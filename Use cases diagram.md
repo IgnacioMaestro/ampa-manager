@@ -31,4 +31,4 @@ Family o-- BankAccount
 @enduml
 -->
 
-![](//www.plantuml.com/plantuml/png/XOz12i8m44NtFSKisqMl88s22rVY3K9cR0UJ2IGJmTjheOje0sxVVo5lfgmsQGc-ytHNq0Y9vqK1EP5JZjBrDvevAoKusy3-DNIzGOJJmXvNttxpgqqa-ZlapBF0qSh3E1VB9cpoKFrXdFAJTNrqYInWfK86mmUDum7sKTNMpgkDEhIj_4rkjJHBzsTC95Y2VmC0)
+![](www.plantuml.com/plantuml/png/XOz12i8m44NtFSKisqMl88s22rVY3K9cR0UJ2IGJmTjheOje0sxVVo5lfgmsQGc-ytHNq0Y9vqK1EP5JZjBrDvevAoKusy3-DNIzGOJJmXvNttxpgqqa-ZlapBF0qSh3E1VB9cpoKFrXdFAJTNrqYInWfK86mmUDum7sKTNMpgkDEhIj_4rkjJHBzsTC95Y2VmC0)
