@@ -2,34 +2,20 @@
 
 <!--
 @startuml
-class Family {
-  FirstSurname : String
-  SecondSurname : String
-}
-class Parent {
-  Name : String
-  Surname: String
-} 
-class Child {
-  Name : String
-} 
-class BankAccount
-class Course
-abstract class "Activity"
-class Familiar
-class Individual
-Activity <|-- Familiar
-Activity <|-- Individual
-Familiar o-up- Family
-Activity o-up- BankAccount
-Individual o-up- Child
-Family *-- "N" Child
-Family *-- "1..2" Parent
-Parent *-- "0..N" BankAccount
-Child o-- "1" Course
-Family o-- BankAccount
+left to right direction
+(Register Family)
+(Add Child to a Family)
+(Add Parent to a Family)
+(Assign BankAccount to a Parent)
+(Register Activity)
+(Join an Activity)
+Admin --> (Register Family)
+Admin --> (Add Child to a Family)
+Admin --> (Add Parent to a Family)
+Admin --> (Assign BankAccount to a Parent)
+Admin --> (Register Activity)
+Admin --> (Join an Activity)
 @enduml
 -->
 
-![](firstDiagram.svg)
-![](https://www.plantuml.com/plantuml/svg/RP11IyGm48Nl-HL3ZaABUXGFkmeBNXQXls1CWWRJH9A9KDJ_Racc9BezbRxtljVEEoJ2I7bsGZbC2KuuMxV0bm0usPXeoj7ZRE0E9ehMlwxwP5Jm-iBuuOPdZCPJQJZ_8vbf20Y67j-iqutPIJoWVpyg5RAdZGav9YFm9L54HL1LULHaFoqjih_8OkJN9wzNMsTqOal2_VSmjDmVkSzl2GX3_c1WQV6gzl_PM3RBcO8tlbhRvLdkY3VZU2jvI54VrRWUnnNeFr672uMIF0bt5RNF7epNUNQ_)
+![](//www.plantuml.com/plantuml/png/XOz12i8m44NtFSKisqMl88s22rVY3K9cR0UJ2IGJmTjheOje0sxVVo5lfgmsQGc-ytHNq0Y9vqK1EP5JZjBrDvevAoKusy3-DNIzGOJJmXvNttxpgqqa-ZlapBF0qSh3E1VB9cpoKFrXdFAJTNrqYInWfK86mmUDum7sKTNMpgkDEhIj_4rkjJHBzsTC95Y2VmC0)
