@@ -2,19 +2,32 @@
 
 <!--
 @startuml
-left to right direction
-(Register Family)
-(Add Child to a Family)
-(Add Parent to a Family)
-(Assign BankAccount to a Parent)
-(Register Activity)
-(Join an Activity)
-Admin --> (Register Family)
-Admin --> (Add Child to a Family)
-Admin --> (Add Parent to a Family)
-Admin --> (Assign BankAccount to a Parent)
-Admin --> (Register Activity)
-Admin --> (Join an Activity)
+class Family {
+  FirstSurname : String
+  SecondSurname : String
+}
+class Parent {
+  Name : String
+  Surname: String
+} 
+class Child {
+  Name : String
+} 
+class BankAccount
+class Course
+abstract class "Activity"
+class Familiar
+class Individual
+Activity <|-- Familiar
+Activity <|-- Individual
+Familiar o-up- Family
+Activity o-up- BankAccount
+Individual o-up- Child
+Family *-- "N" Child
+Family *-- "1..2" Parent
+Parent *-- "0..N" BankAccount
+Child o-- "1" Course
+Family o-- BankAccount
 @enduml
 -->
 
