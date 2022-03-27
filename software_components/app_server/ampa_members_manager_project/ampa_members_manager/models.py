@@ -1,1 +1,3 @@
-from .academic_course.models import AcademicCourse
+from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
+
