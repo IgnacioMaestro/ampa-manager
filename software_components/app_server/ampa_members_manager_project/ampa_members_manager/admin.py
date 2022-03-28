@@ -4,8 +4,10 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.parent import Parent
 
 admin.site.register(AcademicCourse)
 admin.site.register(EstablishedCourse)
 admin.site.register(Family)
 admin.site.register(Child)
+admin.site.register(Parent)
