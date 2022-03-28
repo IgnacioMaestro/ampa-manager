@@ -1,14 +1,11 @@
 from django.db import models
 
-from ampa_members_manager.family.models.family import Family
-
 
 class Parent(models.Model):
     name = models.CharField(max_length=500)
     first_surname = models.CharField(max_length=500)
     second_surname = models.CharField(max_length=500)
     phone_number = models.CharField(max_length=12)
-    family = models.ManyToManyField(to=Family)
 
     class Meta:
         constraints = [
