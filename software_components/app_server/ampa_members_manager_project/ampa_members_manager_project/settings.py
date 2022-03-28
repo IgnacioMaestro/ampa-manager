@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ampa_members_manager'
+    'ampa_members_manager',
+    'localflavor'
 ]
 
 MIDDLEWARE = [
