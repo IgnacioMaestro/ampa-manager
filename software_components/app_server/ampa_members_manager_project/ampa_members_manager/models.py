@@ -3,3 +3,4 @@ from ampa_members_manager.academic_course.models.established_course import Estab
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.family.models.bank_account import BankAccount
