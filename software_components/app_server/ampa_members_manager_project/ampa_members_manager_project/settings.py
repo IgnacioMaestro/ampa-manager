@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ampa_members_manager',
-    'localflavor'
+    'localflavor',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [

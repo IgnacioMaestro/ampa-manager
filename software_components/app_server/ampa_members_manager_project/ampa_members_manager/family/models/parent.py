@@ -1,11 +1,12 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Parent(models.Model):
     name = models.CharField(max_length=500)
     first_surname = models.CharField(max_length=500)
     second_surname = models.CharField(max_length=500)
-    phone_number = models.CharField(max_length=12)
+    phone_number = PhoneNumberField()
 
     class Meta:
         constraints = [
