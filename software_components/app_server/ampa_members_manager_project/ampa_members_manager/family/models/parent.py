@@ -12,5 +12,9 @@ class Parent(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['name', 'first_surname', 'second_surname'], name='unique_parent')]
 
+    @property
+    def full_name(self) -> str:
+        return f'{self.name} {self.first_surname} {self.second_surname}'
+
     def __str__(self) -> str:
-        return "{} {} {}".format(self.name, self.first_surname, self.second_surname)
+        return self.full_name
