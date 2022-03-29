@@ -16,4 +16,4 @@ class Family(models.Model):
         constraints = [models.UniqueConstraint(fields=['first_surname', 'second_surname'], name='unique_surnames')]
 
     def __str__(self) -> str:
-        return "{} {}".format(self.first_surname, self.second_surname)
+        return f'{self.first_surname} {self.second_surname}'
