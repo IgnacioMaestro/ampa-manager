@@ -32,3 +32,7 @@ class ActivityRegistration(models.Model):
         if self.registered_child is not None:
             registered_str = str(self.registered_child)
         return f'{str(self.single_activity)}-{registered_str}'
+
+    def establish_amount(self, amount) -> None:
+        self.amount = amount
+        self.save()

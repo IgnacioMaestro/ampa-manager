@@ -41,3 +41,11 @@ class TestActivityRegistration(TestCase):
             str(activity_registration),
             f'{str(activity_registration.single_activity)}-{str(activity_registration.registered_child)}')
 
+    def test_establish_amount(self):
+        amount: float = 123.56
+        child: Child = baker.make('Child')
+        activity_registration: ActivityRegistration = baker.make(
+            'ActivityRegistration', registered_child=child, registered_family=None)
+        activity_registration.establish_amount(amount)
+        activity_registration.refresh_from_db()
+        self.assertEqual(activity_registration.amount, amount)
