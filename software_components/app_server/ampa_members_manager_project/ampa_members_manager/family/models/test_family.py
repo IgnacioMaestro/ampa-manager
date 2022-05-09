@@ -1,3 +1,5 @@
+from typing import List
+
 from django.db import IntegrityError
 from django.test import TestCase
 from model_bakery import baker
@@ -26,3 +28,14 @@ class TestFamily(TestCase):
     def test_str(self):
         family: Family = baker.make('Family')
         self.assertEqual(str(family), "{} {}".format(family.first_surname, family.second_surname))
+
+    def test_all_families_no_families(self):
+        self.assertQuerysetEqual(Family.all_families(), Family.objects.none())
+
+    def test_all_families_one_family(self):
+        family: Family = baker.make('Family')
+        self.assertQuerysetEqual(Family.all_families(), [family])
+
+    def test_all_families_more_than_one_family(self):
+        families: List[Family] = baker.make('Family', _quantity=3)
+        self.assertListEqual(list(Family.all_families()), families)
