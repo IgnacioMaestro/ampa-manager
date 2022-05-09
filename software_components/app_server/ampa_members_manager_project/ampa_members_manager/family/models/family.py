@@ -22,3 +22,7 @@ class Family(models.Model):
     @classmethod
     def all_families(cls) -> QuerySet[Family]:
         return Family.objects.all()
+
+    @classmethod
+    def all_families_with_bank_account(cls) -> QuerySet[Family]:
+        return cls.all_families().exclude(default_bank_account__isnull=True)
