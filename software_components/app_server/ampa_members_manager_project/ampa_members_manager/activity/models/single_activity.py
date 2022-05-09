@@ -14,3 +14,15 @@ class SingleActivity(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}'
+
+    def calculate_price(self, times: float, membership: bool) -> float:
+        if self.payment_type is PaymentType.SINGLE:
+            if membership:
+                return float(self.price_for_member)
+            else:
+                return float(self.price_for_no_member)
+        else:
+            if membership:
+                return float(self.price_for_member) * times
+            else:
+                return float(self.price_for_no_member) * times
