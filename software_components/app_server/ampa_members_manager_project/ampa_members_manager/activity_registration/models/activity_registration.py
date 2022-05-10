@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import CASCADE, SET_NULL
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
+from ampa_members_manager.activity_registration.models.payment_order import PaymentOrder
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
@@ -13,6 +14,7 @@ class ActivityRegistration(models.Model):
     bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True)
     registered_family = models.ForeignKey(to=Family, on_delete=CASCADE, null=True, blank=True)
     registered_child = models.ForeignKey(to=Child, on_delete=CASCADE, null=True, blank=True)
+    payment_order = models.ForeignKey(to=PaymentOrder, on_delete=SET_NULL, null=True, blank=True)
 
     class Meta:
         constraints = [
