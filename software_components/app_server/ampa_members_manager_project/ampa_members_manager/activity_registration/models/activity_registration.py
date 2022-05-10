@@ -1,11 +1,13 @@
+from __future__ import annotations
 from django.db import models
-from django.db.models import CASCADE, SET_NULL
+from django.db.models import CASCADE, SET_NULL, QuerySet
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.payment_order import PaymentOrder
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.membership import Membership
 
 
 class ActivityRegistration(models.Model):
@@ -38,3 +40,17 @@ class ActivityRegistration(models.Model):
     def establish_amount(self, amount) -> None:
         self.amount = amount
         self.save()
+
+    def set_payment_order(self, amount: float):
+        self.payment_order = PaymentOrder.objects.create(amount=amount)
+        self.save()
+
+    def is_membership(self) -> bool:
+        if self.registered_family is not None:
+            return Membership.is_membership_family(self.registered_family)
+        if self.registered_child is not None:
+            return Membership.is_membership_child(self.registered_child)
+
+    @classmethod
+    def with_single_activity(cls, single_activity: SingleActivity) -> QuerySet[ActivityRegistration]:
+        return ActivityRegistration.objects.filter(single_activity=single_activity)
