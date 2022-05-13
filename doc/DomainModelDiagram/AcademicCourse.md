@@ -1,0 +1,2 @@
+## AcademicCourse package
+![](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLS4nEJ4dDpKnspYyjAawjvk9IK4ZEIImkLd05AatAoIpEI4s1oC5aqBGeL7Cf085dNcP9Pc9EP6fYaHMGKvAQdbe4bAW56eXfb4A-hYwwCGfSjLmEgNafGCS10000)
