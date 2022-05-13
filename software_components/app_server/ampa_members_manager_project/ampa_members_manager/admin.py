@@ -5,10 +5,7 @@ from ampa_members_manager.academic_course.models.established_course import Estab
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
-from ampa_members_manager.activity_registration.models.familiar_activity_registration import \
-    FamiliarActivityRegistration
-from ampa_members_manager.activity_registration.models.individual_activity_registration import \
-    IndividualActivityRegistration
+from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
@@ -36,5 +33,4 @@ admin.site.register(Membership)
 admin.site.register(RepetitiveActivity, RepetitiveActivityAdmin)
 admin.site.register(UniqueActivity, UniqueActivityAdmin)
 admin.site.register(SingleActivity)
-admin.site.register(IndividualActivityRegistration)
-admin.site.register(FamiliarActivityRegistration)
+admin.site.register(ActivityRegistration)

@@ -8,7 +8,6 @@ from ampa_members_manager.academic_course.models.established_course import Estab
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.generate_payment_orders import GeneratePaymentOrders
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.family.models.child import Child
 
 
 class TestGeneratePaymentOrders(TestCase):
@@ -22,20 +21,15 @@ class TestGeneratePaymentOrders(TestCase):
         self.assertEqual(ActivityRegistration.objects.count(), 0)
 
     def test_generate_payment_orders_one_activity_registration(self):
-        child: Child = baker.make('Child')
         activity_registration: ActivityRegistration = baker.make(
-            'ActivityRegistration',
-            registered_child=child, registered_family=None, single_activity=self.single_activity, amount=2.5)
+            'ActivityRegistration', single_activity=self.single_activity)
         GeneratePaymentOrders.generate(self.single_activity)
         activity_registration.refresh_from_db()
         self.assertIsNotNone(activity_registration.payment_order)
 
     def test_generate_payment_orders_more_than_one_activity_registration(self):
-        child: Child = baker.make('Child')
         activity_registrations: List[ActivityRegistration] = baker.make(
-            'ActivityRegistration',
-            registered_child=child, registered_family=None, single_activity=self.single_activity, amount=2.5,
-            _quantity=3)
+            'ActivityRegistration', single_activity=self.single_activity, _quantity=3)
         GeneratePaymentOrders.generate(self.single_activity)
         for activity_registration in activity_registrations:
             activity_registration.refresh_from_db()
