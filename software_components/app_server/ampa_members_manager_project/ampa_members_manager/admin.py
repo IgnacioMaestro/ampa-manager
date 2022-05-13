@@ -18,11 +18,11 @@ from ampa_members_manager.family.models.parent import Parent
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
-    fields = ['name', 'academic_course', 'assignment', 'funding', 'single_activities']
+    fields = ['name', 'academic_course', 'funding', 'single_activities']
 
 
 class UniqueActivityAdmin(admin.ModelAdmin):
-    fields = ['name', 'academic_course', 'assignment', 'funding', 'single_activity']
+    fields = ['name', 'academic_course', 'funding', 'single_activity']
 
 
 admin.site.register(AcademicCourse)

@@ -31,4 +31,4 @@ class TestSingleActivity(TestCase):
         single_activity: SingleActivity = baker.make('SingleActivity', payment_type=PaymentType.PER_DAY)
         times: float = 2.5
         price: float = single_activity.calculate_price(times, False)
-        self.assertEqual(price, float(single_activity.price_for_no_member)   * times)
+        self.assertEqual(price, float(single_activity.price_for_no_member) * times)
