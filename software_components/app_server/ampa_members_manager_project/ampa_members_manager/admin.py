@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
-from ampa_members_manager.academic_course.models.fee import Fee
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
@@ -28,7 +27,6 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 
 admin.site.register(AcademicCourse)
 admin.site.register(EstablishedCourse)
-admin.site.register(Fee)
 admin.site.register(Family)
 admin.site.register(Child)
 admin.site.register(Parent)
