@@ -1,2 +1,2 @@
 ## AcademicCourse package
-![](https://www.plantuml.com/plantuml/png/PS-zgeD04CNnVfxYO7b1kMbJ6KA4F4BAoNemIrOtx4SbldiM144pxVpvmMbZqf3owEIZvgq3SJ7QSxJcwdE8d4K0upH6T2HcGJaTVPxI6VSfSM0GODcgMm6VpiON-rNOFdjufGfXarNte8Qz9_YbuElwm0YExbzfgl-cELNeI5cavTINWLy0)
+![](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuIf8JCvEJ4zLS4nEJ4dDpKnspYyjAawjvk9IK4ZEIImkLd1BJOMpNO7Qad8oYpDIKy3gu39esXMgkHI0m3ClioGpCISoDR782iWfIKrFBG9Ar08DnpHA8LzN5suCp7HqSxM0QfGCzFGCbS3kgkLoICrB0Ne30000)
