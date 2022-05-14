@@ -11,6 +11,10 @@ class Child(models.Model):
     repetition = models.IntegerField(default=0)
     family = models.ForeignKey(to=Family, on_delete=CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'),]
+
     @property
     def full_name(self) -> str:
         return f'{self.name} {str(self.family)}'
