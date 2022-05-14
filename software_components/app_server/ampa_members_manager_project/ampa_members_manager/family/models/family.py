@@ -13,9 +13,6 @@ class Family(models.Model):
     parents = models.ManyToManyField(to=Parent)
     default_bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True, blank=True)
 
-    class Meta:
-        constraints = [models.UniqueConstraint(fields=['first_surname', 'second_surname'], name='unique_surnames')]
-
     def __str__(self) -> str:
         return f'{self.first_surname} {self.second_surname}'
 
