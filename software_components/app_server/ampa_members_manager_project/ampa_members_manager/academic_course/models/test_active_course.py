@@ -9,7 +9,7 @@ class TestActiveCourse(TestCase):
     def test_str(self):
         academic_course = baker.make('AcademicCourse')
         established_course = ActiveCourse.objects.create(course=academic_course, pk=2)
-        self.assertEqual(str(established_course), 'SingletonEstablishedCourse')
+        self.assertEqual(str(established_course), 'ActiveCourse')
 
     def test_save_always_pk_1(self):
         academic_course = baker.make('AcademicCourse')
