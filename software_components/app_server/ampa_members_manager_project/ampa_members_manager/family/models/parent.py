@@ -7,6 +7,7 @@ class Parent(models.Model):
     first_surname = models.CharField(max_length=500)
     second_surname = models.CharField(max_length=500)
     phone_number = PhoneNumberField()
+    additional_phone_number = PhoneNumberField(null=True, blank=True)
 
     class Meta:
         constraints = [
