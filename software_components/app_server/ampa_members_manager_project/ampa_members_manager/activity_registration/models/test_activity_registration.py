@@ -34,7 +34,7 @@ class TestActivityRegistration(TestCase):
         self.activity_registration.set_payment_order(amount=payment_order_amount)
         self.activity_registration.refresh_from_db()
         self.assertIsNotNone(self.activity_registration.payment_order)
-        self.assertEqual(self.activity_registration.payment_order.amount, payment_order_amount)
+        self.assertEqual(self.activity_registration.payment_order, payment_order_amount)
 
     def test_with_single_activity_no_activity_registration(self):
         single_activity: SingleActivity = baker.make('SingleActivity')
