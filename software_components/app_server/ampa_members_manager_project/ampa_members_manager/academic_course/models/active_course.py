@@ -4,15 +4,18 @@ from django.db.models import SET_NULL
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 
 
-class EstablishedCourse(models.Model):
+class ActiveCourse(models.Model):
     course = models.ForeignKey(to=AcademicCourse, on_delete=SET_NULL, null=True)
 
+    class Meta:
+        verbose_name_plural = "ActiveCourse"
+
     def __str__(self) -> str:
-        return "SingletonEstablishedCourse"
+        return "ActiveCourse"
 
     def save(self, *args, **kwargs):
         self.pk = 1
-        super(EstablishedCourse, self).save(*args, **kwargs)
+        super(ActiveCourse, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         pass
