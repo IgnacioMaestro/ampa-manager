@@ -11,4 +11,4 @@ class BankAccount(models.Model):
     owner = models.ForeignKey(to=Parent, on_delete=CASCADE)
 
     def __str__(self) -> str:
-        return f'{self.iban}'
+        return '{} {}'.format(self.iban, self.owner)
