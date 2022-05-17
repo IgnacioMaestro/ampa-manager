@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-17 14:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:7
+msgid "Initial year"
+msgstr "Año inicio"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:8
+msgid "Fee"
+msgstr "Cuota"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\established_course.py:9
+msgid "Course"
+msgstr "Curso"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:15
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:11
+msgid "Name"
+msgstr "Nombre"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:16
+msgid "Academic course"
+msgstr "Curso académico"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:17
+msgid "Funding"
+msgstr "Financiación"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\repetitive_activity.py:9
+msgid "Single activities"
+msgstr "Actividades únicas"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:12
+msgid "Price for members"
+msgstr "Precio para miembros"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:13
+msgid "Price for no members"
+msgstr "Precio para no miembros"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:14
+msgid "Payment type"
+msgstr "Tipo de pago"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:122
+msgid "Spanish"
+msgstr "Español"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:123
+msgid "Basque"
+msgstr "Euskera"
