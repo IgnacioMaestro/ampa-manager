@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import CASCADE
+from django.utils.translation import gettext as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
@@ -8,8 +9,12 @@ from ampa_members_manager.family.models.family import Family
 
 
 class Membership(models.Model):
-    family = models.ForeignKey(to=Family, on_delete=CASCADE)
-    academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE)
+    family = models.ForeignKey(verbose_name=_("Family"), to=Family, on_delete=CASCADE)
+    academic_course = models.ForeignKey(verbose_name=_("Academic course"), to=AcademicCourse, on_delete=CASCADE)
+
+    class Meta:
+        verbose_name = _('Membership')
+        verbose_name_plural = _('Membership')
 
     def __str__(self) -> str:
         return f'{str(self.family)}-{str(self.academic_course)}'

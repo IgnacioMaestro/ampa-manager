@@ -18,3 +18,5 @@ class Activity(models.Model):
 
     class Meta:
         abstract = True
+        verbose_name = _('Activity')
+        verbose_name_plural = _('Activities')

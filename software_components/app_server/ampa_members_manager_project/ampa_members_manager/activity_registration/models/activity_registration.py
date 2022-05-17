@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.db import models
 from django.db.models import CASCADE, SET_NULL, QuerySet
+from django.utils.translation import gettext as _
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.payment_order import PaymentOrder
@@ -11,11 +12,15 @@ from ampa_members_manager.family.models.membership import Membership
 
 
 class ActivityRegistration(models.Model):
-    amount = models.FloatField(default=0.0)
-    single_activity = models.ForeignKey(to=SingleActivity, on_delete=CASCADE)
-    bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True)
-    child = models.ForeignKey(to=Child, on_delete=CASCADE)
-    payment_order = models.ForeignKey(to=PaymentOrder, on_delete=SET_NULL, null=True, blank=True)
+    amount = models.FloatField(verbose_name=_("Amount"), default=0.0)
+    single_activity = models.ForeignKey(verbose_name=_("Single activity"), to=SingleActivity, on_delete=CASCADE)
+    bank_account = models.ForeignKey(verbose_name=_("Bank account"), to=BankAccount, on_delete=SET_NULL, null=True)
+    child = models.ForeignKey(verbose_name=_("Child"), to=Child, on_delete=CASCADE)
+    payment_order = models.ForeignKey(verbose_name=_("Payment order"), to=PaymentOrder, on_delete=SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Activity registration')
+        verbose_name_plural = _('Activity registrations')
 
     def __str__(self) -> str:
         return f'{str(self.single_activity)}-{str(self.child)}'

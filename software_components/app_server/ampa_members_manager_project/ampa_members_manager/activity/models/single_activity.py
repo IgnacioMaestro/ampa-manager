@@ -13,6 +13,10 @@ class SingleActivity(models.Model):
     price_for_no_member = models.DecimalField(verbose_name=_("Price for no members"), max_digits=6, decimal_places=2)
     payment_type = models.IntegerField(verbose_name=_("Payment type"), choices=PaymentType.choices)
 
+    class Meta:
+        verbose_name = _('Single activity')
+        verbose_name_plural = _('Single activities')
+
     def __str__(self) -> str:
         return f'{self.name}'
 

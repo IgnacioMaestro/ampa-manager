@@ -8,6 +8,10 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 class EstablishedCourse(models.Model):
     course = models.ForeignKey(verbose_name=_('Course'), to=AcademicCourse, on_delete=SET_NULL, null=True)
 
+    class Meta:
+        verbose_name = _('Established course')
+        verbose_name_plural = _('Established courses')
+
     def __str__(self) -> str:
         return "SingletonEstablishedCourse"
 
