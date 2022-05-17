@@ -1,10 +1,11 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 class AcademicCourse(models.Model):
-    initialYear = models.IntegerField('Initial year', unique=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    fee = models.PositiveIntegerField(null=True, blank=True)
+    initialYear = models.IntegerField(verbose_name=_("Initial year"), unique=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
+    fee = models.PositiveIntegerField(verbose_name=_("Fee"), null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{str(self.initialYear)}-{str(self.initialYear + 1)}'

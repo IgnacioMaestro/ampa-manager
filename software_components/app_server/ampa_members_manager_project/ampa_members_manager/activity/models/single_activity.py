@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 class PaymentType(models.IntegerChoices):
@@ -7,10 +8,10 @@ class PaymentType(models.IntegerChoices):
 
 
 class SingleActivity(models.Model):
-    name = models.CharField(max_length=100)
-    price_for_member = models.DecimalField(max_digits=6, decimal_places=2)
-    price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2)
-    payment_type = models.IntegerField(choices=PaymentType.choices)
+    name = models.CharField(verbose_name=_("Name"), max_length=100)
+    price_for_member = models.DecimalField(verbose_name=_("Price for members"), max_digits=6, decimal_places=2)
+    price_for_no_member = models.DecimalField(verbose_name=_("Price for no members"), max_digits=6, decimal_places=2)
+    payment_type = models.IntegerField(verbose_name=_("Payment type"), choices=PaymentType.choices)
 
     def __str__(self) -> str:
         return f'{self.name}'

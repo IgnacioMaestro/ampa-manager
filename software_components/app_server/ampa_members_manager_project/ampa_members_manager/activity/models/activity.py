@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import CASCADE
+from django.utils.translation import gettext as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 
@@ -11,9 +12,9 @@ class Funding(models.IntegerChoices):
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=100)
-    academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE)
-    funding = models.IntegerField(choices=Funding.choices)
+    name = models.CharField(verbose_name=_("Name"), max_length=100)
+    academic_course = models.ForeignKey(verbose_name=_("Academic course"), to=AcademicCourse, on_delete=CASCADE)
+    funding = models.IntegerField(verbose_name=_("Funding"), choices=Funding.choices)
 
     class Meta:
         abstract = True
