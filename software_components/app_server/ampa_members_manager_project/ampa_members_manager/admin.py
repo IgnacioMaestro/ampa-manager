@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
@@ -22,14 +23,79 @@ class UniqueActivityAdmin(admin.ModelAdmin):
     fields = ['name', 'academic_course', 'funding', 'single_activity']
 
 
-admin.site.register(AcademicCourse)
+@admin.register(AcademicCourse)
+class AcademicCourseAdmin(admin.ModelAdmin):
+    list_display = ['summary', 'fee']
+
+    def summary(self, instance):
+        return str(instance)
+
+
+class FamilyAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['default_bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance)
+
+
+class ChildInline(admin.TabularInline):
+    model = Child
+    extra = 0
+
+
+@admin.register(Family)
+class FamilyAdmin(admin.ModelAdmin):
+    list_display = ['first_surname', 'second_surname', 'email', 'default_bank_account']
+    search_fields = ['first_surname', 'second_surname', 'email']
+    form = FamilyAdminForm
+    filter_horizontal = ['parents']
+    inlines = [
+        ChildInline
+    ]
+
+
+class AuthorizationInline(admin.TabularInline):
+    model = Authorization
+    extra = 0
+
+
+@admin.register(BankAccount)
+class BankAccountAdmin(admin.ModelAdmin):
+    list_display = ['swift_bic', 'iban', 'owner']
+    list_filter = ['swift_bic']
+    search_fields = ['swift_bic', 'iban', 'owner']
+    inlines = [
+        AuthorizationInline
+    ]
+
+
+@admin.register(Parent)
+class ParentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'first_surname', 'second_surname', 'phone_number']
+    search_fields = ['name', 'first_surname', 'second_surname', 'phone_number']
+
+
+@admin.register(Child)
+class ChildAdmin(admin.ModelAdmin):
+    list_display = ['name', 'year_of_birth', 'repetition', 'family']
+    list_filter = ['year_of_birth', 'repetition']
+    search_fields = ['name', 'year_of_birth', 'repetition', 'family']
+
+
+@admin.register(Authorization)
+class AuthorizationAdmin(admin.ModelAdmin):
+    list_display = ['number', 'date', 'bank_account']
+    list_filter = ['date']
+    search_fields = ['number', 'date', 'bank_account']
+
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ['family', 'academic_course']
+    list_filter = ['academic_course']
+    search_fields = ['family', 'academic_course']
+
+
 admin.site.register(EstablishedCourse)
-admin.site.register(Family)
-admin.site.register(Child)
-admin.site.register(Parent)
-admin.site.register(BankAccount)
-admin.site.register(Authorization)
-admin.site.register(Membership)
 admin.site.register(RepetitiveActivity, RepetitiveActivityAdmin)
 admin.site.register(UniqueActivity, UniqueActivityAdmin)
 admin.site.register(SingleActivity)
