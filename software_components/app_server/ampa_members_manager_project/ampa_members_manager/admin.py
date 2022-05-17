@@ -83,9 +83,9 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Authorization)
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'date', 'bank_account']
-    list_filter = ['date']
-    search_fields = ['number', 'date', 'bank_account']
+    list_display = ['number', 'year', 'bank_account']
+    list_filter = ['year']
+    search_fields = ['number', 'year', 'bank_account']
 
 
 @admin.register(Membership)
