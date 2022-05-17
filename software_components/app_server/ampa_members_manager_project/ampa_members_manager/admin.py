@@ -83,7 +83,7 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Authorization)
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'bank_account']
+    list_display = ['number', 'year', 'bank_account', 'document']
     list_filter = ['year']
     search_fields = ['number', 'year', 'bank_account']
 

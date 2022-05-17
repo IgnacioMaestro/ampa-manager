@@ -9,6 +9,7 @@ class Authorization(models.Model):
     number = models.CharField(max_length=50)
     year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)])
     bank_account = models.OneToOneField(to=BankAccount, on_delete=CASCADE)
+    document = models.FileField(null=True, blank=True)
 
     class Meta:
         constraints = [
