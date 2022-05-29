@@ -1,23 +1,21 @@
 from django.db import models
 from django.db.models import SET_NULL
-from django.utils.translation import gettext as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 
 
-class EstablishedCourse(models.Model):
-    course = models.ForeignKey(verbose_name=_('Course'), to=AcademicCourse, on_delete=SET_NULL, null=True)
+class ActiveCourse(models.Model):
+    course = models.ForeignKey(to=AcademicCourse, on_delete=SET_NULL, null=True)
 
     class Meta:
-        verbose_name = _('Established course')
-        verbose_name_plural = _('Established courses')
+        verbose_name_plural = "ActiveCourse"
 
     def __str__(self) -> str:
-        return "SingletonEstablishedCourse"
+        return "ActiveCourse"
 
     def save(self, *args, **kwargs):
         self.pk = 1
-        super(EstablishedCourse, self).save(*args, **kwargs)
+        super(ActiveCourse, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         pass

@@ -2,7 +2,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
+from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
@@ -11,7 +11,7 @@ from ampa_members_manager.family.models.membership import Membership
 class TestMembership(TestCase):
     def setUp(self):
         self.academic_course: AcademicCourse = baker.make('AcademicCourse')
-        EstablishedCourse.objects.create(course=self.academic_course)
+        ActiveCourse.objects.create(course=self.academic_course)
 
     def test_str(self):
         family: Family = baker.make('Family')

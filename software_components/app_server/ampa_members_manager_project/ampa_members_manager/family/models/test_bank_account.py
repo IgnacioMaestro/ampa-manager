@@ -11,4 +11,4 @@ class TestBankAccount(TestCase):
         owner: Parent = baker.make('Parent', phone_number=phonenumbers.parse("695715902", 'ES'))
         bank_account: BankAccount = baker.make(
             'BankAccount', swift_bic="BASKES2BXXX", iban="ES60 0049 1500 0512 3456 7892", owner=owner)
-        self.assertEqual(str(bank_account), bank_account.iban)
+        self.assertEqual(str(bank_account), f'{bank_account.iban} {bank_account.owner}')

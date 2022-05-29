@@ -1,23 +1,17 @@
 from __future__ import annotations
 from django.db import models
 from django.db.models import SET_NULL, QuerySet
-from django.utils.translation import gettext as _
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
 
 
 class Family(models.Model):
-    first_surname = models.CharField(verbose_name=_("First surname"), max_length=500)
-    second_surname = models.CharField(verbose_name=_("Second surname"), max_length=500)
-    email = models.EmailField(verbose_name=_("Email"), unique=True)
-    parents = models.ManyToManyField(verbose_name=_("Parents"), to=Parent)
-    default_bank_account = models.ForeignKey(verbose_name=_("Default bank account"), to=BankAccount, on_delete=SET_NULL, null=True, blank=True)
-
-    class Meta:
-        constraints = [models.UniqueConstraint(fields=['first_surname', 'second_surname'], name='unique_surnames')]
-        verbose_name = _('Family')
-        verbose_name_plural = _('Families')
+    first_surname = models.CharField(max_length=500)
+    second_surname = models.CharField(max_length=500)
+    email = models.EmailField(unique=True)
+    parents = models.ManyToManyField(to=Parent)
+    default_bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.first_surname} {self.second_surname}'

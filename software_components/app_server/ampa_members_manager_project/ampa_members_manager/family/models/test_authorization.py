@@ -13,4 +13,6 @@ class TestAuthorization(TestCase):
         bank_account: BankAccount = baker.make(
             'BankAccount', swift_bic="BASKES2BXXX", iban="ES60 0049 1500 0512 3456 7892", owner=owner)
         authorization: Authorization = baker.make('Authorization', bank_account=bank_account)
-        self.assertEqual(str(authorization), f'{authorization.number}-{str(authorization.bank_account)}')
+        self.assertEqual(
+            str(authorization),
+            f'{authorization.year}/{authorization.number}-{str(authorization.bank_account)}')

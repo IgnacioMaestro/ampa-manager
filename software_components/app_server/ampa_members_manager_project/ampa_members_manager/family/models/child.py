@@ -16,6 +16,10 @@ class Child(models.Model):
         verbose_name = _('Child')
         verbose_name_plural = _('Children')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'),]
+
     @property
     def full_name(self) -> str:
         return f'{self.name} {str(self.family)}'

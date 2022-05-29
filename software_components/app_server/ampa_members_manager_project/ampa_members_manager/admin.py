@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_members_manager.academic_course.models.established_course import EstablishedCourse
+from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
@@ -83,9 +83,9 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Authorization)
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'date', 'bank_account']
-    list_filter = ['date']
-    search_fields = ['number', 'date', 'bank_account']
+    list_display = ['number', 'year', 'bank_account', 'document']
+    list_filter = ['year']
+    search_fields = ['number', 'year', 'bank_account']
 
 
 @admin.register(Membership)
@@ -95,7 +95,7 @@ class MembershipAdmin(admin.ModelAdmin):
     search_fields = ['family', 'academic_course']
 
 
-admin.site.register(EstablishedCourse)
+admin.site.register(ActiveCourse)
 admin.site.register(RepetitiveActivity, RepetitiveActivityAdmin)
 admin.site.register(UniqueActivity, UniqueActivityAdmin)
 admin.site.register(SingleActivity)
