@@ -7,10 +7,11 @@ from ampa_members_manager.family.models.family import Family
 
 
 class Child(models.Model):
-    name = models.CharField(verbose_name=_("Name"), max_length=500)
-    year_of_birth = models.IntegerField(verbose_name=_("Year of birth"), validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    repetition = models.IntegerField(verbose_name=_("Repetition"), default=0)
-    family = models.ForeignKey(verbose_name=_("Family"), to=Family, on_delete=CASCADE)
+    name = models.CharField(max_length=500, verbose_name=_("Name"))
+    year_of_birth = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)],
+                                        verbose_name=_("Year of birth"))
+    repetition = models.IntegerField(default=0, verbose_name=_("Repetition"))
+    family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
 
     class Meta:
         verbose_name = _('Child')

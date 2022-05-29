@@ -12,9 +12,9 @@ class Funding(models.IntegerChoices):
 
 
 class Activity(models.Model):
-    name = models.CharField(verbose_name=_("Name"), max_length=100)
-    academic_course = models.ForeignKey(verbose_name=_("Academic course"), to=AcademicCourse, on_delete=CASCADE)
-    funding = models.IntegerField(verbose_name=_("Funding"), choices=Funding.choices)
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
+    academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
+    funding = models.IntegerField(choices=Funding.choices, verbose_name=_("Funding"))
 
     class Meta:
         abstract = True

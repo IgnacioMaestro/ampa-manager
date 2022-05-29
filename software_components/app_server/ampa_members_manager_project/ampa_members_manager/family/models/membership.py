@@ -9,8 +9,8 @@ from ampa_members_manager.family.models.family import Family
 
 
 class Membership(models.Model):
-    family = models.ForeignKey(verbose_name=_("Family"), to=Family, on_delete=CASCADE)
-    academic_course = models.ForeignKey(verbose_name=_("Academic course"), to=AcademicCourse, on_delete=CASCADE)
+    family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+    academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
 
     class Meta:
         verbose_name = _('Membership')

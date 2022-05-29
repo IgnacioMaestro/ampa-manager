@@ -8,8 +8,8 @@ from ampa_members_manager.family.models.parent import Parent
 
 class BankAccount(models.Model):
     swift_bic = BICField(verbose_name=_("SWIFT/BIC"))
-    iban = IBANField(verbose_name=_("IBAN"), unique=True)
-    owner = models.ForeignKey(verbose_name=_("Owner"), to=Parent, on_delete=CASCADE)
+    iban = IBANField(unique=True, verbose_name=_("IBAN"))
+    owner = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Owner"))
 
     class Meta:
         verbose_name = _('Bank account')

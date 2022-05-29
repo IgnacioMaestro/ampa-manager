@@ -4,8 +4,9 @@ from django.utils.translation import gettext as _
 
 
 class AcademicCourse(models.Model):
-    initialYear = models.IntegerField(verbose_name=_("Initial year"), unique=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)])
-    fee = models.PositiveIntegerField(verbose_name=_("Fee"), null=True, blank=True)
+    initialYear = models.IntegerField(unique=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)],
+                                      verbose_name=_("Initial year"))
+    fee = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("Fee"))
 
     class Meta:
         verbose_name = _('Academic course')

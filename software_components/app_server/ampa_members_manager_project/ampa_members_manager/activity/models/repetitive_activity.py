@@ -6,7 +6,7 @@ from ampa_members_manager.activity.models.single_activity import SingleActivity
 
 
 class RepetitiveActivity(Activity):
-    single_activities = models.ManyToManyField(verbose_name=_("Single activities"), to=SingleActivity)
+    single_activities = models.ManyToManyField(to=SingleActivity, verbose_name=_("Single activities"))
 
     class Meta:
         verbose_name = _('Repetitive activity')
