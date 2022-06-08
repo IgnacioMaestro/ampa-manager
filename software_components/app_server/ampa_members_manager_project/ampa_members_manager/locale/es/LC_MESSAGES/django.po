@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-08 14:35+0200\n"
+"POT-Creation-Date: 2022-06-08 14:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,227 +18,233 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:8
+#: .\ampa_members_manager\academic_course\models\academic_course.py:8
 msgid "Initial year"
 msgstr "Año inicio"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:9
+#: .\ampa_members_manager\academic_course\models\academic_course.py:9
 msgid "Fee"
 msgstr "Cuota"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:12
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:16
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:13
+#: .\ampa_members_manager\academic_course\models\academic_course.py:12
+#: .\ampa_members_manager\activity\models\activity.py:16
+#: .\ampa_members_manager\family\models\membership.py:13
 msgid "Academic course"
 msgstr "Curso académico"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\academic_course.py:13
+#: .\ampa_members_manager\academic_course\models\academic_course.py:13
 msgid "Academic courses"
 msgstr "Cursos académicos"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:9
+#: .\ampa_members_manager\academic_course\models\active_course.py:9
 msgid "Course"
 msgstr "Curso"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:12
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:13
+#: .\ampa_members_manager\academic_course\models\active_course.py:12
+#: .\ampa_members_manager\academic_course\models\active_course.py:13
 msgid "Active course"
 msgstr "Curso activo"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:15
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:11
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:10
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:7
+#: .\ampa_members_manager\activity\models\activity.py:15
+#: .\ampa_members_manager\activity\models\single_activity.py:11
+#: .\ampa_members_manager\family\models\child.py:10
+#: .\ampa_members_manager\family\models\parent.py:7
 msgid "Name"
 msgstr "Nombre"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:17
+#: .\ampa_members_manager\activity\models\activity.py:17
 msgid "Funding"
 msgstr "Financiación"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:21
+#: .\ampa_members_manager\activity\models\activity.py:21
 msgid "Activity"
 msgstr "Actividad"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\activity.py:22
+#: .\ampa_members_manager\activity\models\activity.py:22
 msgid "Activities"
 msgstr "Actividades"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\repetitive_activity.py:9
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:18
+#: .\ampa_members_manager\activity\models\repetitive_activity.py:9
+#: .\ampa_members_manager\activity\models\single_activity.py:18
 msgid "Single activities"
 msgstr "Actividades únicas"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\repetitive_activity.py:12
+#: .\ampa_members_manager\activity\models\repetitive_activity.py:12
 msgid "Repetitive activity"
 msgstr "Actividad periódicas"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\repetitive_activity.py:13
+#: .\ampa_members_manager\activity\models\repetitive_activity.py:13
 msgid "Repetitive activities"
 msgstr "Actividades periódicas"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:12
+#: .\ampa_members_manager\activity\models\single_activity.py:12
 msgid "Price for members"
 msgstr "Precio para miembros"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:13
+#: .\ampa_members_manager\activity\models\single_activity.py:13
 msgid "Price for no members"
 msgstr "Precio para no miembros"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:14
+#: .\ampa_members_manager\activity\models\single_activity.py:14
 msgid "Payment type"
 msgstr "Tipo de pago"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\single_activity.py:17
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\unique_activity.py:10
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:15
+#: .\ampa_members_manager\activity\models\single_activity.py:17
+#: .\ampa_members_manager\activity\models\unique_activity.py:10
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:15
 msgid "Single activity"
 msgstr "Actividad única"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\unique_activity.py:13
+#: .\ampa_members_manager\activity\models\unique_activity.py:13
 msgid "Unique activity"
 msgstr "Actividad única"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity\models\unique_activity.py:14
+#: .\ampa_members_manager\activity\models\unique_activity.py:14
 msgid "Unique activities"
 msgstr "Actividades únicas"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:14
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:14
 msgid "Amount"
 msgstr "Cantidad"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:16
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:12
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:15
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:16
+#: .\ampa_members_manager\family\models\authorization.py:12
+#: .\ampa_members_manager\family\models\bank_account.py:15
 msgid "Bank account"
 msgstr "Cuenta bancaria"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:17
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:17
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:17
+#: .\ampa_members_manager\family\models\child.py:17
 msgid "Child"
 msgstr "Hijo"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:18
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:18
 msgid "Payment order"
 msgstr "Orden de pago"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:21
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:21
 msgid "Activity registration"
 msgstr "Registro en actividad"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:22
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:22
 msgid "Activity registrations"
 msgstr "Registros en actividad"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:10
+#: .\ampa_members_manager\family\models\authorization.py:10
 msgid "Number"
 msgstr "Número"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:11
+#: .\ampa_members_manager\family\models\authorization.py:11
 msgid "Year"
 msgstr "Año"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:13
+#: .\ampa_members_manager\family\models\authorization.py:13
 msgid "Document"
 msgstr "Documento"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:16
+#: .\ampa_members_manager\family\models\authorization.py:16
+#| msgid "Authorizations"
 msgid "Authorization"
-msgstr "Authorización"
+msgstr "Autorización"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:17
+#: .\ampa_members_manager\family\models\authorization.py:17
+#| msgid "Authorizations"
 msgid "Authorizations"
-msgstr "Authorizaciones"
+msgstr "Autorizaciones"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:10
+#: .\ampa_members_manager\family\models\bank_account.py:10
 msgid "SWIFT/BIC"
 msgstr "SWIFT/BIC"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:11
+#: .\ampa_members_manager\family\models\bank_account.py:11
 msgid "IBAN"
 msgstr "IBAN"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:12
+#: .\ampa_members_manager\family\models\bank_account.py:12
 msgid "Owner"
 msgstr "Titular"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:16
+#: .\ampa_members_manager\family\models\bank_account.py:16
 msgid "Bank accounts"
 msgstr "Cuentas bancarias"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:12
+#: .\ampa_members_manager\family\models\child.py:12
 msgid "Year of birth"
 msgstr "Año de nacimiento"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:13
+#: .\ampa_members_manager\family\models\child.py:13
 msgid "Repetition"
 msgstr "Repetición"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:14
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:19
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:12
+#: .\ampa_members_manager\family\models\child.py:14
+#: .\ampa_members_manager\family\models\family.py:19
+#: .\ampa_members_manager\family\models\membership.py:12
 msgid "Family"
 msgstr "Familia"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:18
+#: .\ampa_members_manager\family\models\child.py:18
 msgid "Children"
 msgstr "Hijos"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:11
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:8
+#: .\ampa_members_manager\family\models\family.py:11
+#: .\ampa_members_manager\family\models\parent.py:8
 msgid "First surname"
 msgstr "Primer apellido"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:12
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:9
+#: .\ampa_members_manager\family\models\family.py:12
+#: .\ampa_members_manager\family\models\parent.py:9
 msgid "Second surname"
 msgstr "Segundo apellido"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:13
+#: .\ampa_members_manager\family\models\family.py:13
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:14
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:15
+#: .\ampa_members_manager\family\models\family.py:14
+#: .\ampa_members_manager\family\models\parent.py:15
 msgid "Parents"
 msgstr "Padres"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:16
+#: .\ampa_members_manager\family\models\family.py:16
 msgid "Default bank account"
 msgstr "Cuenta bancaria por defecto"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:20
+#: .\ampa_members_manager\family\models\family.py:20
 msgid "Families"
 msgstr "Familias"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:16
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:17
+#: .\ampa_members_manager\family\models\membership.py:16
+#: .\ampa_members_manager\family\models\membership.py:17
 msgid "Membership"
 msgstr "Afiliación"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:10
+#: .\ampa_members_manager\family\models\parent.py:10
 msgid "Phone number"
 msgstr "Número de teléfono"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:11
+#: .\ampa_members_manager\family\models\parent.py:11
 msgid "Additional phone number"
 msgstr "Número de teléfono adicional"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:14
+#: .\ampa_members_manager\family\models\parent.py:14
 msgid "Parent"
 msgstr "Padre"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:115
+#: .\ampa_members_manager_project\settings.py:115
 msgid "English"
 msgstr "Inglés"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:116
+#: .\ampa_members_manager_project\settings.py:116
 msgid "Spanish"
 msgstr "Español"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:117
+#: .\ampa_members_manager_project\settings.py:117
 msgid "Basque"
 msgstr "Euskera"
+
+#~| msgid "Authorization"
+#~ msgid "Autorización"
+#~ msgstr "Authorizaciones"
 
 #~ msgid "Established course"
 #~ msgstr "Curso actual"
