@@ -67,7 +67,7 @@ msgstr "Actividades"
 #: .\ampa_members_manager\activity\models\repetitive_activity.py:9
 #: .\ampa_members_manager\activity\models\single_activity.py:18
 msgid "Single activities"
-msgstr "Actividades únicas"
+msgstr "Actividades individuales"
 
 #: .\ampa_members_manager\activity\models\repetitive_activity.py:12
 msgid "Repetitive activity"
