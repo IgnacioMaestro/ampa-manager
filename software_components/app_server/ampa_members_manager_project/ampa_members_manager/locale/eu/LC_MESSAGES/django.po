@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-29 09:35+0200\n"
+"POT-Creation-Date: 2022-06-08 14:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,7 @@ msgid "Course"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:12
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:13
 msgid "Active course"
 msgstr ""
 
@@ -121,6 +122,14 @@ msgstr ""
 msgid "Payment order"
 msgstr ""
 
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:21
+msgid "Activity registration"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:22
+msgid "Activity registrations"
+msgstr ""
+
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:10
 msgid "Number"
 msgstr ""
@@ -131,6 +140,14 @@ msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:13
 msgid "Document"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:16
+msgid "Authorization"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:17
+msgid "Authorizations"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\bank_account.py:10
@@ -158,6 +175,7 @@ msgid "Repetition"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:14
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:19
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:12
 msgid "Family"
 msgstr ""
@@ -181,11 +199,16 @@ msgid "Email"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:14
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:15
 msgid "Parents"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:16
 msgid "Default bank account"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:20
+msgid "Families"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:16
@@ -199,6 +222,10 @@ msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:11
 msgid "Additional phone number"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:14
+msgid "Parent"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:115

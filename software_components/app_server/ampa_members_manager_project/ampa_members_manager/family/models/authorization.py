@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CASCADE
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 
@@ -13,6 +13,8 @@ class Authorization(models.Model):
     document = models.FileField(null=True, blank=True, verbose_name=_("Document"))
 
     class Meta:
+        verbose_name = _('Authorization')
+        verbose_name_plural = _("Authorizations")
         constraints = [
             models.UniqueConstraint(fields=['number', 'year'], name='unique_number_in_a_year')]
 

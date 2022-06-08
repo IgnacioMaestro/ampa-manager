@@ -1,7 +1,7 @@
 from __future__ import annotations
 from django.db import models
 from django.db.models import SET_NULL, QuerySet
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
@@ -14,6 +14,10 @@ class Family(models.Model):
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True, blank=True,
                                              verbose_name=_("Default bank account"))
+
+    class Meta:
+        verbose_name = _('Family')
+        verbose_name_plural = _("Families")
 
     def __str__(self) -> str:
         return f'{self.first_surname} {self.second_surname}'

@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.family import Family
 

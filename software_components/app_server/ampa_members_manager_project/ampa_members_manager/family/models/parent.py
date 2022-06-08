@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -11,6 +11,8 @@ class Parent(models.Model):
     additional_phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Additional phone number"))
 
     class Meta:
+        verbose_name = _('Parent')
+        verbose_name_plural = _("Parents")
         constraints = [
             models.UniqueConstraint(fields=['name', 'first_surname', 'second_surname'], name='unique_parent')]
 
