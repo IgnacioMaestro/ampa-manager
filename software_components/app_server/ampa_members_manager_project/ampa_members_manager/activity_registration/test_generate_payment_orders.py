@@ -8,7 +8,9 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.generate_payment_orders import GeneratePaymentOrders
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
+from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
+GeneratorAdder.add_all()
 
 class TestGeneratePaymentOrders(TestCase):
     def setUp(self):
