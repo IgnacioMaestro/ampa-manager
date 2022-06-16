@@ -13,6 +13,7 @@ from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.charge.models.charge_group import ChargeGroup
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
@@ -93,6 +94,11 @@ class MembershipAdmin(admin.ModelAdmin):
     list_display = ['family', 'academic_course']
     list_filter = ['academic_course']
     search_fields = ['family', 'academic_course']
+
+
+@admin.register(ChargeGroup)
+class ChargeGroupAdmin(admin.ModelAdmin):
+    actions = [ChargeGroup.download_csv]
 
 
 admin.site.register(ActiveCourse)
