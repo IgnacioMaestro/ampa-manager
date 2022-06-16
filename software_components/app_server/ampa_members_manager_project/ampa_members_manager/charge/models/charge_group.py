@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 from __future__ import annotations
 from django.db import models, transaction
@@ -21,16 +22,18 @@ class ChargeGroup(models.Model):
         verbose_name = _('Charge group')
         verbose_name_plural = _('Charge groups')
 
-    #@admin.action(description='Export selected charge groups to a CSV file')
     @staticmethod
     def download_csv(modeladmin, request, queryset):
+        filename = 'charge_groups_' + datetime.now().strftime("%m%d%Y_%H%M%S") + '.csv'
         response = HttpResponse(
             content_type='text/csv',
-            headers={'Content-Disposition': 'attachment; filename="charge_groups.csv"'},
+            headers={
+                'Content-Disposition': f'attachment; filename="{filename}"'
+            },
         )
 
         writer = csv.writer(response)
-        for charge_group in queryset:
+        for charge_group in queryset.all():
             for charge in charge_group.charge_set.all():
                 receipt = charge.generate_receipt()
                 writer.writerow(receipt.export_csv())
