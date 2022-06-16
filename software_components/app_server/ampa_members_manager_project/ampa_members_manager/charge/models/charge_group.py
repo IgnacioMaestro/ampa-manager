@@ -31,16 +31,11 @@ class ChargeGroup(models.Model):
 
         writer = csv.writer(response)
         for charge_group in queryset:
-            writer.writerow(charge_group.export_csv())
+            for charge in charge_group.charge_set.all():
+                receipt = charge.generate_receipt()
+                writer.writerow(receipt.export_csv())
 
         return response
-
-    def export_csv(self):
-        csv_data = ''
-        for charge in self.charge_set.all():
-            receipt = charge.generate_receipt()
-            csv_data += '\n' + receipt.export_csv()
-        return csv_data
 
     @classmethod
     def create_filled_charge_group(cls, single_activities: QuerySet[SingleActivity]) -> ChargeGroup:
