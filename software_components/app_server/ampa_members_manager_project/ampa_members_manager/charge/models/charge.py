@@ -4,6 +4,7 @@ from typing import List
 
 from django.db import models
 from django.db.models import CASCADE, QuerySet
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
@@ -19,10 +20,14 @@ class NotFound(Exception):
 
 
 class Charge(models.Model):
-    amount = models.FloatField(null=True, blank=True)
-    state = models.IntegerField(choices=State.choices, default=State.CREATED)
-    activity_registrations = models.ManyToManyField(to=ActivityRegistration)
-    group = models.ForeignKey(to=ChargeGroup, on_delete=CASCADE)
+    amount = models.FloatField(null=True, blank=True, verbose_name=_("Amount"))
+    state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
+    activity_registrations = models.ManyToManyField(to=ActivityRegistration, verbose_name=_("Activity registrations"))
+    group = models.ForeignKey(to=ChargeGroup, on_delete=CASCADE, verbose_name=_("Group"))
+
+    class Meta:
+        verbose_name = _('Charge')
+        verbose_name_plural = _('Charges')
 
     def check_bank_account(self, bank_account: BankAccount) -> bool:
         for activity_registration in self.activity_registrations.all():
