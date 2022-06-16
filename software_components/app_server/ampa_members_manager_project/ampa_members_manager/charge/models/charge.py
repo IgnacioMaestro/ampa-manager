@@ -9,6 +9,8 @@ from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
 from ampa_members_manager.charge.models.state import State
+from ampa_members_manager.charge.receipt import Receipt
+from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 
 
@@ -27,6 +29,19 @@ class Charge(models.Model):
             if activity_registration.bank_account == bank_account:
                 return True
         return False
+
+    def generate_receipt(self) -> Receipt:
+        activity_registration: ActivityRegistration = self.activity_registrations.first()
+        bank_account: BankAccount = activity_registration.bank_account
+        try:
+            authorization: Authorization = Authorization.objects.get(bank_account=bank_account)
+            return Receipt(
+                amount=self.amount, bank_account_owner=str(bank_account.owner),
+                iban=bank_account.iban, authorization=str(authorization))
+        except Authorization.DoesNotExist:
+            return Receipt(
+                amount=self.amount, bank_account_owner=str(bank_account.owner),
+                iban=bank_account.iban, authorization='No authorization')
 
     @classmethod
     def create_charges(cls, charge_group: ChargeGroup):
