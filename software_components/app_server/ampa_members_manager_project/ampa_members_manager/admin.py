@@ -1,5 +1,10 @@
+import csv
+from datetime import datetime
+
 from django.contrib import admin
 from django import forms
+from django.http import HttpResponse
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
@@ -14,6 +19,7 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.charge import Charge
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
@@ -42,7 +48,6 @@ class ChildInline(admin.TabularInline):
     model = Child
     extra = 0
 
-
 @admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['first_surname', 'second_surname', 'email', 'default_bank_account']
@@ -52,6 +57,18 @@ class FamilyAdmin(admin.ModelAdmin):
     inlines = [
         ChildInline
     ]
+
+class ActivityRegistrationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if hasattr(self.instance, 'child'):
+            self.fields['bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance.child.family)
+        else:
+            self.fields['bank_account'].queryset = BankAccount.objects.all()
+
+@admin.register(ActivityRegistration)
+class ActivityRegistrationAdmin(admin.ModelAdmin):
+    form = ActivityRegistrationForm
 
 
 class AuthorizationInline(admin.TabularInline):
@@ -96,13 +113,42 @@ class MembershipAdmin(admin.ModelAdmin):
     search_fields = ['family', 'academic_course']
 
 
+class ChargeInline(admin.TabularInline):
+    model = Charge
+    extra = 0
+
+
 @admin.register(ChargeGroup)
 class ChargeGroupAdmin(admin.ModelAdmin):
-    actions = [ChargeGroup.download_csv]
+    inlines = [
+        ChargeInline
+    ]
+
+    def download_csv(self, request, queryset):
+        filename = 'charge_groups_' + datetime.now().strftime("%Y%m%d_%H%M%S") + '.csv'
+
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={
+                'Content-Disposition': f'attachment; filename="{filename}"'
+            },
+        )
+
+        writer = csv.writer(response)
+        for charge_group in queryset.all():
+            for charge in charge_group.charge_set.all():
+                receipt = charge.generate_receipt()
+                writer.writerow(receipt.get_csv_properties())
+
+        return response
+
+    download_csv.short_description = _("Export to CSV")
+
+    actions = [download_csv]
 
 
 admin.site.register(ActiveCourse)
 admin.site.register(RepetitiveActivity, RepetitiveActivityAdmin)
 admin.site.register(UniqueActivity, UniqueActivityAdmin)
 admin.site.register(SingleActivity)
-admin.site.register(ActivityRegistration)
+admin.site.register(Charge)
