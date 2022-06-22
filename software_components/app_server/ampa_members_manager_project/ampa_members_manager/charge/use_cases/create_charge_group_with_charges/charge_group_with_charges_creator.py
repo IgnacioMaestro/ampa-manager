@@ -6,7 +6,9 @@ from ampa_members_manager.charge.models.charge_group import ChargeGroup
 
 
 class ChargeGroupWithChargesCreator:
-    @classmethod
-    def create(cls, single_activities: QuerySet[SingleActivity]):
-        charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(single_activities=single_activities)
+    def __init__(self, single_activities: QuerySet[SingleActivity]):
+        self.__single_activities: QuerySet[SingleActivity] = single_activities
+
+    def create(self):
+        charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(single_activities=self.__single_activities)
         ChargesCreator(charge_group).create()
