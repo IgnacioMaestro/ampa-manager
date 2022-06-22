@@ -44,8 +44,8 @@ class ChildInline(admin.TabularInline):
 
 @admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['first_surname', 'second_surname', 'email', 'default_bank_account']
-    search_fields = ['first_surname', 'second_surname', 'email']
+    list_display = ['first_surname', 'second_surname', 'email', 'secondary_email', 'default_bank_account']
+    search_fields = ['first_surname', 'second_surname', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [
