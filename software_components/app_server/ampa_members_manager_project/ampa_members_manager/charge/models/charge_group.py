@@ -3,11 +3,7 @@ from django.db import models, transaction
 from django.db.models import QuerySet
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
-
-
-class NoSingleActivityError(Exception):
-    def __init__(self):
-        super().__init__("NoSingleActivityError")
+from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
 
 
 class ChargeGroup(models.Model):

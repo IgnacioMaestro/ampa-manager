@@ -3,7 +3,8 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
-from ampa_members_manager.charge.models.charge_group import ChargeGroup, NoSingleActivityError
+from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
 
 
 class TestChargeGroup(TestCase):
