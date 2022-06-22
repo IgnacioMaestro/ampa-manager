@@ -9,4 +9,4 @@ class ChargeGroupWithChargesCreator:
     @classmethod
     def create(cls, single_activities: QuerySet[SingleActivity]):
         charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(single_activities=single_activities)
-        ChargesCreator.create(charge_group)
+        ChargesCreator(charge_group).create()

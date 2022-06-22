@@ -27,7 +27,7 @@ class TestChargesCreator(TestCase):
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT)
         charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(SingleActivity.objects.all())
 
-        ChargesCreator.create(charge_group)
+        ChargesCreator(charge_group).create()
 
         self.assertEqual(self.ACTIVITY_REGISTRATION_COUNT, Charge.objects.filter(group=charge_group).count())
         for activity_registration in activity_registrations:
@@ -41,7 +41,7 @@ class TestChargesCreator(TestCase):
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account)
         charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(SingleActivity.objects.all())
 
-        ChargesCreator.create(charge_group)
+        ChargesCreator(charge_group).create()
 
         self.assertEqual(1, Charge.objects.count())
         charge = Charge.objects.first()
