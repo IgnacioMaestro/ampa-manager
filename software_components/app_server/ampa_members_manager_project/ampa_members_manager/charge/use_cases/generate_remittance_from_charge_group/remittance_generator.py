@@ -6,9 +6,12 @@ from ampa_members_manager.charge.remittance import Remittance
 
 
 class RemittanceGenerator:
-    @classmethod
-    def generate(cls, charge_group: ChargeGroup, remittance_name: str) -> Remittance:
+    def __init__(self, charge_group: ChargeGroup, name: str):
+        self.__charge_group: ChargeGroup = charge_group
+        self.__name: str = name
+
+    def generate(self) -> Remittance:
         receipts: List[Receipt] = []
-        for charge in charge_group.charge_set.all():
+        for charge in self.__charge_group.charge_set.all():
             receipts.append(charge.generate_receipt())
-        return Remittance(receipts, remittance_name)
+        return Remittance(receipts, self.__name)

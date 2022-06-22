@@ -23,7 +23,7 @@ class TestRemittanceGenerator(TestCase):
     def test_generate_remittance_no_charge(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
 
-        remittance: Remittance = RemittanceGenerator.generate(charge_group, self.remittance_name)
+        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
 
         self.assertEqual(remittance.name, self.remittance_name)
         self.assertEqual(len(remittance.receipts), 0)
@@ -35,7 +35,7 @@ class TestRemittanceGenerator(TestCase):
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         charge.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator.generate(charge_group, self.remittance_name)
+        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
 
         self.assertEqual(remittance.name, self.remittance_name)
         self.assertEqual(len(remittance.receipts), 1)
@@ -54,7 +54,7 @@ class TestRemittanceGenerator(TestCase):
             activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
             charge.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator.generate(charge_group, self.remittance_name)
+        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
 
         self.assertEqual(remittance.name, self.remittance_name)
         self.assertEqual(len(remittance.receipts), charge_count)
