@@ -22,7 +22,14 @@ class TestChargesCreator(TestCase):
     def setUpTestData(cls):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
 
-    def test_create_charges_activity_registrations_different_bank_accounts(self):
+    def test_create_charge_group_without_single_activities(self):
+        charge_group: ChargeGroup = baker.make('ChargeGroup')
+
+        ChargesCreator(charge_group).create()
+
+        self.assertEqual(Charge.objects.filter(group=charge_group).count(), 0)
+
+    def test_create_activity_registrations_different_bank_accounts(self):
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT)
         charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(SingleActivity.objects.all())
@@ -35,7 +42,7 @@ class TestChargesCreator(TestCase):
                 times=activity_registration.amount, membership=activity_registration.is_membership())
             Charge.objects.get(activity_registrations__exact=activity_registration, amount=amount)
 
-    def test_create_charges_activity_registrations_same_bank_accounts(self):
+    def test_create_activity_registrations_same_bank_accounts(self):
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account)
@@ -43,7 +50,7 @@ class TestChargesCreator(TestCase):
 
         ChargesCreator(charge_group).create()
 
-        self.assertEqual(1, Charge.objects.count())
+        self.assertEqual(Charge.objects.count(), 1)
         charge = Charge.objects.first()
         self.assertEqual(activity_registrations, list(charge.activity_registrations.all()))
         amount = 0
