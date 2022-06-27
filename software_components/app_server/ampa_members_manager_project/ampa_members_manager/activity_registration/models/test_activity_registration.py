@@ -8,7 +8,9 @@ from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
+from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
+GeneratorAdder.add_all()
 
 class TestActivityRegistration(TestCase):
     def setUp(self):
