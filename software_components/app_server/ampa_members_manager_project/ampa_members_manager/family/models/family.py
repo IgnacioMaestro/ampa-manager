@@ -11,6 +11,7 @@ class Family(models.Model):
     first_surname = models.CharField(max_length=500, verbose_name=_("First surname"))
     second_surname = models.CharField(max_length=500, verbose_name=_("Second surname"))
     email = models.EmailField(unique=True, verbose_name=_("Email"))
+    secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True, blank=True,
                                              verbose_name=_("Default bank account"))
