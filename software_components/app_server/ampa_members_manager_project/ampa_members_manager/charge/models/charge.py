@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from django.db import models
-from django.db.models import CASCADE, QuerySet
+from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
-from ampa_members_manager.charge.models.state import State
+from ampa_members_manager.charge.state import State
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount

@@ -1,6 +1,7 @@
-django==4.0.5
-model-bakery==1.5.0
+django==4.0.6
+model-bakery==1.6.0
 django-localflavor==3.1
-schwifty==2022.4.2
-phonenumbers==8.12.49
-django-phonenumber-field[phonenumbers]==6.1.0
+schwifty==2022.7.0
+phonenumbers==8.12.51
+django-phonenumber-field[phonenumbers]==6.3.0
+django-modeladmin-reorder==0.3.1

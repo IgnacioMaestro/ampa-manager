@@ -17,7 +17,6 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'django-insecure-gdxs^$mn=vxt41(b8+tf)g3s(-09m1j%kfj6i=7=pi$dagj1--
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -41,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ampa_members_manager',
     'localflavor',
-    'phonenumber_field'
+    'phonenumber_field',
+    'admin_reorder',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'ampa_members_manager_project.urls'
@@ -75,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ampa_members_manager_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -85,7 +84,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -104,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -127,7 +124,6 @@ LOCALE_PATHS = [
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -137,3 +133,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ADMIN_REORDER = (
+    {'app': 'ampa_members_manager', 'label': _('Academic course'),
+     'models': ('ampa_members_manager.AcademicCourse', 'ampa_members_manager.ActiveCourse')},
+    {'app': 'ampa_members_manager', 'label': _('Family'),
+     'models': (
+         'ampa_members_manager.Family', 'ampa_members_manager.Parent', 'ampa_members_manager.Child',
+         'ampa_members_manager.Parent', 'ampa_members_manager.Membership', 'ampa_members_manager.BankAccount',
+         'ampa_members_manager.Authorization')},
+    {'app': 'ampa_members_manager', 'label': _('Activity'),
+     'models': (
+         'ampa_members_manager.Activity', 'ampa_members_manager.RepetitiveActivity',
+         'ampa_members_manager.UniqueActivity', 'ampa_members_manager.SingleActivity')},
+    {'app': 'ampa_members_manager', 'label': _('ActivityRegistration'),
+     'models': ('ampa_members_manager.ActivityRegistration',)},
+    {'app': 'ampa_members_manager', 'label': _('Charge'),
+     'models': ('ampa_members_manager.Charge', 'ampa_members_manager.ChargeGroup')},
+    # Keep original label and models
+    'auth',
+)
