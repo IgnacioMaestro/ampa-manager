@@ -1,8 +1,8 @@
 import csv
-from datetime import datetime
 
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 
@@ -12,14 +12,17 @@ from ampa_members_manager.activity.models.repetitive_activity import RepetitiveA
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
+from ampa_members_manager.charge.models.charge import Charge
+from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.remittance import Remittance
+from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
+    RemittanceGenerator
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.models.parent import Parent
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
-from ampa_members_manager.charge.models.charge import Charge
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
@@ -34,7 +37,8 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 class AcademicCourseAdmin(admin.ModelAdmin):
     list_display = ['summary', 'fee']
 
-    def summary(self, instance):
+    @staticmethod
+    def summary(instance):
         return str(instance)
 
 
@@ -48,15 +52,15 @@ class ChildInline(admin.TabularInline):
     model = Child
     extra = 0
 
+
 @admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['first_surname', 'second_surname', 'email', 'secondary_email', 'default_bank_account']
     search_fields = ['first_surname', 'second_surname', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [
-        ChildInline
-    ]
+    inlines = [ChildInline]
+
 
 class ActivityRegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -65,6 +69,7 @@ class ActivityRegistrationForm(forms.ModelForm):
             self.fields['bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance.child.family)
         else:
             self.fields['bank_account'].queryset = BankAccount.objects.all()
+
 
 @admin.register(ActivityRegistration)
 class ActivityRegistrationAdmin(admin.ModelAdmin):
@@ -81,9 +86,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     list_display = ['swift_bic', 'iban', 'owner']
     list_filter = ['swift_bic']
     search_fields = ['swift_bic', 'iban', 'owner']
-    inlines = [
-        AuthorizationInline
-    ]
+    inlines = [AuthorizationInline]
 
 
 @admin.register(Parent)
@@ -120,29 +123,21 @@ class ChargeInline(admin.TabularInline):
 
 @admin.register(ChargeGroup)
 class ChargeGroupAdmin(admin.ModelAdmin):
-    inlines = [
-        ChargeInline
-    ]
+    inlines = [ChargeInline]
 
-    def download_csv(self, request, queryset):
-        filename = 'charge_groups_' + datetime.now().strftime("%Y%m%d_%H%M%S") + '.csv'
+    @admin.action(description=_("Export to CSV"))
+    def download_csv(self, request, queryset: QuerySet[ChargeGroup]):
+        if queryset.count() > 1:
+            return self.message_user(request=request, message=_("Only can select one charge group"))
+        remittance: Remittance = RemittanceGenerator(charge_group=queryset.first()).generate()
+        return ChargeGroupAdmin.create_csv_response_from_remittance(remittance)
 
-        response = HttpResponse(
-            content_type='text/csv',
-            headers={
-                'Content-Disposition': f'attachment; filename="{filename}"'
-            },
-        )
-
-        writer = csv.writer(response)
-        for charge_group in queryset.all():
-            for charge in charge_group.charge_set.all():
-                receipt = charge.generate_receipt()
-                writer.writerow(receipt.get_csv_properties())
-
+    @staticmethod
+    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
+        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
+        response = HttpResponse(content_type='text/csv', headers=headers)
+        csv.writer(response).writerows(remittance.obtain_rows())
         return response
-
-    download_csv.short_description = _("Export to CSV")
 
     actions = [download_csv]
 

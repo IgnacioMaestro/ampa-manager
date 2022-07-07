@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Final
 
 from django.test import TestCase
@@ -18,14 +19,12 @@ GeneratorAdder.add_all()
 
 
 class TestRemittanceGenerator(TestCase):
-    remittance_name: str = 'Remittance Name'
-
     def test_generate_remittance_no_charge(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
 
-        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
+        remittance: Remittance = RemittanceGenerator(charge_group).generate()
 
-        self.assertEqual(remittance.name, self.remittance_name)
+        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
         self.assertEqual(len(remittance.receipts), 0)
 
     def test_generate_remittance_one_charge(self):
@@ -35,9 +34,9 @@ class TestRemittanceGenerator(TestCase):
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         charge.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
+        remittance: Remittance = RemittanceGenerator(charge_group).generate()
 
-        self.assertEqual(remittance.name, self.remittance_name)
+        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, charge.amount)
@@ -54,7 +53,7 @@ class TestRemittanceGenerator(TestCase):
             activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
             charge.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator(charge_group, name=self.remittance_name).generate()
+        remittance: Remittance = RemittanceGenerator(charge_group).generate()
 
-        self.assertEqual(remittance.name, self.remittance_name)
+        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
         self.assertEqual(len(remittance.receipts), charge_count)

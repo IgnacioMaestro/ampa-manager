@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -8,5 +9,5 @@ class Receipt:
     iban: str
     authorization: str
 
-    def get_csv_properties(self):
+    def obtain_row(self) -> List[str]:
         return [self.amount, self.bank_account_owner, self.iban, self.authorization]
