@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 class PaymentType(models.IntegerChoices):
     SINGLE = 1
     PER_DAY = 2
+    PER_WEEK = 3
+    PER_MONTH = 4
 
 
 class SingleActivity(models.Model):
