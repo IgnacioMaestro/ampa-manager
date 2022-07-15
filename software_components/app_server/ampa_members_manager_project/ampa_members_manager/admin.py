@@ -3,7 +3,7 @@ from django.contrib import admin
 from ampa_members_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.admin import RepetitiveActivityAdmin, UniqueActivityAdmin
+from ampa_members_manager.activity.admin import RepetitiveActivityAdmin, UniqueActivityAdmin, SingleActivityAdmin
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
@@ -26,7 +26,7 @@ admin.site.register(ActiveCourse)
 
 admin.site.register(RepetitiveActivity, RepetitiveActivityAdmin)
 admin.site.register(UniqueActivity, UniqueActivityAdmin)
-admin.site.register(SingleActivity)
+admin.site.register(SingleActivity, SingleActivityAdmin)
 
 admin.site.register(Child, ChildAdmin)
 admin.site.register(Parent, ParentAdmin)
