@@ -17,13 +17,14 @@ class ChargesCreator:
             self.__create_charge_for_activity_registration(activity_registration)
 
     def __create_charge_for_activity_registration(self, activity_registration: ActivityRegistration):
-        charge: Charge = self.__find_or_create_charge(activity_registration)
+        charge: Charge = self.find_or_create_charge(activity_registration)
         charge.activity_registrations.add(activity_registration)
         charge.save()
 
-    def __find_or_create_charge(self, activity_registration: ActivityRegistration) -> Charge:
+    def find_or_create_charge(self, activity_registration: ActivityRegistration) -> Charge:
         try:
-            return Charge.find_charge_with_bank_account(bank_account=activity_registration.bank_account)
+            return Charge.find_charge_with_bank_account(
+                charge_group=self.__charge_group, bank_account=activity_registration.bank_account)
         except NotFound:
             price: float = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())

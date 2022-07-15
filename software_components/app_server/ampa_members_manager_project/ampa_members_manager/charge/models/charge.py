@@ -46,8 +46,8 @@ class Charge(models.Model):
                 iban=bank_account.iban, authorization='No authorization')
 
     @classmethod
-    def find_charge_with_bank_account(cls, bank_account: BankAccount) -> Charge:
-        for charge in Charge.objects.all():
+    def find_charge_with_bank_account(cls, charge_group: ChargeGroup, bank_account: BankAccount) -> Charge:
+        for charge in Charge.objects.filter(group=charge_group):
             if charge.check_bank_account(bank_account=bank_account):
                 return charge
         raise NotFound

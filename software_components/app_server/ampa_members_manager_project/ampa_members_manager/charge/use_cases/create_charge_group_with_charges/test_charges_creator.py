@@ -58,3 +58,29 @@ class TestChargesCreator(TestCase):
             amount += activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
         self.assertEqual(amount, charge.amount)
+
+    def test_find_or_create_charge_create(self):
+        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
+        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertEqual(charge.group, charge_group)
+
+    def test_find_or_create_charge_find(self):
+        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
+        previous_charge: Charge = baker.make('Charge', group=charge_group)
+        previous_charge.activity_registrations.add(activity_registration)
+        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertEqual(charge, previous_charge)
+
+    def test_find_or_create_charge_create_instead_other_charge(self):
+        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        bank_account: BankAccount = baker.make('BankAccount')
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
+        other_activity_registration: ActivityRegistration = baker.make(
+            'ActivityRegistration', bank_account=bank_account)
+        other_charge: Charge = baker.make('Charge')
+        other_charge.activity_registrations.add(other_activity_registration)
+        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertNotEqual(charge, other_charge)
+        self.assertEqual(charge.group, charge_group)
