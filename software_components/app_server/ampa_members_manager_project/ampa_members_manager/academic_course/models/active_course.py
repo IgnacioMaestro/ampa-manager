@@ -13,7 +13,7 @@ class ActiveCourse(models.Model):
         verbose_name_plural = _("Active course")
 
     def __str__(self) -> str:
-        return "ActiveCourse"
+        return str(self.course)
 
     def save(self, *args, **kwargs):
         self.pk = 1
