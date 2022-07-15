@@ -13,8 +13,8 @@ class Family(models.Model):
     email = models.EmailField(unique=True, verbose_name=_("Email"))
     secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
-    default_bank_account = models.ForeignKey(to=BankAccount, on_delete=SET_NULL, null=True, blank=True,
-                                             verbose_name=_("Default bank account"))
+    default_bank_account = models.ForeignKey(
+        to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"))
 
     class Meta:
         verbose_name = _('Family')

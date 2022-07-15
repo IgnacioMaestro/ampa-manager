@@ -45,7 +45,10 @@ class AcademicCourseAdmin(admin.ModelAdmin):
 class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['default_bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance)
+        if self.instance is None:
+            self.fields['default_bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance)
+        else:
+            self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
 
 class ChildInline(admin.TabularInline):
