@@ -15,7 +15,6 @@ class ActivityRegistration(models.Model):
     single_activity = models.ForeignKey(to=SingleActivity, on_delete=CASCADE, verbose_name=_("Single activity"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
     child = models.ForeignKey(to=Child, on_delete=CASCADE, verbose_name=_("Child"))
-    payment_order = models.FloatField(null=True, blank=True, verbose_name=_("Payment order"))
 
     class Meta:
         verbose_name = _('Activity registration')
@@ -26,10 +25,6 @@ class ActivityRegistration(models.Model):
 
     def establish_amount(self, amount) -> None:
         self.amount = amount
-        self.save()
-
-    def set_payment_order(self, amount: float):
-        self.payment_order = amount
         self.save()
 
     def is_membership(self) -> bool:
