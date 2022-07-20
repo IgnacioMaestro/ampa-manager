@@ -29,7 +29,7 @@ class TestRemittanceGenerator(TestCase):
 
     def test_generate_remittance_one_charge(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
-        activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', group=charge_group)
+        activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=charge_group)
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         activity_receipt.activity_registrations.add(activity_registration)
@@ -47,7 +47,8 @@ class TestRemittanceGenerator(TestCase):
     def test_generate_remittance_two_charges(self):
         charge_count: Final[int] = 2
         charge_group: ChargeGroup = baker.make('ChargeGroup')
-        activity_receipts: List[ActivityReceipt] = baker.make('ActivityReceipt', _quantity=charge_count, group=charge_group)
+        activity_receipts: List[ActivityReceipt] = baker.make(
+            'ActivityReceipt', _quantity=charge_count, remittance=charge_group)
         bank_account: BankAccount = baker.make('BankAccount')
         for activity_receipt in activity_receipts:
             activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)

@@ -28,4 +28,4 @@ class ChargesCreator:
         except NotFound:
             price: float = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
-            return ActivityReceipt.objects.create(group=self.__charge_group, amount=price)
+            return ActivityReceipt.objects.create(remittance=self.__charge_group, amount=price)
