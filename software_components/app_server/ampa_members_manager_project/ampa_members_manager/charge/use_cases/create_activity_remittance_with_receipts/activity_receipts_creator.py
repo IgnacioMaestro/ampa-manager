@@ -17,11 +17,11 @@ class ActivityReceiptsCreator:
             self.__create_receipt_for_activity_registration(activity_registration)
 
     def __create_receipt_for_activity_registration(self, activity_registration: ActivityRegistration):
-        activity_receipt: ActivityReceipt = self.find_or_create_charge(activity_registration)
+        activity_receipt: ActivityReceipt = self.find_or_create_receipt(activity_registration)
         activity_receipt.activity_registrations.add(activity_registration)
         activity_receipt.save()
 
-    def find_or_create_charge(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
+    def find_or_create_receipt(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
         try:
             return ActivityReceipt.find_charge_with_bank_account(
                 activity_remittance=self.__activity_remittance, bank_account=activity_registration.bank_account)
