@@ -5,7 +5,7 @@ from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.char
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 
 
-class ChargeGroupWithChargesCreator:
+class ActivityRemittanceWithReceiptsCreator:
     def __init__(self, single_activities: QuerySet[SingleActivity]):
         self.__single_activities: QuerySet[SingleActivity] = single_activities
 
