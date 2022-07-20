@@ -30,6 +30,7 @@ class ActivityRemittance(models.Model):
             raise NoSingleActivityError
 
         with transaction.atomic():
-            activity_remittance: ActivityRemittance = ActivityRemittance.objects.create()
+            name: str = single_activities.first().name
+            activity_remittance: ActivityRemittance = ActivityRemittance.objects.create(name=name)
             activity_remittance.single_activities.set(single_activities)
             return activity_remittance

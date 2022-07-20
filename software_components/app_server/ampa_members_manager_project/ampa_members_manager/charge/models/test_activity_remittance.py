@@ -16,6 +16,9 @@ class TestActivityRemittance(TestCase):
     def test_create_filled__one_single_activity_one_activity_registration(self):
         single_activity: SingleActivity = baker.make('SingleActivity')
         single_activities_one: QuerySet[SingleActivity] = SingleActivity.objects.all()
+
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(single_activities_one)
+
+        self.assertEqual(activity_remittance.name, single_activity.name)
         self.assertIsNotNone(activity_remittance.single_activities)
         self.assertEqual(list(activity_remittance.single_activities.all()), list([single_activity]))
