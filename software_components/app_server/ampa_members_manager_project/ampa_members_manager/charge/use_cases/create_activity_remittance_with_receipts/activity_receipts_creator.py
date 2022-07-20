@@ -23,7 +23,7 @@ class ActivityReceiptsCreator:
 
     def find_or_create_receipt(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
         try:
-            return ActivityReceipt.find_charge_with_bank_account(
+            return ActivityReceipt.find_activity_receipt_with_bank_account(
                 activity_remittance=self.__activity_remittance, bank_account=activity_registration.bank_account)
         except NotFound:
             price: float = activity_registration.single_activity.calculate_price(

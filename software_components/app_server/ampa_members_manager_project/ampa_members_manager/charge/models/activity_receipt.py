@@ -46,7 +46,7 @@ class ActivityReceipt(models.Model):
                 iban=bank_account.iban, authorization='No authorization')
 
     @classmethod
-    def find_charge_with_bank_account(
+    def find_activity_receipt_with_bank_account(
             cls, activity_remittance: ActivityRemittance, bank_account: BankAccount) -> ActivityReceipt:
         for activity_receipt in ActivityReceipt.objects.filter(remittance=activity_remittance):
             if activity_receipt.check_bank_account(bank_account=bank_account):
