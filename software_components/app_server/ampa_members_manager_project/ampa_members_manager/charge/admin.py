@@ -17,7 +17,7 @@ class ActivityReceiptInline(admin.TabularInline):
     extra = 0
 
 
-class ChargeGroupAdmin(admin.ModelAdmin):
+class ActivityRemittanceAdmin(admin.ModelAdmin):
     inlines = [ActivityReceiptInline]
 
     @admin.action(description=_("Export to CSV"))
@@ -25,7 +25,7 @@ class ChargeGroupAdmin(admin.ModelAdmin):
         if queryset.count() > 1:
             return self.message_user(request=request, message=_("Only can select one charge group"))
         remittance: Remittance = RemittanceGenerator(charge_group=queryset.first()).generate()
-        return ChargeGroupAdmin.create_csv_response_from_remittance(remittance)
+        return ActivityRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
