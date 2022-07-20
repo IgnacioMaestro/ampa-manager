@@ -6,7 +6,7 @@ from model_bakery import baker
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.charges_creator import ChargesCreator
+from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.charges_creator import ChargesCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.family.models.bank_account import BankAccount

@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
-from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.activity_remittance_with_receipts_creator import \
+from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
 
 
