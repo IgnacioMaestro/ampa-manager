@@ -12,7 +12,7 @@ from ampa_members_manager.tests.generator_adder import GeneratorAdder
 GeneratorAdder.add_all()
 
 
-class TestChargeGroupWithChargesCreator(TestCase):
+class TestActivityRemittanceWithReceiptsCreator(TestCase):
     @classmethod
     def setUpTestData(cls):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
