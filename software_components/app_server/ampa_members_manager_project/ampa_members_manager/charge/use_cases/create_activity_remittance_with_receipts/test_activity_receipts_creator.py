@@ -6,7 +6,7 @@ from model_bakery import baker
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.charges_creator import ChargesCreator
+from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import ActivityReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.family.models.bank_account import BankAccount
@@ -15,7 +15,7 @@ from ampa_members_manager.tests.generator_adder import GeneratorAdder
 GeneratorAdder.add_all()
 
 
-class TestChargesCreator(TestCase):
+class TestActivityReceiptsCreator(TestCase):
     ACTIVITY_REGISTRATION_COUNT: Final[int] = 3
 
     @classmethod
@@ -25,7 +25,7 @@ class TestChargesCreator(TestCase):
     def test_create_charge_group_without_single_activities(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
-        ChargesCreator(activity_remittance).create()
+        ActivityReceiptsCreator(activity_remittance).create()
 
         self.assertEqual(ActivityReceipt.objects.filter(remittance=activity_remittance).count(), 0)
 
@@ -35,7 +35,7 @@ class TestChargesCreator(TestCase):
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             SingleActivity.objects.all())
 
-        ChargesCreator(activity_remittance).create()
+        ActivityReceiptsCreator(activity_remittance).create()
 
         self.assertEqual(
             self.ACTIVITY_REGISTRATION_COUNT, ActivityReceipt.objects.filter(remittance=activity_remittance).count())
@@ -51,7 +51,7 @@ class TestChargesCreator(TestCase):
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             SingleActivity.objects.all())
 
-        ChargesCreator(activity_remittance).create()
+        ActivityReceiptsCreator(activity_remittance).create()
 
         self.assertEqual(ActivityReceipt.objects.count(), 1)
         activity_receipt = ActivityReceipt.objects.first()
@@ -65,7 +65,7 @@ class TestChargesCreator(TestCase):
     def test_find_or_create_charge_create(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
-        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+        activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_charge(
             activity_registration)
         self.assertEqual(activity_receipt.remittance, activity_remittance)
 
@@ -74,7 +74,7 @@ class TestChargesCreator(TestCase):
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
         previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         previous_activity_receipt.activity_registrations.add(activity_registration)
-        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+        activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_charge(
             activity_registration)
         self.assertEqual(activity_receipt, previous_activity_receipt)
 
@@ -86,7 +86,7 @@ class TestChargesCreator(TestCase):
             'ActivityRegistration', bank_account=bank_account)
         other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         other_activity_receipt.activity_registrations.add(other_activity_registration)
-        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+        activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_charge(
             activity_registration)
         self.assertNotEqual(activity_receipt, other_activity_receipt)
         self.assertEqual(activity_receipt.remittance, activity_remittance)

@@ -5,13 +5,13 @@ from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt,
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 
 
-class ChargesCreator:
-    def __init__(self, charge_group: ActivityRemittance):
-        self.__charge_group: ActivityRemittance = charge_group
+class ActivityReceiptsCreator:
+    def __init__(self, activity_remittance: ActivityRemittance):
+        self.__activity_remittance: ActivityRemittance = activity_remittance
 
     def create(self):
         activity_registrations: List[ActivityRegistration] = []
-        for single_activity in self.__charge_group.single_activities.all():
+        for single_activity in self.__activity_remittance.single_activities.all():
             activity_registrations.extend(ActivityRegistration.with_single_activity(single_activity=single_activity))
         for activity_registration in activity_registrations:
             self.__create_charge_for_activity_registration(activity_registration)
@@ -24,8 +24,8 @@ class ChargesCreator:
     def find_or_create_charge(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
         try:
             return ActivityReceipt.find_charge_with_bank_account(
-                charge_group=self.__charge_group, bank_account=activity_registration.bank_account)
+                activity_remittance=self.__activity_remittance, bank_account=activity_registration.bank_account)
         except NotFound:
             price: float = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
-            return ActivityReceipt.objects.create(remittance=self.__charge_group, amount=price)
+            return ActivityReceipt.objects.create(remittance=self.__activity_remittance, amount=price)
