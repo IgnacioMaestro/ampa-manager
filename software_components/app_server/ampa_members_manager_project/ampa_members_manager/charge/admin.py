@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
+from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
 
 

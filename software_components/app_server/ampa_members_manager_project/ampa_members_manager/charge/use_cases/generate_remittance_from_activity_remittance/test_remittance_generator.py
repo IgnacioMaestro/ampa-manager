@@ -10,7 +10,7 @@ from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
+from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
