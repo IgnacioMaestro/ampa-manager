@@ -4,6 +4,7 @@ from django.contrib import admin
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.family.models.membership import Membership
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -20,12 +21,17 @@ class ChildInline(admin.TabularInline):
     extra = 0
 
 
+class MembershipInline(admin.TabularInline):
+    model = Membership
+    extra = 0
+
+
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['first_surname', 'second_surname', 'email', 'secondary_email', 'default_bank_account']
     search_fields = ['first_surname', 'second_surname', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline]
+    inlines = [ChildInline, MembershipInline]
 
 
 class ParentAdmin(admin.ModelAdmin):
