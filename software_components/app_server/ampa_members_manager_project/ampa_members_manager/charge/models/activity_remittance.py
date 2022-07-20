@@ -16,11 +16,11 @@ class ActivityRemittance(models.Model):
         verbose_name_plural = _('Activity Remittances')
 
     @classmethod
-    def create_filled_charge_group(cls, single_activities: QuerySet[SingleActivity]) -> ActivityRemittance:
+    def create_filled(cls, single_activities: QuerySet[SingleActivity]) -> ActivityRemittance:
         if not single_activities.exists():
             raise NoSingleActivityError
 
         with transaction.atomic():
-            charge_group: ActivityRemittance = ActivityRemittance.objects.create()
-            charge_group.single_activities.set(single_activities)
-            return charge_group
+            activity_remittance: ActivityRemittance = ActivityRemittance.objects.create()
+            activity_remittance.single_activities.set(single_activities)
+            return activity_remittance

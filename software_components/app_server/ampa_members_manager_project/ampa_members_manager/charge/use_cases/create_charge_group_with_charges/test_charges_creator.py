@@ -32,7 +32,7 @@ class TestChargesCreator(TestCase):
     def test_create_activity_registrations_different_bank_accounts(self):
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT)
-        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled_charge_group(
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             SingleActivity.objects.all())
 
         ChargesCreator(activity_remittance).create()
@@ -48,7 +48,7 @@ class TestChargesCreator(TestCase):
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account)
-        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled_charge_group(
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             SingleActivity.objects.all())
 
         ChargesCreator(activity_remittance).create()

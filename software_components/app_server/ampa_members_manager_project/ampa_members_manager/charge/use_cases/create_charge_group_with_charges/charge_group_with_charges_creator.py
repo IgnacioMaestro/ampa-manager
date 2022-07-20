@@ -10,5 +10,6 @@ class ChargeGroupWithChargesCreator:
         self.__single_activities: QuerySet[SingleActivity] = single_activities
 
     def create(self):
-        charge_group: ActivityRemittance = ActivityRemittance.create_filled_charge_group(single_activities=self.__single_activities)
-        ChargesCreator(charge_group).create()
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
+            single_activities=self.__single_activities)
+        ChargesCreator(activity_remittance).create()
