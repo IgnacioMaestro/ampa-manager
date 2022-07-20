@@ -2,12 +2,12 @@ from typing import List
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt, NotFound
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 
 
 class ChargesCreator:
-    def __init__(self, charge_group: ChargeGroup):
-        self.__charge_group: ChargeGroup = charge_group
+    def __init__(self, charge_group: ActivityRemittance):
+        self.__charge_group: ActivityRemittance = charge_group
 
     def create(self):
         activity_registrations: List[ActivityRegistration] = []

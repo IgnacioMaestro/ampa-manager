@@ -7,7 +7,7 @@ from model_bakery import baker
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
 from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
@@ -20,23 +20,23 @@ GeneratorAdder.add_all()
 
 class TestRemittanceGenerator(TestCase):
     def test_generate_remittance_no_charge(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
-        remittance: Remittance = RemittanceGenerator(charge_group).generate()
+        remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
         self.assertEqual(len(remittance.receipts), 0)
 
     def test_generate_remittance_one_charge(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
-        activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=charge_group)
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
+        activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         activity_receipt.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator(charge_group).generate()
+        remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, activity_receipt.amount)
@@ -45,16 +45,16 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(receipt.iban, bank_account.iban)
 
     def test_generate_remittance_two_charges(self):
-        charge_count: Final[int] = 2
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        receipt_count: Final[int] = 2
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_receipts: List[ActivityReceipt] = baker.make(
-            'ActivityReceipt', _quantity=charge_count, remittance=charge_group)
+            'ActivityReceipt', _quantity=receipt_count, remittance=activity_remittance)
         bank_account: BankAccount = baker.make('BankAccount')
         for activity_receipt in activity_receipts:
             activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
             activity_receipt.activity_registrations.add(activity_registration)
 
-        remittance: Remittance = RemittanceGenerator(charge_group).generate()
+        remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
-        self.assertEqual(len(remittance.receipts), charge_count)
+        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(len(remittance.receipts), receipt_count)

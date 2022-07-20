@@ -1,14 +1,14 @@
 from datetime import datetime
 from typing import List
 
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
 
 
 class RemittanceGenerator:
-    def __init__(self, charge_group: ChargeGroup):
-        self.__charge_group: ChargeGroup = charge_group
+    def __init__(self, charge_group: ActivityRemittance):
+        self.__charge_group: ActivityRemittance = charge_group
         self.__name: str = str(charge_group) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S")
 
     def generate(self) -> Remittance:

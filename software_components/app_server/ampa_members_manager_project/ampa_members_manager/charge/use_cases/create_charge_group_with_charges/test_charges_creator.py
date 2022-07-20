@@ -8,7 +8,7 @@ from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.charges_creator import ChargesCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
@@ -23,21 +23,22 @@ class TestChargesCreator(TestCase):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
 
     def test_create_charge_group_without_single_activities(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
-        ChargesCreator(charge_group).create()
+        ChargesCreator(activity_remittance).create()
 
-        self.assertEqual(ActivityReceipt.objects.filter(remittance=charge_group).count(), 0)
+        self.assertEqual(ActivityReceipt.objects.filter(remittance=activity_remittance).count(), 0)
 
     def test_create_activity_registrations_different_bank_accounts(self):
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT)
-        charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(SingleActivity.objects.all())
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled_charge_group(
+            SingleActivity.objects.all())
 
-        ChargesCreator(charge_group).create()
+        ChargesCreator(activity_remittance).create()
 
         self.assertEqual(
-            self.ACTIVITY_REGISTRATION_COUNT, ActivityReceipt.objects.filter(remittance=charge_group).count())
+            self.ACTIVITY_REGISTRATION_COUNT, ActivityReceipt.objects.filter(remittance=activity_remittance).count())
         for activity_registration in activity_registrations:
             amount = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
@@ -47,9 +48,10 @@ class TestChargesCreator(TestCase):
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registrations: List[ActivityRegistration] = baker.make(
             'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account)
-        charge_group: ChargeGroup = ChargeGroup.create_filled_charge_group(SingleActivity.objects.all())
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled_charge_group(
+            SingleActivity.objects.all())
 
-        ChargesCreator(charge_group).create()
+        ChargesCreator(activity_remittance).create()
 
         self.assertEqual(ActivityReceipt.objects.count(), 1)
         activity_receipt = ActivityReceipt.objects.first()
@@ -61,27 +63,30 @@ class TestChargesCreator(TestCase):
         self.assertEqual(amount, activity_receipt.amount)
 
     def test_find_or_create_charge_create(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
-        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
-        self.assertEqual(activity_receipt.remittance, charge_group)
+        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+            activity_registration)
+        self.assertEqual(activity_receipt.remittance, activity_remittance)
 
     def test_find_or_create_charge_find(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
-        previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=charge_group)
+        previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         previous_activity_receipt.activity_registrations.add(activity_registration)
-        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+            activity_registration)
         self.assertEqual(activity_receipt, previous_activity_receipt)
 
     def test_find_or_create_charge_create_instead_other_charge(self):
-        charge_group: ChargeGroup = baker.make('ChargeGroup')
+        activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         other_activity_registration: ActivityRegistration = baker.make(
             'ActivityRegistration', bank_account=bank_account)
         other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         other_activity_receipt.activity_registrations.add(other_activity_registration)
-        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        activity_receipt: ActivityReceipt = ChargesCreator(activity_remittance).find_or_create_charge(
+            activity_registration)
         self.assertNotEqual(activity_receipt, other_activity_receipt)
-        self.assertEqual(activity_receipt.remittance, charge_group)
+        self.assertEqual(activity_receipt.remittance, activity_remittance)

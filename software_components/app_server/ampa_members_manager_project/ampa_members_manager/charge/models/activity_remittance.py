@@ -8,19 +8,19 @@ from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
 
 
-class ChargeGroup(models.Model):
+class ActivityRemittance(models.Model):
     single_activities = models.ManyToManyField(to=SingleActivity, verbose_name=_("Single activities"))
 
     class Meta:
-        verbose_name = _('Charge group')
-        verbose_name_plural = _('Charge groups')
+        verbose_name = _('Activity Remittance')
+        verbose_name_plural = _('Activity Remittances')
 
     @classmethod
-    def create_filled_charge_group(cls, single_activities: QuerySet[SingleActivity]) -> ChargeGroup:
+    def create_filled_charge_group(cls, single_activities: QuerySet[SingleActivity]) -> ActivityRemittance:
         if not single_activities.exists():
             raise NoSingleActivityError
 
         with transaction.atomic():
-            charge_group: ChargeGroup = ChargeGroup.objects.create()
+            charge_group: ActivityRemittance = ActivityRemittance.objects.create()
             charge_group.single_activities.set(single_activities)
             return charge_group

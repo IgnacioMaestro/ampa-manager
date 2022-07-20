@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.remittance import Remittance
 from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
     RemittanceGenerator
@@ -21,7 +21,7 @@ class ChargeGroupAdmin(admin.ModelAdmin):
     inlines = [ActivityReceiptInline]
 
     @admin.action(description=_("Export to CSV"))
-    def download_csv(self, request, queryset: QuerySet[ChargeGroup]):
+    def download_csv(self, request, queryset: QuerySet[ActivityRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=_("Only can select one charge group"))
         remittance: Remittance = RemittanceGenerator(charge_group=queryset.first()).generate()
