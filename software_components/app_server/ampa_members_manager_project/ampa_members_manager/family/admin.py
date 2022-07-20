@@ -34,9 +34,16 @@ class FamilyAdmin(admin.ModelAdmin):
     inlines = [ChildInline, MembershipInline]
 
 
+class BankAccountInline(admin.TabularInline):
+    model = BankAccount
+    fields = ['swift_bic', 'iban', 'owner']
+    extra = 0
+
+
 class ParentAdmin(admin.ModelAdmin):
     list_display = ['name', 'first_surname', 'second_surname', 'phone_number']
     search_fields = ['name', 'first_surname', 'second_surname', 'phone_number']
+    inlines = [BankAccountInline]
 
 
 class ChildAdmin(admin.ModelAdmin):
