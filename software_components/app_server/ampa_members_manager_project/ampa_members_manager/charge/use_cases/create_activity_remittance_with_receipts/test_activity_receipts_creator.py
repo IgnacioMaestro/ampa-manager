@@ -6,7 +6,8 @@ from model_bakery import baker
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import ActivityReceiptsCreator
+from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import \
+    ActivityReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.family.models.bank_account import BankAccount
@@ -47,7 +48,7 @@ class TestActivityReceiptsCreator(TestCase):
     def test_create_activity_registrations_same_bank_accounts(self):
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registrations: List[ActivityRegistration] = baker.make(
-            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account)
+            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account, amount=2.3)
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             SingleActivity.objects.all())
 
@@ -64,29 +65,38 @@ class TestActivityReceiptsCreator(TestCase):
 
     def test_find_or_create_receipt_create(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
-        activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', amount=2.3)
+
         activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_receipt(
             activity_registration)
+
         self.assertEqual(activity_receipt.remittance, activity_remittance)
+        self.assertEqual(activity_receipt.amount, 0)
 
     def test_find_or_create_receipt_find(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
         previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         previous_activity_receipt.activity_registrations.add(activity_registration)
+
         activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_receipt(
             activity_registration)
+
         self.assertEqual(activity_receipt, previous_activity_receipt)
 
-    def test_find_or_create_receipt_create_instead_other_charge(self):
+    def test_find_or_create_receipt_create_instead_other_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         bank_account: BankAccount = baker.make('BankAccount')
-        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
+        activity_registration: ActivityRegistration = baker.make(
+            'ActivityRegistration', amount=2.3, bank_account=bank_account)
         other_activity_registration: ActivityRegistration = baker.make(
             'ActivityRegistration', bank_account=bank_account)
         other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         other_activity_receipt.activity_registrations.add(other_activity_registration)
+
         activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_receipt(
             activity_registration)
+
         self.assertNotEqual(activity_receipt, other_activity_receipt)
         self.assertEqual(activity_receipt.remittance, activity_remittance)
+        self.assertEqual(activity_receipt.amount, 0)
