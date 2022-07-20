@@ -9,7 +9,11 @@ from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.char
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
+    list_display = ['name', 'academic_course', 'funding']
+    list_filter = ['academic_course', 'funding']
+    search_fields = ['name', 'academic_course']
     fields = ['name', 'academic_course', 'funding', 'single_activities']
+    filter_horizontal = ['single_activities']
 
 
 class UniqueActivityAdmin(admin.ModelAdmin):
