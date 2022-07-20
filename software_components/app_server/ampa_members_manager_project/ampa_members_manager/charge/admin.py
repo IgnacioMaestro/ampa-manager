@@ -5,20 +5,20 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.charge.models.charge import Charge
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
 from ampa_members_manager.charge.remittance import Remittance
 from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
     RemittanceGenerator
 
 
-class ChargeInline(admin.TabularInline):
-    model = Charge
+class ActivityReceiptInline(admin.TabularInline):
+    model = ActivityReceipt
     extra = 0
 
 
 class ChargeGroupAdmin(admin.ModelAdmin):
-    inlines = [ChargeInline]
+    inlines = [ActivityReceiptInline]
 
     @admin.action(description=_("Export to CSV"))
     def download_csv(self, request, queryset: QuerySet[ChargeGroup]):

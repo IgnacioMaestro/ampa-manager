@@ -5,7 +5,7 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.charge_group_with_charges_creator import \
     ChargeGroupWithChargesCreator
-from ampa_members_manager.charge.models.charge import Charge
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
@@ -26,4 +26,4 @@ class TestChargeGroupWithChargesCreator(TestCase):
 
         ChargeGroupWithChargesCreator(SingleActivity.objects.all()).create()
 
-        self.assertEqual(1, Charge.objects.count())
+        self.assertEqual(1, ActivityReceipt.objects.count())

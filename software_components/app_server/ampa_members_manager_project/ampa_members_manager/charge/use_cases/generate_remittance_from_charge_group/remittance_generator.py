@@ -13,6 +13,6 @@ class RemittanceGenerator:
 
     def generate(self) -> Remittance:
         receipts: List[Receipt] = []
-        for charge in self.__charge_group.charge_set.all():
-            receipts.append(charge.generate_receipt())
+        for activity_receipt in self.__charge_group.activityreceipt_set.all():
+            receipts.append(activity_receipt.generate_receipt())
         return Remittance(receipts, self.__name)

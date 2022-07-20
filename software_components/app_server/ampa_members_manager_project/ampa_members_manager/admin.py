@@ -10,7 +10,7 @@ from ampa_members_manager.activity.models.unique_activity import UniqueActivity
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationAdmin
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.admin import ChargeGroupAdmin
-from ampa_members_manager.charge.models.charge import Charge
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
 from ampa_members_manager.family.admin import FamilyAdmin, ParentAdmin, ChildAdmin, BankAccountAdmin, \
     AuthorizationAdmin, MembershipAdmin
@@ -39,4 +39,4 @@ admin.site.register(Membership, MembershipAdmin)
 admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)
 
 admin.site.register(ChargeGroup, ChargeGroupAdmin)
-admin.site.register(Charge)
+admin.site.register(ActivityReceipt)

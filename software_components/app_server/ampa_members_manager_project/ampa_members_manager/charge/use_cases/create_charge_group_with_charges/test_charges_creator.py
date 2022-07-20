@@ -7,7 +7,7 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.charges_creator import ChargesCreator
-from ampa_members_manager.charge.models.charge import Charge
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
@@ -27,7 +27,7 @@ class TestChargesCreator(TestCase):
 
         ChargesCreator(charge_group).create()
 
-        self.assertEqual(Charge.objects.filter(group=charge_group).count(), 0)
+        self.assertEqual(ActivityReceipt.objects.filter(group=charge_group).count(), 0)
 
     def test_create_activity_registrations_different_bank_accounts(self):
         activity_registrations: List[ActivityRegistration] = baker.make(
@@ -36,11 +36,11 @@ class TestChargesCreator(TestCase):
 
         ChargesCreator(charge_group).create()
 
-        self.assertEqual(self.ACTIVITY_REGISTRATION_COUNT, Charge.objects.filter(group=charge_group).count())
+        self.assertEqual(self.ACTIVITY_REGISTRATION_COUNT, ActivityReceipt.objects.filter(group=charge_group).count())
         for activity_registration in activity_registrations:
             amount = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
-            Charge.objects.get(activity_registrations__exact=activity_registration, amount=amount)
+            ActivityReceipt.objects.get(activity_registrations__exact=activity_registration, amount=amount)
 
     def test_create_activity_registrations_same_bank_accounts(self):
         bank_account: BankAccount = baker.make('BankAccount')
@@ -50,28 +50,28 @@ class TestChargesCreator(TestCase):
 
         ChargesCreator(charge_group).create()
 
-        self.assertEqual(Charge.objects.count(), 1)
-        charge = Charge.objects.first()
-        self.assertEqual(activity_registrations, list(charge.activity_registrations.all()))
+        self.assertEqual(ActivityReceipt.objects.count(), 1)
+        activity_receipt = ActivityReceipt.objects.first()
+        self.assertEqual(activity_registrations, list(activity_receipt.activity_registrations.all()))
         amount = 0
         for activity_registration in activity_registrations:
             amount += activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
-        self.assertEqual(amount, charge.amount)
+        self.assertEqual(amount, activity_receipt.amount)
 
     def test_find_or_create_charge_create(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
-        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
-        self.assertEqual(charge.group, charge_group)
+        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertEqual(activity_receipt.group, charge_group)
 
     def test_find_or_create_charge_find(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
-        previous_charge: Charge = baker.make('Charge', group=charge_group)
-        previous_charge.activity_registrations.add(activity_registration)
-        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
-        self.assertEqual(charge, previous_charge)
+        previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', group=charge_group)
+        previous_activity_receipt.activity_registrations.add(activity_registration)
+        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertEqual(activity_receipt, previous_activity_receipt)
 
     def test_find_or_create_charge_create_instead_other_charge(self):
         charge_group: ChargeGroup = baker.make('ChargeGroup')
@@ -79,8 +79,8 @@ class TestChargesCreator(TestCase):
         activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=bank_account)
         other_activity_registration: ActivityRegistration = baker.make(
             'ActivityRegistration', bank_account=bank_account)
-        other_charge: Charge = baker.make('Charge')
-        other_charge.activity_registrations.add(other_activity_registration)
-        charge: Charge = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
-        self.assertNotEqual(charge, other_charge)
-        self.assertEqual(charge.group, charge_group)
+        other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
+        other_activity_receipt.activity_registrations.add(other_activity_registration)
+        activity_receipt: ActivityReceipt = ChargesCreator(charge_group).find_or_create_charge(activity_registration)
+        self.assertNotEqual(activity_receipt, other_activity_receipt)
+        self.assertEqual(activity_receipt.group, charge_group)

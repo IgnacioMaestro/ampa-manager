@@ -16,15 +16,15 @@ class NotFound(Exception):
     pass
 
 
-class Charge(models.Model):
+class ActivityReceipt(models.Model):
     amount = models.FloatField(null=True, blank=True, verbose_name=_("Amount"))
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     activity_registrations = models.ManyToManyField(to=ActivityRegistration, verbose_name=_("Activity registrations"))
     group = models.ForeignKey(to=ChargeGroup, on_delete=CASCADE, verbose_name=_("Group"))
 
     class Meta:
-        verbose_name = _('Charge')
-        verbose_name_plural = _('Charges')
+        verbose_name = _('Activity Receipt')
+        verbose_name_plural = _('Activity Receipts')
 
     def check_bank_account(self, bank_account: BankAccount) -> bool:
         for activity_registration in self.activity_registrations.all():
@@ -46,8 +46,8 @@ class Charge(models.Model):
                 iban=bank_account.iban, authorization='No authorization')
 
     @classmethod
-    def find_charge_with_bank_account(cls, charge_group: ChargeGroup, bank_account: BankAccount) -> Charge:
-        for charge in Charge.objects.filter(group=charge_group):
-            if charge.check_bank_account(bank_account=bank_account):
-                return charge
+    def find_charge_with_bank_account(cls, charge_group: ChargeGroup, bank_account: BankAccount) -> ActivityReceipt:
+        for activity_receipt in ActivityReceipt.objects.filter(group=charge_group):
+            if activity_receipt.check_bank_account(bank_account=bank_account):
+                return activity_receipt
         raise NotFound

@@ -1,7 +1,7 @@
 from typing import List
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.charge.models.charge import Charge, NotFound
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt, NotFound
 from ampa_members_manager.charge.models.charge_group import ChargeGroup
 
 
@@ -17,15 +17,15 @@ class ChargesCreator:
             self.__create_charge_for_activity_registration(activity_registration)
 
     def __create_charge_for_activity_registration(self, activity_registration: ActivityRegistration):
-        charge: Charge = self.find_or_create_charge(activity_registration)
-        charge.activity_registrations.add(activity_registration)
-        charge.save()
+        activity_receipt: ActivityReceipt = self.find_or_create_charge(activity_registration)
+        activity_receipt.activity_registrations.add(activity_registration)
+        activity_receipt.save()
 
-    def find_or_create_charge(self, activity_registration: ActivityRegistration) -> Charge:
+    def find_or_create_charge(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
         try:
-            return Charge.find_charge_with_bank_account(
+            return ActivityReceipt.find_charge_with_bank_account(
                 charge_group=self.__charge_group, bank_account=activity_registration.bank_account)
         except NotFound:
             price: float = activity_registration.single_activity.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
-            return Charge.objects.create(group=self.__charge_group, amount=price)
+            return ActivityReceipt.objects.create(group=self.__charge_group, amount=price)
