@@ -17,12 +17,12 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 
 
 class SingleActivityAdmin(admin.ModelAdmin):
-    @admin.action(description=_("Create charge group"))
-    def create_charge_group(self, request, single_activities: QuerySet[SingleActivity]):
+    @admin.action(description=_("Create activity remittance"))
+    def create_activity_remittance(self, request, single_activities: QuerySet[SingleActivity]):
         if not RepetitiveActivity.all_same_repetitive_activity(single_activities=single_activities):
             message = _("All Single Activities must be from the same repetitive activity")
             return self.message_user(request, message)
         ActivityRemittanceWithReceiptsCreator(single_activities).create()
-        return self.message_user(request=request, message=_("Charge group created"))
+        return self.message_user(request=request, message=_("Activity Remittance created"))
 
-    actions = [create_charge_group]
+    actions = [create_activity_remittance]

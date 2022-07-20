@@ -22,7 +22,7 @@ class TestActivityReceiptsCreator(TestCase):
     def setUpTestData(cls):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
 
-    def test_create_charge_group_without_single_activities(self):
+    def test_create_without_single_activities(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
         ActivityReceiptsCreator(activity_remittance).create()
