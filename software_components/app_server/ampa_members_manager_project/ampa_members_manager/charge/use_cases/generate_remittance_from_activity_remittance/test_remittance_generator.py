@@ -1,8 +1,6 @@
-from datetime import datetime
 from typing import List, Final
 
 from django.test import TestCase
-
 from model_bakery import baker
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
@@ -24,7 +22,7 @@ class TestRemittanceGenerator(TestCase):
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), 0)
 
     def test_generate_remittance_one_charge(self):
@@ -36,7 +34,7 @@ class TestRemittanceGenerator(TestCase):
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, activity_receipt.amount)
@@ -56,5 +54,5 @@ class TestRemittanceGenerator(TestCase):
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
 
-        self.assertEqual(remittance.name, str(activity_remittance) + '_' + datetime.now().strftime("%Y%m%d_%H%M%S"))
+        self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), receipt_count)

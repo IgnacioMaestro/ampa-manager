@@ -9,11 +9,20 @@ from ampa_members_manager.charge.no_single_activity_error import NoSingleActivit
 
 
 class ActivityRemittance(models.Model):
+    name = models.CharField(max_length=300, verbose_name=_("Name"))
+    created_at = models.DateTimeField(auto_now_add=True)
     single_activities = models.ManyToManyField(to=SingleActivity, verbose_name=_("Single activities"))
 
     class Meta:
         verbose_name = _('Activity Remittance')
         verbose_name_plural = _('Activity Remittances')
+
+    def __str__(self) -> str:
+        return self.complete_name
+
+    @property
+    def complete_name(self) -> str:
+        return self.name + '_' + self.created_at.strftime("%Y%m%d_%H%M%S")
 
     @classmethod
     def create_filled(cls, single_activities: QuerySet[SingleActivity]) -> ActivityRemittance:
