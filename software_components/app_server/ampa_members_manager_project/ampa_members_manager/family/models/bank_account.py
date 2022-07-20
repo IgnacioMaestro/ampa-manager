@@ -14,6 +14,7 @@ class BankAccount(models.Model):
     class Meta:
         verbose_name = _('Bank account')
         verbose_name_plural = _('Bank accounts')
+        ordering = ['owner', 'iban']
 
     def __str__(self) -> str:
         return f'{self.iban} {self.owner}'
