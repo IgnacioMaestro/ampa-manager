@@ -14,9 +14,9 @@ class ActivityReceiptsCreator:
         for single_activity in self.__activity_remittance.single_activities.all():
             activity_registrations.extend(ActivityRegistration.with_single_activity(single_activity=single_activity))
         for activity_registration in activity_registrations:
-            self.__create_charge_for_activity_registration(activity_registration)
+            self.__create_receipt_for_activity_registration(activity_registration)
 
-    def __create_charge_for_activity_registration(self, activity_registration: ActivityRegistration):
+    def __create_receipt_for_activity_registration(self, activity_registration: ActivityRegistration):
         activity_receipt: ActivityReceipt = self.find_or_create_charge(activity_registration)
         activity_receipt.activity_registrations.add(activity_registration)
         activity_receipt.save()
