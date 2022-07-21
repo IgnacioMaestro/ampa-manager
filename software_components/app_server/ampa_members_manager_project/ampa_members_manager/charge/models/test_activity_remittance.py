@@ -3,6 +3,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.activity.models.single_activity import SingleActivity
+from ampa_members_manager.baker_recipes import single_activity_with_unique_activity
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
 
@@ -14,7 +15,7 @@ class TestActivityRemittance(TestCase):
             ActivityRemittance.create_filled(single_activities_none)
 
     def test_create_filled__one_single_activity_one_activity_registration(self):
-        single_activity: SingleActivity = baker.make('SingleActivity')
+        single_activity: SingleActivity = baker.make_recipe(single_activity_with_unique_activity)
         single_activities_one: QuerySet[SingleActivity] = SingleActivity.objects.all()
 
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(single_activities_one)

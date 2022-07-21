@@ -6,18 +6,21 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
+from ampa_members_manager.baker_recipes import activity_registration_with_single_activity, \
+    single_activity_with_unique_activity
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()
 
+
 class TestActivityRegistration(TestCase):
     def setUp(self):
         self.academic_course: AcademicCourse = baker.make('AcademicCourse')
         ActiveCourse.objects.create(course=self.academic_course)
         self.family: Family = baker.make('Family')
-        self.activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
+        self.activity_registration: ActivityRegistration = baker.make_recipe(activity_registration_with_single_activity)
 
     def test_str(self):
         self.assertEqual(
@@ -31,13 +34,13 @@ class TestActivityRegistration(TestCase):
         self.assertEqual(self.activity_registration.amount, amount)
 
     def test_with_single_activity_no_activity_registration(self):
-        single_activity: SingleActivity = baker.make('SingleActivity')
+        single_activity: SingleActivity = baker.make_recipe(single_activity_with_unique_activity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_single_activity(
             single_activity=single_activity)
         self.assertEqual(activity_registrations.count(), 0)
 
     def test_with_single_activity_one_activity_registration(self):
-        single_activity: SingleActivity = baker.make('SingleActivity')
+        single_activity: SingleActivity = baker.make_recipe(single_activity_with_unique_activity)
         baker.make('ActivityRegistration', single_activity=single_activity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_single_activity(
             single_activity=single_activity)
@@ -45,7 +48,7 @@ class TestActivityRegistration(TestCase):
 
     def test_with_single_activity_more_than_one_activity_registration(self):
         quantity: int = 3
-        single_activity: SingleActivity = baker.make('SingleActivity')
+        single_activity: SingleActivity = baker.make_recipe(single_activity_with_unique_activity)
         baker.make('ActivityRegistration', single_activity=single_activity, _quantity=quantity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_single_activity(
             single_activity=single_activity)
