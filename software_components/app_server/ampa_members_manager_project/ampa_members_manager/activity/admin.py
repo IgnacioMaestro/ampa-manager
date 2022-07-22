@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
-from ampa_members_manager.charge.use_cases.create_charge_group_with_charges.charge_group_with_charges_creator import \
-    ChargeGroupWithChargesCreator
+from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
+    ActivityRemittanceWithReceiptsCreator
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
@@ -21,12 +21,12 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 
 
 class SingleActivityAdmin(admin.ModelAdmin):
-    @admin.action(description=_("Create charge group"))
-    def create_charge_group(self, request, single_activities: QuerySet[SingleActivity]):
+    @admin.action(description=_("Create activity remittance"))
+    def create_activity_remittance(self, request, single_activities: QuerySet[SingleActivity]):
         if not RepetitiveActivity.all_same_repetitive_activity(single_activities=single_activities):
             message = _("All Single Activities must be from the same repetitive activity")
             return self.message_user(request, message)
-        ChargeGroupWithChargesCreator(single_activities).create()
-        return self.message_user(request=request, message=_("Charge group created"))
+        ActivityRemittanceWithReceiptsCreator(single_activities).create()
+        return self.message_user(request=request, message=_("Activity Remittance created"))
 
-    actions = [create_charge_group]
+    actions = [create_activity_remittance]

@@ -6,27 +6,27 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.charge.models.charge import Charge
-from ampa_members_manager.charge.models.charge_group import ChargeGroup
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
+from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_charge_group.remittance_generator import \
+from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
 
 
-class ChargeInline(admin.TabularInline):
-    model = Charge
+class ActivityReceiptInline(admin.TabularInline):
+    model = ActivityReceipt
     extra = 0
 
 
-class ChargeGroupAdmin(admin.ModelAdmin):
-    inlines = [ChargeInline]
+class ActivityRemittanceAdmin(admin.ModelAdmin):
+    inlines = [ActivityReceiptInline]
 
     @admin.action(description=_("Export to CSV"))
-    def download_csv(self, request, queryset: QuerySet[ChargeGroup]):
+    def download_csv(self, request, queryset: QuerySet[ActivityRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=_("Only one charge group can be selected at a time"))
-        remittance: Remittance = RemittanceGenerator(charge_group=queryset.first()).generate()
-        return ChargeGroupAdmin.create_csv_response_from_remittance(remittance)
+            return self.message_user(request=request, message=_("Only one activity remittance can be selected at a time"))
+        remittance: Remittance = RemittanceGenerator(activity_remittance=queryset.first()).generate()
+        return ActivityRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
