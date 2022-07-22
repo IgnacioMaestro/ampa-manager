@@ -20,9 +20,9 @@ class SingleActivity(models.Model):
     price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for no members"))
     payment_type = models.IntegerField(choices=PaymentType.choices, verbose_name=_("Payment type"))
     repetitive_activity = models.ForeignKey(
-        to=RepetitiveActivity, on_delete=CASCADE, null=True, verbose_name=_("Repetitive Activity"))
+        to=RepetitiveActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Repetitive Activity"))
     unique_activity = models.OneToOneField(
-        to=UniqueActivity, on_delete=CASCADE, null=True, verbose_name=_("Unique activity"))
+        to=UniqueActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Unique activity"))
 
     class Meta:
         verbose_name = _('Single activity')
