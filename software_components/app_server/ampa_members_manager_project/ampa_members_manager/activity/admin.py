@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
 from ampa_members_manager.activity.models.single_activity import SingleActivity
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
@@ -19,7 +18,7 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 class SingleActivityAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, single_activities: QuerySet[SingleActivity]):
-        if not RepetitiveActivity.all_same_repetitive_activity(single_activities=single_activities):
+        if not SingleActivity.all_same_repetitive_activity(single_activities=single_activities):
             message = _("All Single Activities must be from the same repetitive activity")
             return self.message_user(request, message)
         ActivityRemittanceWithReceiptsCreator(single_activities).create()

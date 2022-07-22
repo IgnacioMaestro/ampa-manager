@@ -9,12 +9,12 @@ from ampa_members_manager.baker_recipes import single_activity_with_repetitive_a
 
 class TestSingleActivity(TestCase):
     def test_str(self):
-        single_activity: SingleActivity = baker.make_recipe(single_activity_with_unique_activity)
+        single_activity: SingleActivity = baker.prepare_recipe(single_activity_with_unique_activity)
 
         self.assertEqual(str(single_activity), single_activity.name)
 
     def test_calculate_price_single_member(self):
-        single_activity: SingleActivity = baker.make_recipe(
+        single_activity: SingleActivity = baker.prepare_recipe(
             single_activity_with_unique_activity, payment_type=PaymentType.SINGLE)
         times: float = 2.5
 
@@ -23,7 +23,7 @@ class TestSingleActivity(TestCase):
         self.assertEqual(price, float(single_activity.price_for_member))
 
     def test_calculate_price_single_no_member(self):
-        single_activity: SingleActivity = baker.make_recipe(
+        single_activity: SingleActivity = baker.prepare_recipe(
             single_activity_with_unique_activity, payment_type=PaymentType.SINGLE)
         times: float = 2.5
 
@@ -32,7 +32,7 @@ class TestSingleActivity(TestCase):
         self.assertEqual(price, float(single_activity.price_for_no_member))
 
     def test_calculate_price_per_day_member(self):
-        single_activity: SingleActivity = baker.make_recipe(
+        single_activity: SingleActivity = baker.prepare_recipe(
             single_activity_with_unique_activity, payment_type=PaymentType.PER_DAY)
         times: float = 2.5
 
@@ -41,7 +41,7 @@ class TestSingleActivity(TestCase):
         self.assertEqual(price, float(single_activity.price_for_member) * times)
 
     def test_calculate_price_per_day_no_member(self):
-        single_activity: SingleActivity = baker.make_recipe(
+        single_activity: SingleActivity = baker.prepare_recipe(
             single_activity_with_unique_activity, payment_type=PaymentType.PER_DAY)
         times: float = 2.5
 
