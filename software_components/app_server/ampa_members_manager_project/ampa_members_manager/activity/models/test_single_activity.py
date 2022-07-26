@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TestCase
 from model_bakery import baker
 
@@ -8,6 +9,18 @@ from ampa_members_manager.baker_recipes import single_activity_with_repetitive_a
 
 
 class TestSingleActivity(TestCase):
+    def test_one_activity_reference_constraint_no_repetitive_neither_unique(self):
+        with self.assertRaises(IntegrityError):
+            baker.make('SingleActivity')
+
+    def test_one_activity_reference_constraint_with_repetitive_and_unique(self):
+        with self.assertRaises(IntegrityError):
+            repetitive_activity = baker.make('RepetitiveActivity')
+            unique_activity = baker.make('UniqueActivity')
+            SingleActivity.objects.create(
+                name='name', price_for_member=50, price_for_no_member=150, payment_type=PaymentType.SINGLE,
+                repetitive_activity=repetitive_activity, unique_activity=unique_activity)
+
     def test_str(self):
         single_activity: SingleActivity = baker.prepare_recipe(single_activity_with_unique_activity)
 

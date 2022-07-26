@@ -29,7 +29,8 @@ class SingleActivity(models.Model):
         verbose_name_plural = _('Single activities')
         constraints = [
             models.CheckConstraint(
-                check=~Q(repetitive_activity=None) | ~Q(unique_activity=None),
+                check=(Q(repetitive_activity__isnull=False) & Q(unique_activity__isnull=True)
+                       ) | (Q(repetitive_activity__isnull=True) & Q(unique_activity__isnull=False)),
                 name='one_activity_reference'),
         ]
 
@@ -37,16 +38,22 @@ class SingleActivity(models.Model):
         return f'{self.name}'
 
     def calculate_price(self, times: float, membership: bool) -> float:
-        if self.payment_type is PaymentType.SINGLE:
-            if membership:
-                return float(self.price_for_member)
-            else:
-                return float(self.price_for_no_member)
+        if membership:
+            return self.calculate_price_membership(times)
         else:
-            if membership:
-                return float(self.price_for_member) * times
-            else:
-                return float(self.price_for_no_member) * times
+            return self.calculate_price_no_membership(times)
+
+    def calculate_price_no_membership(self, times):
+        if self.payment_type == int(PaymentType.SINGLE):
+            return float(self.price_for_no_member)
+        else:
+            return float(self.price_for_no_member) * times
+
+    def calculate_price_membership(self, times):
+        if self.payment_type == int(PaymentType.SINGLE):
+            return float(self.price_for_member)
+        else:
+            return float(self.price_for_member) * times
 
     @classmethod
     def all_same_repetitive_activity(cls, single_activities: QuerySet[SingleActivity]) -> bool:

@@ -23,6 +23,9 @@ class ActivityRegistration(models.Model):
     def __str__(self) -> str:
         return f'{str(self.single_activity)}-{str(self.child)}'
 
+    def calculate_price(self) -> float:
+        return self.single_activity.calculate_price(times=self.amount, membership=self.is_membership())
+
     def establish_amount(self, amount) -> None:
         self.amount = amount
         self.save()
