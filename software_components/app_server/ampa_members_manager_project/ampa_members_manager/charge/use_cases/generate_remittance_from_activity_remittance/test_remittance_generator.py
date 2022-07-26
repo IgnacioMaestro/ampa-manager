@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.baker_recipes import activity_registration_with_single_activity
+from ampa_members_manager.baker_recipes import activity_registration_with_payable_part
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.receipt import Receipt
@@ -31,7 +31,7 @@ class TestRemittanceGenerator(TestCase):
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         bank_account: BankAccount = baker.make('BankAccount')
         activity_registration: ActivityRegistration = baker.make_recipe(
-            activity_registration_with_single_activity, bank_account=bank_account)
+            activity_registration_with_payable_part, bank_account=bank_account)
         activity_receipt.activity_registrations.add(activity_registration)
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
@@ -52,7 +52,7 @@ class TestRemittanceGenerator(TestCase):
         bank_account: BankAccount = baker.make('BankAccount')
         for activity_receipt in activity_receipts:
             activity_registration: ActivityRegistration = baker.make_recipe(
-                activity_registration_with_single_activity, bank_account=bank_account)
+                activity_registration_with_payable_part, bank_account=bank_account)
             activity_receipt.activity_registrations.add(activity_registration)
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()

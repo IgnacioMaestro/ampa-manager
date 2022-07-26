@@ -4,14 +4,14 @@ from django.db import models, transaction
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.activity.models.single_activity import SingleActivity
-from ampa_members_manager.charge.no_single_activity_error import NoSingleActivityError
+from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.charge.no_payable_part_error import NoActivityPayablePartError
 
 
 class ActivityRemittance(models.Model):
     name = models.CharField(max_length=300, verbose_name=_("Name"))
     created_at = models.DateTimeField(auto_now_add=True)
-    single_activities = models.ManyToManyField(to=SingleActivity, verbose_name=_("Single activities"))
+    payable_parts = models.ManyToManyField(to=ActivityPayablePart, verbose_name=_("Activity Payable Parts"))
 
     class Meta:
         verbose_name = _('Activity Remittance')
@@ -25,12 +25,12 @@ class ActivityRemittance(models.Model):
         return self.name + '_' + self.created_at.strftime("%Y%m%d_%H%M%S")
 
     @classmethod
-    def create_filled(cls, single_activities: QuerySet[SingleActivity]) -> ActivityRemittance:
-        if not single_activities.exists():
-            raise NoSingleActivityError
+    def create_filled(cls, payable_parts: QuerySet[ActivityPayablePart]) -> ActivityRemittance:
+        if not payable_parts.exists():
+            raise NoActivityPayablePartError
 
         with transaction.atomic():
-            name: str = single_activities.first().name
+            name: str = payable_parts.first().name
             activity_remittance: ActivityRemittance = ActivityRemittance.objects.create(name=name)
-            activity_remittance.single_activities.set(single_activities)
+            activity_remittance.payable_parts.set(payable_parts)
             return activity_remittance

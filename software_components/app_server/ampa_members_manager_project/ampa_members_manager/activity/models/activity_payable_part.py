@@ -14,7 +14,7 @@ class PaymentType(models.IntegerChoices):
     PER_MONTH = 4
 
 
-class SingleActivity(models.Model):
+class ActivityPayablePart(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Name"))
     price_for_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for members"))
     price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for no members"))
@@ -25,8 +25,8 @@ class SingleActivity(models.Model):
         to=UniqueActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Unique activity"))
 
     class Meta:
-        verbose_name = _('Single activity')
-        verbose_name_plural = _('Single activities')
+        verbose_name = _('Activity Payable Part')
+        verbose_name_plural = _('Activity Payable Parts')
         constraints = [
             models.CheckConstraint(
                 check=(Q(repetitive_activity__isnull=False) & Q(unique_activity__isnull=True)
@@ -56,20 +56,20 @@ class SingleActivity(models.Model):
             return float(self.price_for_member) * times
 
     @classmethod
-    def all_same_repetitive_activity(cls, single_activities: QuerySet[SingleActivity]) -> bool:
-        if single_activities.count() > 1:
-            if not SingleActivity.no_unique_activity(single_activities):
+    def all_same_repetitive_activity(cls, payable_parts: QuerySet[ActivityPayablePart]) -> bool:
+        if payable_parts.count() > 1:
+            if not ActivityPayablePart.no_unique_activity(payable_parts):
                 return False
-            repetitive_activity: RepetitiveActivity = single_activities.first().repetitive_activity
-            single_activity: SingleActivity
-            for single_activity in single_activities.all():
-                if single_activity.repetitive_activity != repetitive_activity:
+            repetitive_activity: RepetitiveActivity = payable_parts.first().repetitive_activity
+            payable_part: ActivityPayablePart
+            for payable_part in payable_parts.all():
+                if payable_part.repetitive_activity != repetitive_activity:
                     return False
         return True
 
     @classmethod
-    def no_unique_activity(cls, single_activities: QuerySet[SingleActivity]) -> bool:
-        for single_activity in single_activities.all():
-            if single_activity.unique_activity is not None:
+    def no_unique_activity(cls, payable_parts: QuerySet[ActivityPayablePart]) -> bool:
+        for payable_part in payable_parts.all():
+            if payable_part.unique_activity is not None:
                 return False
         return True
