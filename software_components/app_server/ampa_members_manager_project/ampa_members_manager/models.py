@@ -2,7 +2,7 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.activity import Activity
 from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
-from ampa_members_manager.activity.models.single_activity import SingleActivity
+from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.family.models.authorization import Authorization
