@@ -1,6 +1,13 @@
+from model_bakery import baker
+from model_bakery.recipe import Recipe, foreign_key
+
 from ampa_members_manager.activity.baker_recipes import payable_part_with_unique_activity_local_recipe, \
     payable_part_with_repetitive_activity_local_recipe, \
     activity_registration_with_payable_part_local_recipe
+from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.tests.generator_adder import bic_generator, phonenumbers_generator, iban_generator
 
 payable_part_with_unique_activity_recipe = payable_part_with_unique_activity_local_recipe
 payable_part_with_repetitive_activity_recipe = payable_part_with_repetitive_activity_local_recipe
@@ -9,3 +16,15 @@ activity_registration_with_payable_part_recipe = activity_registration_with_paya
 payable_part_with_unique_activity = 'ampa_members_manager.payable_part_with_unique_activity_recipe'
 payable_part_with_repetitive_activity = 'ampa_members_manager.payable_part_with_repetitive_activity_recipe'
 activity_registration_with_payable_part = 'ampa_members_manager.activity_registration_with_payable_part_recipe'
+
+baker.generators.add('localflavor.generic.models.BICField', bic_generator)
+baker.generators.add('phonenumber_field.modelfields.PhoneNumberField', phonenumbers_generator)
+baker.generators.add('localflavor.generic.models.IBANField', iban_generator)
+
+bank_account_recipe_name = Recipe(BankAccount)
+bank_account_recipe = 'ampa_members_manager.bank_account_recipe_name'
+family_bank_account_recipe_name = Recipe(Family, default_bank_account=foreign_key(bank_account_recipe_name))
+family_bank_account_recipe = 'ampa_members_manager.family_bank_account_recipe_name'
+
+membership_receipt_family_bank_account_recipe_name = Recipe(MembershipReceipt, family=foreign_key(family_bank_account_recipe_name))
+membership_receipt_family_bank_account_recipe = 'ampa_members_manager.membership_receipt_family_bank_account_recipe_name'
