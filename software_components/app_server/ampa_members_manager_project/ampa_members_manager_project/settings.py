@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'admin_reorder',
-    'gdstorage',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +129,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_ROOT = 'media/'
+MEDIA_URL = ''
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -154,9 +156,3 @@ ADMIN_REORDER = (
     # Keep original label and models
     'auth',
 )
-
-#
-# Google Drive Storage Settings
-#
-GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = r'ampa_members_manager_project\almacen-datos-django-fd12fbec5701.json'
-#GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>' # OPTIONAL

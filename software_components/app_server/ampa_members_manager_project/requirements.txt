@@ -5,4 +5,3 @@ schwifty==2022.7.0
 phonenumbers==8.12.51
 django-phonenumber-field[phonenumbers]==6.3.0
 django-modeladmin-reorder==0.3.1
-django-googledrive-storage
