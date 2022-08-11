@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'admin_reorder',
+    'gdstorage',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,10 @@ ADMIN_REORDER = (
     # Keep original label and models
     'auth',
 )
+
+#
+# Google Drive Storage Settings
+#
+
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = r'C:\Users\danil\Downloads\AMPAMembersManager\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\almacen-datos-django-fd12fbec5701.json'
+#GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>' # OPTIONAL
