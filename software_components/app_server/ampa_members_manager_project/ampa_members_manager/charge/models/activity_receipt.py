@@ -20,7 +20,7 @@ class ActivityReceipt(models.Model):
     amount = models.FloatField(null=True, blank=True, verbose_name=_("Amount"))
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     activity_registrations = models.ManyToManyField(to=ActivityRegistration, verbose_name=_("Activity registrations"))
-    remittance = models.ForeignKey(to=ActivityRemittance, on_delete=CASCADE, verbose_name=_("ActivityRemittance"))
+    remittance = models.ForeignKey(to=ActivityRemittance, on_delete=CASCADE, verbose_name=_("Activity remittance"))
 
     class Meta:
         verbose_name = _('Activity Receipt')

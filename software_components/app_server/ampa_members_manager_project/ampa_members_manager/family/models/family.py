@@ -14,7 +14,7 @@ class Family(models.Model):
     secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(
-        to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"), help_text=_("Save the family to see its ban accounts"))
+        to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"), help_text=_("Save the family to see its bank accounts"))
 
     class Meta:
         verbose_name = _('Family')
