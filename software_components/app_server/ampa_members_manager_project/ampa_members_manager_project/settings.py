@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
@@ -158,6 +158,5 @@ ADMIN_REORDER = (
 #
 # Google Drive Storage Settings
 #
-
-GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = r'C:\Users\danil\Downloads\AMPAMembersManager\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\almacen-datos-django-fd12fbec5701.json'
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = r'ampa_members_manager_project\almacen-datos-django-fd12fbec5701.json'
 #GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>' # OPTIONAL
