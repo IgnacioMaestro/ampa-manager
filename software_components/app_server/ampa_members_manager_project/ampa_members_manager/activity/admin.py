@@ -8,11 +8,14 @@ from ampa_members_manager.charge.use_cases.create_activity_remittance_with_recei
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
+    list_display = ['name', 'academic_course', 'funding']
+    list_filter = ['academic_course', 'funding']
+    search_fields = ['name', 'academic_course']
     fields = ['name', 'academic_course', 'funding']
 
 
 class UniqueActivityAdmin(admin.ModelAdmin):
-    fields = ['name', 'academic_course', 'funding']
+    fields = ['name', 'academic_course', 'funding', 'single_activity']
 
 
 class ActivityPayablePartAdmin(admin.ModelAdmin):

@@ -11,6 +11,7 @@ from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.membership import Membership
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -27,12 +28,17 @@ class ChildInline(admin.TabularInline):
     extra = 0
 
 
+class MembershipInline(admin.TabularInline):
+    model = Membership
+    extra = 0
+
+
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['first_surname', 'second_surname', 'email', 'secondary_email', 'default_bank_account']
     search_fields = ['first_surname', 'second_surname', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline]
+    inlines = [ChildInline, MembershipInline]
 
     @admin.action(description=_("Generate MembershipRemittance for current year"))
     def generate_remittance(self, request, families: QuerySet[Family]):
@@ -43,9 +49,16 @@ class FamilyAdmin(admin.ModelAdmin):
     actions = [generate_remittance]
 
 
+class BankAccountInline(admin.TabularInline):
+    model = BankAccount
+    fields = ['swift_bic', 'iban', 'owner']
+    extra = 0
+
+
 class ParentAdmin(admin.ModelAdmin):
     list_display = ['name', 'first_surname', 'second_surname', 'phone_number']
     search_fields = ['name', 'first_surname', 'second_surname', 'phone_number']
+    inlines = [BankAccountInline]
 
 
 class ChildAdmin(admin.ModelAdmin):

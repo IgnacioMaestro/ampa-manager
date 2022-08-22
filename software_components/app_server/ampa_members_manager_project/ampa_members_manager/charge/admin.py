@@ -1,4 +1,5 @@
 import csv
+import codecs
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -27,14 +28,15 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=_("Export to CSV"))
     def download_csv(self, request, queryset: QuerySet[ActivityRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=_("Only can select one activity remittance"))
+            return self.message_user(request=request, message=_("Only one activity remittance can be selected at a time"))
         remittance: Remittance = RemittanceGenerator(activity_remittance=queryset.first()).generate()
         return ActivityRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
+        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.csv"'}
         response = HttpResponse(content_type='text/csv', headers=headers)
+        response.write(codecs.BOM_UTF8)
         csv.writer(response).writerows(remittance.obtain_rows())
         return response
 

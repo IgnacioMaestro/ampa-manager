@@ -14,4 +14,7 @@ class ActivityRegistrationForm(forms.ModelForm):
 
 
 class ActivityRegistrationAdmin(admin.ModelAdmin):
+    list_display = ['payable_part', 'child', 'amount', 'bank_account']
+    list_filter = ['payable_part', 'amount']
+    search_fields = ['child', 'payable_part']
     form = ActivityRegistrationForm

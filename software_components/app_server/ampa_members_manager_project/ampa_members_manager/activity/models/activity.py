@@ -6,9 +6,9 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 
 
 class Funding(models.IntegerChoices):
-    NO_FUNDING = 1
-    CULTURAL = 2
-    SPORT = 3
+    NO_FUNDING = (1, _('No funding'))
+    CULTURAL = (2, _('Cultural'))
+    SPORT = (3, _('Sport'))
 
 
 class Activity(models.Model):
