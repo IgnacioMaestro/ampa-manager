@@ -152,7 +152,8 @@ ADMIN_REORDER = (
     {'app': 'ampa_members_manager', 'label': _('ActivityRegistration'),
      'models': ('ampa_members_manager.ActivityRegistration',)},
     {'app': 'ampa_members_manager', 'label': _('Charge'),
-     'models': ('ampa_members_manager.ActivityReceipt', 'ampa_members_manager.ActivityRemittance')},
+     'models': ('ampa_members_manager.ActivityReceipt', 'ampa_members_manager.ActivityRemittance',
+                'ampa_members_manager.MembershipReceipt', 'ampa_members_manager.MembershipRemittance')},
     # Keep original label and models
     'auth',
 )

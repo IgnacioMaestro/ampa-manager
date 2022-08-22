@@ -9,9 +9,11 @@ from ampa_members_manager.activity.models.activity_payable_part import ActivityP
 from ampa_members_manager.activity.models.unique_activity import UniqueActivity
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationAdmin
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.charge.admin import ActivityRemittanceAdmin
+from ampa_members_manager.charge.admin import ActivityRemittanceAdmin, MembershipRemittanceAdmin
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
+from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.family.admin import FamilyAdmin, ParentAdmin, ChildAdmin, BankAccountAdmin, \
     AuthorizationAdmin, MembershipAdmin
 from ampa_members_manager.family.models.authorization import Authorization
@@ -40,3 +42,5 @@ admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)
 
 admin.site.register(ActivityRemittance, ActivityRemittanceAdmin)
 admin.site.register(ActivityReceipt)
+admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)
+admin.site.register(MembershipReceipt)

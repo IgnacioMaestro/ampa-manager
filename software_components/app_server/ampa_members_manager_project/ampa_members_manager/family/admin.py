@@ -1,9 +1,16 @@
 from django import forms
 from django.contrib import admin
+from django.db.models import QuerySet
+from django.utils.translation import gettext_lazy as _
 
+from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_members_manager.academic_course.models.active_course import ActiveCourse
+from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
+    MembershipRemittanceCreator
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 
 
@@ -32,6 +39,14 @@ class FamilyAdmin(admin.ModelAdmin):
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
+
+    @admin.action(description=_("Generate MembershipRemittance for current year"))
+    def generate_remittance(self, request, families: QuerySet[Family]):
+        academic_course: AcademicCourse = ActiveCourse.load()
+        MembershipRemittanceCreator(families, academic_course).create()
+        return self.message_user(request=request, message=_("Membership Remittance created"))
+
+    actions = [generate_remittance]
 
 
 class BankAccountInline(admin.TabularInline):

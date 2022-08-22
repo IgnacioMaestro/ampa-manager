@@ -18,7 +18,7 @@ GeneratorAdder.add_all()
 
 
 class TestRemittanceGenerator(TestCase):
-    def test_generate_remittance_no_charge(self):
+    def test_generate_remittance_no_activity_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
@@ -26,7 +26,7 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), 0)
 
-    def test_generate_remittance_one_charge(self):
+    def test_generate_remittance_one_activity_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         bank_account: BankAccount = baker.make('BankAccount')
@@ -44,7 +44,7 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(receipt.authorization, 'No authorization')
         self.assertEqual(receipt.iban, bank_account.iban)
 
-    def test_generate_remittance_two_charges(self):
+    def test_generate_remittance_two_activity_receipts(self):
         receipt_count: Final[int] = 2
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_receipts: List[ActivityReceipt] = baker.make(
