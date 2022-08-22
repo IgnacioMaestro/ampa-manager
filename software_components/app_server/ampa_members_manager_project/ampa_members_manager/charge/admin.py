@@ -62,6 +62,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
         response = HttpResponse(content_type='text/csv', headers=headers)
+        response.write(codecs.BOM_UTF8)
         csv.writer(response).writerows(remittance.obtain_rows())
         return response
 
