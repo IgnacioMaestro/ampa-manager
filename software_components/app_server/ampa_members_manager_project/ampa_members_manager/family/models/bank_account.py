@@ -7,7 +7,7 @@ from ampa_members_manager.family.models.parent import Parent
 
 
 class BankAccount(models.Model):
-    swift_bic = BICField(verbose_name=_("SWIFT/BIC"))
+    swift_bic = BICField(verbose_name=_("SWIFT/BIC"), null=True, blank=True)
     iban = IBANField(unique=True, verbose_name=_("IBAN"))
     owner = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Owner"))
 

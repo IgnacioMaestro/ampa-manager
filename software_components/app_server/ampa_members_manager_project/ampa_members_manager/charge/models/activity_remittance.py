@@ -10,6 +10,7 @@ from ampa_members_manager.charge.no_payable_part_error import NoActivityPeriodEr
 
 class ActivityRemittance(models.Model):
     name = models.CharField(max_length=300, verbose_name=_("Name"))
+    identifier = models.CharField(max_length=40, null=True, blank=True,verbose_name=_("Identifier"))
     created_at = models.DateTimeField(auto_now_add=True)
     payable_parts = models.ManyToManyField(to=ActivityPeriod, verbose_name=_("Activity Payable Parts"))
 

@@ -96,32 +96,9 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'bank_account', 'document', 'state']
+    list_display = ['number', 'year', 'date', 'bank_account', 'document', 'state']
     list_filter = ['year', 'state']
-    search_fields = ['number', 'year', 'bank_account']
-
-    @admin.action(description=_("Set as not sent"))
-    def set_as_not_sent(self, request, queryset: QuerySet[Authorization]):
-        queryset.update(state=State.NOT_SENT)
-
-        message = _("%(num_authorizations)s authorizations set as NOT sent") % {'num_authorizations':  queryset.count()}
-        self.message_user(request=request, message=message)
-
-    @admin.action(description=_("Set as sent"))
-    def set_as_sent(self, request, queryset: QuerySet[Authorization]):
-        queryset.update(state=State.SENT)
-
-        message = _("%(num_authorizations)s authorizations set as sent") % {'num_authorizations':  queryset.count()}
-        self.message_user(request=request, message=message)
-    
-    @admin.action(description=_("Set as signed"))
-    def set_as_signed(self, request, queryset: QuerySet[Authorization]):
-        queryset.update(state=State.SIGNED)
-
-        message = _("%(num_authorizations)s authorizations set as signed") % {'num_authorizations':  queryset.count()}
-        self.message_user(request=request, message=message)
-    
-    actions = [set_as_not_sent, set_as_sent, set_as_signed]
+    search_fields = ['number', 'year', 'date', 'bank_account']
 
 
 class MembershipAdmin(admin.ModelAdmin):
