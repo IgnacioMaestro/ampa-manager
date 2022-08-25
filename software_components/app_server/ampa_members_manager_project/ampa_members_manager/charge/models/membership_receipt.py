@@ -30,13 +30,15 @@ class MembershipReceipt(models.Model):
         bank_account_owner: str = str(self.family.default_bank_account.owner)
         iban: str = self.family.default_bank_account.iban
         amount = self.remittance.course.fee
-        authorization = self.__obtain_authorization()
-        return Receipt(amount, bank_account_owner, iban, authorization)
+        authorization_number, authorization_date = self.__obtain_authorization()
+        return Receipt(amount, bank_account_owner, iban, authorization_number, authorization_date)
 
     def __obtain_authorization(self):
         try:
             authorization: Authorization = Authorization.objects.get(bank_account=self.family.default_bank_account)
             authorization_number = authorization.number
+            authorization_date = authorization.date
         except Authorization.DoesNotExist:
             authorization_number = Receipt.NO_AUTHORIZATION_MESSAGE
-        return authorization_number
+            authorization_date = None
+        return authorization_number, authorization_date

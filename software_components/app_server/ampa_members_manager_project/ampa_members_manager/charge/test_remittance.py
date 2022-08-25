@@ -14,7 +14,8 @@ class TestRemittance(TestCase):
 
     def test_obtain_rows_one_receipt(self):
         receipt: Receipt = Receipt(
-            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization='authorization')
+            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization_number='authorization_number',
+            authorization_date='authorization_date')
         remittance: Remittance = Remittance([receipt], 'One Receipt Remittance')
 
         rows = remittance.obtain_rows()
@@ -23,7 +24,8 @@ class TestRemittance(TestCase):
 
     def test_obtain_rows_two_receipts(self):
         receipt: Receipt = Receipt(
-            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization='authorization')
+            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization_number='authorization_number', 
+            authorization_date='authorization_date')
         remittance: Remittance = Remittance([receipt, receipt], 'Two Receipt Remittance')
 
         rows = remittance.obtain_rows()
