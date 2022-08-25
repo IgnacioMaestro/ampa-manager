@@ -23,7 +23,7 @@ class TestActivityRegistration(TestCase):
     def test_str(self):
         self.assertEqual(
             str(self.activity_registration),
-            f'{str(self.activity_registration.payable_part)}-{str(self.activity_registration.child)}')
+            f'{str(self.activity_registration.activity_period)}-{str(self.activity_registration.child)}')
 
     def test_establish_amount(self):
         amount: float = 123.56
@@ -31,25 +31,25 @@ class TestActivityRegistration(TestCase):
         self.activity_registration.refresh_from_db()
         self.assertEqual(self.activity_registration.amount, amount)
 
-    def test_with_payable_part_no_activity_registration(self):
-        payable_part: ActivityPeriod = baker.make('ActivityPeriod')
-        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
-            payable_part=payable_part)
+    def test_with_activity_period_no_activity_registration(self):
+        activity_period: ActivityPeriod = baker.make('ActivityPeriod')
+        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_activity_period(
+            activity_period=activity_period)
         self.assertEqual(activity_registrations.count(), 0)
 
-    def test_with_payable_part_one_activity_registration(self):
+    def test_with_activity_period_one_activity_registration(self):
         activity_period: ActivityPeriod = baker.make('ActivityPeriod')
-        baker.make('ActivityRegistration', payable_part=activity_period)
-        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
-            payable_part=activity_period)
+        baker.make('ActivityRegistration', activity_period=activity_period)
+        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_activity_period(
+            activity_period=activity_period)
         self.assertEqual(activity_registrations.count(), 1)
 
-    def test_with_payable_part_more_than_one_activity_registration(self):
+    def test_with_activity_period_more_than_one_activity_registration(self):
         quantity: int = 3
         activity_period: ActivityPeriod = baker.make('ActivityPeriod')
-        baker.make('ActivityRegistration', payable_part=activity_period, _quantity=quantity)
-        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
-            payable_part=activity_period)
+        baker.make('ActivityRegistration', activity_period=activity_period, _quantity=quantity)
+        activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_activity_period(
+            activity_period=activity_period)
         self.assertEqual(activity_registrations.count(), quantity)
 
     def test_is_membership_no_membership(self):
