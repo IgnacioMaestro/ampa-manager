@@ -69,7 +69,7 @@ class ChildAdmin(admin.ModelAdmin):
     list_filter = ['year_of_birth', 'repetition', CourseListFilter]
     search_fields = ['name', 'year_of_birth', 'repetition', 'family']
 
-    @admin.display(description=_('Es miembro'))
+    @admin.display(description=_('Is member'))
     def is_member(self, child):
         return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
     
