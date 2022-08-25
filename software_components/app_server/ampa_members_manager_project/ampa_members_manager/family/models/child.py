@@ -1,9 +1,13 @@
+from typing import Optional
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_members_manager.academic_course.models.active_course import ActiveCourse
+from ampa_members_manager.academic_course.models.course_name import CourseName
 
 
 class Child(models.Model):
@@ -25,3 +29,9 @@ class Child(models.Model):
 
     def __str__(self) -> str:
         return self.full_name
+    
+    def get_course_name(self) -> Optional[CourseName]:
+        active_course = ActiveCourse.load()
+        years_since_birth = active_course.initial_year - self.year_of_birth
+
+        return CourseName.get_name_by_years(years_since_birth - self.repetition)
