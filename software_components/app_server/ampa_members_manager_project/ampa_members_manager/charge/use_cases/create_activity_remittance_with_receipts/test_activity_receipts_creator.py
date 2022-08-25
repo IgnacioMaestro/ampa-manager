@@ -4,9 +4,8 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.baker_recipes import activity_registration_with_payable_part
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import \
     ActivityReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
@@ -32,10 +31,10 @@ class TestActivityReceiptsCreator(TestCase):
         self.assertEqual(ActivityReceipt.objects.filter(remittance=activity_remittance).count(), 0)
 
     def test_create_activity_registrations_different_bank_accounts(self):
-        activity_registrations: List[ActivityRegistration] = baker.make_recipe(
-            activity_registration_with_payable_part, _quantity=self.ACTIVITY_REGISTRATION_COUNT)
+        activity_registrations: List[ActivityRegistration] = baker.make(
+            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT)
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            ActivityPayablePart.objects.all())
+            ActivityPeriod.objects.all())
 
         ActivityReceiptsCreator(activity_remittance).create()
 
@@ -48,11 +47,10 @@ class TestActivityReceiptsCreator(TestCase):
 
     def test_create_activity_registrations_same_bank_accounts(self):
         bank_account: BankAccount = baker.make('BankAccount')
-        activity_registrations: List[ActivityRegistration] = baker.make_recipe(
-            activity_registration_with_payable_part, _quantity=self.ACTIVITY_REGISTRATION_COUNT,
-            bank_account=bank_account, amount=2.3)
+        activity_registrations: List[ActivityRegistration] = baker.make(
+            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account, amount=2.3)
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            ActivityPayablePart.objects.all())
+            ActivityPeriod.objects.all())
 
         ActivityReceiptsCreator(activity_remittance).create()
 
@@ -67,8 +65,7 @@ class TestActivityReceiptsCreator(TestCase):
 
     def test_find_or_create_receipt_create(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
-        activity_registration: ActivityRegistration = baker.make_recipe(
-            activity_registration_with_payable_part, amount=2.3)
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', amount=2.3)
 
         activity_receipt: ActivityReceipt = ActivityReceiptsCreator(activity_remittance).find_or_create_receipt(
             activity_registration)
@@ -78,7 +75,7 @@ class TestActivityReceiptsCreator(TestCase):
 
     def test_find_or_create_receipt_find(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
-        activity_registration: ActivityRegistration = baker.make_recipe(activity_registration_with_payable_part)
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
         previous_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance)
         previous_activity_receipt.activity_registrations.add(activity_registration)
 
@@ -90,10 +87,10 @@ class TestActivityReceiptsCreator(TestCase):
     def test_find_or_create_receipt_create_instead_other_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         bank_account: BankAccount = baker.make('BankAccount')
-        activity_registration: ActivityRegistration = baker.make_recipe(
-            activity_registration_with_payable_part, amount=2.3, bank_account=bank_account)
-        other_activity_registration: ActivityRegistration = baker.make_recipe(
-            activity_registration_with_payable_part, bank_account=bank_account)
+        activity_registration: ActivityRegistration = baker.make(
+            'ActivityRegistration', amount=2.3, bank_account=bank_account)
+        other_activity_registration: ActivityRegistration = baker.make(
+            'ActivityRegistration', bank_account=bank_account)
         other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         other_activity_receipt.activity_registrations.add(other_activity_registration)
 

@@ -34,8 +34,8 @@ class MembershipInline(admin.TabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['first_surname', 'second_surname', 'email', 'secondary_email', 'default_bank_account']
-    search_fields = ['first_surname', 'second_surname', 'email', 'secondary_email']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account']
+    search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]

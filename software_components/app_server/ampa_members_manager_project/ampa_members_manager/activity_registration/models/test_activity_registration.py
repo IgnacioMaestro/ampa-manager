@@ -4,10 +4,8 @@ from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.baker_recipes import activity_registration_with_payable_part, \
-    payable_part_with_unique_activity
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
@@ -20,7 +18,7 @@ class TestActivityRegistration(TestCase):
         self.academic_course: AcademicCourse = baker.make('AcademicCourse')
         ActiveCourse.objects.create(course=self.academic_course)
         self.family: Family = baker.make('Family')
-        self.activity_registration: ActivityRegistration = baker.make_recipe(activity_registration_with_payable_part)
+        self.activity_registration: ActivityRegistration = baker.make('ActivityRegistration')
 
     def test_str(self):
         self.assertEqual(
@@ -34,24 +32,24 @@ class TestActivityRegistration(TestCase):
         self.assertEqual(self.activity_registration.amount, amount)
 
     def test_with_payable_part_no_activity_registration(self):
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
+        payable_part: ActivityPeriod = baker.make('ActivityPeriod')
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
             payable_part=payable_part)
         self.assertEqual(activity_registrations.count(), 0)
 
     def test_with_payable_part_one_activity_registration(self):
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
-        baker.make('ActivityRegistration', payable_part=payable_part)
+        activity_period: ActivityPeriod = baker.make('ActivityPeriod')
+        baker.make('ActivityRegistration', payable_part=activity_period)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
-            payable_part=payable_part)
+            payable_part=activity_period)
         self.assertEqual(activity_registrations.count(), 1)
 
     def test_with_payable_part_more_than_one_activity_registration(self):
         quantity: int = 3
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
-        baker.make('ActivityRegistration', payable_part=payable_part, _quantity=quantity)
+        activity_period: ActivityPeriod = baker.make('ActivityPeriod')
+        baker.make('ActivityRegistration', payable_part=activity_period, _quantity=quantity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
-            payable_part=payable_part)
+            payable_part=activity_period)
         self.assertEqual(activity_registrations.count(), quantity)
 
     def test_is_membership_no_membership(self):
