@@ -3,12 +3,7 @@ from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
-
-
-class Funding(models.IntegerChoices):
-    NO_FUNDING = (1, _('No funding'))
-    CULTURAL = (2, _('Cultural'))
-    SPORT = (3, _('Sport'))
+from ampa_members_manager.activity.models.funding import Funding
 
 
 class Activity(models.Model):
@@ -17,6 +12,8 @@ class Activity(models.Model):
     funding = models.IntegerField(choices=Funding.choices, verbose_name=_("Funding"))
 
     class Meta:
-        abstract = True
         verbose_name = _('Activity')
-        verbose_name_plural = _('Activities')
+        verbose_name_plural = _('Activity')
+
+    def __str__(self) -> str:
+        return f'{self.name}'
