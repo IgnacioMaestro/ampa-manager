@@ -146,8 +146,9 @@ ADMIN_REORDER = (
          'ampa_members_manager.Membership', 'ampa_members_manager.BankAccount', 'ampa_members_manager.Authorization')},
     {'app': 'ampa_members_manager', 'label': _('Activity'),
      'models': (
-         'ampa_members_manager.Activity', 'ampa_members_manager.RepetitiveActivity',
-         'ampa_members_manager.UniqueActivity', 'ampa_members_manager.ActivityPeriod')},
+         'ampa_members_manager.ActivityInheritance', 'ampa_members_manager.Activity',
+         'ampa_members_manager.RepetitiveActivity', 'ampa_members_manager.UniqueActivity',
+         'ampa_members_manager.ActivityPeriod')},
     {'app': 'ampa_members_manager', 'label': _('ActivityRegistration'),
      'models': ('ampa_members_manager.ActivityRegistration',)},
     {'app': 'ampa_members_manager', 'label': _('Charge'),

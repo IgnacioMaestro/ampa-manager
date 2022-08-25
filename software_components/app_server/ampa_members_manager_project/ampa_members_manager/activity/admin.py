@@ -21,7 +21,7 @@ class UniqueActivityAdmin(admin.ModelAdmin):
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, payable_parts: QuerySet[ActivityPeriod]):
-        if not ActivityPeriod.all_same_repetitive_activity(payable_parts=payable_parts):
+        if not ActivityPeriod.all_same_activity(activity_periods=payable_parts):
             message = _("All Single Activities must be from the same repetitive activity")
             return self.message_user(request, message)
         ActivityRemittanceWithReceiptsCreator(payable_parts).create()

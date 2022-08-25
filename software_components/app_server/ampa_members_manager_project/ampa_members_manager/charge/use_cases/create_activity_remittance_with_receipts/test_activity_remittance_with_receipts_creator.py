@@ -3,7 +3,6 @@ from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
-from ampa_members_manager.baker_recipes import activity_registration_with_payable_part
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
@@ -23,7 +22,7 @@ class TestActivityRemittanceWithReceiptsCreator(TestCase):
             ActivityRemittanceWithReceiptsCreator(ActivityPeriod.objects.all()).create()
 
     def test_create_activity_registrations_same_bank_accounts(self):
-        baker.make_recipe(activity_registration_with_payable_part, bank_account=baker.make('BankAccount'))
+        baker.make('ActivityRegistration', bank_account=baker.make('BankAccount'))
 
         ActivityRemittanceWithReceiptsCreator(ActivityPeriod.objects.all()).create()
 

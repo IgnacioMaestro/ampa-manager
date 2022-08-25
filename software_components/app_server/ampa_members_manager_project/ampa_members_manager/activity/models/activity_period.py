@@ -1,17 +1,11 @@
 from __future__ import annotations
+
 from django.db import models
-from django.db.models import Q, CASCADE, QuerySet
+from django.db.models import CASCADE, QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.activity.models.repetitive_activity import RepetitiveActivity
-from ampa_members_manager.activity.models.unique_activity import UniqueActivity
-
-
-class PaymentType(models.IntegerChoices):
-    SINGLE = 1
-    PER_DAY = 2
-    PER_WEEK = 3
-    PER_MONTH = 4
+from ampa_members_manager.activity.models.activity import Activity
+from ampa_members_manager.activity.models.payment_type import PaymentType
 
 
 class ActivityPeriod(models.Model):
@@ -19,20 +13,11 @@ class ActivityPeriod(models.Model):
     price_for_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for members"))
     price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for no members"))
     payment_type = models.IntegerField(choices=PaymentType.choices, verbose_name=_("Payment type"))
-    repetitive_activity = models.ForeignKey(
-        to=RepetitiveActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Repetitive Activity"))
-    unique_activity = models.OneToOneField(
-        to=UniqueActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Unique activity"))
+    activity = models.ForeignKey(to=Activity, on_delete=CASCADE, verbose_name=_("Activity"))
 
     class Meta:
         verbose_name = _('Activity Period')
         verbose_name_plural = _('Activity Periods')
-        constraints = [
-            models.CheckConstraint(
-                check=(Q(repetitive_activity__isnull=False) & Q(unique_activity__isnull=True)
-                       ) | (Q(repetitive_activity__isnull=True) & Q(unique_activity__isnull=False)),
-                name='one_activity_reference'),
-        ]
 
     def __str__(self) -> str:
         return f'{self.name}'
@@ -56,20 +41,11 @@ class ActivityPeriod(models.Model):
             return float(self.price_for_member) * times
 
     @classmethod
-    def all_same_repetitive_activity(cls, payable_parts: QuerySet[ActivityPeriod]) -> bool:
-        if payable_parts.count() > 1:
-            if not ActivityPeriod.no_unique_activity(payable_parts):
-                return False
-            repetitive_activity: RepetitiveActivity = payable_parts.first().repetitive_activity
-            payable_part: ActivityPeriod
-            for payable_part in payable_parts.all():
-                if payable_part.repetitive_activity != repetitive_activity:
+    def all_same_activity(cls, activity_periods: QuerySet[ActivityPeriod]) -> bool:
+        if activity_periods.count() > 1:
+            activity: Activity = activity_periods.first().activity
+            activity_period: ActivityPeriod
+            for activity_period in activity_periods.all():
+                if activity_period.activity != activity:
                     return False
-        return True
-
-    @classmethod
-    def no_unique_activity(cls, payable_parts: QuerySet[ActivityPeriod]) -> bool:
-        for payable_part in payable_parts.all():
-            if payable_part.unique_activity is not None:
-                return False
         return True
