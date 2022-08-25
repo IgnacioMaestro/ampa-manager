@@ -25,8 +25,8 @@ class ActivityPeriod(models.Model):
         to=UniqueActivity, on_delete=CASCADE, null=True, blank=True, verbose_name=_("Unique activity"))
 
     class Meta:
-        verbose_name = _('Activity Payable Part')
-        verbose_name_plural = _('Activity Payable Parts')
+        verbose_name = _('Activity Period')
+        verbose_name_plural = _('Activity Periods')
         constraints = [
             models.CheckConstraint(
                 check=(Q(repetitive_activity__isnull=False) & Q(unique_activity__isnull=True)
