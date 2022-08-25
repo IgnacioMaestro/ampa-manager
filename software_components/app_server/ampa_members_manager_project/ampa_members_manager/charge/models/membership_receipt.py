@@ -22,6 +22,10 @@ class MembershipReceipt(models.Model):
     remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
 
+    class Meta:
+        verbose_name = _('Membership receipt')
+        verbose_name_plural = _('Membership receipts')
+
     def generate_receipt(self) -> Receipt:
         if self.family.default_bank_account is None:
             raise NoFamilyBankAccountException

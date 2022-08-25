@@ -15,8 +15,8 @@ class ActivityRemittance(models.Model):
     activity_periods = models.ManyToManyField(to=ActivityPeriod, verbose_name=_("Activity Payable Parts"))
 
     class Meta:
-        verbose_name = _('Activity Remittance')
-        verbose_name_plural = _('Activity Remittances')
+        verbose_name = _('Activity remittance')
+        verbose_name_plural = _('Activity remittances')
 
     def __str__(self) -> str:
         return self.complete_name
