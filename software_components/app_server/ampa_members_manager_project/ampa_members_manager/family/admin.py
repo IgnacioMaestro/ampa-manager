@@ -12,6 +12,7 @@ from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
+from ampa_members_manager.family.filters import CourseListFilter
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -62,13 +63,23 @@ class ParentAdmin(admin.ModelAdmin):
 
 
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ['name', 'year_of_birth', 'repetition', 'family', 'is_member']
-    list_filter = ['year_of_birth', 'repetition']
+    list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
+    list_filter = ['year_of_birth', 'repetition', CourseListFilter]
     search_fields = ['name', 'year_of_birth', 'repetition', 'family']
 
     @admin.display(description=_('Es miembro'))
     def is_member(self, child):
         return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
+    
+    @admin.display(description=_('Course'))
+    def child_course(self, child):
+        active_course = ActiveCourse.load()
+        years_since_birth = active_course.initial_year - child.year_of_birth
+        return AcademicCourse.get_course(years_since_birth, child.repetition)
+    
+    @admin.display(description=_('Parents'))
+    def parents(self, child):
+        return ', '.join(p.name_and_surnames for p in child.family.parents.all())
 
 
 class AuthorizationInline(admin.TabularInline):
