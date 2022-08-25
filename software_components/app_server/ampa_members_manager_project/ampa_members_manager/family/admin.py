@@ -80,9 +80,9 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'bank_account', 'document']
+    list_display = ['number', 'year', 'date', 'bank_account', 'document']
     list_filter = ['year']
-    search_fields = ['number', 'year', 'bank_account']
+    search_fields = ['number', 'year', 'date', 'bank_account']
 
 
 class MembershipAdmin(admin.ModelAdmin):
