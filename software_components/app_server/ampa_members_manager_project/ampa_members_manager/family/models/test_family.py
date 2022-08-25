@@ -23,7 +23,7 @@ class TestFamily(TestCase):
 
     def test_str(self):
         family: Family = baker.make('Family')
-        self.assertEqual(str(family), "{} {}".format(family.first_surname, family.second_surname))
+        self.assertEqual(str(family), str(family.surnames))
 
     def test_all_families_no_families(self):
         self.assertQuerysetEqual(Family.all_families(), Family.objects.none())
