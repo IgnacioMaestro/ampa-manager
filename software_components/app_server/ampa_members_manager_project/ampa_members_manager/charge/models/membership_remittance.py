@@ -6,6 +6,7 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 
 
 class MembershipRemittance(models.Model):
+    identifier = models.CharField(max_length=40, null=True, blank=True, verbose_name=_("Identifier"))
     created_at = models.DateTimeField(auto_now_add=True)
     course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("AcademicCourse"))
 
