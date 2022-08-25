@@ -6,7 +6,7 @@ from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.no_payable_part_error import NoActivityPeriodError
+from ampa_members_manager.charge.no_activity_period_error import NoActivityPeriodError
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()
@@ -17,7 +17,7 @@ class TestActivityRemittanceWithReceiptsCreator(TestCase):
     def setUpTestData(cls):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
 
-    def test_create_no_payable_part(self):
+    def test_create_no_activity_period(self):
         with self.assertRaises(NoActivityPeriodError):
             ActivityRemittanceWithReceiptsCreator(ActivityPeriod.objects.all()).create()
 

@@ -11,14 +11,14 @@ class ActivityReceiptsCreator:
 
     def create(self):
         activity_registrations: List[ActivityRegistration] = []
-        for payable_part in self.__activity_remittance.payable_parts.all():
-            activity_registrations.extend(ActivityRegistration.with_payable_part(payable_part=payable_part))
+        for activity_period in self.__activity_remittance.activity_periods.all():
+            activity_registrations.extend(ActivityRegistration.with_activity_period(activity_period=activity_period))
         for activity_registration in activity_registrations:
             self.create_receipt_for_activity_registration(activity_registration)
 
     def create_receipt_for_activity_registration(self, activity_registration: ActivityRegistration):
         activity_receipt: ActivityReceipt = self.find_or_create_receipt(activity_registration)
-        price: float = activity_registration.payable_part.calculate_price(
+        price: float = activity_registration.activity_period.calculate_price(
             times=activity_registration.amount, membership=activity_registration.is_membership())
         activity_receipt.amount = activity_receipt.amount + price
         activity_receipt.activity_registrations.add(activity_registration)

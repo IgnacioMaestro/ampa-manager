@@ -46,6 +46,7 @@ class ActivityReceiptAdmin(admin.ModelAdmin):
 
 class ActivityRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'receipt_count', 'receipt_created_count', 'receipt_sent_count', 'receipt_paid_count']
+    list_filter = ['created_at']
     inlines = [ActivityReceiptInline]
 
     @admin.action(description=_("Export to CSV"))

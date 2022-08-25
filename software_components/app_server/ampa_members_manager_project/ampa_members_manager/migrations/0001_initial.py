@@ -173,7 +173,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=300, verbose_name='Name')),
                 ('identifier', models.CharField(blank=True, max_length=40, null=True, verbose_name='Identifier')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('payable_parts', models.ManyToManyField(to='ampa_members_manager.activityperiod', verbose_name='Activity Payable Parts')),
+                ('activity_periods', models.ManyToManyField(to='ampa_members_manager.activityperiod', verbose_name='Activity Payable Parts')),
             ],
             options={
                 'verbose_name': 'Activity Remittance',

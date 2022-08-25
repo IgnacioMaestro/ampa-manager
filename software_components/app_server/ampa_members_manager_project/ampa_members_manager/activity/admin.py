@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
+from ampa_members_manager.activity_registration.admin import ActivityRegistrationInline
 
 
 class RepetitiveActivityAdmin(admin.ModelAdmin):
@@ -16,14 +17,18 @@ class RepetitiveActivityAdmin(admin.ModelAdmin):
 
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
-    def create_activity_remittance(self, request, payable_parts: QuerySet[ActivityPeriod]):
-        if not ActivityPeriod.all_same_activity(activity_periods=payable_parts):
+    def create_activity_remittance(self, request, activity_periods: QuerySet[ActivityPeriod]):
+        if not ActivityPeriod.all_same_activity(activity_periods=activity_periods):
             message = _("All Single Activities must be from the same repetitive activity")
             return self.message_user(request, message)
-        ActivityRemittanceWithReceiptsCreator(payable_parts).create()
+        ActivityRemittanceWithReceiptsCreator(activity_periods).create()
         return self.message_user(request=request, message=_("Activity Remittance created"))
 
     actions = [create_activity_remittance]
+    inlines = [ActivityRegistrationInline]
+    list_display = ['name', 'price_for_member', 'price_for_no_member', 'payment_type', 'activity']
+    list_filter = ['activity__name', 'payment_type']
+    search_fields = ['name']
 
 
 class ActivityPeriodInline(admin.TabularInline):
@@ -36,6 +41,4 @@ class ActivityAdmin(admin.ModelAdmin):
     list_display = ['name', 'academic_course', 'funding']
     list_filter = ['funding', 'academic_course__initial_year']
     inlines = [ActivityPeriodInline]
-
-
-
+    search_fields = ['name']

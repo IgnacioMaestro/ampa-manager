@@ -10,6 +10,10 @@ class MembershipRemittance(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("AcademicCourse"))
 
+    class Meta:
+        verbose_name = _('Membership remittance')
+        verbose_name_plural = _('Membership remittances')
+
     def __str__(self) -> str:
         return self.complete_name
 
