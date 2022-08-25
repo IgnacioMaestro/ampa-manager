@@ -13,6 +13,7 @@ from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter
+from ampa_members_manager.family.models.state import State
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -95,9 +96,32 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'bank_account', 'document']
-    list_filter = ['year']
+    list_display = ['number', 'year', 'bank_account', 'document', 'state']
+    list_filter = ['year', 'state']
     search_fields = ['number', 'year', 'bank_account']
+
+    @admin.action(description=_("Set as not sent"))
+    def set_as_not_sent(self, request, queryset: QuerySet[Authorization]):
+        queryset.update(state=State.NOT_SENT)
+
+        message = _("%(num_authorizations)s authorizations set as NOT sent") % {'num_authorizations':  queryset.count()}
+        self.message_user(request=request, message=message)
+
+    @admin.action(description=_("Set as sent"))
+    def set_as_sent(self, request, queryset: QuerySet[Authorization]):
+        queryset.update(state=State.SENT)
+
+        message = _("%(num_authorizations)s authorizations set as sent") % {'num_authorizations':  queryset.count()}
+        self.message_user(request=request, message=message)
+    
+    @admin.action(description=_("Set as signed"))
+    def set_as_signed(self, request, queryset: QuerySet[Authorization]):
+        queryset.update(state=State.SIGNED)
+
+        message = _("%(num_authorizations)s authorizations set as signed") % {'num_authorizations':  queryset.count()}
+        self.message_user(request=request, message=message)
+    
+    actions = [set_as_not_sent, set_as_sent, set_as_signed]
 
 
 class MembershipAdmin(admin.ModelAdmin):
