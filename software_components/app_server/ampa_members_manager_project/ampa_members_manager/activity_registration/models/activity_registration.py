@@ -12,7 +12,7 @@ from ampa_members_manager.family.models.membership import Membership
 
 class ActivityRegistration(models.Model):
     amount = models.FloatField(default=0.0, verbose_name=_("Amount"))
-    payable_part = models.ForeignKey(to=ActivityPeriod, on_delete=CASCADE, verbose_name=_("Activity Payable Part"))
+    payable_part = models.ForeignKey(to=ActivityPeriod, on_delete=CASCADE, verbose_name=_("Activity period"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
     child = models.ForeignKey(to=Child, on_delete=CASCADE, verbose_name=_("Child"))
 

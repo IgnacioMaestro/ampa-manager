@@ -14,10 +14,6 @@ class RepetitiveActivityAdmin(admin.ModelAdmin):
     fields = ['name', 'academic_course', 'funding']
 
 
-class UniqueActivityAdmin(admin.ModelAdmin):
-    fields = ['name', 'academic_course', 'funding']
-
-
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, payable_parts: QuerySet[ActivityPeriod]):
@@ -28,3 +24,18 @@ class ActivityPeriodAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=_("Activity Remittance created"))
 
     actions = [create_activity_remittance]
+
+
+class ActivityPeriodInline(admin.TabularInline):
+    model = ActivityPeriod
+    list_display = ['name', 'price_for_member', 'price_for_no_member', 'payment_type', 'activity']
+    extra = 0
+
+
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ['name', 'academic_course', 'funding']
+    list_filter = ['funding', 'academic_course__initial_year']
+    inlines = [ActivityPeriodInline]
+
+
+

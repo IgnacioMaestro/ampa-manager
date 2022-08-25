@@ -38,12 +38,18 @@ class ActivityReceipt(models.Model):
         try:
             authorization: Authorization = Authorization.objects.get(bank_account=bank_account)
             return Receipt(
-                amount=self.amount, bank_account_owner=str(bank_account.owner),
-                iban=bank_account.iban, authorization=str(authorization))
+                amount=str(self.amount), 
+                bank_account_owner=str(bank_account.owner),
+                iban=bank_account.iban, 
+                authorization_number=str(authorization.number),
+                authorization_date=authorization.date.strftime("%m/%d/%Y"))
         except Authorization.DoesNotExist:
             return Receipt(
-                amount=self.amount, bank_account_owner=str(bank_account.owner),
-                iban=bank_account.iban, authorization='No authorization')
+                amount=str(self.amount), 
+                bank_account_owner=str(bank_account.owner),
+                iban=bank_account.iban, 
+                authorization_number=str(Receipt.NO_AUTHORIZATION_MESSAGE),
+                authorization_date='')
 
     @classmethod
     def find_activity_receipt_with_bank_account(

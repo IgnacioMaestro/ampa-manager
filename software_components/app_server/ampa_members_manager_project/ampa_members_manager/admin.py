@@ -3,7 +3,7 @@ from django.contrib import admin
 from ampa_members_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.admin import ActivityPeriodAdmin
+from ampa_members_manager.activity.admin import ActivityPeriodAdmin, ActivityAdmin
 from ampa_members_manager.activity.models.activity import Activity
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationAdmin
@@ -26,7 +26,7 @@ admin.site.register(AcademicCourse, AcademicCourseAdmin)
 admin.site.register(ActiveCourse)
 
 admin.site.register(ActivityPeriod, ActivityPeriodAdmin)
-admin.site.register(Activity)
+admin.site.register(Activity, ActivityAdmin)
 
 admin.site.register(Child, ChildAdmin)
 admin.site.register(Parent, ParentAdmin)
@@ -37,7 +37,6 @@ admin.site.register(Authorization, AuthorizationAdmin)
 admin.site.register(Membership, MembershipAdmin)
 
 admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)
-
 admin.site.register(ActivityRemittance, ActivityRemittanceAdmin)
 admin.site.register(ActivityReceipt, ActivityReceiptAdmin)
 admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)

@@ -78,7 +78,7 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.csv"'}
         response = HttpResponse(content_type='text/csv', headers=headers)
         response.write(codecs.BOM_UTF8)
-        csv.writer(response).writerows(remittance.obtain_rows())
+        csv.writer(response, quoting=csv.QUOTE_ALL).writerows(remittance.obtain_rows())
         return response
 
     @admin.display(description=_('Total receipts'))
