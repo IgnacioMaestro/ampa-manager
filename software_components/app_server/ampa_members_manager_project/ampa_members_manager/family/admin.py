@@ -14,7 +14,6 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter
 from ampa_members_manager.family.models.state import State
-from ampa_members_manager.academic_course.models.course_name import CourseName
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -96,10 +95,18 @@ class AuthorizationInline(admin.TabularInline):
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['swift_bic', 'iban', 'owner']
+    list_display = ['swift_bic', 'iban', 'owner', 'authorization_status']
     list_filter = ['swift_bic']
     search_fields = ['swift_bic', 'iban', 'owner']
     inlines = [AuthorizationInline]
+
+    @admin.display(description=_('Authorization'))
+    def authorization_status(self, bank_account):
+        try:
+            authorization = Authorization.objects.get(bank_account=bank_account)
+            return authorization.state
+        except Authorization.DoesNotExist:
+            return _('No authorizacion')
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
