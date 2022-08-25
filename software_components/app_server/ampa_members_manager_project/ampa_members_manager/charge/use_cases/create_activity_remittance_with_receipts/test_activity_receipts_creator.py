@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.baker_recipes import activity_registration_with_payable_part
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import \
@@ -35,7 +35,7 @@ class TestActivityReceiptsCreator(TestCase):
         activity_registrations: List[ActivityRegistration] = baker.make_recipe(
             activity_registration_with_payable_part, _quantity=self.ACTIVITY_REGISTRATION_COUNT)
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            ActivityPayablePart.objects.all())
+            ActivityPeriod.objects.all())
 
         ActivityReceiptsCreator(activity_remittance).create()
 
@@ -52,7 +52,7 @@ class TestActivityReceiptsCreator(TestCase):
             activity_registration_with_payable_part, _quantity=self.ACTIVITY_REGISTRATION_COUNT,
             bank_account=bank_account, amount=2.3)
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            ActivityPayablePart.objects.all())
+            ActivityPeriod.objects.all())
 
         ActivityReceiptsCreator(activity_remittance).create()
 

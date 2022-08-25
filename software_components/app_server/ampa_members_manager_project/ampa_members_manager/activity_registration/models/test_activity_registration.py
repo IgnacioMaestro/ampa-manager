@@ -4,7 +4,7 @@ from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.baker_recipes import activity_registration_with_payable_part, \
     payable_part_with_unique_activity
@@ -34,13 +34,13 @@ class TestActivityRegistration(TestCase):
         self.assertEqual(self.activity_registration.amount, amount)
 
     def test_with_payable_part_no_activity_registration(self):
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
+        payable_part: ActivityPeriod = baker.make_recipe(payable_part_with_unique_activity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
             payable_part=payable_part)
         self.assertEqual(activity_registrations.count(), 0)
 
     def test_with_payable_part_one_activity_registration(self):
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
+        payable_part: ActivityPeriod = baker.make_recipe(payable_part_with_unique_activity)
         baker.make('ActivityRegistration', payable_part=payable_part)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
             payable_part=payable_part)
@@ -48,7 +48,7 @@ class TestActivityRegistration(TestCase):
 
     def test_with_payable_part_more_than_one_activity_registration(self):
         quantity: int = 3
-        payable_part: ActivityPayablePart = baker.make_recipe(payable_part_with_unique_activity)
+        payable_part: ActivityPeriod = baker.make_recipe(payable_part_with_unique_activity)
         baker.make('ActivityRegistration', payable_part=payable_part, _quantity=quantity)
         activity_registrations: QuerySet[ActivityRegistration] = ActivityRegistration.with_payable_part(
             payable_part=payable_part)

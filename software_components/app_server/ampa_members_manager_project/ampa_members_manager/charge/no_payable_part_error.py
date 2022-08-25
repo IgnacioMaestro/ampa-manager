@@ -1,6 +1,6 @@
 from __future__ import annotations
 
 
-class NoActivityPayablePartError(Exception):
+class NoActivityPeriodError(Exception):
     def __init__(self):
-        super().__init__("NoActivityPayablePartError")
+        super().__init__("NoActivityPeriodError")

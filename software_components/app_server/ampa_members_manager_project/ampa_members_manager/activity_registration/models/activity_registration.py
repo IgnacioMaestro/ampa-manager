@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import CASCADE, QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.activity.models.activity_payable_part import ActivityPayablePart
+from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.membership import Membership
@@ -12,7 +12,7 @@ from ampa_members_manager.family.models.membership import Membership
 
 class ActivityRegistration(models.Model):
     amount = models.FloatField(default=0.0, verbose_name=_("Amount"))
-    payable_part = models.ForeignKey(to=ActivityPayablePart, on_delete=CASCADE, verbose_name=_("Activity Payable Part"))
+    payable_part = models.ForeignKey(to=ActivityPeriod, on_delete=CASCADE, verbose_name=_("Activity Payable Part"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
     child = models.ForeignKey(to=Child, on_delete=CASCADE, verbose_name=_("Child"))
 
@@ -34,5 +34,5 @@ class ActivityRegistration(models.Model):
         return Membership.is_membership_child(self.child)
 
     @classmethod
-    def with_payable_part(cls, payable_part: ActivityPayablePart) -> QuerySet[ActivityRegistration]:
+    def with_payable_part(cls, payable_part: ActivityPeriod) -> QuerySet[ActivityRegistration]:
         return ActivityRegistration.objects.filter(payable_part=payable_part)

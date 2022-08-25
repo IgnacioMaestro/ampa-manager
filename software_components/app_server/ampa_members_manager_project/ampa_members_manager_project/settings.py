@@ -147,7 +147,7 @@ ADMIN_REORDER = (
     {'app': 'ampa_members_manager', 'label': _('Activity'),
      'models': (
          'ampa_members_manager.Activity', 'ampa_members_manager.RepetitiveActivity',
-         'ampa_members_manager.UniqueActivity', 'ampa_members_manager.ActivityPayablePart')},
+         'ampa_members_manager.UniqueActivity', 'ampa_members_manager.ActivityPeriod')},
     {'app': 'ampa_members_manager', 'label': _('ActivityRegistration'),
      'models': ('ampa_members_manager.ActivityRegistration',)},
     {'app': 'ampa_members_manager', 'label': _('Charge'),
