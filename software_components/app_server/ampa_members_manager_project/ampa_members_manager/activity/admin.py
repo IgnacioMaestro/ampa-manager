@@ -15,7 +15,7 @@ class RepetitiveActivityAdmin(admin.ModelAdmin):
 
 
 class UniqueActivityAdmin(admin.ModelAdmin):
-    fields = ['name', 'academic_course', 'funding', 'single_activity']
+    fields = ['name', 'academic_course', 'funding']
 
 
 class ActivityPayablePartAdmin(admin.ModelAdmin):
