@@ -10,9 +10,9 @@ from ampa_members_manager.charge.no_activity_period_error import NoActivityPerio
 
 class ActivityRemittance(models.Model):
     name = models.CharField(max_length=300, verbose_name=_("Name"))
-    identifier = models.CharField(max_length=40, null=True, blank=True,verbose_name=_("Identifier"))
-    created_at = models.DateTimeField(auto_now_add=True)
-    activity_periods = models.ManyToManyField(to=ActivityPeriod, verbose_name=_("Activity Payable Parts"))
+    identifier = models.CharField(max_length=40, null=True, blank=True, verbose_name=_("Identifier"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
+    activity_periods = models.ManyToManyField(to=ActivityPeriod, verbose_name=_("Activity periods"))
 
     class Meta:
         verbose_name = _('Activity remittance')

@@ -37,7 +37,7 @@ class MembershipInline(admin.TabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_member']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
@@ -48,7 +48,15 @@ class FamilyAdmin(admin.ModelAdmin):
         academic_course: AcademicCourse = ActiveCourse.load()
         MembershipRemittanceCreator(families, academic_course).create()
         return self.message_user(request=request, message=_("Membership Remittance created"))
-
+    
+    @admin.display(description=_('Children'))
+    def child_count(self, family):
+        return family.child_set.count()
+    
+    @admin.display(description=_('Is member'))
+    def is_member(self, family):
+        return _('Yes') if family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
+    
     actions = [generate_remittance]
 
 
@@ -71,7 +79,7 @@ class ChildAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Is member'))
     def is_member(self, child):
-        return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
+        return _('Yes') if child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
     
     @admin.display(description=_('Course'))
     def child_course(self, child):
@@ -125,5 +133,5 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ['family', 'academic_course']
-    list_filter = ['academic_course']
+    list_filter = ['academic_course__initial_year']
     search_fields = ['family', 'academic_course']
