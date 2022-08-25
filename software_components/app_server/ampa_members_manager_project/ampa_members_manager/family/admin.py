@@ -62,9 +62,13 @@ class ParentAdmin(admin.ModelAdmin):
 
 
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ['name', 'year_of_birth', 'repetition', 'family']
+    list_display = ['name', 'year_of_birth', 'repetition', 'family', 'is_member']
     list_filter = ['year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'repetition', 'family']
+
+    @admin.display(description=_('Es miembro'))
+    def is_member(self, child):
+        return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
 
 
 class AuthorizationInline(admin.TabularInline):
