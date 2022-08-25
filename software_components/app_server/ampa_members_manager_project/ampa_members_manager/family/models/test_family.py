@@ -14,12 +14,11 @@ class TestFamily(TestCase):
     def test_create_no_unique_email(self):
         family: Family = baker.make('Family')
         with self.assertRaises(IntegrityError):
-            Family.objects.create(
-                first_surname="first_surname", second_surname="second_surname", email=family.email)
+            Family.objects.create(surnames="surnames", email=family.email)
 
     def test_create_unique_email_and_unique_surnames(self):
         baker.make('Family')
-        Family.objects.create(first_surname="first_surname", second_surname="second_surname", email="unique_email")
+        Family.objects.create(surnames="surnames", email="unique_email")
 
     def test_str(self):
         family: Family = baker.make('Family')

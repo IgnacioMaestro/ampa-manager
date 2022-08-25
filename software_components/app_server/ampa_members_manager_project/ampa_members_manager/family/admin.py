@@ -56,8 +56,8 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'first_surname', 'second_surname', 'phone_number']
-    search_fields = ['name', 'first_surname', 'second_surname', 'phone_number']
+    list_display = ['name_and_surnames', 'phone_number']
+    search_fields = ['name_and_surnames', 'phone_number']
     inlines = [BankAccountInline]
 
 
