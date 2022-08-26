@@ -5,7 +5,7 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 
 
 class AcademicCourseAdmin(admin.ModelAdmin):
-    list_display = ['summary', 'fee', 'is_active']
+    list_display = ['summary', 'fee', 'is_active', 'members_count']
 
     @staticmethod
     def summary(instance):
@@ -13,5 +13,8 @@ class AcademicCourseAdmin(admin.ModelAdmin):
     
     @admin.display(description=_('Is active'))
     def is_active(self, academic_course):
-        return ActiveCourse.load().initial_year == academic_course.initial_year
-        return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
+        return _('Yes') if ActiveCourse.load().initial_year == academic_course.initial_year else _('No')
+    
+    @admin.display(description=_('Members'))
+    def members_count(self, academic_course):
+        return academic_course.membership_set.count()

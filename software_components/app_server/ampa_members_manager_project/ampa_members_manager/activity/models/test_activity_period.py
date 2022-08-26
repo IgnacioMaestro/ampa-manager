@@ -8,9 +8,9 @@ from ampa_members_manager.activity.models.payment_type import PaymentType
 
 class TestActivityPeriod(TestCase):
     def test_str(self):
-        payable_part: ActivityPeriod = baker.prepare('ActivityPeriod')
+        activity_period: ActivityPeriod = baker.prepare('ActivityPeriod')
 
-        self.assertEqual(str(payable_part), payable_part.name)
+        self.assertEqual(str(activity_period), activity_period.name)
 
     def test_calculate_price_single_member(self):
         activity_period: ActivityPeriod = baker.prepare('ActivityPeriod', payment_type=PaymentType.SINGLE)

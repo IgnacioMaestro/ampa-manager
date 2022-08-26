@@ -23,7 +23,7 @@ class TestActivityReceiptsCreator(TestCase):
     def setUpTestData(cls):
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
 
-    def test_create_without_payable_parts(self):
+    def test_create_without_activity_periods(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
 
         ActivityReceiptsCreator(activity_remittance).create()
@@ -41,7 +41,7 @@ class TestActivityReceiptsCreator(TestCase):
         self.assertEqual(
             self.ACTIVITY_REGISTRATION_COUNT, ActivityReceipt.objects.filter(remittance=activity_remittance).count())
         for activity_registration in activity_registrations:
-            amount = activity_registration.payable_part.calculate_price(
+            amount = activity_registration.activity_period.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
             ActivityReceipt.objects.get(activity_registrations__exact=activity_registration, amount=amount)
 
@@ -59,7 +59,7 @@ class TestActivityReceiptsCreator(TestCase):
         self.assertEqual(activity_registrations, list(activity_receipt.activity_registrations.all()))
         amount = 0
         for activity_registration in activity_registrations:
-            amount += activity_registration.payable_part.calculate_price(
+            amount += activity_registration.activity_period.calculate_price(
                 times=activity_registration.amount, membership=activity_registration.is_membership())
         self.assertEqual(amount, activity_receipt.amount)
 

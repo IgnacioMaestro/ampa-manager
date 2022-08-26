@@ -14,7 +14,6 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter
 from ampa_members_manager.family.models.state import State
-from ampa_members_manager.academic_course.models.course_name import CourseName
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -37,7 +36,7 @@ class MembershipInline(admin.TabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_member']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
@@ -48,7 +47,15 @@ class FamilyAdmin(admin.ModelAdmin):
         academic_course: AcademicCourse = ActiveCourse.load()
         MembershipRemittanceCreator(families, academic_course).create()
         return self.message_user(request=request, message=_("Membership Remittance created"))
-
+    
+    @admin.display(description=_('Children'))
+    def child_count(self, family):
+        return family.child_set.count()
+    
+    @admin.display(description=_('Is member'))
+    def is_member(self, family):
+        return _('Yes') if family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
+    
     actions = [generate_remittance]
 
 
@@ -71,7 +78,7 @@ class ChildAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Is member'))
     def is_member(self, child):
-        return child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists()
+        return _('Yes') if child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
     
     @admin.display(description=_('Course'))
     def child_course(self, child):
@@ -88,10 +95,18 @@ class AuthorizationInline(admin.TabularInline):
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['swift_bic', 'iban', 'owner']
+    list_display = ['swift_bic', 'iban', 'owner', 'authorization_status']
     list_filter = ['swift_bic']
     search_fields = ['swift_bic', 'iban', 'owner']
     inlines = [AuthorizationInline]
+
+    @admin.display(description=_('Authorization'))
+    def authorization_status(self, bank_account):
+        try:
+            authorization = Authorization.objects.get(bank_account=bank_account)
+            return authorization.state
+        except Authorization.DoesNotExist:
+            return _('No authorizacion')
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
@@ -125,5 +140,5 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ['family', 'academic_course']
-    list_filter = ['academic_course']
+    list_filter = ['academic_course__initial_year']
     search_fields = ['family', 'academic_course']

@@ -7,10 +7,10 @@ from ampa_members_manager.charge.models.activity_remittance import ActivityRemit
 
 
 class ActivityRemittanceWithReceiptsCreator:
-    def __init__(self, payable_parts: QuerySet[ActivityPeriod]):
-        self.__payable_parts: QuerySet[ActivityPeriod] = payable_parts
+    def __init__(self, activity_periods: QuerySet[ActivityPeriod]):
+        self.__activity_periods: QuerySet[ActivityPeriod] = activity_periods
 
     def create(self):
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            payable_parts=self.__payable_parts)
+            activity_periods=self.__activity_periods)
         ActivityReceiptsCreator(activity_remittance).create()
