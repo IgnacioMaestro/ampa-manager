@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 15:34+0200\n"
+"POT-Creation-Date: 2022-08-26 09:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,15 +102,15 @@ msgstr ""
 msgid "LH6"
 msgstr ""
 
-#: .\ampa_members_manager\activity\admin.py:18
+#: .\ampa_members_manager\activity\admin.py:11
 msgid "Create activity remittance"
 msgstr ""
 
-#: .\ampa_members_manager\activity\admin.py:21
-msgid "All Single Activities must be from the same repetitive activity"
+#: .\ampa_members_manager\activity\admin.py:14
+msgid "All period activities must belong to the same activity"
 msgstr ""
 
-#: .\ampa_members_manager\activity\admin.py:24
+#: .\ampa_members_manager\activity\admin.py:17
 msgid "Activity Remittance created"
 msgstr ""
 

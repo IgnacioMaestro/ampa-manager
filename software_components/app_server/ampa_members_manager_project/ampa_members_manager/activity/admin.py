@@ -7,18 +7,11 @@ from ampa_members_manager.charge.use_cases.create_activity_remittance_with_recei
     ActivityRemittanceWithReceiptsCreator
 
 
-class RepetitiveActivityAdmin(admin.ModelAdmin):
-    list_display = ['name', 'academic_course', 'funding']
-    list_filter = ['academic_course', 'funding']
-    search_fields = ['name', 'academic_course']
-    fields = ['name', 'academic_course', 'funding']
-
-
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, payable_parts: QuerySet[ActivityPeriod]):
         if not ActivityPeriod.all_same_activity(activity_periods=payable_parts):
-            message = _("All Single Activities must be from the same repetitive activity")
+            message = _("All period activities must belong to the same activity")
             return self.message_user(request, message)
         ActivityRemittanceWithReceiptsCreator(payable_parts).create()
         return self.message_user(request=request, message=_("Activity Remittance created"))

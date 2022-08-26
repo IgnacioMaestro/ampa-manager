@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 15:34+0200\n"
+"POT-Creation-Date: 2022-08-26 09:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,15 +102,15 @@ msgstr "LH5"
 msgid "LH6"
 msgstr "LH6"
 
-#: .\ampa_members_manager\activity\admin.py:18
+#: .\ampa_members_manager\activity\admin.py:11
 msgid "Create activity remittance"
 msgstr "Crear remesa de actividad"
 
-#: .\ampa_members_manager\activity\admin.py:21
-msgid "All Single Activities must be from the same repetitive activity"
-msgstr "Todas las actividades únicas deben pertenecer a la misma actividad repetitiva"
+#: .\ampa_members_manager\activity\admin.py:14
+msgid "All period activities must belong to the same activity"
+msgstr "Todas los períodos de actividad deben pertenecer a la misma actividad"
 
-#: .\ampa_members_manager\activity\admin.py:24
+#: .\ampa_members_manager\activity\admin.py:17
 msgid "Activity Remittance created"
 msgstr "Remesa de actividad creada"
 
@@ -368,7 +368,7 @@ msgstr "%(num_authorizations)s autorizaciones marcadas como no pagadas"
 #: .\ampa_members_manager\family\admin.py:113
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
-msgstr "%(num_authorizations)s marcadas como enviadas"
+msgstr "%(num_authorizations)s autorizaciones marcadas como enviadas"
 
 #: .\ampa_members_manager\family\admin.py:116
 msgid "Set as signed"
@@ -377,7 +377,7 @@ msgstr "Marcar como firmadas"
 #: .\ampa_members_manager\family\admin.py:120
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
-msgstr "%(num_authorizations)s marcadas como firmadas"
+msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
 
 #: .\ampa_members_manager\family\models\authorization.py:12
 msgid "Number"
