@@ -1,4 +1,5 @@
 from __future__ import annotations
+from xmlrpc.client import Boolean
 from django.db import models
 from django.db.models import SET_NULL, QuerySet
 from django.utils.translation import gettext_lazy as _
@@ -30,3 +31,4 @@ class Family(models.Model):
     @classmethod
     def all_families_with_bank_account(cls) -> QuerySet[Family]:
         return cls.all_families().exclude(default_bank_account__isnull=True)
+    
