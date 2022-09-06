@@ -23,6 +23,7 @@ class Command(BaseCommand):
             'created': 0,
             'updated': 0,
             'not_modified': 0,
+            'added_to_family': 0,
             'error': 0
         },
         'children': {
@@ -35,6 +36,7 @@ class Command(BaseCommand):
             'created': 0,
             'updated': 0,
             'not_modified': 0,
+            'set_as_default': 0,
             'error': 0
         }
     }
@@ -63,17 +65,17 @@ class Command(BaseCommand):
 
             family = self.import_family(sheet, row_index)
 
-            self.import_parent1(sheet, row_index)
-            self.import_parent1_bank_account(sheet, row_index)
+            parent1 = self.import_parent1(sheet, family, row_index)
+            parent2 = self.import_parent2(sheet, family, row_index)
 
-            self.import_parent2(sheet, row_index)
-            self.import_parent2_bank_account(sheet, row_index)
+            self.import_parent1_bank_account(sheet, parent1, family, row_index)
+            self.import_parent2_bank_account(sheet, parent2, family, row_index)
 
-            self.import_child1(sheet, row_index)
-            self.import_child2(sheet, row_index)
-            self.import_child3(sheet, row_index)
-            self.import_child4(sheet, row_index)
-            self.import_child5(sheet, row_index)
+            self.import_child1(sheet, family, row_index)
+            self.import_child2(sheet, family, row_index)
+            self.import_child3(sheet, family, row_index)
+            self.import_child4(sheet, family, row_index)
+            self.import_child5(sheet, family, row_index)
         
         self.print_stats()
     
@@ -88,6 +90,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["created"]} created. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["updated"]} updated. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["not_modified"]} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["added_to_family"]} assigned to a family. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["error"]} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Children:'))
@@ -100,6 +103,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["created"]} created. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["updated"]} updated. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["not_modified"]} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["set_as_default"]} set as family default account. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["error"]} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Errors:'))
@@ -144,21 +148,21 @@ class Command(BaseCommand):
 
         return family
 
-    def import_parent1(self, sheet, row_index):
+    def import_parent1(self, sheet, family, row_index):
         parent1_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX).strip()
         parent1_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX).strip()
         parent1_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX).strip()
         print('- Parent 1: {}, {}, {}'.format(parent1_full_name, parent1_phone1, parent1_phone2))
 
-        self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, row_index)
+        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index)
 
-    def import_parent2(self, sheet, row_index):
+    def import_parent2(self, sheet, family, row_index):
         parent2_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX).strip()
         parent2_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX).strip()
         parent2_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX).strip()
         print('- Parent 2: {}, {}, {}'.format(parent2_full_name, parent2_phone1, parent2_phone2))
 
-        self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, row_index)
+        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index)
 
     def import_parent(self, full_name, phone1, phone2, family, row_index):
         parent = None
@@ -184,6 +188,7 @@ class Command(BaseCommand):
                     self.processed_objects['parents']['created'] += 1
                 
                 if not parent.family_set.filter(surnames=family.surnames).exists():
+                    self.processed_objects['parents']['added_to_family'] += 1
                     family.parents.add(parent)
             else:
                 error = f'Row {row_index}: Parent without name'
@@ -196,7 +201,7 @@ class Command(BaseCommand):
 
         return parent
 
-    def import_parent1_bank_account(self, sheet, row_index, parent, family):
+    def import_parent1_bank_account(self, sheet, parent, family, row_index):
         parent1_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX).strip()
         parent1_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX).strip()
         parent1_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX).strip()
@@ -204,7 +209,7 @@ class Command(BaseCommand):
 
         self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index)
 
-    def import_parent2_bank_account(self, sheet, row_index, parent, family):
+    def import_parent2_bank_account(self, sheet, parent, family, row_index):
         parent2_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_SWIFT_BIC_INDEX).strip()
         parent2_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IBAN_INDEX).strip()
         parent2_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX).strip()
@@ -239,6 +244,7 @@ class Command(BaseCommand):
                 self.processed_objects['bank_accounts']['error'] += 1
             
             if default_account and family.default_bank_account != bank_account:
+                self.processed_objects['bank_accounts']['set_as_default'] += 1
                 family.default_bank_account = bank_account
                 family.save()
 
@@ -309,7 +315,7 @@ class Command(BaseCommand):
                     self.processing_errors.append(error)
                     self.processed_objects['children']['error'] += 1                
                 else:
-                    parent = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
+                    child = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
                     self.processed_objects['children']['created'] += 1
             else:
                 error = f'Row {row_index}: Child without name or family'
