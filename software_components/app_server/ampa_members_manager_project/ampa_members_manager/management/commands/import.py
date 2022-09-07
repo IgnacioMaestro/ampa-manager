@@ -33,7 +33,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            self.stdout.write(self.style.SUCCESS('Importing file "{0}"'.format(options['file'])))
+            self.stdout.write(self.style.SUCCESS(f'Importing file {options["file"]}'))
             self.import_file(options['file'])
             self.print_stats()
         except:
@@ -41,12 +41,11 @@ class Command(BaseCommand):
 
     def import_file(self, file_path):
         book = xlrd.open_workbook(file_path)
-
         sheet = book.sheet_by_index(xls_settings.SHEET_NUMBER)
-        self.stdout.write(self.style.SUCCESS('Importing rows {}-{} from sheet "{}". Rows: {}. Cols: {}'.format(xls_settings.FIRST_ROW_NUMBER, sheet.nrows-1, sheet.name, sheet.nrows, sheet.ncols)))
+        self.stdout.write(self.style.SUCCESS(f'Importing rows {xls_settings.FIRST_ROW_NUMBER}-{sheet.nrows-1} from sheet "{sheet.name}". Rows: {sheet.nrows}. Cols: {sheet.ncols}'))
 
         for row_index in range(xls_settings.FIRST_ROW_NUMBER, sheet.nrows):
-            self.stdout.write(self.style.SUCCESS('Row {}'.format(row_index)))
+            self.stdout.write(self.style.SUCCESS(f'Row {row_index}'))
 
             family = self.import_family(sheet, row_index)
 
