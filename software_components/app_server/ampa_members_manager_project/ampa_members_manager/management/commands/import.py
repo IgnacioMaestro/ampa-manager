@@ -63,6 +63,8 @@ class Command(BaseCommand):
             self.import_child5(sheet, family, row_index)
     
     def print_stats(self):
+        self.stdout.write(self.style.SUCCESS(''))
+        self.stdout.write(self.style.SUCCESS('SUMMARY'))
         self.stdout.write(self.style.SUCCESS(f'Families:'))
         self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_FAMILY)} created. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_FAMILY)} updated. '))
