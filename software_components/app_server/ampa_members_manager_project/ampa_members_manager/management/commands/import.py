@@ -101,7 +101,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["created"]} created. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["updated"]} updated. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["not_modified"]} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["set_as_default"]} set as family default account. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["set_as_default"]} family default bank accounts changed. '))
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["error"]} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Errors:'))
@@ -205,7 +205,7 @@ class Command(BaseCommand):
     def import_parent1_bank_account(self, sheet, parent, family, row_index):
         parent1_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX).strip()
         parent1_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX).strip()
-        parent1_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX).strip()
+        parent1_is_default_account = self.str_to_bool(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX).strip())
         print('- Parent 1 bank account: {}, {}, {}'.format(parent1_swift_bic, parent1_iban, parent1_is_default_account))
 
         self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index)
@@ -213,10 +213,16 @@ class Command(BaseCommand):
     def import_parent2_bank_account(self, sheet, parent, family, row_index):
         parent2_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_SWIFT_BIC_INDEX).strip()
         parent2_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IBAN_INDEX).strip()
-        parent2_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX).strip()
+        parent2_is_default_account = self.str_to_bool(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX).strip())
         print('- Parent 2 bank account: {}, {}, {}'.format(parent2_swift_bic, parent2_iban, parent2_is_default_account))
 
         self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index)
+    
+    def str_to_bool(self, str_bool):
+        if str_bool:
+            return str_bool.strip().lower() in ["si", "sí", "yes", "1", "true"]
+        else:
+            return False
     
     def import_bank_account(self, swift_bic, iban, default_account, parent, family, row_index):
         bank_account = None
@@ -258,8 +264,13 @@ class Command(BaseCommand):
     
     def import_child1(self, sheet, family, row_index):
         child1_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_NAME_INDEX)
-        child1_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX)
-        child1_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX)
+        if child1_name:
+            child1_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX))
+            child1_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX))
+        else:
+            child1_year = ''
+            child1_repetitions = ''
+
         print('- Child 1: {}, {}, {}'.format(child1_name, child1_year, child1_repetitions))
 
         if child1_name or child1_year or child1_repetitions:
@@ -267,8 +278,13 @@ class Command(BaseCommand):
 
     def import_child2(self, sheet, family, row_index):
         child2_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_NAME_INDEX)
-        child2_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_YEAR_INDEX)
-        child2_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX)
+        if child2_name:
+            child2_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_YEAR_INDEX))
+            child2_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX))
+        else:
+            child2_year = ''
+            child2_repetitions = ''
+
         print('- Child 2: {}, {}, {}'.format(child2_name, child2_year, child2_repetitions))
 
         if child2_name or child2_year or child2_repetitions:
@@ -276,8 +292,13 @@ class Command(BaseCommand):
 
     def import_child3(self, sheet, family, row_index):
         child3_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_NAME_INDEX)
-        child3_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_YEAR_INDEX)
-        child3_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX)
+        if child3_name:
+            child3_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_YEAR_INDEX))
+            child3_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX))
+        else:
+            child3_year = ''
+            child3_repetitions = ''
+
         print('- Child 3: {}, {}, {}'.format(child3_name, child3_year, child3_repetitions))
 
         if child3_name or child3_year or child3_repetitions:
@@ -285,8 +306,13 @@ class Command(BaseCommand):
 
     def import_child4(self, sheet, family, row_index):
         child4_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_NAME_INDEX)
-        child4_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_YEAR_INDEX)
-        child4_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX)
+        if child4_name:
+            child4_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_YEAR_INDEX))
+            child4_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX))
+        else:
+            child4_year = ''
+            child4_repetitions = ''
+
         print('- Child 4: {}, {}, {}'.format(child4_name, child4_year, child4_repetitions))
 
         if child4_name or child4_year or child4_repetitions:
@@ -294,8 +320,13 @@ class Command(BaseCommand):
 
     def import_child5(self, sheet, family, row_index):
         child5_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_NAME_INDEX)
-        child5_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_YEAR_INDEX)
-        child5_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX)
+        if child5_name:
+            child5_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_YEAR_INDEX))
+            child5_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX))
+        else:
+            child5_year = ''
+            child5_repetitions = ''
+
         print('- Child 5: {}, {}, {}'.format(child5_name, child5_year, child5_repetitions))
         
         if child5_name or child5_year or child5_repetitions:
