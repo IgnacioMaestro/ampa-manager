@@ -20,11 +20,6 @@ class Command(BaseCommand):
     STATUS_NOT_MODIFIED = 'not_modified'
     STATUS_ERROR = 'error'
 
-    OBJECT_FAMILY = 'families'
-    OBJECT_PARENT = 'parents'
-    OBJECT_CHILD = 'children'
-    OBJECT_BANK_ACCOUNT = 'bank_accounts'
-
     processed_objects = {}
     processing_errors = []
 
@@ -65,30 +60,30 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(''))
         self.stdout.write(self.style.SUCCESS('SUMMARY'))
         self.stdout.write(self.style.SUCCESS(f'Families:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_FAMILY)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_FAMILY)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_FAMILY)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_FAMILY)} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Family.__name__)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Family.__name__)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Family.__name__)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Family.__name__)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Parents:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_PARENT)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_PARENT)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_PARENT)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Command.OBJECT_PARENT)} assigned to a family. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_PARENT)} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Parent.__name__)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Parent.__name__)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Parent.__name__)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Parent.__name__)} assigned to a family. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Parent.__name__)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Children:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_CHILD)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_CHILD)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_CHILD)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_CHILD)} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Child.__name__)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Child.__name__)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Child.__name__)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Child.__name__)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Bank accounts:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_BANK_ACCOUNT)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_BANK_ACCOUNT)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_BANK_ACCOUNT)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED_AS_DEFAULT, Command.OBJECT_BANK_ACCOUNT)} family default bank accounts changed. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_BANK_ACCOUNT)} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, BankAccount.__name__)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, BankAccount.__name__)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, BankAccount.__name__)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED_AS_DEFAULT, BankAccount.__name__)} family default bank accounts changed. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, BankAccount.__name__)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Errors:'))
         if len(self.processing_errors) > 0:
@@ -332,16 +327,16 @@ class Command(BaseCommand):
         return child
 
     def set_family_status(self, status, error=None):
-        return self.set_status(status, Command.OBJECT_FAMILY, error)
+        return self.set_status(status, Family.__name__, error)
 
     def set_parent_status(self, status, error=None):
-        return self.set_status(status, Command.OBJECT_PARENT, error)
+        return self.set_status(status, Parent.__name__, error)
 
     def set_child_status(self, status, error=None):
-        return self.set_status(status, Command.OBJECT_CHILD, error)
+        return self.set_status(status, Child.__name__, error)
 
     def set_bank_account_status(self, status, error=None):
-        return self.set_status(status, Command.OBJECT_BANK_ACCOUNT, error)
+        return self.set_status(status, BankAccount.__name__, error)
 
     def set_status(self, status, object_name, error=None):
         if error:
@@ -357,5 +352,5 @@ class Command(BaseCommand):
 
         return status
 
-    def get_status(self, status, object_name):
+    def get_status_total(self, status, object_name):
         return self.processed_objects.get(object_name, {}).get(status, 0)
