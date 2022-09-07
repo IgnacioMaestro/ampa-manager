@@ -6,7 +6,7 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
-import members_excel_settings as xls_settings
+import ampa_members_manager.management.commands.members_excel_settings as xls_settings
 
 
 class Command(BaseCommand):
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         try:
             self.stdout.write(self.style.SUCCESS('Importing file "{0}"'.format(options['file'])))
             self.import_file(options['file'])
-            self.stdout.write(self.style.SUCCESS('Successfully imported'))
+            self.print_stats()
         except:
             self.stdout.write(self.style.ERROR(traceback.format_exc()))
 
@@ -76,8 +76,6 @@ class Command(BaseCommand):
             self.import_child3(sheet, family, row_index)
             self.import_child4(sheet, family, row_index)
             self.import_child5(sheet, family, row_index)
-        
-        self.print_stats()
     
     def print_stats(self):
         self.stdout.write(self.style.SUCCESS(f'Families:'))
@@ -107,8 +105,11 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["error"]} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Errors:'))
-        for error in self.processing_errors:
-            self.stdout.write(self.style.ERROR(f'- {error} '))
+        if len(self.processing_errors) > 0:
+            for error in self.processing_errors:
+                self.stdout.write(self.style.ERROR(f'- {error} '))
+        else:
+            self.stdout.write(self.style.SUCCESS(f'- No errors'))
 
     def import_family(self, sheet, row_index):
         family = None
@@ -261,7 +262,8 @@ class Command(BaseCommand):
         child1_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX)
         print('- Child 1: {}, {}, {}'.format(child1_name, child1_year, child1_repetitions))
 
-        self.import_child(child1_name, child1_year, child1_repetitions, family, row_index)
+        if child1_name or child1_year or child1_repetitions:
+            self.import_child(child1_name, child1_year, child1_repetitions, family, row_index, 1)
 
     def import_child2(self, sheet, family, row_index):
         child2_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_NAME_INDEX)
@@ -269,7 +271,8 @@ class Command(BaseCommand):
         child2_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX)
         print('- Child 2: {}, {}, {}'.format(child2_name, child2_year, child2_repetitions))
 
-        self.import_child(child2_name, child2_year, child2_repetitions, family, row_index)
+        if child2_name or child2_year or child2_repetitions:
+            self.import_child(child2_name, child2_year, child2_repetitions, family, row_index, 2)
 
     def import_child3(self, sheet, family, row_index):
         child3_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_NAME_INDEX)
@@ -277,7 +280,8 @@ class Command(BaseCommand):
         child3_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX)
         print('- Child 3: {}, {}, {}'.format(child3_name, child3_year, child3_repetitions))
 
-        self.import_child(child3_name, child3_year, child3_repetitions, family, row_index)
+        if child3_name or child3_year or child3_repetitions:
+            self.import_child(child3_name, child3_year, child3_repetitions, family, row_index, 3)
 
     def import_child4(self, sheet, family, row_index):
         child4_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_NAME_INDEX)
@@ -285,7 +289,8 @@ class Command(BaseCommand):
         child4_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX)
         print('- Child 4: {}, {}, {}'.format(child4_name, child4_year, child4_repetitions))
 
-        self.import_child(child4_name, child4_year, child4_repetitions, family, row_index)
+        if child4_name or child4_year or child4_repetitions:
+            self.import_child(child4_name, child4_year, child4_repetitions, family, row_index, 4)
 
     def import_child5(self, sheet, family, row_index):
         child5_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_NAME_INDEX)
@@ -293,9 +298,10 @@ class Command(BaseCommand):
         child5_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX)
         print('- Child 5: {}, {}, {}'.format(child5_name, child5_year, child5_repetitions))
         
-        self.import_child(child5_name, child5_year, child5_repetitions, family, row_index)
+        if child5_name or child5_year or child5_repetitions:
+            self.import_child(child5_name, child5_year, child5_repetitions, family, row_index, 5)
 
-    def import_child(self, name, year, repetition, family, row_index):
+    def import_child(self, name, year, repetition, family, row_index, child_number):
         child = None
 
         try:
@@ -318,7 +324,7 @@ class Command(BaseCommand):
                     child = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
                     self.processed_objects['children']['created'] += 1
             else:
-                error = f'Row {row_index}: Child without name or family'
+                error = f'Row {row_index}: Child #{child_number} without name or family'
                 self.processing_errors.append(error)
                 self.processed_objects['children']['error'] += 1
         except Exception as e:
