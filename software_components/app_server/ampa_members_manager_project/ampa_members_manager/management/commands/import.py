@@ -134,8 +134,7 @@ class Command(BaseCommand):
                     family = Family.objects.create(surnames=family_surnames, email=family_email1, secondary_email=family_email2)
                     status = self.set_family_status(Command.STATUS_CREATED)
             else:
-                error = f'Row {row_index}: Family without surnames'
-                status = self.set_family_status(Command.STATUS_ERROR, error)
+                status = self.set_family_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             error = f'Row {row_index}: Exception processing family: {e}'
             status = self.set_family_status(Command.STATUS_ERROR, error)
@@ -183,12 +182,11 @@ class Command(BaseCommand):
                     parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2)
                     status = self.set_parent_status(Command.STATUS_CREATED)
                 
-                if not parent.family_set.filter(surnames=family.surnames).exists():
-                    status = self.set_parent_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY)
+                if family and not parent.family_set.filter(surnames=family.surnames).exists():
+                    self.set_parent_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY)
                     family.parents.add(parent)
             else:
-                error = f'Row {row_index}: Parent without name'
-                status = self.set_parent_status(Command.STATUS_ERROR)
+                status = self.set_parent_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             error = f'Row {row_index}: Exception processing parent {parent_number}: {e}'
             status = self.set_parent_status(Command.STATUS_ERROR)
@@ -228,7 +226,7 @@ class Command(BaseCommand):
             iban = iban.strip()
             default_account = self.str_to_bool(default_account)
 
-            if swift_bic and iban:
+            if swift_bic and iban and parent:
                 bank_accounts = BankAccount.objects.filter(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
@@ -246,11 +244,10 @@ class Command(BaseCommand):
                     bank_account = BankAccount.objects.create(swift_bic=swift_bic, iban=iban, owner=parent)
                     status = self.set_bank_account_status(Command.STATUS_CREATED)
             else:
-                error = f'Row {row_index}: Account without iban or swift code'
-                status = self.set_bank_account_status(Command.STATUS_ERROR, error)
+                status = self.set_bank_account_status(Command.STATUS_NOT_PROCESSED)
             
-            if default_account and family.default_bank_account != bank_account:
-                status = self.set_bank_account_status(Command.STATUS_UPDATED_AS_DEFAULT)
+            if default_account and family and family.default_bank_account != bank_account:
+                self.set_bank_account_status(Command.STATUS_UPDATED_AS_DEFAULT)
                 family.default_bank_account = bank_account
                 family.save()
 
