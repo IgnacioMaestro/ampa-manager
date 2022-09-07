@@ -12,35 +12,20 @@ import ampa_members_manager.management.commands.members_excel_settings as xls_se
 class Command(BaseCommand):
     help = 'Import families, parents, childs and bank accounts from an excel file'
 
-    processed_objects = {
-        'families': {
-            'created': 0,
-            'updated': 0,
-            'not_modified': 0,
-            'error': 0
-        },
-        'parents': {
-            'created': 0,
-            'updated': 0,
-            'not_modified': 0,
-            'added_to_family': 0,
-            'error': 0
-        },
-        'children': {
-            'created': 0,
-            'updated': 0,
-            'not_modified': 0,
-            'error': 0
-        },
-        'bank_accounts': {
-            'created': 0,
-            'updated': 0,
-            'not_modified': 0,
-            'set_as_default': 0,
-            'error': 0
-        }
-    }
+    STATUS_NOT_PROCESSED = 'not_processed'
+    STATUS_CREATED = 'created'
+    STATUS_UPDATED = 'updated'
+    STATUS_UPDATED_ADDED_TO_FAMILY = 'added_to_family'
+    STATUS_UPDATED_AS_DEFAULT = 'set_as_default'
+    STATUS_NOT_MODIFIED = 'not_modified'
+    STATUS_ERROR = 'error'
 
+    OBJECT_FAMILY = 'families'
+    OBJECT_PARENT = 'parents'
+    OBJECT_CHILD = 'children'
+    OBJECT_BANK_ACCOUNT = 'bank_accounts'
+
+    processed_objects = {}
     processing_errors = []
 
     def add_arguments(self, parser):
@@ -79,30 +64,30 @@ class Command(BaseCommand):
     
     def print_stats(self):
         self.stdout.write(self.style.SUCCESS(f'Families:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["families"]["created"]} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["families"]["updated"]} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["families"]["not_modified"]} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["families"]["error"]} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_FAMILY)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_FAMILY)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_FAMILY)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_FAMILY)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Parents:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["created"]} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["updated"]} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["not_modified"]} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["added_to_family"]} assigned to a family. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["parents"]["error"]} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_PARENT)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_PARENT)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_PARENT)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Command.OBJECT_PARENT)} assigned to a family. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_PARENT)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Children:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["children"]["created"]} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["children"]["updated"]} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["children"]["not_modified"]} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["children"]["error"]} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_CHILD)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_CHILD)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_CHILD)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_CHILD)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Bank accounts:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["created"]} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["updated"]} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["not_modified"]} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["set_as_default"]} family default bank accounts changed. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.processed_objects["bank_accounts"]["error"]} errors. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_CREATED, Command.OBJECT_BANK_ACCOUNT)} created. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED, Command.OBJECT_BANK_ACCOUNT)} updated. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_NOT_MODIFIED, Command.OBJECT_BANK_ACCOUNT)} not modified. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_UPDATED_AS_DEFAULT, Command.OBJECT_BANK_ACCOUNT)} family default bank accounts changed. '))
+        self.stdout.write(self.style.SUCCESS(f'- {self.get_status(Command.STATUS_ERROR, Command.OBJECT_BANK_ACCOUNT)} errors. '))
 
         self.stdout.write(self.style.SUCCESS(f'Errors:'))
         if len(self.processing_errors) > 0:
@@ -111,14 +96,23 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.SUCCESS(f'- No errors'))
 
+    def print_status(self, status, message):
+        if status == Command.STATUS_ERROR:
+            self.stdout.write(self.style.ERROR(message))
+        elif status == Command.STATUS_NOT_PROCESSED:
+            self.stdout.write(self.style.WARNING(message))
+        else:
+            self.stdout.write(self.style.SUCCESS(message))
+
     def import_family(self, sheet, row_index):
         family = None
+        status = Command.STATUS_NOT_PROCESSED
+        error = ''
 
         try:
             family_surnames = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX).strip()
             family_email1 = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL1_INDEX).strip()
             family_email2 = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL2_INDEX).strip()
-            print('- Family: {}, {}, {}'.format(family_surnames, family_email1, family_email2))
 
             if family_surnames:
                 families = Family.objects.filter(surnames__iexact=family_surnames)
@@ -128,24 +122,24 @@ class Command(BaseCommand):
                         family.email = family_email1
                         family.secondary_email = family_email2
                         family.save()
-                        self.processed_objects['families']['updated'] += 1
+                        status = self.set_family_status(Command.STATUS_UPDATED)
                     else:
-                        self.processed_objects['families']['not_modified'] += 1
+                        status = self.set_family_status(Command.STATUS_NOT_MODIFIED)
                 elif families.count() > 1:
                     error = f'Row {row_index}: There is more than one family with surnames "{family_surnames}"'
-                    self.processing_errors.append(error)
-                    self.processed_objects['families']['error'] += 1                
+                    status = self.set_family_status(Command.STATUS_ERROR, error)
                 else:
                     family = Family.objects.create(surnames=family_surnames, email=family_email1, secondary_email=family_email2)
-                    self.processed_objects['families']['created'] += 1
+                    status = self.set_family_status(Command.STATUS_CREATED)
             else:
                 error = f'Row {row_index}: Family without surnames'
-                self.processing_errors.append(error)
-                self.processed_objects['families']['error'] += 1
+                status = self.set_family_status(Command.STATUS_ERROR, error)
         except Exception as e:
             error = f'Row {row_index}: Exception processing family: {e}'
-            self.processing_errors.append(error)
-            self.processed_objects['families']['error'] += 1
+            status = self.set_family_status(Command.STATUS_ERROR, error)
+        finally:
+            message = f'- Family: {family_surnames}, {family_email1}, {family_email2} -> {status} {error}'
+            self.print_status(status, message)
 
         return family
 
@@ -153,20 +147,20 @@ class Command(BaseCommand):
         parent1_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX).strip()
         parent1_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX).strip()
         parent1_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX).strip()
-        print('- Parent 1: {}, {}, {}'.format(parent1_full_name, parent1_phone1, parent1_phone2))
 
-        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index)
+        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index, 1)
 
     def import_parent2(self, sheet, family, row_index):
         parent2_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX).strip()
         parent2_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX).strip()
         parent2_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX).strip()
-        print('- Parent 2: {}, {}, {}'.format(parent2_full_name, parent2_phone1, parent2_phone2))
 
-        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index)
+        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index, 2)
 
-    def import_parent(self, full_name, phone1, phone2, family, row_index):
+    def import_parent(self, full_name, phone1, phone2, family, row_index, parent_number):
         parent = None
+        status = Command.STATUS_NOT_PROCESSED
+        error = ''
 
         try:
             if full_name:
@@ -177,46 +171,44 @@ class Command(BaseCommand):
                         parent.phone_number = phone1
                         parent.additional_phone_number = phone2
                         parent.save()
-                        self.processed_objects['parents']['updated'] += 1
+                        status = self.set_parent_status(Command.STATUS_UPDATED)
                     else:
-                        self.processed_objects['parents']['not_modified'] += 1
+                        status = self.set_parent_status(Command.STATUS_NOT_MODIFIED)
                 elif parents.count() > 1:
                     error = f'Row {row_index}: There is more than one parent with name "{full_name}"'
-                    self.processing_errors.append(error)
-                    self.processed_objects['parents']['error'] += 1                
+                    status = self.set_parent_status(Command.STATUS_ERROR)
                 else:
                     parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2)
-                    self.processed_objects['parents']['created'] += 1
+                    status = self.set_parent_status(Command.STATUS_CREATED)
                 
                 if not parent.family_set.filter(surnames=family.surnames).exists():
-                    self.processed_objects['parents']['added_to_family'] += 1
+                    status = self.set_parent_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY)
                     family.parents.add(parent)
             else:
                 error = f'Row {row_index}: Parent without name'
-                self.processing_errors.append(error)
-                self.processed_objects['parents']['error'] += 1
+                status = self.set_parent_status(Command.STATUS_ERROR)
         except Exception as e:
-            error = f'Row {row_index}: Exception processing parent with name "{full_name}": {e}'
-            self.processing_errors.append(error)
-            self.processed_objects['parents']['error'] += 1
+            error = f'Row {row_index}: Exception processing parent {parent_number}: {e}'
+            status = self.set_parent_status(Command.STATUS_ERROR)
+        finally:
+            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2} -> {status} {error}'
+            self.print_status(status, message)
 
         return parent
 
     def import_parent1_bank_account(self, sheet, parent, family, row_index):
-        parent1_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX).strip()
-        parent1_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX).strip()
-        parent1_is_default_account = self.str_to_bool(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX).strip())
-        print('- Parent 1 bank account: {}, {}, {}'.format(parent1_swift_bic, parent1_iban, parent1_is_default_account))
+        parent1_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX)
+        parent1_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX)
+        parent1_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX)
 
-        self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index)
+        self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index, 1)
 
     def import_parent2_bank_account(self, sheet, parent, family, row_index):
-        parent2_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_SWIFT_BIC_INDEX).strip()
-        parent2_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IBAN_INDEX).strip()
-        parent2_is_default_account = self.str_to_bool(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX).strip())
-        print('- Parent 2 bank account: {}, {}, {}'.format(parent2_swift_bic, parent2_iban, parent2_is_default_account))
+        parent2_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_SWIFT_BIC_INDEX)
+        parent2_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IBAN_INDEX)
+        parent2_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX)
 
-        self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index)
+        self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index, 2)
     
     def str_to_bool(self, str_bool):
         if str_bool:
@@ -224,9 +216,16 @@ class Command(BaseCommand):
         else:
             return False
     
-    def import_bank_account(self, swift_bic, iban, default_account, parent, family, row_index):
+    def import_bank_account(self, swift_bic, iban, default_account, parent, family, row_index, parent_number):
         bank_account = None
+        status = Command.STATUS_NOT_PROCESSED
+        error = ''
+
         try:
+            swift_bic = swift_bic.strip()
+            iban = iban.strip()
+            default_account = self.str_to_bool(default_account)
+
             if swift_bic and iban:
                 bank_accounts = BankAccount.objects.filter(iban=iban)
                 if bank_accounts.count() == 1:
@@ -235,108 +234,78 @@ class Command(BaseCommand):
                         bank_account.swift_bic = swift_bic
                         bank_account.owner = parent
                         bank_account.save()
-                        self.processed_objects['bank_accounts']['updated'] += 1
+                        status = self.set_bank_account_status(Command.STATUS_UPDATED)
                     else:
-                        self.processed_objects['bank_accounts']['not_modified'] += 1
+                        status = self.set_bank_account_status(Command.STATUS_NOT_MODIFIED)
                 elif bank_accounts.count() > 1:
                     error = f'Row {row_index}: There is more than one bank account with iban "{iban}"'
-                    self.processing_errors.append(error)
-                    self.processed_objects['bank_accounts']['error'] += 1                
+                    status = self.set_bank_account_status(Command.STATUS_ERROR, error)           
                 else:
                     bank_account = BankAccount.objects.create(swift_bic=swift_bic, iban=iban, owner=parent)
-                    self.processed_objects['bank_accounts']['created'] += 1
+                    status = self.set_bank_account_status(Command.STATUS_CREATED)
             else:
                 error = f'Row {row_index}: Account without iban or swift code'
-                self.processing_errors.append(error)
-                self.processed_objects['bank_accounts']['error'] += 1
+                status = self.set_bank_account_status(Command.STATUS_ERROR, error)
             
             if default_account and family.default_bank_account != bank_account:
-                self.processed_objects['bank_accounts']['set_as_default'] += 1
+                status = self.set_bank_account_status(Command.STATUS_UPDATED_AS_DEFAULT)
                 family.default_bank_account = bank_account
                 family.save()
 
         except Exception as e:
-            error = f'Row {row_index}: Exception processing bank account with iban "{iban}": {e}'
-            self.processing_errors.append(error)
-            self.processed_objects['bank_accounts']['error'] += 1
+            error = f'Row {row_index}: Exception processing bank account of parent {parent_number}: {e}'
+            status = self.set_bank_account_status(Command.STATUS_ERROR, error)
+        finally:
+            message = f'- Parent {parent_number} bank account: {swift_bic}, {iban}, {default_account} -> {status} {error}'
+            self.print_status(status, message)
 
         return bank_account
     
     def import_child1(self, sheet, family, row_index):
         child1_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_NAME_INDEX)
-        if child1_name:
-            child1_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX))
-            child1_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX))
-        else:
-            child1_year = ''
-            child1_repetitions = ''
+        child1_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX)
+        child1_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX)
 
-        print('- Child 1: {}, {}, {}'.format(child1_name, child1_year, child1_repetitions))
-
-        if child1_name or child1_year or child1_repetitions:
-            self.import_child(child1_name, child1_year, child1_repetitions, family, row_index, 1)
+        self.import_child(child1_name, child1_year, child1_repetitions, family, row_index, 1)
 
     def import_child2(self, sheet, family, row_index):
         child2_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_NAME_INDEX)
-        if child2_name:
-            child2_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_YEAR_INDEX))
-            child2_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX))
-        else:
-            child2_year = ''
-            child2_repetitions = ''
+        child2_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_YEAR_INDEX)
+        child2_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX)
 
-        print('- Child 2: {}, {}, {}'.format(child2_name, child2_year, child2_repetitions))
-
-        if child2_name or child2_year or child2_repetitions:
-            self.import_child(child2_name, child2_year, child2_repetitions, family, row_index, 2)
+        self.import_child(child2_name, child2_year, child2_repetitions, family, row_index, 2)
 
     def import_child3(self, sheet, family, row_index):
         child3_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_NAME_INDEX)
-        if child3_name:
-            child3_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_YEAR_INDEX))
-            child3_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX))
-        else:
-            child3_year = ''
-            child3_repetitions = ''
+        child3_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_YEAR_INDEX)
+        child3_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX)
 
-        print('- Child 3: {}, {}, {}'.format(child3_name, child3_year, child3_repetitions))
-
-        if child3_name or child3_year or child3_repetitions:
-            self.import_child(child3_name, child3_year, child3_repetitions, family, row_index, 3)
+        self.import_child(child3_name, child3_year, child3_repetitions, family, row_index, 3)
 
     def import_child4(self, sheet, family, row_index):
         child4_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_NAME_INDEX)
-        if child4_name:
-            child4_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_YEAR_INDEX))
-            child4_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX))
-        else:
-            child4_year = ''
-            child4_repetitions = ''
+        child4_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_YEAR_INDEX)
+        child4_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX)
 
-        print('- Child 4: {}, {}, {}'.format(child4_name, child4_year, child4_repetitions))
-
-        if child4_name or child4_year or child4_repetitions:
-            self.import_child(child4_name, child4_year, child4_repetitions, family, row_index, 4)
+        self.import_child(child4_name, child4_year, child4_repetitions, family, row_index, 4)
 
     def import_child5(self, sheet, family, row_index):
         child5_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_NAME_INDEX)
-        if child5_name:
-            child5_year = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_YEAR_INDEX))
-            child5_repetitions = int(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX))
-        else:
-            child5_year = ''
-            child5_repetitions = ''
+        child5_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_YEAR_INDEX)
+        child5_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX)
 
-        print('- Child 5: {}, {}, {}'.format(child5_name, child5_year, child5_repetitions))
-        
-        if child5_name or child5_year or child5_repetitions:
-            self.import_child(child5_name, child5_year, child5_repetitions, family, row_index, 5)
+        self.import_child(child5_name, child5_year, child5_repetitions, family, row_index, 5)
 
     def import_child(self, name, year, repetition, family, row_index, child_number):
         child = None
+        status = Command.STATUS_NOT_PROCESSED
+        error = ''
 
         try:
             if name and family:
+                year = int(year)
+                repetition = int(repetition)
+
                 children = Child.objects.filter(name__iexact=name, family=family)
                 if children.count() == 1:
                     child = children[0]
@@ -344,23 +313,51 @@ class Command(BaseCommand):
                         child.year_of_birth = year
                         child.repetition = repetition
                         child.save()
-                        self.processed_objects['children']['updated'] += 1
+                        status = self.set_child_status(Command.STATUS_UPDATED)
                     else:
-                        self.processed_objects['children']['not_modified'] += 1
+                        status = self.set_child_status(Command.STATUS_NOT_MODIFIED)
                 elif children.count() > 1:
                     error = f'Row {row_index}: There is more than one child with name "{name}" in the family "{family}"'
-                    self.processing_errors.append(error)
-                    self.processed_objects['children']['error'] += 1                
+                    status = self.set_child_status(Command.STATUS_ERROR, error)          
                 else:
                     child = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
-                    self.processed_objects['children']['created'] += 1
+                    status = self.set_child_status(Command.STATUS_CREATED)
             else:
-                error = f'Row {row_index}: Child #{child_number} without name or family'
-                self.processing_errors.append(error)
-                self.processed_objects['children']['error'] += 1
+                status = self.set_child_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
-            error = f'Row {row_index}: Exception processing child with name "{name}": {e}'
-            self.processing_errors.append(error)
-            self.processed_objects['children']['error'] += 1
+            error = f'Row {row_index}: Exception processing child {child_number}: {e}'
+            status = self.set_child_status(Command.STATUS_ERROR, error)
+        finally:
+            message = f'- Child {child_number}: {name}, {year}, {repetition} -> {status} {error}'
+            self.print_status(status, message)
 
         return child
+
+    def set_family_status(self, status, error=None):
+        return self.set_status(status, Command.OBJECT_FAMILY, error)
+
+    def set_parent_status(self, status, error=None):
+        return self.set_status(status, Command.OBJECT_PARENT, error)
+
+    def set_child_status(self, status, error=None):
+        return self.set_status(status, Command.OBJECT_CHILD, error)
+
+    def set_bank_account_status(self, status, error=None):
+        return self.set_status(status, Command.OBJECT_BANK_ACCOUNT, error)
+
+    def set_status(self, status, object_name, error=None):
+        if error:
+            self.processing_errors.append(error)
+        
+        if object_name not in self.processed_objects:
+            self.processed_objects[object_name] = {}
+        
+        if status not in self.processed_objects[object_name]:
+            self.processed_objects[object_name][status] = 0
+        
+        self.processed_objects[object_name][status] += 1
+
+        return status
+
+    def get_status(self, status, object_name):
+        return self.processed_objects.get(object_name, {}).get(status, 0)
