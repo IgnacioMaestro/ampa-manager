@@ -1,3 +1,4 @@
+import re
 import xlrd
 import traceback
 
@@ -105,10 +106,14 @@ class Command(BaseCommand):
         status = Command.STATUS_NOT_PROCESSED
         error = ''
 
+        family_surnames = None
+        family_email1 = None
+        family_email2 = None
+
         try:
-            family_surnames = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX).strip()
-            family_email1 = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL1_INDEX).strip()
-            family_email2 = sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL2_INDEX).strip()
+            family_surnames = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX))
+            family_email1 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL1_INDEX))
+            family_email2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL2_INDEX))
 
             if family_surnames:
                 families = Family.objects.filter(surnames__iexact=family_surnames)
@@ -139,22 +144,23 @@ class Command(BaseCommand):
         return family
 
     def import_parent1(self, sheet, family, row_index):
-        parent1_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX).strip()
-        parent1_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX).strip()
-        parent1_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX).strip()
+        parent1_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
+        parent1_phone1 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX))
+        parent1_phone2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX))
 
         return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index, 1)
 
     def import_parent2(self, sheet, family, row_index):
-        parent2_full_name = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX).strip()
-        parent2_phone1 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX).strip()
-        parent2_phone2 = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX).strip()
+        parent2_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
+        parent2_phone1 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX))
+        parent2_phone2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX))
 
         return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index, 2)
 
     def import_parent(self, full_name, phone1, phone2, family, row_index, parent_number):
         parent = None
         status = Command.STATUS_NOT_PROCESSED
+        added_to_family = False
         error = ''
 
         try:
@@ -179,20 +185,22 @@ class Command(BaseCommand):
                 if family and not parent.family_set.filter(surnames=family.surnames).exists():
                     self.set_parent_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY)
                     family.parents.add(parent)
+                    added_to_family_status = True
             else:
                 status = self.set_parent_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             error = f'Row {row_index}: Exception processing parent {parent_number}: {e}'
             status = self.set_parent_status(Command.STATUS_ERROR)
         finally:
-            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2} -> {status} {error}'
+            added_to_family_status = 'Added to family' if added_to_family else ''
+            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2} -> {status} {added_to_family_status} {error}'
             self.print_status(status, message)
 
         return parent
 
     def import_parent1_bank_account(self, sheet, parent, family, row_index):
-        parent1_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX)
-        parent1_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX)
+        parent1_swift_bic = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX))
+        parent1_iban = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX))
         parent1_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX)
 
         self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index, 1)
@@ -204,21 +212,30 @@ class Command(BaseCommand):
 
         self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index, 2)
     
-    def str_to_bool(self, str_bool):
+    @staticmethod
+    def str_to_bool(str_bool):
         if str_bool:
             return str_bool.strip().lower() in ["si", "sí", "yes", "1", "true"]
         else:
             return False
     
+    @staticmethod
+    def clean_string_value(str_value):
+        if str:
+            return re.sub(' +', ' ', str_value).strip()
+        else:
+            return str_value
+
     def import_bank_account(self, swift_bic, iban, default_account, parent, family, row_index, parent_number):
         bank_account = None
         status = Command.STATUS_NOT_PROCESSED
+        set_as_default = False
         error = ''
 
         try:
-            swift_bic = swift_bic.strip()
-            iban = iban.strip()
-            default_account = self.str_to_bool(default_account)
+            swift_bic = swift_bic
+            iban = iban
+            default_account = Command.str_to_bool(default_account)
 
             if swift_bic and iban and parent:
                 bank_accounts = BankAccount.objects.filter(iban=iban)
@@ -244,12 +261,14 @@ class Command(BaseCommand):
                 self.set_bank_account_status(Command.STATUS_UPDATED_AS_DEFAULT)
                 family.default_bank_account = bank_account
                 family.save()
+                set_as_default = True
 
         except Exception as e:
             error = f'Row {row_index}: Exception processing bank account of parent {parent_number}: {e}'
             status = self.set_bank_account_status(Command.STATUS_ERROR, error)
         finally:
-            message = f'- Parent {parent_number} bank account: {swift_bic}, {iban}, {default_account} -> {status} {error}'
+            default_status = 'Set as default' if set_as_default else ''
+            message = f'- Parent {parent_number} bank account: {swift_bic}, {iban}, {default_account} -> {status} {default_status} {error}'
             self.print_status(status, message)
 
         return bank_account
