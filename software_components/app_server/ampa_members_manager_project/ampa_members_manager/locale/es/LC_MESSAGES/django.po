@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-26 09:15+0200\n"
+"POT-Creation-Date: 2022-09-14 17:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,28 +22,44 @@ msgstr ""
 msgid "Is active"
 msgstr "Está activo"
 
-#: .\ampa_members_manager\academic_course\models\academic_course.py:8
+#: .\ampa_members_manager\academic_course\admin.py:16
+#: .\ampa_members_manager\family\admin.py:57
+#: .\ampa_members_manager\family\admin.py:81
+msgid "Yes"
+msgstr "Sí"
+
+#: .\ampa_members_manager\academic_course\admin.py:16
+#: .\ampa_members_manager\family\admin.py:57
+#: .\ampa_members_manager\family\admin.py:81
+msgid "No"
+msgstr "No"
+
+#: .\ampa_members_manager\academic_course\admin.py:18
+msgid "Members"
+msgstr "Socios"
+
+#: .\ampa_members_manager\academic_course\models\academic_course.py:19
 msgid "Initial year"
 msgstr "Año inicio"
 
-#: .\ampa_members_manager\academic_course\models\academic_course.py:9
+#: .\ampa_members_manager\academic_course\models\academic_course.py:20
 msgid "Fee"
 msgstr "Cuota"
 
-#: .\ampa_members_manager\academic_course\models\academic_course.py:12
+#: .\ampa_members_manager\academic_course\models\academic_course.py:23
 #: .\ampa_members_manager\activity\models\activity.py:11
 #: .\ampa_members_manager\family\models\membership.py:13
 #: .\ampa_members_manager_project\settings.py:141
 msgid "Academic course"
 msgstr "Curso académico"
 
-#: .\ampa_members_manager\academic_course\models\academic_course.py:13
+#: .\ampa_members_manager\academic_course\models\academic_course.py:24
 msgid "Academic courses"
 msgstr "Cursos académicos"
 
 #: .\ampa_members_manager\academic_course\models\active_course.py:9
-#: .\ampa_members_manager\family\admin.py:76
-#: .\ampa_members_manager\family\filters.py:13
+#: .\ampa_members_manager\family\admin.py:83
+#: .\ampa_members_manager\family\filters.py:12
 msgid "Course"
 msgstr "Curso"
 
@@ -53,71 +69,81 @@ msgid "Active course"
 msgstr "Curso activo"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:6
-#: .\ampa_members_manager\family\filters.py:19
+#: .\ampa_members_manager\academic_course\models\course_name.py:18
+#: .\ampa_members_manager\family\filters.py:18
 msgid "HH2"
 msgstr "HH2"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:7
-#: .\ampa_members_manager\family\filters.py:20
+#: .\ampa_members_manager\academic_course\models\course_name.py:19
+#: .\ampa_members_manager\family\filters.py:19
 msgid "HH3"
 msgstr "HH3"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:8
-#: .\ampa_members_manager\family\filters.py:21
+#: .\ampa_members_manager\academic_course\models\course_name.py:20
+#: .\ampa_members_manager\family\filters.py:20
 msgid "HH4"
 msgstr "HH4"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:9
-#: .\ampa_members_manager\family\filters.py:22
+#: .\ampa_members_manager\academic_course\models\course_name.py:21
+#: .\ampa_members_manager\family\filters.py:21
 msgid "HH5"
 msgstr "HH5"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:10
-#: .\ampa_members_manager\family\filters.py:23
+#: .\ampa_members_manager\academic_course\models\course_name.py:22
+#: .\ampa_members_manager\family\filters.py:22
 msgid "LH1"
 msgstr "LH1"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:11
-#: .\ampa_members_manager\family\filters.py:24
+#: .\ampa_members_manager\academic_course\models\course_name.py:23
+#: .\ampa_members_manager\family\filters.py:23
 msgid "LH2"
 msgstr "LH2"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:12
-#: .\ampa_members_manager\family\filters.py:25
+#: .\ampa_members_manager\academic_course\models\course_name.py:24
+#: .\ampa_members_manager\family\filters.py:24
 msgid "LH3"
 msgstr "LH3"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:13
-#: .\ampa_members_manager\family\filters.py:26
+#: .\ampa_members_manager\academic_course\models\course_name.py:25
+#: .\ampa_members_manager\family\filters.py:25
 msgid "LH4"
 msgstr "LH4"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:14
-#: .\ampa_members_manager\family\filters.py:27
+#: .\ampa_members_manager\academic_course\models\course_name.py:26
+#: .\ampa_members_manager\family\filters.py:26
 msgid "LH5"
 msgstr "LH5"
 
 #: .\ampa_members_manager\academic_course\models\course_name.py:15
-#: .\ampa_members_manager\family\filters.py:28
+#: .\ampa_members_manager\academic_course\models\course_name.py:27
+#: .\ampa_members_manager\family\filters.py:27
 msgid "LH6"
 msgstr "LH6"
 
-#: .\ampa_members_manager\activity\admin.py:11
+#: .\ampa_members_manager\activity\admin.py:12
 msgid "Create activity remittance"
 msgstr "Crear remesa de actividad"
 
-#: .\ampa_members_manager\activity\admin.py:14
+#: .\ampa_members_manager\activity\admin.py:15
 msgid "All period activities must belong to the same activity"
 msgstr "Todas los períodos de actividad deben pertenecer a la misma actividad"
 
-#: .\ampa_members_manager\activity\admin.py:17
-msgid "Activity Remittance created"
+#: .\ampa_members_manager\activity\admin.py:18
+msgid "Activity remittance created"
 msgstr "Remesa de actividad creada"
 
 #: .\ampa_members_manager\activity\models\activity.py:10
 #: .\ampa_members_manager\activity\models\activity_period.py:12
 #: .\ampa_members_manager\charge\models\activity_remittance.py:12
-#: .\ampa_members_manager\family\models\child.py:14
+#: .\ampa_members_manager\family\models\child.py:13
 msgid "Name"
 msgstr "Nombre"
 
@@ -196,7 +222,7 @@ msgid "Bank account"
 msgstr "Cuenta bancaria"
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:17
-#: .\ampa_members_manager\family\models\child.py:21
+#: .\ampa_members_manager\family\models\child.py:20
 msgid "Child"
 msgstr "Hijo"
 
@@ -210,7 +236,7 @@ msgid "Activity registrations"
 msgstr "Registros en actividad"
 
 #: .\ampa_members_manager\charge\admin.py:29
-#: .\ampa_members_manager\family\admin.py:109
+#: .\ampa_members_manager\family\admin.py:124
 msgid "Set as sent"
 msgstr "Marcar como envíado"
 
@@ -224,53 +250,53 @@ msgstr "%(num_receipts)s recibos marcados como enviados"
 msgid "Set as paid"
 msgstr "Marcar como pagado"
 
-#: .\ampa_members_manager\charge\admin.py:51
+#: .\ampa_members_manager\charge\admin.py:52
 msgid "Export to CSV"
 msgstr "Exportar a CSV"
 
-#: .\ampa_members_manager\charge\admin.py:54
+#: .\ampa_members_manager\charge\admin.py:55
 msgid "Only one activity remittance can be selected at a time"
 msgstr "Solo se puede seleccionar una remesa de actividad a la vez"
 
-#: .\ampa_members_manager\charge\admin.py:58
+#: .\ampa_members_manager\charge\admin.py:59
 msgid "Set all receipts as sent"
 msgstr "Marcar todos los recibos como enviados"
 
-#: .\ampa_members_manager\charge\admin.py:64
+#: .\ampa_members_manager\charge\admin.py:65
 #, python-format
 msgid "%(num_receipts)s receipts set as sent for remittance %(remittance)s"
 msgstr "%(num_receipts)s recibos marcados como enviados para la remesa %(remittance)s"
 
-#: .\ampa_members_manager\charge\admin.py:67
+#: .\ampa_members_manager\charge\admin.py:68
 msgid "Set all receipts as paid"
 msgstr "Marcar todos los recibos como pagados"
 
-#: .\ampa_members_manager\charge\admin.py:73
+#: .\ampa_members_manager\charge\admin.py:74
 #, python-format
 msgid "%(num_receipts)s receipts set as paid for remittance %(remittance)s"
 msgstr "%(num_receipts)s recibos marcados como pagados para la remesa %(remittance)s"
 
-#: .\ampa_members_manager\charge\admin.py:84
+#: .\ampa_members_manager\charge\admin.py:85
 msgid "Total receipts"
 msgstr "Recibos totales"
 
-#: .\ampa_members_manager\charge\admin.py:88
+#: .\ampa_members_manager\charge\admin.py:89
 msgid "Created receipts"
 msgstr "Recibos creados"
 
-#: .\ampa_members_manager\charge\admin.py:92
+#: .\ampa_members_manager\charge\admin.py:93
 msgid "Sent receipts"
 msgstr "Recibos enviados"
 
-#: .\ampa_members_manager\charge\admin.py:96
+#: .\ampa_members_manager\charge\admin.py:97
 msgid "Paid receipts"
 msgstr "Recibos pagados"
 
-#: .\ampa_members_manager\charge\admin.py:111
+#: .\ampa_members_manager\charge\admin.py:112
 msgid "Export Membership Remittance to CSV"
 msgstr "Exportar la remesa de socios a CSV"
 
-#: .\ampa_members_manager\charge\admin.py:114
+#: .\ampa_members_manager\charge\admin.py:115
 msgid "Only can select one membership remittance"
 msgstr "Solo se puede seleccionar una remesa de socios cada vez"
 
@@ -281,6 +307,7 @@ msgid "State"
 msgstr "Estado"
 
 #: .\ampa_members_manager\charge\models\activity_receipt.py:23
+#: .\ampa_members_manager\charge\models\activity_remittance.py:18
 msgid "Activity remittance"
 msgstr "Remesa de actividad"
 
@@ -297,16 +324,16 @@ msgstr "Recibos de actividad"
 msgid "Identifier"
 msgstr "Identificador"
 
-#: .\ampa_members_manager\charge\models\activity_remittance.py:15
-msgid "Activity Payable Parts"
-msgstr "Datos de cobro de la actividad"
+#: .\ampa_members_manager\charge\models\activity_remittance.py:14
+msgid "Created at"
+msgstr "Creado"
 
-#: .\ampa_members_manager\charge\models\activity_remittance.py:18
-msgid "Activity Remittance"
-msgstr "Remesa de actividad"
+#: .\ampa_members_manager\charge\models\activity_remittance.py:15
+msgid "Activity periods"
+msgstr "Períodos de actividad"
 
 #: .\ampa_members_manager\charge\models\activity_remittance.py:19
-msgid "Activity Remittances"
+msgid "Activity remittances"
 msgstr "Remesas de actividad"
 
 #: .\ampa_members_manager\charge\models\membership_receipt.py:22
@@ -314,16 +341,32 @@ msgid "Membership Remittance"
 msgstr "Remesa de socios"
 
 #: .\ampa_members_manager\charge\models\membership_receipt.py:23
-#: .\ampa_members_manager\family\models\child.py:18
-#: .\ampa_members_manager\family\models\family.py:20
+#: .\ampa_members_manager\family\models\child.py:17
+#: .\ampa_members_manager\family\models\family.py:21
 #: .\ampa_members_manager\family\models\membership.py:12
 #: .\ampa_members_manager_project\settings.py:143
 msgid "Family"
 msgstr "Familia"
 
+#: .\ampa_members_manager\charge\models\membership_receipt.py:26
+msgid "Membership receipt"
+msgstr "Recibo de socio"
+
+#: .\ampa_members_manager\charge\models\membership_receipt.py:27
+msgid "Membership receipts"
+msgstr "Recibos de socios"
+
 #: .\ampa_members_manager\charge\models\membership_remittance.py:11
 msgid "AcademicCourse"
 msgstr "Curso académico"
+
+#: .\ampa_members_manager\charge\models\membership_remittance.py:14
+msgid "Membership remittance"
+msgstr "Remesa de socios"
+
+#: .\ampa_members_manager\charge\models\membership_remittance.py:15
+msgid "Membership remittances"
+msgstr "Remesas de socios"
 
 #: .\ampa_members_manager\charge\state.py:6
 msgid "Created"
@@ -338,46 +381,77 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
-#: .\ampa_members_manager\family\admin.py:46
+#: .\ampa_members_manager\family\admin.py:45
 msgid "Generate MembershipRemittance for current year"
 msgstr "Generar la remesa de socios del año activo"
 
-#: .\ampa_members_manager\family\admin.py:50
+#: .\ampa_members_manager\family\admin.py:49
 msgid "Membership Remittance created"
 msgstr "Remesa de socios creada"
 
-#: .\ampa_members_manager\family\admin.py:72
+#: .\ampa_members_manager\family\admin.py:51
+#: .\ampa_members_manager\family\models\child.py:21
+msgid "Children"
+msgstr "Hijos"
+
+#: .\ampa_members_manager\family\admin.py:55
+#: .\ampa_members_manager\family\admin.py:79
 msgid "Is member"
 msgstr "Es miembro"
 
-#: .\ampa_members_manager\family\admin.py:80
-#: .\ampa_members_manager\family\models\family.py:14
+#: .\ampa_members_manager\family\admin.py:87
+#: .\ampa_members_manager\family\models\family.py:15
 #: .\ampa_members_manager\family\models\parent.py:13
 msgid "Parents"
 msgstr "Padres"
 
-#: .\ampa_members_manager\family\admin.py:102
+#: .\ampa_members_manager\family\admin.py:103
+#: .\ampa_members_manager\family\models\authorization.py:20
+msgid "Authorization"
+msgstr "Autorización"
+
+#: .\ampa_members_manager\family\admin.py:109
+msgid "No authorizacion"
+msgstr "Sin autorización"
+
+#: .\ampa_members_manager\family\admin.py:117
 msgid "Set as not sent"
 msgstr "Marcar como no enviado"
 
-#: .\ampa_members_manager\family\admin.py:106
+#: .\ampa_members_manager\family\admin.py:121
 #, python-format
 msgid "%(num_authorizations)s authorizations set as NOT sent"
 msgstr "%(num_authorizations)s autorizaciones marcadas como no pagadas"
 
-#: .\ampa_members_manager\family\admin.py:113
+#: .\ampa_members_manager\family\admin.py:128
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
 msgstr "%(num_authorizations)s autorizaciones marcadas como enviadas"
 
-#: .\ampa_members_manager\family\admin.py:116
+#: .\ampa_members_manager\family\admin.py:131
 msgid "Set as signed"
 msgstr "Marcar como firmadas"
 
-#: .\ampa_members_manager\family\admin.py:120
+#: .\ampa_members_manager\family\admin.py:135
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
+
+#: .\ampa_members_manager\family\filters.py:41
+msgid "Cycle"
+msgstr "Ciclo"
+
+#: .\ampa_members_manager\family\filters.py:47
+msgid "Pre-school"
+msgstr "Infantil"
+
+#: .\ampa_members_manager\family\filters.py:48
+msgid "Primary education"
+msgstr "Primaria"
+
+#: .\ampa_members_manager\family\filters.py:49
+msgid "Out of school"
+msgstr "Fuera de la ikastola"
 
 #: .\ampa_members_manager\family\models\authorization.py:12
 msgid "Number"
@@ -390,10 +464,6 @@ msgstr "Año"
 #: .\ampa_members_manager\family\models\authorization.py:16
 msgid "Document"
 msgstr "Documento"
-
-#: .\ampa_members_manager\family\models\authorization.py:20
-msgid "Authorization"
-msgstr "Autorización"
 
 #: .\ampa_members_manager\family\models\authorization.py:21
 msgid "Authorizations"
@@ -415,39 +485,35 @@ msgstr "Titular"
 msgid "Bank accounts"
 msgstr "Cuentas bancarias"
 
-#: .\ampa_members_manager\family\models\child.py:16
+#: .\ampa_members_manager\family\models\child.py:15
 msgid "Year of birth"
 msgstr "Año de nacimiento"
 
-#: .\ampa_members_manager\family\models\child.py:17
+#: .\ampa_members_manager\family\models\child.py:16
 msgid "Repetition"
 msgstr "Repetición"
 
-#: .\ampa_members_manager\family\models\child.py:22
-msgid "Children"
-msgstr "Hijos"
-
-#: .\ampa_members_manager\family\models\family.py:11
+#: .\ampa_members_manager\family\models\family.py:12
 msgid "Surnames"
 msgstr "Apellidos"
 
-#: .\ampa_members_manager\family\models\family.py:12
+#: .\ampa_members_manager\family\models\family.py:13
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: .\ampa_members_manager\family\models\family.py:13
+#: .\ampa_members_manager\family\models\family.py:14
 msgid "Secondary Email"
 msgstr "Correo secundario"
 
-#: .\ampa_members_manager\family\models\family.py:16
+#: .\ampa_members_manager\family\models\family.py:17
 msgid "Default bank account"
 msgstr "Cuenta bancaria por defecto"
 
-#: .\ampa_members_manager\family\models\family.py:17
+#: .\ampa_members_manager\family\models\family.py:18
 msgid "Save the family to see its bank accounts"
 msgstr "Guarda la familia para ver sus cuentas bancarias"
 
-#: .\ampa_members_manager\family\models\family.py:21
+#: .\ampa_members_manager\family\models\family.py:22
 msgid "Families"
 msgstr "Familias"
 
@@ -499,6 +565,15 @@ msgstr "Registro en actividad"
 #: .\ampa_members_manager_project\settings.py:154
 msgid "Charge"
 msgstr "Cargo"
+
+#~ msgid "Activity Payable Parts"
+#~ msgstr "Datos de cobro de la actividad"
+
+#~ msgid "Activity Remittance"
+#~ msgstr "Remesa de actividad"
+
+#~ msgid "Activity Remittances"
+#~ msgstr "Remesas de actividad"
 
 #~ msgid "Activities"
 #~ msgstr "Actividades"
