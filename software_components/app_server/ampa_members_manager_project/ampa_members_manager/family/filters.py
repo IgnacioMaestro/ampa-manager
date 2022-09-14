@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
 
 
 class CourseListFilter(admin.SimpleListFilter):
@@ -16,16 +15,16 @@ class CourseListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            (2, _('HH2')),
-            (3, _('HH3')),
-            (4, _('HH4')),
-            (5, _('HH5')),
-            (6, _('LH1')),
-            (7, _('LH2')),
-            (8, _('LH3')),
-            (9, _('LH4')),
-            (10, _('LH5')),
-            (11, _('LH6')),
+            (AcademicCourse.HH2_YEARS_SINCE_BIRTH, _('HH2')),
+            (AcademicCourse.HH3_YEARS_SINCE_BIRTH, _('HH3')),
+            (AcademicCourse.HH4_YEARS_SINCE_BIRTH, _('HH4')),
+            (AcademicCourse.HH5_YEARS_SINCE_BIRTH, _('HH5')),
+            (AcademicCourse.LH1_YEARS_SINCE_BIRTH, _('LH1')),
+            (AcademicCourse.LH2_YEARS_SINCE_BIRTH, _('LH2')),
+            (AcademicCourse.LH3_YEARS_SINCE_BIRTH, _('LH3')),
+            (AcademicCourse.LH4_YEARS_SINCE_BIRTH, _('LH4')),
+            (AcademicCourse.LH5_YEARS_SINCE_BIRTH, _('LH5')),
+            (AcademicCourse.LH6_YEARS_SINCE_BIRTH, _('LH6')),
         )
 
     def queryset(self, request, queryset):
@@ -34,6 +33,33 @@ class CourseListFilter(admin.SimpleListFilter):
             active_course = ActiveCourse.load()
             default_year_of_birth = active_course.initial_year - years_since_birth
 
-            return queryset.filter(Q(year_of_birth=default_year_of_birth - F('repetition')))
+            return queryset.annotate(course=active_course.initial_year - F('year_of_birth') - F('repetition')).filter(course=years_since_birth)
+        else:
+            return queryset
+
+class CycleFilter(admin.SimpleListFilter):
+    title = _('Cycle')
+
+    parameter_name = 'cycle'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('pre', _('Pre-school')),
+            ('pri', _('Primary education')),
+            ('out', _('Out of school')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            active_course = ActiveCourse.load()
+
+            queryset = queryset.annotate(course=active_course.initial_year - F('year_of_birth') - F('repetition'))
+
+            if self.value() == 'pre':
+                return queryset.filter(course__range=(AcademicCourse.HH2_YEARS_SINCE_BIRTH, AcademicCourse.HH5_YEARS_SINCE_BIRTH))
+            elif self.value() == 'pri':
+                return queryset.filter(course__range=(AcademicCourse.LH1_YEARS_SINCE_BIRTH, AcademicCourse.LH6_YEARS_SINCE_BIRTH))
+            elif self.value() == 'out':
+                return queryset.filter(Q(course__lt=AcademicCourse.HH2_YEARS_SINCE_BIRTH) | Q(course__gt=AcademicCourse.LH6_YEARS_SINCE_BIRTH))
         else:
             return queryset

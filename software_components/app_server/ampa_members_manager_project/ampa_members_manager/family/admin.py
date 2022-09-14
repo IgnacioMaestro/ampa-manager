@@ -12,7 +12,7 @@ from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
-from ampa_members_manager.family.filters import CourseListFilter
+from ampa_members_manager.family.filters import CourseListFilter, CycleFilter
 from ampa_members_manager.family.models.state import State
 
 
@@ -73,7 +73,7 @@ class ParentAdmin(admin.ModelAdmin):
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
-    list_filter = ['year_of_birth', 'repetition', CourseListFilter]
+    list_filter = [CycleFilter, CourseListFilter, 'year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'repetition', 'family']
 
     @admin.display(description=_('Is member'))

@@ -5,7 +5,6 @@ from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.family import Family
-from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.course_name import CourseName
 
