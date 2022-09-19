@@ -1,3 +1,4 @@
+from datetime import datetime
 import re
 import xlrd
 import traceback
@@ -21,6 +22,8 @@ class Command(BaseCommand):
     STATUS_NOT_MODIFIED = 'not_modified'
     STATUS_ERROR = 'error'
 
+    LOG_STYLES = ['SUCCESS', 'ERROR']
+
     processed_objects = {}
     processing_errors = []
 
@@ -29,19 +32,25 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            self.stdout.write(self.style.SUCCESS(f'Importing file {options["file"]}'))
+            self.init_log_file()
+            self.log(f'Importing file {options["file"]}')
             self.import_file(options['file'])
             self.print_stats()
         except:
-            self.stdout.write(self.style.ERROR(traceback.format_exc()))
+            self.log(traceback.format_exc())
+        finally:
+            self.close_log_file()
 
     def import_file(self, file_path):
         book = xlrd.open_workbook(file_path)
         sheet = book.sheet_by_index(xls_settings.SHEET_NUMBER)
-        self.stdout.write(self.style.SUCCESS(f'Importing rows {xls_settings.FIRST_ROW_NUMBER}-{sheet.nrows-1} from sheet "{sheet.name}". Rows: {sheet.nrows}. Cols: {sheet.ncols}'))
+
+        self.rows_count = sheet.nrows - xls_settings.FIRST_ROW_NUMBER
+        self.log(f'Importing {self.rows_count} rows (from row {xls_settings.FIRST_ROW_NUMBER+1} to row {sheet.nrows}). Sheet: "{sheet.name}". Rows: {sheet.nrows}')
 
         for row_index in range(xls_settings.FIRST_ROW_NUMBER, sheet.nrows):
-            self.stdout.write(self.style.SUCCESS(f'Row {row_index}'))
+            row_number = row_index + 1
+            self.log(f'\nRow {row_number}')
 
             family = self.import_family(sheet, row_index)
 
@@ -58,48 +67,49 @@ class Command(BaseCommand):
             self.import_child5(sheet, family, row_index)
     
     def print_stats(self):
-        self.stdout.write(self.style.SUCCESS(''))
-        self.stdout.write(self.style.SUCCESS('SUMMARY'))
-        self.stdout.write(self.style.SUCCESS(f'Families:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Family.__name__)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Family.__name__)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Family.__name__)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Family.__name__)} errors. '))
+        self.log('')
+        self.log('SUMMARY')
+        self.log(f'Rows with data: {self.rows_count}')
+        self.log(f'Families:')
+        self.log(f'- {self.get_status_total(Command.STATUS_CREATED, Family.__name__)} created. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, Family.__name__)} updated. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Family.__name__)} not modified. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_ERROR, Family.__name__)} errors. ')
 
-        self.stdout.write(self.style.SUCCESS(f'Parents:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Parent.__name__)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Parent.__name__)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Parent.__name__)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Parent.__name__)} assigned to a family. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Parent.__name__)} errors. '))
+        self.log(f'Parents:')
+        self.log(f'- {self.get_status_total(Command.STATUS_CREATED, Parent.__name__)} created. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, Parent.__name__)} updated. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Parent.__name__)} not modified. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Parent.__name__)} assigned to a family. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_ERROR, Parent.__name__)} errors. ')
 
-        self.stdout.write(self.style.SUCCESS(f'Children:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, Child.__name__)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, Child.__name__)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Child.__name__)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, Child.__name__)} errors. '))
+        self.log(f'Children:')
+        self.log(f'- {self.get_status_total(Command.STATUS_CREATED, Child.__name__)} created. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, Child.__name__)} updated. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Child.__name__)} not modified. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_ERROR, Child.__name__)} errors. ')
 
-        self.stdout.write(self.style.SUCCESS(f'Bank accounts:'))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_CREATED, BankAccount.__name__)} created. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED, BankAccount.__name__)} updated. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, BankAccount.__name__)} not modified. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_UPDATED_AS_DEFAULT, BankAccount.__name__)} family default bank accounts changed. '))
-        self.stdout.write(self.style.SUCCESS(f'- {self.get_status_total(Command.STATUS_ERROR, BankAccount.__name__)} errors. '))
+        self.log(f'Bank accounts:')
+        self.log(f'- {self.get_status_total(Command.STATUS_CREATED, BankAccount.__name__)} created. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, BankAccount.__name__)} updated. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, BankAccount.__name__)} not modified. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED_AS_DEFAULT, BankAccount.__name__)} family default bank accounts changed. ')
+        self.log(f'- {self.get_status_total(Command.STATUS_ERROR, BankAccount.__name__)} errors. ')
 
-        self.stdout.write(self.style.SUCCESS(f'Errors:'))
+        self.log(f'Errors:')
         if len(self.processing_errors) > 0:
             for error in self.processing_errors:
-                self.stdout.write(self.style.ERROR(f'- {error} '))
+                self.error(f'- {error} ')
         else:
-            self.stdout.write(self.style.SUCCESS(f'- No errors'))
+            self.log(f'- No errors')
 
     def print_status(self, status, message):
         if status == Command.STATUS_ERROR:
-            self.stdout.write(self.style.ERROR(message))
+            self.error(message)
         elif status == Command.STATUS_NOT_PROCESSED:
-            self.stdout.write(self.style.WARNING(message))
+            self.warning(message)
         else:
-            self.stdout.write(self.style.SUCCESS(message))
+            self.log(message)
 
     def import_family(self, sheet, row_index):
         family = None
@@ -127,7 +137,7 @@ class Command(BaseCommand):
                     else:
                         status = self.set_family_status(Command.STATUS_NOT_MODIFIED)
                 elif families.count() > 1:
-                    error = f'Row {row_index}: There is more than one family with surnames "{family_surnames}"'
+                    error = f'Row {row_index+1}: There is more than one family with surnames "{family_surnames}"'
                     status = self.set_family_status(Command.STATUS_ERROR, error)
                 else:
                     family = Family.objects.create(surnames=family_surnames, email=family_email1, secondary_email=family_email2)
@@ -135,7 +145,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_family_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
-            error = f'Row {row_index}: Exception processing family: {e}'
+            error = f'Row {row_index+1}: Exception processing family: {e}'
             status = self.set_family_status(Command.STATUS_ERROR, error)
         finally:
             message = f'- Family: {family_surnames}, {family_email1}, {family_email2} -> {status} {error}'
@@ -145,15 +155,15 @@ class Command(BaseCommand):
 
     def import_parent1(self, sheet, family, row_index):
         parent1_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
-        parent1_phone1 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX))
-        parent1_phone2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX))
+        parent1_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX)))
+        parent1_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX)))
 
         return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index, 1)
 
     def import_parent2(self, sheet, family, row_index):
         parent2_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
-        parent2_phone1 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX))
-        parent2_phone2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX))
+        parent2_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX)))
+        parent2_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX)))
 
         return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index, 2)
 
@@ -176,7 +186,7 @@ class Command(BaseCommand):
                     else:
                         status = self.set_parent_status(Command.STATUS_NOT_MODIFIED)
                 elif parents.count() > 1:
-                    error = f'Row {row_index}: There is more than one parent with name "{full_name}"'
+                    error = f'Row {row_index+1}: There is more than one parent with name "{full_name}"'
                     status = self.set_parent_status(Command.STATUS_ERROR)
                 else:
                     parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2)
@@ -189,7 +199,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_parent_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
-            error = f'Row {row_index}: Exception processing parent {parent_number}: {e}'
+            error = f'Row {row_index+1}: Exception processing parent {parent_number}: {e}'
             status = self.set_parent_status(Command.STATUS_ERROR)
         finally:
             added_to_family_status = 'Added to family' if added_to_family else ''
@@ -222,9 +232,23 @@ class Command(BaseCommand):
     @staticmethod
     def clean_string_value(str_value):
         if str:
-            return re.sub(' +', ' ', str_value).strip()
+            return re.sub(' +', ' ', str(str_value)).strip()
         else:
-            return str_value
+            return str(str_value)
+    
+    @staticmethod
+    def clean_phone(phone):
+        if phone and str(phone) not in ['0', '0.0', '0,0']:
+            phone = str(phone)
+            if not phone.startswith('+34'):
+                phone = f'+34{phone}'
+            if phone.endswith('.0'):
+                phone = phone[:-2]
+            if phone.endswith(',0'):
+                phone = phone[:-2]
+            return phone
+        else:
+            return ''
 
     def import_bank_account(self, swift_bic, iban, default_account, parent, family, row_index, parent_number):
         bank_account = None
@@ -237,7 +261,7 @@ class Command(BaseCommand):
             iban = iban
             default_account = Command.str_to_bool(default_account)
 
-            if swift_bic and iban and parent:
+            if iban and parent:
                 bank_accounts = BankAccount.objects.filter(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
@@ -249,7 +273,7 @@ class Command(BaseCommand):
                     else:
                         status = self.set_bank_account_status(Command.STATUS_NOT_MODIFIED)
                 elif bank_accounts.count() > 1:
-                    error = f'Row {row_index}: There is more than one bank account with iban "{iban}"'
+                    error = f'Row {row_index+1}: There is more than one bank account with iban "{iban}"'
                     status = self.set_bank_account_status(Command.STATUS_ERROR, error)           
                 else:
                     bank_account = BankAccount.objects.create(swift_bic=swift_bic, iban=iban, owner=parent)
@@ -264,7 +288,7 @@ class Command(BaseCommand):
                 set_as_default = True
 
         except Exception as e:
-            error = f'Row {row_index}: Exception processing bank account of parent {parent_number}: {e}'
+            error = f'Row {row_index+1}: Exception processing bank account of parent {parent_number}: {e}'
             status = self.set_bank_account_status(Command.STATUS_ERROR, error)
         finally:
             default_status = 'Set as default' if set_as_default else ''
@@ -329,7 +353,7 @@ class Command(BaseCommand):
                     else:
                         status = self.set_child_status(Command.STATUS_NOT_MODIFIED)
                 elif children.count() > 1:
-                    error = f'Row {row_index}: There is more than one child with name "{name}" in the family "{family}"'
+                    error = f'Row {row_index+1}: There is more than one child with name "{name}" in the family "{family}"'
                     status = self.set_child_status(Command.STATUS_ERROR, error)          
                 else:
                     child = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
@@ -337,7 +361,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_child_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
-            error = f'Row {row_index}: Exception processing child {child_number}: {e}'
+            error = f'Row {row_index+1}: Exception processing child {child_number}: {e}'
             status = self.set_child_status(Command.STATUS_ERROR, error)
         finally:
             message = f'- Child {child_number}: {name}, {year}, {repetition} -> {status} {error}'
@@ -373,3 +397,25 @@ class Command(BaseCommand):
 
     def get_status_total(self, status, object_name):
         return self.processed_objects.get(object_name, {}).get(status, 0)
+    
+    def log(self, message):
+        self.stdout.write(self.style.SUCCESS(message))
+        self.write_to_log_file(message)
+    
+    def error(self, message):
+        self.stdout.write(self.style.ERROR(message))
+        self.write_to_log_file(f'ERROR: {message}')
+    
+    def warning(self, message):
+        self.stdout.write(self.style.WARNING(message))
+        self.write_to_log_file(f'WARNING: {message}')
+
+    def init_log_file(self):
+        self.log_file = open(f"import {datetime.now().strftime('%d-%m-%Y, %H-%M-%S')}.log", "a", encoding='utf-8')
+    
+    def write_to_log_file(self, message):
+        self.log_file.write(message + '\n')
+    
+    def close_log_file(self):
+        if self.log_file:
+            self.log_file.close()

@@ -6,6 +6,13 @@
 ## Use cases diagram
 [Use cases diagram](doc/Use%20cases%20diagram.md)
 
+## Create virtual environment
+```
+python3 -m venv /path/to/new/virtual/environment
+/path/to/new/virtual/environment/Scripts/activate
+pip install -r AMPAMembersManager\software_components\app_server\ampa_members_manager_project\requirements.txt
+```
+
 ## Translations
 1. Generate translations files
 
