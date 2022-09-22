@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_members_manager.family.models.state import State
 
 
 class CourseListFilter(admin.SimpleListFilter):
@@ -124,22 +125,18 @@ class BankAccountAuthorizationFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('no', _('No authorization')),
-            ('created', _('Created')),
-            ('sent', _('Sent')),
-            ('signed', _('Signed')),
+            (0, _('No authorization')),
+            (State.NOT_SENT, _('Created')),
+            (State.SENT, _('Sent')),
+            (State.SIGNED, _('Signed')),
         )
 
     def queryset(self, request, queryset):
         if self.value():
-            if self.value() == 'no':
+            if self.value() == '0':
                 queryset = queryset.annotate(auth_count=Count('authorization'))
                 return queryset.filter(auth_count=0)
-            elif self.value() == 'created':
-                return queryset.filter(authorization__state=1)
-            elif self.value() == 'sent':
-                return queryset.filter(authorization__state=2)
-            elif self.value() == 'signed':
-                return queryset.filter(authorization__state=3)
+            else:
+                return queryset.filter(authorization__state=self.value())
         else:
             return queryset

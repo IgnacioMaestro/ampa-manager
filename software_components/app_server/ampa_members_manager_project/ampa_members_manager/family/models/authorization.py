@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.bank_account import BankAccount
-from ampa_members_manager.charge.state import State
+from ampa_members_manager.family.models.state import State
 
 
 class Authorization(models.Model):
@@ -14,7 +14,7 @@ class Authorization(models.Model):
     date = models.DateField(default=timezone.now)
     bank_account = models.OneToOneField(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
-    state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
+    state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
 
     class Meta:
         verbose_name = _('Authorization')
