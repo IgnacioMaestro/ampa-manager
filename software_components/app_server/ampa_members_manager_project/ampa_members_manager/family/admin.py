@@ -12,7 +12,7 @@ from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
-from ampa_members_manager.family.filters import CourseListFilter, CycleFilter
+from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, IsMemberFilter, ChildrenCountFilter
 from ampa_members_manager.family.models.state import State
 
 
@@ -37,6 +37,7 @@ class MembershipInline(admin.TabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_member']
+    list_filter = [IsMemberFilter, ChildrenCountFilter]
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
