@@ -27,7 +27,7 @@ class FamilyAdminForm(forms.ModelForm):
             self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
 
-class ChildInline(ReadOnlyTabularInline):
+class ChildInline(admin.TabularInline):
     model = Child
     extra = 0
 
