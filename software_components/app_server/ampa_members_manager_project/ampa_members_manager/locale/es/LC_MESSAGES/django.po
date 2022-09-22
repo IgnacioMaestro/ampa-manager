@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-22 12:06+0200\n"
+"POT-Creation-Date: 2022-09-22 12:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:10
+msgid "Summary"
+msgstr "Resumen"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:14
 msgid "Is active"
@@ -266,7 +270,8 @@ msgstr "Marcar todos los recibos como enviados"
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:65
 #, python-format
 msgid "%(num_receipts)s receipts set as sent for remittance %(remittance)s"
-msgstr "%(num_receipts)s recibos marcados como enviados para la remesa %(remittance)s"
+msgstr ""
+"%(num_receipts)s recibos marcados como enviados para la remesa %(remittance)s"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:68
 msgid "Set all receipts as paid"
@@ -275,7 +280,8 @@ msgstr "Marcar todos los recibos como pagados"
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:74
 #, python-format
 msgid "%(num_receipts)s receipts set as paid for remittance %(remittance)s"
-msgstr "%(num_receipts)s recibos marcados como pagados para la remesa %(remittance)s"
+msgstr ""
+"%(num_receipts)s recibos marcados como pagados para la remesa %(remittance)s"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:85
 msgid "Total receipts"
@@ -370,10 +376,12 @@ msgid "Membership remittances"
 msgstr "Remesas de socios"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\state.py:6
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:128
 msgid "Created"
 msgstr "Creado"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\state.py:7
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:129
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:7
 msgid "Sent"
 msgstr "Enviado"
@@ -407,6 +415,7 @@ msgid "Parents"
 msgstr "Padres"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:104
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:121
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:20
 msgid "Authorization"
 msgstr "Autorización"
@@ -487,6 +496,15 @@ msgstr "2 hijos"
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:100
 msgid "3 or more"
 msgstr "3 o más"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:127
+msgid "No authorization"
+msgstr "Sin autorización"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:130
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:8
+msgid "Signed"
+msgstr "Firmado"
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:12
 msgid "Number"
@@ -572,15 +590,7 @@ msgstr "Padre"
 msgid "Not sent"
 msgstr "No enviado"
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:8
-msgid "Signed"
-msgstr "Firmado"
-
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:112
-msgid "English"
-msgstr "Inglés"
-
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:113
 msgid "Spanish"
 msgstr "Español"
 
@@ -595,6 +605,9 @@ msgstr "Registro en actividad"
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:154
 msgid "Charge"
 msgstr "Cargo"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
 
 #~ msgid "Activity Payable Parts"
 #~ msgstr "Datos de cobro de la actividad"

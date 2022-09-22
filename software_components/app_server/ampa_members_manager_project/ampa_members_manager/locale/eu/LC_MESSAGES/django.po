@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-22 12:06+0200\n"
+"POT-Creation-Date: 2022-09-22 12:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:10
+msgid "Summary"
+msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:14
 msgid "Is active"
@@ -370,10 +374,12 @@ msgid "Membership remittances"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\state.py:6
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:128
 msgid "Created"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\state.py:7
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:129
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:7
 msgid "Sent"
 msgstr ""
@@ -407,6 +413,7 @@ msgid "Parents"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:104
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:121
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:20
 msgid "Authorization"
 msgstr ""
@@ -486,6 +493,15 @@ msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:100
 msgid "3 or more"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:127
+msgid "No authorization"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:130
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:8
+msgid "Signed"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:12
@@ -572,15 +588,7 @@ msgstr ""
 msgid "Not sent"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\state.py:8
-msgid "Signed"
-msgstr ""
-
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:112
-msgid "English"
-msgstr ""
-
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:113
 msgid "Spanish"
 msgstr ""
 
