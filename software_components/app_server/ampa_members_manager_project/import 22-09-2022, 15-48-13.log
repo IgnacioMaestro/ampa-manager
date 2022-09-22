@@ -1,0 +1,2345 @@
+Importing file .\datos_familias.xls
+Importing 193 rows (from row 3 to row 195). Sheet: "Importar". Rows: 195
+
+Row 3
+- Family: Abalos Ruiz De Gauna, nabasa29@hotmail.com,  -> created 
+- Parent 1: Natxo Abalos, +34699115096,  -> created  
+- Parent 2: NEREA RUIZ DE GAUNA HERNANDEZ, +34646749213,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6220953140501094619763, False -> created  
+- Child 1: ANDER , 2012, 0 -> created 
+- Child 2: AIALA, 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 4
+- Family: Aizpurua Etxagibel, etxagibel@gmail.com,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Maider Etxagibel Galdos, +34652749404,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5720953162909114336233, False -> created  
+- Child 1: Eunate, 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 5
+- Family: Alba Calvo, paquicalvo@yahoo.es,  -> created 
+- Parent 1: Gene Alba, +34653715460,  -> created  
+- Parent 2: Francisca Calvo González, +34656714911,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6630080160471230205518, False -> created  
+- Child 1: Jia Yao Alba Calvo, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 6
+- Family: Albaina Blazquez, leticiablaf@gmail.com,  -> created 
+- Parent 1: Fernando Albaina, +34627980356,  -> created  
+- Parent 2: Leticia Blazquez, +34620817349,  -> created  
+- Parent 1 bank account: , ES7920953156109115039621, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: UNAI , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 7
+- Family: Allende Ruiz De Gauna, eruizdegauna@hotmail.com,  -> created 
+- Parent 1: Joseba Allende, +34670208898,  -> created  
+- Parent 2: Estíbaliz Ruiz de Gauna, +34650779634,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0320953173021094523072, False -> created  
+- Child 1: Ane, 2011, 0 -> created 
+- Child 2: Eneko, 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 8
+- Family: Alonso Bao, i275@hotmail.com,  -> created 
+- Parent 1: Alberto Alonso, +34679183773,  -> created  
+- Parent 2: IDOIA BAO AGUAYO, +34619129237,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6520953188021094555835, False -> created  
+- Child 1: Noa, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 9
+- Family: Alonso Boga, bogita13@hotmail.com,  -> created 
+- Parent 1: Jokin Alonso, +34686203828,  -> created  
+- Parent 2: Estibaliz Boga, +34646749475,  -> created  
+- Parent 1 bank account: , ES2201380002680102501020, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Ainhize, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 10
+- Family: Alonso Celaya, zuriboxing@hotmail.com,  -> created 
+- Parent 1: Andoni Alonso, +34618788455,  -> created  
+- Parent 2: Zuriñe Celaya García, +34622188777,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4030080189124403892021, False -> created  
+- Child 1: Kenai, 2012, 0 -> created 
+- Child 2: Idara , 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 11
+- Family: Amurrio Fernández, amurriodelpozo@yahoo.es,  -> created 
+- Parent 1: Juanjo Amurrio De La Torre, +34655101955,  -> created  
+- Parent 2: Monica Fernández, +34600328849,  -> created  
+- Parent 1 bank account: , ES5721006053770200019953, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Olatz, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 12
+- Family: Angulo Pablos, monicapablos73@gmail.com,  -> created 
+- Parent 1: Asier Angulo, +34636399847,  -> created  
+- Parent 2: Monica Pablos, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2620953188011093827631, False -> created  
+- Child 1: ENEKO, 2009, 0 -> created 
+- Child 2: JULEN , 2011, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 13
+- Family: Ángulo Santamaría, kora3011@hotmail.com,  -> created 
+- Parent 1: Juan Ángulo, +34696748598,  -> created  
+- Parent 2: Ana Santamaría Burgos, +34607507235,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6630350431164311023363, False -> created  
+- Child 1: Irune, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 14
+- Family: Antia González, antia.González3104@gmail.com,  -> created 
+- Parent 1: Unai González, +34695498823,  -> created  
+- Parent 2: Amaia Antia, +34625531510,  -> created  
+- Parent 1 bank account: , ES7530350012760120112852, False -> created  
+- Parent 2 bank account: , ES7530350012760120112852, False -> updated  
+- Child 1: Aner , 2011, 0 -> created 
+- Child 2: Libe, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 15
+- Family: Arana Argomaniz, inesargomaniz0@gmail.com,  -> created 
+- Parent 1: Pablo Arana, +34646240423,  -> created  
+- Parent 2: Inés Argomaniz, +34665757753,  -> created  
+- Parent 1 bank account: , ES6400730100510612864951, False -> created  
+- Parent 2 bank account: , ES0320859864940330247554, False -> created  
+- Child 1: Iraide, 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 16
+- Family: Arbulu Martin, soniamvadillo@hotmail.com,  -> created 
+- Parent 1: Aitor Arbulu San Pedro, +34680349002,  -> created  
+- Parent 2: Sonia Martín Vadillo, +34652732999,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7814650100981707094202, False -> created  
+- Child 1: Oihan , 2013, 0 -> created 
+- Child 2: Haizea, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 17
+- Family: Arenas Avelino, jatoarenas@gmail.com,  -> created 
+- Parent 1: Jacinto Arenas, +34616406180,  -> created  
+- Parent 2: Laura Avelino, +34659187887,  -> created  
+- Parent 1 bank account: , ES0620953173071092964856, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Adrián, 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 18
+- Family: Argote Bergado, argotetxus@gmail.com,  -> created 
+- Parent 1: Jesús María Argote, +34659085541,  -> created  
+- Parent 2: Marisol Bergado, +34696396993,  -> created  
+- Parent 1 bank account: , ES5921003811260200125495, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Ekia, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 19
+- Family: Arin Alonso, malonso027@gmail.com,  -> created 
+- Parent 1: Joseba Arin, +34665753046,  -> created  
+- Parent 2: Maider Alonso, +34675704201,  -> created  
+- Parent 1 bank account: , ES1330080213533021554617, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Noah, 2017, 0 -> created 
+- Child 2: Noah, 2017, 0 -> not_modified 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 20
+- Family: Arriba Santalla, ainsantalla@hotmail.com,  -> created 
+- Parent 1: Kike Arriba, +34685722205,  -> created  
+- Parent 2: AINHOA SANTALLA ESPINOSA, +34685722207,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9620953140511092231835, False -> created  
+- Child 1: Anne , 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 21
+- Family: Arrieta Romero, ametzromero@gmail.com,  -> created 
+- Parent 1: Mikel Romero, +34658726808,  -> created  
+- Parent 2: Amaia Arrieta Cortazar, +34629480558,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7920953156191094224028, False -> created  
+- Child 1: Ametz, 2015, 0 -> created 
+- Child 2: Lizar, 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 22
+- Family: Arroniz Benito, estela_benito@hotmail.com,  -> created 
+- Parent 1: Gorka Arroniz, +34686363914,  -> created  
+- Parent 2: ESTELA BENITO PALACIOS, +34620835423,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3220953188001093654621, False -> created  
+- Child 1: ANDER , 2011, 0 -> created 
+- Child 2: NOA , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 23
+- Family: Báez Pérez, izar@mundurat.net,  -> created 
+- Parent 1: Rubén Báez, +34662011854,  -> created  
+- Parent 2: Estrella Elena Pérez Maestre, +34685781569,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2730350178101780013293, False -> created  
+- Child 1: Afrika, 2016, 0 -> created 
+- Child 2: Ekain, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 24
+- Family: Bagazgoitia González, inigobagaz@gmail.com,  -> created 
+- Parent 1: Iñigo Bagazgoitia, +34615713391,  -> created  
+- Parent 2: Irati González Lasa, +34665547163,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5320953156109116693066, False -> created  
+- Child 1: Eneko, 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 25
+- Family: Barbero Marcos, carbaregi@hotmail.com,  -> created 
+- Parent 1: Carlos Barbero Egido, +34616360535,  -> created  
+- Parent 2: SOLEDAD MARCOS, +34655739268,  -> created  
+- Parent 1 bank account: , ES7801821629890208535427, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: MARKEL , 2014, 0 -> created 
+- Child 2: JUNE , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 26
+- Family: Barroso Sousa, ines.sartu@gmail.com,  -> created 
+- Parent 1: Jose Alberto Barroso, +34650412332,  -> created  
+- Parent 2: Inés Sousa Quincoces, +34683347243,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7820953156191092088979, False -> created  
+- Child 1: Mikel , 2009, 0 -> created 
+- Child 2: Xabier , 2012, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 27
+- Family: Basurto Bustamante, atxabal06@gmail.com,  -> created 
+- Parent 1: Jose Manuel Basurto Garrido, +34646607936,  -> created  
+- Parent 2: SUSANA BUSTAMANTE, +34676043230,  -> created  
+- Parent 1 bank account: , ES5920953140511093256336, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: ARATZ , 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 28
+- Family: Becerra Rivas, mac1-b@hotmail.com,  -> created 
+- Parent 1: Marcos Becerra, +34616028275,  -> created  
+- Parent 2: Inma Rivas, ,  -> created  
+- Parent 1 bank account: , ES6901380002690102454923, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Aratz , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 29
+- Family: Belategi Garbizu, ainhogarbi@gmail.com,  -> created 
+- Parent 1: Aitor Belategi, +34676618307,  -> created  
+- Parent 2: Ainhoa Garbizu Martínez, +34600414061,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0230350115441151016108, False -> created  
+- Child 1: JUNE, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 30
+- Family: Beltrán De Nanclares Jiménez De Aberásturi, txatxeaberas@hotmail.com,  -> created 
+- Parent 1: Oscar Beltrán De Nanclares Echezarreta, +34669288827,  -> created  
+- Parent 2: Iratxe Jiménez de Aberásturi Fuentes, +34656757926,  -> created  
+- Parent 1 bank account: , ES2920953112251093415817, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Sara , 2009, 0 -> created 
+- Child 2: Ibon, 2011, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 31
+- Family: Beltrán De Salazar Plágaro, plaeuskadi@gmail.com,  -> created 
+- Parent 1: Aitor Beltrán De Salazar, +34606820079,  -> created  
+- Parent 2: Nuria Plágaro Gómez, +34646325654,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1820953212661094552345, False -> created  
+- Child 1: Unax , 2012, 0 -> created 
+- Child 2: Ander, 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 32
+- Family: Bravo Romano, ainhoa_romano@hotmail.com,  -> created 
+- Parent 1: Jon Bravo, +34657739785,  -> created  
+- Parent 2: Ainhoa Romano, +34615751514,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0220953140541093419108, False -> created  
+- Child 1: Aretx , 2012, 0 -> created 
+- Child 2: Irai , 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 33
+- Family: Brazo Otazu, martolaris@hotmail.com,  -> created 
+- Parent 1: Luis Brazo, +34699720864,  -> created  
+- Parent 2: Marta Otazu, +34646507801,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2320953156111094539029, False -> created  
+- Child 1: Aiala, 2012, 0 -> created 
+- Child 2: Maia, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 34
+- Family: Brea Montero, ainaramontero@gmail.com,  -> created 
+- Parent 1: David Brea Amurrio, +34657733509,  -> created  
+- Parent 2: Ainara Montero Santillan, +34645814094,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1521003535472100557432, False -> created  
+- Child 1: Leyre , 2010, 0 -> created 
+- Child 2: Nerea, 2011, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 35
+- Family: Bueno Ojanguren, enaraojanguren@gmail.com,  -> created 
+- Parent 1: Hodei Bueno, +34605720820,  -> created  
+- Parent 2: Enara Ojanguren Iraola, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3330350142201420006852, False -> created  
+- Child 1: Beñat , 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 36
+- Family: Buldain Echeverría, zurietxebee@hotmail.com,  -> created 
+- Parent 1: Urko Buldain Mugica, +34620583129,  -> created  
+- Parent 2: Zuriñe Echeverría López de Arbina, +34629114803,  -> created  
+- Parent 1 bank account: , ES1920955073009115135461, False -> created  
+- Parent 2 bank account: , ES1920955073009115135461, False -> updated  
+- Child 1: Naiade , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 37
+- Family: Buquete Zárate, goratriki@gmail.com,  -> created 
+- Parent 1: Gaizka Buquete, +34655723728,  -> created  
+- Parent 2: Ruth Zárate Díaz de Guereñu, +34678624007,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES8730080198282389773017, False -> created  
+- Child 1: Mirari , 2013, 0 -> created 
+- Child 2: Hodei , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 38
+- Family: Calavia Roldán, mairoldangrimaldos@gmail.com,  -> created 
+- Parent 1: Juan Manuel, +34626186372,  -> created  
+- Parent 2: Maider Roldán Grimaldos, +34659213569,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5320953156121094221735, False -> created  
+- Child 1: IRATI, 2010, 0 -> created 
+- Child 2: IKER , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 39
+- Family: Callado Parra, callado_78@hotmail.com,  -> created 
+- Parent 1: Alberto Callado Portugués, +34655745079,  -> created  
+- Parent 2: Laura Parra, +34655745079,  -> created  
+- Parent 1 bank account: , ES3030350115491151024574, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Adrián , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 40
+- Family: Calvo García, biocasascp@gmail.com,  -> created 
+- Parent 1: Raúl Calvo, +34696049491,  -> created  
+- Parent 2: Marta García, +34661297427,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4800493040502694759301, False -> created  
+- Child 1: June , 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 41
+- Family: Campo Mesa, osita333@msn.com,  -> created 
+- Parent 1: Juan Carlos Campo Cabeza, +34669535481,  -> created  
+- Parent 2: Sandra Mesa Bermejo, +34680265962,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3230350073550730069139, False -> created  
+- Child 1: Ariana, 2015, 0 -> created 
+- Child 2: Selene , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 42
+- Family: Caño Rodríguez, estibalizrj@gmail.com,  -> created 
+WARNING: - Parent 1: , +34639391647,  -> not_processed  
+- Parent 2: Estibaliz Rodríguez Jaén, +34945309627,  -> created  
+WARNING: - Parent 1 bank account: , ES5621004708530100117772, False -> not_processed  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Unai, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 43
+- Family: Carlos De Bergara Pérez, aipeca@yahoo.es,  -> created 
+- Parent 1: Mikel Carlos De Bergara, +34636511152,  -> created  
+- Parent 2: Ainara Pérez Casado, +34677384837,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7330350155351551075512, False -> created  
+- Child 1: Imanol, 2011, 0 -> created 
+- Child 2: Koldo, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 44
+- Family: Carrancio Pinedo, soniapinedosalazar@gmail.com,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Sonia Pinedo, +34666243113,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2620953188041092519536, False -> created  
+- Child 1: Julen, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 45
+- Family: Castillo Sáez, rusilbai@hotmail.com,  -> created 
+- Parent 1: Rubén Castillo Arenillas, +34685739049,  -> created  
+- Parent 2: Silvia Sáez Santamaria, +34615797196,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6501280321110100033415, False -> created  
+- Child 1: Nahia, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 46
+- Family: Castrillo Pérez De Mendiola, tatiana.Pérezdemendiola@gmail.com,  -> created 
+- Parent 1: Guillermo Castrillo Zamora, +34626899625,  -> created  
+- Parent 2: TATIANA PÉREZ DE MENDIOLA BARROSO, +34678508740,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4830080177371069653119, False -> created  
+- Child 1: AIXA, 2015, 0 -> created 
+- Child 2: NIRA , 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 47
+- Family: Cenarruzabeitia Etxazarra, atxuri1@gmail.com,  -> created 
+- Parent 1: Galder Cenarruzabeitia, +34616583101,  -> created  
+- Parent 2: Alma Etxazarra, +34650586698,  -> created  
+- Parent 1 bank account: , ES7730350355073550020793, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Udane, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 48
+- Family: Chaparro Martínez, edurnenabarro@gmail.com,  -> created 
+- Parent 1: Diego Chaparro, +34635787947,  -> created  
+- Parent 2: Edurne Martínez Rodríguez, +34645789046,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2000817531230001134721, False -> created  
+- Child 1: Aneley, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 49
+- Family: Coca Ayarza, naiaraayarza13@gmail.com,  -> created 
+- Parent 1: Eder Coca, +34649674688,  -> created  
+- Parent 2: Naiara Ayarza, +34617910163,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2230350012740121227755, False -> created  
+- Child 1: Malen, 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 50
+- Family: Criado Puertas, maikapg84@gmail.com,  -> created 
+- Parent 1: Asier Criado, +34665724321,  -> created  
+- Parent 2: Maika Puertas, +34675717561,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2102390806710026422725, False -> created  
+- Child 1: Iraide, 2017, 0 -> created 
+- Child 2: Oihan , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 51
+- Family: De Andrés López, juanmarantza@hotmail.com,  -> created 
+- Parent 1: Juan Manuel De Andrés García, +34645713168,  -> created  
+- Parent 2: Arantza López, +34635706382,  -> created  
+- Parent 1 bank account: , ES8602164703350600096542, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Sofía, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 52
+- Family: De La Arada Argote, javierdelaarada@gmail.com,  -> created 
+- Parent 1: Javier De La Arada Echevarria, +34605767149,  -> created  
+- Parent 2: Estibaliz Argote, +34647922763,  -> created  
+- Parent 1 bank account: , ES9801380002670113531123, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Mikel, 2010, 0 -> created 
+- Child 2: June, 2012, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 53
+- Family: Del Olmo Paniego, info@reparagasteiz.com,  -> created 
+- Parent 1: David Del Olmo, +34650429521,  -> created  
+- Parent 2: Naiara Paniego, +34655745412,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7220953129191090787630, False -> created  
+- Child 1: IBAI, 2015, 0 -> created 
+- Child 2: LAIA, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 54
+- Family: Diakite Pujana, elenapujana@hotmail.com,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Elena Pujana Álava, +34635747916,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6220953153608200372829, False -> created  
+- Child 1: Noah, 2019, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 55
+- Family: Dias Guerra, kely_138@hotmail.com,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Kely Guerra Tuanama, +34695732923, +34669444693 -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1820953129141094715116, False -> created  
+- Child 1: Bryan, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 56
+- Family: Díaz De Mendibil Pereda, loremendibil@yahoo.com,  -> created 
+- Parent 1: Ismael Pereda, +34652763492,  -> created  
+- Parent 2: Lorena Díaz de Mendibil, +34620871352,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6700817531210006144023, False -> created  
+- Child 1: Pagoa, 2009, 0 -> created 
+- Child 2: Lur , 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 57
+- Family: Diez Llama, aizeallama@gmail.com,  -> created 
+- Parent 1: David Diez, +34659980545,  -> created  
+- Parent 2: Aizea Llama Pérez, +34653702479,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1220953114151094769857, False -> created  
+- Child 1: Martín , 2014, 0 -> created 
+- Child 2: Uxue, 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 58
+- Family: Dimitrov Dzhindzhiev, emilia811111@gmail.com,  -> created 
+- Parent 1: Dimitar Sabev Dzhindzhiev, +34615789531,  -> created  
+- Parent 2: Emiliya Vasileva Velichkova, +34615789560,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2520953129101094413225, False -> created  
+- Child 1: Nikolas Esmael Dimitrov Dzhindzhiev , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 59
+- Family: Diz Carretero, raquelcb80@gmail.com,  -> created 
+- Parent 1: Filipe Samuel Diz De Almeida, +34675710870,  -> created  
+- Parent 2: Raquel Carretero Boyero, +34675710748,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1030350106111061103978, False -> created  
+- Child 1: Daniela , 2013, 0 -> created 
+- Child 2: Martina , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 60
+- Family: Echazarra García, gechazarra@gmail.com,  -> created 
+- Parent 1: Diego García, +34667570422,  -> created  
+- Parent 2: Gemma Echazarra, +34619420841,  -> created  
+- Parent 1 bank account: , ES1020953141119113872811, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Mara , 2011, 0 -> created 
+- Child 2: Telmo, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 61
+- Family: Echevarría García, blancakeka@mixmail.com,  -> created 
+- Parent 1: Igor Echevarría Barrenechea, +34657737474,  -> created  
+WARNING: - Parent 2: , +34945201448,  -> not_processed  
+- Parent 1 bank account: , ES3230350429064291045087, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Anne , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 62
+- Family: Echevarria-Arteun Corres, mcorres@konfekoop.coop,  -> created 
+- Parent 1: Anton Echevarria-Arteun, +34688880203,  -> created  
+- Parent 2: MAITE CORRES MANERO, +34652082136,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7220953150251091616218, False -> created  
+- Child 1: Eider , 2010, 0 -> created 
+- Child 2: Josu, 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 63
+- Family: Eguiluz Muñoz, marimar.munoz@hotmail.com,  -> created 
+- Parent 1: Andoni Eguiluz Madinabeitia, +34646486720,  -> created  
+- Parent 2: María del Mar Muñoz Rubio, +34626700315,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9020953140541094394508, False -> created  
+- Child 1: Ibai , 2010, 0 -> created 
+- Child 2: Naroa, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 64
+- Family: Esperança San Martin, golon31@gmail.com,  -> created 
+- Parent 1: Aitor Esperança López De Munain, +34658702344,  -> created  
+- Parent 2: ENARA SAN MARTIN ALANGUA, +34656764324,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2820953162909110480132, False -> created  
+- Child 1: JORITZ , 2010, 0 -> created 
+- Child 2: IRAITZ, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 65
+- Family: Estenaga De Toro, erramuneh@gmail.com,  -> created 
+- Parent 1: Ramón De Toro, +34652741540,  -> created  
+- Parent 2: Dorleta Estenaga, +34646793137,  -> created  
+- Parent 1 bank account: , ES4530350173931730054831, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: June, 2013, 0 -> created 
+- Child 2: Libe, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 66
+- Family: Fagundez Guarnido, nuria_22vit@hotmail.com,  -> created 
+- Parent 1: Alberto Fagundez, +34660034928,  -> created  
+- Parent 2: Nuria Guarnido Calvo, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES8620953129109113880337, False -> created  
+- Child 1: Naira , 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 67
+- Family: Fernández Alba, rocioFernándezalba@yahoo.es,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Rocío Fernández Alba, +34636860965,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3120953187601091855212, False -> created  
+- Child 1: Zoe , 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 68
+- Family: Fernández De Ayala, ibaiyleire@hotmail.com,  -> created 
+- Parent 1: Emilio Fernández Fernández, +34637852094,  -> created  
+- Parent 2: Leire De Ayala Ramos, +34620164466,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9601820702350201612418, False -> created  
+- Child 1: Izan, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 69
+- Family: Fernández De Landa Andino, estandino35@gmail.com,  -> created 
+- Parent 1: Mikel Fernández De Landa, +34660706197,  -> created  
+- Parent 2: Estibaliz Andino, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1930350079210790703596, False -> created  
+- Child 1: Eneritz, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 70
+- Family: Fernández Larrea, plarrea2@hotmail.com,  -> created 
+- Parent 1: Natxo Fernández, +34646223268,  -> created  
+- Parent 2: Patricia Larrea Martínez, +34619723101,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3220953169009116986224, False -> created  
+- Child 1: Uxue, 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 71
+- Family: Fernández Muñoz, nmmedel@hotmail.com,  -> created 
+- Parent 1: Luis Miguel Fernández, +34626041695,  -> created  
+- Parent 2: Noemí Muñoz, +34616651171,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5320953159301094579991, False -> created  
+- Child 1: Uxue, 2013, 0 -> created 
+- Child 2: Jon, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 72
+- Family: Gámez Polo, idoiapolo@yahoo.es,  -> created 
+- Parent 1: Ignacio Gámez, +34656730547,  -> created  
+- Parent 2: Idoia Polo Casado, +34655596408,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5030350173991731088758, False -> created  
+- Child 1: Unai, 2011, 0 -> created 
+- Child 2: Aitana , 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 73
+- Family: García De Iturrospe Rodríguez, ugif@yahoo.es,  -> created 
+- Parent 1: Unai García De Iturrospe Fernández, +34691202003,  -> created  
+- Parent 2: Ana Belen Rodríguez Vences, +34676032511,  -> created  
+- Parent 1 bank account: , ES8101826809130201585545, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Ane, 2016, 0 -> created 
+- Child 2: Nahia , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 74
+- Family: García Lanzos, iratxelanz@gmail.com,  -> created 
+- Parent 1: Vicente García Angulo, +34686921145,  -> created  
+- Parent 2: Iratxe Lanzos Casas, +34626702098,  -> created  
+- Parent 1 bank account: , ES6630350258012580005862, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Aimar, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 75
+- Family: García Marquinez, miren.marquinez@ebasl.com,  -> created 
+- Parent 1: Oscar García, +34619367843,  -> created  
+- Parent 2: MIREN MARQUINEZ SAEZ, +34620711750,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0421003535482100157456, False -> created  
+- Child 1: IRIA, 2011, 0 -> created 
+- Child 2: IZAN , 2011, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 76
+- Family: García Romeo, igorGarcía1976@hotmail.com,  -> created 
+- Parent 1: Igor García Mendo, +34657704852,  -> created  
+- Parent 2: NEREA ROMEO MEDINA, +34629803730,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9420953188061092146801, False -> created  
+- Child 1: GARAZI, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 77
+- Family: García Sáez De Ibarra, yolanda.saez@gmail.com,  -> created 
+- Parent 1: Jaime García Sánchez, +34657739414,  -> created  
+- Parent 2: Yolanda Sáez de Ibarra Fernández, +34606430267,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5730350167171671041996, False -> created  
+- Child 1: Alan, 2009, 0 -> created 
+- Child 2: Joana, 2011, 0 -> created 
+- Child 3: Ilargi , 2013, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 78
+- Family: García Santos, naigarri@gmail.com,  -> created 
+- Parent 1: Kiluanji Kia Henda, ,  -> created  
+- Parent 2: Naiara García, +34646246290,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2920953159341092188886, False -> created  
+- Child 1: Xisolle, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 79
+- Family: Gaviña Carmona, xxaabbiieerr@gmail.com,  -> created 
+- Parent 1: Xabier Gaviña Arenaza, +34675713561,  -> created  
+WARNING: - Parent 2: , ,  -> not_processed  
+- Parent 1 bank account: , ES7320953141109118383875, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Nahia, 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 80
+- Family: Gaviña González, dagabas@hotmail.com,  -> created 
+- Parent 1: David Gaviña Basterra, +34655708415,  -> created  
+- Parent 2: Itziar González López de Alda, +34655708416,  -> created  
+- Parent 1 bank account: , ES3230350061970611168573, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Irati , 2010, 0 -> created 
+- Child 2: Asier, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 81
+- Family: Gaztelumendi Sagardia, zurigazt@gmail.com,  -> created 
+- Parent 1: Iker Sagardia Peñagaricano, +34656761588,  -> created  
+- Parent 2: Zuriñe Gaztelumendi Pipaon, +34600435326,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4301280321120100038903, False -> created  
+- Child 1: Oier, 2010, 0 -> created 
+- Child 2: Unai, 2012, 0 -> created 
+- Child 3: Izar, 2014, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 82
+- Family: Gil Miguel, rober_gil_Gómez@hotmail.com,  -> created 
+- Parent 1: Roberto Gil Gómez, +34635725443,  -> created  
+- Parent 2: ZURIÑE MIGUEL SAEZ DE URABAIN, +34610895046,  -> created  
+- Parent 1 bank account: , ES6320953140511092603454, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: OLARTIA , 2011, 0 -> created 
+- Child 2: MATEO, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 83
+- Family: Gil Sánchez, lsanchezf@hotmail.es,  -> created 
+- Parent 1: Victor Gil, +34620601632,  -> created  
+- Parent 2: Laura Sánchez Fernández, +34606237597,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2530080213533177323015, False -> created  
+- Child 1: Laia , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 84
+- Family: Goiburu Fernández, martafcerrada@gmail.com,  -> created 
+- Parent 1: Ander Goiburu Jauregi, +34653642909,  -> created  
+- Parent 2: Marta Fernández Cerrada, +34610675780,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9800495474352116101403, False -> created  
+- Child 1: Malen , 2013, 0 -> created 
+- Child 2: Libe, 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 85
+- Family: Gómez Mesa, ninfa_4@hotmail.com,  -> created 
+- Parent 1: Agustín Gómez Arenas, +34622221076,  -> created  
+- Parent 2: Tania Mesa Bermejo, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1920953188031092790244, False -> created  
+- Child 1: Sara , 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 86
+- Family: González Cuesta, vanesa_cuesta@hotmail.com,  -> created 
+- Parent 1: Nestor González, +34629431757,  -> created  
+- Parent 2: Vanesa Cuesta Ibáñez, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0821006548082100058649, False -> created  
+- Child 1: Naia, 2011, 0 -> created 
+- Child 2: Unax , 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 87
+- Family: González De Heredia Elorza, lauraelorza@hotmail.com,  -> created 
+- Parent 1: Hilari González De Heredia, +34629867367,  -> created  
+- Parent 2: Laura Elorza, +34653012625,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5020953162909113297586, False -> created  
+- Child 1: Nora , 2014, 0 -> created 
+- Child 2: June , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 88
+- Family: González De Heredia Sáez, javi-larrea@hotmail.com,  -> created 
+- Parent 1: Javier González De Heredia, +34665718199,  -> created  
+- Parent 2: Amaya Saéz, +34652739439,  -> created  
+- Parent 1 bank account: , ES0900817531270001163726, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Ruth , 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 89
+- Family: González Ibarrondo, arantzaibarrondo@hotmail.com,  -> created 
+- Parent 1: Óscar González, +34656763627,  -> created  
+- Parent 2: MIREN ARANTZA IBARRONDO, +34670442260,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7630080236303755915919, False -> created  
+- Child 1: IÑAKI , 2013, 0 -> created 
+- Child 2: NEREA , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 90
+- Family: González Martínez, mirenmarsa@gmail.com,  -> created 
+- Parent 1: David González, +34665713631,  -> created  
+- Parent 2: MIREN Martínez, +34652729790,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6600817531210001232834, False -> created  
+- Child 1: ENARA, 2015, 0 -> created 
+- Child 2: UXUE, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 91
+- Family: Goñi González, mikel.goni@yahoo.es,  -> created 
+- Parent 1: Mikel Goñi Zubiaurre, +34666680523,  -> created  
+- Parent 2: Toñi González, +34669814672,  -> created  
+- Parent 1 bank account: , ES3120953156131094024105, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Markel , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 92
+- Family: Gorospe Munguia, june.mungia@gmail.com,  -> created 
+- Parent 1: Gorka Gorospe, +34699702716,  -> created  
+- Parent 2: June Munguía, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2030350066100661166699, False -> created  
+- Child 1: Arale, 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 93
+- Family: Gracia Unzalu, txatxeunza@hotmail.com,  -> created 
+- Parent 1: Iker Gracia, +34687476281,  -> created  
+- Parent 2: Iratxe Unzalu, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3400814359070001114015, False -> created  
+- Child 1: Paule, 2014, 0 -> created 
+- Child 2: Malen, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 94
+- Family: Gutiérrez Ibáñez, idoiaibanezastorkia@gmail.com,  -> created 
+- Parent 1: Nicolás Gutierrez, +34646689336,  -> created  
+- Parent 2: Idoia Ibañez, +34667879534,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES8420953156119107609961, False -> created  
+- Child 1: Lucía, 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 95
+- Family: Hermosilla, hermosillarakel@gmail.com,  -> created 
+- Parent 1: Hermosilla, ,  -> created  
+- Parent 2: Rakel Hermosilla, +34670344690,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3630350061970610052710, False -> created  
+- Child 1: Aiur , 2019, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 96
+- Family: Herzog Rodríguez, herzogluis@hotmail.com,  -> created 
+- Parent 1: Luis Herzog Rodríguez, +34676580017,  -> created  
+- Parent 2: Mónica Rodríguez, +34601189625,  -> created  
+- Parent 1 bank account: , ES4430350040100400011848, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Danel , 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 97
+- Family: Ibáñez De Opacua Jilete, vicky_jilete@hotmail.com,  -> created 
+- Parent 1: Ruben Ibáñez De Opacua, +34665755380,  -> created  
+- Parent 2: María Victoria Jilete Corraliza, +34605762972,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1120953188061092214740, False -> created  
+- Child 1: Izaro , 2009, 0 -> created 
+- Child 2: Markel, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 98
+- Family: Iturriaga Folgueira, srgiturriaga@gmail.com,  -> created 
+- Parent 1: Sergio Iturriaga Alevia, +34690235698,  -> created  
+- Parent 2: Susana Folgueira, +34686806861,  -> created  
+- Parent 1 bank account: , ES5330080168021239107210, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Izaro, 2009, 0 -> created 
+- Child 2: Urko, 2011, 0 -> created 
+- Child 3: Araitz, 2013, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 99
+- Family: Jaime Pérez, lyzzie11@hotmail.com,  -> created 
+- Parent 1: Manuel Ignacio Jaime Fernández, +34620323885,  -> created  
+- Parent 2: EIDER Pérez Fernández, +34657728876,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4730350178111780022390, False -> created  
+- Child 1: ADRIAN, 2013, 0 -> created 
+- Child 2: AMETS , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 100
+- Family: Janah Guinea, ziortzaguinea@hotmail.com,  -> created 
+- Parent 1: Abdessalam Janah, +34629429686,  -> created  
+- Parent 2: Ziortza Guinea Gutierrez, +34640266698,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9421001419020200306363, False -> created  
+- Child 1: Sara , 2015, 0 -> created 
+- Child 2: Anaya , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 101
+- Family: Jarones Zugazua, titxu_zug@hotmail.com,  -> created 
+- Parent 1: Raúl Jarones, +34656765102,  -> created  
+- Parent 2: Estibaliz Zugazua saez de urabain, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3420953153681094149449, False -> created  
+- Child 1: Ilargi, 2013, 0 -> created 
+- Child 2: Andoni, 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 102
+- Family: Jorge Cabo, josemi-nerea@hotmail.com,  -> created 
+- Parent 1: Jose Miguel Jorge, +34659372162,  -> created  
+- Parent 2: Nerea Cabo, +34635748434,  -> created  
+- Parent 1 bank account: , ES4630350431144311021978, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Laura , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 103
+- Family: Juarez Artola, izastola@hotmail.com,  -> created 
+- Parent 1: Igor Juarez, +34657710070,  -> created  
+- Parent 2: Izaskun Artola, +34617182017,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9730350204632040035648, False -> created  
+- Child 1: June, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 104
+- Family: Lacarta Mañá, jemaneija@gmail.com,  -> created 
+- Parent 1: Saúl Lacarta Anadón, +34656752203,  -> created  
+- Parent 2: NEILA MAÑÁ POLO, +34695541353,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1020953112209118354153, False -> created  
+- Child 1: MARCOS , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 105
+- Family: Lamin Nafa, safiambn@gmail.com,  -> created 
+- Parent 1: Abdallah Lamin, +34679334550,  -> created  
+- Parent 2: Safia Nafa Aali, +34650642577,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6730350061990611159018, False -> created  
+- Child 1: Aichatu, 2010, 0 -> created 
+- Child 2: Suleiman, 2012, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 106
+- Family: Landa Hualde, nahhia@gmail.com,  -> created 
+- Parent 1: Daniel Landa, +34657714927,  -> created  
+- Parent 2: Nahia Hualde, +34647743503,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0930350086620860049627, False -> created  
+- Child 1: Ibai, 2014, 0 -> created 
+- Child 2: Joanes, 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 107
+- Family: Larreina Donaire, Erikadonaire1980@gmail.com,  -> created 
+- Parent 1: Alain Larreina, +34658748196,  -> created  
+- Parent 2: Erika Donaire, +34658748195,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5020953112291093585866, False -> created  
+- Child 1: Haizea, 2010, 0 -> created 
+- Child 2: Irati , 2012, 0 -> created 
+- Child 3: Elaia , 2015, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 108
+- Family: Larruzea Ezponda, regina.larrucea@gmail.com,  -> created 
+- Parent 1: Regina Larruzea Aransolo, +34600286249,  -> created  
+- Parent 2: Ixone Ezponda Ubiria, +34617991249,  -> created  
+- Parent 1 bank account: , ES1220953156121093427655, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Leixuri, 2014, 0 -> created 
+- Child 2: Manex , 2017, 0 -> created 
+- Child 3: Zelai , 2017, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 109
+- Family: Lata Trueba, misatru@hotmail.com,  -> created 
+- Parent 1: Igor Lata, +34650669524,  -> created  
+- Parent 2: María Isabel Trueba Ortiz de Urbina, +34657716932,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2330350068010681135794, False -> created  
+- Child 1: Hodei , 2014, 0 -> created 
+- Child 2: Haizea , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 110
+- Family: Leal Mardones, mardonesamaia@gmail.com,  -> created 
+- Parent 1: Urtxi Leal, +34610760394,  -> created  
+- Parent 2: Amaia Mardones, +34665737468,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2002390806720026660829, False -> created  
+- Child 1: Markel , 2012, 0 -> created 
+- Child 2: Eneko , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 111
+- Family: Lizarraga Sáenz, lizarmen79@gmail.com,  -> created 
+- Parent 1: Fernando Sáenz, +34647260951,  -> created  
+- Parent 2: Patricia Lizarraga, +34945248515,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4630350061910611150864, False -> created  
+- Child 1: Garazi , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 112
+- Family: Lizarralde Lafuente, estilafuente@gmail.com,  -> created 
+- Parent 1: Unai Lizarralde, +34605758353,  -> created  
+- Parent 2: Estibaliz Lafuente, +34657798167,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2720953153621094343190, False -> created  
+- Child 1: Peio, 2011, 0 -> created 
+- Child 2: Ane , 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 113
+- Family: López De Armentia Goula, sofigoula@yahoo.es,  -> created 
+- Parent 1: Imanol López De Armentia Septién, +34655168041,  -> created  
+- Parent 2: Sofía Goula Fernández, +34690293584,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1301380002660102040821, False -> created  
+- Child 1: Pau, 2016, 0 -> created 
+- Child 2: Ares, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 114
+- Family: López De Gereñu Rodrigo, rodrigo_helena@hotmail.com,  -> created 
+- Parent 1: Mikel López De Gereñu, +34635744734,  -> created  
+- Parent 2: Elena Rodrigo Sánchez, +346357329630,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4221003679522200535549, False -> created  
+- Child 1: Ainara , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 115
+- Family: López Pérez, sPérezcil@gmail.com,  -> created 
+- Parent 1: Oscar López, +34656723734,  -> created  
+- Parent 2: Sonia Pérez Cilleruelo, +34655714943,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1220953188051091845395, False -> created  
+- Child 1: Igor , 2010, 0 -> created 
+- Child 2: Paula, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 116
+- Family: López Rubio, ainhoita9@hotmail.com,  -> created 
+- Parent 1: Raúl López, +34667396573,  -> created  
+- Parent 2: Ainhoa Rubio, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6120953164801094144333, False -> created  
+- Child 1: Eider, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 117
+- Family: López Salazar, aritz_lt@hotmail.com,  -> created 
+- Parent 1: Aritz López Trueba, +34615715552,  -> created  
+- Parent 2: BEATRIZ SALAZAR, +34655724236,  -> created  
+- Parent 1 bank account: , ES7430350073580731123111, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: UXURI , 2013, 0 -> created 
+- Child 2: JONE , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 118
+- Family: Loza Roa, pirikitron@hotmail.com,  -> created 
+- Parent 1: Iñigo Loza, +34645708989,  -> created  
+- Parent 2: Iratxe Roa Martínez de Trespuentes, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9420953157461092366581, False -> created  
+- Child 1: Danel , 2017, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 119
+- Family: Manero Txarterina, arrate.txarterina@gmail.com,  -> created 
+- Parent 1: Juan Carlos Manero Pozo, +34619806985,  -> created  
+- Parent 2: ARRATE TXARTERINA GOIKURIA, +34656771160,  -> created  
+- Parent 1 bank account: , ES1821003535432100428855, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: KATTALIN , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 120
+- Family: Manovel Etxagibel, leireetxagibel@gmail.com,  -> created 
+- Parent 1: Ritxar Manovel, +34605710572,  -> created  
+- Parent 2: Leire Etxagibel Martínez, +34659591172,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3614650100981740509712, False -> created  
+- Child 1: Aratz , 2016, 0 -> created 
+- Child 2: Eñaut , 2009, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 121
+- Family: Manzano Canales, johanna.canales.González@gmail.com,  -> created 
+- Parent 1: Iñigo Manzano, +34696054699,  -> created  
+- Parent 2: Johanna Canales, +34687364367,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5320953164809114194784, False -> created  
+- Child 1: Beñat, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 122
+- Family: Marinda Otxoa, zelaiotxoa@gmail.com,  -> created 
+- Parent 1: Gorka Marinda, +34645710808,  -> created  
+- Parent 2: Zelai Ochoa Díez, +34669913178,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5230350155391550038279, False -> created  
+- Child 1: Imanol, 2014, 0 -> created 
+- Child 2: Irati , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 123
+- Family: Márquez Barrueta, begomam@gmail.com,  -> created 
+- Parent 1: Jose Luis Barrueta, +34653715649,  -> created  
+- Parent 2: Begoña Márquez, ,  -> created  
+- Parent 1 bank account: , ES3901280321180100044986, False -> created  
+- Parent 2 bank account: , ES3901280321180100044986, False -> updated  
+- Child 1: Hodei , 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 124
+- Family: Martínez De Albeniz Flores, lorena.vit85@gmail.com,  -> created 
+- Parent 1: Javier Martínez De Albeniz Ruiz De Luzuriaga, +34620414341,  -> created  
+- Parent 2: Lorena Flores Fernández, +34626689834,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6030350056410560060890, False -> created  
+- Child 1: JULEN , 2018, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 125
+- Family: Martínez De Albeniz Muga, nagorem007@gmail.com,  -> created 
+WARNING: - Parent 1: , +34636867565,  -> not_processed  
+- Parent 2: Nagore Muga García, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7830350079260791103481, False -> created  
+- Child 1: Irati, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 126
+- Family: Martínez De Alegría Fernández, yabitxu10@hotmail.com,  -> created 
+- Parent 1: Javier Martínez De Alegría, +34630059200,  -> created  
+- Parent 2: Cristina Fernández, +34669346415,  -> created  
+- Parent 1 bank account: , ES1030350073560731162288, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Keila, 2011, 0 -> created 
+- Child 2: Noa , 2015, 0 -> created 
+- Child 3: Eider , 2015, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 127
+- Family: Martínez De Aramayona González De Zárate, nagosant@hotmail.com,  -> created 
+- Parent 1: Roberto Martínez De Aramayona, +34699734610,  -> created  
+- Parent 2: NAGORE González DE ZÁRATE RAMÍREZ, +34626879368,  -> created  
+- Parent 1 bank account: , ES5020953173051094465431, False -> created  
+- Parent 2 bank account: , ES5020953173051094465431, False -> updated  
+- Child 1: JARE, 2011, 0 -> created 
+- Child 2: IRAIDE, 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 128
+- Family: Martínez De Ternero Medel, suamoni@hotmail.com,  -> created 
+- Parent 1: Fernando Martínez De Ternero Fernández, +34687915561,  -> created  
+- Parent 2: Mónica Medel Sáenz López, +34637870027,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7020953169061093663614, False -> created  
+- Child 1: Einar, 2012, 0 -> created 
+- Child 2: Arik , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 129
+- Family: Martínez Mejino, evamejino@hotmail.com,  -> created 
+- Parent 1: Javier Martínez, +34665744019,  -> created  
+- Parent 2: Eva María Mejino Muruzabal, +34627990152,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3730350061970611188368, False -> created  
+- Child 1: Adriana , 2013, 0 -> created 
+- Child 2: Ekain , 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 130
+- Family: Matamoros Airas, blanca.airas@gmail.com,  -> created 
+- Parent 1: Rodrigo Matamoros, +34686064202,  -> created  
+- Parent 2: Blanca Airas, +34945001558,  -> created  
+- Parent 1 bank account: , ES8620953153681096081335, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Alba, 2010, 0 -> created 
+- Child 2: Alain, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 131
+- Family: Mcgladdery Pérez Del Notario, maitenotario@yahoo.es,  -> created 
+- Parent 1: Shane Mcgladdery, +34610059969,  -> created  
+- Parent 2: Maite Pérez del Notario Larrea, +34691489603,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9020953156131094366423, False -> created  
+- Child 1: Ethan, 2012, 0 -> created 
+- Child 2: Liam , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 132
+- Family: Medel Martín, maider_mart@yahoo.es,  -> created 
+- Parent 1: Antonio José Medel, +34686903489,  -> created  
+- Parent 2: Maider Martín, +34690759216,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3220953164811094490611, False -> created  
+- Child 1: Hegoi, 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 133
+- Family: Mediavilla Rodríguez, lilabalin@gmail.com,  -> created 
+- Parent 1: Gregorio Mediavilla Arcauz, +34658470452,  -> created  
+- Parent 2: Maria del Puerto Rodríguez Conde, +34635753691,  -> created  
+- Parent 1 bank account: , ES8030350086610860041414, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Nahia, 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 134
+- Family: Meiro Calleja, roblameca@gmail.com,  -> created 
+- Parent 1: Robero, +34649314052,  -> created  
+WARNING: - Parent 2: , +34627317230,  -> not_processed  
+- Parent 1 bank account: , ES5120953156109115703217, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Iker, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 135
+- Family: Mendez Alonso, eanasei@gmail.com,  -> created 
+- Parent 1: Roberto Mendez, +34699940484,  -> created  
+- Parent 2: Elena Alonso Nestares, +34652756999,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3930350142251421038579, False -> created  
+- Child 1: Paula, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 136
+- Family: Mendizabal Perales, yolpablo@gmail.com,  -> created 
+- Parent 1: Pablo Mendizabal, +34649093525,  -> created  
+- Parent 2: Yolanda Perales, +34682263918,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2730350124761241050010, False -> created  
+- Child 1: Itziar, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 137
+- Family: Merino Sanz, estisanzdelcampo@gmail.com,  -> created 
+- Parent 1: Iñigo Merino, +34635750681,  -> created  
+- Parent 2: Estibaliz Sanz, +34635750686,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3330080254962058986411, False -> created  
+- Child 1: Irati, 2009, 0 -> created 
+- Child 2: Jon , 2011, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 138
+- Family: Molinero Alvarez, begoyalex@gmail.com,  -> created 
+- Parent 1: Alejandro Molinero, +34699697945,  -> created  
+- Parent 2: Begoña Alvarez Bernal, +34945004629,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6830350222122221071003, False -> created  
+- Child 1: Unai, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 139
+- Family: Mompel Madera, xaviermompel@gmail.com,  -> created 
+- Parent 1: Xavier Mompel Sánchez, +34655656785,  -> created  
+- Parent 2: Itziar Madera, +34655656786,  -> created  
+- Parent 1 bank account: , ES1930350431174311016400, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Irati , 2015, 0 -> created 
+- Child 2: Unax, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 140
+- Family: Mujika Morales, ymoralessainz@gmail.com,  -> created 
+- Parent 1: Edorta Mujika, +34675544764,  -> created  
+- Parent 2: Yolanda Morales Sainz, +34606610206,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4820953142481092939973, False -> created  
+- Child 1: Ibai , 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 141
+- Family: Musitu Ortiz De Urbina, beortizu@hotmail.com,  -> created 
+- Parent 1: Hugo Musitu Iriberri, +34676449703,  -> created  
+- Parent 2: BEATRIZ ORTIZ DE URBINA MONTOYA, +34600311875,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5320953150219110966141, False -> created  
+- Child 1: MIKEL, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 142
+- Family: Ndiaye Estévez, centroprimal@yahoo.es,  -> created 
+WARNING: - Parent 1: , ,  -> not_processed  
+- Parent 2: Edurne Estévez Bernal, +34609658922, +34945241229 -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9630080236382638027512, False -> created  
+- Child 1: Alle, 2010, 0 -> created 
+- Child 2: Jose, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 143
+- Family: Neve Corcuera, maracorcuera@gmail.com,  -> created 
+- Parent 1: Mikel Neve Lete, +34629434969,  -> created  
+- Parent 2: MARA CORCUERA SANZ, +34665736816,  -> created  
+- Parent 1 bank account: , ES6521006446850100145251, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: AIALA , 2015, 0 -> created 
+- Child 2: ANDER, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 144
+- Family: Núñez Remiro, vir.gastiain@gmail.com,  -> created 
+- Parent 1: Emilio Núñez, +34646524219,  -> created  
+- Parent 2: Virginia Remiro Asarta, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES1821003535462100216084, False -> created  
+- Child 1: Ixone, 2014, 0 -> created 
+- Child 2: Aratz , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 145
+- Family: Ochoa López, iranzuLópez@hotmail.com,  -> created 
+- Parent 1: Jon Ochoa Azcarraga, +34696785081,  -> created  
+- Parent 2: Iranzu López Santamaria, +34699300268,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6621001419050200308272, False -> created  
+- Child 1: Jone , 2012, 0 -> created 
+- Child 2: Oier , 2017, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 146
+- Family: Ontoria Virgala, rontoriamur@gmail.com,  -> created 
+- Parent 1: Raúl Ontoria, +34688737622,  -> created  
+- Parent 2: AINHOA VIRGALA, +34655735461,  -> created  
+- Parent 1 bank account: , ES3320953156111092194553, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: EKAIN , 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 147
+- Family: Orcajo Guijas, beatrizguijas@gmail.com,  -> created 
+- Parent 1: Javier Orcajo Blanco, +34695745905,  -> created  
+- Parent 2: Beatriz Guijas Vaquerizo, +34675578816,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5920953157411094604955, False -> created  
+- Child 1: Uxue, 2016, 0 -> created 
+- Child 2: Julen, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 148
+- Family: Ortega López, beita984@gmail.com,  -> created 
+- Parent 1: Javier Ortega, +34645722208,  -> created  
+- Parent 2: Beatriz López Camarero, +34630154402,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4130350012710120097025, False -> created  
+- Child 1: Laia, 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 149
+- Family: Ortiz De Guzmán Fernández, alfre_blanca@hotmail.com,  -> created 
+- Parent 1: Alfredo Ortiz De Guzmán Zárate, +34652700517,  -> created  
+- Parent 2: Blanca Fernández Soto, +34665747548,  -> created  
+- Parent 1 bank account: , ES2530350155371551076472, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Markel, 2010, 0 -> created 
+- Child 2: Ander , 2012, 0 -> created 
+- Child 3: Unai , 2014, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 150
+- Family: Ortiz De Guzman García De Vicuña, laurabiku@gmail.com,  -> created 
+- Parent 1: Iker Ortiz De Guzman, +34635736252,  -> created  
+- Parent 2: Laura García de Vicuña Chico, +34635736367,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9820953156181094371563, False -> created  
+- Child 1: Ekhi, 2009, 0 -> created 
+- Child 2: Izar , 2012, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 151
+- Family: Ortiz De Urbina Díaz, aDíazlaburu@hotmail.com,  -> created 
+- Parent 1: Alfonso Ortiz De Urbina Uriarte, +34620846895,  -> created  
+- Parent 2: Arantza Díaz Laburu, +34626511117,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3230350155381551065821, False -> created  
+- Child 1: Aratz, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 152
+- Family: Ortiz Zubielqui, ainzubie@gmail.com,  -> created 
+- Parent 1: Andoni Ortiz, +34625703317,  -> created  
+- Parent 2: Ainhoa Zubielqui, +34667450617,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2720953162951093511870, False -> created  
+- Child 1: Arima, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 153
+- Family: Ostolaza Solozabal, isasoloasti@hotmail.com,  -> created 
+- Parent 1: Tomas Ostolaza, +34677667363,  -> created  
+- Parent 2: Isabel Solozabal, +34620234886,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2800730100540463696136, False -> created  
+- Child 1: Anton, 2010, 0 -> created 
+- Child 2: Marta , 2012, 0 -> created 
+- Child 3: Peio , 2014, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 154
+- Family: Otaño González, otanoetxaun@gmail.com,  -> created 
+- Parent 1: Etxaun Otaño, +34635208185,  -> created  
+- Parent 2: Hebe González Lasa, +34675707856,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4920953156109117563810, False -> created  
+- Child 1: Lur, 2018, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 155
+- Family: Padilla López, rosevit@hotmail.com,  -> created 
+- Parent 1: Javier Padilla, +34679649322,  -> created  
+- Parent 2: Rosa María López de la pinta, +34639205279,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7220953129131092808822, False -> created  
+- Child 1: Egoitz, 2011, 0 -> created 
+- Child 2: Markel, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 156
+- Family: Palacios Blanco, namenabar2@gmail.com,  -> created 
+- Parent 1: Gorka Palacios, +34682754281,  -> created  
+- Parent 2: Nora Blanco, +34675713303,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0320953141109113959219, False -> created  
+- Child 1: Asier, 2010, 0 -> created 
+- Child 2: Aina , 2014, 0 -> created 
+- Child 3: Nico , 2016, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 157
+- Family: Palomino Sobaco, amaya-cesar@hotmail.com,  -> created 
+- Parent 1: César Palomino Romero, +34661452668,  -> created  
+- Parent 2: Amaya Sobaco, +34661452667,  -> created  
+- Parent 1 bank account: , ES2220953129111092725042, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Aroa, 2012, 0 -> created 
+- Child 2: Aingeru , 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 158
+- Family: Pereda Velasco, ruthgmb46@gmail.com,  -> created 
+- Parent 1: Juan Ramón Pereda, +34607306034,  -> created  
+- Parent 2: Ruth Velasco, +34600903707,  -> created  
+- Parent 1 bank account: , ES1620801206393040011856, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Izan, 2013, 0 -> created 
+- Child 2: Nico, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 159
+- Family: Pérez De Arriba López De Heredia, iratxeldh@gmail.com,  -> created 
+- Parent 1: Ikatz Pérez De Arriba, +34656718961,  -> created  
+- Parent 2: Iratxe López de Heredia Bermeo, +34658862021,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0820950059409110552441, False -> created  
+- Child 1: Olatz , 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 160
+- Family: Pérez De Arrilucea Morales, belen.itsasarri@gmail.com,  -> created 
+- Parent 1: Máximo Pérez De Arrilucea Monte, +34676180532,  -> created  
+- Parent 2: María Belen Morales Parra, +34682152674,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES7820953114141091863471, False -> created  
+- Child 1: Valeria , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 161
+- Family: Pérez De Unzueta Maestro, iakimaestro@gmail.com,  -> created 
+- Parent 1: Ignacio Maestro, +34695715902,  -> created  
+- Parent 2: Jone Pérez de Unzueta, +34695715902,  -> created  
+- Parent 1 bank account: , ES1420953160181094184792, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Udane, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 162
+- Family: Pérez Del Palomar Rodríguez, begoquintairos@gmail.com,  -> created 
+- Parent 1: Ionkar Pérez Del Palomar, +34655716170,  -> created  
+- Parent 2: Begoña Rodríguez Quintairos, +34688625355,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0530080189102057787117, False -> created  
+- Child 1: Nahia , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 163
+- Family: Pérez Segura, elisabet_segura@hotmail.com,  -> created 
+- Parent 1: Roberto Pérez, +34605709580,  -> created  
+- Parent 2: Elixabet Segura, +34656727018,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5521003535482100435025, False -> created  
+- Child 1: Alazne , 2012, 0 -> created 
+- Child 2: Haritz, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 164
+- Family: Portela Vicente, ikerne_vicente@hotmail.com,  -> created 
+- Parent 1: Esteban Portela De La Fuente, +34657772768,  -> created  
+- Parent 2: Ikerne Vicente Etxenausia, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9120953169081094496659, False -> created  
+- Child 1: Aimar, 2015, 0 -> created 
+- Child 2: Hegoi, 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 165
+- Family: Ramírez Martínez, nagoremr@hotmail.es,  -> created 
+- Parent 1: Angel Ramírez, +34619974900,  -> created  
+- Parent 2: Nagore Martínez Ruiz, +34619625132,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES5930350061920611180845, False -> created  
+- Child 1: Lhia, 2011, 0 -> created 
+- Child 2: Sue , 2013, 0 -> created 
+- Child 3: Danel, 2017, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 166
+- Family: Robles López, durnelop@gmail.com,  -> created 
+- Parent 1: Jose Robles, +34605753770,  -> created  
+- Parent 2: Edurne López Gutiérrez, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3420953112209118434619, False -> created  
+- Child 1: Oier, 2013, 0 -> created 
+- Child 2: Irati , 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 167
+- Family: Robles Tejero, onintza.corres@hotmail.com,  -> created 
+- Parent 1: Aitor, +34653611763,  -> created  
+- Parent 2: Onintza Corres, +34695389102,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0720953188031094799136, False -> created  
+- Child 1: Liher, 2015, 0 -> created 
+- Child 2: Noa , 2018, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 168
+- Family: Rodríguez Jimenez, elenaele78@gmail.com,  -> created 
+- Parent 1: Iñigo Rodríguez, +34630171739,  -> created  
+- Parent 2: ELENA JIMENEZ, +34656731419,  -> created  
+- Parent 1 bank account: , ES2030350429014291013150, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: MAIA , 2010, 0 -> created 
+- Child 2: UR , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 169
+- Family: Romero Expósito, lolaetaval@gmail.com,  -> created 
+WARNING: - Parent 1: , +34651377991,  -> not_processed  
+- Parent 2: Lola Romero Expósito, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3421001419040100655074, False -> created  
+- Child 1: Valentina , 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 170
+- Family: Rosado Jimenez, moniki82@hotmail.com,  -> created 
+- Parent 1: Felipe Rosado, +34636843952,  -> created  
+- Parent 2: MÓNICA JIMÉNEZ CASTILLA, +34630839359,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9620953160141094004644, False -> created  
+- Child 1: MAIALEN , 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 171
+- Family: Ruiz De Azua Leturiaga, maiderlf@hotmail.com,  -> created 
+- Parent 1: Urtzi Ruiz De Azua, +34617764851,  -> created  
+- Parent 2: Maider Leturiaga Fernández, +34659429346,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES4030080189102162425819, False -> created  
+- Child 1: Udane, 2012, 0 -> created 
+- Child 2: Iraia, 2015, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 172
+- Family: Sáenz Del Castillo, amaya.Sáenz@gmail.com,  -> created 
+- Parent 1: Iker, +34606186804,  -> created  
+- Parent 2: Amaya Sáenz García, +34615739789,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6130080220902142358916, False -> created  
+- Child 1: USUNE, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 173
+- Family: Sáenz Pérez, ainara14@gmail.com,  -> created 
+- Parent 1: Aritz Sáenz, +34635728220,  -> created  
+- Parent 2: Ainara Pérez, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES6420953164811092254282, False -> created  
+- Child 1: Ainhize, 2015, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 174
+- Family: Sánchez Iturburu, csorive@gmail.com,  -> created 
+- Parent 1: Carlos Sánchez Orive, +34620163642,  -> created  
+- Parent 2: Itxaso Iturburu, +34619772497,  -> created  
+- Parent 1 bank account: , ES6130350012720121045470, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Lucia, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 175
+- Family: Santa Cruz Escarza, santacruzaberasturi@gmail.com,  -> created 
+- Parent 1: Javier, +34669422588,  -> created  
+WARNING: - Parent 2: , +34945243354,  -> not_processed  
+- Parent 1 bank account: , ES6620953156171093273760, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Asier, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 176
+- Family: Santidiran Santano, eladisan@gmail.com,  -> created 
+- Parent 1: Iñaki Santidrián García, +34605747684,  -> created  
+- Parent 2: ELADI Santano, +34656733033,  -> created  
+- Parent 1 bank account: , ES4230350073560730073954, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: ALAIN, 2011, 0 -> created 
+- Child 2: UNAI, 2013, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 177
+- Family: Seco Neira, yamago@hotmail.es,  -> created 
+- Parent 1: Enrique Seco Hilera, +34687180418,  -> created  
+- Parent 2: Maria Belen Neira, +34656008423,  -> created  
+- Parent 1 bank account: , ES4320953141131091988609, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Mikel, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 178
+- Family: Suso Moya, nunedurne@hotmail.com,  -> created 
+- Parent 1: Asier Suso, +34665728684,  -> created  
+- Parent 2: Edurne Moya Martínez de Vergara, +34615714839,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES8830350173911730027965, False -> created  
+- Child 1: Haizea , 2014, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 179
+- Family: Tobias Gelado, santitobias@hotmail.com,  -> created 
+- Parent 1: Santiago Tobias Peregrina, +34665700187,  -> created  
+- Parent 2: Ana Belén Gelado Lorente, +34649303367,  -> created  
+- Parent 1 bank account: , ES2020953156111092275782, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Santi, 2011, 0 -> created 
+- Child 2: Iria , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 180
+- Family: Triñanes Idigoras, onekaidigoras@yahoo.es,  -> created 
+- Parent 1: Daniel Triñanes López, +34607302755,  -> created  
+- Parent 2: Oneka Idigoras Bañares, +34685726447,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES8030080236342458544919, False -> created  
+- Child 1: Mara, 2013, 0 -> created 
+- Child 2: Leo, 2016, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 181
+- Family: Ubillos Rabella, jonubillosm@gmail.com,  -> created 
+- Parent 1: Jon Ubillos, +34677852160,  -> created  
+- Parent 2: Mirari Rabella, +34666282032,  -> created  
+- Parent 1 bank account: , ES3620953153691071117005, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Elene, 2012, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 182
+- Family: Ugarte García, itxasGarcía@gmail.com,  -> created 
+WARNING: - Parent 1: , +34661016232,  -> not_processed  
+- Parent 2: Itxaso García Mardones, +34945357955,  -> created  
+WARNING: - Parent 1 bank account: , ES4120953212671092853315, False -> not_processed  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Ieltxu, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 183
+- Family: Ugarte Ureta, amaia_ureta@yahoo.es,  -> created 
+- Parent 1: Oskar Ugarte Ezenarro, +34658737368,  -> created  
+- Parent 2: Amaia Ureta Askasibar, +34639679046,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2430350155351550015117, False -> created  
+- Child 1: Ekain, 2013, 0 -> created 
+- Child 2: Irati , 2017, 0 -> created 
+- Child 3: Maddi , 2018, 0 -> created 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 184
+- Family: Urbiola Constenla, aneostatxu@gmail.com,  -> created 
+- Parent 1: Unai Urbiola, +34606987347,  -> created  
+WARNING: - Parent 2: , ,  -> not_processed  
+- Parent 1 bank account: , ES9630350086690860039958, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Eneitz, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 185
+- Family: Urtaran Arnanz, bea.arnanz@gmail.com,  -> created 
+- Parent 1: Endika Urtaran Motos, +34688621540,  -> created  
+- Parent 2: Beatriz Arnanz Burgueño, +34656728370,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3921003679512200258426, False -> created  
+- Child 1: AMAIA, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 186
+- Family: Usategui Viana, estitxu10@hotmail.com,  -> created 
+- Parent 1: Unai Usategui, +34636782079,  -> created  
+- Parent 2: Estibaliz Viana Armentia, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3920953119409116899338, False -> created  
+- Child 1: Markel, 2012, 0 -> created 
+- Child 2: Irati , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 187
+- Family: Valderrey Pablos, bruno.valderrey@hotmail.com,  -> created 
+- Parent 1: Bruno Valderrey Robleda, +34649552805,  -> created  
+- Parent 2: Maria Dolores, +34619929345,  -> created  
+- Parent 1 bank account: , ES7321002949240100231184, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Markel, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 188
+- Family: Valle Jiménez, dvalle.salgado@gmail.com,  -> created 
+- Parent 1: David Valle Salgado, +34685539424,  -> created  
+- Parent 2: Eva María Jiménez exposito, +34619188109,  -> created  
+- Parent 1 bank account: , ES4120953112221094702841, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Mireia, 2011, 0 -> created 
+- Child 2: Luka , 2014, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 189
+- Family: Villamor Subijana, eduvo63@gmail.com,  -> created 
+- Parent 1: Eduardo Villamor, +34699858026,  -> created  
+- Parent 2: Elena Subijana, +34610494120,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES2130350080930801171617, False -> created  
+- Child 1: Xabier, 2010, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 190
+- Family: Viñuela Ortiz De Viñaspre, sandraortizdevinaspre@gmail.com,  -> created 
+- Parent 1: Alfredo Viñuela, +34628547497,  -> created  
+- Parent 2: Sandra Ortiz de Viñaspre López de Armentia, +34655720202,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9520953166721094670865, False -> created  
+- Child 1: Markel, 2013, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 191
+- Family: Yagüe Cid, txetxinaria@hotmail.com,  -> created 
+- Parent 1: José Luis Yagüe Sánchez, +34659410942,  -> created  
+- Parent 2: María Cid Miguel, +34696883560,  -> created  
+- Parent 1 bank account: , ES5721007921010200036298, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Uxue, 2011, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 192
+- Family: Zaera López, martanaiz@gmail.com,  -> created 
+- Parent 1: Ander Zaera, +34679848538,  -> created  
+- Parent 2: Marta López, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES3520953159309119259268, False -> created  
+- Child 1: Ilargi, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 193
+- Family: Zamalloa Mendia, izarmm81@gmail.com,  -> created 
+- Parent 1: Unai Zamalloa, +34627218869,  -> created  
+- Parent 2: Izar Mendia, ,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES9630350056490560045882, False -> created  
+- Child 1: Markel, 2010, 0 -> created 
+- Child 2: Julen, 2012, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 194
+- Family: Zárate Uribesalgo, larraitzz@hotmail.com,  -> created 
+- Parent 1: Jesus Jose, +34606198956,  -> created  
+- Parent 2: Larraitz Uribesalgo, +34679419761,  -> created  
+WARNING: - Parent 1 bank account: , , False -> not_processed  
+- Parent 2 bank account: , ES0430350258012581006660, False -> created  
+- Child 1: Uxue, 2009, 0 -> created 
+- Child 2: Izaro , 2010, 0 -> created 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+Row 195
+- Family: Zarrabeitia Alonso, gonzarrabeitia@gmail.com,  -> created 
+- Parent 1: Gonzalo Zarrabeitia Ullibarri, +34652722963,  -> created  
+- Parent 2: Yanela Alonso, +34637801239,  -> created  
+- Parent 1 bank account: , ES1730080199712840476218, False -> created  
+WARNING: - Parent 2 bank account: , , False -> not_processed  
+- Child 1: Cayetana, 2016, 0 -> created 
+WARNING: - Child 2: , ,  -> not_processed 
+WARNING: - Child 3: , ,  -> not_processed 
+WARNING: - Child 4: , ,  -> not_processed 
+WARNING: - Child 5: , ,  -> not_processed 
+
+SUMMARY
+Rows with data: 193
+Families:
+- 193 created. 
+- 0 updated. 
+- 0 not modified. 
+- 0 errors. 
+Parents:
+- 371 created. 
+- 0 updated. 
+- 0 not modified. 
+- 371 assigned to a family. 
+- 0 errors. 
+Children:
+- 302 created. 
+- 0 updated. 
+- 1 not modified. 
+- 0 errors. 
+Bank accounts:
+- 192 created. 
+- 4 updated. 
+- 0 not modified. 
+- 0 family default bank accounts changed. 
+- 0 errors. 
+Errors:
+- No errors

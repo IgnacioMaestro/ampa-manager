@@ -9,7 +9,7 @@ from ampa_members_manager.activity.models.payment_type import PaymentType
 
 
 class ActivityPeriod(models.Model):
-    name = models.CharField(max_length=100, verbose_name=_("Name"))
+    name = models.CharField(max_length=100, verbose_name=_("Period name"))
     price_for_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for members"))
     price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for no members"))
     payment_type = models.IntegerField(choices=PaymentType.choices, verbose_name=_("Payment type"))
@@ -20,7 +20,7 @@ class ActivityPeriod(models.Model):
         verbose_name_plural = _('Activity Periods')
 
     def __str__(self) -> str:
-        return f'{self.name}'
+        return f'{self.activity} - {self.name}'
 
     def calculate_price(self, times: float, membership: bool) -> float:
         if membership:

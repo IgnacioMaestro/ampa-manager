@@ -140,3 +140,23 @@ class BankAccountAuthorizationFilter(admin.SimpleListFilter):
                 return queryset.filter(authorization__state=self.value())
         else:
             return queryset
+
+class FamilyDefaultAccountFilter(admin.SimpleListFilter):
+    title = _('Default account')
+
+    parameter_name = 'account'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('with', _('With account')),
+            ('without', _('Without account')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'with':
+                return queryset.exclude(default_bank_account=None)
+            elif self.value() == 'without':
+                return queryset.filter(default_bank_account=None)
+        else:
+            return queryset

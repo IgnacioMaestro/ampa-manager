@@ -12,8 +12,10 @@ from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
-from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter
+from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter, \
+                                                FamilyDefaultAccountFilter
 from ampa_members_manager.family.models.state import State
+from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -25,23 +27,25 @@ class FamilyAdminForm(forms.ModelForm):
             self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
 
-class ChildInline(admin.TabularInline):
+class ChildInline(ReadOnlyTabularInline):
     model = Child
     extra = 0
 
 
-class MembershipInline(admin.TabularInline):
+class MembershipInline(ReadOnlyTabularInline):
     model = Membership
     extra = 0
 
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_member']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter]
+    ordering = ['surnames']
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter]
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
+    list_per_page = 25
 
     @admin.action(description=_("Generate MembershipRemittance for current year"))
     def generate_remittance(self, request, families: QuerySet[Family]):
@@ -67,15 +71,24 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'phone_number']
-    search_fields = ['name_and_surnames', 'phone_number']
+    list_display = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'is_member']
+    ordering = ['name_and_surnames']
+    search_fields = ['name_and_surnames', 'phone_number', 'additional_phone_number']
     inlines = [BankAccountInline]
+    list_per_page = 25
 
+    @admin.display(description=_('Is member'))
+    def is_member(self, parent):
+        families = [f.id for f in parent.family_set.all()]
+        return _('Yes') if Membership.objects.filter(family__in=families, academic_course=ActiveCourse.load()).exists() else _('No')
+    
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
+    ordering = ['name']
     list_filter = [CycleFilter, CourseListFilter, 'year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'repetition', 'family']
+    list_per_page = 25
 
     @admin.display(description=_('Is member'))
     def is_member(self, child):
@@ -96,10 +109,12 @@ class AuthorizationInline(admin.TabularInline):
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['swift_bic', 'iban', 'owner', 'authorization_status']
+    list_display = ['iban', 'swift_bic', 'owner', 'authorization_status']
+    ordering = ['swift_bic', 'iban']
     list_filter = [BankAccountAuthorizationFilter]
     search_fields = ['swift_bic', 'iban', 'owner']
     inlines = [AuthorizationInline]
+    list_per_page = 25
 
     @admin.display(description=_('Authorization'))
     def authorization_status(self, bank_account):
@@ -112,8 +127,10 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 class AuthorizationAdmin(admin.ModelAdmin):
     list_display = ['number', 'year', 'date', 'bank_account', 'document', 'state']
+    ordering = ['-date']
     list_filter = ['year', 'state']
     search_fields = ['number', 'year', 'date', 'bank_account']
+    list_per_page = 25
 
     @admin.action(description=_("Set as not sent"))
     def set_as_not_sent(self, request, queryset: QuerySet[Authorization]):
@@ -141,5 +158,7 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ['family', 'academic_course']
+    ordering = ['-academic_course', 'family__surnames']
     list_filter = ['academic_course__initial_year']
     search_fields = ['family', 'academic_course']
+    list_per_page = 25
