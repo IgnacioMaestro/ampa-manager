@@ -6,6 +6,8 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 
 class AcademicCourseAdmin(admin.ModelAdmin):
     list_display = ['summary', 'fee', 'is_active', 'members_count']
+    ordering = ['-id']
+    list_per_page = 25
 
     @admin.display(description=_('Summary'))
     def summary(self, instance):

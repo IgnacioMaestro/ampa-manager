@@ -16,15 +16,18 @@ from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_rem
     RemittanceGenerator
 from ampa_members_manager.charge.use_cases.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
+from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
 
-class ActivityReceiptInline(admin.TabularInline):
+class ActivityReceiptInline(ReadOnlyTabularInline):
     model = ActivityReceipt
     extra = 0
 
 
 class ActivityReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'amount', 'state']
+    ordering = ['remittance', 'state']
+    list_per_page = 25
 
     @admin.action(description=_("Set as sent"))
     def set_as_sent(self, request, queryset: QuerySet[ActivityReceipt]):
@@ -45,9 +48,11 @@ class ActivityReceiptAdmin(admin.ModelAdmin):
 
 
 class ActivityRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipt_count', 'receipt_created_count', 'receipt_sent_count', 'receipt_paid_count']
+    list_display = ['created_at', 'name', 'receipt_count', 'receipt_created_count', 'receipt_sent_count', 'receipt_paid_count']
+    ordering = ['-created_at']
     list_filter = ['created_at']
     inlines = [ActivityReceiptInline]
+    list_per_page = 25
 
     @admin.action(description=_("Export to CSV"))
     def download_csv(self, request, queryset: QuerySet[ActivityRemittance]):
@@ -101,13 +106,16 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
     actions = [download_csv, set_all_receipts_as_sent, set_all_receipts_as_paid]
 
 
-class MembershipReceiptInline(admin.TabularInline):
+class MembershipReceiptInline(ReadOnlyTabularInline):
     model = MembershipReceipt
     extra = 0
 
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
+    list_display = ['identifier', 'created_at', 'course']
+    ordering = ['-created_at']
     inlines = [MembershipReceiptInline]
+    list_per_page = 25
 
     @admin.action(description=_("Export Membership Remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
@@ -125,3 +133,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         return response
 
     actions = [download_membership_remittance_csv]
+
+
+class MembershipReceiptAdmin(admin.ModelAdmin):
+    list_display = ['remittance', 'family', 'state']
+    ordering = ['state']
+    search_fields = ['family__surnames']
+    list_filter = ['state']
+    list_per_page = 25

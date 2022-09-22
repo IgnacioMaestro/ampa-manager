@@ -7,7 +7,7 @@ from ampa_members_manager.activity.models.funding import Funding
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=100, verbose_name=_("Name"))
+    name = models.CharField(max_length=100, verbose_name=_("Activity name"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
     funding = models.IntegerField(choices=Funding.choices, verbose_name=_("Funding"))
 

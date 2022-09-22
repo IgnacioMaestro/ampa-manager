@@ -19,19 +19,24 @@ class ActivityPeriodAdmin(admin.ModelAdmin):
 
     actions = [create_activity_remittance]
     inlines = [ActivityRegistrationInline]
-    list_display = ['name', 'price_for_member', 'price_for_no_member', 'payment_type', 'activity']
+    list_display = ['activity', 'name', 'price_for_member', 'price_for_no_member', 'payment_type']
+    ordering = ['activity', 'name']
     list_filter = ['activity__name', 'payment_type']
     search_fields = ['name']
+    list_per_page = 25
 
 
 class ActivityPeriodInline(admin.TabularInline):
     model = ActivityPeriod
-    list_display = ['name', 'price_for_member', 'price_for_no_member', 'payment_type', 'activity']
+    list_display = ['activity', 'name', 'price_for_member', 'price_for_no_member', 'payment_type']
+    ordering = ['activity', 'name']
     extra = 0
 
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ['name', 'academic_course', 'funding']
+    list_display = ['academic_course', 'name', 'funding']
+    ordering = ['-academic_course', 'name']
     list_filter = ['funding', 'academic_course__initial_year']
     inlines = [ActivityPeriodInline]
     search_fields = ['name']
+    list_per_page = 25
