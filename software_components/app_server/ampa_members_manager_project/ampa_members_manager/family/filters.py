@@ -64,7 +64,7 @@ class CycleFilter(admin.SimpleListFilter):
         else:
             return queryset
 
-class IsMemberFilter(admin.SimpleListFilter):
+class FamilyIsMemberFilter(admin.SimpleListFilter):
     title = _('Membership')
 
     parameter_name = 'member'
@@ -86,7 +86,7 @@ class IsMemberFilter(admin.SimpleListFilter):
         else:
             return queryset
 
-class ChildrenCountFilter(admin.SimpleListFilter):
+class FamilyChildrenCountFilter(admin.SimpleListFilter):
     title = _('Children count')
 
     parameter_name = 'children'
@@ -114,5 +114,32 @@ class ChildrenCountFilter(admin.SimpleListFilter):
                 return queryset.filter(children_count=2)
             elif self.value() == '3+':
                 return queryset.filter(children_count__gt=2)
+        else:
+            return queryset
+
+class BankAccountAuthorizationFilter(admin.SimpleListFilter):
+    title = _('Authorization')
+
+    parameter_name = 'authorization'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('no', _('No authorization')),
+            ('created', _('Created')),
+            ('sent', _('Sent')),
+            ('signed', _('Signed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'no':
+                queryset = queryset.annotate(auth_count=Count('authorization'))
+                return queryset.filter(auth_count=0)
+            elif self.value() == 'created':
+                return queryset.filter(authorization__state=1)
+            elif self.value() == 'sent':
+                return queryset.filter(authorization__state=2)
+            elif self.value() == 'signed':
+                return queryset.filter(authorization__state=3)
         else:
             return queryset

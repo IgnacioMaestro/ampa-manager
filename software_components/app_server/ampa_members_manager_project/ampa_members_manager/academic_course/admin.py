@@ -7,8 +7,8 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 class AcademicCourseAdmin(admin.ModelAdmin):
     list_display = ['summary', 'fee', 'is_active', 'members_count']
 
-    @staticmethod
-    def summary(instance):
+    @admin.display(description=_('Summary'))
+    def summary(self, instance):
         return str(instance)
     
     @admin.display(description=_('Is active'))
