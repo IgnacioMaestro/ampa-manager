@@ -60,17 +60,6 @@ python manage.py import <FILE_PATH>
 Importing file plantilla_carga_datos_familias.xls
 Importing rows 2-6 from sheet "Hoja1". Rows: 7. Cols: 30
 Row 2
-- Family: Landa Hualde, landa.hualde@abendanogurasoak.com,  -> not_modified 
-- Parent 1: Daniel Landa, +34647743503,  -> not_modified 
-- Parent 2: Nahia Hualde, +34657714927,  -> not_modified 
-- Parent 1 bank account: BCOEESMM190, ES3331908581718583553674, True -> not_modified 
-- Parent 2 bank account: BKBKESMMXXX, ES5401282239519875277981, False -> not_modified 
-- Child 1: Ibai, 2014, 0 -> not_modified 
-- Child 2: Joanes, 2017, 0 -> not_modified 
-- Child 3: , ,  -> not_processed 
-- Child 4: , ,  -> not_processed 
-- Child 5: , ,  -> not_processed 
-Row 3
 - Family: Lopez Aguirrezabal, lopez.aguirrezabal@abendanogurasoak.com, lopezzz@gmail.com -> not_modified 
 - Parent 1: Javier Lopez, +346558899, +34124578 -> not_modified 
 - Parent 2: Paula Aguirrezabal, +34635241, +34698574 -> not_modified 
