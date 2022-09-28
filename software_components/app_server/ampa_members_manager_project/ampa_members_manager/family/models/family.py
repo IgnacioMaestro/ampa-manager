@@ -16,6 +16,7 @@ class Family(models.Model):
     default_bank_account = models.ForeignKey(
         to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"),
         help_text=_("Save the family to see its bank accounts"))
+    is_defaulter = models.BooleanField(default=False, verbose_name=_("Defaulter"))
 
     class Meta:
         verbose_name = _('Family')
