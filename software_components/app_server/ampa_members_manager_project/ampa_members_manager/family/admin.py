@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
+from django.forms.models import BaseInlineFormSet
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
@@ -14,6 +15,8 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter, \
                                                 FamilyDefaultAccountFilter
+from ampa_members_manager.charge.admin import MembershipReceiptInline, ActivityReceiptInline
+from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.family.models.state import State
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
@@ -37,14 +40,25 @@ class MembershipInline(ReadOnlyTabularInline):
     extra = 0
 
 
+class ActivityReceiptInlineFormSet(BaseInlineFormSet):
+
+    def get_queryset(self):
+        qs = super(ActivityReceiptInlineFormSet, self).get_queryset()
+        return ActivityReceipt.objects.filter(activity_registrations__child__family=None)
+
+
+class FamilyActivityReceiptInline(ActivityReceiptInline):
+    formset = ActivityReceiptInlineFormSet
+
+
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_member']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_defaulter', 'is_member']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter]
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'is_defaulter']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline, MembershipInline]
+    inlines = [ChildInline, MembershipInline, MembershipReceiptInline]
     list_per_page = 25
 
     @admin.action(description=_("Generate MembershipRemittance for current year"))

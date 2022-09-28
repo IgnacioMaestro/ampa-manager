@@ -141,3 +141,11 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     search_fields = ['family__surnames']
     list_filter = ['state']
     list_per_page = 25
+
+class MembershipReceiptInline(ReadOnlyTabularInline):
+    model = MembershipReceipt
+    extra = 0
+
+class ActivityReceiptInline(ReadOnlyTabularInline):
+    model = ActivityReceipt
+    extra = 0
