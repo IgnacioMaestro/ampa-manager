@@ -9,11 +9,11 @@
 ## Run environment from a BAT file
 1. Create virtual environment
 2. Copy this to a file named run.bat.
-3. Replace < VARIABLES >
 ```
 @echo off
 cmd /k "cd /d <PATH TO VIRTUAL ENV SCRIPTS FOLDER> & activate & cd /d <PATH TO MANAGE.PY FILE> & python manage.py runserver 0.0.0.0:8001"
 ```
+3. Replace < PATHS >
 4. Run bat file
 
 ## Create virtual environment
