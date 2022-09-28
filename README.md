@@ -6,6 +6,16 @@
 ## Use cases diagram
 [Use cases diagram](doc/Use%20cases%20diagram.md)
 
+## Run environment from a BAT file
+1. Create virtual environment
+2. Copy this to a file named run.bat.
+3. Replace < VARIABLES >
+```
+@echo off
+cmd /k "cd /d <PATH TO VIRTUAL ENV SCRIPTS FOLDER> & activate & cd /d <PATH TO MANAGE.PY FILE> & python manage.py runserver 0.0.0.0:8001"
+```
+4. Run bat file
+
 ## Create virtual environment
 ```
 python3 -m venv /path/to/new/virtual/environment
@@ -16,9 +26,9 @@ pip install -r AMPAMembersManager\software_components\app_server\ampa_members_ma
 ## Translations
 1. Generate translations files
 
-``
+```
 django-admin makemessages -l es -l eu
-``
+```
 
 2. Edit translations files. 
    1. Check translations marked as "fuzzy" (translated automatically by django based on similar translations)
@@ -31,9 +41,9 @@ locale/eu/LC_MESSAGES/django.po
 
 3. Compile translations files
 
-``
+```
 django-admin compilemessages
-``
+```
 
 ## Import from excel
 
