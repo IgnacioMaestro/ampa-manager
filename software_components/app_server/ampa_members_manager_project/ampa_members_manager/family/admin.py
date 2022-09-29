@@ -2,7 +2,8 @@ from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
-from django.forms.models import BaseInlineFormSet
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
@@ -63,8 +64,9 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.action(description=_("Generate MembershipRemittance for current year"))
     def generate_remittance(self, request, families: QuerySet[Family]):
         academic_course: AcademicCourse = ActiveCourse.load()
-        MembershipRemittanceCreator(families, academic_course).create()
-        return self.message_user(request=request, message=_("Membership remittance created"))
+        remittance = MembershipRemittanceCreator(families, academic_course).create()
+        message = mark_safe(_("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
+        return self.message_user(request=request, message=message)
     
     @admin.display(description=_('Children'))
     def child_count(self, family):

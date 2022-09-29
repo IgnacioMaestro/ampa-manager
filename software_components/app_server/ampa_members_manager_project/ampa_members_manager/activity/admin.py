@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
@@ -14,8 +15,9 @@ class ActivityPeriodAdmin(admin.ModelAdmin):
         if not ActivityPeriod.all_same_activity(activity_periods=activity_periods):
             message = _("All period activities must belong to the same activity")
             return self.message_user(request, message)
-        ActivityRemittanceWithReceiptsCreator(activity_periods).create()
-        return self.message_user(request=request, message=_("Activity remittance created"))
+        remittance = ActivityRemittanceWithReceiptsCreator(activity_periods).create()
+        message = mark_safe(_("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
+        return self.message_user(request=request, message=message)
 
     actions = [create_activity_remittance]
     inlines = [ActivityRegistrationInline]
