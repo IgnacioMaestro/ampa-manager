@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-29 14:25+0200\n"
+"POT-Creation-Date: 2022-09-29 14:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,7 +233,7 @@ msgid "Activity period"
 msgstr "Periodo de actividad"
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:18
-#: .\ampa_members_manager\family\models\authorization.py:15
+#: .\ampa_members_manager\family\models\authorization.py:16
 #: .\ampa_members_manager\family\models\bank_account.py:15
 msgid "Bank account"
 msgstr "Cuenta bancaria"
@@ -254,7 +254,9 @@ msgstr "Registros en actividad"
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:44
 msgid "The selected bank account does not belong to the child's family"
-msgstr "La cuenta bancaria seleccionada no pertenece a la familia del hijo seleccionado"
+msgstr ""
+"La cuenta bancaria seleccionada no pertenece a la familia del hijo "
+"seleccionado"
 
 #: .\ampa_members_manager\admin.py:26 .\ampa_members_manager\admin.py:27
 msgid "PTA Administration"
@@ -353,7 +355,7 @@ msgstr "Total (€)"
 
 #: .\ampa_members_manager\charge\models\activity_receipt.py:21
 #: .\ampa_members_manager\charge\models\membership_receipt.py:21
-#: .\ampa_members_manager\family\models\authorization.py:17
+#: .\ampa_members_manager\family\models\authorization.py:18
 msgid "State"
 msgstr "Estado"
 
@@ -453,7 +455,7 @@ msgstr "Padres"
 
 #: .\ampa_members_manager\family\admin.py:133
 #: .\ampa_members_manager\family\filters.py:122
-#: .\ampa_members_manager\family\models\authorization.py:20
+#: .\ampa_members_manager\family\models\authorization.py:21
 msgid "Authorization"
 msgstr "Autorización"
 
@@ -555,21 +557,25 @@ msgstr "Con cuenta"
 msgid "Without account"
 msgstr "Con cuenta"
 
-#: .\ampa_members_manager\family\models\authorization.py:12
+#: .\ampa_members_manager\family\models\authorization.py:13
 msgid "Number"
 msgstr "Número"
 
-#: .\ampa_members_manager\family\models\authorization.py:13
+#: .\ampa_members_manager\family\models\authorization.py:14
 msgid "Year"
 msgstr "Año"
 
-#: .\ampa_members_manager\family\models\authorization.py:16
+#: .\ampa_members_manager\family\models\authorization.py:17
 msgid "Document"
 msgstr "Documento"
 
-#: .\ampa_members_manager\family\models\authorization.py:21
+#: .\ampa_members_manager\family\models\authorization.py:22
 msgid "Authorizations"
 msgstr "Autorizaciones"
+
+#: .\ampa_members_manager\family\models\authorization.py:31
+msgid "The state can not be sent or signed if there is no document attached"
+msgstr "El estado no puede ser envíado o firmado si no hay un documento adjunto"
 
 #: .\ampa_members_manager\family\models\bank_account.py:10
 msgid "SWIFT/BIC"
