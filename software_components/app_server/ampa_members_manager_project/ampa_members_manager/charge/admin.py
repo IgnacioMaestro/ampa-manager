@@ -25,7 +25,7 @@ class ActivityReceiptInline(ReadOnlyTabularInline):
 
 
 class ActivityReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'amount', 'state']
+    list_display = ['remittance', 'amount', 'state', 'activity_registrations_count', 'family', 'children', 'activities']
     ordering = ['remittance', 'state']
     list_per_page = 25
 
@@ -43,6 +43,34 @@ class ActivityReceiptAdmin(admin.ModelAdmin):
         message = _("%(num_receipts)s receipts set as sent") % {'num_receipts':  queryset.count()}
         self.message_user(request=request, message=message)
 
+    @admin.display(description=_('Family'))
+    def family(self, activity_receipt):
+        families = []
+        for activity_registration in activity_receipt.activity_registrations.all():
+            if activity_registration.child.family.surnames not in families:
+                families.append(activity_registration.child.family.surnames)
+        return ', '.join(families)
+    
+    @admin.display(description=_('Children'))
+    def children(self, activity_receipt):
+        children_list = []
+        for activity_registration in activity_receipt.activity_registrations.all():
+            if activity_registration.child.name not in children_list:
+                children_list.append(activity_registration.child.name)
+        return ', '.join(children_list)
+    
+    @admin.display(description=_('Activities'))
+    def activities(self, activity_receipt):
+        activities_list = []
+        for activity_registration in activity_receipt.activity_registrations.all():
+            if str(activity_registration.activity_period) not in activities_list:
+                activities_list.append(str(activity_registration.activity_period))
+        return ', '.join(activities_list)
+    
+    @admin.display(description=_('Activities'))
+    def activity_registrations_count(self, activity_receipt):
+        return activity_receipt.activity_registrations.count()
+    
     list_filter = ['state', 'remittance__name']
     actions = [set_as_sent, set_as_paid]
 
