@@ -14,3 +14,4 @@ class ActivityRemittanceWithReceiptsCreator:
         activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
             activity_periods=self.__activity_periods)
         ActivityReceiptsCreator(activity_remittance).create()
+        return activity_remittance
