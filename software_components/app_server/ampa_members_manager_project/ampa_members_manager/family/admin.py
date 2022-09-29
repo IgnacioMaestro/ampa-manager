@@ -40,15 +40,15 @@ class MembershipInline(ReadOnlyTabularInline):
     extra = 0
 
 
-class ActivityReceiptInlineFormSet(BaseInlineFormSet):
+class FamilyActivityReceiptInlineFormSet(BaseInlineFormSet):
 
-    def get_queryset(self):
-        qs = super(ActivityReceiptInlineFormSet, self).get_queryset()
-        return ActivityReceipt.objects.filter(activity_registrations__child__family=None)
+    def get_queryset(self, family):
+        qs = super(FamilyActivityReceiptInlineFormSet, self).get_queryset()
+        return ActivityReceipt.objects.filter(activity_registrations__child__family=family)
 
 
 class FamilyActivityReceiptInline(ActivityReceiptInline):
-    formset = ActivityReceiptInlineFormSet
+    formset = FamilyActivityReceiptInlineFormSet
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -65,7 +65,7 @@ class FamilyAdmin(admin.ModelAdmin):
     def generate_remittance(self, request, families: QuerySet[Family]):
         academic_course: AcademicCourse = ActiveCourse.load()
         MembershipRemittanceCreator(families, academic_course).create()
-        return self.message_user(request=request, message=_("Membership Remittance created"))
+        return self.message_user(request=request, message=_("Membership remittance created"))
     
     @admin.display(description=_('Children'))
     def child_count(self, family):
@@ -101,7 +101,7 @@ class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
     ordering = ['name']
     list_filter = [CycleFilter, CourseListFilter, 'year_of_birth', 'repetition']
-    search_fields = ['name', 'year_of_birth', 'repetition', 'family']
+    search_fields = ['name', 'year_of_birth', 'family__surnames']
     list_per_page = 25
 
     @admin.display(description=_('Is member'))

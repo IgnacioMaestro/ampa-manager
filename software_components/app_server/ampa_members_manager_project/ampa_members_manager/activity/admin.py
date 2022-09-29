@@ -19,11 +19,15 @@ class ActivityPeriodAdmin(admin.ModelAdmin):
 
     actions = [create_activity_remittance]
     inlines = [ActivityRegistrationInline]
-    list_display = ['activity', 'name', 'price_for_member', 'price_for_no_member', 'payment_type']
+    list_display = ['activity', 'name', 'price_for_member', 'price_for_no_member', 'registered_count', 'payment_type']
     ordering = ['activity', 'name']
     list_filter = ['activity__name', 'payment_type']
     search_fields = ['name']
     list_per_page = 25
+
+    @admin.display(description=_('Signed up'))
+    def registered_count(self, activity_period):
+        return activity_period.activityregistration_set.count()
 
 
 class ActivityPeriodInline(admin.TabularInline):
