@@ -16,9 +16,8 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter, \
                                                 FamilyDefaultAccountFilter
-from ampa_members_manager.charge.admin import MembershipReceiptInline, ActivityReceiptInline
+from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.family.models.state import State
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_members_manager.non_related_inlines import NonrelatedTabularInline
@@ -124,8 +123,8 @@ class AuthorizationInline(admin.TabularInline):
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['iban', 'swift_bic', 'owner', 'authorization_status']
-    ordering = ['swift_bic', 'iban']
+    list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
+    ordering = ['owner__name_and_surnames']
     list_filter = [BankAccountAuthorizationFilter]
     search_fields = ['swift_bic', 'iban', 'owner']
     inlines = [AuthorizationInline]
@@ -135,7 +134,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     def authorization_status(self, bank_account):
         try:
             authorization = Authorization.objects.get(bank_account=bank_account)
-            return authorization.state
+            return State.get_value_hunman_name(authorization.state)
         except Authorization.DoesNotExist:
             return _('No authorizacion')
 

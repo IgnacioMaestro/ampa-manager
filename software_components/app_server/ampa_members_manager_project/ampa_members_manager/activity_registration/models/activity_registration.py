@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from django.db import models
 from django.db.models import CASCADE, QuerySet
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.family.models.bank_account import BankAccount
@@ -21,7 +23,7 @@ class ActivityRegistration(models.Model):
         verbose_name_plural = _("Activity registrations")
 
     def __str__(self) -> str:
-        return f'{str(self.activity_period)}-{str(self.child)}'
+        return f'{str(self.activity_period)} - {str(self.child)}'
 
     def calculate_price(self) -> float:
         return self.activity_period.calculate_price(times=self.amount, membership=self.is_membership())
@@ -36,3 +38,7 @@ class ActivityRegistration(models.Model):
     @classmethod
     def with_activity_period(cls, activity_period: ActivityPeriod) -> QuerySet[ActivityRegistration]:
         return ActivityRegistration.objects.filter(activity_period=activity_period)
+    
+    def clean(self):
+        if not self.bank_account.owner.family_set.filter(id=self.child.family.id).exists():
+            raise ValidationError(_('The selected bank account does not belong to the child\'s family'))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-29 13:11+0200\n"
+"POT-Creation-Date: 2022-09-29 14:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,16 +27,16 @@ msgid "Is active"
 msgstr "Está activo"
 
 #: .\ampa_members_manager\academic_course\admin.py:18
-#: .\ampa_members_manager\family\admin.py:77
-#: .\ampa_members_manager\family\admin.py:98
-#: .\ampa_members_manager\family\admin.py:110
+#: .\ampa_members_manager\family\admin.py:76
+#: .\ampa_members_manager\family\admin.py:97
+#: .\ampa_members_manager\family\admin.py:109
 msgid "Yes"
 msgstr "Sí"
 
 #: .\ampa_members_manager\academic_course\admin.py:18
-#: .\ampa_members_manager\family\admin.py:77
-#: .\ampa_members_manager\family\admin.py:98
-#: .\ampa_members_manager\family\admin.py:110
+#: .\ampa_members_manager\family\admin.py:76
+#: .\ampa_members_manager\family\admin.py:97
+#: .\ampa_members_manager\family\admin.py:109
 msgid "No"
 msgstr "No"
 
@@ -65,7 +65,7 @@ msgid "Academic courses"
 msgstr "Cursos académicos"
 
 #: .\ampa_members_manager\academic_course\models\active_course.py:9
-#: .\ampa_members_manager\family\admin.py:112
+#: .\ampa_members_manager\family\admin.py:111
 #: .\ampa_members_manager\family\filters.py:13
 msgid "Course"
 msgstr "Curso"
@@ -148,7 +148,7 @@ msgid "Activity remittance created"
 msgstr "Remesa de actividad creada"
 
 #: .\ampa_members_manager\activity\admin.py:19
-#: .\ampa_members_manager\family\admin.py:68
+#: .\ampa_members_manager\family\admin.py:67
 msgid "View details"
 msgstr "Ver detalles"
 
@@ -224,40 +224,44 @@ msgstr "Por semana"
 msgid "Per month"
 msgstr "Por mes"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:14
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:16
 msgid "Amount"
 msgstr "Cantidad"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:15
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:17
 msgid "Activity period"
 msgstr "Periodo de actividad"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:16
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:18
 #: .\ampa_members_manager\family\models\authorization.py:15
 #: .\ampa_members_manager\family\models\bank_account.py:15
 msgid "Bank account"
 msgstr "Cuenta bancaria"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:17
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:19
 #: .\ampa_members_manager\family\models\child.py:20
 msgid "Child"
 msgstr "Hijo"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:20
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:22
 msgid "Activity registration"
 msgstr "Registro en actividad"
 
-#: .\ampa_members_manager\activity_registration\models\activity_registration.py:21
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:23
 #: .\ampa_members_manager\charge\models\activity_receipt.py:22
 msgid "Activity registrations"
 msgstr "Registros en actividad"
+
+#: .\ampa_members_manager\activity_registration\models\activity_registration.py:44
+msgid "The selected bank account does not belong to the child's family"
+msgstr "La cuenta bancaria seleccionada no pertenece a la familia del hijo seleccionado"
 
 #: .\ampa_members_manager\admin.py:26 .\ampa_members_manager\admin.py:27
 msgid "PTA Administration"
 msgstr "Administración del AMPA"
 
 #: .\ampa_members_manager\charge\admin.py:32
-#: .\ampa_members_manager\family\admin.py:157
+#: .\ampa_members_manager\family\admin.py:156
 msgid "Set as sent"
 msgstr "Marcar como envíado"
 
@@ -281,7 +285,7 @@ msgid "Family"
 msgstr "Familia"
 
 #: .\ampa_members_manager\charge\admin.py:54
-#: .\ampa_members_manager\family\admin.py:71
+#: .\ampa_members_manager\family\admin.py:70
 #: .\ampa_members_manager\family\models\child.py:21
 msgid "Children"
 msgstr "Hijos"
@@ -427,55 +431,55 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
-#: .\ampa_members_manager\family\admin.py:64
+#: .\ampa_members_manager\family\admin.py:63
 msgid "Generate MembershipRemittance for current year"
 msgstr "Generar la remesa de socios del año activo"
 
-#: .\ampa_members_manager\family\admin.py:68
+#: .\ampa_members_manager\family\admin.py:67
 msgid "Membership remittance created"
 msgstr "Remesa de socios creada"
 
-#: .\ampa_members_manager\family\admin.py:75
-#: .\ampa_members_manager\family\admin.py:95
-#: .\ampa_members_manager\family\admin.py:108
+#: .\ampa_members_manager\family\admin.py:74
+#: .\ampa_members_manager\family\admin.py:94
+#: .\ampa_members_manager\family\admin.py:107
 msgid "Is member"
 msgstr "Es socio"
 
-#: .\ampa_members_manager\family\admin.py:116
+#: .\ampa_members_manager\family\admin.py:115
 #: .\ampa_members_manager\family\models\family.py:15
 #: .\ampa_members_manager\family\models\parent.py:13
 msgid "Parents"
 msgstr "Padres"
 
-#: .\ampa_members_manager\family\admin.py:134
+#: .\ampa_members_manager\family\admin.py:133
 #: .\ampa_members_manager\family\filters.py:122
 #: .\ampa_members_manager\family\models\authorization.py:20
 msgid "Authorization"
 msgstr "Autorización"
 
-#: .\ampa_members_manager\family\admin.py:140
+#: .\ampa_members_manager\family\admin.py:139
 msgid "No authorizacion"
 msgstr "Sin autorización"
 
-#: .\ampa_members_manager\family\admin.py:150
+#: .\ampa_members_manager\family\admin.py:149
 msgid "Set as not sent"
 msgstr "Marcar como no enviado"
 
-#: .\ampa_members_manager\family\admin.py:154
+#: .\ampa_members_manager\family\admin.py:153
 #, python-format
 msgid "%(num_authorizations)s authorizations set as NOT sent"
 msgstr "%(num_authorizations)s autorizaciones marcadas como no pagadas"
 
-#: .\ampa_members_manager\family\admin.py:161
+#: .\ampa_members_manager\family\admin.py:160
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
 msgstr "%(num_authorizations)s autorizaciones marcadas como enviadas"
 
-#: .\ampa_members_manager\family\admin.py:164
+#: .\ampa_members_manager\family\admin.py:163
 msgid "Set as signed"
 msgstr "Marcar como firmadas"
 
-#: .\ampa_members_manager\family\admin.py:168
+#: .\ampa_members_manager\family\admin.py:167
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
