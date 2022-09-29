@@ -17,8 +17,10 @@ from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, F
                                                 FamilyDefaultAccountFilter
 from ampa_members_manager.charge.admin import MembershipReceiptInline, ActivityReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
+from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.family.models.state import State
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_members_manager.non_related_inlines import NonrelatedTabularInline
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -40,15 +42,12 @@ class MembershipInline(ReadOnlyTabularInline):
     extra = 0
 
 
-class FamilyActivityReceiptInlineFormSet(BaseInlineFormSet):
+class FamilyActivityReceiptInline(NonrelatedTabularInline):
+    model = ActivityReceipt
+    fields = ['amount', 'state']
 
-    def get_queryset(self, family):
-        qs = super(FamilyActivityReceiptInlineFormSet, self).get_queryset()
+    def get_form_queryset(self, family):
         return ActivityReceipt.objects.filter(activity_registrations__child__family=family)
-
-
-class FamilyActivityReceiptInline(ActivityReceiptInline):
-    formset = FamilyActivityReceiptInlineFormSet
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -58,7 +57,7 @@ class FamilyAdmin(admin.ModelAdmin):
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline, MembershipInline, MembershipReceiptInline]
+    inlines = [ChildInline, MembershipInline, MembershipReceiptInline, FamilyActivityReceiptInline]
     list_per_page = 25
 
     @admin.action(description=_("Generate MembershipRemittance for current year"))
