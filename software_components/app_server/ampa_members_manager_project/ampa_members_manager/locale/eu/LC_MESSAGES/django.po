@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-29 09:26+0200\n"
+"POT-Creation-Date: 2022-09-29 10:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,16 +27,16 @@ msgid "Is active"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:18
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:76
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:97
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:109
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:75
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:96
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:108
 msgid "Yes"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\admin.py:18
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:76
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:97
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:109
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:75
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:96
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:108
 msgid "No"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgid "Academic courses"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\academic_course\models\active_course.py:9
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:111
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:110
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:13
 msgid "Course"
 msgstr ""
@@ -220,7 +220,6 @@ msgid "Per month"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\activity_registration\models\activity_registration.py:14
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\activity_receipt.py:20
 msgid "Amount"
 msgstr ""
 
@@ -254,7 +253,7 @@ msgid "PTA Administration"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:32
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:156
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:155
 msgid "Set as sent"
 msgstr ""
 
@@ -268,54 +267,78 @@ msgstr ""
 msgid "Set as paid"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:57
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:46
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\membership_receipt.py:23
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:17
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:22
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:12
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:143
+msgid "Family"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:54
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:69
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:21
+msgid "Children"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:62
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:70
+msgid "Activities"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:85
 msgid "Export to CSV"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:60
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:88
 msgid "Only one activity remittance can be selected at a time"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:64
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:92
 msgid "Set all receipts as sent"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:70
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:98
 #, python-format
 msgid "%(num_receipts)s receipts set as sent for remittance %(remittance)s"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:73
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:101
 msgid "Set all receipts as paid"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:79
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:107
 #, python-format
 msgid "%(num_receipts)s receipts set as paid for remittance %(remittance)s"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:90
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:118
 msgid "Total receipts"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:94
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:122
 msgid "Created receipts"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:98
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:126
 msgid "Sent receipts"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:102
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:130
 msgid "Paid receipts"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:120
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:148
 msgid "Export Membership Remittance to CSV"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:123
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\admin.py:151
 msgid "Only can select one membership remittance"
+msgstr ""
+
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\activity_receipt.py:20
+msgid "Total (€)"
 msgstr ""
 
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\activity_receipt.py:21
@@ -363,14 +386,6 @@ msgstr ""
 msgid "Membership Remittance"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\membership_receipt.py:23
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:17
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:22
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\membership.py:12
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager_project\settings.py:143
-msgid "Family"
-msgstr ""
-
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\charge\models\membership_receipt.py:26
 msgid "Membership receipt"
 msgstr ""
@@ -406,60 +421,55 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:64
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:63
 msgid "Generate MembershipRemittance for current year"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:68
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:67
 msgid "Membership remittance created"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:70
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\child.py:21
-msgid "Children"
-msgstr ""
-
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:74
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:94
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:107
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:73
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:93
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:106
 msgid "Is member"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:115
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:114
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\family.py:15
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\parent.py:13
 msgid "Parents"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:133
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:132
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\filters.py:122
 #: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\models\authorization.py:20
 msgid "Authorization"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:139
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:138
 msgid "No authorizacion"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:149
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:148
 msgid "Set as not sent"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:153
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:152
 #, python-format
 msgid "%(num_authorizations)s authorizations set as NOT sent"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:160
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:159
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:163
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:162
 msgid "Set as signed"
 msgstr ""
 
-#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:167
+#: .\software_components\app_server\ampa_members_manager_project\ampa_members_manager\family\admin.py:166
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr ""
