@@ -170,9 +170,28 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     list_filter = ['state']
     list_per_page = 25
 
+    @admin.action(description=_("Set as sent"))
+    def set_as_sent(self, request, queryset: QuerySet[ActivityReceipt]):
+        queryset.update(state=State.SEND)
+
+        message = _("%(num_receipts)s receipts set as sent") % {'num_receipts':  queryset.count()}
+        self.message_user(request=request, message=message)
+    
+    @admin.action(description=_("Set as paid"))
+    def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
+        queryset.update(state=State.PAID)
+
+        message = _("%(num_receipts)s receipts set as sent") % {'num_receipts':  queryset.count()}
+        self.message_user(request=request, message=message)
+
+
+    actions = [set_as_sent, set_as_paid]
+
+
 class MembershipReceiptInline(ReadOnlyTabularInline):
     model = MembershipReceipt
     extra = 0
+
 
 class ActivityReceiptInline(ReadOnlyTabularInline):
     model = ActivityReceipt
