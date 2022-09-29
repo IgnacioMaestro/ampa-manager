@@ -13,7 +13,7 @@ class ActivityRegistrationForm(forms.ModelForm):
         if hasattr(self.instance, 'child'):
             self.fields['bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance.child.family)
         else:
-            self.fields['bank_account'].queryset = BankAccount.objects.all()
+            self.fields['bank_account'].queryset = BankAccount.objects.order_by('owner__name_and_surnames')
 
 
 class ActivityRegistrationAdmin(admin.ModelAdmin):
@@ -21,7 +21,7 @@ class ActivityRegistrationAdmin(admin.ModelAdmin):
     ordering = ['activity_period__activity__name', 'activity_period']
     list_filter = ['activity_period__activity__name', 'activity_period__name', 'amount']
     search_fields = ['child', 'activity_period']
-    form = ActivityRegistrationForm
+    #form = ActivityRegistrationForm
     list_per_page = 25
 
     @admin.display(description=_('Activity'))
