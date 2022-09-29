@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.state import State
@@ -24,3 +25,7 @@ class Authorization(models.Model):
 
     def __str__(self) -> str:
         return f'{self.year}/{self.number}-{str(self.bank_account)}'
+    
+    def clean(self):
+        if self.state in [State.SENT, State.SIGNED] and not self.document:
+            raise ValidationError(_('The state can not be sent or signed if there is no document attached'))

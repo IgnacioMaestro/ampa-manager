@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-29 14:25+0200\n"
+"POT-Creation-Date: 2022-09-29 14:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,7 +233,7 @@ msgid "Activity period"
 msgstr ""
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:18
-#: .\ampa_members_manager\family\models\authorization.py:15
+#: .\ampa_members_manager\family\models\authorization.py:16
 #: .\ampa_members_manager\family\models\bank_account.py:15
 msgid "Bank account"
 msgstr ""
@@ -351,7 +351,7 @@ msgstr ""
 
 #: .\ampa_members_manager\charge\models\activity_receipt.py:21
 #: .\ampa_members_manager\charge\models\membership_receipt.py:21
-#: .\ampa_members_manager\family\models\authorization.py:17
+#: .\ampa_members_manager\family\models\authorization.py:18
 msgid "State"
 msgstr ""
 
@@ -451,7 +451,7 @@ msgstr ""
 
 #: .\ampa_members_manager\family\admin.py:133
 #: .\ampa_members_manager\family\filters.py:122
-#: .\ampa_members_manager\family\models\authorization.py:20
+#: .\ampa_members_manager\family\models\authorization.py:21
 msgid "Authorization"
 msgstr ""
 
@@ -553,20 +553,24 @@ msgstr ""
 msgid "Without account"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\authorization.py:12
+#: .\ampa_members_manager\family\models\authorization.py:13
 msgid "Number"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\authorization.py:13
+#: .\ampa_members_manager\family\models\authorization.py:14
 msgid "Year"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\authorization.py:16
+#: .\ampa_members_manager\family\models\authorization.py:17
 msgid "Document"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\authorization.py:21
+#: .\ampa_members_manager\family\models\authorization.py:22
 msgid "Authorizations"
+msgstr ""
+
+#: .\ampa_members_manager\family\models\authorization.py:31
+msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
 
 #: .\ampa_members_manager\family\models\bank_account.py:10
