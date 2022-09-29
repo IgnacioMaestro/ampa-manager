@@ -1,0 +1,58 @@
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+    <div id="content-related">
+        <div class="module" id="recent-actions-module">
+            <h1>Alta de familia</h1>
+            <ul>
+                <li>Confirmar que la familia no exista usando los <a href="/admin/ampa_members_manager/family/">filtros y la búsqueda</a></li>
+                <li><a href="/admin/ampa_members_manager/family/add/">Completar datos familia</a></li>
+                <li>Clic en "Agregar hijo adicional" y completar datos</li>
+                <li>Clic en botón GUARDAR</li>
+            </ul>
+            <h1>Alta de tutor</h1>
+            <ul>
+                <li>Confirmar que el tutor no exista usando los <a href="/admin/ampa_members_manager/parent/">filtros y la búsqueda</a></li>
+                <li><a href="/admin/ampa_members_manager/parent/add/">Completar datos tutor</a></li>
+                <li>Opcional: clic en "Agregar cuenta bancaria adicional" y completar datos</li>
+                <li>Clic en botón GUARDAR</li>
+            </ul>
+            <h1>Alta de hijo/a</h1>
+            <ul>
+                <li>Confirmar que el hijo/a no exista usando los <a href="/admin/ampa_members_manager/child/">filtros y la búsqueda</a></li>
+                <li><a href="/admin/ampa_members_manager/child/add/">Completar datos tutor</a></li>
+                <li>Opcional: clic en "Agregar cuenta bancaria adicional" y completar datos</li>
+                <li>Clic en botón GUARDAR</li>
+            </ul>
+            <h1>Nueva actividad</h1>
+            <ul>
+                <li>Confirmar que la actividad no exista usando los <a href="/admin/ampa_members_manager/activity/">filtros y la búsqueda</a></li>
+                <li><a href="/admin/ampa_members_manager/activity/add/">Completar datos actividad</a></li>
+                <li>Añadir los períodos de actividad necesarios</li>
+                <li>Clic en botón GUARDAR</li>
+            </ul>
+            <h1>Apuntar a actividad</h1>
+            <ul>
+                <li>Confirmar que el alumno no esté ya apuntado usando los <a href="/admin/ampa_members_manager/activityregistration/">filtros y la búsqueda</a></li>
+                <li><a href="/admin/ampa_members_manager/activityregistration/add/">Apuntar a la actividad</a></li>
+                <li>Al desplegar lista de cuentas, pulsar inicial del titular para localizar cuenta</li>
+                <li>Al desplegar lista de hijos, pulsar inicial del nombre para localizar cuenta</li>
+                <li>Clic en botón GUARDAR</li>
+            </ul>
+            <h1>Generar remesa de socios</h1>
+            <ul>
+                <li>Abrir la sección <a href="/admin/ampa_members_manager/family/">"Familias"</a></li>
+                <li>Seleccionar todas las familias</li>
+                <li>Ejecutar acción "Generar la remesa de socios del año activo"</li>
+                <li>Comprobar la nueva remesa en la sección <a href="/admin/ampa_members_manager/membershipremittance/">"Remesas de socios"</a></li>
+            </ul>
+            <h1>Generar remesa de actividad</h1>
+            <ul>
+                <li>Abrir la sección <a href="/admin/ampa_members_manager/activityperiod/">"Períodos de actividad"</a></li>
+                <li>Seleccionar los períodos de actividad requeridos</li>
+                <li>Ejecutar acción "Crear remesa de actividad"</li>
+                <li>Comprobar la nueva remesa en la sección <a href="/admin/ampa_members_manager/activityremittance/">"Remesas de actividad"</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
