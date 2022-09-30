@@ -33,3 +33,7 @@ class Family(models.Model):
     def all_families_with_bank_account(cls) -> QuerySet[Family]:
         return cls.all_families().exclude(default_bank_account__isnull=True)
     
+    def clean(self):
+        if self.surnames:
+            self.surnames = self.surnames.title().strip()
+    

@@ -34,3 +34,7 @@ class Child(models.Model):
         years_since_birth = active_course.initial_year - self.year_of_birth
 
         return CourseName.get_name_by_years(years_since_birth - self.repetition)
+    
+    def clean(self):
+        if self.name:
+            self.name = self.name.title().strip()

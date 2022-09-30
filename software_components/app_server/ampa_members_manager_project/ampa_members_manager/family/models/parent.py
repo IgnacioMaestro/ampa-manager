@@ -18,3 +18,7 @@ class Parent(models.Model):
 
     def __str__(self) -> str:
         return self.full_name
+    
+    def clean(self):
+        if self.name_and_surnames:
+            self.name_and_surnames = self.name_and_surnames.title().strip()

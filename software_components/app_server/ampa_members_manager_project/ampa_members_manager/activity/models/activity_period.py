@@ -49,3 +49,7 @@ class ActivityPeriod(models.Model):
                 if activity_period.activity != activity:
                     return False
         return True
+
+    def clean(self):
+        if self.name:
+            self.name = self.name.title().strip()
