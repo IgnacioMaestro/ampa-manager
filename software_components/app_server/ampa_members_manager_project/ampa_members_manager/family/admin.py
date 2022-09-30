@@ -85,9 +85,9 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'is_member']
+    list_display = ['name_and_surnames', 'parent_families', 'phone_number', 'additional_phone_number', 'is_member']
     ordering = ['name_and_surnames']
-    search_fields = ['name_and_surnames', 'phone_number', 'additional_phone_number']
+    search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
     inlines = [BankAccountInline]
     list_per_page = 25
 
@@ -95,6 +95,10 @@ class ParentAdmin(admin.ModelAdmin):
     def is_member(self, parent):
         families = [f.id for f in parent.family_set.all()]
         return _('Yes') if Membership.objects.filter(family__in=families, academic_course=ActiveCourse.load()).exists() else _('No')
+    
+    @admin.display(description=_('Family'))
+    def parent_families(self, parent):
+        return ', '.join(str(f) for f in parent.family_set.all())
     
 
 class ChildAdmin(admin.ModelAdmin):
