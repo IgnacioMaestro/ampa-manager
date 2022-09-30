@@ -40,9 +40,13 @@ class ActivityPeriodInline(admin.TabularInline):
 
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ['academic_course', 'name', 'funding']
+    list_display = ['academic_course', 'name', 'funding', 'activity_period_count'] 
     ordering = ['-academic_course', 'name']
     list_filter = ['funding', 'academic_course__initial_year']
     inlines = [ActivityPeriodInline]
     search_fields = ['name']
-    list_per_page = 25
+    list_per_page = 35
+
+    @admin.display(description=_('Periods'))
+    def activity_period_count(self, activity):
+        return activity.activityperiod_set.count()
