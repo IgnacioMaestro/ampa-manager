@@ -1,5 +1,7 @@
+from django.http import HttpResponse
 from django import forms
 from django.contrib import admin
+from django.contrib import messages
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -66,7 +68,17 @@ class FamilyAdmin(admin.ModelAdmin):
         remittance = MembershipRemittanceCreator(families, academic_course).create()
         message = mark_safe(_("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
-    
+
+    @admin.action(description=_("Export emails to CSV"))
+    def export_emails(self, request, families: QuerySet[Family]):
+        emails = []
+        for family in families:
+            if family.email and family.email not in emails:
+                emails.append(family.email)
+
+        headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
+        return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
+        
     @admin.display(description=_('Children'))
     def child_count(self, family):
         return family.child_set.count()
@@ -75,7 +87,7 @@ class FamilyAdmin(admin.ModelAdmin):
     def is_member(self, family):
         return _('Yes') if family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
     
-    actions = [generate_remittance]
+    actions = [generate_remittance, export_emails]
 
 
 class BankAccountInline(admin.TabularInline):
