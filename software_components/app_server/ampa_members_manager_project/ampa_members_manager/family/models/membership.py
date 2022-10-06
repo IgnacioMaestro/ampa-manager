@@ -20,9 +20,14 @@ class Membership(models.Model):
         return f'{str(self.family)}-{str(self.academic_course)}'
 
     @classmethod
-    def is_membership_family(cls, family: Family) -> bool:
+    def is_member_family(cls, family: Family) -> bool:
         return Membership.objects.filter(family=family, academic_course=ActiveCourse.load()).exists()
 
     @classmethod
-    def is_membership_child(cls, child: Child) -> bool:
+    def is_member_child(cls, child: Child) -> bool:
         return Membership.objects.filter(family=child.family, academic_course=ActiveCourse.load()).exists()
+
+    @classmethod
+    def make_member_for_active_course(cls, family: Family):
+        member = Membership(family=family, academic_course=ActiveCourse.load())
+        member.save()

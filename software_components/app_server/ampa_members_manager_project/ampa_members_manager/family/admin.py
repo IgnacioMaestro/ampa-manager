@@ -79,15 +79,29 @@ class FamilyAdmin(admin.ModelAdmin):
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
         
+    @admin.action(description=_("Make families member"))
+    def make_members(self, request, families: QuerySet[Family]):
+        new_members = 0
+        already_members = 0
+        for family in families:
+            if Membership.is_member_family(family):
+                already_members += 1
+            else:
+                Membership.make_member_for_active_course(family)
+                new_members += 1
+
+        message = _('%(new_members)s families became members. %(already_members)s families already were members') % {'new_members': new_members, 'already_members': already_members}
+        return self.message_user(request=request, message=message)         
+
     @admin.display(description=_('Children'))
     def child_count(self, family):
         return family.child_set.count()
     
     @admin.display(description=_('Is member'))
     def is_member(self, family):
-        return _('Yes') if family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
+        return _('Yes') if Membership.is_member_family(family) else _('No')
     
-    actions = [generate_remittance, export_emails]
+    actions = [generate_remittance, export_emails, make_members]
 
 
 class BankAccountInline(admin.TabularInline):
@@ -122,7 +136,7 @@ class ChildAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Is member'))
     def is_member(self, child):
-        return _('Yes') if child.family.membership_set.filter(academic_course=ActiveCourse.load()).exists() else _('No')
+        return _('Yes') if Membership.is_member_child(child) else _('No')
     
     @admin.display(description=_('Course'))
     def child_course(self, child):

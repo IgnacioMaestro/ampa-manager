@@ -24,7 +24,7 @@ class Family(models.Model):
 
     def __str__(self) -> str:
         return f'{self.surnames}'
-
+    
     @classmethod
     def all_families(cls) -> QuerySet[Family]:
         return Family.objects.all()
