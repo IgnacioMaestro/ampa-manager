@@ -568,7 +568,7 @@ msgstr "Con cuenta"
 
 #: .\ampa_members_manager\family\filters.py:152
 msgid "Without account"
-msgstr "Con cuenta"
+msgstr "Sin cuenta"
 
 #: .\ampa_members_manager\family\models\authorization.py:13
 msgid "Number"
