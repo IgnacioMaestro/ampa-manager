@@ -21,20 +21,20 @@ class TestMembership(TestCase):
 
     def test_is_membership_family_no_membership(self):
         family: Family = baker.make('Family')
-        self.assertFalse(Membership.is_membership_family(family=family))
+        self.assertFalse(Membership.is_member_family(family=family))
 
     def test_is_membership_family_membership(self):
         family: Family = baker.make('Family')
         baker.make('Membership', family=family, academic_course=self.academic_course)
-        self.assertTrue(Membership.is_membership_family(family=family))
+        self.assertTrue(Membership.is_member_family(family=family))
 
     def test_is_membership_no_membership(self):
         family: Family = baker.make('Family')
         child: Child = baker.make('Child', family=family)
-        self.assertFalse(Membership.is_membership_child(child=child))
+        self.assertFalse(Membership.is_member_child(child=child))
 
     def test_is_membership_membership(self):
         family: Family = baker.make('Family')
         child: Child = baker.make('Child', family=family)
         baker.make('Membership', family=family, academic_course=self.academic_course)
-        self.assertTrue(Membership.is_membership_child(child=child))
+        self.assertTrue(Membership.is_member_child(child=child))

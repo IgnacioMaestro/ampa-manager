@@ -33,7 +33,7 @@ class ActivityRegistration(models.Model):
         self.save()
 
     def is_membership(self) -> bool:
-        return Membership.is_membership_child(self.child)
+        return Membership.is_member_child(self.child)
 
     @classmethod
     def with_activity_period(cls, activity_period: ActivityPeriod) -> QuerySet[ActivityRegistration]:
