@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.generic.models import IBANField, BICField
 
 from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.family.models.bic_code import BicCode
 
 
 class BankAccount(models.Model):
@@ -18,3 +19,9 @@ class BankAccount(models.Model):
 
     def __str__(self) -> str:
         return f'{self.owner} {self.iban}'
+    
+    def save(self, *args, **kwargs):
+        if not self.swift_bic:
+            self.swift_bic = BicCode.get_bic_code(self.iban)
+        
+        super(BankAccount, self).save(*args, **kwargs)

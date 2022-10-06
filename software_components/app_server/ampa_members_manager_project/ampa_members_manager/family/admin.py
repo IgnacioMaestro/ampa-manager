@@ -17,7 +17,7 @@ from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter, \
-                                                FamilyDefaultAccountFilter
+                                                FamilyDefaultAccountFilter, BICCodeFilter
 from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.family.models.state import State
@@ -141,8 +141,8 @@ class AuthorizationInline(admin.TabularInline):
 class BankAccountAdmin(admin.ModelAdmin):
     list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
     ordering = ['owner__name_and_surnames']
-    list_filter = [BankAccountAuthorizationFilter]
-    search_fields = ['swift_bic', 'iban', 'owner']
+    list_filter = [BankAccountAuthorizationFilter, BICCodeFilter]
+    search_fields = ['swift_bic', 'iban', 'owner__name_and_surnames']
     inlines = [AuthorizationInline]
     list_per_page = 25
 
