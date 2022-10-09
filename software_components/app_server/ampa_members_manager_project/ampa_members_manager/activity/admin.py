@@ -12,9 +12,6 @@ from ampa_members_manager.activity_registration.admin import ActivityRegistratio
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, activity_periods: QuerySet[ActivityPeriod]):
-        if not ActivityPeriod.all_same_activity(activity_periods=activity_periods):
-            message = _("All period activities must belong to the same activity")
-            return self.message_user(request, message)
         remittance = ActivityRemittanceWithReceiptsCreator(activity_periods).create()
         message = mark_safe(_("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
