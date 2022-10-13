@@ -75,6 +75,8 @@ class FamilyAdmin(admin.ModelAdmin):
         for family in families:
             if family.email and family.email not in emails:
                 emails.append(family.email)
+            if family.secondary_email and family.secondary_email not in emails:
+                emails.append(family.secondary_email)
 
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
