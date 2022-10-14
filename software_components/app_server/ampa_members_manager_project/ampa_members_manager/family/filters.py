@@ -5,8 +5,8 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.family.models.state import State
+from ampa_members_manager.academic_course.models.course_name import CourseName
 
 
 class CourseListFilter(admin.SimpleListFilter):
@@ -16,16 +16,16 @@ class CourseListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            (AcademicCourse.HH2_YEARS_SINCE_BIRTH, _('HH2')),
-            (AcademicCourse.HH3_YEARS_SINCE_BIRTH, _('HH3')),
-            (AcademicCourse.HH4_YEARS_SINCE_BIRTH, _('HH4')),
-            (AcademicCourse.HH5_YEARS_SINCE_BIRTH, _('HH5')),
-            (AcademicCourse.LH1_YEARS_SINCE_BIRTH, _('LH1')),
-            (AcademicCourse.LH2_YEARS_SINCE_BIRTH, _('LH2')),
-            (AcademicCourse.LH3_YEARS_SINCE_BIRTH, _('LH3')),
-            (AcademicCourse.LH4_YEARS_SINCE_BIRTH, _('LH4')),
-            (AcademicCourse.LH5_YEARS_SINCE_BIRTH, _('LH5')),
-            (AcademicCourse.LH6_YEARS_SINCE_BIRTH, _('LH6')),
+            (CourseName.AGE_HH2, _('HH2')),
+            (CourseName.AGE_HH3, _('HH3')),
+            (CourseName.AGE_HH4, _('HH4')),
+            (CourseName.AGE_HH5, _('HH5')),
+            (CourseName.AGE_LH1, _('LH1')),
+            (CourseName.AGE_LH2, _('LH2')),
+            (CourseName.AGE_LH3, _('LH3')),
+            (CourseName.AGE_LH4, _('LH4')),
+            (CourseName.AGE_LH5, _('LH5')),
+            (CourseName.AGE_LH6, _('LH6')),
         )
 
     def queryset(self, request, queryset):
@@ -57,11 +57,11 @@ class CycleFilter(admin.SimpleListFilter):
             queryset = queryset.annotate(course=active_course.initial_year - F('year_of_birth') - F('repetition'))
 
             if self.value() == 'pre':
-                return queryset.filter(course__range=(AcademicCourse.HH2_YEARS_SINCE_BIRTH, AcademicCourse.HH5_YEARS_SINCE_BIRTH))
+                return queryset.filter(course__range=(CourseName.AGE_HH2, CourseName.AGE_HH5))
             elif self.value() == 'pri':
-                return queryset.filter(course__range=(AcademicCourse.LH1_YEARS_SINCE_BIRTH, AcademicCourse.LH6_YEARS_SINCE_BIRTH))
+                return queryset.filter(course__range=(CourseName.AGE_LH1, CourseName.AGE_LH6))
             elif self.value() == 'out':
-                return queryset.filter(Q(course__lt=AcademicCourse.HH2_YEARS_SINCE_BIRTH) | Q(course__gt=AcademicCourse.LH6_YEARS_SINCE_BIRTH))
+                return queryset.filter(Q(course__lt=CourseName.AGE_HH2) | Q(course__gt=CourseName.AGE_LH6))
         else:
             return queryset
 
@@ -94,27 +94,18 @@ class FamilyChildrenCountFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('0', _('No children')),
-            ('1+', _('Any children')),
-            ('1', _('1 child')),
-            ('2', _('2 children')),
-            ('3+', _('3 or more')),
+            ('yes', _('Any children in school')),
+            ('no', _('No children in school')),
         )
 
     def queryset(self, request, queryset):
         if self.value():
             queryset = queryset.annotate(children_count=Count('child'))
 
-            if self.value() == '0':
-                return queryset.filter(children_count=0)
-            elif self.value() == '1':
-                return queryset.filter(children_count=1)
-            elif self.value() == '1+':
-                return queryset.filter(children_count__gt=0)
-            elif self.value() == '2':
-                return queryset.filter(children_count=2)
-            elif self.value() == '3+':
-                return queryset.filter(children_count__gt=2)
+            if self.value() == 'yes':
+                return queryset.has_any_children()
+            elif self.value() == 'no':
+                return queryset.has_no_children()
         else:
             return queryset
 

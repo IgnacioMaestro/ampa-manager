@@ -4,7 +4,6 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.course_name import CourseName
 
@@ -14,7 +13,7 @@ class Child(models.Model):
     year_of_birth = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)],
                                         verbose_name=_("Year of birth"))
     repetition = models.IntegerField(default=0, verbose_name=_("Repetition"))
-    family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+    family = models.ForeignKey(to='Family', on_delete=CASCADE, verbose_name=_("Family"))
 
     class Meta:
         verbose_name = _('Child')

@@ -1,11 +1,11 @@
 from __future__ import annotations
-from xmlrpc.client import Boolean
 from django.db import models
-from django.db.models import SET_NULL, QuerySet
+from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.family.models.family_queryset import FamilyQuerySet
 
 
 class Family(models.Model):
@@ -17,6 +17,8 @@ class Family(models.Model):
         to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"),
         help_text=_("Save the family to see its bank accounts"))
     is_defaulter = models.BooleanField(default=False, verbose_name=_("Defaulter"))
+
+    objects = Manager.from_queryset(FamilyQuerySet)()
 
     class Meta:
         verbose_name = _('Family')
