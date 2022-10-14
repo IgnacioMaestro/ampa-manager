@@ -1,0 +1,1 @@
+C:\Users\107596\venvs\AMPAMembersManager\Scripts\activate
