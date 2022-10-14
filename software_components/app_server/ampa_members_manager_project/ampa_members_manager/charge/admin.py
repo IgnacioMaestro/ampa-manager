@@ -121,15 +121,15 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
     
     @admin.display(description=_('Created receipts'))
     def receipt_created_count(self, remittance):
-        return remittance.activityreceipt_set.filter(state=State.CREATED).count()
+        return remittance.get_receipt_count(state=State.CREATED)
     
     @admin.display(description=_('Sent receipts'))
     def receipt_sent_count(self, remittance):
-        return remittance.activityreceipt_set.filter(state=State.SEND).count()
+        return remittance.get_receipt_count(state=State.SEND)
 
     @admin.display(description=_('Paid receipts'))
     def receipt_paid_count(self, remittance):
-        return remittance.activityreceipt_set.filter(state=State.PAID).count()
+        return remittance.get_receipt_count(state=State.PAID)
 
     actions = [download_csv, set_all_receipts_as_sent, set_all_receipts_as_paid]
 

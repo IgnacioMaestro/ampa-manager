@@ -22,3 +22,8 @@ class ChildQuerySet(QuerySet):
         active_course = ActiveCourse.load()
         childs_with_age = self.annotate(age=active_course.initial_year - F('year_of_birth') - F('repetition'))
         return childs_with_age.filter(age__range=(min_age, max_age))
+    
+    def out_of_school(self):
+        active_course = ActiveCourse.load()
+        childs_with_age = self.annotate(age=active_course.initial_year - F('year_of_birth') - F('repetition'))
+        return childs_with_age.exclude(age__range=(CourseName.AGE_HH2, CourseName.AGE_LH6))

@@ -22,8 +22,17 @@ class FamilyQuerySet(QuerySet):
                 distinct_families_ids.append(child.family.id)
         return distinct_families_ids
     
-    def members_by_age(self, age):
-        return Child.objects.by_age_range(age, age)
-
     def with_bank_account(self):
         return self.exclude(default_bank_account__isnull=True)
+    
+    def members(self):
+        return self.filter(membership__academic_course=ActiveCourse.load())
+
+    def no_members(self):
+        return self.exclude(membership__academic_course=ActiveCourse.load())
+
+    def with_default_account(self):
+        return self.exclude(default_bank_account=None)
+    
+    def without_default_account(self):
+        return self.filter(default_bank_account=None)

@@ -39,3 +39,6 @@ class ActivityRemittance(models.Model):
             activity_remittance: ActivityRemittance = ActivityRemittance.objects.create(name=name)
             activity_remittance.activity_periods.set(activity_periods)
             return activity_remittance
+
+    def get_receipt_count(self, state):
+        return self.activityreceipt_set.filter(state=state).count()

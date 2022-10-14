@@ -51,7 +51,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Members'))
     def members_count(self, active_course):
-        return Membership.objects.filter(academic_course=active_course.course).count()
+        return Membership.objects.active_course_members().count()
     
     @admin.display(description=_('Families'))
     def families_count(self, active_course):

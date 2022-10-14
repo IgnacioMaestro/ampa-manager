@@ -13,3 +13,6 @@ class MembershipQuerySet(QuerySet):
         active_course = ActiveCourse.load()
         children_ids = Child.get_ids_by_age(min_age, max_age)
         return self.filter(academic_course=active_course, family__child__id__in=children_ids)
+
+    def active_course_members(self):
+        return self.filter(academic_course=ActiveCourse.load())

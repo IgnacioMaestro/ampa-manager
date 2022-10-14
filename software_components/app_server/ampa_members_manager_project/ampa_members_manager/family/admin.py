@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django import forms
 from django.contrib import admin
-from django.contrib import messages
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -9,15 +8,15 @@ from django.utils.safestring import mark_safe
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
-    MembershipRemittanceCreator
+from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import MembershipRemittanceCreator
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
-from ampa_members_manager.family.filters import CourseListFilter, CycleFilter, FamilyIsMemberFilter, FamilyChildrenCountFilter, BankAccountAuthorizationFilter, \
-                                                FamilyDefaultAccountFilter, BICCodeFilter
+from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
+from ampa_members_manager.family.child_filters import ChildCourseListFilter, ChildCycleFilter
+from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter
 from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.family.models.state import State
@@ -132,7 +131,7 @@ class ParentAdmin(admin.ModelAdmin):
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
     ordering = ['name']
-    list_filter = [CycleFilter, CourseListFilter, 'year_of_birth', 'repetition']
+    list_filter = [ChildCycleFilter, ChildCourseListFilter, 'year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'family__surnames']
     list_per_page = 25
 
@@ -157,7 +156,7 @@ class AuthorizationInline(admin.TabularInline):
 class BankAccountAdmin(admin.ModelAdmin):
     list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
     ordering = ['owner__name_and_surnames']
-    list_filter = [BankAccountAuthorizationFilter, BICCodeFilter]
+    list_filter = [BankAccountAuthorizationFilter, BankAccountBICCodeFilter]
     search_fields = ['swift_bic', 'iban', 'owner__name_and_surnames']
     inlines = [AuthorizationInline]
     list_per_page = 25
