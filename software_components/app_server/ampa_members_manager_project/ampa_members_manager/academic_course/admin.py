@@ -1,4 +1,5 @@
 import imp
+from traceback import format_exc
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
@@ -28,14 +29,17 @@ class AcademicCourseAdmin(admin.ModelAdmin):
         return academic_course.membership_set.count()
 
 class ActiveCourseAdmin(admin.ModelAdmin):
-    list_display = ['course', 'members_count', 'families_count', 'parents_count', 'children_count', 'hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members', 'lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members']
-    readonly_fields = ['members_count', 'families_count', 'parents_count', 'children_count', 'hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members', 'lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members']
+    list_display = ['course', 'members_count', 'families_count', 'parents_count', 'children_count']
+    readonly_fields = ['members_count', 'families_count', 'families_in_school_count', 'parents_count', 'children_count', 'children_in_school_count', 'children_in_pre_school_count', 'children_in_primary_count', 'hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members', 'lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members']
     fieldsets = (
         (None, {
             'fields': ('course',)
         }),
         (_('Global'), {
-            'fields': ('members_count', 'families_count', 'parents_count', 'children_count'),
+            'fields': ('members_count', 'families_count', 'families_in_school_count', 'parents_count'),
+        }),
+        (_('Children'), {
+            'fields': ('children_count', 'children_in_school_count', 'children_in_pre_school_count', 'children_in_primary_count'),
         }),
         (_('HH members'), {
             'fields': ('hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members'),
@@ -53,6 +57,10 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     def families_count(self, active_course):
         return Family.objects.count()
     
+    @admin.display(description=_('Families with children in school'))
+    def families_in_school_count(self, active_course):
+        return Family.objects.has_any_children().count()
+    
     @admin.display(description=_('Parents'))
     def parents_count(self, active_course):
         return Parent.objects.count()
@@ -60,6 +68,18 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('Children'))
     def children_count(self, active_course):
         return Child.objects.count()
+
+    @admin.display(description=_('Children in school'))
+    def children_in_school_count(self, active_course):
+        return Child.objects.in_school().count()
+
+    @admin.display(description=_('Pre-school'))
+    def children_in_pre_school_count(self, active_course):
+        return Child.objects.in_pre_school().count()
+
+    @admin.display(description=_('Primary'))
+    def children_in_primary_count(self, active_course):
+        return Child.objects.in_primary().count()
 
     @admin.display(description=_('HH members'))
     def hh_members(self, active_course):
