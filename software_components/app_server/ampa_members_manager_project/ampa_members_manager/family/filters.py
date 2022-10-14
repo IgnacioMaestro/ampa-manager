@@ -100,8 +100,6 @@ class FamilyChildrenCountFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            queryset = queryset.annotate(children_count=Count('child'))
-
             if self.value() == 'yes':
                 return queryset.has_any_children()
             elif self.value() == 'no':

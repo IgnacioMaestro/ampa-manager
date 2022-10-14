@@ -1,11 +1,12 @@
 from typing import Optional
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.family.models.child_queryset import ChildQuerySet
 
 
 class Child(models.Model):
@@ -14,6 +15,8 @@ class Child(models.Model):
                                         verbose_name=_("Year of birth"))
     repetition = models.IntegerField(default=0, verbose_name=_("Repetition"))
     family = models.ForeignKey(to='Family', on_delete=CASCADE, verbose_name=_("Family"))
+
+    objects = Manager.from_queryset(ChildQuerySet)()
 
     class Meta:
         verbose_name = _('Child')
