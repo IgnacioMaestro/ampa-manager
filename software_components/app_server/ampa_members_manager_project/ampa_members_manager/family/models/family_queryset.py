@@ -17,7 +17,13 @@ class FamilyQuerySet(QuerySet):
     
     def get_families_with_school_children_ids():
         distinct_families_ids = []
-        for child in Child.objects.age_range(CourseName.AGE_HH2, CourseName.AGE_LH6):
+        for child in Child.objects.by_age_range(CourseName.AGE_HH2, CourseName.AGE_LH6):
             if child.family.id not in distinct_families_ids:
                 distinct_families_ids.append(child.family.id)
         return distinct_families_ids
+    
+    def members_by_age(self, age):
+        return Child.objects.by_age_range(age, age)
+
+    def with_bank_account(self):
+        return self.exclude(default_bank_account__isnull=True)

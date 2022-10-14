@@ -1,16 +1,19 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.membership_queryset import MembershipQuerySet
 
 
 class Membership(models.Model):
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
+
+    objects = Manager.from_queryset(MembershipQuerySet)()
 
     class Meta:
         verbose_name = _('Membership')

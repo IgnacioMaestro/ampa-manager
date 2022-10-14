@@ -40,3 +40,7 @@ class Child(models.Model):
     def clean(self):
         if self.name:
             self.name = self.name.title().strip()
+
+    @staticmethod
+    def get_ids_by_age(min_age, max_age):
+        return [c.id for c in Child.objects.by_age_range(min_age, max_age)]

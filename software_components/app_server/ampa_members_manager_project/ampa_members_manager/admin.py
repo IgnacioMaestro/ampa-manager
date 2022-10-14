@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.admin import AcademicCourseAdmin
+from ampa_members_manager.academic_course.admin import ActiveCourseAdmin
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.admin import ActivityPeriodAdmin, ActivityAdmin
@@ -27,7 +28,7 @@ admin.site.site_header = _('PTA Administration')
 admin.site.site_title = _('PTA Administration')
 
 admin.site.register(AcademicCourse, AcademicCourseAdmin)
-admin.site.register(ActiveCourse)
+admin.site.register(ActiveCourse, ActiveCourseAdmin)
 
 admin.site.register(ActivityPeriod, ActivityPeriodAdmin)
 admin.site.register(Activity, ActivityAdmin)
