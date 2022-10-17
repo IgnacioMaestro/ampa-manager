@@ -9,9 +9,8 @@ class MembershipQuerySet(QuerySet):
         return self.by_child_age_range(age, age)
     
     def by_child_age_range(self, min_age, max_age):
-        active_course = ActiveCourse.load()
         children_ids = Child.get_ids_by_age(min_age, max_age)
-        return self.filter(academic_course=active_course, family__child__id__in=children_ids)
+        return self.filter(academic_course=ActiveCourse.load(), family__child__id__in=children_ids)
 
     def active_course_members(self):
         return self.filter(academic_course=ActiveCourse.load())

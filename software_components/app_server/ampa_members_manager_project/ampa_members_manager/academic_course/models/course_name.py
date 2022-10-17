@@ -50,8 +50,15 @@ class CourseName():
     }
 
     @staticmethod
-    def get_name_by_years(years :int) -> str:
+    def get_course_name_by_age(years :int) -> str:
         try:
             return CourseName.COURSES.get(years)
         except ValueError:
             return None
+    
+    @staticmethod
+    def get_age_by_course_name(course_name :str) -> int:
+        for key, value in CourseName.COURSES.items():
+            if value == course_name:
+                return key
+        return None

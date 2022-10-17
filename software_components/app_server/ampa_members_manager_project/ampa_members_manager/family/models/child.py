@@ -35,7 +35,7 @@ class Child(models.Model):
         active_course = ActiveCourse.load()
         years_since_birth = active_course.initial_year - self.year_of_birth
 
-        return CourseName.get_name_by_years(years_since_birth - self.repetition)
+        return CourseName.get_course_name_by_age(years_since_birth - self.repetition)
     
     def clean(self):
         if self.name:
