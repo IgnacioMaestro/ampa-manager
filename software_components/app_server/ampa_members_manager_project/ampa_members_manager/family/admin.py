@@ -52,7 +52,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'child_count', 'is_defaulter', 'is_member']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'children_count', 'children_in_school_count', 'is_defaulter', 'is_member']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'is_defaulter']
     search_fields = ['surnames', 'email', 'secondary_email']
@@ -95,8 +95,12 @@ class FamilyAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=message)         
 
     @admin.display(description=_('Children'))
-    def child_count(self, family):
-        return family.child_set.count()
+    def children_count(self, family):
+        return family.get_children_count()
+    
+    @admin.display(description=_('In school'))
+    def children_in_school_count(self, family):
+        return family.get_children_in_school_count()
     
     @admin.display(description=_('Is member'))
     def is_member(self, family):

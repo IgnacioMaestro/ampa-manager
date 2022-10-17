@@ -12,6 +12,9 @@ class ChildQuerySet(QuerySet):
     def in_school(self):
         return self.by_age_range(Level.AGE_HH2, Level.AGE_LH6)
     
+    def in_school_by_family(self, family):
+        return self.by_age_range(Level.AGE_HH2, Level.AGE_LH6).filter(family=family)
+    
     def in_primary(self):
         return self.by_age_range(Level.AGE_LH1, Level.AGE_LH6)
 

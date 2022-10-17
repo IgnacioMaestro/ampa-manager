@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.family.models.family_queryset import FamilyQuerySet
+from ampa_members_manager.academic_course.models.level import Level
 
 
 class Family(models.Model):
@@ -26,6 +27,12 @@ class Family(models.Model):
 
     def __str__(self) -> str:
         return f'{self.surnames}'
+    
+    def get_children_count(self):
+        return self.child_set.count()
+    
+    def get_children_in_school_count(self):
+        return self.child_set.by_age_range(Level.AGE_HH2, Level.AGE_LH6).count()
     
     @classmethod
     def all_families(cls) -> QuerySet[Family]:

@@ -75,6 +75,19 @@ class Level():
         ID_LH6: AGE_LH6,
     }
 
+    QUOTAS = {
+        ID_HH2: 75,
+        ID_HH3: 75,
+        ID_HH4: 75,
+        ID_HH5: 75,
+        ID_LH1: 75,
+        ID_LH2: 75,
+        ID_LH3: 75,
+        ID_LH4: 75,
+        ID_LH5: 75,
+        ID_LH6: 75,
+    }
+
     @staticmethod
     def get_level_name_by_age(age :int) -> str:
         try:
