@@ -2,10 +2,10 @@ from django.db.models.query import QuerySet
 from django.db.models import F
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 
 class FamilyQuerySet(QuerySet):
 
@@ -17,7 +17,7 @@ class FamilyQuerySet(QuerySet):
     
     def get_families_with_school_children_ids():
         distinct_families_ids = []
-        for child in Child.objects.by_age_range(CourseName.AGE_HH2, CourseName.AGE_LH6):
+        for child in Child.objects.by_age_range(Level.AGE_HH2, Level.AGE_LH6):
             if child.family.id not in distinct_families_ids:
                 distinct_families_ids.append(child.family.id)
         return distinct_families_ids

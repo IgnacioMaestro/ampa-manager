@@ -5,7 +5,7 @@ from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.child_queryset import ChildQuerySet
 
 
@@ -31,16 +31,16 @@ class Child(models.Model):
     def __str__(self) -> str:
         return self.full_name
     
-    def get_course_name(self) -> Optional[CourseName]:
+    def get_level_name(self) -> Optional[Level]:
         active_course = ActiveCourse.load()
         years_since_birth = active_course.initial_year - self.year_of_birth
 
-        return CourseName.get_course_name_by_age(years_since_birth - self.repetition)
+        return Level.get_level_name_by_age(years_since_birth - self.repetition)
     
     def clean(self):
         if self.name:
             self.name = self.name.title().strip()
 
     @staticmethod
-    def get_ids_by_age(min_age, max_age):
+    def get_children_ids(min_age, max_age):
         return [c.id for c in Child.objects.by_age_range(min_age, max_age)]

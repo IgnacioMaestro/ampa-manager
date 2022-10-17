@@ -2,7 +2,7 @@ from django.db.models.query import QuerySet
 from django.db.models import Count, Q
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 
 class BankAccountQuerySet(QuerySet):
 

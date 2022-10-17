@@ -3,26 +3,26 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 
 
-class ChildCourseListFilter(admin.SimpleListFilter):
+class ChildLevelListFilter(admin.SimpleListFilter):
     title = _('Course')
 
     parameter_name = 'course'
 
     def lookups(self, request, model_admin):
         return (
-            (CourseName.AGE_HH2, CourseName.LABEL_HH2),
-            (CourseName.AGE_HH3, CourseName.LABEL_HH3),
-            (CourseName.AGE_HH4, CourseName.LABEL_HH4),
-            (CourseName.AGE_HH5, CourseName.LABEL_HH5),
-            (CourseName.AGE_LH1, CourseName.LABEL_LH1),
-            (CourseName.AGE_LH2, CourseName.LABEL_LH3),
-            (CourseName.AGE_LH3, CourseName.LABEL_LH4),
-            (CourseName.AGE_LH4, CourseName.LABEL_LH4),
-            (CourseName.AGE_LH5, CourseName.LABEL_LH5),
-            (CourseName.AGE_LH6, CourseName.LABEL_LH6),
+            (Level.AGE_HH2, Level.NAME_HH2),
+            (Level.AGE_HH3, Level.NAME_HH3),
+            (Level.AGE_HH4, Level.NAME_HH4),
+            (Level.AGE_HH5, Level.NAME_HH5),
+            (Level.AGE_LH1, Level.NAME_LH1),
+            (Level.AGE_LH2, Level.NAME_LH2),
+            (Level.AGE_LH3, Level.NAME_LH3),
+            (Level.AGE_LH4, Level.NAME_LH4),
+            (Level.AGE_LH5, Level.NAME_LH5),
+            (Level.AGE_LH6, Level.NAME_LH6),
         )
 
     def queryset(self, request, queryset):

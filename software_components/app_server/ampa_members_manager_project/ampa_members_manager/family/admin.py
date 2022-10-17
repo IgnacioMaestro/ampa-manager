@@ -15,7 +15,7 @@ from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
-from ampa_members_manager.family.child_filters import ChildCourseListFilter, ChildCycleFilter
+from ampa_members_manager.family.child_filters import ChildLevelListFilter, ChildCycleFilter
 from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter
 from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
@@ -130,7 +130,7 @@ class ParentAdmin(admin.ModelAdmin):
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
     ordering = ['name']
-    list_filter = [ChildCycleFilter, ChildCourseListFilter, 'year_of_birth', 'repetition']
+    list_filter = [ChildCycleFilter, ChildLevelListFilter, 'year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'family__surnames']
     list_per_page = 25
 
@@ -140,7 +140,7 @@ class ChildAdmin(admin.ModelAdmin):
     
     @admin.display(description=_('Course'))
     def child_course(self, child):
-        return child.get_course_name()
+        return child.get_level_name()
     
     @admin.display(description=_('Parents'))
     def parents(self, child):

@@ -7,7 +7,7 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.family.models.child import Child
-from ampa_members_manager.academic_course.models.course_name import CourseName
+from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.family import Family
 
 
@@ -83,86 +83,86 @@ class ActiveCourseAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('HH members'))
     def hh_members(self, active_course):
-        min_age = CourseName.AGE_HH2
-        max_age = CourseName.AGE_HH5
+        min_age = Level.AGE_HH2
+        max_age = Level.AGE_HH5
         child_count = Child.objects.by_age_range(min_age, max_age).count()
         members_count = Membership.objects.by_child_age_range(min_age, max_age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('HH2 members'))
     def hh2_members(self, active_course):
-        age = CourseName.AGE_HH2
+        age = Level.AGE_HH2
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
     
     @admin.display(description=_('HH3 members'))
     def hh3_members(self, active_course):
-        age = CourseName.AGE_HH3
+        age = Level.AGE_HH3
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('HH4 members'))
     def hh4_members(self, active_course):
-        age = CourseName.AGE_HH4
+        age = Level.AGE_HH4
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('HH5 members'))
     def hh5_members(self, active_course):
-        age = CourseName.AGE_HH5
+        age = Level.AGE_HH5
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
     
     @admin.display(description=_('LH members'))
     def lh_members(self, active_course):
-        min_age = CourseName.AGE_LH1
-        max_age = CourseName.AGE_LH6
+        min_age = Level.AGE_LH1
+        max_age = Level.AGE_LH6
         child_count = Child.objects.by_age_range(min_age, max_age).count()
         members_count = Membership.objects.by_child_age_range(min_age, max_age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('LH1 members'))
     def lh1_members(self, active_course):
-        age = CourseName.AGE_LH1
+        age = Level.AGE_LH1
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
     
     @admin.display(description=_('LH2 members'))
     def lh2_members(self, active_course):
-        age = CourseName.AGE_LH2
+        age = Level.AGE_LH2
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('LH3 members'))
     def lh3_members(self, active_course):
-        age = CourseName.AGE_LH3
+        age = Level.AGE_LH3
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('LH4 members'))
     def lh4_members(self, active_course):
-        age = CourseName.AGE_LH4
+        age = Level.AGE_LH4
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('LH5 members'))
     def lh5_members(self, active_course):
-        age = CourseName.AGE_LH5
+        age = Level.AGE_LH5
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
 
     @admin.display(description=_('LH6 members'))
     def lh6_members(self, active_course):
-        age = CourseName.AGE_LH6
+        age = Level.AGE_LH6
         child_count = Child.objects.by_age(age).count()
         members_count = Membership.objects.by_child_age(age).count()
         return f'{members_count}/{child_count}'
