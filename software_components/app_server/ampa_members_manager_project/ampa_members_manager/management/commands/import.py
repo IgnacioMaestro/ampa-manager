@@ -126,7 +126,7 @@ class Command(BaseCommand):
             family_email2 = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL2_INDEX))
 
             if family_surnames:
-                families = Family.objects.filter(surnames__iexact=family_surnames)
+                families = Family.objects.by_surnames(family_surnames)
                 if families.count() == 1:
                     family = families[0]
                     if family.email != family_email1 or family.secondary_email != family_email2:
@@ -175,7 +175,7 @@ class Command(BaseCommand):
 
         try:
             if full_name:
-                parents = Parent.objects.filter(name_and_surnames__iexact=full_name)
+                parents = Parent.objects.by_full_name(full_name)
                 if parents.count() == 1:
                     parent = parents[0]
                     if parent.phone_number != phone1 or parent.additional_phone_number != phone2:
@@ -262,7 +262,7 @@ class Command(BaseCommand):
             default_account = Command.str_to_bool(default_account)
 
             if iban and parent:
-                bank_accounts = BankAccount.objects.filter(iban=iban)
+                bank_accounts = BankAccount.objects.by_iban(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
                     if bank_account.swift_bic != swift_bic or bank_account.owner != parent:
@@ -342,7 +342,7 @@ class Command(BaseCommand):
                 year = int(year)
                 repetition = int(repetition)
 
-                children = Child.objects.filter(name__iexact=name, family=family)
+                children = Child.objects.by_name_and_family(name, family)
                 if children.count() == 1:
                     child = children[0]
                     if child.year_of_birth != year or child.repetition != repetition:

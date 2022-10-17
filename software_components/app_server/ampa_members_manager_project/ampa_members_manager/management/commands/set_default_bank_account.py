@@ -8,8 +8,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for family in Family.objects.without_default_account():
-            if (BankAccount.objects.filter(owner__family=family).count()) == 1:
-                family.default_bank_account = BankAccount.objects.filter(owner__family=family).first()
+            if (BankAccount.objects.by_family(family).count()) == 1:
+                family.default_bank_account = BankAccount.by_family(family).first()
                 family.save()
             else:
-                print('Hay ' + str(BankAccount.objects.filter(owner__family=family).count()) + ' cuentas')
+                print(f'Family {family}: not set. Accounts: {BankAccount.objects.by_family(family).count()}')

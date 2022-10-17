@@ -36,3 +36,6 @@ class FamilyQuerySet(QuerySet):
     
     def without_default_account(self):
         return self.filter(default_bank_account=None)
+
+    def by_surnames(self, surnames):
+        return self.filter(surnames__iexact=surnames)

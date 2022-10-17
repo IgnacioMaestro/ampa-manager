@@ -28,7 +28,7 @@ class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance:
-            self.fields['default_bank_account'].queryset = BankAccount.objects.filter(owner__family=self.instance)
+            self.fields['default_bank_account'].queryset = BankAccount.objects.by_family(self.instance)
         else:
             self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
@@ -48,7 +48,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.filter(activity_registrations__child__family=family)
+        return ActivityReceipt.objects.by_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -120,8 +120,7 @@ class ParentAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Is member'))
     def is_member(self, parent):
-        families = [f.id for f in parent.family_set.all()]
-        return _('Yes') if Membership.objects.filter(family__in=families, academic_course=ActiveCourse.load()).exists() else _('No')
+        return _('Yes') if Membership.objects.by_parent(parent).exists() else _('No')
     
     @admin.display(description=_('Family'))
     def parent_families(self, parent):

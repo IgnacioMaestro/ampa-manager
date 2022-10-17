@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
@@ -10,6 +10,7 @@ from ampa_members_manager.charge.state import State
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.charge.models.activity_receipt_queryset import ActivityReceiptQuerySet
 
 
 class NotFound(Exception):
@@ -21,6 +22,8 @@ class ActivityReceipt(models.Model):
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     activity_registrations = models.ManyToManyField(to=ActivityRegistration, verbose_name=_("Activity registrations"))
     remittance = models.ForeignKey(to=ActivityRemittance, on_delete=CASCADE, verbose_name=_("Activity remittance"))
+
+    objects = Manager.from_queryset(ActivityReceiptQuerySet)()
 
     class Meta:
         verbose_name = _('Activity Receipt')

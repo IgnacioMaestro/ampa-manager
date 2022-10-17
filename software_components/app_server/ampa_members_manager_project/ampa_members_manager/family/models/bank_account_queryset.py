@@ -21,3 +21,6 @@ class BankAccountQuerySet(QuerySet):
     
     def without_swift_bic(self):
         return self.filter(Q(swift_bic=None) | Q(swift_bic=""))
+
+    def by_iban(self, iban):
+        return self.filter(iban=iban)

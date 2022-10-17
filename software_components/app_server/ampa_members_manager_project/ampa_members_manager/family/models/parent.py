@@ -1,12 +1,17 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Manager
+
 from phonenumber_field.modelfields import PhoneNumberField
+from ampa_members_manager.family.models.parent_queryset import ParentQuerySet
 
 
 class Parent(models.Model):
     name_and_surnames = models.CharField(max_length=500, verbose_name=_("Name and surnames"), unique=True)
     phone_number = PhoneNumberField(verbose_name=_("Phone number"))
     additional_phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Additional phone number"))
+
+    objects = Manager.from_queryset(ParentQuerySet)()
 
     class Meta:
         verbose_name = _('Parent')
