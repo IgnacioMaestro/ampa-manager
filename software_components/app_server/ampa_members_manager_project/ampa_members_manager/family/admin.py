@@ -52,7 +52,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'children_count', 'children_in_school_count', 'is_defaulter', 'is_member']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count', 'children_count', 'children_in_school_count', 'is_defaulter', 'is_member']
     fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
@@ -96,6 +96,10 @@ class FamilyAdmin(admin.ModelAdmin):
         message = _('%(new_members)s families became members. %(already_members)s families already were members') % {'new_members': new_members, 'already_members': already_members}
         return self.message_user(request=request, message=message)         
 
+    @admin.display(description=_('Parents'))
+    def parent_count(self, family):
+        return family.get_parent_count()
+
     @admin.display(description=_('Children'))
     def children_count(self, family):
         return family.get_children_count()
@@ -118,7 +122,7 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'parent_families', 'phone_number', 'additional_phone_number', 'is_member']
+    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
