@@ -29,6 +29,9 @@ class Family(TimeStampedModel):
     def __str__(self) -> str:
         return f'{self.surnames}'
     
+    def get_parent_count(self):
+        return self.parents.count()
+    
     def get_children_count(self):
         return self.child_set.count()
     
