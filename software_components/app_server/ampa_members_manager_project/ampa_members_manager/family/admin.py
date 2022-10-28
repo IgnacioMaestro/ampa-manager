@@ -12,6 +12,7 @@ from ampa_members_manager.charge.use_cases.create_membership_remittance_with_fam
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
@@ -154,7 +155,7 @@ class ChildAdmin(admin.ModelAdmin):
     
     @admin.display(description=_('Course'))
     def child_course(self, child):
-        return child.get_level_name()
+        return Level.get_level_name(child.level)
     
     @admin.display(description=_('Parents'))
     def parents(self, child):

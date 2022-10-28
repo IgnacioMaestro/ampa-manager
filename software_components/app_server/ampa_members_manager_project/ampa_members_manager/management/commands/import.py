@@ -8,6 +8,7 @@ from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.academic_course.models.level import Level
 import ampa_members_manager.management.commands.members_excel_settings as xls_settings
 
 
@@ -303,53 +304,54 @@ class Command(BaseCommand):
     def import_child1(self, sheet, family, row_index):
         child1_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_NAME_INDEX)
         child1_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX)
-        child1_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_REPETITIONS_INDEX)
+        child1_level = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_LEVEL_INDEX)
 
-        self.import_child(child1_name, child1_year, child1_repetitions, family, row_index, 1)
+        self.import_child(child1_name, child1_year, child1_level, family, row_index, 1)
 
     def import_child2(self, sheet, family, row_index):
         child2_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_NAME_INDEX)
         child2_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_YEAR_INDEX)
-        child2_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_REPETITIONS_INDEX)
+        child2_level = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD2_LEVEL_INDEX)
 
-        self.import_child(child2_name, child2_year, child2_repetitions, family, row_index, 2)
+        self.import_child(child2_name, child2_year, child2_level, family, row_index, 2)
 
     def import_child3(self, sheet, family, row_index):
         child3_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_NAME_INDEX)
         child3_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_YEAR_INDEX)
-        child3_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_REPETITIONS_INDEX)
+        child3_level = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD3_LEVEL_INDEX)
 
-        self.import_child(child3_name, child3_year, child3_repetitions, family, row_index, 3)
+        self.import_child(child3_name, child3_year, child3_level, family, row_index, 3)
 
     def import_child4(self, sheet, family, row_index):
         child4_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_NAME_INDEX)
         child4_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_YEAR_INDEX)
-        child4_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_REPETITIONS_INDEX)
+        child4_level = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD4_LEVEL_INDEX)
 
-        self.import_child(child4_name, child4_year, child4_repetitions, family, row_index, 4)
+        self.import_child(child4_name, child4_year, child4_level, family, row_index, 4)
 
     def import_child5(self, sheet, family, row_index):
         child5_name = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_NAME_INDEX)
         child5_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_YEAR_INDEX)
-        child5_repetitions = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_REPETITIONS_INDEX)
+        child5_level = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD5_LEVEL_INDEX)
 
-        self.import_child(child5_name, child5_year, child5_repetitions, family, row_index, 5)
+        self.import_child(child5_name, child5_year, child5_level, family, row_index, 5)
 
-    def import_child(self, name, year, repetition, family, row_index, child_number):
+    def import_child(self, name, year_of_birth, level, family, row_index, child_number):
         child = None
         status = Command.STATUS_NOT_PROCESSED
         error = ''
 
         try:
             if name and family:
-                year = int(year)
-                repetition = int(repetition)
+                year_of_birth = int(year_of_birth)
+                current_level = Level.parse_level(level, year_of_birth)
+                repetition = Level.calculate_repetition(current_level, year_of_birth)
 
                 children = Child.objects.by_name_and_family(name, family)
                 if children.count() == 1:
                     child = children[0]
-                    if child.year_of_birth != year or child.repetition != repetition:
-                        child.year_of_birth = year
+                    if child.year_of_birth != year_of_birth or child.repetition != repetition:
+                        child.year_of_birth = year_of_birth
                         child.repetition = repetition
                         child.save()
                         status = self.set_child_status(Command.STATUS_UPDATED)
@@ -359,7 +361,7 @@ class Command(BaseCommand):
                     error = f'Row {row_index+1}: There is more than one child with name "{name}" in the family "{family}"'
                     status = self.set_child_status(Command.STATUS_ERROR, error)          
                 else:
-                    child = Child.objects.create(name=name, year_of_birth=year, repetition=repetition, family=family)
+                    child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition, family=family)
                     status = self.set_child_status(Command.STATUS_CREATED)
             else:
                 status = self.set_child_status(Command.STATUS_NOT_PROCESSED)
@@ -367,7 +369,7 @@ class Command(BaseCommand):
             error = f'Row {row_index+1}: Exception processing child {child_number}: {e}'
             status = self.set_child_status(Command.STATUS_ERROR, error)
         finally:
-            message = f'- Child {child_number}: {name}, {year}, {repetition} -> {status} {error}'
+            message = f'- Child {child_number}: {name}, {year_of_birth}, {level} ({repetition}) -> {status} {error}'
             self.print_status(status, message)
 
         return child

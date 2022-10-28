@@ -23,13 +23,13 @@ class ChildQuerySet(QuerySet):
 
     def by_age_range(self, min_age, max_age):
         active_course = ActiveCourse.load()
-        childs_with_age = self.annotate(age=active_course.initial_year - F('year_of_birth') - F('repetition'))
-        return childs_with_age.filter(age__range=(min_age, max_age))
+        childs_with_age = self.annotate(child_age=active_course.initial_year - F('year_of_birth') - F('repetition'))
+        return childs_with_age.filter(child_age__range=(min_age, max_age))
     
     def out_of_school(self):
         active_course = ActiveCourse.load()
-        childs_with_age = self.annotate(age=active_course.initial_year - F('year_of_birth') - F('repetition'))
-        return childs_with_age.exclude(age__range=(Level.AGE_HH2, Level.AGE_LH6))
+        childs_with_age = self.annotate(child_age=active_course.initial_year - F('year_of_birth') - F('repetition'))
+        return childs_with_age.exclude(child_age__range=(Level.AGE_HH2, Level.AGE_LH6))
     
     def by_name_and_family(self, name, family):
         return self.filter(name__iexact=name, family=family)
