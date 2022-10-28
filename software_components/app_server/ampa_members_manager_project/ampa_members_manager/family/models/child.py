@@ -3,13 +3,14 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
+from django_extensions.db.models import TimeStampedModel
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.child_queryset import ChildQuerySet
 
 
-class Child(models.Model):
+class Child(TimeStampedModel):
     name = models.CharField(max_length=500, verbose_name=_("Name"))
     year_of_birth = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)],
                                         verbose_name=_("Year of birth"))

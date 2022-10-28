@@ -2,6 +2,7 @@ from __future__ import annotations
 from django.db import models
 from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
+from django_extensions.db.models import TimeStampedModel
 
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
@@ -9,7 +10,7 @@ from ampa_members_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_members_manager.academic_course.models.level import Level
 
 
-class Family(models.Model):
+class Family(TimeStampedModel):
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
     email = models.EmailField(unique=True, verbose_name=_("Email"))
     secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
