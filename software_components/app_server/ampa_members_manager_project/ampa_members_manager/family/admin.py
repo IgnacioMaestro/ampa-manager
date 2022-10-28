@@ -57,7 +57,7 @@ class FamilyAdmin(admin.ModelAdmin):
     fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'is_defaulter']
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified', 'is_defaulter']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
