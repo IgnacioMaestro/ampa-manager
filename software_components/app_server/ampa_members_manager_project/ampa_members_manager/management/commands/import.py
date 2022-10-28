@@ -159,7 +159,7 @@ class Command(BaseCommand):
         parent1_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
         parent1_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX)))
         parent1_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX)))
-        parent1_email = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_EMAIL_INDEX)))
+        parent1_email = Command.clean_string_value(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_EMAIL_INDEX)))
 
         return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, parent1_email, family, row_index, 1)
 
@@ -167,7 +167,7 @@ class Command(BaseCommand):
         parent2_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
         parent2_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX)))
         parent2_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX)))
-        parent2_email = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_EMAIL_INDEX)))
+        parent2_email = Command.clean_string_value(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_EMAIL_INDEX)))
 
         return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, parent2_email, family, row_index, 2)
 
