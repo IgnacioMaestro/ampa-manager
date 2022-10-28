@@ -53,7 +53,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count', 'children_count', 'children_in_school_count', 'is_defaulter', 'is_member']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count', 'children_in_school_count', 'is_member', 'created_formatted']
     fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
@@ -107,11 +107,16 @@ class FamilyAdmin(admin.ModelAdmin):
     
     @admin.display(description=_('In school'))
     def children_in_school_count(self, family):
-        return family.get_children_in_school_count()
+        return f'{family.get_children_in_school_count()}/{family.get_children_count()}' 
     
     @admin.display(description=_('Is member'))
     def is_member(self, family):
         return _('Yes') if Membership.is_member_family(family) else _('No')
+    
+    @admin.display(description=_('Created'))
+    def created_formatted(self, family):
+        return family.created.strftime('%d/%m/%y, %H:%M')
+    created_formatted.admin_order_field = 'created'
     
     actions = [generate_remittance, export_emails, make_members]
 

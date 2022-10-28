@@ -106,8 +106,10 @@ class Level():
     def calculate_repetition(current_level: int, year_of_birth: int) -> int:
         if current_level:
             age = Level.calculate_age(year_of_birth)
-            expected_level = Level.get_level_by_age(age)
-            return current_level - expected_level
+            school_age = Level.get_age_by_level(current_level)
+
+            if school_age is not None:
+                return age - school_age
         return 0
     
     @staticmethod

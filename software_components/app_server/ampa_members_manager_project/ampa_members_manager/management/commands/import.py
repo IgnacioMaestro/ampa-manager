@@ -146,6 +146,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_family_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
+            print(traceback.format_exc())
             error = f'Row {row_index+1}: Exception processing family: {e}'
             status = self.set_family_status(Command.STATUS_ERROR, error)
         finally:
@@ -203,6 +204,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_parent_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
+            print(traceback.format_exc())
             error = f'Row {row_index+1}: Exception processing parent {parent_number}: {e}'
             status = self.set_parent_status(Command.STATUS_ERROR)
         finally:
@@ -292,6 +294,7 @@ class Command(BaseCommand):
                 set_as_default = True
 
         except Exception as e:
+            print(traceback.format_exc())
             error = f'Row {row_index+1}: Exception processing bank account of parent {parent_number}: {e}'
             status = self.set_bank_account_status(Command.STATUS_ERROR, error)
         finally:
@@ -340,11 +343,12 @@ class Command(BaseCommand):
         child = None
         status = Command.STATUS_NOT_PROCESSED
         error = ''
+        repetition = None
 
         try:
             if name and family:
                 year_of_birth = int(year_of_birth)
-                current_level = Level.parse_level(level, year_of_birth)
+                current_level = Level.parse_level(level)
                 repetition = Level.calculate_repetition(current_level, year_of_birth)
 
                 children = Child.objects.by_name_and_family(name, family)
@@ -366,6 +370,7 @@ class Command(BaseCommand):
             else:
                 status = self.set_child_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
+            print(traceback.format_exc())
             error = f'Row {row_index+1}: Exception processing child {child_number}: {e}'
             status = self.set_child_status(Command.STATUS_ERROR, error)
         finally:
