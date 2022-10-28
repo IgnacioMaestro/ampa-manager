@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'admin_reorder',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

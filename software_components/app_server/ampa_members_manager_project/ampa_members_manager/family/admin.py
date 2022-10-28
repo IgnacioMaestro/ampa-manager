@@ -53,6 +53,8 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'children_count', 'children_in_school_count', 'is_defaulter', 'is_member']
+    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'is_defaulter', 'created', 'modified']
+    readonly_fields = ['created', 'modified']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'is_defaulter']
     search_fields = ['surnames', 'email', 'secondary_email']
@@ -117,6 +119,8 @@ class BankAccountInline(admin.TabularInline):
 
 class ParentAdmin(admin.ModelAdmin):
     list_display = ['name_and_surnames', 'parent_families', 'phone_number', 'additional_phone_number', 'is_member']
+    fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'created', 'modified']
+    readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
     search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
     inlines = [BankAccountInline]
@@ -133,6 +137,8 @@ class ParentAdmin(admin.ModelAdmin):
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
+    fields = ['name', 'family', 'year_of_birth', 'repetition', 'created', 'modified']
+    readonly_fields = ['created', 'modified']
     ordering = ['name']
     list_filter = [ChildCycleFilter, ChildLevelListFilter, 'year_of_birth', 'repetition']
     search_fields = ['name', 'year_of_birth', 'family__surnames']
@@ -158,6 +164,8 @@ class AuthorizationInline(admin.TabularInline):
 
 class BankAccountAdmin(admin.ModelAdmin):
     list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
+    fields = ['owner', 'iban', 'swift_bic', 'created', 'modified']
+    readonly_fields = ['created', 'modified']
     ordering = ['owner__name_and_surnames']
     list_filter = [BankAccountAuthorizationFilter, BankAccountBICCodeFilter]
     search_fields = ['swift_bic', 'iban', 'owner__name_and_surnames']
