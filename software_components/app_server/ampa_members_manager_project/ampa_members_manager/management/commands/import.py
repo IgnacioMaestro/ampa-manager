@@ -157,17 +157,19 @@ class Command(BaseCommand):
         parent1_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
         parent1_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX)))
         parent1_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX)))
+        parent1_email = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_EMAIL_INDEX)))
 
-        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, family, row_index, 1)
+        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, parent1_email, family, row_index, 1)
 
     def import_parent2(self, sheet, family, row_index):
         parent2_full_name = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
         parent2_phone1 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX)))
         parent2_phone2 = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX)))
+        parent2_email = Command.clean_phone(Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_EMAIL_INDEX)))
 
-        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, family, row_index, 2)
+        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, parent2_email, family, row_index, 2)
 
-    def import_parent(self, full_name, phone1, phone2, family, row_index, parent_number):
+    def import_parent(self, full_name, phone1, phone2, email, family, row_index, parent_number):
         parent = None
         status = Command.STATUS_NOT_PROCESSED
         added_to_family = False
@@ -178,9 +180,10 @@ class Command(BaseCommand):
                 parents = Parent.objects.by_full_name(full_name)
                 if parents.count() == 1:
                     parent = parents[0]
-                    if parent.phone_number != phone1 or parent.additional_phone_number != phone2:
+                    if parent.phone_number != phone1 or parent.additional_phone_number != phone2 or parent.email != email:
                         parent.phone_number = phone1
                         parent.additional_phone_number = phone2
+                        parent.email = email
                         parent.save()
                         status = self.set_parent_status(Command.STATUS_UPDATED)
                     else:
@@ -189,7 +192,7 @@ class Command(BaseCommand):
                     error = f'Row {row_index+1}: There is more than one parent with name "{full_name}"'
                     status = self.set_parent_status(Command.STATUS_ERROR)
                 else:
-                    parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2)
+                    parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2, email=email)
                     status = self.set_parent_status(Command.STATUS_CREATED)
                 
                 if family and not parent.family_set.filter(surnames=family.surnames).exists():
@@ -203,7 +206,7 @@ class Command(BaseCommand):
             status = self.set_parent_status(Command.STATUS_ERROR)
         finally:
             added_to_family_status = 'Added to family' if added_to_family else ''
-            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2} -> {status} {added_to_family_status} {error}'
+            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2}, {email} -> {status} {added_to_family_status} {error}'
             self.print_status(status, message)
 
         return parent
