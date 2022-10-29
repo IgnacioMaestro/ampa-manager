@@ -5,7 +5,6 @@ from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
-from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.child_queryset import ChildQuerySet
 
@@ -32,11 +31,17 @@ class Child(TimeStampedModel):
     def __str__(self) -> str:
         return self.full_name
     
-    def get_level_name(self) -> Optional[Level]:
-        active_course = ActiveCourse.load()
-        years_since_birth = active_course.initial_year - self.year_of_birth
-
-        return Level.get_level_name_by_age(years_since_birth - self.repetition)
+    @property
+    def level(self):
+        return Level.get_level_by_age(self.school_age)
+    
+    @property
+    def age(self):
+        return Level.calculate_age(self.year_of_birth)
+    
+    @property
+    def school_age(self):
+        return self.age - self.repetition
     
     def clean(self):
         if self.name:

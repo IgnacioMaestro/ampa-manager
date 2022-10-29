@@ -10,12 +10,12 @@ from ampa_members_manager.academic_course.models.level import Level
 class FamilyQuerySet(QuerySet):
 
     def has_any_children(self):
-        return self.filter(id__in=FamilyQuerySet.get_families_with_school_children_ids())
+        return self.filter(id__in=FamilyQuerySet.get_families_ids_with_school_children())
     
     def has_no_children(self):
-        return self.exclude(id__in=FamilyQuerySet.get_families_with_school_children_ids())
+        return self.exclude(id__in=FamilyQuerySet.get_families_ids_with_school_children())
     
-    def get_families_with_school_children_ids():
+    def get_families_ids_with_school_children():
         distinct_families_ids = []
         for child in Child.objects.by_age_range(Level.AGE_HH2, Level.AGE_LH6):
             if child.family.id not in distinct_families_ids:
