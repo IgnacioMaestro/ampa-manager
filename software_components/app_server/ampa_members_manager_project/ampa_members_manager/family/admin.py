@@ -129,7 +129,7 @@ class BankAccountInline(admin.TabularInline):
 
 class ParentAdmin(admin.ModelAdmin):
     list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
-    fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'created', 'modified']
+    fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
     search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
