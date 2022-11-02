@@ -54,10 +54,10 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count', 'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'is_defaulter', 'created', 'modified']
+    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified', 'is_defaulter']
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified', 'is_defaulter', 'decline_membership']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
@@ -87,14 +87,17 @@ class FamilyAdmin(admin.ModelAdmin):
     def make_members(self, request, families: QuerySet[Family]):
         new_members = 0
         already_members = 0
+        declined = 0
         for family in families:
             if Membership.is_member_family(family):
                 already_members += 1
+            elif family.decline_membership:
+                declined += 1
             else:
                 Membership.make_member_for_active_course(family)
                 new_members += 1
 
-        message = _('%(new_members)s families became members. %(already_members)s families already were members') % {'new_members': new_members, 'already_members': already_members}
+        message = _('%(new_members)s families became members. %(already_members)s families already were members. %(declined)s families declined to be members anymore') % {'new_members': new_members, 'already_members': already_members, 'declined': declined}
         return self.message_user(request=request, message=message)         
 
     @admin.display(description=_('Parents'))
