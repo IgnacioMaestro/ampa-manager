@@ -1,10 +1,9 @@
-from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 
 
-class Level():
+class Level:
     ID_HH2 = 'HH2'
     ID_HH3 = 'HH3'
     ID_HH4 = 'HH4'
@@ -15,7 +14,7 @@ class Level():
     ID_LH4 = 'LH4'
     ID_LH5 = 'LH5'
     ID_LH6 = 'LH6'
-    
+
     AGE_HH2 = 2
     AGE_HH3 = 3
     AGE_HH4 = 4
@@ -91,27 +90,27 @@ class Level():
     }
 
     @staticmethod
-    def get_level_by_age(age :int) -> str:
+    def get_level_by_age(age: int) -> str:
         return Level.LEVEL_BY_AGE.get(age)
-    
+
     @staticmethod
-    def get_age_by_level(level_id :str) -> int:
+    def get_age_by_level(level_id: str) -> int:
         return Level.AGE_BY_LEVEL.get(level_id)
-    
+
     @staticmethod
-    def get_level_name(level_id :str) -> int:
+    def get_level_name(level_id: str) -> int:
         return Level.LEVELS_NAMES.get(level_id)
 
     @staticmethod
     def calculate_repetition(current_level: int, year_of_birth: int) -> int:
         if current_level:
             age = Level.calculate_age(year_of_birth)
-            school_age = Level.get_age_by_level(current_level)
+            school_age = Level.get_age_by_level(str(current_level))
 
             if school_age is not None:
                 return age - school_age
         return 0
-    
+
     @staticmethod
     def calculate_age(year_of_birth):
         active_course = ActiveCourse.load()

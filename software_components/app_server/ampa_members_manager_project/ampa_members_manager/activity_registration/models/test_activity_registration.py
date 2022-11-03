@@ -23,7 +23,7 @@ class TestActivityRegistration(TestCase):
     def test_str(self):
         self.assertEqual(
             str(self.activity_registration),
-            f'{str(self.activity_registration.activity_period)}-{str(self.activity_registration.child)}')
+            f'{str(self.activity_registration.activity_period)} - {str(self.activity_registration.child)}')
 
     def test_establish_amount(self):
         amount: float = 123.56

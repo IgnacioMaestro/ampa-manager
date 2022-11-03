@@ -5,12 +5,13 @@ from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
+from ampa_members_manager.charge.models.activity_receipt_queryset import ActivityReceiptQuerySet
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
-from ampa_members_manager.charge.state import State
+from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_members_manager.charge.receipt import Receipt
+from ampa_members_manager.charge.state import State
 from ampa_members_manager.family.models.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
-from ampa_members_manager.charge.models.activity_receipt_queryset import ActivityReceiptQuerySet
 
 
 class NotFound(Exception):
@@ -37,6 +38,9 @@ class ActivityReceipt(models.Model):
 
     def generate_receipt(self) -> Receipt:
         activity_registration: ActivityRegistration = self.activity_registrations.first()
+        if not activity_registration:
+            raise NoBankAccountException
+
         bank_account: BankAccount = activity_registration.bank_account
         try:
             authorization: Authorization = Authorization.objects.get(bank_account=bank_account)
