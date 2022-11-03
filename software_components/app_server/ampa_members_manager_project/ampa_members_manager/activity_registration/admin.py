@@ -20,7 +20,7 @@ class ActivityRegistrationAdmin(admin.ModelAdmin):
     list_display = ['activity_name', 'activity_period', 'child', 'amount', 'bank_account']
     ordering = ['activity_period__activity__name', 'activity_period']
     list_filter = ['activity_period__activity__name', 'activity_period__name', 'amount']
-    search_fields = ['child', 'activity_period']
+    search_fields = ['child__name', 'activity_period__name']
     #form = ActivityRegistrationForm
     list_per_page = 25
 
