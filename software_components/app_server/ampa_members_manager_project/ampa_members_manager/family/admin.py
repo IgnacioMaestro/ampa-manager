@@ -198,7 +198,7 @@ class AuthorizationAdmin(admin.ModelAdmin):
     list_display = ['number', 'year', 'date', 'bank_account', 'document', 'state']
     ordering = ['-date']
     list_filter = ['year', 'state']
-    search_fields = ['number', 'year', 'date', 'bank_account']
+    search_fields = ['number', 'year', 'date', 'bank_account__iban', 'bank_account__owner__name_and_surnames']
     list_per_page = 25
 
     @admin.action(description=_("Set as not sent"))
@@ -229,5 +229,5 @@ class MembershipAdmin(admin.ModelAdmin):
     list_display = ['family', 'academic_course']
     ordering = ['-academic_course', 'family__surnames']
     list_filter = ['academic_course__initial_year']
-    search_fields = ['family', 'academic_course']
+    search_fields = ['family__surnames', 'academic_course__initial_year']
     list_per_page = 25
