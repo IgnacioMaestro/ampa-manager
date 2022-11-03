@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import MembershipRemittanceCreator
-from ampa_members_manager.family.models.authorization import Authorization
+from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.academic_course.models.level import Level
@@ -188,7 +188,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     @admin.display(description=_('Authorization'))
     def authorization_status(self, bank_account):
         try:
-            authorization = Authorization.objects.get(bank_account=bank_account)
+            authorization = Authorization.objects.of_bank_account(bank_account).get()
             return State.get_value_hunman_name(authorization.state)
         except Authorization.DoesNotExist:
             return _('No authorizacion')

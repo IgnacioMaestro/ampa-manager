@@ -10,7 +10,7 @@ from ampa_members_manager.charge.models.activity_remittance import ActivityRemit
 from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.state import State
-from ampa_members_manager.family.models.authorization import Authorization
+from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account import BankAccount
 
 
@@ -43,7 +43,7 @@ class ActivityReceipt(models.Model):
 
         bank_account: BankAccount = activity_registration.bank_account
         try:
-            authorization: Authorization = Authorization.objects.get(bank_account=bank_account)
+            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
             return Receipt(
                 amount=str(self.amount), 
                 bank_account_owner=str(bank_account.owner),
