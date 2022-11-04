@@ -13,3 +13,4 @@ from ampa_members_manager.charge.models.activity_remittance import ActivityRemit
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_members_manager.charge.models.fee.fee import Fee

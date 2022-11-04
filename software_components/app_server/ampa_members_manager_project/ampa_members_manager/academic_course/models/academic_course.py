@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 class AcademicCourse(models.Model):
     initial_year = models.IntegerField(
         unique=True, validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Initial year"))
-    fee = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("Fee"))
 
     class Meta:
         verbose_name = _('Academic course')

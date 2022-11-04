@@ -13,25 +13,29 @@ from ampa_members_manager.statistics.models import Statistic
 
 
 class AcademicCourseAdmin(admin.ModelAdmin):
-    list_display = ['summary', 'fee', 'is_active', 'members_count']
+    list_display = ['summary', 'is_active', 'members_count']
     ordering = ['-id']
     list_per_page = 25
 
     @admin.display(description=_('Summary'))
     def summary(self, instance):
         return str(instance)
-    
+
     @admin.display(description=_('Is active'))
     def is_active(self, academic_course):
         return _('Yes') if ActiveCourse.load().initial_year == academic_course.initial_year else _('No')
-    
+
     @admin.display(description=_('Members'))
     def members_count(self, academic_course):
         return academic_course.membership_set.count()
 
+
 class ActiveCourseAdmin(admin.ModelAdmin):
     list_display = ['course', 'members_count', 'families_in_school_count', 'parents_count', 'children_in_school_count']
-    readonly_fields = ['members_count', 'families_in_school_count', 'parents_count', 'children_in_school_count', 'children_in_pre_school_count', 'children_in_primary_count', 'children_out_of_school_count', 'hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members', 'lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members']
+    readonly_fields = ['members_count', 'families_in_school_count', 'parents_count', 'children_in_school_count',
+                       'children_in_pre_school_count', 'children_in_primary_count', 'children_out_of_school_count',
+                       'hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members', 'lh_members',
+                       'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members']
     fieldsets = (
         (None, {
             'fields': ('course',)
@@ -40,32 +44,34 @@ class ActiveCourseAdmin(admin.ModelAdmin):
             'fields': ('members_count', 'families_in_school_count', 'parents_count'),
         }),
         (_('Students'), {
-            'fields': ('children_in_school_count', 'children_in_pre_school_count', 'children_in_primary_count', 'children_out_of_school_count'),
+            'fields': ('children_in_school_count', 'children_in_pre_school_count', 'children_in_primary_count',
+                       'children_out_of_school_count'),
         }),
         (_('HH members'), {
             'fields': ('hh_members', 'hh2_members', 'hh3_members', 'hh4_members', 'hh5_members'),
         }),
         (_('LH members'), {
-            'fields': ('lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members'),
+            'fields': (
+            'lh_members', 'lh1_members', 'lh2_members', 'lh3_members', 'lh4_members', 'lh5_members', 'lh6_members'),
         }),
     )
 
     @admin.display(description=_('Members'))
     def members_count(self, active_course):
         return Membership.objects.active_course_members().count()
-    
+
     @admin.display(description=_('Families'))
     def families_count(self, active_course):
         return Family.objects.count()
-    
+
     @admin.display(description=_('Families with children in school'))
     def families_in_school_count(self, active_course):
         return Statistic.families_in_school()
-    
+
     @admin.display(description=_('Parents'))
     def parents_count(self, active_course):
         return Parent.objects.count()
-    
+
     @admin.display(description=_('Children in school'))
     def children_in_school_count(self, active_course):
         return Statistic.children_in_school()
@@ -77,7 +83,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('Primary'))
     def children_in_primary_count(self, active_course):
         return Child.objects.in_primary().count()
-    
+
     @admin.display(description=_('Out of school'))
     def children_out_of_school_count(self, active_course):
         return Child.objects.out_of_school().count()
@@ -89,7 +95,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('HH2 members'))
     def hh2_members(self, active_course):
         return Statistic.get_level_members_by_total(Level.ID_HH2)
-    
+
     @admin.display(description=_('HH3 members'))
     def hh3_members(self, active_course):
         return Statistic.get_level_members_by_total(Level.ID_HH3)
@@ -101,7 +107,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('HH5 members'))
     def hh5_members(self, active_course):
         return Statistic.get_level_members_by_total(Level.ID_HH5)
-    
+
     @admin.display(description=_('LH members'))
     def lh_members(self, active_course):
         return Statistic.get_lh_members_by_total()
@@ -109,7 +115,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('LH1 members'))
     def lh1_members(self, active_course):
         return Statistic.get_level_members_by_total(Level.ID_LH1)
-    
+
     @admin.display(description=_('LH2 members'))
     def lh2_members(self, active_course):
         return Statistic.get_level_members_by_total(Level.ID_LH2)
