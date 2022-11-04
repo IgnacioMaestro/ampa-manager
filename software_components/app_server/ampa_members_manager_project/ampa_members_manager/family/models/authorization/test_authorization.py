@@ -3,7 +3,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.family.models.authorization.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
 
 

@@ -7,7 +7,7 @@ from ampa_members_manager.charge.models.membership_receipt import MembershipRece
 from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.family.models.authorization.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.baker_recipes import bank_account_recipe, membership_receipt_family_bank_account_recipe
 

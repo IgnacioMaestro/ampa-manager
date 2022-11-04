@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 
 import ampa_members_manager.management.commands.members_excel_settings as xls_settings
 from ampa_members_manager.academic_course.models.level import Level
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.parent import Parent

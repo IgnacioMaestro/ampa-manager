@@ -1,7 +1,7 @@
 from model_bakery import baker
 from model_bakery.recipe import Recipe, foreign_key
 
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.tests.generator_adder import bic_generator, phonenumbers_generator, iban_generator
 

@@ -4,7 +4,7 @@ from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
 from ampa_members_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_members_manager.academic_course.models.level import Level

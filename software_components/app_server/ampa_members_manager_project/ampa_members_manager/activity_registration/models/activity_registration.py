@@ -1,13 +1,12 @@
 from __future__ import annotations
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import CASCADE, QuerySet
-from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.membership import Membership
 

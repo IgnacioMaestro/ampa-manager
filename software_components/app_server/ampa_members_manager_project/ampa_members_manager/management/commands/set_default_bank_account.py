@@ -1,12 +1,12 @@
 from django.core.management.base import BaseCommand
 from django.db.models import QuerySet
 
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
 
 
 class Command(BaseCommand):
-    help = 'Set default bank acount for families without it and only 1 bank account'
+    help = 'Set default bank account for families without it and only 1 bank account'
 
     def handle(self, *args, **options):
         for family in Family.objects.without_default_account():
