@@ -11,7 +11,7 @@ class ActivityRegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if hasattr(self.instance, 'child'):
-            self.fields['bank_account'].queryset = BankAccount.objects.by_family(self.instance.child.family)
+            self.fields['bank_account'].queryset = BankAccount.objects.of_family(self.instance.child.family)
         else:
             self.fields['bank_account'].queryset = BankAccount.objects.all()
 

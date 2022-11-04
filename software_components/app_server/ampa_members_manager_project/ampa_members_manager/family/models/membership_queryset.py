@@ -3,11 +3,12 @@ from django.db.models.query import QuerySet
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.family.models.child import Child
 
+
 class MembershipQuerySet(QuerySet):
 
     def by_child_age(self, age):
         return self.by_child_age_range(age, age)
-    
+
     def by_child_age_range(self, min_age, max_age):
         children_ids = Child.get_children_ids(min_age, max_age)
         return self.filter(academic_course=ActiveCourse.load(), family__child__id__in=children_ids)

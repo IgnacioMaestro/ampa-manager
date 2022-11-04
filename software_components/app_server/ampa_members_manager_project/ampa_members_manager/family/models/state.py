@@ -8,7 +8,7 @@ class State(models.IntegerChoices):
     SIGNED = (3, _('Signed'))
 
     @staticmethod
-    def get_value_hunman_name(value):
+    def get_value_human_name(value):
         if value == State.NOT_SENT:
             return State.NOT_SENT.label
         elif value == State.SENT:

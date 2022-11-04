@@ -29,7 +29,7 @@ class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance:
-            self.fields['default_bank_account'].queryset = BankAccount.objects.by_family(self.instance)
+            self.fields['default_bank_account'].queryset = BankAccount.objects.of_family(self.instance)
         else:
             self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
@@ -49,7 +49,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.by_family(family)
+        return ActivityReceipt.objects.of_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -189,7 +189,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     def authorization_status(self, bank_account):
         try:
             authorization = Authorization.objects.of_bank_account(bank_account).get()
-            return State.get_value_hunman_name(authorization.state)
+            return State.get_value_human_name(authorization.state)
         except Authorization.DoesNotExist:
             return _('No authorizacion')
 
