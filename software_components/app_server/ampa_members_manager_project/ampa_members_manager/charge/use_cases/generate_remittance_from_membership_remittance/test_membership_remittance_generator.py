@@ -1,4 +1,4 @@
-from typing import Final, List
+from typing import Final
 
 from django.test import TestCase
 from model_bakery import baker
@@ -27,14 +27,14 @@ class TestMembershipRemittanceGenerator(TestCase):
         membership_remittance: MembershipRemittance = baker.make('MembershipRemittance')
         membership_receipt: MembershipReceipt = baker.make_recipe(
             membership_receipt_family_bank_account_recipe, remittance=membership_remittance)
-        membership_receipt.remittance.course.fee = self.FEE
-        membership_receipt.remittance.course.save()
+        baker.make('Fee', academic_course=membership_remittance.course, amount=self.FEE)
+
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance).generate()
 
         self.assertEqual(remittance.name, str(membership_remittance))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
-        self.assertEqual(receipt.amount, membership_receipt.remittance.course.fee)
+        self.assertEqual(receipt.amount, self.FEE)
         self.assertEqual(receipt.bank_account_owner, membership_receipt.family.default_bank_account.owner.full_name)
         self.assertEqual(receipt.authorization_number, Receipt.NO_AUTHORIZATION_MESSAGE)
         self.assertEqual(receipt.iban, membership_receipt.family.default_bank_account.iban)
@@ -42,11 +42,9 @@ class TestMembershipRemittanceGenerator(TestCase):
     def test_generate_remittance_two_membership_receipts(self):
         receipt_count: Final[int] = 2
         membership_remittance: MembershipRemittance = baker.make('MembershipRemittance')
-        membership_receipts: List[MembershipReceipt] = baker.make_recipe(
+        baker.make_recipe(
             membership_receipt_family_bank_account_recipe, remittance=membership_remittance, _quantity=receipt_count)
-        for membership_receipt in membership_receipts:
-            membership_receipt.remittance.course.fee = self.FEE
-            membership_receipt.remittance.course.save()
+        baker.make('Fee', academic_course=membership_remittance.course, amount=self.FEE)
 
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance).generate()
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_members_manager.charge.models.fee.fee import Fee
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_members_manager.charge.receipt import Receipt
@@ -23,13 +24,14 @@ class MembershipReceipt(models.Model):
     def generate_receipt(self) -> Receipt:
         if self.family.default_bank_account is None:
             raise NoBankAccountException
-        if self.remittance.course.fee is None:
+        try:
+            fee = Fee.objects.get(academic_course=self.remittance.course)
+        except Fee.DoesNotExist:
             raise NoFeeForCourseException
         bank_account_owner: str = str(self.family.default_bank_account.owner)
         iban: str = self.family.default_bank_account.iban
-        amount = self.remittance.course.fee
         authorization_number, authorization_date = self.__obtain_authorization()
-        return Receipt(amount, bank_account_owner, iban, authorization_number, authorization_date)
+        return Receipt(fee.amount, bank_account_owner, iban, authorization_number, authorization_date)
 
     def __obtain_authorization(self):
         try:
