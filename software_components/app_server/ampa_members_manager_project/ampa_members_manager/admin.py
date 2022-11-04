@@ -17,8 +17,8 @@ from ampa_members_manager.charge.models.membership_receipt import MembershipRece
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.family.admin import FamilyAdmin, ParentAdmin, ChildAdmin, BankAccountAdmin, \
     AuthorizationAdmin, MembershipAdmin
-from ampa_members_manager.family.models.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership

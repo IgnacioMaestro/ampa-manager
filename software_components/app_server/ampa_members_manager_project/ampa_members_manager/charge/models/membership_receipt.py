@@ -3,18 +3,12 @@ from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.state import State
-from ampa_members_manager.family.models.authorization import Authorization
+from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
-
-
-class NoFamilyBankAccountException(Exception):
-    pass
-
-
-class NoFeeForCourseException(Exception):
-    pass
 
 
 class MembershipReceipt(models.Model):
@@ -28,7 +22,7 @@ class MembershipReceipt(models.Model):
 
     def generate_receipt(self) -> Receipt:
         if self.family.default_bank_account is None:
-            raise NoFamilyBankAccountException
+            raise NoBankAccountException
         if self.remittance.course.fee is None:
             raise NoFeeForCourseException
         bank_account_owner: str = str(self.family.default_bank_account.owner)
@@ -39,7 +33,8 @@ class MembershipReceipt(models.Model):
 
     def __obtain_authorization(self):
         try:
-            authorization: Authorization = Authorization.objects.get(bank_account=self.family.default_bank_account)
+            bank_account: BankAccount = self.family.default_bank_account
+            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
             authorization_number = authorization.number
             authorization_date = authorization.date
         except Authorization.DoesNotExist:

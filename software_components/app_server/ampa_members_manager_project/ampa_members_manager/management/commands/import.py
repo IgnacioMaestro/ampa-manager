@@ -1,15 +1,16 @@
-from datetime import datetime
 import re
-import xlrd
 import traceback
+from datetime import datetime
 
+import xlrd
 from django.core.management.base import BaseCommand
+
+import ampa_members_manager.management.commands.members_excel_settings as xls_settings
+from ampa_members_manager.academic_course.models.level import Level
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.parent import Parent
-from ampa_members_manager.family.models.bank_account import BankAccount
-from ampa_members_manager.family.models.child import Child
-from ampa_members_manager.academic_course.models.level import Level
-import ampa_members_manager.management.commands.members_excel_settings as xls_settings
 from ampa_members_manager.management.commands.surnames import SURNAMES
 
 
@@ -51,7 +52,8 @@ class Command(BaseCommand):
         sheet = book.sheet_by_index(xls_settings.SHEET_NUMBER)
 
         self.rows_count = sheet.nrows - xls_settings.FIRST_ROW_NUMBER
-        self.log(f'Importing {self.rows_count} rows (from row {xls_settings.FIRST_ROW_NUMBER+1} to row {sheet.nrows}). Sheet: "{sheet.name}". Rows: {sheet.nrows}')
+        self.log(
+            f'Importing {self.rows_count} rows (from row {xls_settings.FIRST_ROW_NUMBER + 1} to row {sheet.nrows}). Sheet: "{sheet.name}". Rows: {sheet.nrows}')
 
         self.set_totals_before()
 
@@ -72,9 +74,9 @@ class Command(BaseCommand):
             self.import_child3(sheet, family, row_index)
             self.import_child4(sheet, family, row_index)
             self.import_child5(sheet, family, row_index)
-        
+
         self.set_totals_after()
-    
+
     def print_stats(self):
         self.log('')
         self.log('SUMMARY')
@@ -92,7 +94,8 @@ class Command(BaseCommand):
         self.log(f'- {self.get_status_total(Command.STATUS_CREATED, Parent.__name__)} created. ')
         self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, Parent.__name__)} updated. ')
         self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, Parent.__name__)} not modified. ')
-        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Parent.__name__)} assigned to a family. ')
+        self.log(
+            f'- {self.get_status_total(Command.STATUS_UPDATED_ADDED_TO_FAMILY, Parent.__name__)} assigned to a family. ')
         self.log(f'- {self.get_status_total(Command.STATUS_ERROR, Parent.__name__)} errors. ')
 
         child_totals = self.get_totals(Child.__name__)
@@ -107,7 +110,8 @@ class Command(BaseCommand):
         self.log(f'- {self.get_status_total(Command.STATUS_CREATED, BankAccount.__name__)} created. ')
         self.log(f'- {self.get_status_total(Command.STATUS_UPDATED, BankAccount.__name__)} updated. ')
         self.log(f'- {self.get_status_total(Command.STATUS_NOT_MODIFIED, BankAccount.__name__)} not modified. ')
-        self.log(f'- {self.get_status_total(Command.STATUS_UPDATED_AS_DEFAULT, BankAccount.__name__)} set as family default. ')
+        self.log(
+            f'- {self.get_status_total(Command.STATUS_UPDATED_AS_DEFAULT, BankAccount.__name__)} set as family default. ')
         self.log(f'- {self.get_status_total(Command.STATUS_ERROR, BankAccount.__name__)} errors. ')
 
         self.log(f'Errors:')
@@ -135,7 +139,8 @@ class Command(BaseCommand):
         family_email2 = None
 
         try:
-            family_surnames = Command.clean_surname(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX))
+            family_surnames = Command.clean_surname(
+                sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX))
             family_email1 = Command.clean_email(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL1_INDEX))
             family_email2 = Command.clean_email(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_EMAIL2_INDEX))
 
@@ -151,16 +156,17 @@ class Command(BaseCommand):
                     else:
                         status = self.set_family_status(Command.STATUS_NOT_MODIFIED)
                 elif families.count() > 1:
-                    error = f'Row {row_index+1}: There is more than one family with surnames "{family_surnames}"'
+                    error = f'Row {row_index + 1}: There is more than one family with surnames "{family_surnames}"'
                     status = self.set_family_status(Command.STATUS_ERROR, error)
                 else:
-                    family = Family.objects.create(surnames=family_surnames, email=family_email1, secondary_email=family_email2)
+                    family = Family.objects.create(surnames=family_surnames, email=family_email1,
+                                                   secondary_email=family_email2)
                     status = self.set_family_status(Command.STATUS_CREATED)
             else:
                 status = self.set_family_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             print(traceback.format_exc())
-            error = f'Row {row_index+1}: Exception processing family: {e}'
+            error = f'Row {row_index + 1}: Exception processing family: {e}'
             status = self.set_family_status(Command.STATUS_ERROR, error)
         finally:
             message = f'- Family: {family_surnames}, {family_email1}, {family_email2} -> {status} {error}'
@@ -169,20 +175,24 @@ class Command(BaseCommand):
         return family
 
     def import_parent1(self, sheet, family, row_index):
-        parent1_full_name = Command.clean_surname(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
+        parent1_full_name = Command.clean_surname(
+            sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
         parent1_phone1 = Command.clean_phone(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX))
         parent1_phone2 = Command.clean_phone(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX))
         parent1_email = Command.clean_email(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_EMAIL_INDEX))
 
-        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, parent1_email, family, row_index, 1)
+        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, parent1_email, family, row_index,
+                                  1)
 
     def import_parent2(self, sheet, family, row_index):
-        parent2_full_name = Command.clean_surname(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
+        parent2_full_name = Command.clean_surname(
+            sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
         parent2_phone1 = Command.clean_phone(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX))
         parent2_phone2 = Command.clean_phone(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX))
         parent2_email = Command.clean_email(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_EMAIL_INDEX))
 
-        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, parent2_email, family, row_index, 2)
+        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, parent2_email, family, row_index,
+                                  2)
 
     def import_parent(self, full_name, phone1, phone2, email, family, row_index, parent_number):
         parent = None
@@ -204,12 +214,13 @@ class Command(BaseCommand):
                     else:
                         status = self.set_parent_status(Command.STATUS_NOT_MODIFIED)
                 elif parents.count() > 1:
-                    error = f'Row {row_index+1}: There is more than one parent with name "{full_name}"'
+                    error = f'Row {row_index + 1}: There is more than one parent with name "{full_name}"'
                     status = self.set_parent_status(Command.STATUS_ERROR)
                 else:
-                    parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2, email=email)
+                    parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1,
+                                                   additional_phone_number=phone2, email=email)
                     status = self.set_parent_status(Command.STATUS_CREATED)
-                
+
                 if family and not parent.family_set.filter(surnames=family.surnames).exists():
                     self.set_parent_status(Command.STATUS_UPDATED_ADDED_TO_FAMILY)
                     family.parents.add(parent)
@@ -218,7 +229,7 @@ class Command(BaseCommand):
                 status = self.set_parent_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             print(traceback.format_exc())
-            error = f'Row {row_index+1}: Exception processing parent {parent_number}: {e}'
+            error = f'Row {row_index + 1}: Exception processing parent {parent_number}: {e}'
             status = self.set_parent_status(Command.STATUS_ERROR)
         finally:
             added_to_family_status = 'Added to family' if added_to_family else ''
@@ -228,30 +239,34 @@ class Command(BaseCommand):
         return parent
 
     def import_parent1_bank_account(self, sheet, parent, family, row_index):
-        parent1_swift_bic = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX))
-        parent1_iban = Command.clean_string_value(sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX))
+        parent1_swift_bic = Command.clean_string_value(
+            sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_SWIFT_BIC_INDEX))
+        parent1_iban = Command.clean_string_value(
+            sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IBAN_INDEX))
         parent1_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_IS_DEFAULT_INDEX)
 
-        self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index, 1)
+        self.import_bank_account(parent1_swift_bic, parent1_iban, parent1_is_default_account, parent, family, row_index,
+                                 1)
 
     def import_parent2_bank_account(self, sheet, parent, family, row_index):
         parent2_swift_bic = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_SWIFT_BIC_INDEX)
         parent2_iban = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IBAN_INDEX)
         parent2_is_default_account = sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_IS_DEFAULT_INDEX)
 
-        self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index, 2)
-    
+        self.import_bank_account(parent2_swift_bic, parent2_iban, parent2_is_default_account, parent, family, row_index,
+                                 2)
+
     @staticmethod
     def str_to_bool(str_bool):
         if str_bool:
             return str_bool.strip().lower() in ["si", "sí", "yes", "1", "true"]
         else:
             return False
-    
+
     @staticmethod
     def clean_email(str_value):
         return Command.clean_string_value(str_value, lower=True)
-    
+
     @staticmethod
     def clean_surname(str_value):
         str_value = Command.clean_string_value(str_value, title=True)
@@ -273,13 +288,13 @@ class Command(BaseCommand):
                     clean_value = clean_value.title()
                 return clean_value
         return None
-    
+
     @staticmethod
     def remove_duplicate_spaces(str_value):
         if str_value is not None:
             return re.sub(' +', ' ', str(str_value))
         return None
-    
+
     @staticmethod
     def clean_phone(phone):
         phone = Command.clean_string_value(phone)
@@ -302,12 +317,10 @@ class Command(BaseCommand):
         error = ''
 
         try:
-            swift_bic = swift_bic
-            iban = iban
             default_account = Command.str_to_bool(default_account)
 
             if iban and parent:
-                bank_accounts = BankAccount.objects.by_iban(iban=iban)
+                bank_accounts = BankAccount.objects.with_iban(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
                     if bank_account.swift_bic != swift_bic or bank_account.owner != parent:
@@ -318,14 +331,14 @@ class Command(BaseCommand):
                     else:
                         status = self.set_bank_account_status(Command.STATUS_NOT_MODIFIED)
                 elif bank_accounts.count() > 1:
-                    error = f'Row {row_index+1}: There is more than one bank account with iban "{iban}"'
-                    status = self.set_bank_account_status(Command.STATUS_ERROR, error)           
+                    error = f'Row {row_index + 1}: There is more than one bank account with iban "{iban}"'
+                    status = self.set_bank_account_status(Command.STATUS_ERROR, error)
                 else:
                     bank_account = BankAccount.objects.create(swift_bic=swift_bic, iban=iban, owner=parent)
                     status = self.set_bank_account_status(Command.STATUS_CREATED)
             else:
                 status = self.set_bank_account_status(Command.STATUS_NOT_PROCESSED)
-            
+
             if default_account and family and family.default_bank_account != bank_account:
                 self.set_bank_account_status(Command.STATUS_UPDATED_AS_DEFAULT)
                 family.default_bank_account = bank_account
@@ -334,7 +347,7 @@ class Command(BaseCommand):
 
         except Exception as e:
             print(traceback.format_exc())
-            error = f'Row {row_index+1}: Exception processing bank account of parent {parent_number}: {e}'
+            error = f'Row {row_index + 1}: Exception processing bank account of parent {parent_number}: {e}'
             status = self.set_bank_account_status(Command.STATUS_ERROR, error)
         finally:
             default_status = 'Set as default' if set_as_default else ''
@@ -342,7 +355,7 @@ class Command(BaseCommand):
             self.print_status(status, message)
 
         return bank_account
-    
+
     def import_child1(self, sheet, family, row_index):
         child1_name = Command.clean_surname(sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_NAME_INDEX))
         child1_year = sheet.cell_value(rowx=row_index, colx=xls_settings.CHILD1_YEAR_INDEX)
@@ -401,16 +414,17 @@ class Command(BaseCommand):
                     else:
                         status = self.set_child_status(Command.STATUS_NOT_MODIFIED)
                 elif children.count() > 1:
-                    error = f'Row {row_index+1}: There is more than one child with name "{name}" in the family "{family}"'
-                    status = self.set_child_status(Command.STATUS_ERROR, error)          
+                    error = f'Row {row_index + 1}: There is more than one child with name "{name}" in the family "{family}"'
+                    status = self.set_child_status(Command.STATUS_ERROR, error)
                 else:
-                    child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition, family=family)
+                    child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition,
+                                                 family=family)
                     status = self.set_child_status(Command.STATUS_CREATED)
             else:
                 status = self.set_child_status(Command.STATUS_NOT_PROCESSED)
         except Exception as e:
             print(traceback.format_exc())
-            error = f'Row {row_index+1}: Exception processing child {child_number}: {e}'
+            error = f'Row {row_index + 1}: Exception processing child {child_number}: {e}'
             status = self.set_child_status(Command.STATUS_ERROR, error)
         finally:
             message = f'- Child {child_number}: {name}, {year_of_birth}, {level} ({repetition}) -> {status} {error}'
@@ -433,20 +447,20 @@ class Command(BaseCommand):
     def set_status(self, status, object_name, error=None):
         if error:
             self.processing_errors.append(error)
-        
+
         if object_name not in self.processed_objects:
             self.processed_objects[object_name] = {}
-        
+
         if status not in self.processed_objects[object_name]:
             self.processed_objects[object_name][status] = 0
-        
+
         self.processed_objects[object_name][status] += 1
 
         return status
 
     def get_status_total(self, status, object_name):
         return self.processed_objects.get(object_name, {}).get(status, 0)
-    
+
     def set_totals_before(self):
         if self.TOTAL_BEFORE not in self.totals:
             self.totals[self.TOTAL_BEFORE] = {}
@@ -455,7 +469,7 @@ class Command(BaseCommand):
         self.totals[self.TOTAL_BEFORE][Parent.__name__] = Parent.objects.count()
         self.totals[self.TOTAL_BEFORE][Child.__name__] = Child.objects.count()
         self.totals[self.TOTAL_BEFORE][BankAccount.__name__] = BankAccount.objects.count()
-    
+
     def set_totals_after(self):
         if self.TOTAL_AFTER not in self.totals:
             self.totals[self.TOTAL_AFTER] = {}
@@ -464,28 +478,28 @@ class Command(BaseCommand):
         self.totals[self.TOTAL_AFTER][Parent.__name__] = Parent.objects.count()
         self.totals[self.TOTAL_AFTER][Child.__name__] = Child.objects.count()
         self.totals[self.TOTAL_AFTER][BankAccount.__name__] = BankAccount.objects.count()
-    
+
     def get_totals(self, object_name):
         return f'{self.totals[self.TOTAL_BEFORE][object_name]} -> {self.totals[self.TOTAL_AFTER][object_name]}'
 
     def log(self, message):
         self.stdout.write(self.style.SUCCESS(message))
         self.write_to_log_file(message)
-    
+
     def error(self, message):
         self.stdout.write(self.style.ERROR(message))
         self.write_to_log_file(f'ERROR: {message}')
-    
+
     def warning(self, message):
         self.stdout.write(self.style.WARNING(message))
         self.write_to_log_file(f'WARNING: {message}')
 
     def init_log_file(self):
         self.log_file = open(f"import {datetime.now().strftime('%d-%m-%Y, %H-%M-%S')}.log", "a", encoding='utf-8')
-    
+
     def write_to_log_file(self, message):
         self.log_file.write(message + '\n')
-    
+
     def close_log_file(self):
         if self.log_file:
             self.log_file.close()

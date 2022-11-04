@@ -1,35 +1,36 @@
-from django.http import HttpResponse
 from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import MembershipRemittanceCreator
-from ampa_members_manager.family.models.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
-from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.academic_course.models.level import Level
-from ampa_members_manager.family.models.family import Family
-from ampa_members_manager.family.models.membership import Membership
-from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
-from ampa_members_manager.family.child_filters import ChildLevelListFilter, ChildCycleFilter
-from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter
 from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
+from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
+    MembershipRemittanceCreator
+from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
+from ampa_members_manager.family.child_filters import ChildLevelListFilter, ChildCycleFilter
+from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
+    FamilyDefaultAccountFilter
+from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.membership import Membership
 from ampa_members_manager.family.models.state import State
-from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_members_manager.non_related_inlines import NonrelatedTabularInline
+from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
 
 class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance:
-            self.fields['default_bank_account'].queryset = BankAccount.objects.by_family(self.instance)
+            self.fields['default_bank_account'].queryset = BankAccount.objects.of_family(self.instance)
         else:
             self.fields['default_bank_account'].queryset = BankAccount.objects.none()
 
@@ -49,15 +50,18 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.by_family(family)
+        return ActivityReceipt.objects.of_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count', 'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count',
+                    'children_in_school_count', 'is_member', 'created_formatted']
+    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter',
+              'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified', 'is_defaulter', 'decline_membership']
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
+                   'is_defaulter', 'decline_membership']
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
@@ -68,7 +72,9 @@ class FamilyAdmin(admin.ModelAdmin):
     def generate_remittance(self, request, families: QuerySet[Family]):
         academic_course: AcademicCourse = ActiveCourse.load()
         remittance = MembershipRemittanceCreator(families, academic_course).create()
-        message = mark_safe(_("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
+        message = mark_safe(
+            _("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
+                "View details") + "</a>)")
         return self.message_user(request=request, message=message)
 
     @admin.action(description=_("Export emails to CSV"))
@@ -82,7 +88,7 @@ class FamilyAdmin(admin.ModelAdmin):
 
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
-        
+
     @admin.action(description=_("Make families member"))
     def make_members(self, request, families: QuerySet[Family]):
         new_members = 0
@@ -97,8 +103,10 @@ class FamilyAdmin(admin.ModelAdmin):
                 Membership.make_member_for_active_course(family)
                 new_members += 1
 
-        message = _('%(new_members)s families became members. %(already_members)s families already were members. %(declined)s families declined to be members anymore') % {'new_members': new_members, 'already_members': already_members, 'declined': declined}
-        return self.message_user(request=request, message=message)         
+        message = _(
+            '%(new_members)s families became members. %(already_members)s families already were members. %(declined)s families declined to be members anymore') % {
+                      'new_members': new_members, 'already_members': already_members, 'declined': declined}
+        return self.message_user(request=request, message=message)
 
     @admin.display(description=_('Parents'))
     def parent_count(self, family):
@@ -107,20 +115,21 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.display(description=_('Children'))
     def children_count(self, family):
         return family.get_children_count()
-    
+
     @admin.display(description=_('In school'))
     def children_in_school_count(self, family):
-        return f'{family.get_children_in_school_count()}/{family.get_children_count()}' 
-    
+        return f'{family.get_children_in_school_count()}/{family.get_children_count()}'
+
     @admin.display(description=_('Is member'))
     def is_member(self, family):
         return _('Yes') if Membership.is_member_family(family) else _('No')
-    
+
     @admin.display(description=_('Created'))
     def created_formatted(self, family):
         return family.created.strftime('%d/%m/%y, %H:%M')
+
     created_formatted.admin_order_field = 'created'
-    
+
     actions = [generate_remittance, export_emails, make_members]
 
 
@@ -131,7 +140,8 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
+    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number',
+                    'is_member']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
@@ -142,11 +152,11 @@ class ParentAdmin(admin.ModelAdmin):
     @admin.display(description=_('Is member'))
     def is_member(self, parent):
         return _('Yes') if Membership.objects.by_parent(parent).exists() else _('No')
-    
+
     @admin.display(description=_('Family'))
     def parent_families(self, parent):
         return ', '.join(str(f) for f in parent.family_set.all())
-    
+
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
@@ -160,11 +170,11 @@ class ChildAdmin(admin.ModelAdmin):
     @admin.display(description=_('Is member'))
     def is_member(self, child):
         return _('Yes') if Membership.is_member_child(child) else _('No')
-    
+
     @admin.display(description=_('Course'))
     def child_course(self, child):
         return Level.get_level_name(child.level)
-    
+
     @admin.display(description=_('Parents'))
     def parents(self, child):
         return ', '.join(p.name_and_surnames for p in child.family.parents.all())
@@ -188,8 +198,8 @@ class BankAccountAdmin(admin.ModelAdmin):
     @admin.display(description=_('Authorization'))
     def authorization_status(self, bank_account):
         try:
-            authorization = Authorization.objects.get(bank_account=bank_account)
-            return State.get_value_hunman_name(authorization.state)
+            authorization = Authorization.objects.of_bank_account(bank_account).get()
+            return State.get_value_human_name(authorization.state)
         except Authorization.DoesNotExist:
             return _('No authorizacion')
 
@@ -205,23 +215,23 @@ class AuthorizationAdmin(admin.ModelAdmin):
     def set_as_not_sent(self, request, queryset: QuerySet[Authorization]):
         queryset.update(state=State.NOT_SENT)
 
-        message = _("%(num_authorizations)s authorizations set as NOT sent") % {'num_authorizations':  queryset.count()}
+        message = _("%(num_authorizations)s authorizations set as NOT sent") % {'num_authorizations': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.action(description=_("Set as sent"))
     def set_as_sent(self, request, queryset: QuerySet[Authorization]):
         queryset.update(state=State.SENT)
 
-        message = _("%(num_authorizations)s authorizations set as sent") % {'num_authorizations':  queryset.count()}
+        message = _("%(num_authorizations)s authorizations set as sent") % {'num_authorizations': queryset.count()}
         self.message_user(request=request, message=message)
-    
+
     @admin.action(description=_("Set as signed"))
     def set_as_signed(self, request, queryset: QuerySet[Authorization]):
         queryset.update(state=State.SIGNED)
 
-        message = _("%(num_authorizations)s authorizations set as signed") % {'num_authorizations':  queryset.count()}
+        message = _("%(num_authorizations)s authorizations set as signed") % {'num_authorizations': queryset.count()}
         self.message_user(request=request, message=message)
-    
+
     actions = [set_as_not_sent, set_as_sent, set_as_signed]
 
 

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from model_bakery import baker
 
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()

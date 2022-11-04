@@ -22,7 +22,7 @@ class BankAccountAuthorizationFilter(admin.SimpleListFilter):
             if self.value() == '0':
                 return queryset.without_authorization()
             else:
-                return queryset.by_authorization_state(self.value())
+                return queryset.with_authorization_state(self.value())
         else:
             return queryset
 

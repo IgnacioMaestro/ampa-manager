@@ -10,7 +10,7 @@ from ampa_members_manager.charge.use_cases.create_activity_remittance_with_recei
     ActivityReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()

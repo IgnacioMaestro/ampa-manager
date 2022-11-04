@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
@@ -11,7 +11,7 @@ class ActivityRegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if hasattr(self.instance, 'child'):
-            self.fields['bank_account'].queryset = BankAccount.objects.by_family(self.instance.child.family)
+            self.fields['bank_account'].queryset = BankAccount.objects.of_family(self.instance.child.family)
         else:
             self.fields['bank_account'].queryset = BankAccount.objects.all()
 

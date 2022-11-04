@@ -1,5 +1,6 @@
 from django.db.models.query import QuerySet
 
+
 class ParentQuerySet(QuerySet):
 
     def by_full_name(self, full_name):

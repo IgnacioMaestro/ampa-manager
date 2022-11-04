@@ -3,11 +3,11 @@ from typing import Final
 from django.test import TestCase
 from model_bakery import baker
 
-from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt, NoFamilyBankAccountException, \
-    NoFeeForCourseException
+from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_members_manager.charge.receipt import Receipt
-from ampa_members_manager.family.models.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.baker_recipes import bank_account_recipe, membership_receipt_family_bank_account_recipe
 
@@ -17,7 +17,7 @@ class TestMembershipReceipt(TestCase):
 
     def test_generate_receipt_no_default_bank_account(self):
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt')
-        with self.assertRaises(NoFamilyBankAccountException):
+        with self.assertRaises(NoBankAccountException):
             membership_receipt.generate_receipt()
 
     def test_generate_receipt_no_fee_for_course(self):

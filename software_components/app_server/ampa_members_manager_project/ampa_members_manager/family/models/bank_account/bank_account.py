@@ -1,12 +1,12 @@
 from django.db import models
 from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
-from localflavor.generic.models import IBANField, BICField
 from django_extensions.db.models import TimeStampedModel
+from localflavor.generic.models import IBANField, BICField
 
-from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_members_manager.family.models.bic_code import BicCode
-from ampa_members_manager.family.models.bank_account_queryset import BankAccountQuerySet
+from ampa_members_manager.family.models.parent import Parent
 
 
 class BankAccount(TimeStampedModel):
@@ -23,9 +23,9 @@ class BankAccount(TimeStampedModel):
 
     def __str__(self) -> str:
         return f'{self.owner} {self.iban}'
-    
+
     def save(self, *args, **kwargs):
         if not self.swift_bic:
             self.swift_bic = BicCode.get_bic_code(self.iban)
-        
-        super(BankAccount, self).save(*args, **kwargs)
+
+        super(BankAccount, self).save(**kwargs)
