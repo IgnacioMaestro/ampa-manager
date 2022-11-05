@@ -12,7 +12,7 @@ from ampa_members_manager.academic_course.models.level import Level
 
 class Family(TimeStampedModel):
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
-    email = models.EmailField(unique=True, verbose_name=_("Email"))
+    email = models.EmailField(unique=True, blank=True, null=True, verbose_name=_("Email"))
     secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(

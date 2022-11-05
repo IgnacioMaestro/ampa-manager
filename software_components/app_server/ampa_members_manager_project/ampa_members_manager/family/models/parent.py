@@ -11,7 +11,7 @@ class Parent(TimeStampedModel):
     name_and_surnames = models.CharField(max_length=500, verbose_name=_("Name and surnames"), unique=True)
     phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Phone number"))
     additional_phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Other phone"))
-    email = models.EmailField(unique=True, null=True, blank=True, verbose_name=_("Email"))
+    email = models.EmailField(null=True, blank=True, verbose_name=_("Email"))
 
     objects = Manager.from_queryset(ParentQuerySet)()
 

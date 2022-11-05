@@ -38,3 +38,9 @@ class FamilyQuerySet(QuerySet):
 
     def by_surnames(self, surnames):
         return self.filter(surnames__iexact=surnames)
+    
+    def number_of_parents(self, number):
+        return self.parents_set.count() == number
+    
+    def more_than_two_parents(self, number):
+        return self.parents_set.count() > 2

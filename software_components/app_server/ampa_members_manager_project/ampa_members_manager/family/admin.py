@@ -1,3 +1,6 @@
+import csv
+import codecs
+
 from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -12,10 +15,11 @@ from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
-from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
-from ampa_members_manager.family.child_filters import ChildLevelListFilter, ChildCycleFilter
-from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
-    FamilyDefaultAccountFilter
+from ampa_members_manager.family.filters.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
+from ampa_members_manager.family.filters.child_filters import ChildLevelListFilter, ChildCycleFilter
+from ampa_members_manager.family.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
+    FamilyDefaultAccountFilter, FamilyParentCountFilter
+from ampa_members_manager.family.filters.parent_filters import ParentFamilyEmailsFilter, ParentFamiliesCountFilter
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
@@ -56,12 +60,12 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
-                   'is_defaulter', 'decline_membership']
+                   'is_defaulter', 'decline_membership', FamilyParentCountFilter]
     search_fields = ['surnames', 'email', 'secondary_email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
@@ -140,14 +144,15 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number',
-                    'is_member']
+    # list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
+    list_display = ['name_and_surnames', 'email', 'family_email1', 'family_email2', 'parent_families']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
     search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
     inlines = [BankAccountInline]
     list_per_page = 25
+    list_filter = [ParentFamilyEmailsFilter, ParentFamiliesCountFilter]
 
     @admin.display(description=_('Is member'))
     def is_member(self, parent):
@@ -156,6 +161,64 @@ class ParentAdmin(admin.ModelAdmin):
     @admin.display(description=_('Family'))
     def parent_families(self, parent):
         return ', '.join(str(f) for f in parent.family_set.all())
+    
+    @admin.display(description=_('Family email 1'))
+    def family_email1(self, parent):
+        if parent.family_set.count() == 1:
+            return parent.family_set.first().email
+        else:
+            return None
+
+    @admin.display(description=_('Family email 2'))
+    def family_email2(self, parent):
+        if parent.family_set.count() == 1:
+            return parent.family_set.first().secondary_email
+        else:
+            return None
+    
+    @admin.action(description=_("Delete family emails"))
+    def delete_family_emails(self, request, queryset: QuerySet[Authorization]):
+        for parent in queryset:
+            for family in parent.family_set.all():
+                if family.email or family.secondary_email:
+                    family.email = None
+                    family.secondary_email = None
+                    family.save()
+    
+    @admin.action(description=_("Import email from family email 1"))
+    def import_family_email1(self, request, queryset: QuerySet[Authorization]):
+        for parent in queryset:
+            if parent.family_set.count() == 1:
+                family = parent.family_set.first()
+                if family.email and not parent.email:
+                    parent.email = family.email
+                parent.save()
+    
+    @admin.action(description=_("Import email from family email 2"))
+    def import_family_email2(self, request, queryset: QuerySet[Authorization]):
+        for parent in queryset:
+            if parent.family_set.count() == 1:
+                family = parent.family_set.first()
+                if family.secondary_email and not parent.email:
+                    parent.email = family.secondary_email
+                parent.save()
+    
+    @admin.action(description=_("Import family email if there is only one"))
+    def try_to_complete_email(self, request, queryset: QuerySet[Authorization]):
+        for parent in queryset:
+            if parent.email in ['', None]:
+                if parent.family_set.count() == 1:
+                    family = parent.family_set.first()
+                    emails = []
+                    if family.email:
+                        emails.append(family.email)
+                    if family.secondary_email:
+                        emails.append(family.secondary_email)
+                    if len(emails) == 1:
+                        parent.email = emails[0]
+                        parent.save()
+    
+    actions = ['delete_family_emails', 'import_family_email1', 'import_family_email2', 'try_to_complete_email']
 
 
 class ChildAdmin(admin.ModelAdmin):
@@ -202,6 +265,24 @@ class BankAccountAdmin(admin.ModelAdmin):
             return State.get_value_human_name(authorization.state)
         except Authorization.DoesNotExist:
             return _('No authorizacion')
+    
+    @admin.action(description=_("Export account owners"))
+    def export_owners(self, request, bank_accounts: QuerySet[BankAccount]):
+        file_name = _('Bank account owners').lower()
+        headers = {'Content-Disposition': f'attachment; filename="{file_name}.csv"'}
+        response = HttpResponse(content_type='text/csv', headers=headers)
+        response.write(codecs.BOM_UTF8)
+        csv.writer(response, quoting=csv.QUOTE_ALL).writerows(BankAccount.get_csv_fields(bank_accounts))
+        return response
+    
+    @admin.action(description=_("Complete SWIFT/BIC codes"))
+    def complete_swift_bic(self, request, bank_accounts: QuerySet[BankAccount]):
+        for bank_account in bank_accounts:
+            if bank_account.swift_bic in [None, '']:
+                bank_account.complete_swift_bic()
+                bank_account.save()
+    
+    actions = ['export_owners', 'complete_swift_bic']
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
