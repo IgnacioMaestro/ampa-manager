@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+actor Admin
+package Charge {
+    package Activity{
+      Admin --> (Create a ActivityRemittance from ActivityPeriods)
+      Admin --> (Generate remittance from a ActivityRemittance with the list of ActivityReceipts)
+      Admin --> (Set all ActivityReceipts of a ActivityRemittance send)
+      Admin --> (Set all ActivityReceipts of a ActivityRemittance paid)
+      Admin --> (Check an ActivityRegistration state of payment or assignation)
+    }
+    package Membership{
+      Admin --> (Create a MembershipRemittance with selected families)
+      Admin --> (Create a MembershipRemittance with families not included in a MembershipRemittance)
+      Admin --> (Generate remittance from a MembershipRemittance with the list of MembershipReceipts)
+      Admin --> (Set all MembershipReceipts of a MembershipRemittance send)
+      Admin --> (Set all MembershipCharge of a MembershipChargeGroup paid)
+      Admin --> (Check a Family Membership of an AcademicCourse state of payment or assignation)
+    }
+}
+@enduml
