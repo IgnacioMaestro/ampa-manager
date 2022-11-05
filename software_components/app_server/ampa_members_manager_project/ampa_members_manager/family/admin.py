@@ -50,7 +50,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.of_family(family)
+        return ActivityReceipt.objects.by_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
