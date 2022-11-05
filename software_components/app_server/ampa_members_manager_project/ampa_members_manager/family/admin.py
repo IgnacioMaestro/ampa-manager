@@ -73,9 +73,12 @@ class FamilyAdmin(admin.ModelAdmin):
     def generate_remittance(self, request, families: QuerySet[Family]):
         academic_course: AcademicCourse = ActiveCourse.load()
         remittance = MembershipRemittanceCreator(families, academic_course).create()
-        message = mark_safe(
-            _("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
-                "View details") + "</a>)")
+        if remittance:
+            message = mark_safe(
+                _("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
+                    "View details") + "</a>)")
+        else:
+            message = _("No families to include in Membership Remittance")
         return self.message_user(request=request, message=message)
 
     @admin.action(description=_("Export emails to CSV"))

@@ -13,7 +13,7 @@ class MembershipRemittanceCreatorOfActiveCourse:
     @classmethod
     def create(cls) -> Optional[MembershipRemittance]:
         families: QuerySet[Family] = Family.objects.members().not_included_in_receipt_of_course(
-            ActiveCourse.load()).no_declined_membership()
+            ActiveCourse.load())
         if not families.exists():
             return None
         return MembershipRemittanceCreator(families, course=ActiveCourse.load()).create()
