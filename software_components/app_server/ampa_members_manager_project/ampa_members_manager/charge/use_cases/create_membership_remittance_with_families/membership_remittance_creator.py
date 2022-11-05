@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from django.db.models import QuerySet
 
@@ -13,11 +13,15 @@ class MembershipRemittanceCreator:
         self.__families = families
         self.__course = course
 
-    def create(self) -> MembershipRemittance:
-        membership_remittance: MembershipRemittance = MembershipRemittance.objects.create(course=self.__course)
+    def create(self) -> Optional[MembershipRemittance]:
+        membership_remittance: MembershipRemittance = MembershipRemittance(course=self.__course)
         membership_receipts: List[MembershipReceipt] = []
         for family in self.__families.iterator():
-            membership_receipt: MembershipReceipt = MembershipReceipt(remittance=membership_remittance, family=family)
-            membership_receipts.append(membership_receipt)
+            if not family.decline_membership:
+                membership_receipt: MembershipReceipt = MembershipReceipt(remittance=membership_remittance, family=family)
+                membership_receipts.append(membership_receipt)
+        if not membership_receipts:
+            return None
+        membership_remittance.save()
         MembershipReceipt.objects.bulk_create(membership_receipts)
         return membership_remittance
