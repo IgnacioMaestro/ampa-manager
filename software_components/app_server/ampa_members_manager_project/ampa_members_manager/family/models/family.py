@@ -12,8 +12,6 @@ from ampa_members_manager.academic_course.models.level import Level
 
 class Family(TimeStampedModel):
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
-    email = models.EmailField(unique=True, blank=True, null=True, verbose_name=_("Email"))
-    secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary Email"))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(
         to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"),
@@ -34,7 +32,7 @@ class Family(TimeStampedModel):
         return f'{self.surnames}'
 
     def get_parent_count(self):
-        return self.parents.count()
+        return self.parents.all().count()
 
     def get_children_count(self):
         return self.child_set.count()

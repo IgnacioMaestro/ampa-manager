@@ -58,15 +58,15 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count',
+    list_display = ['surnames', 'default_bank_account', 'parent_count',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'parents', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_bank_account', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
                    'is_defaulter', 'decline_membership', FamilyParentCountFilter]
-    search_fields = ['surnames', 'email', 'secondary_email']
+    search_fields = ['surnames', 'parents__name_and_surnames']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline, MembershipReceiptInline, FamilyActivityReceiptInline]
@@ -85,10 +85,9 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_emails(self, request, families: QuerySet[Family]):
         emails = []
         for family in families:
-            if family.email and family.email not in emails:
-                emails.append(family.email)
-            if family.secondary_email and family.secondary_email not in emails:
-                emails.append(family.secondary_email)
+            for parent in family.parents.all():
+                if parent.email and parent.email not in emails:
+                    emails.append(parent.email)
 
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
@@ -144,8 +143,7 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    # list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
-    list_display = ['name_and_surnames', 'email', 'family_email1', 'family_email2', 'parent_families']
+    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
@@ -162,64 +160,6 @@ class ParentAdmin(admin.ModelAdmin):
     def parent_families(self, parent):
         return ', '.join(str(f) for f in parent.family_set.all())
     
-    @admin.display(description=_('Family email 1'))
-    def family_email1(self, parent):
-        if parent.family_set.count() == 1:
-            return parent.family_set.first().email
-        else:
-            return None
-
-    @admin.display(description=_('Family email 2'))
-    def family_email2(self, parent):
-        if parent.family_set.count() == 1:
-            return parent.family_set.first().secondary_email
-        else:
-            return None
-    
-    @admin.action(description=_("Delete family emails"))
-    def delete_family_emails(self, request, queryset: QuerySet[Authorization]):
-        for parent in queryset:
-            for family in parent.family_set.all():
-                if family.email or family.secondary_email:
-                    family.email = None
-                    family.secondary_email = None
-                    family.save()
-    
-    @admin.action(description=_("Import email from family email 1"))
-    def import_family_email1(self, request, queryset: QuerySet[Authorization]):
-        for parent in queryset:
-            if parent.family_set.count() == 1:
-                family = parent.family_set.first()
-                if family.email and not parent.email:
-                    parent.email = family.email
-                parent.save()
-    
-    @admin.action(description=_("Import email from family email 2"))
-    def import_family_email2(self, request, queryset: QuerySet[Authorization]):
-        for parent in queryset:
-            if parent.family_set.count() == 1:
-                family = parent.family_set.first()
-                if family.secondary_email and not parent.email:
-                    parent.email = family.secondary_email
-                parent.save()
-    
-    @admin.action(description=_("Import family email if there is only one"))
-    def try_to_complete_email(self, request, queryset: QuerySet[Authorization]):
-        for parent in queryset:
-            if parent.email in ['', None]:
-                if parent.family_set.count() == 1:
-                    family = parent.family_set.first()
-                    emails = []
-                    if family.email:
-                        emails.append(family.email)
-                    if family.secondary_email:
-                        emails.append(family.secondary_email)
-                    if len(emails) == 1:
-                        parent.email = emails[0]
-                        parent.save()
-    
-    actions = ['delete_family_emails', 'import_family_email1', 'import_family_email2', 'try_to_complete_email']
-
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']

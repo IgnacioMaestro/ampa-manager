@@ -1,4 +1,5 @@
 from django.db.models.query import QuerySet
+from django.db.models import Count
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.level import Level
@@ -40,7 +41,9 @@ class FamilyQuerySet(QuerySet):
         return self.filter(surnames__iexact=surnames)
     
     def number_of_parents(self, number):
-        return self.parents_set.count() == number
+        self = self.annotate(parents_count=Count('parents'))
+        return self.filter(parents_count=number)
     
-    def more_than_two_parents(self, number):
-        return self.parents_set.count() > 2
+    def more_than_two_parents(self):
+        self = self.annotate(parents_count=Count('parents'))
+        return self.filter(parents_count__gt=2)
