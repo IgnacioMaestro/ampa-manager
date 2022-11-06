@@ -4,7 +4,7 @@
 [Domain model diagram](doc/DomainModelDiagram/DomainModelDiagram.md)
 
 ## Use cases diagram
-[Use cases diagram](doc/Use%20cases%20diagram.md)
+[Use cases diagram](doc/UseCasesDiagram/Use%20cases%20diagram.md)
 
 ## Run environment from a BAT file
 1. Create virtual environment

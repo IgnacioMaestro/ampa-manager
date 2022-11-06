@@ -1,0 +1,11 @@
+@startuml
+package AcademicCourse{
+
+  class ActiveCourse
+  class AcademicCourse {
+    InitialYear: Integer
+  }
+
+  ActiveCourse o-- AcademicCourse
+}
+@enduml

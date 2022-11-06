@@ -5,6 +5,7 @@ from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -54,7 +55,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.of_family(family)
+        return ActivityReceipt.objects.by_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -76,9 +77,12 @@ class FamilyAdmin(admin.ModelAdmin):
     def generate_remittance(self, request, families: QuerySet[Family]):
         academic_course: AcademicCourse = ActiveCourse.load()
         remittance = MembershipRemittanceCreator(families, academic_course).create()
-        message = mark_safe(
-            _("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
-                "View details") + "</a>)")
+        if remittance:
+            message = mark_safe(
+                _("Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
+                    "View details") + "</a>)")
+        else:
+            message = _("No families to include in Membership Remittance")
         return self.message_user(request=request, message=message)
 
     @admin.action(description=_("Export emails to CSV"))
@@ -254,6 +258,14 @@ class AuthorizationAdmin(admin.ModelAdmin):
         self.message_user(request=request, message=message)
 
     actions = [set_as_not_sent, set_as_sent, set_as_signed]
+
+    def get_changeform_initial_data(self, request):
+        year: int = timezone.now().year
+        previous_authorization: Authorization = Authorization.objects.filter(year=year).order_by('-number').first()
+        number: int = 1
+        if previous_authorization:
+            number = int(previous_authorization.number) + 1
+        return {'year': year, 'number': str(number)}
 
 
 class MembershipAdmin(admin.ModelAdmin):
