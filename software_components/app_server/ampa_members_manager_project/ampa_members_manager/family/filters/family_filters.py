@@ -66,3 +66,29 @@ class FamilyDefaultAccountFilter(admin.SimpleListFilter):
                 return queryset.without_default_account()
         else:
             return queryset
+
+class FamilyParentCountFilter(admin.SimpleListFilter):
+    title = _('Numer of parents')
+
+    parameter_name = 'parents'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('0', _('No parents')),
+            ('1', _('1 parent')),
+            ('2', _('2 parent')),
+            ('3+', _('More than 2 parents')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == '0':
+                return queryset.number_of_parents(0)
+            elif self.value() == '1':
+                return queryset.number_of_parents(1)
+            if self.value() == '2':
+                return queryset.number_of_parents(2)
+            elif self.value() == '3+':
+                return queryset.more_than_two_parents()
+        else:
+            return queryset

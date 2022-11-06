@@ -1,3 +1,6 @@
+import csv
+import codecs
+
 from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -13,10 +16,11 @@ from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
-from ampa_members_manager.family.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
-from ampa_members_manager.family.child_filters import ChildLevelListFilter, ChildCycleFilter
-from ampa_members_manager.family.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
-    FamilyDefaultAccountFilter
+from ampa_members_manager.family.filters.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
+from ampa_members_manager.family.filters.child_filters import ChildLevelListFilter, ChildCycleFilter
+from ampa_members_manager.family.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
+    FamilyDefaultAccountFilter, FamilyParentCountFilter
+from ampa_members_manager.family.filters.parent_filters import ParentFamilyEmailsFilter, ParentFamiliesCountFilter
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
@@ -55,15 +59,15 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'parent_count',
+    list_display = ['surnames', 'default_bank_account', 'parent_count',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'email', 'secondary_email', 'default_bank_account', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_bank_account', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
-                   'is_defaulter', 'decline_membership']
-    search_fields = ['surnames', 'email', 'secondary_email']
+                   'is_defaulter', 'decline_membership', FamilyParentCountFilter]
+    search_fields = ['surnames', 'parents__name_and_surnames']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline, MembershipReceiptInline, FamilyActivityReceiptInline]
@@ -85,10 +89,9 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_emails(self, request, families: QuerySet[Family]):
         emails = []
         for family in families:
-            if family.email and family.email not in emails:
-                emails.append(family.email)
-            if family.secondary_email and family.secondary_email not in emails:
-                emails.append(family.secondary_email)
+            for parent in family.parents.all():
+                if parent.email and parent.email not in emails:
+                    emails.append(parent.email)
 
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
@@ -144,14 +147,14 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number',
-                    'is_member']
+    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
     search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
     inlines = [BankAccountInline]
     list_per_page = 25
+    list_filter = [ParentFamilyEmailsFilter, ParentFamiliesCountFilter]
 
     @admin.display(description=_('Is member'))
     def is_member(self, parent):
@@ -160,7 +163,7 @@ class ParentAdmin(admin.ModelAdmin):
     @admin.display(description=_('Family'))
     def parent_families(self, parent):
         return ', '.join(str(f) for f in parent.family_set.all())
-
+    
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
@@ -205,7 +208,25 @@ class BankAccountAdmin(admin.ModelAdmin):
             authorization = Authorization.objects.of_bank_account(bank_account).get()
             return State.get_value_human_name(authorization.state)
         except Authorization.DoesNotExist:
-            return _('No authorization')
+            return _('No authorizacion')
+    
+    @admin.action(description=_("Export account owners"))
+    def export_owners(self, request, bank_accounts: QuerySet[BankAccount]):
+        file_name = _('Bank account owners').lower()
+        headers = {'Content-Disposition': f'attachment; filename="{file_name}.csv"'}
+        response = HttpResponse(content_type='text/csv', headers=headers)
+        response.write(codecs.BOM_UTF8)
+        csv.writer(response, quoting=csv.QUOTE_ALL).writerows(BankAccount.get_csv_fields(bank_accounts))
+        return response
+    
+    @admin.action(description=_("Complete SWIFT/BIC codes"))
+    def complete_swift_bic(self, request, bank_accounts: QuerySet[BankAccount]):
+        for bank_account in bank_accounts:
+            if bank_account.swift_bic in [None, '']:
+                bank_account.complete_swift_bic()
+                bank_account.save()
+    
+    actions = ['export_owners', 'complete_swift_bic']
 
 
 class AuthorizationAdmin(admin.ModelAdmin):

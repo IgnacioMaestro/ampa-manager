@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.db.models.query import QuerySet
+from django.db.models import Count
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
@@ -40,10 +41,11 @@ class FamilyQuerySet(QuerySet):
 
     def by_surnames(self, surnames):
         return self.filter(surnames__iexact=surnames)
-
-    def no_declined_membership(self) -> QuerySet:
-        return self.filter(decline_membership=False)
-
-    def not_included_in_receipt_of_course(self, academic_course: AcademicCourse):
-        return self.filter(
-            Q(membershipreceipt__isnull=True) | ~Q(membershipreceipt__remittance__course=academic_course))
+    
+    def number_of_parents(self, number):
+        self = self.annotate(parents_count=Count('parents'))
+        return self.filter(parents_count=number)
+    
+    def more_than_two_parents(self):
+        self = self.annotate(parents_count=Count('parents'))
+        return self.filter(parents_count__gt=2)

@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
+from django.db.models import QuerySet
 from localflavor.generic.models import IBANField, BICField
 
 from ampa_members_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
@@ -24,8 +25,17 @@ class BankAccount(TimeStampedModel):
     def __str__(self) -> str:
         return f'{self.owner} {self.iban}'
 
-    def save(self, *args, **kwargs):
-        if not self.swift_bic:
-            self.swift_bic = BicCode.get_bic_code(self.iban)
+    def complete_swift_bic(self):
+        self.swift_bic = BicCode.get_bic_code(self.iban)
+    
+    @staticmethod
+    def get_csv_fields(bank_accounts):
+        csv_fields = []
+        for bank_account in bank_accounts:
+            csv_fields.append([str(bank_account.owner), bank_account.iban])
+        return csv_fields
 
+    def save(self, *args, **kwargs):
+        if self.swift_bic in [None, '']:
+            self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
