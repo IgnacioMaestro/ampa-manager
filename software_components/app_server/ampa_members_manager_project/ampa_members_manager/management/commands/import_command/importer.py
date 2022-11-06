@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from ampa_members_manager.management.commands.surnames import SURNAMES
 
@@ -45,9 +46,34 @@ class Importer:
         return None
     
     @staticmethod
+    def clean_iban(str_value):
+        if str_value is not None:
+            return Importer.remove_spaces(str_value).strip().upper()
+        return None
+    
+    @staticmethod
+    def clean_date(str_value, format='%d/%m/%y'):
+        if str_value not in [None, '']:
+            return datetime.strptime(Importer.remove_spaces(str_value), format)
+        return None
+    
+    @staticmethod
+    def clean_integer(str_value, lower=False, title=False):
+        if str_value is not None:
+            clean_value = Importer.remove_spaces(str_value).strip()
+            return int(clean_value)
+        return None
+    
+    @staticmethod
     def remove_duplicate_spaces(str_value):
         if str_value is not None:
             return re.sub(' +', ' ', str(str_value))
+        return None
+    
+    @staticmethod
+    def remove_spaces(str_value):
+        if str_value is not None:
+            return str(str_value).replace(' ', '')
         return None
     
     @staticmethod

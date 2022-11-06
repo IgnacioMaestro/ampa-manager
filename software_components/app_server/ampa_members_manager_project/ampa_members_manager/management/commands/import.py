@@ -87,8 +87,6 @@ class Command(BaseCommand):
             self.bank_account_importer.import_parent1_bank_account(row_index)
             self.bank_account_importer.import_parent2_bank_account(row_index)
 
-            self.bank_account_importer.import_parent1_bank_account(row_index)
-
             self.import_child1(sheet, family, row_index)
             self.import_child2(sheet, family, row_index)
             self.import_child3(sheet, family, row_index)
