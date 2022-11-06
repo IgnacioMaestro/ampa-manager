@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 from model_bakery import baker
 
@@ -23,7 +24,7 @@ class TestActiveCourse(TestCase):
         self.assertEqual(established_course.pk, 1)
 
     def test_load_no_established_course(self):
-        with self.assertRaises(ActiveCourse.DoesNotExist):
+        with self.assertRaises(ObjectDoesNotExist):
             ActiveCourse.load()
 
     def test_load_established_course(self):

@@ -15,6 +15,12 @@ class TestRemittanceCreator(TestCase):
     def setUpTestData(cls):
         cls.course: AcademicCourse = baker.make('AcademicCourse')
 
+    def test_create_with_no_family(self):
+        membership_remittance: MembershipRemittance = MembershipRemittanceCreator(
+            families=Family.objects.all(), course=self.course).create()
+
+        self.assertIsNone(membership_remittance)
+
     def test_create_with_a_family(self):
         baker.make('Family')
 
@@ -23,6 +29,14 @@ class TestRemittanceCreator(TestCase):
 
         self.assertEqual(membership_remittance.course, self.course)
         self.assertEqual(membership_remittance.membershipreceipt_set.all().count(), 1)
+
+    def test_create_with_a_declined_family(self):
+        baker.make('Family', decline_membership=True)
+
+        membership_remittance: MembershipRemittance = MembershipRemittanceCreator(
+            families=Family.objects.all(), course=self.course).create()
+
+        self.assertIsNone(membership_remittance)
 
     def test_create_with_two_family(self):
         quantity: Final[int] = 2

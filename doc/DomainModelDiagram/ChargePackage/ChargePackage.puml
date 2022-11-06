@@ -1,0 +1,74 @@
+@startuml
+package Charge{
+  class ActivityRemittance{
+    name: string
+    created_at: datetime
+  }
+  class ActivityReceipt {
+    amount: float
+  }
+  class MembershipRemittance {
+    created_at: datetime
+  }
+  class MembershipReceipt
+
+  class State
+  class Created
+  class Send
+  class Paid
+  State <|-- Created
+  State <|-- Send
+  State <|-- Paid
+
+  class Remittance__Remesa {
+    name: string
+  }
+  class Receipt {
+    amount: float
+    bank_account_owner: string
+    iban: string
+    authorization: string
+  }
+
+  class Fee{
+    amount: integer
+  }
+
+  Remittance__Remesa *--> Receipt
+  ActivityReceipt --> Receipt
+  ActivityRemittance --> Remittance__Remesa
+  MembershipReceipt --> Receipt
+  MembershipRemittance --> Remittance__Remesa
+
+  ActivityReceipt *-- State
+  ActivityRemittance *-- "1..N" ActivityReceipt
+  MembershipReceipt *-- State
+  MembershipRemittance *-- "1..N" MembershipReceipt
+}
+
+package Activity{
+  class ActivityPayablePart
+}
+
+ActivityPayablePart "1..N" -right-o ActivityRemittance
+
+package ActivityRegistration {
+  class ActivityRegistration
+}
+
+ActivityRegistration "1..N" --o ActivityReceipt
+
+ActivityRegistration o--left ActivityPayablePart
+
+package AcademicCourse{
+  class AcademicCourse
+}
+
+Fee --o AcademicCourse
+MembershipRemittance o-- AcademicCourse
+
+package Family{
+  class Family
+}
+MembershipReceipt o--  Family
+@enduml

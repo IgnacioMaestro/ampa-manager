@@ -10,7 +10,7 @@ class TestActivityPeriod(TestCase):
     def test_str(self):
         activity_period: ActivityPeriod = baker.prepare('ActivityPeriod')
 
-        self.assertEqual(str(activity_period), activity_period.name)
+        self.assertEqual(str(activity_period), str(activity_period.activity) + ' - ' + activity_period.name)
 
     def test_calculate_price_single_member(self):
         activity_period: ActivityPeriod = baker.prepare('ActivityPeriod', payment_type=PaymentType.SINGLE)

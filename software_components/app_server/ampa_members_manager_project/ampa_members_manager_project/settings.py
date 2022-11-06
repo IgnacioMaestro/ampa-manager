@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+from os.path import join
 from pathlib import Path
-
 from django.utils.translation import gettext_lazy as _
+
+from ampa_members_manager_project.secret_key_manager import SecretKeyManager
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,8 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gdxs^$mn=vxt41(b8+tf)g3s(-09m1j%kfj6i=7=pi$dagj1--'
+# KEY CONFIGURATION ----------------------------------------------------------------------------------------------------
+# Try to load the SECRET_KEY from our secret_file. If that fails, then generate
+# a random SECRET_KEY and save it into our secret_file for future loading. If
+# everything fails, then just raise an exception.
+
+# Absolute filesystem path to the secret file which holds this project's SECRET_KEY.
+secret_file = join(os.path.dirname(os.path.abspath(__file__)), './credentials/sk')
+SECRET_KEY = SecretKeyManager().load_or_create_key(secret_file)
+# END KEY CONFIGURATION ------------------------------------------------------------------------------------------------
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,7 +120,7 @@ LANGUAGE_CODE = 'es-es'
 
 LANGUAGES = [
     ('es', _('Spanish')),
-    #("en", _("English")),
+    # ("en", _("English")),
     ('eu', _('Basque')),
 ]
 
@@ -154,7 +163,8 @@ ADMIN_REORDER = (
      'models': ('ampa_members_manager.ActivityRegistration',)},
     {'app': 'ampa_members_manager', 'label': _('Charge'),
      'models': ('ampa_members_manager.ActivityReceipt', 'ampa_members_manager.ActivityRemittance',
-                'ampa_members_manager.MembershipReceipt', 'ampa_members_manager.MembershipRemittance')},
+                'ampa_members_manager.MembershipReceipt', 'ampa_members_manager.MembershipRemittance',
+                'ampa_members_manager.Fee')},
     # Keep original label and models
     'auth',
 )

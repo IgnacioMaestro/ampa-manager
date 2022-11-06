@@ -1,0 +1,2 @@
+## AcademicCourse package
+![](AcademicCourse.png)

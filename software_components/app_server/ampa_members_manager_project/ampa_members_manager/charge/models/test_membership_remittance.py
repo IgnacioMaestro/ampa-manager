@@ -10,4 +10,4 @@ class TestMembershipRemittance(TestCase):
         datetime = now()
         membership_remittance: MembershipRemittance = baker.prepare('MembershipRemittance', created_at=datetime)
         self.assertEqual(membership_remittance.complete_name,
-                         str(membership_remittance.course) + '_' + datetime.strftime("%Y%m%d_%H%M%S"))
+                         str(membership_remittance.course) + ' - ' + datetime.strftime("%Y%m%d_%H%M%S"))

@@ -3,8 +3,8 @@ from ampa_members_manager.academic_course.models.active_course import ActiveCour
 from ampa_members_manager.activity.models.activity import Activity
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_members_manager.family.models.authorization import Authorization
-from ampa_members_manager.family.models.bank_account import BankAccount
+from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.membership import Membership
@@ -13,3 +13,4 @@ from ampa_members_manager.charge.models.activity_remittance import ActivityRemit
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_members_manager.charge.models.fee.fee import Fee

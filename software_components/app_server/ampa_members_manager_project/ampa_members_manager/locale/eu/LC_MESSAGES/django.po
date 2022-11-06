@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 13:55+0200\n"
+"POT-Creation-Date: 2022-11-03 15:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,122 +18,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\ampa_members_manager\academic_course\admin.py:19
+#: .\ampa_members_manager\academic_course\admin.py:20
 msgid "Summary"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:23
+#: .\ampa_members_manager\academic_course\admin.py:24
 msgid "Is active"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:25
-#: .\ampa_members_manager\family\admin.py:104
-#: .\ampa_members_manager\family\admin.py:125
-#: .\ampa_members_manager\family\admin.py:141
+#: .\ampa_members_manager\academic_course\admin.py:26
+#: .\ampa_members_manager\family\admin.py:117
+#: .\ampa_members_manager\family\admin.py:144
+#: .\ampa_members_manager\family\admin.py:162
 msgid "Yes"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:25
-#: .\ampa_members_manager\family\admin.py:104
-#: .\ampa_members_manager\family\admin.py:125
-#: .\ampa_members_manager\family\admin.py:141
+#: .\ampa_members_manager\academic_course\admin.py:26
+#: .\ampa_members_manager\family\admin.py:117
+#: .\ampa_members_manager\family\admin.py:144
+#: .\ampa_members_manager\family\admin.py:162
 msgid "No"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:27
-#: .\ampa_members_manager\academic_course\admin.py:52
-#: .\ampa_members_manager\family\filters.py:75
+#: .\ampa_members_manager\academic_course\admin.py:28
+#: .\ampa_members_manager\academic_course\admin.py:53
+#: .\ampa_members_manager\family\family_filters.py:15
 msgid "Members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:38
-msgid "Global"
-msgstr ""
-
-#: .\ampa_members_manager\academic_course\admin.py:41
-#: .\ampa_members_manager\academic_course\admin.py:68
-#: .\ampa_members_manager\charge\admin.py:54
-#: .\ampa_members_manager\family\admin.py:98
-#: .\ampa_members_manager\family\models\child.py:23
-msgid "Children"
-msgstr ""
-
-#: .\ampa_members_manager\academic_course\admin.py:44
-#: .\ampa_members_manager\academic_course\admin.py:84
-msgid "HH members"
-msgstr ""
-
-#: .\ampa_members_manager\academic_course\admin.py:47
-#: .\ampa_members_manager\academic_course\admin.py:120
-msgid "LH members"
-msgstr ""
-
-#: .\ampa_members_manager\academic_course\admin.py:56
-#: .\ampa_members_manager\family\models\family.py:25
+#: .\ampa_members_manager\academic_course\admin.py:39
+#: .\ampa_members_manager\academic_course\admin.py:57
+#: .\ampa_members_manager\family\models\family.py:28
 msgid "Families"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:60
+#: .\ampa_members_manager\academic_course\admin.py:42
+msgid "Students"
+msgstr ""
+
+#: .\ampa_members_manager\academic_course\admin.py:45
+#: .\ampa_members_manager\academic_course\admin.py:85
+msgid "HH members"
+msgstr ""
+
+#: .\ampa_members_manager\academic_course\admin.py:48
+#: .\ampa_members_manager\academic_course\admin.py:105
+msgid "LH members"
+msgstr ""
+
+#: .\ampa_members_manager\academic_course\admin.py:61
 msgid "Families with children in school"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:64
-#: .\ampa_members_manager\family\admin.py:147
-#: .\ampa_members_manager\family\models\family.py:15
-#: .\ampa_members_manager\family\models\parent.py:13
+#: .\ampa_members_manager\academic_course\admin.py:65
+#: .\ampa_members_manager\family\admin.py:103
+#: .\ampa_members_manager\family\admin.py:168
+#: .\ampa_members_manager\family\models\family.py:17
+#: .\ampa_members_manager\family\models\parent.py:20
 msgid "Parents"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:72
+#: .\ampa_members_manager\academic_course\admin.py:69
 msgid "Children in school"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:76
-#: .\ampa_members_manager\family\filters.py:48
+#: .\ampa_members_manager\academic_course\admin.py:73
+#: .\ampa_members_manager\family\child_filters.py:41
 msgid "Pre-school"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:80
+#: .\ampa_members_manager\academic_course\admin.py:77
 msgid "Primary"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:92
+#: .\ampa_members_manager\academic_course\admin.py:81
+#: .\ampa_members_manager\family\child_filters.py:43
+msgid "Out of school"
+msgstr ""
+
+#: .\ampa_members_manager\academic_course\admin.py:89
 msgid "HH2 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:99
+#: .\ampa_members_manager\academic_course\admin.py:93
 msgid "HH3 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:106
+#: .\ampa_members_manager\academic_course\admin.py:97
 msgid "HH4 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:113
+#: .\ampa_members_manager\academic_course\admin.py:101
 msgid "HH5 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:128
+#: .\ampa_members_manager\academic_course\admin.py:109
 msgid "LH1 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:135
+#: .\ampa_members_manager\academic_course\admin.py:113
 msgid "LH2 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:142
+#: .\ampa_members_manager\academic_course\admin.py:117
 msgid "LH3 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:149
+#: .\ampa_members_manager\academic_course\admin.py:121
 msgid "LH4 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:156
+#: .\ampa_members_manager\academic_course\admin.py:125
 msgid "LH5 members"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\admin.py:163
+#: .\ampa_members_manager\academic_course\admin.py:129
 msgid "LH6 members"
 msgstr ""
 
@@ -148,7 +147,7 @@ msgstr ""
 #: .\ampa_members_manager\academic_course\models\academic_course.py:12
 #: .\ampa_members_manager\activity\models\activity.py:11
 #: .\ampa_members_manager\family\models\membership.py:14
-#: .\ampa_members_manager_project\settings.py:141
+#: .\ampa_members_manager_project\settings.py:142
 msgid "Academic course"
 msgstr ""
 
@@ -157,8 +156,8 @@ msgid "Academic courses"
 msgstr ""
 
 #: .\ampa_members_manager\academic_course\models\active_course.py:9
-#: .\ampa_members_manager\family\admin.py:143
-#: .\ampa_members_manager\family\filters.py:13
+#: .\ampa_members_manager\family\admin.py:164
+#: .\ampa_members_manager\family\child_filters.py:10
 msgid "Course"
 msgstr ""
 
@@ -167,53 +166,43 @@ msgstr ""
 msgid "Active course"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:17
-#: .\ampa_members_manager\family\filters.py:19
+#: .\ampa_members_manager\academic_course\models\level.py:30
 msgid "HH2"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:18
-#: .\ampa_members_manager\family\filters.py:20
+#: .\ampa_members_manager\academic_course\models\level.py:31
 msgid "HH3"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:19
-#: .\ampa_members_manager\family\filters.py:21
+#: .\ampa_members_manager\academic_course\models\level.py:32
 msgid "HH4"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:20
-#: .\ampa_members_manager\family\filters.py:22
+#: .\ampa_members_manager\academic_course\models\level.py:33
 msgid "HH5"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:21
-#: .\ampa_members_manager\family\filters.py:23
+#: .\ampa_members_manager\academic_course\models\level.py:34
 msgid "LH1"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:22
-#: .\ampa_members_manager\family\filters.py:24
+#: .\ampa_members_manager\academic_course\models\level.py:35
 msgid "LH2"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:23
-#: .\ampa_members_manager\family\filters.py:25
+#: .\ampa_members_manager\academic_course\models\level.py:36
 msgid "LH3"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:24
-#: .\ampa_members_manager\family\filters.py:26
+#: .\ampa_members_manager\academic_course\models\level.py:37
 msgid "LH4"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:25
-#: .\ampa_members_manager\family\filters.py:27
+#: .\ampa_members_manager\academic_course\models\level.py:38
 msgid "LH5"
 msgstr ""
 
-#: .\ampa_members_manager\academic_course\models\course_name.py:26
-#: .\ampa_members_manager\family\filters.py:28
+#: .\ampa_members_manager\academic_course\models\level.py:39
 msgid "LH6"
 msgstr ""
 
@@ -226,7 +215,7 @@ msgid "Activity remittance created"
 msgstr ""
 
 #: .\ampa_members_manager\activity\admin.py:16
-#: .\ampa_members_manager\family\admin.py:69
+#: .\ampa_members_manager\family\admin.py:71
 msgid "View details"
 msgstr ""
 
@@ -250,7 +239,7 @@ msgstr ""
 #: .\ampa_members_manager\activity\models\activity.py:16
 #: .\ampa_members_manager\activity\models\activity_period.py:16
 #: .\ampa_members_manager\activity_registration\admin.py:27
-#: .\ampa_members_manager_project\settings.py:147
+#: .\ampa_members_manager_project\settings.py:148
 msgid "Activity"
 msgstr ""
 
@@ -316,7 +305,7 @@ msgstr ""
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:18
 #: .\ampa_members_manager\family\models\authorization.py:16
-#: .\ampa_members_manager\family\models\bank_account.py:16
+#: .\ampa_members_manager\family\models\bank_account.py:20
 msgid "Bank account"
 msgstr ""
 
@@ -330,7 +319,7 @@ msgid "Activity registration"
 msgstr ""
 
 #: .\ampa_members_manager\activity_registration\models\activity_registration.py:23
-#: .\ampa_members_manager\charge\models\activity_receipt.py:22
+#: .\ampa_members_manager\charge\models\activity_receipt.py:23
 msgid "Activity registrations"
 msgstr ""
 
@@ -344,7 +333,7 @@ msgstr ""
 
 #: .\ampa_members_manager\charge\admin.py:32
 #: .\ampa_members_manager\charge\admin.py:173
-#: .\ampa_members_manager\family\admin.py:188
+#: .\ampa_members_manager\family\admin.py:211
 msgid "Set as sent"
 msgstr ""
 
@@ -363,12 +352,18 @@ msgstr ""
 
 #: .\ampa_members_manager\charge\admin.py:46
 #: .\ampa_members_manager\charge\models\membership_receipt.py:23
-#: .\ampa_members_manager\family\admin.py:127
+#: .\ampa_members_manager\family\admin.py:146
 #: .\ampa_members_manager\family\models\child.py:17
-#: .\ampa_members_manager\family\models\family.py:24
+#: .\ampa_members_manager\family\models\family.py:27
 #: .\ampa_members_manager\family\models\membership.py:13
-#: .\ampa_members_manager_project\settings.py:143
+#: .\ampa_members_manager_project\settings.py:144
 msgid "Family"
+msgstr ""
+
+#: .\ampa_members_manager\charge\admin.py:54
+#: .\ampa_members_manager\family\admin.py:107
+#: .\ampa_members_manager\family\models\child.py:23
+msgid "Children"
 msgstr ""
 
 #: .\ampa_members_manager\charge\admin.py:62
@@ -426,26 +421,26 @@ msgstr ""
 msgid "Only can select one membership remittance"
 msgstr ""
 
-#: .\ampa_members_manager\charge\models\activity_receipt.py:20
+#: .\ampa_members_manager\charge\models\activity_receipt.py:21
 msgid "Total (€)"
 msgstr ""
 
-#: .\ampa_members_manager\charge\models\activity_receipt.py:21
+#: .\ampa_members_manager\charge\models\activity_receipt.py:22
 #: .\ampa_members_manager\charge\models\membership_receipt.py:21
 #: .\ampa_members_manager\family\models\authorization.py:18
 msgid "State"
 msgstr ""
 
-#: .\ampa_members_manager\charge\models\activity_receipt.py:23
+#: .\ampa_members_manager\charge\models\activity_receipt.py:24
 #: .\ampa_members_manager\charge\models\activity_remittance.py:19
 msgid "Activity remittance"
 msgstr ""
 
-#: .\ampa_members_manager\charge\models\activity_receipt.py:26
+#: .\ampa_members_manager\charge\models\activity_receipt.py:29
 msgid "Activity Receipt"
 msgstr ""
 
-#: .\ampa_members_manager\charge\models\activity_receipt.py:27
+#: .\ampa_members_manager\charge\models\activity_receipt.py:30
 msgid "Activity Receipts"
 msgstr ""
 
@@ -496,12 +491,13 @@ msgid "Membership remittances"
 msgstr ""
 
 #: .\ampa_members_manager\charge\state.py:6
-#: .\ampa_members_manager\family\filters.py:118
+#: .\ampa_members_manager\family\admin.py:119
+#: .\ampa_members_manager\family\bank_account_filters.py:15
 msgid "Created"
 msgstr ""
 
 #: .\ampa_members_manager\charge\state.py:7
-#: .\ampa_members_manager\family\filters.py:119
+#: .\ampa_members_manager\family\bank_account_filters.py:16
 #: .\ampa_members_manager\family\models\state.py:7
 msgid "Sent"
 msgstr ""
@@ -510,134 +506,134 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:65
+#: .\ampa_members_manager\family\admin.py:67
 msgid "Generate MembershipRemittance for current year"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:69
+#: .\ampa_members_manager\family\admin.py:71
 msgid "Membership remittance created"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:72
+#: .\ampa_members_manager\family\admin.py:74
 msgid "Export emails to CSV"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:84
+#: .\ampa_members_manager\family\admin.py:86
 msgid "Make families member"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:95
+#: .\ampa_members_manager\family\admin.py:100
 #, python-format
 msgid ""
 "%(new_members)s families became members. %(already_members)s families "
-"already were members"
+"already were members. %(declined)s families declined to be members anymore"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:102
-#: .\ampa_members_manager\family\admin.py:122
-#: .\ampa_members_manager\family\admin.py:139
+#: .\ampa_members_manager\family\admin.py:111
+msgid "In school"
+msgstr ""
+
+#: .\ampa_members_manager\family\admin.py:115
+#: .\ampa_members_manager\family\admin.py:142
+#: .\ampa_members_manager\family\admin.py:160
 msgid "Is member"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:165
-#: .\ampa_members_manager\family\filters.py:111
+#: .\ampa_members_manager\family\admin.py:188
+#: .\ampa_members_manager\family\bank_account_filters.py:8
 #: .\ampa_members_manager\family\models\authorization.py:21
 msgid "Authorization"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:171
+#: .\ampa_members_manager\family\admin.py:194
 msgid "No authorizacion"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:181
+#: .\ampa_members_manager\family\admin.py:204
 msgid "Set as not sent"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:185
+#: .\ampa_members_manager\family\admin.py:208
 #, python-format
 msgid "%(num_authorizations)s authorizations set as NOT sent"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:192
+#: .\ampa_members_manager\family\admin.py:215
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:195
+#: .\ampa_members_manager\family\admin.py:218
 msgid "Set as signed"
 msgstr ""
 
-#: .\ampa_members_manager\family\admin.py:199
+#: .\ampa_members_manager\family\admin.py:222
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:42
+#: .\ampa_members_manager\family\bank_account_filters.py:14
+msgid "No authorization"
+msgstr ""
+
+#: .\ampa_members_manager\family\bank_account_filters.py:17
+#: .\ampa_members_manager\family\models\state.py:8
+msgid "Signed"
+msgstr ""
+
+#: .\ampa_members_manager\family\bank_account_filters.py:30
+#: .\ampa_members_manager\family\models\bank_account.py:13
+msgid "SWIFT/BIC"
+msgstr ""
+
+#: .\ampa_members_manager\family\bank_account_filters.py:36
+msgid "With SWIFT/BIC"
+msgstr ""
+
+#: .\ampa_members_manager\family\bank_account_filters.py:37
+msgid "Without SWIFT/BIC"
+msgstr ""
+
+#: .\ampa_members_manager\family\child_filters.py:35
 msgid "Cycle"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:49
+#: .\ampa_members_manager\family\child_filters.py:42
 msgid "Primary education"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:50
-msgid "Out of school"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:69
+#: .\ampa_members_manager\family\family_filters.py:9
 #: .\ampa_members_manager\family\models\membership.py:19
 #: .\ampa_members_manager\family\models\membership.py:20
 msgid "Membership"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:76
+#: .\ampa_members_manager\family\family_filters.py:16
 msgid "No members"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:91
+#: .\ampa_members_manager\family\family_filters.py:31
 msgid "Children count"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:97
+#: .\ampa_members_manager\family\family_filters.py:37
 msgid "Any children in school"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:98
+#: .\ampa_members_manager\family\family_filters.py:38
 msgid "No children in school"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:117
-msgid "No authorization"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:120
-#: .\ampa_members_manager\family\models\state.py:8
-msgid "Signed"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:134
+#: .\ampa_members_manager\family\family_filters.py:51
 msgid "Default account"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:140
+#: .\ampa_members_manager\family\family_filters.py:57
 msgid "With account"
 msgstr ""
 
-#: .\ampa_members_manager\family\filters.py:141
+#: .\ampa_members_manager\family\family_filters.py:58
 msgid "Without account"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:154
-#: .\ampa_members_manager\family\models\bank_account.py:11
-msgid "SWIFT/BIC"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:160
-msgid "With SWIFT/BIC"
-msgstr ""
-
-#: .\ampa_members_manager\family\filters.py:161
-msgid "Without SWIFT/BIC"
 msgstr ""
 
 #: .\ampa_members_manager\family\models\authorization.py:13
@@ -660,15 +656,15 @@ msgstr ""
 msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\bank_account.py:12
+#: .\ampa_members_manager\family\models\bank_account.py:14
 msgid "IBAN"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\bank_account.py:13
+#: .\ampa_members_manager\family\models\bank_account.py:15
 msgid "Owner"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\bank_account.py:17
+#: .\ampa_members_manager\family\models\bank_account.py:21
 msgid "Bank accounts"
 msgstr ""
 
@@ -680,43 +676,58 @@ msgstr ""
 msgid "Repetition"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:12
+#: .\ampa_members_manager\family\models\family.py:14
 msgid "Surnames"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:13
+#: .\ampa_members_manager\family\models\family.py:15
+#: .\ampa_members_manager\family\models\parent.py:14
 msgid "Email"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:14
+#: .\ampa_members_manager\family\models\family.py:16
 msgid "Secondary Email"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:17
+#: .\ampa_members_manager\family\models\family.py:19
 msgid "Default bank account"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:18
+#: .\ampa_members_manager\family\models\family.py:20
 msgid "Save the family to see its bank accounts"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\family.py:19
+#: .\ampa_members_manager\family\models\family.py:21
 msgid "Defaulter"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\parent.py:7
+#: .\ampa_members_manager\family\models\family.py:21
+msgid "Informative field only"
+msgstr ""
+
+#: .\ampa_members_manager\family\models\family.py:22
+msgid "Decline membership"
+msgstr ""
+
+#: .\ampa_members_manager\family\models\family.py:22
+msgid ""
+"It prevents the family from becoming a member. For example, if they no "
+"longer have children at school but you do not want to delete the record."
+msgstr ""
+
+#: .\ampa_members_manager\family\models\parent.py:11
 msgid "Name and surnames"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\parent.py:8
+#: .\ampa_members_manager\family\models\parent.py:12
 msgid "Phone number"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\parent.py:9
-msgid "Additional phone number"
+#: .\ampa_members_manager\family\models\parent.py:13
+msgid "Other phone"
 msgstr ""
 
-#: .\ampa_members_manager\family\models\parent.py:12
+#: .\ampa_members_manager\family\models\parent.py:19
 msgid "Parent"
 msgstr ""
 
@@ -724,18 +735,18 @@ msgstr ""
 msgid "Not sent"
 msgstr ""
 
-#: .\ampa_members_manager_project\settings.py:112
+#: .\ampa_members_manager_project\settings.py:113
 msgid "Spanish"
 msgstr ""
 
-#: .\ampa_members_manager_project\settings.py:114
+#: .\ampa_members_manager_project\settings.py:115
 msgid "Basque"
 msgstr ""
 
-#: .\ampa_members_manager_project\settings.py:152
+#: .\ampa_members_manager_project\settings.py:153
 msgid "ActivityRegistration"
 msgstr ""
 
-#: .\ampa_members_manager_project\settings.py:154
+#: .\ampa_members_manager_project\settings.py:155
 msgid "Charge"
 msgstr ""
