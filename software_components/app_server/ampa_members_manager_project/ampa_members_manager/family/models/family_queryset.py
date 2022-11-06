@@ -49,3 +49,10 @@ class FamilyQuerySet(QuerySet):
     def more_than_two_parents(self):
         self = self.annotate(parents_count=Count('parents'))
         return self.filter(parents_count__gt=2)
+
+    def no_declined_membership(self) -> QuerySet:
+        return self.filter(decline_membership=False)
+
+    def not_included_in_receipt_of_course(self, academic_course: AcademicCourse):
+        return self.filter(
+            Q(membershipreceipt__isnull=True) | ~Q(membershipreceipt__remittance__course=academic_course))
