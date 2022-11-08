@@ -26,7 +26,7 @@ class TestAuthorization(TestCase):
         initial_number: int = 16
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Authorization', bank_account=bank_account, year=year, number=initial_number)
+        baker.make('Authorization', bank_account=bank_account, year=year, number=str(initial_number))
         next_number = Authorization.next_number_for_year(2020)
         self.assertEqual(next_number, initial_number + 1)
 
@@ -35,7 +35,7 @@ class TestAuthorization(TestCase):
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         other_bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Authorization', bank_account=bank_account, year=year, number=initial_number)
-        baker.make('Authorization', bank_account=other_bank_account, year=year, number=2)
+        baker.make('Authorization', bank_account=bank_account, year=year, number=str(initial_number))
+        baker.make('Authorization', bank_account=other_bank_account, year=year, number='2')
         next_number = Authorization.next_number_for_year(2020)
         self.assertEqual(next_number, initial_number + 1)
