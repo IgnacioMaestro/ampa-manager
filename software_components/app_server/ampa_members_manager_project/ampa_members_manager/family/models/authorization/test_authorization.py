@@ -2,6 +2,7 @@ import phonenumbers
 from django.test import TestCase
 from model_bakery import baker
 
+from ampa_members_manager.baker_recipes import bank_account_recipe
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.parent import Parent
@@ -16,3 +17,25 @@ class TestAuthorization(TestCase):
         self.assertEqual(
             str(authorization),
             f'{authorization.year}/{authorization.number}-{str(authorization.bank_account)}')
+
+    def test_next_number_for_year_no_authorization_that_year_returns_one(self):
+        number = Authorization.next_number_for_year(2020)
+        self.assertEqual(number, 1)
+
+    def test_next_number_for_year_one_authorization_that_year_returns_value_plus_one(self):
+        initial_number: int = 16
+        year: int = 2020
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        baker.make('Authorization', bank_account=bank_account, year=year, number=initial_number)
+        next_number = Authorization.next_number_for_year(2020)
+        self.assertEqual(next_number, initial_number + 1)
+
+    def test_next_number_for_year_two_authorizations_that_year_returns_max_value_plus_one(self):
+        initial_number: int = 16
+        year: int = 2020
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        other_bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        baker.make('Authorization', bank_account=bank_account, year=year, number=initial_number)
+        baker.make('Authorization', bank_account=other_bank_account, year=year, number=2)
+        next_number = Authorization.next_number_for_year(2020)
+        self.assertEqual(next_number, initial_number + 1)

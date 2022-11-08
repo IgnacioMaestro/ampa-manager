@@ -32,3 +32,10 @@ class Authorization(models.Model):
     def clean(self):
         if self.state in [State.SENT, State.SIGNED] and not self.document:
             raise ValidationError(_('The state can not be sent or signed if there is no document attached'))
+
+    @classmethod
+    def next_number_for_year(cls, year: int) -> int:
+        authorization: Authorization = Authorization.objects.filter(year=year).order_by('number').first()
+        if not authorization:
+            return 1
+        return int(authorization.number) + 1
