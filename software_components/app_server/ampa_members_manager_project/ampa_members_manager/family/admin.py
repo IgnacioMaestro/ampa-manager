@@ -261,11 +261,8 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
     def get_changeform_initial_data(self, request):
         year: int = timezone.now().year
-        previous_authorization: Authorization = Authorization.objects.filter(year=year).order_by('-number').first()
-        number: int = 1
-        if previous_authorization:
-            number = int(previous_authorization.number) + 1
-        return {'year': year, 'number': str(number)}
+        next_number = Authorization.next_number_for_year(year)
+        return {'year': year, 'number': str(next_number)}
 
 
 class MembershipAdmin(admin.ModelAdmin):
