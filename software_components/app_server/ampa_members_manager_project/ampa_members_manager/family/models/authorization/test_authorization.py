@@ -19,7 +19,7 @@ class TestAuthorization(TestCase):
             f'{authorization.year}/{authorization.number}-{str(authorization.bank_account)}')
 
     def test_next_number_for_year_no_authorization_that_year_returns_one(self):
-        number = Authorization.next_number_for_year(2020)
+        number = Authorization.objects.next_number_for_year(2020)
         self.assertEqual(number, 1)
 
     def test_next_number_for_year_one_authorization_that_year_returns_value_plus_one(self):
@@ -27,7 +27,7 @@ class TestAuthorization(TestCase):
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         baker.make('Authorization', bank_account=bank_account, year=year, number=str(initial_number))
-        next_number = Authorization.next_number_for_year(2020)
+        next_number = Authorization.objects.next_number_for_year(2020)
         self.assertEqual(next_number, initial_number + 1)
 
     def test_next_number_for_year_two_authorizations_that_year_returns_max_value_plus_one(self):
@@ -37,5 +37,13 @@ class TestAuthorization(TestCase):
         other_bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         baker.make('Authorization', bank_account=bank_account, year=year, number=str(initial_number))
         baker.make('Authorization', bank_account=other_bank_account, year=year, number='2')
-        next_number = Authorization.next_number_for_year(2020)
+        next_number = Authorization.objects.next_number_for_year(2020)
         self.assertEqual(next_number, initial_number + 1)
+
+    def test_create_next_authorization(self):
+        year = 2020
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        authorization: Authorization = Authorization.objects.create_next_authorization(year, bank_account)
+        self.assertEqual(authorization.year, year)
+        self.assertEqual(authorization.number, '1')
+        self.assertEqual(authorization.bank_account, bank_account)

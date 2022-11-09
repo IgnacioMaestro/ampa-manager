@@ -16,7 +16,8 @@ from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
-from ampa_members_manager.family.filters.bank_account_filters import BankAccountAuthorizationFilter, BankAccountBICCodeFilter
+from ampa_members_manager.family.filters.bank_account_filters import BankAccountAuthorizationFilter, \
+    BankAccountBICCodeFilter
 from ampa_members_manager.family.filters.child_filters import ChildLevelListFilter, ChildCycleFilter
 from ampa_members_manager.family.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
     FamilyDefaultAccountFilter, FamilyParentCountFilter
@@ -147,7 +148,8 @@ class BankAccountInline(admin.TabularInline):
 
 
 class ParentAdmin(admin.ModelAdmin):
-    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number', 'is_member']
+    list_display = ['name_and_surnames', 'parent_families', 'email', 'phone_number', 'additional_phone_number',
+                    'is_member']
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
@@ -163,7 +165,7 @@ class ParentAdmin(admin.ModelAdmin):
     @admin.display(description=_('Family'))
     def parent_families(self, parent):
         return ', '.join(str(f) for f in parent.family_set.all())
-    
+
 
 class ChildAdmin(admin.ModelAdmin):
     list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
@@ -208,8 +210,8 @@ class BankAccountAdmin(admin.ModelAdmin):
             authorization = Authorization.objects.of_bank_account(bank_account).get()
             return State.get_value_human_name(authorization.state)
         except Authorization.DoesNotExist:
-            return _('No authorizacion')
-    
+            return _('No authorization')
+
     @admin.action(description=_("Export account owners"))
     def export_owners(self, request, bank_accounts: QuerySet[BankAccount]):
         file_name = _('Bank account owners').lower()
@@ -218,15 +220,21 @@ class BankAccountAdmin(admin.ModelAdmin):
         response.write(codecs.BOM_UTF8)
         csv.writer(response, quoting=csv.QUOTE_ALL).writerows(BankAccount.get_csv_fields(bank_accounts))
         return response
-    
+
     @admin.action(description=_("Complete SWIFT/BIC codes"))
     def complete_swift_bic(self, request, bank_accounts: QuerySet[BankAccount]):
-        for bank_account in bank_accounts:
+        for bank_account in bank_accounts.iterator():
             if bank_account.swift_bic in [None, '']:
                 bank_account.complete_swift_bic()
                 bank_account.save()
-    
-    actions = ['export_owners', 'complete_swift_bic']
+
+    @admin.action(description=_("Create authorization for this year"))
+    def create_authorization_for_this_year(self, request, bank_accounts: QuerySet[BankAccount]):
+        year = ActiveCourse.load().initial_year
+        for bank_account in bank_accounts.iterator():
+            Authorization.objects.create_next_authorization(year=year, bank_account=bank_account)
+
+    actions = ['export_owners', 'complete_swift_bic', 'create_authorization_for_this_year']
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
@@ -261,7 +269,7 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
     def get_changeform_initial_data(self, request):
         year: int = timezone.now().year
-        next_number = Authorization.next_number_for_year(year)
+        next_number = Authorization.objects.next_number_for_year(year)
         return {'year': year, 'number': str(next_number)}
 
 
