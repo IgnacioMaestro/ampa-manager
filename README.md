@@ -1,10 +1,10 @@
 # AMPA Manager
 
 ## Diagrama del modelo del dominio
-[Domain model diagram](doc/DomainModelDiagram/DomainModelDiagram.md)
+[Diagrama del modelo del dominio](doc/DomainModelDiagram/DomainModelDiagram.md)
 
 ## Diagramas de casos de uso
-[Use cases diagram](doc/UseCasesDiagram/Use%20cases%20diagram.md)
+[Diagramas de casos de uso](doc/UseCasesDiagram/Use%20cases%20diagram.md)
 
 ## Configurar base de datos
 
@@ -22,7 +22,7 @@ django-admin makemessages -l es -l eu
 ```
 
 2. Completar las traducciones
-   1. Buscar traducciones marcadas como "fuzzy" (son traducciones automáticas basadas en textos similares)
+   1. Validar traducciones marcadas como "fuzzy" (son traducciones automáticas basadas en textos similares). Una vez validadas se les puede quitar la etiqueta "fuzzy".
    2. Completar traducciones pendientes (look for ``msgstr ""``)
 
 ```
