@@ -15,7 +15,7 @@ from ampa_members_manager.management.commands.surnames import SURNAMES
 
 
 class Command(BaseCommand):
-    help = 'Import families, parents, childs and bank accounts from an excel file'
+    help = 'Import families, parents, children and bank accounts from an excel file'
 
     STATUS_NOT_PROCESSED = 'not_processed'
     STATUS_CREATED = 'created'
