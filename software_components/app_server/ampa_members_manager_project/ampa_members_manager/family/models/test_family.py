@@ -32,14 +32,14 @@ class TestFamily(TestCase):
         self.assertListEqual(list(Family.all_families()), families)
 
     def test_all_families_with_bank_account_no_families(self):
-        self.assertQuerysetEqual(Family.objects.with_bank_account(), Family.objects.none())
+        self.assertQuerysetEqual(Family.objects.with_default_bank_account(), Family.objects.none())
 
     def test_all_families_with_bank_account_one_family(self):
         parent: Parent = baker.make('Parent', phone_number=phonenumbers.parse("695715902", 'ES'))
         bank_account: BankAccount = baker.make(
             'BankAccount', swift_bic="BASKES2BXXX", iban="ES60 0049 1500 0512 3456 7892", owner=parent)
         family: Family = baker.make('Family', default_bank_account=bank_account)
-        self.assertQuerysetEqual(Family.objects.with_bank_account(), [family])
+        self.assertQuerysetEqual(Family.objects.with_default_bank_account(), [family])
 
     def test_all_families_with_bank_account_more_than_one_family(self):
         parent: Parent = baker.make('Parent', phone_number=phonenumbers.parse("695715902", 'ES'))
@@ -51,4 +51,4 @@ class TestFamily(TestCase):
         families[1].default_bank_account = bank_account
         families[1].save()
 
-        self.assertEqual(len(Family.objects.with_bank_account()), 2)
+        self.assertEqual(len(Family.objects.with_default_bank_account()), 2)

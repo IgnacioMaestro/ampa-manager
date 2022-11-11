@@ -56,7 +56,7 @@ class FamilyActivityReceiptInline(NonrelatedTabularInline):
     fields = ['amount', 'state']
 
     def get_form_queryset(self, family):
-        return ActivityReceipt.objects.by_family(family)
+        return ActivityReceipt.objects.of_family(family)
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -160,7 +160,7 @@ class ParentAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Is member'))
     def is_member(self, parent):
-        return _('Yes') if Membership.objects.by_parent(parent).exists() else _('No')
+        return _('Yes') if Membership.objects.of_parent(parent).exists() else _('No')
 
     @admin.display(description=_('Family'))
     def parent_families(self, parent):
