@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.level import Level
-from ampa_members_manager.family.filters.child_filters import ChildCycleFilter, ChildLevelListFilter
+from ampa_members_manager.family.admin.filters.child_filters import ChildCycleFilter, ChildLevelListFilter
 from ampa_members_manager.family.models.membership import Membership
 
 

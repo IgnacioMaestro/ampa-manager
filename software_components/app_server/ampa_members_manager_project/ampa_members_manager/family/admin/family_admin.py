@@ -11,7 +11,7 @@ from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
-from ampa_members_manager.family.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
+from ampa_members_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
     FamilyDefaultAccountFilter, FamilyParentCountFilter
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child

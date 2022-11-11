@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.family.filters.parent_filters import ParentFamilyEmailsFilter, ParentFamiliesCountFilter
+from ampa_members_manager.family.admin.filters.parent_filters import ParentFamilyEmailsFilter, ParentFamiliesCountFilter
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.membership import Membership
 
