@@ -38,7 +38,7 @@ class Family(TimeStampedModel):
         return self.child_set.count()
 
     def get_children_in_school_count(self):
-        return self.child_set.by_age_range(Level.AGE_HH2, Level.AGE_LH6).count()
+        return self.child_set.of_age_in_range(Level.AGE_HH2, Level.AGE_LH6).count()
 
     @classmethod
     def all_families(cls) -> QuerySet[Family]:

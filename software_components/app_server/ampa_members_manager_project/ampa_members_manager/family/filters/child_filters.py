@@ -27,7 +27,7 @@ class ChildLevelListFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.by_age(int(self.value()))
+            return queryset.of_age(int(self.value()))
         else:
             return queryset
 

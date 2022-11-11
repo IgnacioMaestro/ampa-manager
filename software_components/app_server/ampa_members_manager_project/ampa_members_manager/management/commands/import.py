@@ -140,7 +140,7 @@ class Command(BaseCommand):
             family_surnames = Command.clean_surname(sheet.cell_value(rowx=row_index, colx=xls_settings.FAMILY_SURNAMES_INDEX))
 
             if family_surnames:
-                families = Family.objects.by_surnames(family_surnames)
+                families = Family.objects.with_surnames(family_surnames)
                 if families.count() == 1:
                     family = families[0]
                     status = self.set_family_status(Command.STATUS_NOT_MODIFIED)
@@ -190,7 +190,7 @@ class Command(BaseCommand):
 
         try:
             if full_name:
-                parents = Parent.objects.by_full_name(full_name)
+                parents = Parent.objects.with_full_name(full_name)
                 if parents.count() == 1:
                     parent = parents[0]
                     if parent.phone_number != phone1 or parent.additional_phone_number != phone2 or parent.email != email:
@@ -391,7 +391,7 @@ class Command(BaseCommand):
                 current_level = Level.parse_level(level)
                 repetition = Level.calculate_repetition(current_level, year_of_birth)
 
-                children = Child.objects.by_name_and_family(name, family)
+                children = Child.objects.with_name_and_of_family(name, family)
                 if children.count() == 1:
                     child = children[0]
                     if child.year_of_birth != year_of_birth or child.repetition != repetition:
