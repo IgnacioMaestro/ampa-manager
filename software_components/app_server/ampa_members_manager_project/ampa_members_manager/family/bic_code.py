@@ -3,20 +3,21 @@ class BicCode:
     CODES = {
         "2100": "CAIXESBBXXX",
         "3035": "CLPEES2MXXX",
-        "73": "OPENESMMXXX",
+        "0073": "OPENESMMXXX",
         "2095": "BASKES2BXXX",
         "3008": "BCOEESMM008",
-        "81": "BSABESBBXXX",
-        "239": "EVOBESMMXXX",
-        "128": "BKBKESMMXXX",
+        "0081": "BSABESBBXXX",
+        "0239": "EVOBESMMXXX",
+        "0128": "BKBKESMMXXX",
         "2085": "CAZRES2ZXXX",
-        "138": "BKOAES22XXX",
-        "182": "BBVAESMMXXX",
-        "216": "CMCIESMMXXX",
-        "49": "BSCHESMMXXX",
+        "0138": "BKOAES22XXX",
+        "0182": "BBVAESMMXXX",
+        "0216": "CMCIESMMXXX",
+        "0049": "BSCHESMMXXX",
         "1465": "INGDESMMXXX",
         "2080": "CAGLESMMXXX",
-        "3076": "BCOEESMM076"
+        "3076": "BCOEESMM076",
+        "1491": "TRIOESMMXXX"
     }
 
     @staticmethod
