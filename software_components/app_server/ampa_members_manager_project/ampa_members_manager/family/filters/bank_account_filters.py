@@ -26,6 +26,7 @@ class BankAccountAuthorizationFilter(admin.SimpleListFilter):
         else:
             return queryset
 
+
 class BankAccountBICCodeFilter(admin.SimpleListFilter):
     title = _('SWIFT/BIC')
 
