@@ -2,38 +2,45 @@ import traceback
 
 from ampa_members_manager.management.commands.import_command.importer import Importer
 from ampa_members_manager.family.models.parent  import Parent
-
-import ampa_members_manager.management.commands.members_excel_settings as xls_settings
+from ampa_members_manager.management.commands.import_command.importer import ProcessingResult
 
 
 class ParentImporter(Importer):
 
-    def __init__(self, sheet):
+    def __init__(self, sheet, xls_settings):
         self.sheet = sheet
+        self.xls_settings = xls_settings
 
-    def import_parent1(self, family, row_index):
-        parent1_full_name = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_FULL_NAME_INDEX))
-        parent1_phone1 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE1_INDEX))
-        parent1_phone2 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_PHONE2_INDEX))
-        parent1_email = Importer.clean_email(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT1_EMAIL_INDEX))
+    def get_fields(self, row_index, parent_number):
+        if parent_number in [1, 2]:
+            if parent_number == 1:
+                full_name_index = self.xls_settings.PARENT1_FULL_NAME_INDEX
+                phone1_index = self.xls_settings.PARENT1_PHONE1_INDEX
+                phone2_index = self.xls_settings.PARENT1_PHONE2_INDEX
+                email_index = self.xls_settings.PARENT1_EMAIL_INDEX
+            elif parent_number == 2:
+                full_name_index = self.xls_settings.PARENT2_FULL_NAME_INDEX
+                phone1_index = self.xls_settings.PARENT2_PHONE1_INDEX
+                phone2_index = self.xls_settings.PARENT2_PHONE2_INDEX
+                email_index = self.xls_settings.PARENT2_EMAIL_INDEX
+            
+            full_name = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=full_name_index))
+            phone1 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=phone1_index))
+            phone2 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=phone2_index))
+            email = Importer.clean_email(self.sheet.cell_value(rowx=row_index, colx=email_index))
 
-        return self.import_parent(parent1_full_name, parent1_phone1, parent1_phone2, parent1_email, family, row_index, 1)
+            return full_name, phone1, phone2, email
+        return None, None, None, None
 
-    def import_parent2(self, family, row_index):
-        parent2_full_name = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_FULL_NAME_INDEX))
-        parent2_phone1 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE1_INDEX))
-        parent2_phone2 = Importer.clean_phone(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_PHONE2_INDEX))
-        parent2_email = Importer.clean_email(self.sheet.cell_value(rowx=row_index, colx=xls_settings.PARENT2_EMAIL_INDEX))
-
-        return self.import_parent(parent2_full_name, parent2_phone1, parent2_phone2, parent2_email, family, row_index, 2)
-
-    def import_parent(self, full_name, phone1, phone2, email, family, row_index, parent_number):
+    def import_parent(self, row_index, parent_number, family):
         parent = None
-        status = Importer.STATUS_NOT_PROCESSED
-        added_to_family = False
-        error = ''
+        result = ProcessingResult(Parent.__name__, row_index)
 
         try:
+
+            full_name, phone1, phone2, email = self.get_fields(self, row_index, parent_number)
+            result.fields([full_name, phone1, phone2, email])
+
             if full_name:
                 parents = Parent.objects.by_full_name(full_name)
                 if parents.count() == 1:
@@ -43,29 +50,25 @@ class ParentImporter(Importer):
                         parent.additional_phone_number = phone2
                         parent.email = email
                         parent.save()
-                        status = self.set_parent_status(Importer.STATUS_UPDATED)
+                        result.set_updated()
                     else:
-                        status = self.set_parent_status(Importer.STATUS_NOT_MODIFIED)
+                        result.set_not_modified()
                 elif parents.count() > 1:
-                    error = f'Row {row_index+1}: There is more than one parent with name "{full_name}"'
-                    status = self.set_parent_status(Importer.STATUS_ERROR)
+                    result.set_error('There is more than one parent with name "{full_name}"')
                 else:
                     parent = Parent.objects.create(name_and_surnames=full_name, phone_number=phone1, additional_phone_number=phone2, email=email)
-                    status = self.set_parent_status(Importer.STATUS_CREATED)
+                    result.set_created()
                 
-                if family and not parent.family_set.filter(surnames=family.surnames).exists():
+                if family and not parent.belong_to_family(family):
                     self.set_parent_status(Importer.STATUS_UPDATED_ADDED_TO_FAMILY)
                     family.parents.add(parent)
-                    added_to_family_status = True
-            else:
-                status = self.set_parent_status(Importer.STATUS_NOT_PROCESSED)
-        except Exception as e:
-            self.logger.error(traceback.format_exc())
-            error = f'Row {row_index+1}: Exception processing parent {parent_number}: {e}'
-            status = self.set_parent_status(Importer.STATUS_ERROR)
-        finally:
-            added_to_family_status = 'Added to family' if added_to_family else ''
-            message = f'- Parent {parent_number}: {full_name}, {phone1}, {phone2}, {email} -> {status} {added_to_family_status} {error}'
-            self.print_status(status, message)
+                    result.set_added_to_family()
 
-        return parent
+            else:
+                result.set_not_processed()
+
+        except Exception as e:
+            print(traceback.format_exc())
+            result.set_error(f'Exception: {e}')
+
+        return parent, result

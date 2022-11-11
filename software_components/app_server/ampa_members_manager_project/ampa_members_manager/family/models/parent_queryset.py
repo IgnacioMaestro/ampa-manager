@@ -24,3 +24,7 @@ class ParentQuerySet(QuerySet):
     
     def without_email(self):
         return self.filter(Q(email=None) | Q(email=''))
+
+    def with_multiple_bank_accounts(self):
+        self = self.annotate(account_count=Count('bankaccount'))
+        return self.filter(account_count__gt=1)

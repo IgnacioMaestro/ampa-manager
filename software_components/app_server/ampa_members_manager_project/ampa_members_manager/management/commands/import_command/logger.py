@@ -7,6 +7,10 @@ class Logger:
 
     def __init__(self):
         self.log_file = open(f"import_{datetime.now().strftime(Logger.DATE_FORMAT)}.log", "a", encoding=Logger.FILE_ENCODING)
+    
+    def log_result(self, result):
+        fields_csv = ', '.join(result.fields)
+        self.log(f'{result.class_name}: {fields_csv} -> {result.state.label}')
 
     def log(self, message):
         print(message)

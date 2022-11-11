@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-from ampa_members_manager.management.commands.surnames import SURNAMES
+from ampa_members_manager.management.commands.import_command.surnames import SURNAMES
 
 
 class Importer:
