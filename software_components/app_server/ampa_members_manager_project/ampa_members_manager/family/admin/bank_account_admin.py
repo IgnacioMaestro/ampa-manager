@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.family.filters.bank_account_filters import BankAccountAuthorizationFilter, \
+from ampa_members_manager.family.admin.filters.bank_account_filters import BankAccountAuthorizationFilter, \
     BankAccountBICCodeFilter
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
