@@ -1,14 +1,15 @@
 import traceback
 
 from ampa_members_manager.management.commands.import_command.importer import Importer
-from ampa_members_manager.family.models.bank_account import BankAccount
-from ampa_members_manager.management.commands.import_command.importer import ProcessingResult
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_members_manager.management.commands.import_command.processing_result import ProcessingResult
 
 
 class BankAccountImporter(Importer):
 
-    def __init__(self, sheet):
+    def __init__(self, sheet, xls_settings):
         self.sheet = sheet
+        self.xls_settings = xls_settings
     
     def get_fields(self, row_index, parent_number):
         if parent_number in [1, 2]:
@@ -33,18 +34,20 @@ class BankAccountImporter(Importer):
         result = ProcessingResult(BankAccount.__name__, row_index)
 
         try:
-            swift_bic, iban, is_default_account = self.get_fields(self, row_index, parent_number)
-            result.fields([swift_bic, iban, is_default_account])
+            swift_bic, iban, is_default_account = self.get_fields(row_index, parent_number)
+            result.fields_excel = [swift_bic, iban, is_default_account]
 
             if iban and parent:
                 bank_accounts = BankAccount.objects.with_iban(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
                     if bank_account.swift_bic != swift_bic or bank_account.owner != parent:
+                        fields_before = [bank_account.swift_bic, bank_account.iban, bank_account.owner]
                         bank_account.swift_bic = swift_bic
                         bank_account.owner = parent
                         bank_account.save()
-                        result.set_updated()
+                        fields_after = [bank_account.swift_bic, bank_account.iban, bank_account.owner]
+                        result.set_updated(fields_before, fields_after)
                     else:
                         result.set_not_modified()
                 elif bank_accounts.count() > 1:

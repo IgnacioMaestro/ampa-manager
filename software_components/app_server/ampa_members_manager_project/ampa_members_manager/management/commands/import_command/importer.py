@@ -8,8 +8,8 @@ class Importer:
     STATUS_NOT_PROCESSED = 'not_processed'
     STATUS_CREATED = 'created'
     STATUS_UPDATED = 'updated'
-    STATUS_UPDATED_ADDED_TO_FAMILY = 'added_to_family'
-    STATUS_UPDATED_AS_DEFAULT = 'set_as_default'
+    STATUS_ADDED_TO_FAMILY = 'added_to_family'
+    STATUS_SET_AS_DEFAULT = 'set_as_default'
     STATUS_NOT_MODIFIED = 'not_modified'
 
     @staticmethod
@@ -59,9 +59,9 @@ class Importer:
     
     @staticmethod
     def clean_integer(str_value, lower=False, title=False):
-        if str_value is not None:
+        if str_value not in [None, '']:
             clean_value = Importer.remove_spaces(str_value).strip()
-            return int(clean_value)
+            return int(float(clean_value))
         return None
     
     @staticmethod

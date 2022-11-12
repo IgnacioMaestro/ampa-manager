@@ -1,19 +1,14 @@
-import re
 import traceback
-from datetime import datetime
-
 import xlrd
+
 from django.core.management.base import BaseCommand
 
-import ampa_members_manager.management.commands.import_command.members_excel_settings as xls_settings
-from ampa_members_manager.academic_course.models.level import Level
+import ampa_members_manager.management.commands.import_command.settings as xls_settings
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 from ampa_members_manager.family.models.family import Family
 from ampa_members_manager.family.models.parent import Parent
-from ampa_members_manager.family.models.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
-from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.management.commands.import_command.surnames import SURNAMES
 from ampa_members_manager.management.commands.import_command.logger import Logger
 from ampa_members_manager.management.commands.import_command.family_importer import FamilyImporter
@@ -22,11 +17,10 @@ from ampa_members_manager.management.commands.import_command.child_importer impo
 from ampa_members_manager.management.commands.import_command.bank_account_importer import BankAccountImporter
 
 
-
 class Command(BaseCommand):
     help = 'Import families, parents, childs and bank accounts from an excel file'
 
-    results = {}
+    results = []
     totals = {}
 
     def add_arguments(self, parser):
@@ -44,7 +38,7 @@ class Command(BaseCommand):
 
             self.set_totals_before()
 
-            for row_index in range(xls_settings.FIRST_ROW_NUMBER, self.sheet.nrows):
+            for row_index in range(xls_settings.FIRST_ROW_INDEX, self.sheet.nrows):
                 row_number = row_index + 1
                 self.logger.log(f'\nRow {row_number}')
 
@@ -87,7 +81,7 @@ class Command(BaseCommand):
             self.logger.close_file()
     
     def load_excel(self, file_path):
-        self.logger.log(f'Importing file {file_path}')
+        self.logger.log(f'\nImporting file {file_path}')
         self.book = xlrd.open_workbook(file_path)
         self.sheet = self.book.sheet_by_index(xls_settings.SHEET_NUMBER)
     
@@ -108,41 +102,49 @@ class Command(BaseCommand):
     def print_stats(self):
         self.logger.log('\nSUMMARY\n')
 
-        rows_with_data_count = self.sheet.nrows - xls_settings.FIRST_ROW_NUMBER
-        self.logger.log(f'Rows with data: {rows_with_data_count} (from row {xls_settings.FIRST_ROW_NUMBER+1} to row {self.sheet.nrows}). Sheet: "{self.sheet.name}"')
+        rows_with_data_count = self.sheet.nrows - xls_settings.FIRST_ROW_INDEX
+        self.logger.log(f' - Rows with data: {rows_with_data_count} (rows {xls_settings.FIRST_ROW_INDEX+1} to {self.sheet.nrows}). Sheet: "{self.sheet.name}"')
 
         self.totals = self.totalize_results()
         for class_name, states in self.totals.items():
             variation = self.get_totals_variation(class_name)
-            self.logger.log(f'{class_name} ({variation}):')
+            self.logger.log(f' - {class_name} ({variation}):')
 
             for state, total in states.items():
-                self.logger.log(f'{state}: {total}:')
+                self.logger.log(f'   - {state.name}: {total}:')
 
         self.logger.log(f'\nVALIDATIONS:\n')
 
-        parents_without_family = Parent.objects.has_no_family.count()
+        parents_without_family = Parent.objects.has_no_family().count()
         self.logger.log(f'- Parents without family: {parents_without_family}')
 
-        parents_in_multiple_families = Parent.objects.has_multiple_families.count()
-        self.logger.log(f'- Parents without family: {parents_in_multiple_families}')
+        parents_in_multiple_families = Parent.objects.has_multiple_families().count()
+        self.logger.log(f'- Parents with multiple families: {parents_in_multiple_families}')
 
-        parents_with_multiple_bank_accounts = Parent.objects.with_multiple_bank_accounts.count()
+        parents_with_multiple_bank_accounts = Parent.objects.with_multiple_bank_accounts().count()
         self.logger.log(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
 
-        families_without_account = Family.objects.without_default_account.count()
+        families_without_account = Family.objects.without_default_account().count()
         self.logger.log(f'- Families without bank account: {families_without_account}')
 
-        families_with_more_than_2_parents = Family.objects.more_than_two_parents.count()
+        families_with_more_than_2_parents = Family.objects.more_than_two_parents().count()
         self.logger.log(f'- Families with more than 2 parents: {families_with_more_than_2_parents}')
 
-        self.logger.log(f'\nERRORS:\n')
         errors = self.get_errors()
+        self.logger.log(f'\nERRORS ({len(errors)}):\n')
         if len(errors) > 0:
             for error in errors:
                 self.logger.error(f'- {error} ')
         else:
-            self.logger.log(f'- No errors')
+            self.logger.log(f'- No errors\n')
+    
+    def get_errors(self):
+        errors = []
+        for result in self.results:
+            if result.error:
+                message = f'Row {result.row_index+1}: {result.error}'
+                errors.append(message)
+        return errors
 
     def process_result(self, result):
         self.logger.log_result(result)
@@ -164,5 +166,5 @@ class Command(BaseCommand):
         self.totals_after[Child.__name__] = Child.objects.count()
         self.totals_after[BankAccount.__name__] = BankAccount.objects.count()
 
-    def get_totals_variation(self, object_name):
-        return f'{self.totals_before[object_name]} -> {self.totals_after[object_name]}'
+    def get_totals_variation(self, class_name):
+        return f'{self.totals_before[class_name]} -> {self.totals_after[class_name]}'
