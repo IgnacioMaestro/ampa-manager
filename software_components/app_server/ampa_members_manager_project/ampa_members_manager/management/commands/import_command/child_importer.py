@@ -53,15 +53,15 @@ class ChildImporter(Importer):
             if name and family:
                 repetition = Level.calculate_repetition(level, year_of_birth)
 
-                children = Child.objects.by_name_and_family(name, family)
+                children = Child.objects.with_name_and_of_family(name, family)
                 if children.count() == 1:
                     child = children[0]
                     if child.year_of_birth != year_of_birth or child.repetition != repetition:
-                        fields_before = [child.name, child.year_of_birth, child.level]
+                        fields_before = [child.name, child.year_of_birth, child.level, child.repetition]
                         child.year_of_birth = year_of_birth
                         child.repetition = repetition
                         child.save()
-                        fields_after = [child.name, child.year_of_birth, child.level]
+                        fields_after = [child.name, child.year_of_birth, child.level, child.repetition]
                         result.set_updated(fields_before, fields_after)
                     else:
                         result.set_not_modified()
@@ -71,7 +71,7 @@ class ChildImporter(Importer):
                     child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition, family=family)
                     result.set_created()
             else:
-                result.set_not_processed(f'Name: {name}. Family: {family}')
+                result.set_not_processed()
 
         except Exception as e:
             print(traceback.format_exc())

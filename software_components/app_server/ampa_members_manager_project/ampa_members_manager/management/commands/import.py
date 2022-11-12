@@ -124,10 +124,10 @@ class Command(BaseCommand):
         parents_with_multiple_bank_accounts = Parent.objects.with_multiple_bank_accounts().count()
         self.logger.log(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
 
-        families_without_account = Family.objects.without_default_account().count()
+        families_without_account = Family.objects.without_default_bank_account().count()
         self.logger.log(f'- Families without bank account: {families_without_account}')
 
-        families_with_more_than_2_parents = Family.objects.more_than_two_parents().count()
+        families_with_more_than_2_parents = Family.objects.with_more_than_two_parents().count()
         self.logger.log(f'- Families with more than 2 parents: {families_with_more_than_2_parents}')
 
         errors = self.get_errors()

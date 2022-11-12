@@ -41,7 +41,7 @@ class BankAccountImporter(Importer):
                 bank_accounts = BankAccount.objects.with_iban(iban=iban)
                 if bank_accounts.count() == 1:
                     bank_account = bank_accounts[0]
-                    if bank_account.swift_bic != swift_bic or bank_account.owner != parent:
+                    if bank_account.owner != parent:
                         fields_before = [bank_account.swift_bic, bank_account.iban, bank_account.owner]
                         bank_account.swift_bic = swift_bic
                         bank_account.owner = parent

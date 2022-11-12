@@ -42,7 +42,7 @@ class ParentImporter(Importer):
             result.fields_excel = [name_and_surnames, phone1, phone2, email]
 
             if name_and_surnames:
-                parents = Parent.objects.by_full_name(name_and_surnames)
+                parents = Parent.objects.with_full_name(name_and_surnames)
                 if parents.count() == 1:
                     parent = parents[0]
                     if parent.phone_number != phone1 or parent.additional_phone_number != phone2 or parent.email != email:

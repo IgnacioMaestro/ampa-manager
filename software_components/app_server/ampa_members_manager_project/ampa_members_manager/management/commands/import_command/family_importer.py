@@ -21,7 +21,7 @@ class FamilyImporter(Importer):
             result.fields_excel = [surnames]
 
             if surnames:
-                families = Family.objects.by_surnames(surnames)
+                families = Family.objects.with_surnames(surnames)
                 if families.count() == 1:
                     family = families[0]
                     result.set_not_modified()
