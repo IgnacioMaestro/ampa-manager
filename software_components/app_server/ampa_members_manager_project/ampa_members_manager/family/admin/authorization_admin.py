@@ -8,7 +8,7 @@ from ampa_members_manager.family.models.state import State
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'date', 'bank_account', 'document', 'state']
+    list_display = ['number', 'year', 'order', 'date', 'bank_account', 'document', 'state']
     ordering = ['-date']
     list_filter = ['year', 'state']
     search_fields = ['number', 'year', 'date', 'bank_account__iban', 'bank_account__owner__name_and_surnames']
@@ -39,5 +39,5 @@ class AuthorizationAdmin(admin.ModelAdmin):
 
     def get_changeform_initial_data(self, request):
         year: int = timezone.now().year
-        next_number = Authorization.objects.next_number_for_year(year)
+        next_number = Authorization.objects.next_order_for_year(year)
         return {'year': year, 'number': str(next_number)}

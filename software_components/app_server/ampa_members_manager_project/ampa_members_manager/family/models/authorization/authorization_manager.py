@@ -11,11 +11,11 @@ if TYPE_CHECKING:
 
 class AuthorizationManager(Manager):
     def create_next_authorization(self, year: int, bank_account: BankAccount) -> Authorization:
-        number = self.next_number_for_year(year)
-        return self.create(year=year, number=str(number), bank_account=bank_account)
+        order = self.next_order_for_year(year)
+        return self.create(year=year, order=order, number=f'{year}/{order:03}', bank_account=bank_account)
 
-    def next_number_for_year(self, year: int) -> int:
-        authorization: Authorization = self.authorization_with_highest_number(year=year)
+    def next_order_for_year(self, year: int) -> int:
+        authorization: Authorization = self.authorization_with_highest_order(year=year)
         if not authorization:
             return 1
-        return int(authorization.number) + 1
+        return authorization.order + 1

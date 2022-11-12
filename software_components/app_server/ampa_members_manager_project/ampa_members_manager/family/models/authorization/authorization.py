@@ -13,6 +13,7 @@ from ampa_members_manager.family.models.state import State
 
 class Authorization(models.Model):
     number = models.CharField(max_length=50, verbose_name=_("Number"))
+    order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
     year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year"))
     date = models.DateField(default=timezone.now)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
@@ -28,8 +29,12 @@ class Authorization(models.Model):
             models.UniqueConstraint(fields=['number', 'year'], name='unique_number_in_a_year')]
 
     def __str__(self) -> str:
-        return f'{self.year}/{self.number}-{str(self.bank_account)}'
+        return self.full_number + f'-{str(self.bank_account)}'
 
     def clean(self):
-        if self.state in [State.SENT, State.SIGNED] and not self.document:
+        if self.state == State.SIGNED and not self.document:
             raise ValidationError(_('The state can not be sent or signed if there is no document attached'))
+
+    @property
+    def full_number(self) -> str:
+        return f'{self.year}/{self.order:03}'

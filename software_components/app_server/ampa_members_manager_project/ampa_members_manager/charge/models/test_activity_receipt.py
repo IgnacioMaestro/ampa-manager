@@ -41,7 +41,7 @@ class TestActivityReceipt(TestCase):
         receipt: Receipt = activity_receipt.generate_receipt()
 
         self.assert_params_without_authorization(activity_receipt, receipt)
-        self.assertEqual(receipt.authorization_number, authorization.number)
+        self.assertEqual(receipt.authorization_number, authorization.full_number)
         self.assertEqual(receipt.authorization_date, authorization.date.strftime("%m/%d/%Y"))
 
     def assert_params_without_authorization(self, activity_receipt: ActivityReceipt, receipt: Receipt):

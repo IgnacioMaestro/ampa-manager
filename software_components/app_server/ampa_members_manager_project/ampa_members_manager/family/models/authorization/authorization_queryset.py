@@ -9,3 +9,6 @@ class AuthorizationQueryset(QuerySet):
 
     def authorization_with_highest_number(self, year: int):
         return self.filter(year=year).order_by('number').first()
+
+    def authorization_with_highest_order(self, year: int):
+        return self.filter(year=year).order_by('order').last()

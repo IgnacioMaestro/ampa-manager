@@ -46,7 +46,7 @@ class TestMembershipReceipt(TestCase):
         receipt: Receipt = membership_receipt.generate_receipt()
 
         self.assert_params_without_authorization(membership_receipt, receipt)
-        self.assertEqual(receipt.authorization_number, authorization.number)
+        self.assertEqual(receipt.authorization_number, authorization.full_number)
 
     def assert_params_without_authorization(self, membership_receipt, receipt):
         self.assertEqual(receipt.bank_account_owner, str(membership_receipt.family.default_bank_account.owner))
