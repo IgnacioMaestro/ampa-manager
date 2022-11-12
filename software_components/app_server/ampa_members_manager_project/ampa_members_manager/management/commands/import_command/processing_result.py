@@ -54,13 +54,13 @@ class ProcessingResult:
         if self.error:
             full_state += f' {self.error}.'
         if self.state == ProcessingState.UPDATED:
-            full_state += self.get_changed_fields()
+            full_state += f' ({self.get_changed_fields()})'
         return full_state
     
     def get_changed_fields(self):
         changed_fields = ''
         for i in range(len(self.fields_before)):
-            if self.fields_before[i] != self.fields_after[i] and self.fields_before[i] is not None and self.fields_after[i] is not None:
+            if self.fields_before[i] != self.fields_after[i]:
                 if changed_fields:
                     changed_fields += ', '
                 changed_fields += f' {self.fields_before[i]} -> {self.fields_after[i]}'

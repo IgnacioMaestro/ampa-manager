@@ -13,7 +13,7 @@ class Logger:
 
     def log(self, message):
         print(message)
-        self.write_to_log_file(message)
+        self.write_to_log_file(message + '\n')
     
     def error(self, message):
         formatted_message = f'*** ERROR: {message}'
