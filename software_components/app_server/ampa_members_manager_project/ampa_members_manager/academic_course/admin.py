@@ -1,8 +1,6 @@
 from django.contrib import admin
-from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.academic_course.models.level import Level
 from ampa_members_manager.family.models.child import Child
@@ -58,7 +56,7 @@ class ActiveCourseAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Members'))
     def members_count(self, _):
-        return Membership.objects.active_course_members().count()
+        return Membership.objects.of_active_course().count()
 
     @admin.display(description=_('Families'))
     def families_count(self, _):

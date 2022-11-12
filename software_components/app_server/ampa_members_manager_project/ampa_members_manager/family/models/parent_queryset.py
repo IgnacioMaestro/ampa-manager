@@ -4,7 +4,7 @@ from django.db.models import Count, Q
 
 class ParentQuerySet(QuerySet):
 
-    def by_full_name(self, full_name):
+    def with_full_name(self, full_name):
         return self.filter(name_and_surnames__iexact=full_name)
 
     def has_no_family(self):

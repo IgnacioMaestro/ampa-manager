@@ -43,7 +43,7 @@ class ActivityReceiptAdmin(admin.ModelAdmin):
     def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.PAID)
 
-        message = _("%(num_receipts)s receipts set as sent") % {'num_receipts': queryset.count()}
+        message = _("%(num_receipts)s receipts set as paid") % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.display(description=_('Family'))
@@ -198,17 +198,7 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.PAID)
 
-        message = _("%(num_receipts)s receipts set as sent") % {'num_receipts': queryset.count()}
+        message = _("%(num_receipts)s receipts set as paid") % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     actions = [set_as_sent, set_as_paid]
-
-
-class MembershipReceiptInline(ReadOnlyTabularInline):
-    model = MembershipReceipt
-    extra = 0
-
-
-class ActivityReceiptInline(ReadOnlyTabularInline):
-    model = ActivityReceipt
-    extra = 0
