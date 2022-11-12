@@ -18,7 +18,7 @@ from ampa_members_manager.management.commands.import_command.bank_account_import
 
 
 class Command(BaseCommand):
-    help = 'Import families, parents, childs and bank accounts from an excel file'
+    help = 'Import families, parents, children and bank accounts from an excel file'
 
     results = []
     totals = {}

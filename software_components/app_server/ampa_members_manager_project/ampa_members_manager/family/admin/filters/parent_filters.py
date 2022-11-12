@@ -1,8 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.family.models.state import State
-
 
 class ParentFamilyEmailsFilter(admin.SimpleListFilter):
     title = _('Family emails')

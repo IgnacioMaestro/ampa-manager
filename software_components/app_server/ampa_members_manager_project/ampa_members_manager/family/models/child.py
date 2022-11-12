@@ -1,4 +1,3 @@
-from typing import Optional
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE, Manager
@@ -49,4 +48,4 @@ class Child(TimeStampedModel):
 
     @staticmethod
     def get_children_ids(min_age, max_age):
-        return [c.id for c in Child.objects.by_age_range(min_age, max_age)]
+        return [c.id for c in Child.objects.of_age_in_range(min_age, max_age)]

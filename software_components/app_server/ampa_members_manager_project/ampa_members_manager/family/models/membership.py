@@ -24,11 +24,11 @@ class Membership(models.Model):
 
     @classmethod
     def is_member_family(cls, family: Family) -> bool:
-        return Membership.objects.by_family(family).exists()
+        return Membership.objects.of_family(family).exists()
 
     @classmethod
     def is_member_child(cls, child: Child) -> bool:
-        return Membership.objects.by_family(child.family).exists()
+        return Membership.objects.of_family(child.family).exists()
 
     @classmethod
     def make_member_for_active_course(cls, family: Family):

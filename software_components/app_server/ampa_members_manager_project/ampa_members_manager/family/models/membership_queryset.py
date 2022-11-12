@@ -6,19 +6,19 @@ from ampa_members_manager.family.models.child import Child
 
 class MembershipQuerySet(QuerySet):
 
-    def by_child_age(self, age):
-        return self.by_child_age_range(age, age)
+    def of_child_with_age(self, age):
+        return self.of_child_in_age_range(age, age)
 
-    def by_child_age_range(self, min_age, max_age):
+    def of_child_in_age_range(self, min_age, max_age):
         children_ids = Child.get_children_ids(min_age, max_age)
         return self.filter(academic_course=ActiveCourse.load(), family__child__id__in=children_ids)
 
-    def active_course_members(self):
+    def of_active_course(self):
         return self.filter(academic_course=ActiveCourse.load())
 
-    def by_family(self, family):
+    def of_family(self, family):
         return self.filter(family=family, academic_course=ActiveCourse.load())
 
-    def by_parent(self, parent):
+    def of_parent(self, parent):
         families = [f.id for f in parent.family_set.all()]
         return self.filter(family__in=families, academic_course=ActiveCourse.load())

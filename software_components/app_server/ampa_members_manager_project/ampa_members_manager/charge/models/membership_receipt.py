@@ -37,7 +37,7 @@ class MembershipReceipt(models.Model):
         try:
             bank_account: BankAccount = self.family.default_bank_account
             authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
-            authorization_number = authorization.number
+            authorization_number = authorization.full_number
             authorization_date = authorization.date
         except Authorization.DoesNotExist:
             authorization_number = Receipt.NO_AUTHORIZATION_MESSAGE
