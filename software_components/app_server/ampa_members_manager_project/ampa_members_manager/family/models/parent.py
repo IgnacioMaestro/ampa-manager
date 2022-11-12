@@ -25,6 +25,9 @@ class Parent(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.full_name
+
+    def belong_to_family(self, family):
+        return self.family_set.filter(surnames=family.surnames).exists()
     
     def clean(self):
         if self.name_and_surnames:
