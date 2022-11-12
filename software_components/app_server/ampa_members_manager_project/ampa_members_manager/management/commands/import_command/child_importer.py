@@ -2,7 +2,7 @@ import traceback
 
 from ampa_members_manager.management.commands.import_command.importer import Importer
 from ampa_members_manager.family.models.child import Child
-from ampa_members_manager.management.commands.import_command.importer import ProcessingResult
+from ampa_members_manager.management.commands.import_command.processing_result import ProcessingResult
 from ampa_members_manager.academic_course.models.level import Level
 
 
@@ -47,8 +47,8 @@ class ChildImporter(Importer):
         result = ProcessingResult(Child.__name__, row_index)
 
         try:
-            name, year_of_birth, level = self.get_fields(self, row_index, child_number)
-            result.fields([name, year_of_birth, level])
+            name, year_of_birth, level = self.get_fields(row_index, child_number)
+            result.fields_excel = [name, year_of_birth, level]
 
             if name and family:
                 repetition = Level.calculate_repetition(level, year_of_birth)
@@ -57,10 +57,12 @@ class ChildImporter(Importer):
                 if children.count() == 1:
                     child = children[0]
                     if child.year_of_birth != year_of_birth or child.repetition != repetition:
+                        fields_before = [child.name, child.year_of_birth, child.level]
                         child.year_of_birth = year_of_birth
                         child.repetition = repetition
                         child.save()
-                        result.set_updated()
+                        fields_after = [child.name, child.year_of_birth, child.level]
+                        result.set_updated(fields_before, fields_after)
                     else:
                         result.set_not_modified()
                 elif children.count() > 1:
@@ -69,7 +71,7 @@ class ChildImporter(Importer):
                     child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition, family=family)
                     result.set_created()
             else:
-                result.set_not_processed()
+                result.set_not_processed(f'Name: {name}. Family: {family}')
 
         except Exception as e:
             print(traceback.format_exc())

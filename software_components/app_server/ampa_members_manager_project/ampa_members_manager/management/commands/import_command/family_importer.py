@@ -2,7 +2,7 @@ import traceback
 
 from ampa_members_manager.management.commands.import_command.importer import Importer
 from ampa_members_manager.family.models.family import Family
-from ampa_members_manager.management.commands.import_command.importer import ProcessingResult
+from ampa_members_manager.management.commands.import_command.processing_result import ProcessingResult
 
 
 class FamilyImporter(Importer):
@@ -17,26 +17,18 @@ class FamilyImporter(Importer):
 
         try:
             surnames = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=self.xls_settings.FAMILY_SURNAMES_INDEX))
-            email1 = Importer.clean_email(self.sheet.cell_value(rowx=row_index, colx=self.xls_settings.FAMILY_EMAIL1_INDEX))
-            email2 = Importer.clean_email(self.sheet.cell_value(rowx=row_index, colx=self.xls_settings.FAMILY_EMAIL2_INDEX))
 
-            result.fields([surnames, email1, email2])
+            result.fields_excel = [surnames]
 
             if surnames:
                 families = Family.objects.by_surnames(surnames)
                 if families.count() == 1:
                     family = families[0]
-                    if family.email != email1 or family.secondary_email != email2:
-                        family.email = email1
-                        family.secondary_email = email2
-                        family.save()
-                        result.set_updated()
-                    else:
-                        result.set_not_modified()
+                    result.set_not_modified()
                 elif families.count() > 1:
                     result.set_error('There is more than one family with surnames "{surnames}"')
                 else:
-                    family = Family.objects.create(surnames=surnames, email=email1, secondary_email=email2)
+                    family = Family.objects.create(surnames=surnames)
                     result.set_created()
             else:
                 result.set_not_processed()
