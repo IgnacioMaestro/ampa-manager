@@ -24,7 +24,14 @@ class FamilyImporter(Importer):
                 families = Family.objects.with_surnames(surnames)
                 if families.count() == 1:
                     family = families[0]
-                    result.set_not_modified()
+                    if family.decline_membership:
+                        fields_before = [family.decline_membership]
+                        family.decline_membership = False
+                        family.save()
+                        fields_after = [family.decline_membership]
+                        result.set_updated(fields_before, fields_after)
+                    else:
+                        result.set_not_modified()
                 elif families.count() > 1:
                     result.set_error('There is more than one family with surnames "{surnames}"')
                 else:
