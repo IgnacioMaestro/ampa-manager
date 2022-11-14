@@ -145,10 +145,18 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['identifier', 'created_at', 'course']
+    list_display = ['identifier', 'created_at', 'course', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
     inlines = [MembershipReceiptInline]
     list_per_page = 25
+
+    @admin.display(description=_('Total'))
+    def receipts_total(self, remittance):
+        return remittance.receipts_total
+    
+    @admin.display(description=_('Receipts'))
+    def receipts_count(self, remittance):
+        return remittance.receipts_count
 
     @admin.action(description=_("Export Membership Remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
