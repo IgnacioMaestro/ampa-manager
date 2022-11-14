@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db import IntegrityError
 from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
@@ -38,3 +39,9 @@ class TestMembership(TestCase):
         child: Child = baker.make('Child', family=family)
         baker.make('Membership', family=family, academic_course=self.academic_course)
         self.assertTrue(Membership.is_member_child(child=child))
+
+    def test_membership_constraint(self):
+        family: Family = baker.make('Family')
+        baker.make('Membership', family=family, academic_course=self.academic_course)
+        with self.assertRaises(IntegrityError):
+            baker.make('Membership', family=family, academic_course=self.academic_course)
