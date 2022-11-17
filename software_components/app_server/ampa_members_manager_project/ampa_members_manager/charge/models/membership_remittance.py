@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 
 
 class MembershipRemittance(models.Model):
@@ -23,13 +22,5 @@ class MembershipRemittance(models.Model):
     def complete_name(self) -> str:
         return str(self.course) + ' - ' + self.created_at.strftime("%Y%m%d_%H%M%S")
 
-    @property
-    def receipts_total(self) -> float:
-        return MembershipReceipt.objects.of_remittance(self).get_total()
-
-    @property
-    def receipts_count(self) -> float:
-        return MembershipReceipt.objects.of_remittance(self).count()
-    
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args = [self.id])
