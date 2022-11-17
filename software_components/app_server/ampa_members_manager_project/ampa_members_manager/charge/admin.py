@@ -152,11 +152,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Total'))
     def receipts_total(self, remittance):
-        return remittance.receipts_total
+        return MembershipReceipt.objects.of_remittance(remittance).get_total()
     
     @admin.display(description=_('Receipts'))
     def receipts_count(self, remittance):
-        return remittance.receipts_count
+        return MembershipReceipt.objects.of_remittance(remittance).count()
 
     @admin.action(description=_("Export Membership Remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
