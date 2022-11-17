@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from ampa_members_manager.charge.models.fee.fee import Fee
 from ampa_members_manager.charge.state import State
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
@@ -152,7 +153,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Total'))
     def receipts_total(self, remittance):
-        return MembershipReceipt.objects.of_remittance(remittance).get_total()
+        number_of_receipts = MembershipReceipt.objects.of_remittance(remittance).count()
+        fee = Fee.objects.filter(academic_course=remittance.course).first()
+        if fee:
+            return number_of_receipts * fee.amount
+        return 0
     
     @admin.display(description=_('Receipts'))
     def receipts_count(self, remittance):

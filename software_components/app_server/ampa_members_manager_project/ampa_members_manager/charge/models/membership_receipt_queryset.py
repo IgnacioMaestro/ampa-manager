@@ -6,7 +6,3 @@ class MembershipReceiptQuerySet(QuerySet):
 
     def of_remittance(self, remittance):
         return self.filter(remittance=remittance)
-    
-    def get_total(self):
-        result = self.aggregate(total=Sum('total'))
-        return result.get('total')
