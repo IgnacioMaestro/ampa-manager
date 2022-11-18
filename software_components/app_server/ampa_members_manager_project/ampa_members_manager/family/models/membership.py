@@ -18,6 +18,8 @@ class Membership(models.Model):
     class Meta:
         verbose_name = _('Membership')
         verbose_name_plural = _('Membership')
+        constraints = [
+            models.UniqueConstraint(fields=['academic_course', 'family'], name='unique_family_membership_for_course'), ]
 
     def __str__(self) -> str:
         return f'{str(self.family)}-{str(self.academic_course)}'
