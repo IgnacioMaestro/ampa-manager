@@ -1,5 +1,6 @@
 import csv
 import codecs
+import locale
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -14,7 +15,7 @@ from ampa_members_manager.charge.models.activity_remittance import ActivityRemit
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.create_membership_remittance_for_families_not_in_other_membership_remittance.membership_remittance_creator_of_active_course import \
+from ampa_members_manager.charge.use_cases.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
@@ -156,8 +157,10 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         number_of_receipts = MembershipReceipt.objects.of_remittance(remittance).count()
         fee = Fee.objects.filter(academic_course=remittance.course).first()
         if fee:
-            return number_of_receipts * fee.amount
-        return 0
+            total = number_of_receipts * fee.amount
+            locale.setlocale(locale.LC_ALL, 'es_ES')
+            return locale.format_string('%d €', total, grouping=True)
+        return '0 €'
     
     @admin.display(description=_('Receipts'))
     def receipts_count(self, remittance):
