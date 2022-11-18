@@ -19,12 +19,12 @@ class Parent(TimeStampedModel):
         verbose_name = _('Parent')
         verbose_name_plural = _("Parents")
 
+    def __str__(self) -> str:
+        return self.full_name
+
     @property
     def full_name(self) -> str:
         return str(self.name_and_surnames)
-
-    def __str__(self) -> str:
-        return self.full_name
 
     def belong_to_family(self, family):
         return self.family_set.filter(surnames=family.surnames).exists()
