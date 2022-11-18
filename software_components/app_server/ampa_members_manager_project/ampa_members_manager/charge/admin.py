@@ -1,5 +1,6 @@
 import csv
 import codecs
+import locale
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -7,13 +8,14 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from ampa_members_manager.charge.models.fee.fee import Fee
 from ampa_members_manager.charge.state import State
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.create_membership_remittance_for_families_not_in_other_membership_remittance.membership_remittance_creator_of_active_course import \
+from ampa_members_manager.charge.use_cases.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
@@ -145,10 +147,24 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['identifier', 'created_at', 'course']
+    list_display = ['identifier', 'created_at', 'course', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
     inlines = [MembershipReceiptInline]
     list_per_page = 25
+
+    @admin.display(description=_('Total'))
+    def receipts_total(self, remittance):
+        number_of_receipts = MembershipReceipt.objects.of_remittance(remittance).count()
+        fee = Fee.objects.filter(academic_course=remittance.course).first()
+        if fee:
+            total = number_of_receipts * fee.amount
+            locale.setlocale(locale.LC_ALL, 'es_ES')
+            return locale.format_string('%d €', total, grouping=True)
+        return '0 €'
+    
+    @admin.display(description=_('Receipts'))
+    def receipts_count(self, remittance):
+        return MembershipReceipt.objects.of_remittance(remittance).count()
 
     @admin.action(description=_("Export Membership Remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
