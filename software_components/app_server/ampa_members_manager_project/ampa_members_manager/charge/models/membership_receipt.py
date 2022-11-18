@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.charge.models.fee.fee import Fee
@@ -10,12 +10,15 @@ from ampa_members_manager.charge.state import State
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.charge.models.membership_receipt_queryset import MembershipReceiptQuerySet
 
 
 class MembershipReceipt(models.Model):
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+
+    objects = Manager.from_queryset(MembershipReceiptQuerySet)()
 
     class Meta:
         verbose_name = _('Membership receipt')

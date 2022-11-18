@@ -6,7 +6,7 @@ from model_bakery import baker
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
-from ampa_members_manager.charge.use_cases.create_membership_remittance_for_families_not_in_other_membership_remittance.membership_remittance_creator_of_active_course import \
+from ampa_members_manager.charge.use_cases.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from ampa_members_manager.family.models.membership import Membership
 
