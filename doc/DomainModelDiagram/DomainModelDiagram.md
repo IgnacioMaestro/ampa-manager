@@ -5,7 +5,7 @@
 
 [Family package](FamilyPackage/FamilyPackage.md)
 
-[Activity package](ActivityPackage.md)
+[Activity package](ActivityPackage/ActivityPackage.md)
 
 [ActivityRegistration package](ActivityRegistrationPackage.md)
 
