@@ -1,0 +1,2 @@
+## Activity package
+![](AfterSchool.png)
