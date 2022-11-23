@@ -1,53 +1,33 @@
 @startuml
-package Family{
+package AcademicCourse{
   class AcademicCourse
 }
-package AfterSchool{
-    class AfterSchool{
-        Name : String
+package Activity{
+    package AfterSchool{}
+    package Custody{
+        class Custody
+        class CustodyLevel{
+            Period: String
+        }
+        Custody *-- "1..N" CustodyLevel: ""
+        Custody o-- AcademicCourse
     }
-    class AfterSchoolEdition{
-        Period: String
-        Timetable: String
+
+    package Camps{
+        class Camps
+        class CampsLevel
+        Camps *-- "1..N" CampsLevel: ""
+        Camps o-- AcademicCourse
     }
-    AfterSchool *-- "1..N" AfterSchoolEdition: ""
-    AfterSchoolEdition o-- AcademicCourse
 
-  abstract class Funding
-  class Cultural
-  class Sport
-  class NoFunding
-  Funding <|-- Cultural
-  Funding <|-- Sport
-  Funding <|-- NoFunding
-
-  AfterSchool o-- Funding
-
-}
-package Custody{
-    class Custody
-    class CustodyLevel{
-        Period: String
+    abstract class PricePerLevel{
+        Levels: String
+        PriceForMember: float
+        PriceForNoMember: float
     }
-    Custody *-- "1..N" CustodyLevel: ""
-    Custody o-- AcademicCourse
-}
 
-package Camps{
-    class Camps
-    class CampsLevel
-    Camps *-- "1..N" CampsLevel: ""
-    Camps o-- AcademicCourse
+    CampsLevel <|-- PricePerLevel
+    CustodyLevel <|-- PricePerLevel
 }
-
-abstract class PricePerLevel{
-    Levels: String
-    PriceForMember: float
-    PriceForNoMember: float
-}
-
-CampsLevel <|-- PricePerLevel
-AfterSchoolEdition <|-- PricePerLevel
-CustodyLevel <|-- PricePerLevel
 
 @enduml

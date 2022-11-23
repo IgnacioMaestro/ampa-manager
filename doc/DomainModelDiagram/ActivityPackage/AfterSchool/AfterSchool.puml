@@ -1,0 +1,47 @@
+@startuml
+package AcademicCourse{
+  class AcademicCourse
+}
+package Activity{
+    package AfterSchool{
+
+        class AfterSchool{
+            Name : String
+        }
+        class AfterSchoolEdition{
+            Period: String
+            Timetable: String
+        }
+        class AfterSchoolRegistration
+
+        AfterSchool *-- "1..N" AfterSchoolEdition: ""
+        AfterSchoolEdition o-- AcademicCourse
+
+        AfterSchoolRegistration o-- AfterSchoolEdition
+
+        abstract class Funding
+        class Cultural
+        class Sport
+        class NoFunding
+        Funding <|-- Cultural
+        Funding <|-- Sport
+        Funding <|-- NoFunding
+
+          AfterSchool o-- Funding
+    }
+    abstract class PricePerLevel{
+        Levels: String
+        PriceForMember: float
+        PriceForNoMember: float
+    }
+
+    AfterSchoolEdition <|-- PricePerLevel
+}
+package Family{
+    class Child
+    class BankAccount
+}
+AfterSchoolRegistration o-- Child
+AfterSchoolRegistration o-- BankAccount
+
+@enduml
