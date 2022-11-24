@@ -14,7 +14,3 @@ class AfterSchool(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}'
-
-    def clean(self):
-        if self.name:
-            self.name = self.name.title().strip()
