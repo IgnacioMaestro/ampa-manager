@@ -18,3 +18,6 @@ class AfterSchoolEdition(PricePerLevel):
             models.UniqueConstraint(
                 fields=['after_school', 'academic_course', 'period', 'timetable'], name='unique_important_fields'),
         ]
+
+    def __str__(self) -> str:
+        return f'{self.after_school} {self.period} {self.timetable} {self.academic_course}'
