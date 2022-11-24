@@ -2,25 +2,31 @@
 left to right direction
 actor Admin
 package AcademicCourse{
-  Admin --> (Create AcademicCourse)
-  Admin --> (Establish ActiveCourse)
-  Admin --> (Establish AcademicCourse Fee)
+    Admin --> (Create AcademicCourse)
+    Admin --> (Establish ActiveCourse)
+    Admin --> (Establish AcademicCourse Fee)
 }
 package Family {
-  Admin --> (Register Family)
-  Admin --> (Add Child to a Family)
-  Admin --> (Add Parent to a Family)
-  Admin --> (Assign BankAccount to a Parent)
-  Admin --> (Assign Authorization to a BankAccount)
-  Admin --> (Change Family BankAccount)
-  Admin --> (Add Membership for a Family)
+    Admin --> (Register Family)
+    Admin --> (Add Child to a Family)
+    Admin --> (Add Parent to a Family)
+    Admin --> (Assign BankAccount to a Parent)
+    Admin --> (Assign Authorization to a BankAccount)
+    Admin --> (Change Family BankAccount)
+    Admin --> (Add Membership for a Family)
 }
 package Activity {
-  Admin --> (Register Activity in the system)
+    Admin --> (Register Activity in the system)
+
+    package AfterSchool {
+        Admin --> (Register AfterSchool in the system)
+        Admin --> (Register AfterSchoolEdition in the system)
+        Admin --> (Register AfterSchoolRegistration in the system)
+    }
 }
 package ActivityRegistration {
-  Admin --> (Join Activity)
-  Admin --> (Establish amount of an ActivityRegistration)
+    Admin --> (Join Activity)
+    Admin --> (Establish amount of an ActivityRegistration)
 }
 package Charge {
 }

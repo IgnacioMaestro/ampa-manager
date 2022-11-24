@@ -5,6 +5,7 @@ from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ampa_members_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
