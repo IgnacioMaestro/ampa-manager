@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.activity.models.funding import Funding
+from ampa_members_manager.fields_formatter import FieldsFormatter
 
 
 class Activity(models.Model):
@@ -17,7 +18,7 @@ class Activity(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}'
-    
+
     def clean(self):
         if self.name:
-            self.name = self.name.title().strip()
+            self.name = FieldsFormatter.clean_name(self.name)
