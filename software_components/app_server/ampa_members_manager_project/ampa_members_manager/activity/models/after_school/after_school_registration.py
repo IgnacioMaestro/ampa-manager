@@ -1,7 +1,10 @@
+from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ampa_members_manager.activity.models.after_school.after_school_registration_queryset import \
+    AfterSchoolRegistrationQuerySet
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
 
@@ -11,6 +14,8 @@ class AfterSchoolRegistration(models.Model):
         to=AfterSchoolEdition, on_delete=models.CASCADE, verbose_name=_("AfterSchoolEdition"))
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=models.CASCADE, verbose_name=_("BankAccount"))
+
+    objects = Manager.from_queryset(AfterSchoolRegistrationQuerySet)()
 
     class Meta:
         constraints = [

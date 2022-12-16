@@ -64,10 +64,10 @@ package Charge{
 }
 
 package Activity{
-    class ActivityPayablePart
+    class ActivityPeriod
 }
 
-ActivityPayablePart "1..N" -right-o ActivityRemittance
+ActivityPeriod "1..N" -right-o ActivityRemittance
 
 package ActivityRegistration {
     class ActivityRegistration
@@ -75,7 +75,7 @@ package ActivityRegistration {
 
 ActivityRegistration "1..N" --o ActivityReceipt
 
-ActivityRegistration o--left ActivityPayablePart
+ActivityRegistration o--left ActivityPeriod
 
 package AcademicCourse{
     class AcademicCourse
@@ -93,6 +93,7 @@ package AfterSchool{
     class AfterSchoolEdition
     class AfterSchoolRegistration
 }
-AfterSchoolRemittance o-- AfterSchoolEdition
+AfterSchoolRemittance o-- "1..N" AfterSchoolEdition
 AfterSchoolReceipt o-- AfterSchoolRegistration
+AfterSchoolEdition --o AfterSchoolRegistration
 @enduml
