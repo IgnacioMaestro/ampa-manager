@@ -13,7 +13,7 @@ class TestActivityRemittance(TestCase):
         with self.assertRaises(NoActivityPeriodError):
             ActivityRemittance.create_filled(activity_periods_none)
 
-    def test_create_filled__one_activity_period_one_activity_registration(self):
+    def test_create_filled__one_activity_period(self):
         activity_period: ActivityPeriod = baker.make('ActivityPeriod')
         activity_periods_one: QuerySet[ActivityPeriod] = ActivityPeriod.objects.all()
 
