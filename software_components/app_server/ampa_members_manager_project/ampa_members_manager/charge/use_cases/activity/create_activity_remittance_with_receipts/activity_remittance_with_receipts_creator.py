@@ -1,7 +1,7 @@
 from django.db.models import QuerySet
 
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_receipts_creator import \
+from ampa_members_manager.charge.use_cases.activity.create_activity_remittance_with_receipts.activity_receipts_creator import \
     ActivityReceiptsCreator
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 

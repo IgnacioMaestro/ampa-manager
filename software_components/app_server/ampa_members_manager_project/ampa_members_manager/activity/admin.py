@@ -6,9 +6,9 @@ from django.utils.safestring import mark_safe
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
 from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_members_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
-    ActivityRemittanceWithReceiptsCreator
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationInline
+from ampa_members_manager.charge.use_cases.activity.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
+    ActivityRemittanceWithReceiptsCreator
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
 

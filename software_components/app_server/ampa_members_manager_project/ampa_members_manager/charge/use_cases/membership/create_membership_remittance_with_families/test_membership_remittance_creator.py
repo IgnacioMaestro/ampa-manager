@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
-from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
+from ampa_members_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_members_manager.family.models.family import Family
 
