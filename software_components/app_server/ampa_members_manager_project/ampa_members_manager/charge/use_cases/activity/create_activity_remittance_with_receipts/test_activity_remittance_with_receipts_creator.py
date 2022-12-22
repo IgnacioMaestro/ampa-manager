@@ -3,7 +3,7 @@ from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
+from ampa_members_manager.charge.use_cases.activity.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.no_activity_period_error import NoActivityPeriodError

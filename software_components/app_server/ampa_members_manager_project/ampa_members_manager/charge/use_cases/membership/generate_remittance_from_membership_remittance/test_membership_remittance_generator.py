@@ -8,7 +8,7 @@ from ampa_members_manager.charge.models.membership_receipt import MembershipRece
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_membership_remittance.membership_remittance_generator import \
+from ampa_members_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 
 
