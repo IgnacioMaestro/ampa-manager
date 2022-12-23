@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.db import models, transaction
 from django.db.models import QuerySet
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
@@ -19,6 +20,9 @@ class AfterSchoolRemittance(models.Model):
 
     def __str__(self) -> str:
         return self.complete_name
+
+    def get_admin_url(self):
+        return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])
 
     @property
     def complete_name(self) -> str:

@@ -25,9 +25,9 @@ class AfterSchoolReceipt(models.Model):
         verbose_name_plural = _('After School Receipts')
 
     def generate_receipt(self) -> Receipt:
-        bank_account: Optional[BankAccount] = self.after_school_registration.bank_account
-        bank_account_owner: str = str(bank_account.owner)
-        iban: str = bank_account.iban
-        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
-        amount = self.after_school_registration.calculate_price()
-        return Receipt(amount=amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization)
+        bank_account: BankAccount = self.after_school_registration.bank_account
+        authorization: Optional[AuthorizationReceipt] = Authorization.generate_receipt_authorization(
+            bank_account=bank_account)
+        return Receipt(
+            amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
+            authorization=authorization)
