@@ -2,7 +2,6 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_members_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.family.models.authorization.authorization import Authorization
@@ -27,10 +26,9 @@ class TestAfterSchoolReceipt(TestCase):
         receipt: Receipt = self.after_school_receipt.generate_receipt()
 
         # Assert
-        after_school_edition: AfterSchoolEdition = self.after_school_receipt.after_school_registration.after_school_edition
         self.assert_bank_account(self.after_school_receipt, receipt)
         self.assertIsNone(receipt.authorization)
-        self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
+        self.assertEqual(receipt.amount, float(self.after_school_receipt.amount))
 
     def test_generate_receipt_authorization(self):
         # Arrange
@@ -41,11 +39,10 @@ class TestAfterSchoolReceipt(TestCase):
         receipt: Receipt = self.after_school_receipt.generate_receipt()
 
         # Assert
-        after_school_edition: AfterSchoolEdition = self.after_school_receipt.after_school_registration.after_school_edition
         self.assert_bank_account(self.after_school_receipt, receipt)
         self.assertEqual(receipt.authorization.number, authorization.full_number)
         self.assertEqual(receipt.authorization.date, authorization.date)
-        self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
+        self.assertEqual(receipt.amount, float(self.after_school_receipt.amount))
 
     def assert_bank_account(self, after_school_receipt, receipt):
         bank_account: BankAccount = after_school_receipt.after_school_registration.bank_account

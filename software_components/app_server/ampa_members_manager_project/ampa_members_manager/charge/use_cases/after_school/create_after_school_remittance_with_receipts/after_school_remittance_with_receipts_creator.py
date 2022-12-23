@@ -19,5 +19,6 @@ class AfterSchoolRemittanceWithReceiptsCreator:
             after_school_remittance)
         for after_school_registration in after_school_registrations.iterator():
             AfterSchoolReceipt.objects.create(
+                amount=after_school_registration.calculate_price(),
                 remittance=after_school_remittance, after_school_registration=after_school_registration)
-        return after_school_remittance
+            return after_school_remittance
