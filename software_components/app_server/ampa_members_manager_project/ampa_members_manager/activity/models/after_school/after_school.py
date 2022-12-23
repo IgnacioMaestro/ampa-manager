@@ -11,6 +11,7 @@ class AfterSchool(models.Model):
     class Meta:
         verbose_name = _('AfterSchool')
         verbose_name_plural = _('AfterSchools')
+        db_table = 'after_school'
 
     def __str__(self) -> str:
         return f'{self.name}'

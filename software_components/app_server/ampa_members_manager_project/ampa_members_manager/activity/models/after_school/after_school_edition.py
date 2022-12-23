@@ -14,6 +14,7 @@ class AfterSchoolEdition(PricePerLevel):
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
 
     class Meta:
+        db_table = 'after_school_edition'
         constraints = [
             models.UniqueConstraint(
                 fields=['after_school', 'academic_course', 'period', 'timetable'], name='unique_important_fields'),
