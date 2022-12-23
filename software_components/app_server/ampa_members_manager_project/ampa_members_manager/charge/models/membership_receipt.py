@@ -1,8 +1,11 @@
+from typing import Optional
+
 from django.db import models
 from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.charge.models.fee.fee import Fee
+from ampa_members_manager.charge.models.membership_receipt_queryset import MembershipReceiptQuerySet
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_members_manager.charge.receipt import Receipt
@@ -10,7 +13,6 @@ from ampa_members_manager.charge.state import State
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.family import Family
-from ampa_members_manager.charge.models.membership_receipt_queryset import MembershipReceiptQuerySet
 
 
 class MembershipReceipt(models.Model):
@@ -25,24 +27,15 @@ class MembershipReceipt(models.Model):
         verbose_name_plural = _('Membership receipts')
 
     def generate_receipt(self) -> Receipt:
-        if self.family.default_bank_account is None:
+        bank_account: Optional[BankAccount] = self.family.default_bank_account
+        if bank_account is None:
             raise NoBankAccountException
         try:
-            fee = Fee.objects.get(academic_course=self.remittance.course)
+            fee: Fee = Fee.objects.get(academic_course=self.remittance.course)
         except Fee.DoesNotExist:
             raise NoFeeForCourseException
-        bank_account_owner: str = str(self.family.default_bank_account.owner)
-        iban: str = self.family.default_bank_account.iban
-        authorization_number, authorization_date = self.__obtain_authorization()
-        return Receipt(fee.amount, bank_account_owner, iban, authorization_number, authorization_date)
-
-    def __obtain_authorization(self):
-        try:
-            bank_account: BankAccount = self.family.default_bank_account
-            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
-            authorization_number = authorization.full_number
-            authorization_date = authorization.date
-        except Authorization.DoesNotExist:
-            authorization_number = Receipt.NO_AUTHORIZATION_MESSAGE
-            authorization_date = None
-        return authorization_number, authorization_date
+        bank_account_owner: str = str(bank_account.owner)
+        iban: str = bank_account.iban
+        authorization_number, authorization_date = Authorization.generate_receipt_authorization(
+            bank_account=bank_account)
+        return Receipt(str(fee.amount), bank_account_owner, iban, authorization_number, authorization_date)

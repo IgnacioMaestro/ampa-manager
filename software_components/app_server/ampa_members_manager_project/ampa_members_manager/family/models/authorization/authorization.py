@@ -1,3 +1,6 @@
+import datetime
+from typing import Tuple, Optional
+
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -5,6 +8,7 @@ from django.db.models import CASCADE
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.family.models.authorization.authorization_manager import AuthorizationManager
 from ampa_members_manager.family.models.authorization.authorization_queryset import AuthorizationQueryset
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
@@ -38,3 +42,11 @@ class Authorization(models.Model):
     @property
     def full_number(self) -> str:
         return f'{self.year}/{self.order:03}'
+
+    @classmethod
+    def generate_receipt_authorization(cls, bank_account: BankAccount) -> Tuple[str, Optional[datetime.date]]:
+        try:
+            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
+            return authorization.full_number, authorization.date
+        except Authorization.DoesNotExist:
+            return Receipt.NO_AUTHORIZATION_MESSAGE, None

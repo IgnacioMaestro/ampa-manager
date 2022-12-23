@@ -7,6 +7,7 @@ from ampa_members_manager.activity.models.after_school.after_school_registration
     AfterSchoolRegistrationQuerySet
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.family.models.membership import Membership
 
 
 class AfterSchoolRegistration(models.Model):
@@ -25,3 +26,9 @@ class AfterSchoolRegistration(models.Model):
 
     def __str__(self) -> str:
         return f'{self.after_school_edition} {self.child}'
+
+    def calculate_price(self) -> float:
+        if Membership.is_member_child(self.child):
+            return float(self.after_school_edition.price_for_member)
+        else:
+            return float(self.after_school_edition.price_for_no_member)
