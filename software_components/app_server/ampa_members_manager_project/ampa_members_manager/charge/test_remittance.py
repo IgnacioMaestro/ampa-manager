@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from ampa_members_manager.charge.receipt import Receipt
-from ampa_members_manager.charge.remittance import Remittance
+from .receipt import Receipt
+from .remittance import Remittance
 
 
 class TestRemittance(TestCase):
