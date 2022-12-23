@@ -20,7 +20,7 @@ class ActiveCourse(models.Model):
         super(ActiveCourse, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        pass  # active course shouldn't be deleted'
+        pass  # active course shouldn't be deleted
 
     @classmethod
     def load(cls) -> AcademicCourse:

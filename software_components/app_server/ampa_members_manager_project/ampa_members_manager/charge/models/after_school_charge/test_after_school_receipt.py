@@ -1,5 +1,3 @@
-import datetime
-
 from django.test import TestCase
 from model_bakery import baker
 
@@ -17,37 +15,36 @@ baker.generators.add('localflavor.generic.models.IBANField', iban_generator)
 
 
 class TestAfterSchoolReceipt(TestCase):
-    def test_generate_receipt_no_authorization(self):
-        # Arrange
-        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
-        after_school_receipt: AfterSchoolReceipt = baker.make('AfterSchoolReceipt')
+    after_school_receipt: AfterSchoolReceipt
 
+    @classmethod
+    def setUpTestData(cls):
+        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
+        cls.after_school_receipt: AfterSchoolReceipt = baker.make('AfterSchoolReceipt')
+
+    def test_generate_receipt_no_authorization(self):
         # Act
-        receipt: Receipt = after_school_receipt.generate_receipt()
+        receipt: Receipt = self.after_school_receipt.generate_receipt()
 
         # Assert
-        after_school_edition: AfterSchoolEdition = after_school_receipt.after_school_registration.after_school_edition
-        self.assert_bank_account(after_school_receipt, receipt)
+        after_school_edition: AfterSchoolEdition = self.after_school_receipt.after_school_registration.after_school_edition
+        self.assert_bank_account(self.after_school_receipt, receipt)
         self.assertIsNone(receipt.authorization)
         self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
 
     def test_generate_receipt_authorization(self):
         # Arrange
-        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
-        after_school_receipt: AfterSchoolReceipt = baker.make('AfterSchoolReceipt')
         authorization: Authorization = baker.make(
-            'Authorization', bank_account=after_school_receipt.after_school_registration.bank_account)
+            'Authorization', bank_account=self.after_school_receipt.after_school_registration.bank_account)
 
         # Act
-        receipt: Receipt = after_school_receipt.generate_receipt()
+        receipt: Receipt = self.after_school_receipt.generate_receipt()
 
         # Assert
-        after_school_edition: AfterSchoolEdition = after_school_receipt.after_school_registration.after_school_edition
-        self.assert_bank_account(after_school_receipt, receipt)
+        after_school_edition: AfterSchoolEdition = self.after_school_receipt.after_school_registration.after_school_edition
+        self.assert_bank_account(self.after_school_receipt, receipt)
         self.assertEqual(receipt.authorization.number, authorization.full_number)
-        self.assertEqual(
-            receipt.authorization.date,
-            datetime.date(authorization.date.year, authorization.date.month, authorization.date.day))
+        self.assertEqual(receipt.authorization.date, authorization.date)
         self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
 
     def assert_bank_account(self, after_school_receipt, receipt):
