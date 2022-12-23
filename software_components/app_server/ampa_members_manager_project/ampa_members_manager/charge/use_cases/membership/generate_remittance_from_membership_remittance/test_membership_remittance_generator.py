@@ -36,7 +36,7 @@ class TestMembershipRemittanceGenerator(TestCase):
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, str(self.FEE))
         self.assertEqual(receipt.bank_account_owner, membership_receipt.family.default_bank_account.owner.full_name)
-        self.assertEqual(receipt.authorization_number, Receipt.NO_AUTHORIZATION_MESSAGE)
+        self.assertEqual(receipt.authorization.number, Receipt.NO_AUTHORIZATION_MESSAGE)
         self.assertEqual(receipt.iban, membership_receipt.family.default_bank_account.iban)
 
     def test_generate_remittance_two_membership_receipts(self):

@@ -31,7 +31,7 @@ class TestActivityReceipt(TestCase):
         receipt: Receipt = activity_receipt.generate_receipt()
 
         self.assert_params_without_authorization(activity_receipt, receipt)
-        self.assertEqual(receipt.authorization_number, Receipt.NO_AUTHORIZATION_MESSAGE)
+        self.assertEqual(receipt.authorization.number, Receipt.NO_AUTHORIZATION_MESSAGE)
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
         authorization: Authorization = baker.make('Authorization', bank_account=self.bank_account)
@@ -41,8 +41,8 @@ class TestActivityReceipt(TestCase):
         receipt: Receipt = activity_receipt.generate_receipt()
 
         self.assert_params_without_authorization(activity_receipt, receipt)
-        self.assertEqual(receipt.authorization_number, authorization.full_number)
-        self.assertEqual(receipt.authorization_date, authorization.date.strftime("%m/%d/%Y"))
+        self.assertEqual(receipt.authorization.number, authorization.full_number)
+        self.assertEqual(receipt.authorization.date, authorization.date.strftime("%m/%d/%Y"))
 
     def assert_params_without_authorization(self, activity_receipt: ActivityReceipt, receipt: Receipt):
         self.assertEqual(receipt.bank_account_owner, str(self.bank_account.owner))
