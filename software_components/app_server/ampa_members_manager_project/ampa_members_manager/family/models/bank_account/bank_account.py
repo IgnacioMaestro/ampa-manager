@@ -19,6 +19,7 @@ class BankAccount(TimeStampedModel):
     class Meta:
         verbose_name = _('Bank account')
         verbose_name_plural = _('Bank accounts')
+        db_table = 'bank_account'
         ordering = ['owner__name_and_surnames', 'iban']
 
     def __str__(self) -> str:

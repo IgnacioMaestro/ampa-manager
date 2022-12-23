@@ -25,6 +25,7 @@ class MembershipReceipt(models.Model):
     class Meta:
         verbose_name = _('Membership receipt')
         verbose_name_plural = _('Membership receipts')
+        db_table = 'membership_receipt'
 
     def generate_receipt(self) -> Receipt:
         bank_account: Optional[BankAccount] = self.family.default_bank_account

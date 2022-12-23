@@ -10,6 +10,7 @@ class AcademicCourse(models.Model):
     class Meta:
         verbose_name = _('Academic course')
         verbose_name_plural = _('Academic courses')
+        db_table = 'academic_course'
 
     def __str__(self) -> str:
         return f'{str(self.initial_year)}-{str(self.initial_year + 1)}'

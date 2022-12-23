@@ -9,5 +9,8 @@ class Fee(models.Model):
     academic_course = models.OneToOneField(to=AcademicCourse, on_delete=CASCADE)
     amount = models.PositiveIntegerField(null=True, blank=True, verbose_name=_("Fee"))
 
+    class Meta:
+        db_table = 'fee'
+
     def __str__(self) -> str:
         return str(self.academic_course)

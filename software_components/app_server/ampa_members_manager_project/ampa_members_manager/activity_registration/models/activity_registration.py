@@ -20,6 +20,7 @@ class ActivityRegistration(models.Model):
     class Meta:
         verbose_name = _('Activity registration')
         verbose_name_plural = _("Activity registrations")
+        db_table = 'activity_registration'
 
     def __str__(self) -> str:
         return f'{str(self.activity_period)} - {str(self.child)}'

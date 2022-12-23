@@ -14,6 +14,7 @@ class MembershipRemittance(models.Model):
     class Meta:
         verbose_name = _('Membership remittance')
         verbose_name_plural = _('Membership remittances')
+        db_table = 'membership_remittance'
 
     def __str__(self) -> str:
         return self.complete_name

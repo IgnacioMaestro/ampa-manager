@@ -23,6 +23,7 @@ class AfterSchoolReceipt(models.Model):
     class Meta:
         verbose_name = _('After School Receipt')
         verbose_name_plural = _('After School Receipts')
+        db_table = 'after_school_receipt'
 
     def generate_receipt(self) -> Receipt:
         bank_account: BankAccount = self.after_school_registration.bank_account
