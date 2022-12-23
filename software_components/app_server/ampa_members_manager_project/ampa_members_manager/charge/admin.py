@@ -1,5 +1,5 @@
-import csv
 import codecs
+import csv
 import locale
 
 from django.contrib import admin
@@ -8,19 +8,27 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
-from .models.fee.fee import Fee
-from .state import State
+from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 from .models.activity_receipt import ActivityReceipt
 from .models.activity_remittance import ActivityRemittance
+from .models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from .models.after_school_charge.after_school_remittance import AfterSchoolRemittance
+from .models.fee.fee import Fee
 from .models.membership_receipt import MembershipReceipt
 from .models.membership_remittance import MembershipRemittance
 from .remittance import Remittance
+from .state import State
 from .use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
+from .use_cases.after_school.after_school_remittance_generator import AfterSchoolRemittanceGenerator
 from .use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
-from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
+
+
+TEXT_CSV = 'text/csv'
+RECEIPTS_SET_AS_SENT_MESSAGE = "%(num_receipts)s receipts set as sent"
+RECEIPTS_SET_AS_PAID_MESSAGE = "%(num_receipts)s receipts set as paid"
 
 
 class ActivityReceiptInline(ReadOnlyTabularInline):
@@ -37,14 +45,14 @@ class ActivityReceiptAdmin(admin.ModelAdmin):
     def set_as_sent(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.SEND)
 
-        message = gettext_lazy("%(num_receipts)s receipts set as sent") % {'num_receipts': queryset.count()}
+        message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Set as paid"))
     def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.PAID)
 
-        message = gettext_lazy("%(num_receipts)s receipts set as paid") % {'num_receipts': queryset.count()}
+        message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.display(description=gettext_lazy('Family'))
@@ -90,8 +98,9 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export to CSV"))
     def download_csv(self, request, queryset: QuerySet[ActivityRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request,
-                                     message=gettext_lazy("Only one activity remittance can be selected at a time"))
+            return self.message_user(
+                request=request,
+                message=gettext_lazy("Only one activity remittance can be selected at a time"))
         remittance: Remittance = RemittanceGenerator(activity_remittance=queryset.first()).generate()
         return ActivityRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
@@ -116,7 +125,7 @@ class ActivityRemittanceAdmin(admin.ModelAdmin):
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.csv"'}
-        response = HttpResponse(content_type='text/csv', headers=headers)
+        response = HttpResponse(content_type=TEXT_CSV, headers=headers)
         response.write(codecs.BOM_UTF8)
         csv.writer(response, quoting=csv.QUOTE_ALL).writerows(remittance.obtain_rows())
         return response
@@ -160,7 +169,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
             locale.setlocale(locale.LC_ALL, 'es_ES')
             return locale.format_string('%d €', total, grouping=True)
         return '0 €'
-    
+
     @admin.display(description=gettext_lazy('Receipts'))
     def receipts_count(self, remittance):
         return MembershipReceipt.objects.of_remittance(remittance).count()
@@ -177,7 +186,8 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         membership_remittance: MembershipRemittance = MembershipRemittanceCreatorOfActiveCourse.create()
         if membership_remittance:
             message = mark_safe(
-                gettext_lazy("Membership remittance created") + " (<a href=\"" + membership_remittance.get_admin_url() + "\">" + gettext_lazy(
+                gettext_lazy(
+                    "Membership remittance created") + " (<a href=\"" + membership_remittance.get_admin_url() + "\">" + gettext_lazy(
                     "View details") + "</a>)")
             return self.message_user(request=request, message=message)
         else:
@@ -187,7 +197,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
-        response = HttpResponse(content_type='text/csv', headers=headers)
+        response = HttpResponse(content_type=TEXT_CSV, headers=headers)
         response.write(codecs.BOM_UTF8)
         csv.writer(response).writerows(remittance.obtain_rows())
         return response
@@ -206,14 +216,81 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     def set_as_sent(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.SEND)
 
-        message = gettext_lazy("%(num_receipts)s receipts set as sent") % {'num_receipts': queryset.count()}
+        message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Set as paid"))
     def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
         queryset.update(state=State.PAID)
 
-        message = gettext_lazy("%(num_receipts)s receipts set as paid") % {'num_receipts': queryset.count()}
+        message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     actions = [set_as_sent, set_as_paid]
+
+
+class AfterSchoolReceiptAdmin(admin.ModelAdmin):
+    list_display = ['remittance', 'after_school_registration', 'state', 'amount']
+    ordering = ['state']
+    search_fields = ['after_school_registration__child__family']
+    list_filter = ['state']
+    list_per_page = 25
+
+    @admin.action(description=gettext_lazy("Set as sent"))
+    def set_as_sent(self, request, queryset: QuerySet[AfterSchoolReceipt]):
+        queryset.update(state=State.SEND)
+
+        message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
+        self.message_user(request=request, message=message)
+
+    @admin.action(description=gettext_lazy("Set as paid"))
+    def set_as_paid(self, request, queryset: QuerySet[AfterSchoolReceipt]):
+        queryset.update(state=State.PAID)
+
+        message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
+        self.message_user(request=request, message=message)
+
+    actions = [set_as_sent, set_as_paid]
+
+
+class AfterSchoolReceiptInline(ReadOnlyTabularInline):
+    model = AfterSchoolReceipt
+    extra = 0
+
+
+class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'created_at']
+    ordering = ['-created_at']
+    inlines = [AfterSchoolReceiptInline]
+    list_per_page = 25
+
+    # @admin.display(description=gettext_lazy('Total'))
+    # def receipts_total(self, remittance):
+    #     number_of_receipts = AfterSchoolReceipt.objects.of_remittance(remittance).count()
+    #     fee = Fee.objects.filter(academic_course=remittance.course).first()
+    #     if fee:
+    #         total = number_of_receipts * fee.amount
+    #         locale.setlocale(locale.LC_ALL, 'es_ES')
+    #         return locale.format_string('%d €', total, grouping=True)
+    #     return '0 €'
+
+    # @admin.display(description=gettext_lazy('Receipts'))
+    # def receipts_count(self, remittance):
+    #     return MembershipReceipt.objects.of_remittance(remittance).count()
+
+    @admin.action(description=gettext_lazy("Export AfterSchool Remittance to CSV"))
+    def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
+        if queryset.count() > 1:
+            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
+        remittance: Remittance = AfterSchoolRemittanceGenerator(after_school_remittance=queryset.first()).generate()
+        return AfterSchoolRemittanceAdmin.create_csv_response_from_remittance(remittance)
+
+    @staticmethod
+    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
+        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
+        response = HttpResponse(content_type=TEXT_CSV, headers=headers)
+        response.write(codecs.BOM_UTF8)
+        csv.writer(response).writerows(remittance.obtain_rows())
+        return response
+
+    actions = [download_membership_remittance_csv]
