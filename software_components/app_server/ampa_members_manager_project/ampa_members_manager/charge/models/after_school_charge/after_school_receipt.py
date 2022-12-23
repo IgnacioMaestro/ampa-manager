@@ -28,8 +28,6 @@ class AfterSchoolReceipt(models.Model):
         bank_account: Optional[BankAccount] = self.after_school_registration.bank_account
         bank_account_owner: str = str(bank_account.owner)
         iban: str = bank_account.iban
-        authorization_number, authorization_date = Authorization.generate_receipt_authorization(
-            bank_account=bank_account)
-        authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(authorization_number, authorization_date)
+        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
         amount = self.after_school_registration.calculate_price()
-        return Receipt(amount, bank_account_owner, iban, authorization_receipt)
+        return Receipt(amount=amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization)

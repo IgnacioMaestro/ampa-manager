@@ -36,9 +36,5 @@ class MembershipReceipt(models.Model):
             raise NoFeeForCourseException
         bank_account_owner: str = str(bank_account.owner)
         iban: str = bank_account.iban
-        authorization_number, authorization_date = Authorization.generate_receipt_authorization(
-            bank_account=bank_account)
-        authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(
-            number=authorization_number, date=authorization_date)
-        return Receipt(
-            amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization_receipt)
+        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
+        return Receipt(amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization)

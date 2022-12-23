@@ -28,9 +28,8 @@ class TestAfterSchoolReceipt(TestCase):
         # Assert
         after_school_edition: AfterSchoolEdition = after_school_receipt.after_school_registration.after_school_edition
         self.assert_bank_account(after_school_receipt, receipt)
-        self.assertEqual(receipt.authorization.number, Receipt.NO_AUTHORIZATION_MESSAGE)
-        self.assertIsNone(receipt.authorization.date)
-        self.assertEqual(receipt.amount, str(float(after_school_edition.price_for_no_member)))
+        self.assertIsNone(receipt.authorization)
+        self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
 
     def test_generate_receipt_authorization(self):
         # Arrange
@@ -49,7 +48,7 @@ class TestAfterSchoolReceipt(TestCase):
         self.assertEqual(
             receipt.authorization.date,
             datetime.date(authorization.date.year, authorization.date.month, authorization.date.day))
-        self.assertEqual(receipt.amount, str(float(after_school_edition.price_for_no_member)))
+        self.assertEqual(receipt.amount, float(after_school_edition.price_for_no_member))
 
     def assert_bank_account(self, after_school_receipt, receipt):
         bank_account: BankAccount = after_school_receipt.after_school_registration.bank_account
