@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from model_bakery import baker
 
@@ -65,5 +67,5 @@ class TestAuthorization(TestCase):
 
         number, date = Authorization.generate_receipt_authorization(bank_account)
 
-        self.assertEqual(number, authorization.number)
-        self.assertEqual(date, authorization.date)
+        self.assertEqual(number, authorization.full_number)
+        self.assertEqual(date, datetime.date(authorization.date.year, authorization.date.month, authorization.date.day))

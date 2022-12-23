@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from model_bakery import baker
 
@@ -44,7 +46,9 @@ class TestAfterSchoolReceipt(TestCase):
         after_school_edition: AfterSchoolEdition = after_school_receipt.after_school_registration.after_school_edition
         self.assert_bank_account(after_school_receipt, receipt)
         self.assertEqual(receipt.authorization_number, authorization.full_number)
-        # self.assertEqual(receipt.authorization_date, authorization.date)
+        self.assertEqual(
+            receipt.authorization_date,
+            datetime.date(authorization.date.year, authorization.date.month, authorization.date.day))
         self.assertEqual(receipt.amount, str(float(after_school_edition.price_for_no_member)))
 
     def assert_bank_account(self, after_school_receipt, receipt):
