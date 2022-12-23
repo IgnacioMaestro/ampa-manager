@@ -47,13 +47,13 @@ class ActivityReceipt(models.Model):
             authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(
                 authorization.full_number, authorization.date.strftime("%m/%d/%Y"))
             return Receipt(
-                amount=str(self.amount), bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
+                amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
                 authorization=authorization_receipt)
         except Authorization.DoesNotExist:
             authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(
                 str(Receipt.NO_AUTHORIZATION_MESSAGE), None)
             return Receipt(
-                amount=str(self.amount), bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
+                amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
                 authorization=authorization_receipt)
 
     @classmethod

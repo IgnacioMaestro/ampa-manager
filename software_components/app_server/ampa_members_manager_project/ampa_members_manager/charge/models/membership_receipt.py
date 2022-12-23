@@ -41,5 +41,4 @@ class MembershipReceipt(models.Model):
         authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(
             number=authorization_number, date=authorization_date)
         return Receipt(
-            amount=str(fee.amount), bank_account_owner=bank_account_owner, iban=iban,
-            authorization=authorization_receipt)
+            amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization_receipt)
