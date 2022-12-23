@@ -1,5 +1,4 @@
-import datetime
-from typing import Tuple, Optional
+from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -8,7 +7,7 @@ from django.db.models import CASCADE
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from ampa_members_manager.charge.receipt import Receipt, AuthorizationReceipt
+from ampa_members_manager.charge.receipt import AuthorizationReceipt
 from ampa_members_manager.family.models.authorization.authorization_manager import AuthorizationManager
 from ampa_members_manager.family.models.authorization.authorization_queryset import AuthorizationQueryset
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
