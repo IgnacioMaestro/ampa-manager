@@ -30,7 +30,7 @@ class TestActivityReceipt(TestCase):
 
         receipt: Receipt = activity_receipt.generate_receipt()
 
-        self.assert_params_without_authorization(activity_receipt, receipt)
+        self.assert_params_without_authorization(receipt)
         self.assertEqual(receipt.authorization.number, Receipt.NO_AUTHORIZATION_MESSAGE)
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
@@ -40,11 +40,12 @@ class TestActivityReceipt(TestCase):
 
         receipt: Receipt = activity_receipt.generate_receipt()
 
-        self.assert_params_without_authorization(activity_receipt, receipt)
+        self.assert_params_without_authorization(receipt)
         self.assertEqual(receipt.authorization.number, authorization.full_number)
-        self.assertEqual(receipt.authorization.date, authorization.date.strftime("%m/%d/%Y"))
+        self.assertEqual(receipt.authorization.date, authorization.date)
+        self.assertEqual(receipt.authorization.date, authorization.date)
 
-    def assert_params_without_authorization(self, activity_receipt: ActivityReceipt, receipt: Receipt):
+    def assert_params_without_authorization(self, receipt: Receipt):
         self.assertEqual(receipt.bank_account_owner, str(self.bank_account.owner))
         self.assertEqual(receipt.iban, str(self.bank_account.iban))
-        self.assertEqual(receipt.amount, str(activity_receipt.amount))
+        self.assertIsNone(receipt.amount)
