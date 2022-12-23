@@ -1,6 +1,6 @@
 from typing import List
 
-from ampa_members_manager.charge.receipt import Receipt
+from .receipt import Receipt
 
 
 class Remittance:
