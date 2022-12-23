@@ -34,7 +34,7 @@ class TestMembershipReceipt(TestCase):
         receipt: Receipt = membership_receipt.generate_receipt()
 
         self.assert_params_without_authorization(membership_receipt, receipt)
-        self.assertEqual(receipt.authorization.number, Receipt.NO_AUTHORIZATION_MESSAGE)
+        self.assertIsNone(receipt.authorization)
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
@@ -51,4 +51,4 @@ class TestMembershipReceipt(TestCase):
     def assert_params_without_authorization(self, membership_receipt, receipt):
         self.assertEqual(receipt.bank_account_owner, str(membership_receipt.family.default_bank_account.owner))
         self.assertEqual(receipt.iban, str(membership_receipt.family.default_bank_account.iban))
-        self.assertEqual(receipt.amount, str(self.FEE))
+        self.assertEqual(receipt.amount, self.FEE)

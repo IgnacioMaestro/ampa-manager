@@ -42,10 +42,9 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts.pop()
-        self.assertEqual(receipt.amount, str(activity_receipt.amount))
+        self.assertEqual(receipt.amount, activity_receipt.amount)
         self.assertEqual(receipt.bank_account_owner, self.bank_account.owner.full_name)
-        self.assertEqual(receipt.authorization.number, 'No authorization')
-        self.assertIsNone(receipt.authorization.date)
+        self.assertIsNone(receipt.authorization)
         self.assertEqual(receipt.iban, self.bank_account.iban)
 
     def test_generate_remittance_two_activity_receipts(self):
