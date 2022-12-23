@@ -19,6 +19,7 @@ class AfterSchoolRegistration(models.Model):
     objects = Manager.from_queryset(AfterSchoolRegistrationQuerySet)()
 
     class Meta:
+        db_table = 'after_school_registration'
         constraints = [
             models.UniqueConstraint(
                 fields=['after_school_edition', 'child'], name='unique_after_school_edition_for_child'),
