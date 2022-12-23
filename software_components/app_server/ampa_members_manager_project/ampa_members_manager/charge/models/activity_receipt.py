@@ -29,6 +29,7 @@ class ActivityReceipt(models.Model):
     class Meta:
         verbose_name = _('Activity Receipt')
         verbose_name_plural = _('Activity Receipts')
+        db_table = 'activity_receipt'
 
     def check_bank_account(self, bank_account: BankAccount) -> bool:
         for activity_registration in self.activity_registrations.all():

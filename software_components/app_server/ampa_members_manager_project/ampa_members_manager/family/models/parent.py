@@ -18,6 +18,7 @@ class Parent(TimeStampedModel):
     class Meta:
         verbose_name = _('Parent')
         verbose_name_plural = _("Parents")
+        db_table = 'parent'
 
     def __str__(self) -> str:
         return self.full_name

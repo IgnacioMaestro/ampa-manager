@@ -18,6 +18,7 @@ class Membership(models.Model):
     class Meta:
         verbose_name = _('Membership')
         verbose_name_plural = _('Membership')
+        db_table = 'membership'
         constraints = [
             models.UniqueConstraint(fields=['academic_course', 'family'], name='unique_family_membership_for_course'), ]
 

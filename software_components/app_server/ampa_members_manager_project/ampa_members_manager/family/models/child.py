@@ -20,6 +20,7 @@ class Child(TimeStampedModel):
     class Meta:
         verbose_name = _('Child')
         verbose_name_plural = _('Children')
+        db_table = 'child'
         constraints = [
             models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'), ]
 

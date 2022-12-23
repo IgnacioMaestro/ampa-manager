@@ -27,6 +27,7 @@ class Family(TimeStampedModel):
     class Meta:
         verbose_name = _('Family')
         verbose_name_plural = _("Families")
+        db_table = 'family'
 
     def __str__(self) -> str:
         return f'{self.surnames}'

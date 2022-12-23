@@ -17,6 +17,7 @@ class AfterSchoolRemittance(models.Model):
     class Meta:
         verbose_name = _('AfterSchool remittance')
         verbose_name_plural = _('AfterSchool remittances')
+        db_table = 'after_school_remittance'
 
     def __str__(self) -> str:
         return self.complete_name

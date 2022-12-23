@@ -28,6 +28,7 @@ class Authorization(models.Model):
     class Meta:
         verbose_name = _('Authorization')
         verbose_name_plural = _("Authorizations")
+        db_table = 'authorization'
         constraints = [
             models.UniqueConstraint(fields=['number', 'year'], name='unique_number_in_a_year')]
 

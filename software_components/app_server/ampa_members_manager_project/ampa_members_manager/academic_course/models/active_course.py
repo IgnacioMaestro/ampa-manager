@@ -11,6 +11,7 @@ class ActiveCourse(models.Model):
     class Meta:
         verbose_name = _('Active course')
         verbose_name_plural = _("Active course")
+        db_table = 'active_course'
 
     def __str__(self) -> str:
         return str(self.course)
