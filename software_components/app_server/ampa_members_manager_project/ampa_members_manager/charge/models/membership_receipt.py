@@ -34,7 +34,7 @@ class MembershipReceipt(models.Model):
             fee: Fee = Fee.objects.get(academic_course=self.remittance.course)
         except Fee.DoesNotExist:
             raise NoFeeForCourseException
-        bank_account_owner: str = str(bank_account.owner)
+        bank_account_owner = str(bank_account.owner)
         iban: str = bank_account.iban
         authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
         return Receipt(amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization)

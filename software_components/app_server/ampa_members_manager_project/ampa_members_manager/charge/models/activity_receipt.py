@@ -42,14 +42,10 @@ class ActivityReceipt(models.Model):
             raise NoBankAccountException
 
         bank_account: BankAccount = activity_registration.bank_account
-        try:
-            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
-            authorization_receipt = AuthorizationReceipt(number=authorization.full_number, date=authorization.date)
-        except Authorization.DoesNotExist:
-            authorization_receipt = None
+        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
         return Receipt(
             amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
-            authorization=authorization_receipt)
+            authorization=authorization)
 
     @classmethod
     def find_activity_receipt_with_bank_account(
