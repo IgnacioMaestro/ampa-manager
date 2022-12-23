@@ -8,7 +8,7 @@ from ampa_members_manager.charge.models.membership_receipt import MembershipRece
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_membership_remittance.membership_remittance_generator import \
+from ampa_members_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 
 
@@ -36,7 +36,7 @@ class TestMembershipRemittanceGenerator(TestCase):
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, self.FEE)
         self.assertEqual(receipt.bank_account_owner, membership_receipt.family.default_bank_account.owner.full_name)
-        self.assertEqual(receipt.authorization_number, Receipt.NO_AUTHORIZATION_MESSAGE)
+        self.assertIsNone(receipt.authorization)
         self.assertEqual(receipt.iban, membership_receipt.family.default_bank_account.iban)
 
     def test_generate_remittance_two_membership_receipts(self):

@@ -1,0 +1,13 @@
+@startuml
+package AcademicCourse
+package Family
+package Activity
+package Charge
+
+Charge --> Family
+Activity --> Family
+Activity --> AcademicCourse
+Family --> AcademicCourse
+Charge --> Activity
+Charge --> AcademicCourse
+@enduml

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from ampa_members_manager.charge.receipt import Receipt
-from ampa_members_manager.charge.remittance import Remittance
+from .receipt import Receipt
+from .remittance import Remittance
 
 
 class TestRemittance(TestCase):
@@ -13,9 +13,7 @@ class TestRemittance(TestCase):
         self.assertEqual(len(rows), 0)
 
     def test_obtain_rows_one_receipt(self):
-        receipt: Receipt = Receipt(
-            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization_number='authorization_number',
-            authorization_date='authorization_date')
+        receipt: Receipt = Receipt(amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization=None)
         remittance: Remittance = Remittance([receipt], 'One Receipt Remittance')
 
         rows = remittance.obtain_rows()
@@ -23,9 +21,7 @@ class TestRemittance(TestCase):
         self.assertEqual(len(rows), 1)
 
     def test_obtain_rows_two_receipts(self):
-        receipt: Receipt = Receipt(
-            amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization_number='authorization_number', 
-            authorization_date='authorization_date')
+        receipt: Receipt = Receipt(amount=2, bank_account_owner='bank_account_owner', iban='iban', authorization=None)
         remittance: Remittance = Remittance([receipt, receipt], 'Two Receipt Remittance')
 
         rows = remittance.obtain_rows()

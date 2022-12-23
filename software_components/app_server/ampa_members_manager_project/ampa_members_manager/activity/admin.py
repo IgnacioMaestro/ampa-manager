@@ -4,16 +4,23 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
-from ampa_members_manager.charge.use_cases.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
-    ActivityRemittanceWithReceiptsCreator
+from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ampa_members_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationInline
+from ampa_members_manager.charge.use_cases.activity.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
+    ActivityRemittanceWithReceiptsCreator
+from ampa_members_manager.charge.use_cases.after_school.create_after_school_remittance_with_receipts.after_school_remittance_with_receipts_creator import \
+    AfterSchoolRemittanceWithReceiptsCreator
+from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
 
 class ActivityPeriodAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create activity remittance"))
     def create_activity_remittance(self, request, activity_periods: QuerySet[ActivityPeriod]):
         remittance = ActivityRemittanceWithReceiptsCreator(activity_periods).create()
-        message = mark_safe(_("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _("View details") + "</a>)")
+        message = mark_safe(
+            _("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
+                "View details") + "</a>)")
         return self.message_user(request=request, message=message)
 
     actions = [create_activity_remittance]
@@ -37,7 +44,7 @@ class ActivityPeriodInline(admin.TabularInline):
 
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ['academic_course', 'name', 'funding', 'activity_period_count'] 
+    list_display = ['academic_course', 'name', 'funding', 'activity_period_count']
     ordering = ['-academic_course', 'name']
     list_filter = ['funding', 'academic_course__initial_year']
     inlines = [ActivityPeriodInline]
@@ -47,3 +54,60 @@ class ActivityAdmin(admin.ModelAdmin):
     @admin.display(description=_('Periods'))
     def activity_period_count(self, activity):
         return activity.activityperiod_set.count()
+
+
+class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
+    list_display = ['after_school_edition', 'child', 'bank_account']
+    ordering = ['after_school_edition__after_school__name', 'after_school_edition']
+    list_filter = ['after_school_edition__after_school__name']
+    search_fields = ['child__name', 'after_school_edition__after_school__name']
+    list_per_page = 25
+
+
+class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
+    model = AfterSchoolRegistration
+    list_display = ['after_school_edition', 'child', 'bank_account']
+    ordering = ['after_school_edition__after_school__name', 'after_school_edition']
+    extra = 0
+
+
+class AfterSchoolEditionAdmin(admin.ModelAdmin):
+    inlines = [AfterSchoolRegistrationInline]
+    list_display = ['after_school', 'price_for_member', 'price_for_no_member', 'academic_course', 'registrations_count']
+    ordering = ['-academic_course', 'after_school']
+    list_filter = ['after_school__name']
+    search_fields = ['after_school__name']
+    list_per_page = 25
+
+    @admin.display(description=_('Registrations'))
+    def registrations_count(self, after_school_edition):
+        return after_school_edition.afterschoolregistration_set.count()
+
+    @admin.action(description=_("Create after school remittance"))
+    def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
+        remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create()
+        message = mark_safe(
+            _("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
+                "View details") + "</a>)")
+        return self.message_user(request=request, message=message)
+    actions = [create_after_school_remittance]
+
+
+class AfterSchoolEditionInline(admin.TabularInline):
+    model = AfterSchoolEdition
+    list_display = ['after_school', 'price_for_member', 'price_for_no_member', 'academic_course']
+    ordering = ['-academic_course', 'after_school']
+    extra = 0
+
+
+class AfterSchoolAdmin(admin.ModelAdmin):
+    list_display = ['name', 'funding', 'after_school_edition_count']
+    ordering = ['name']
+    list_filter = ['funding']
+    inlines = [AfterSchoolEditionInline]
+    search_fields = ['name']
+    list_per_page = 35
+
+    @admin.display(description=_('Editions'))
+    def after_school_edition_count(self, after_school):
+        return after_school.afterschooledition_set.count()
