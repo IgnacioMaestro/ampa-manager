@@ -9,6 +9,13 @@ package Charge {
       Admin --> (Set all ActivityReceipts of a ActivityRemittance paid)
       Admin --> (Check an ActivityRegistration state of payment or assignation)
     }
+    package AfterSchool{
+      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions)
+      Admin --> (Generate remittance from a AfterSchoolRemittance with the list of AfterSchoolReceipts)
+      Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance send)
+      Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance paid)
+      Admin --> (Check an AfterSchoolRegistration state of payment or assignation)
+    }
     package Membership{
       Admin --> (Create a MembershipRemittance with selected families)
       Admin --> (Create a MembershipRemittance with families not included in a MembershipRemittance)

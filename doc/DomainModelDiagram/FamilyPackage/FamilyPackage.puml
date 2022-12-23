@@ -35,15 +35,15 @@ package Family{
   Signed -up-|> State
   Authorization *-right- State
 
-  class MemberShip
+  class Membership
 
   Family "1..N" o-- "1..N" Parent
   Family *-- "N" Child
   Parent *-- "0..N" BankAccount
   Family o-- BankAccount: ""
   BankAccount "1" *-- "1" Authorization
-  Family *-- "N" MemberShip: ""
-  MemberShip o-- AcademicCourse
+  Family *-- "N" Membership: ""
+  Membership o-- AcademicCourse
 }
 
 package AcademicCourse{

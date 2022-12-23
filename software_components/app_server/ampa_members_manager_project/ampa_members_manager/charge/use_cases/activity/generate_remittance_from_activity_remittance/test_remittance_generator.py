@@ -8,7 +8,7 @@ from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.receipt import Receipt
 from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.generate_remittance_from_activity_remittance.remittance_generator import \
+from ampa_members_manager.charge.use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_members_manager.tests.generator_adder import GeneratorAdder
@@ -42,10 +42,9 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(remittance.name, str(activity_remittance))
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts.pop()
-        self.assertEqual(receipt.amount, str(activity_receipt.amount))
+        self.assertEqual(receipt.amount, activity_receipt.amount)
         self.assertEqual(receipt.bank_account_owner, self.bank_account.owner.full_name)
-        self.assertEqual(receipt.authorization_number, 'No authorization')
-        self.assertEqual(receipt.authorization_date, '')
+        self.assertIsNone(receipt.authorization)
         self.assertEqual(receipt.iban, self.bank_account.iban)
 
     def test_generate_remittance_two_activity_receipts(self):

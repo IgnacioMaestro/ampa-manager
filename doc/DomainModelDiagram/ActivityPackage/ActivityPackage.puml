@@ -1,0 +1,33 @@
+@startuml
+package AcademicCourse{
+  class AcademicCourse
+}
+package Activity{
+    package AfterSchool{}
+    package Custody{
+        class Custody
+        class CustodyLevel{
+            Period: String
+        }
+        Custody *-- "1..N" CustodyLevel: ""
+        Custody o-- AcademicCourse
+    }
+
+    package Camps{
+        class Camps
+        class CampsLevel
+        Camps *-- "1..N" CampsLevel: ""
+        Camps o-- AcademicCourse
+    }
+
+    abstract class PricePerLevel{
+        Levels: String
+        PriceForMember: float
+        PriceForNoMember: float
+    }
+
+    CampsLevel <|-- PricePerLevel
+    CustodyLevel <|-- PricePerLevel
+}
+
+@enduml

@@ -9,7 +9,7 @@ from ampa_members_manager.academic_course.models.academic_course import Academic
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
 from ampa_members_manager.charge.admin import MembershipReceiptInline
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.use_cases.create_membership_remittance_with_families.membership_remittance_creator import \
+from ampa_members_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_members_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
     FamilyDefaultAccountFilter, FamilyParentCountFilter

@@ -5,15 +5,21 @@ from ampa_members_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_members_manager.academic_course.admin import ActiveCourseAdmin
 from ampa_members_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_members_manager.academic_course.models.active_course import ActiveCourse
-from ampa_members_manager.activity.admin import ActivityPeriodAdmin, ActivityAdmin
+from ampa_members_manager.activity.admin import ActivityPeriodAdmin, ActivityAdmin, AfterSchoolAdmin, \
+    AfterSchoolEditionAdmin, AfterSchoolRegistrationAdmin
 from ampa_members_manager.activity.models.activity import Activity
 from ampa_members_manager.activity.models.activity_period import ActivityPeriod
+from ampa_members_manager.activity.models.after_school.after_school import AfterSchool
+from ampa_members_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ampa_members_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationAdmin
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.admin import ActivityRemittanceAdmin, ActivityReceiptAdmin, MembershipRemittanceAdmin, \
-    MembershipReceiptAdmin
+    MembershipReceiptAdmin, AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
+from ampa_members_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from ampa_members_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_members_manager.charge.models.fee.fee import Fee
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
@@ -40,8 +46,13 @@ admin.site.register(ActiveCourse, ActiveCourseAdmin)
 admin.site.register(ActivityPeriod, ActivityPeriodAdmin)
 admin.site.register(Activity, ActivityAdmin)
 
+admin.site.register(AfterSchool, AfterSchoolAdmin)
+admin.site.register(AfterSchoolEdition, AfterSchoolEditionAdmin)
+admin.site.register(AfterSchoolRegistration, AfterSchoolRegistrationAdmin)
+
 admin.site.register(Child, ChildAdmin)
 admin.site.register(Parent, ParentAdmin)
+# noinspection DuplicatedCode
 admin.site.register(Family, FamilyAdmin)
 
 # noinspection DuplicatedCode
@@ -55,3 +66,5 @@ admin.site.register(ActivityReceipt, ActivityReceiptAdmin)
 admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)
 admin.site.register(MembershipReceipt, MembershipReceiptAdmin)
 admin.site.register(Fee)
+admin.site.register(AfterSchoolReceipt, AfterSchoolReceiptAdmin)
+admin.site.register(AfterSchoolRemittance, AfterSchoolRemittanceAdmin)

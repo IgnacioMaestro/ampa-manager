@@ -8,7 +8,7 @@ from ampa_members_manager.activity_registration.models.activity_registration imp
 from ampa_members_manager.charge.models.activity_receipt_queryset import ActivityReceiptQuerySet
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_members_manager.charge.models.receipt_exceptions import NoBankAccountException
-from ampa_members_manager.charge.receipt import Receipt
+from ampa_members_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_members_manager.charge.state import State
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
@@ -42,21 +42,10 @@ class ActivityReceipt(models.Model):
             raise NoBankAccountException
 
         bank_account: BankAccount = activity_registration.bank_account
-        try:
-            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
-            return Receipt(
-                amount=str(self.amount), 
-                bank_account_owner=str(bank_account.owner),
-                iban=bank_account.iban, 
-                authorization_number=authorization.full_number,
-                authorization_date=authorization.date.strftime("%m/%d/%Y"))
-        except Authorization.DoesNotExist:
-            return Receipt(
-                amount=str(self.amount), 
-                bank_account_owner=str(bank_account.owner),
-                iban=bank_account.iban, 
-                authorization_number=str(Receipt.NO_AUTHORIZATION_MESSAGE),
-                authorization_date='')
+        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
+        return Receipt(
+            amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
+            authorization=authorization)
 
     @classmethod
     def find_activity_receipt_with_bank_account(

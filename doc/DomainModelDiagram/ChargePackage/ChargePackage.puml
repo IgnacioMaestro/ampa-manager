@@ -1,74 +1,99 @@
 @startuml
 package Charge{
-  class ActivityRemittance{
-    name: string
-    created_at: datetime
-  }
-  class ActivityReceipt {
-    amount: float
-  }
-  class MembershipRemittance {
-    created_at: datetime
-  }
-  class MembershipReceipt
+    package Membership{
+        class MembershipRemittance {
+            created_at: datetime
+        }
+        class MembershipReceipt
+        class Fee{
+            amount: integer
+        }
+    }
+    package ActivityCharge{
+        class ActivityRemittance{
+            name: string
+            created_at: datetime
+        }
+        class ActivityReceipt {
+            amount: float
+        }
+    }
+    package AfterSchoolCharge{
+        class AfterSchoolRemittance{
+            name: string
+            created_at: datetime
+        }
+        class AfterSchoolReceipt {
+            amount: float
+        }
+    }
 
-  class State
-  class Created
-  class Send
-  class Paid
-  State <|-- Created
-  State <|-- Send
-  State <|-- Paid
 
-  class Remittance__Remesa {
-    name: string
-  }
-  class Receipt {
-    amount: float
-    bank_account_owner: string
-    iban: string
-    authorization: string
-  }
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
 
-  class Fee{
-    amount: integer
-  }
+    class Remittance__Remesa {
+        name: string
+    }
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
 
-  Remittance__Remesa *--> Receipt
-  ActivityReceipt --> Receipt
-  ActivityRemittance --> Remittance__Remesa
-  MembershipReceipt --> Receipt
-  MembershipRemittance --> Remittance__Remesa
+    Remittance__Remesa *--> Receipt
+    ActivityReceipt --> Receipt
+    ActivityRemittance --> Remittance__Remesa
+    MembershipReceipt --> Receipt
+    MembershipRemittance --> Remittance__Remesa
+    AfterSchoolReceipt --> Receipt
+    AfterSchoolRemittance --> Remittance__Remesa
 
-  ActivityReceipt *-- State
-  ActivityRemittance *-- "1..N" ActivityReceipt
-  MembershipReceipt *-- State
-  MembershipRemittance *-- "1..N" MembershipReceipt
+    ActivityReceipt *-- State
+    ActivityRemittance *-- "1..N" ActivityReceipt
+    MembershipReceipt *-- State
+    MembershipRemittance *-- "1..N" MembershipReceipt
+    AfterSchoolReceipt *-- State
+    AfterSchoolRemittance *-- "1..N" AfterSchoolReceipt
 }
 
 package Activity{
-  class ActivityPayablePart
+    class ActivityPeriod
 }
 
-ActivityPayablePart "1..N" -right-o ActivityRemittance
+ActivityPeriod "1..N" -right-o ActivityRemittance
 
 package ActivityRegistration {
-  class ActivityRegistration
+    class ActivityRegistration
 }
 
 ActivityRegistration "1..N" --o ActivityReceipt
 
-ActivityRegistration o--left ActivityPayablePart
+ActivityRegistration o--left ActivityPeriod
 
 package AcademicCourse{
-  class AcademicCourse
+    class AcademicCourse
 }
 
 Fee --o AcademicCourse
 MembershipRemittance o-- AcademicCourse
 
 package Family{
-  class Family
+    class Family
 }
 MembershipReceipt o--  Family
+
+package AfterSchool{
+    class AfterSchoolEdition
+    class AfterSchoolRegistration
+}
+AfterSchoolRemittance o-- "1..N" AfterSchoolEdition
+AfterSchoolReceipt o-- AfterSchoolRegistration
+AfterSchoolEdition --o AfterSchoolRegistration
 @enduml
