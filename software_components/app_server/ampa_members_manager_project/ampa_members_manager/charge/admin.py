@@ -8,18 +8,17 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
-from ampa_members_manager.charge.models.fee.fee import Fee
-from ampa_members_manager.charge.state import State
-from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
-from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
-from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
-from ampa_members_manager.charge.remittance import Remittance
-from ampa_members_manager.charge.use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import \
-    RemittanceGenerator
-from ampa_members_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
+from .models.fee.fee import Fee
+from .state import State
+from .models.activity_receipt import ActivityReceipt
+from .models.activity_remittance import ActivityRemittance
+from .models.membership_receipt import MembershipReceipt
+from .models.membership_remittance import MembershipRemittance
+from .remittance import Remittance
+from .use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
+from .use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
-from ampa_members_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
+from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 from ampa_members_manager.read_only_inline import ReadOnlyTabularInline
 
