@@ -15,9 +15,11 @@ from ampa_members_manager.activity.models.after_school.after_school_registration
 from ampa_members_manager.activity_registration.admin import ActivityRegistrationAdmin
 from ampa_members_manager.activity_registration.models.activity_registration import ActivityRegistration
 from ampa_members_manager.charge.admin import ActivityRemittanceAdmin, ActivityReceiptAdmin, MembershipRemittanceAdmin, \
-    MembershipReceiptAdmin
+    MembershipReceiptAdmin, AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
 from ampa_members_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_members_manager.charge.models.activity_remittance import ActivityRemittance
+from ampa_members_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from ampa_members_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_members_manager.charge.models.fee.fee import Fee
 from ampa_members_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_members_manager.charge.models.membership_remittance import MembershipRemittance
@@ -64,3 +66,5 @@ admin.site.register(ActivityReceipt, ActivityReceiptAdmin)
 admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)
 admin.site.register(MembershipReceipt, MembershipReceiptAdmin)
 admin.site.register(Fee)
+admin.site.register(AfterSchoolReceipt, AfterSchoolReceiptAdmin)
+admin.site.register(AfterSchoolRemittance, AfterSchoolRemittanceAdmin)
