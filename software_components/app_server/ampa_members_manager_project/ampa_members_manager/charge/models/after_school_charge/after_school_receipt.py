@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_members_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
-from ampa_members_manager.charge.receipt import Receipt
+from ampa_members_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_members_manager.charge.state import State
 from ampa_members_manager.family.models.authorization.authorization import Authorization
 from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
@@ -30,5 +30,6 @@ class AfterSchoolReceipt(models.Model):
         iban: str = bank_account.iban
         authorization_number, authorization_date = Authorization.generate_receipt_authorization(
             bank_account=bank_account)
+        authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(authorization_number, authorization_date)
         amount = self.after_school_registration.calculate_price()
-        return Receipt(str(amount), bank_account_owner, iban, authorization_number, authorization_date)
+        return Receipt(str(amount), bank_account_owner, iban, authorization_receipt)
