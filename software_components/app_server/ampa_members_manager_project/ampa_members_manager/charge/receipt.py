@@ -11,11 +11,11 @@ class AuthorizationReceipt:
 @dataclass
 class Receipt:
     NO_AUTHORIZATION_MESSAGE = 'No authorization'
-    amount: str
+    amount: float
     bank_account_owner: str
     iban: str
     authorization: AuthorizationReceipt
 
     def obtain_row(self) -> List[str]:
-        return ['"{}"'.format(self.amount), str(self.bank_account_owner), str(self.iban),
+        return ['"{}"'.format(str(self.amount)), str(self.bank_account_owner), str(self.iban),
                 str(self.authorization.number), str(self.authorization.date)]

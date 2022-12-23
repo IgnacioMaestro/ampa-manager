@@ -32,4 +32,4 @@ class AfterSchoolReceipt(models.Model):
             bank_account=bank_account)
         authorization_receipt: AuthorizationReceipt = AuthorizationReceipt(authorization_number, authorization_date)
         amount = self.after_school_registration.calculate_price()
-        return Receipt(str(amount), bank_account_owner, iban, authorization_receipt)
+        return Receipt(amount, bank_account_owner, iban, authorization_receipt)
