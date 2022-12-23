@@ -1,10 +1,10 @@
+import datetime
 from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CASCADE
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from ampa_members_manager.charge.receipt import AuthorizationReceipt
@@ -18,7 +18,7 @@ class Authorization(models.Model):
     number = models.CharField(max_length=50, verbose_name=_("Number"))
     order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
     year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year"))
-    date = models.DateField(default=timezone.now().date)
+    date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     bank_account = models.OneToOneField(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
