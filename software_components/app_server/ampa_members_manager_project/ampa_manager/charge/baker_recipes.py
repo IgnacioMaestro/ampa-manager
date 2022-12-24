@@ -1,0 +1,9 @@
+from model_bakery.recipe import Recipe, foreign_key
+
+from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.charge.models.membership_receipt import MembershipReceipt
+from ampa_manager.family.baker_recipes import family_bank_account_local_recipe, bank_account_local_recipe
+
+membership_receipt_family_bank_account_local_recipe = Recipe(MembershipReceipt, family=foreign_key(family_bank_account_local_recipe))
+
+after_school_registration_local_recipe = Recipe(AfterSchoolRegistration, bank_account=foreign_key(bank_account_local_recipe))
