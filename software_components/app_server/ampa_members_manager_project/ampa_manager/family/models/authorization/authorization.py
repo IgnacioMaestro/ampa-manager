@@ -18,7 +18,7 @@ class Authorization(models.Model):
     number = models.CharField(max_length=50, verbose_name=_("Number"))
     order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
     year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year"))
-    date = models.DateField(default=datetime.date.today)
+    sign_date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     bank_account = models.OneToOneField(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
@@ -47,6 +47,6 @@ class Authorization(models.Model):
     def generate_receipt_authorization(cls, bank_account: BankAccount) -> Optional[AuthorizationReceipt]:
         try:
             authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
-            return AuthorizationReceipt(number=authorization.full_number, date=authorization.date)
+            return AuthorizationReceipt(number=authorization.full_number, date=authorization.sign_date)
         except Authorization.DoesNotExist:
             return None

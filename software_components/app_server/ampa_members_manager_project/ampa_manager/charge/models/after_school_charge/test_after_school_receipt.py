@@ -41,7 +41,7 @@ class TestAfterSchoolReceipt(TestCase):
         # Assert
         self.assert_bank_account(self.after_school_receipt, receipt)
         self.assertEqual(receipt.authorization.number, authorization.full_number)
-        self.assertEqual(receipt.authorization.date, authorization.date)
+        self.assertEqual(receipt.authorization.date, authorization.sign_date)
         self.assertEqual(receipt.amount, float(self.after_school_receipt.amount))
 
     def assert_bank_account(self, after_school_receipt, receipt):
