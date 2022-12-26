@@ -66,4 +66,4 @@ class TestAuthorization(TestCase):
         authorization_receipt: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account)
 
         self.assertEqual(authorization_receipt.number, authorization.full_number)
-        self.assertEqual(authorization_receipt.date, authorization.date)
+        self.assertEqual(authorization_receipt.date, authorization.sign_date)
