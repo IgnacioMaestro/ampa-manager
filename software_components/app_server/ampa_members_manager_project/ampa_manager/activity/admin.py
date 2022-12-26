@@ -85,12 +85,21 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create()
+        after_school_remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create()
+        message = mark_safe(
+            _("Activity remittance created") + " (<a href=\"" + after_school_remittance.get_admin_url() + "\">" + _(
+                "View details") + "</a>)")
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=_("Create after school remittance with half amount"))
+    def create_after_school_remittance_half(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
+        remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create_with_fraction(0.5)
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + _(
                 "View details") + "</a>)")
         return self.message_user(request=request, message=message)
-    actions = [create_after_school_remittance]
+
+    actions = [create_after_school_remittance, create_after_school_remittance_half]
 
 
 class AfterSchoolEditionInline(admin.TabularInline):
