@@ -42,8 +42,8 @@ class TestActivityReceipt(TestCase):
 
         self.assert_params_without_authorization(receipt)
         self.assertEqual(receipt.authorization.number, authorization.full_number)
-        self.assertEqual(receipt.authorization.date, authorization.date)
-        self.assertEqual(receipt.authorization.date, authorization.date)
+        self.assertEqual(receipt.authorization.date, authorization.sign_date)
+        self.assertEqual(receipt.authorization.date, authorization.sign_date)
 
     def assert_params_without_authorization(self, receipt: Receipt):
         self.assertEqual(receipt.bank_account_owner, str(self.bank_account.owner))

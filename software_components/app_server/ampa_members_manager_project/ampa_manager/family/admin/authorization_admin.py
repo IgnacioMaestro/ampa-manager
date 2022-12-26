@@ -8,10 +8,10 @@ from ampa_manager.family.models.state import State
 
 
 class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ['number', 'year', 'order', 'date', 'bank_account', 'document', 'state']
-    ordering = ['-date']
+    list_display = ['number', 'year', 'order', 'sign_date', 'bank_account', 'document', 'state']
+    ordering = ['-sign_date']
     list_filter = ['year', 'state']
-    search_fields = ['number', 'year', 'date', 'bank_account__iban', 'bank_account__owner__name_and_surnames']
+    search_fields = ['number', 'year', 'sign_date', 'bank_account__iban', 'bank_account__owner__name_and_surnames']
     list_per_page = 25
 
     @admin.action(description=_("Set as not sent"))
