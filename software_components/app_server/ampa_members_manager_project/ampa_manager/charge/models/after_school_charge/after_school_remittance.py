@@ -15,8 +15,8 @@ class AfterSchoolRemittance(models.Model):
     after_school_editions = models.ManyToManyField(to=AfterSchoolEdition, verbose_name=_("AfterSchoolEditions"), related_name="after_school_remittance")
 
     class Meta:
-        verbose_name = _('AfterSchool remittance')
-        verbose_name_plural = _('AfterSchool remittances')
+        verbose_name = _('After-school remittance')
+        verbose_name_plural = _('After-school remittances')
         db_table = 'after_school_remittance'
 
     def __str__(self) -> str:

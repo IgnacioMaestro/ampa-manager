@@ -53,26 +53,6 @@ class Family(TimeStampedModel):
         self.decline_membership = True
         self.save()
 
-    def find_child(self, name):
-        children = Child.objects.with_name_and_of_family(name, self)
-        if children.count() == 1:
-            return children[0]
-        return None
-
-    def find_parent(self, name_and_surnames):
-        if name_and_surnames:
-            parents = Parent.objects.with_full_name(name_and_surnames)
-            if parents.count() == 1:
-                return parents.first()
-            else:
-                for parent in self.parents.all():
-                    if len(parent.name_and_surnames) > len(name_and_surnames):
-                        if name_and_surnames in parent.name_and_surnames:
-                            return parent
-                    elif parent.name_and_surnames in name_and_surnames:
-                        return parent
-        return None
-
     @staticmethod
     def find(surnames):
         family = None
