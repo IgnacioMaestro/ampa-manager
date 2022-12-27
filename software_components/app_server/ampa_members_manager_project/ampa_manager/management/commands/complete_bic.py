@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.bic_code import BicCode
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_members_manager.family.bic_code import BicCode
 
 
 class Command(BaseCommand):

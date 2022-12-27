@@ -3,18 +3,16 @@ import xlrd
 
 from django.core.management.base import BaseCommand
 
-import ampa_manager.management.commands.import_command.settings as xls_settings
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.child import Child
-from ampa_manager.family.models.family import Family
-from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.models.child import Child
-from ampa_manager.management.commands.import_command.surnames import SURNAMES
-from ampa_manager.management.commands.import_command.logger import Logger
-from ampa_manager.management.commands.import_command.family_importer import FamilyImporter
-from ampa_manager.management.commands.import_command.parent_importer import ParentImporter
-from ampa_manager.management.commands.import_command.child_importer import ChildImporter
-from ampa_manager.management.commands.import_command.bank_account_importer import BankAccountImporter
+import ampa_members_manager.management.commands.import_command.settings as xls_settings
+from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_members_manager.family.models.family import Family
+from ampa_members_manager.family.models.parent import Parent
+from ampa_members_manager.family.models.child import Child
+from ampa_members_manager.management.commands.import_command.logger import Logger
+from ampa_members_manager.management.commands.import_command.importers.family_importer import FamilyImporter
+from ampa_members_manager.management.commands.import_command.importers.parent_importer import ParentImporter
+from ampa_members_manager.management.commands.import_command.importers.child_importer import ChildImporter
+from ampa_members_manager.management.commands.import_command.importers.bank_account_importer import BankAccountImporter
 
 
 class Command(BaseCommand):
@@ -90,10 +88,13 @@ class Command(BaseCommand):
         for result in self.results:
             if result.class_name not in totals:
                 totals[result.class_name] = {}
-            if result.state not in totals[result.class_name]:
-                totals[result.class_name][result.state] = 1
-            else:
-                totals[result.class_name][result.state] += 1
+
+            for state in [result.state, result.state2]:
+                if state:
+                    if state not in totals[result.class_name]:
+                        totals[result.class_name][state] = 1
+                    else:
+                        totals[result.class_name][state] += 1
         return totals
     
     def get_total(self, state, class_name):
