@@ -33,3 +33,18 @@ class Parent(TimeStampedModel):
     def clean(self):
         if self.name_and_surnames:
             self.name_and_surnames = self.name_and_surnames.title().strip()
+
+    @staticmethod
+    def find(family, name_and_surnames):
+        if name_and_surnames:
+            parents = Parent.objects.with_full_name(name_and_surnames)
+            if parents.count() == 1:
+                return parents.first()
+            else:
+                for parent in family.parents.all():
+                    if len(parent.name_and_surnames) > len(name_and_surnames):
+                        if name_and_surnames in parent.name_and_surnames:
+                            return parent
+                    elif parent.name_and_surnames in name_and_surnames:
+                        return parent
+        return None

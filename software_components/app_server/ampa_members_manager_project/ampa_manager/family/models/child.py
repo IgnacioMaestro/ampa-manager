@@ -50,3 +50,10 @@ class Child(TimeStampedModel):
     @staticmethod
     def get_children_ids(min_age, max_age):
         return [c.id for c in Child.objects.of_age_in_range(min_age, max_age)]
+
+    @staticmethod
+    def find(family, name):
+        children = Child.objects.with_name_and_of_family(name, family)
+        if children.count() == 1:
+            return children[0]
+        return None

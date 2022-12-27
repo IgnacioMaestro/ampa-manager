@@ -4,10 +4,10 @@ from datetime import datetime
 
 from django.core.management.base import BaseCommand
 
-from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_members_manager.management.commands.import_command.importer import Importer
-from ampa_members_manager.family.models.parent import Parent
-from ampa_members_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.management.commands.import_command.importer import Importer
+from ampa_manager.family.models.parent import Parent
+from ampa_manager.family.models.authorization.authorization import Authorization
 
 
 class Command(BaseCommand):

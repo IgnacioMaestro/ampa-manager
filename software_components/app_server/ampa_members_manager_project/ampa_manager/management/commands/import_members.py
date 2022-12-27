@@ -3,16 +3,16 @@ import xlrd
 
 from django.core.management.base import BaseCommand
 
-import ampa_members_manager.management.commands.import_command.settings as xls_settings
-from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_members_manager.family.models.family import Family
-from ampa_members_manager.family.models.parent import Parent
-from ampa_members_manager.family.models.child import Child
-from ampa_members_manager.management.commands.import_command.logger import Logger
-from ampa_members_manager.management.commands.import_command.importers.family_importer import FamilyImporter
-from ampa_members_manager.management.commands.import_command.importers.parent_importer import ParentImporter
-from ampa_members_manager.management.commands.import_command.importers.child_importer import ChildImporter
-from ampa_members_manager.management.commands.import_command.importers.bank_account_importer import BankAccountImporter
+import ampa_manager.management.commands.import_command.settings as xls_settings
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.parent import Parent
+from ampa_manager.family.models.child import Child
+from ampa_manager.management.commands.import_command.logger import Logger
+from ampa_manager.management.commands.import_command.importers.family_importer import FamilyImporter
+from ampa_manager.management.commands.import_command.importers.parent_importer import ParentImporter
+from ampa_manager.management.commands.import_command.importers.child_importer import ChildImporter
+from ampa_manager.management.commands.import_command.importers.bank_account_importer import BankAccountImporter
 
 
 class Command(BaseCommand):

@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.db.models import QuerySet
 
-from ampa_members_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_members_manager.family.models.family import Family
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.family import Family
 
 
 class Command(BaseCommand):
