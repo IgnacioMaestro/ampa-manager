@@ -37,8 +37,8 @@ class AfterSchoolEdition(PricePerLevel):
 
     @staticmethod
     def create_edition_for_active_course(after_school, period, timetable, levels, price_for_member, price_for_no_member):
-        edition = AfterSchoolEdition.objects.create(after_school=after_school, period=period,
-                                                    timetable=timetable, levels=levels,
-                                                    academic_course=ActiveCourse.load(),
-                                                    price_for_member=price_for_member,
-                                                    price_for_no_member=price_for_no_member)
+        return AfterSchoolEdition.objects.create(after_school=after_school, period=period,
+                                                 timetable=timetable, levels=levels,
+                                                 academic_course=ActiveCourse.load(),
+                                                 price_for_member=price_for_member,
+                                                 price_for_no_member=price_for_no_member)
