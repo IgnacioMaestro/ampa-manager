@@ -1,3 +1,5 @@
+import re
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE, Manager
@@ -6,6 +8,7 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
+from ampa_manager.management.commands.import_command.surnames import SURNAMES
 
 
 class Child(TimeStampedModel):
@@ -57,3 +60,14 @@ class Child(TimeStampedModel):
         if children.count() == 1:
             return children[0]
         return None
+
+    @staticmethod
+    def fix_accents():
+        for child in Child.objects.all():
+            for wrong, right in SURNAMES.items():
+                pattern = rf'\b{wrong}\b'
+                if re.search(pattern, child.name):
+                    before = child.name
+                    child.name = re.sub(pattern, right, child.name)
+                    child.save(update_fields=['name'])
+                    print(f'Child name fixed: {before} -> {child.name}')
