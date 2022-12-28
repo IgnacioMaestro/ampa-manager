@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+import re
+
 from django.db import models
 from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
@@ -8,6 +11,7 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.management.commands.import_command.surnames import SURNAMES
 
 
 class Family(TimeStampedModel):
@@ -52,3 +56,44 @@ class Family(TimeStampedModel):
     def to_decline_membership(self):
         self.decline_membership = True
         self.save()
+
+    @staticmethod
+    def find(surnames, parents_name_and_surnames=[]):
+        family = None
+        error = None
+
+        families = Family.objects.with_surnames(surnames)
+
+        if families.count() == 1:
+            family = families[0]
+        elif families.count() > 1:
+            if len(parents_name_and_surnames) > 0:
+                family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
+                if family is None:
+                    parents = ', '.join(parents_name_and_surnames)
+                    error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
+            else:
+                error = f'Multiple families with surnames "{surnames}"'
+
+        return family, error
+
+    @staticmethod
+    def get_family_filtered_by_parent(families, parents_name_and_surnames):
+        for family in families.all():
+            for parent in family.parents.all():
+                for name in parents_name_and_surnames:
+                    if name and (name in parent.name_and_surnames or parent.name_and_surnames in name):
+                        return family
+        return None
+
+    @staticmethod
+    def fix_accents():
+        for family in Family.objects.all():
+            for wrong, right in SURNAMES.items():
+                pattern = rf'\b{wrong}\b'
+                if re.search(pattern, family.surnames):
+                    before = family.surnames
+                    family.surnames = re.sub(pattern, right, family.surnames)
+                    family.surnames.replace(wrong, right)
+                    family.save(update_fields=['surnames'])
+                    print(f'Family surnames fixed: {before} -> {family.surnames}')

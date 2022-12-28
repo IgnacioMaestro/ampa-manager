@@ -38,7 +38,7 @@ class FamilyQuerySet(QuerySet):
 
     def with_surnames(self, surnames):
         return self.filter(surnames__iexact=surnames)
-    
+
     def with_number_of_parents(self, number):
         self = self.annotate(parents_count=Count('parents'))
         return self.filter(parents_count=number)

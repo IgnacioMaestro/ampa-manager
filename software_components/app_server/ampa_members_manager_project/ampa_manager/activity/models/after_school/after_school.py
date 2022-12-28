@@ -9,9 +9,16 @@ class AfterSchool(models.Model):
     funding = models.IntegerField(choices=Funding.choices, verbose_name=_("Funding"))
 
     class Meta:
-        verbose_name = _('AfterSchool')
-        verbose_name_plural = _('AfterSchools')
+        verbose_name = _('After-school')
+        verbose_name_plural = _('After-schools')
         db_table = 'after_school'
 
     def __str__(self) -> str:
         return f'{self.name}'
+
+    @staticmethod
+    def find(name):
+        try:
+            return AfterSchool.objects.get(name=name)
+        except AfterSchool.DoesNotExist:
+            return None

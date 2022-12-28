@@ -70,7 +70,7 @@ class AuthorizationImporter(Importer):
         try:
             parent_full_name = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
             iban = Importer.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
-            number = Importer.clean_string_value(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
+            number = Importer.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
             date_value = self.sheet.cell_value(rowx=row_index, colx=Command.DATE_INDEX)
             if date_value not in [None, '']:
