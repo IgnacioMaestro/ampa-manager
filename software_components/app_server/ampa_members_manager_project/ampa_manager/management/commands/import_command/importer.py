@@ -5,12 +5,6 @@ from ampa_manager.management.commands.import_command.surnames import SURNAMES
 
 
 class Importer:
-    STATUS_NOT_PROCESSED = 'not_processed'
-    STATUS_CREATED = 'created'
-    STATUS_UPDATED = 'updated'
-    STATUS_ADDED_TO_FAMILY = 'added_to_family'
-    STATUS_SET_AS_DEFAULT = 'set_as_default'
-    STATUS_NOT_MODIFIED = 'not_modified'
 
     @staticmethod
     def parse_bool(str_bool):
@@ -21,11 +15,11 @@ class Importer:
     
     @staticmethod
     def clean_email(str_value):
-        return Importer.clean_string_value(str_value, lower=True)
+        return Importer.clean_string(str_value, lower=True)
     
     @staticmethod
     def clean_surname(str_value):
-        str_value = Importer.clean_string_value(str_value, title=True)
+        str_value = Importer.clean_string(str_value, title=True)
         if str_value is not None:
             for wrong, right in SURNAMES.items():
                 if wrong in str_value:
@@ -34,7 +28,7 @@ class Importer:
         return None
 
     @staticmethod
-    def clean_string_value(str_value, lower=False, title=False):
+    def clean_string(str_value, lower=False, title=False):
         if str_value is not None:
             clean_value = Importer.remove_duplicate_spaces(str_value).strip()
             if clean_value not in [' ', '']:
@@ -58,10 +52,19 @@ class Importer:
         return None
     
     @staticmethod
-    def clean_integer(str_value, lower=False, title=False):
+    def clean_integer(value):
+        str_value = str(value)
         if str_value not in [None, '']:
             clean_value = Importer.remove_spaces(str_value).strip()
             return int(float(clean_value))
+        return None
+
+    @staticmethod
+    def clean_float(value):
+        str_value = str(value)
+        if str_value not in [None, '']:
+            clean_value = Importer.remove_spaces(str_value).strip()
+            return float(clean_value)
         return None
     
     @staticmethod
@@ -78,7 +81,7 @@ class Importer:
     
     @staticmethod
     def clean_phone(phone):
-        phone = Importer.clean_string_value(phone)
+        phone = Importer.clean_string(phone)
         if phone and str(phone) not in ['0', '0.0', '0,0']:
             phone = str(phone)
             if not phone.startswith('+34'):

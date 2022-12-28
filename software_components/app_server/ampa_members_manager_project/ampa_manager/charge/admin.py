@@ -278,7 +278,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     # def receipts_count(self, remittance):
     #     return MembershipReceipt.objects.of_remittance(remittance).count()
 
-    @admin.action(description=gettext_lazy("Export AfterSchool Remittance to CSV"))
+    @admin.action(description=gettext_lazy("Export after-school remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))

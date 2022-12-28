@@ -39,3 +39,10 @@ class BankAccount(TimeStampedModel):
         if self.swift_bic in [None, '']:
             self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
+
+    @staticmethod
+    def find(iban):
+        try:
+            return BankAccount.objects.get(iban=iban)
+        except BankAccount.DoesNotExist:
+            return None

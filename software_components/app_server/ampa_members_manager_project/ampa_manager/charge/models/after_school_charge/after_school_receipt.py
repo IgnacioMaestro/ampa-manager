@@ -21,8 +21,8 @@ class AfterSchoolReceipt(models.Model):
         to=AfterSchoolRemittance, on_delete=CASCADE, verbose_name=_("After School remittance"))
 
     class Meta:
-        verbose_name = _('After School Receipt')
-        verbose_name_plural = _('After School Receipts')
+        verbose_name = _('After-school receipt')
+        verbose_name_plural = _('After-school receipts')
         db_table = 'after_school_receipt'
 
     def generate_receipt(self) -> Receipt:

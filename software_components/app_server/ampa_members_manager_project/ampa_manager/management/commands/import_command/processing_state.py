@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ProcessingState(Enum):
     NOT_PROCESSED = 0
     CREATED = 1
