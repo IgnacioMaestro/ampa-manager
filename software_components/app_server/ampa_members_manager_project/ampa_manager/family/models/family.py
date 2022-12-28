@@ -54,7 +54,7 @@ class Family(TimeStampedModel):
         self.save()
 
     @staticmethod
-    def find(surnames):
+    def find(surnames, parents_name_and_surnames=[]):
         family = None
         error = None
 
@@ -62,6 +62,21 @@ class Family(TimeStampedModel):
         if families.count() == 1:
             family = families[0]
         elif families.count() > 1:
-            error = f'Multiple families with surnames "{surnames}"'
+            if len(parents_name_and_surnames) > 0:
+                family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
+                if family is None:
+                    parents = ', '.join(parents_name_and_surnames)
+                    error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
+            else:
+                error = f'Multiple families with surnames "{surnames}"'
 
         return family, error
+
+    @staticmethod
+    def get_family_filtered_by_parent(families, parents_name_and_surnames):
+        for family in families.all():
+            for parent in family.parents.all():
+                for name in parents_name_and_surnames:
+                    if name and (name in parent.name_and_surnames or parent.name_and_surnames in name):
+                        return family
+        return None
