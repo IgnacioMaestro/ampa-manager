@@ -52,10 +52,19 @@ class Importer:
         return None
     
     @staticmethod
-    def clean_integer(str_value, lower=False, title=False):
+    def clean_integer(value):
+        str_value = str(value)
         if str_value not in [None, '']:
             clean_value = Importer.remove_spaces(str_value).strip()
             return int(float(clean_value))
+        return None
+
+    @staticmethod
+    def clean_float(value):
+        str_value = str(value)
+        if str_value not in [None, '']:
+            clean_value = Importer.remove_spaces(str_value).strip()
+            return float(clean_value)
         return None
     
     @staticmethod
