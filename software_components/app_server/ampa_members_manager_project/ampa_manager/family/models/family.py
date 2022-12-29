@@ -1,17 +1,16 @@
 from __future__ import annotations
 
-import re
-
 from django.db import models
 from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.academic_course.models.level import Level
-from ampa_manager.management.commands.import_command.surnames import SURNAMES
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.child import Child
+from ampa_manager.family.models.family_queryset import FamilyQuerySet
+from ampa_manager.family.models.parent import Parent
+from ampa_manager.management.commands.import_command.importer import Importer
 
 
 class Family(TimeStampedModel):
@@ -49,9 +48,8 @@ class Family(TimeStampedModel):
     def all_families(cls) -> QuerySet[Family]:
         return Family.objects.all()
 
-    def clean(self):
-        if self.surnames:
-            self.surnames = self.surnames.title().strip()
+    def clean_surnames(self):
+        return Importer.clean_surname(self.cleaned_data['surnames'])
 
     def to_decline_membership(self):
         self.decline_membership = True
@@ -87,13 +85,21 @@ class Family(TimeStampedModel):
         return None
 
     @staticmethod
-    def fix_accents():
+    def fix_surnames():
         for family in Family.objects.all():
-            for wrong, right in SURNAMES.items():
-                pattern = rf'\b{wrong}\b'
-                if re.search(pattern, family.surnames):
-                    before = family.surnames
-                    family.surnames = re.sub(pattern, right, family.surnames)
-                    family.surnames.replace(wrong, right)
-                    family.save(update_fields=['surnames'])
-                    print(f'Family surnames fixed: {before} -> {family.surnames}')
+            fixed_surnames = Importer.clean_surname(family.surnames)
+            if fixed_surnames != family.surnames:
+                print(f'Family surnames fixed: "{family.surnames}" -> "{fixed_surnames}"')
+                family.surnames = fixed_surnames
+                family.save(update_fields=['surnames'])
+
+    @staticmethod
+    def remove_duplicated_children():
+        for family in Family.objects.all():
+            for child in Child.objects.with_family(family):
+                duplicated = Child.find(family, child.name, child.id)
+                if duplicated:
+                    print(f'\nDuplicated child: Family "{family.surnames}"')
+                    print(f'- Kept: #{child.id}, {child.name}, {child.year_of_birth}, {child.repetition}, {child.family.id}')
+                    print(f'- Removed: #{duplicated.id}, {duplicated.name}, {duplicated.year_of_birth}, {duplicated.repetition}, {duplicated.family.id}')
+                    duplicated.delete()
