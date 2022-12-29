@@ -1,13 +1,13 @@
 import re
 
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.db.models import Manager
+from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
-
 from phonenumber_field.modelfields import PhoneNumberField
+
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
-from ampa_manager.management.commands.import_command.surnames import SURNAMES
+from ampa_manager.management.commands.import_command.importer import Importer
 
 
 class Parent(TimeStampedModel):
@@ -33,9 +33,18 @@ class Parent(TimeStampedModel):
     def belong_to_family(self, family):
         return self.family_set.filter(surnames=family.surnames).exists()
     
-    def clean(self):
-        if self.name_and_surnames:
-            self.name_and_surnames = self.name_and_surnames.title().strip()
+    def clean_name_and_surnames(self):
+        return Importer.clean_surname(self.cleaned_data['name_and_surnames'])
+
+    def match(self, name_and_surnames):
+        if name_and_surnames and self.name_and_surnames:
+            if name_and_surnames in self.name_and_surnames or self.name_and_surnames in name_and_surnames:
+                return True
+            for word in self.name_and_surnames.strip().split(' '):
+                pattern = rf'\b{word}\b'
+                if re.search(pattern, name_and_surnames, re.IGNORECASE):
+                    return True
+        return False
 
     @staticmethod
     def find(family, name_and_surnames):
@@ -45,17 +54,15 @@ class Parent(TimeStampedModel):
                 return parents.first()
             else:
                 for parent in family.parents.all():
-                    if name_and_surnames in parent.name_and_surnames or parent.name_and_surnames in name_and_surnames:
+                    if parent.match(name_and_surnames):
                         return parent
         return None
 
     @staticmethod
-    def fix_accents():
+    def fix_name_and_surnames():
         for parent in Parent.objects.all():
-            for wrong, right in SURNAMES.items():
-                pattern = rf'\b{wrong}\b'
-                if re.search(pattern, parent.name_and_surnames):
-                    before = parent.name_and_surnames
-                    parent.name_and_surnames = re.sub(pattern, right, parent.name_and_surnames)
-                    parent.save(update_fields=['name_and_surnames'])
-                    print(f'Parent name and surnames fixed: {before} -> {parent.name_and_surnames}')
+            fixed_name_and_surnames = Importer.clean_surname(parent.name_and_surnames)
+            if fixed_name_and_surnames != parent.name_and_surnames:
+                print(f'Parent name and surnames fixed: "{parent.name_and_surnames}" -> "{fixed_name_and_surnames}"')
+                parent.name_and_surnames = fixed_name_and_surnames
+                parent.save(update_fields=['name_and_surnames'])

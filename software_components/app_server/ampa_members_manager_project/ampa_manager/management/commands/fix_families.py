@@ -6,9 +6,10 @@ from ampa_manager.family.models.parent import Parent
 
 
 class Command(BaseCommand):
-    help = 'Fix accents in families, parents and children'
+    help = 'Fix surnames in families, parents and children. Remove duplicated children.'
 
     def handle(self, *args, **options):
-        Family.fix_accents()
-        Parent.fix_accents()
-        Child.fix_accents()
+        Family.remove_duplicated_children()
+        Family.fix_surnames()
+        Parent.fix_name_and_surnames()
+        Child.fix_names()

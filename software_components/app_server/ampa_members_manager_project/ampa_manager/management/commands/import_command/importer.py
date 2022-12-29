@@ -21,9 +21,17 @@ class Importer:
     def clean_surname(str_value):
         str_value = Importer.clean_string(str_value, title=True)
         if str_value is not None:
+            str_value = Importer.fix_accents(str_value)
+            return str_value
+        return None
+
+    @staticmethod
+    def fix_accents(str_value):
+        if str_value is not None:
             for wrong, right in SURNAMES.items():
-                if wrong in str_value:
-                    str_value = str_value.replace(wrong, right)
+                pattern = rf'\b{wrong}\b'
+                if re.search(pattern, str_value, re.IGNORECASE):
+                    str_value = re.sub(pattern, right, str_value)
             return str_value
         return None
 
