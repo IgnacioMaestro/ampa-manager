@@ -31,4 +31,4 @@ class AfterSchoolReceipt(models.Model):
             bank_account=bank_account)
         return Receipt(
             amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
-            authorization=authorization)
+            bic=bank_account.swift_bic, authorization=authorization)

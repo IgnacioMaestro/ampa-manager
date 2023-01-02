@@ -46,6 +46,7 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(receipt.bank_account_owner, self.bank_account.owner.full_name)
         self.assertIsNone(receipt.authorization)
         self.assertEqual(receipt.iban, self.bank_account.iban)
+        self.assertEqual(receipt.bic, self.bank_account.swift_bic)
 
     def test_generate_remittance_two_activity_receipts(self):
         receipt_count: Final[int] = 2
