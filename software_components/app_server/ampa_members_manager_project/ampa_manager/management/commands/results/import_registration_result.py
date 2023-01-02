@@ -1,5 +1,5 @@
-from ampa_manager.management.commands.utils.processing_state import ProcessingState
-from ampa_manager.management.commands.utils.registration_imported_fields import RegistrationImportedFields
+from ampa_manager.management.commands.results.processing_state import ProcessingState
+from ampa_manager.management.commands.imported_fields.registration_imported_fields import RegistrationImportedFields
 
 
 class ImportRegistrationResult:

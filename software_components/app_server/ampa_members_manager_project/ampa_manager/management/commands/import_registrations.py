@@ -12,34 +12,34 @@ from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
-from ampa_manager.management.commands.utils.import_registration_result import ImportRegistrationResult
-from ampa_manager.management.commands.utils.child_importer import ChildImporter
-from ampa_manager.management.commands.utils.parent_importer import ParentImporter
-from ampa_manager.management.commands.utils.processing_state import ProcessingState
-from ampa_manager.management.commands.utils.registration_imported_fields import RegistrationImportedFields
+from ampa_manager.management.commands.imported_fields.registration_imported_fields import RegistrationImportedFields
+from ampa_manager.management.commands.importers.child_importer import ChildImporter
+from ampa_manager.management.commands.importers.parent_importer import ParentImporter
+from ampa_manager.management.commands.results.import_registration_result import ImportRegistrationResult
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class Command(BaseCommand):
-    help = 'Import activity registrations'
+    help = 'Import after-schools registrations'
 
     SHEET_NUMBER = 0
     FIRST_ROW_NUMBER = 2
 
-    FAMILY_SURNAMES_INDEX = 0
-    CHILD_NAME_INDEX = 1
-    CHILD_LEVEL_INDEX = 3
-    CHILD_YEAR_INDEX = 4
-    PARENT_PHONE_INDEX = 5
-    PARENT_ADDITIONAL_PHONE_INDEX = 6
-    PARENT_EMAIL_INDEX = 7
-    PARENT_NAME_AND_SURNAMES_INDEX = 8
-    BANK_ACCOUNT_IBAN_INDEX = 10
-    AFTER_SCHOOL_NAME_INDEX = 11
-    EDITION_PERIOD_INDEX = 12
-    EDITION_TIMETABLE_INDEX = 13
-    EDITION_LEVELS_INDEX = 14
-    EDITION_PRICE_FOR_MEMBERS_INDEX = 15
-    EDITION_PRICE_FOR_NO_MEMBERS_INDEX = 16
+    COLUMN_INDEX_FAMILY_SURNAMES = 0
+    COLUMN_INDEX_CHILD_NAME = 1
+    COLUMN_INDEX_CHILD_LEVEL = 3
+    COLUMN_INDEX_CHILD_YEAR = 4
+    COLUMN_INDEX_PARENT_PHONE = 5
+    COLUMN_INDEX_PARENT_ADDITIONAL_PHONE = 6
+    COLUMN_INDEX_PARENT_EMAIL = 7
+    COLUMN_INDEX_PARENT_NAME_AND_SURNAMES = 8
+    COLUMN_INDEX_BANK_ACCOUNT_IBAN = 10
+    COLUMN_INDEX_AFTER_SCHOOL_NAME = 11
+    COLUMN_INDEX_EDITION_PERIOD = 12
+    COLUMN_INDEX_EDITION_TIMETABLE = 13
+    COLUMN_INDEX_EDITION_LEVELS = 14
+    COLUMN_INDEX_EDITION_PRICE_FOR_MEMBERS = 15
+    COLUMN_INDEX_EDITION_PRICE_FOR_NO_MEMBERS = 16
 
     CREATE_EDITION_IF_NOT_EXISTS = True
 
@@ -113,21 +113,21 @@ class Command(BaseCommand):
         self.sheet = self.book.sheet_by_index(Command.SHEET_NUMBER)
 
     def import_fields(self, row_index):
-        family_surnames = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.FAMILY_SURNAMES_INDEX))
-        child_name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.CHILD_NAME_INDEX))
-        child_level = FieldsFormatter.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.CHILD_LEVEL_INDEX))
-        child_year = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.CHILD_YEAR_INDEX))
-        parent_name_and_surnames = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.PARENT_NAME_AND_SURNAMES_INDEX))
-        parent_phone_number = FieldsFormatter.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.PARENT_PHONE_INDEX))
-        parent_additional_phone_number = FieldsFormatter.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.PARENT_ADDITIONAL_PHONE_INDEX))
-        parent_email = FieldsFormatter.clean_email(self.sheet.cell_value(rowx=row_index, colx=self.PARENT_EMAIL_INDEX))
-        bank_account_iban = FieldsFormatter.clean_iban(self.sheet.cell_value(rowx=row_index, colx=self.BANK_ACCOUNT_IBAN_INDEX))
-        after_school_name = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.AFTER_SCHOOL_NAME_INDEX))
-        edition_timetable = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.EDITION_TIMETABLE_INDEX))
-        edition_period = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.EDITION_PERIOD_INDEX))
-        edition_levels = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.EDITION_LEVELS_INDEX))
-        edition_price_for_members = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.EDITION_PRICE_FOR_MEMBERS_INDEX))
-        edition_price_for_no_members = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.EDITION_PRICE_FOR_NO_MEMBERS_INDEX))
+        family_surnames = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_FAMILY_SURNAMES))
+        child_name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_NAME))
+        child_level = FieldsFormatter.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_LEVEL))
+        child_year = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_YEAR))
+        parent_name_and_surnames = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_NAME_AND_SURNAMES))
+        parent_phone_number = FieldsFormatter.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_PHONE))
+        parent_additional_phone_number = FieldsFormatter.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_ADDITIONAL_PHONE))
+        parent_email = FieldsFormatter.clean_email(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_EMAIL))
+        bank_account_iban = FieldsFormatter.clean_iban(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_BANK_ACCOUNT_IBAN))
+        after_school_name = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_AFTER_SCHOOL_NAME))
+        edition_timetable = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_TIMETABLE))
+        edition_period = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_PERIOD))
+        edition_levels = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_LEVELS))
+        edition_price_for_members = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_PRICE_FOR_MEMBERS))
+        edition_price_for_no_members = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_PRICE_FOR_NO_MEMBERS))
 
         return RegistrationImportedFields(family_surnames, child_name, child_level, child_year,
                                           parent_name_and_surnames, parent_phone_number, parent_additional_phone_number,
