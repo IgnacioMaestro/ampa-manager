@@ -153,7 +153,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def import_child(family, fields):
-        child = Child.find(family, fields.child_name)
+        child = family.find_child(fields.child_name)
         error = None
 
         repetition = Level.calculate_repetition(fields.child_level, fields.child_year_of_birth)
@@ -176,7 +176,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def import_parent(family, fields):
-        parent = Parent.find(family, fields.parent_name_and_surnames)
+        parent = family.find_parent(fields.parent_name_and_surnames)
         error = None
 
         if parent:
