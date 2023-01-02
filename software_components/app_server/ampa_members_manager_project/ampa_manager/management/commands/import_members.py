@@ -22,41 +22,38 @@ class Command(BaseCommand):
 
     FAMILY_SURNAMES_INDEX = 0
 
-    PARENT1_FULL_NAME_INDEX = 1
-    PARENT1_PHONE1_INDEX = 2
-    PARENT1_PHONE2_INDEX = 3
-    PARENT1_EMAIL_INDEX = 4
-    PARENT1_SWIFT_BIC_INDEX = 5
-    PARENT1_IBAN_INDEX = 6
-    PARENT1_IS_DEFAULT_INDEX = 7
-
-    PARENT2_FULL_NAME_INDEX = 8
-    PARENT2_PHONE1_INDEX = 9
-    PARENT2_PHONE2_INDEX = 10
-    PARENT2_EMAIL_INDEX = 11
-    PARENT2_SWIFT_BIC_INDEX = 12
-    PARENT2_IBAN_INDEX = 13
-    PARENT2_IS_DEFAULT_INDEX = 14
-
-    CHILD1_NAME_INDEX = 15
-    CHILD1_YEAR_INDEX = 16
-    CHILD1_LEVEL_INDEX = 17
-
-    CHILD2_NAME_INDEX = 18
-    CHILD2_YEAR_INDEX = 19
-    CHILD2_LEVEL_INDEX = 20
-
-    CHILD3_NAME_INDEX = 21
-    CHILD3_YEAR_INDEX = 22
-    CHILD3_LEVEL_INDEX = 23
-
-    CHILD4_NAME_INDEX = 24
-    CHILD4_YEAR_INDEX = 25
-    CHILD4_LEVEL_INDEX = 26
-
-    CHILD5_NAME_INDEX = 27
-    CHILD5_YEAR_INDEX = 28
-    CHILD5_LEVEL_INDEX = 29
+    COLUMNS_INDEXES = {
+        'family_surnames': 0,
+        'parent1_full_name': 1,
+        'parent1_phone1': 2,
+        'parent1_phone2': 3,
+        'parent1_email': 4,
+        'parent1_swift_bic': 5,
+        'parent1_iban': 6,
+        'parent1_is_default': 7,
+        'parent2_full_name': 8,
+        'parent2_phone1': 9,
+        'parent2_phone2': 10,
+        'parent2_email': 11,
+        'parent2_swift_bic': 12,
+        'parent2_iban': 13,
+        'parent2_is_default': 14,
+        'child1_name': 15,
+        'child1_year': 16,
+        'child1_level': 17,
+        'child2_name': 18,
+        'child2_year': 19,
+        'child2_level': 20,
+        'child3_name': 21,
+        'child3_year': 22,
+        'child3_level': 23,
+        'child4_name': 24,
+        'child4_year': 25,
+        'child4_level': 26,
+        'child5_name': 27,
+        'child5_year': 28,
+        'child5_level': 29,
+    }
 
     results = []
     totals = {}
@@ -69,19 +66,14 @@ class Command(BaseCommand):
             self.logger = Logger()
             self.load_excel(options['file'])
 
-            self.family_importer = FamilyImporter(self.sheet, Command.FAMILY_SURNAMES_INDEX,
-                                                  Command.PARENT1_FULL_NAME_INDEX, Command.PARENT2_FULL_NAME_INDEX)
-            self.parent_importer = ParentImporter(self.sheet, Command.PARENT1_FULL_NAME_INDEX,
-                                                  Command.PARENT1_PHONE1_INDEX, Command.PARENT1_PHONE2_INDEX,
-                                                  Command.PARENT1_EMAIL_INDEX, Command.PARENT2_FULL_NAME_INDEX,
-                                                  Command.PARENT2_PHONE1_INDEX, Command.PARENT2_PHONE2_INDEX,
-                                                  Command.PARENT2_EMAIL_INDEX)
-            self.child_importer = ChildImporter(self.sheet, xls_settings)
-            self.bank_account_importer = BankAccountImporter(self.sheet, xls_settings)
+            self.family_importer = FamilyImporter(self.sheet, Command.COLUMNS_INDEXES)
+            self.parent_importer = ParentImporter(self.sheet, Command.COLUMNS_INDEXES)
+            self.child_importer = ChildImporter(self.sheet, Command.COLUMNS_INDEXES)
+            self.bank_account_importer = BankAccountImporter(self.sheet, Command.COLUMNS_INDEXES)
 
             self.set_totals_before()
 
-            for row_index in range(xls_settings.FIRST_ROW_INDEX, self.sheet.nrows):
+            for row_index in range(Command.FIRST_ROW_INDEX, self.sheet.nrows):
                 row_number = row_index + 1
                 self.logger.log(f'\nRow {row_number}')
 
@@ -126,7 +118,7 @@ class Command(BaseCommand):
     def load_excel(self, file_path):
         self.logger.log(f'\nImporting file {file_path}')
         self.book = xlrd.open_workbook(file_path)
-        self.sheet = self.book.sheet_by_index(xls_settings.SHEET_NUMBER)
+        self.sheet = self.book.sheet_by_index(Command.SHEET_NUMBER)
     
     def totalize_results(self):
         totals = {}
@@ -148,8 +140,8 @@ class Command(BaseCommand):
     def print_stats(self):
         self.logger.log('\nSUMMARY\n')
 
-        rows_with_data_count = self.sheet.nrows - xls_settings.FIRST_ROW_INDEX
-        self.logger.log(f' - Rows with data: {rows_with_data_count} (rows {xls_settings.FIRST_ROW_INDEX+1} to {self.sheet.nrows}). Sheet: "{self.sheet.name}"')
+        rows_with_data_count = self.sheet.nrows - Command.FIRST_ROW_INDEX
+        self.logger.log(f' - Rows with data: {rows_with_data_count} (rows {Command.FIRST_ROW_INDEX+1} to {self.sheet.nrows}). Sheet: "{self.sheet.name}"')
 
         self.totals = self.totalize_results()
         for class_name, states in self.totals.items():
