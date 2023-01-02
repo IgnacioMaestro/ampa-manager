@@ -48,3 +48,4 @@ class TestAfterSchoolReceipt(TestCase):
         bank_account: BankAccount = after_school_receipt.after_school_registration.bank_account
         self.assertEqual(receipt.bank_account_owner, bank_account.owner.full_name)
         self.assertEqual(receipt.iban, bank_account.iban)
+        self.assertEqual(receipt.bic, bank_account.swift_bic)
