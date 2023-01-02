@@ -115,12 +115,3 @@ class Level:
     def calculate_age(year_of_birth):
         active_course = ActiveCourse.load()
         return active_course.initial_year - year_of_birth
-
-    @staticmethod
-    def parse_level(level):
-        if level:
-            cleaned_level = str(level).strip().lower()
-            for level_id, level_name in Level.LEVELS_NAMES.items():
-                if level_name.strip().lower() in cleaned_level:
-                    return level_id
-        return None

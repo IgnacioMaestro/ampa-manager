@@ -8,7 +8,7 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
-from ampa_manager.management.commands.import_command.importer import Importer
+from ampa_manager.management.commands.utils.importer import Importer
 
 
 class Child(TimeStampedModel):

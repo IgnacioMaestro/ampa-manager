@@ -10,7 +10,7 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.import_command.importer import Importer
+from ampa_manager.management.commands.utils.importer import Importer
 
 
 class Family(TimeStampedModel):
