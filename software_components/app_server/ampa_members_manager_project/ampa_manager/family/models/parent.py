@@ -1,5 +1,3 @@
-import re
-
 from django.db import models
 from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
@@ -8,6 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
 from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.string_utils import StringUtils
 
 
 class Parent(TimeStampedModel):
@@ -36,27 +35,14 @@ class Parent(TimeStampedModel):
     def clean_name_and_surnames(self):
         return FieldsFormatter.clean_name(self.cleaned_data['name_and_surnames'])
 
-    def match(self, name_and_surnames):
+    def matches_name_and_surnames(self, name_and_surnames, strict=False):
         if name_and_surnames and self.name_and_surnames:
-            if name_and_surnames in self.name_and_surnames or self.name_and_surnames in name_and_surnames:
-                return True
-            for word in self.name_and_surnames.strip().split(' '):
-                pattern = rf'\b{word}\b'
-                if re.search(pattern, name_and_surnames, re.IGNORECASE):
+            if strict:
+                if StringUtils.compare_ignoring_everything(self.name_and_surnames, name_and_surnames):
                     return True
+            elif StringUtils.contains_any_word(self.name_and_surnames, name_and_surnames):
+                return True
         return False
-
-    @staticmethod
-    def find(family, name_and_surnames):
-        if name_and_surnames:
-            parents = Parent.objects.with_full_name(name_and_surnames)
-            if parents.count() == 1:
-                return parents.first()
-            else:
-                for parent in family.parents.all():
-                    if parent.match(name_and_surnames):
-                        return parent
-        return None
 
     @staticmethod
     def fix_name_and_surnames():
