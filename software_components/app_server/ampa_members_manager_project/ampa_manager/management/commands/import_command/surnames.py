@@ -49,5 +49,5 @@ SURNAMES = {
     'Beltran': 'Beltrán',
     'Plagaro': 'Plágaro',
     'Estevez': 'Estévez',
-    'Exposito': 'Expósito',
+    'Exposito: 'Expósito',
 }
