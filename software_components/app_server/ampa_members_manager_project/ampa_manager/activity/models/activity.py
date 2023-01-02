@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.funding import Funding
-from ampa_manager.fields_formatter import FieldsFormatter
+from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
 
 
 class Activity(models.Model):

@@ -5,9 +5,9 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.management.commands.import_command.importer import Importer
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
 
 
 class Command(BaseCommand):
@@ -32,7 +32,7 @@ class Command(BaseCommand):
             errors_count = 0
             success_count = 0
             for row_index in range(Command.FIRST_ROW_NUMBER, self.sheet.nrows):
-                success = self.importer.import_authorization(row_index)
+                success, _ = self.importer.import_authorization(row_index)
 
                 if success:
                     success_count += 1
@@ -51,7 +51,7 @@ class Command(BaseCommand):
         self.sheet = self.book.sheet_by_index(Command.SHEET_NUMBER)
 
 
-class AuthorizationImporter(Importer):
+class AuthorizationImporter:
 
     def __init__(self, sheet, book):
         self.book = book
@@ -68,9 +68,9 @@ class AuthorizationImporter(Importer):
         date_value = None
 
         try:
-            parent_full_name = Importer.clean_surname(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
-            iban = Importer.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
-            number = Importer.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
+            parent_full_name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
+            iban = FieldsFormatter.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
+            number = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
             date_value = self.sheet.cell_value(rowx=row_index, colx=Command.DATE_INDEX)
             if date_value not in [None, '']:
@@ -119,7 +119,7 @@ class AuthorizationImporter(Importer):
             status = 'OK' if success else 'ERROR'
             print(f'- Row {row_index+1}: {parent_full_name}, {iban}, {number}, {date_value} -> {status}: {message}')
 
-        return success
+        return success, authorization
     
     @staticmethod
     def get_parent(full_name):

@@ -3,20 +3,60 @@ import xlrd
 
 from django.core.management.base import BaseCommand
 
-import ampa_manager.management.commands.import_command.settings as xls_settings
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.child import Child
-from ampa_manager.management.commands.import_command.logger import Logger
-from ampa_manager.management.commands.import_command.importers.family_importer import FamilyImporter
-from ampa_manager.management.commands.import_command.importers.parent_importer import ParentImporter
-from ampa_manager.management.commands.import_command.importers.child_importer import ChildImporter
-from ampa_manager.management.commands.import_command.importers.bank_account_importer import BankAccountImporter
+from ampa_manager.management.commands.utils.logger import Logger
+from ampa_manager.management.commands.utils.family_importer import FamilyImporter
+from ampa_manager.management.commands.utils.parent_importer import ParentImporter
+from ampa_manager.management.commands.utils.child_importer import ChildImporter
+from ampa_manager.management.commands.utils.bank_account_importer import BankAccountImporter
 
 
 class Command(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
+
+    SHEET_NUMBER = 0
+    FIRST_ROW_INDEX = 3
+
+    FAMILY_SURNAMES_INDEX = 0
+
+    PARENT1_FULL_NAME_INDEX = 1
+    PARENT1_PHONE1_INDEX = 2
+    PARENT1_PHONE2_INDEX = 3
+    PARENT1_EMAIL_INDEX = 4
+    PARENT1_SWIFT_BIC_INDEX = 5
+    PARENT1_IBAN_INDEX = 6
+    PARENT1_IS_DEFAULT_INDEX = 7
+
+    PARENT2_FULL_NAME_INDEX = 8
+    PARENT2_PHONE1_INDEX = 9
+    PARENT2_PHONE2_INDEX = 10
+    PARENT2_EMAIL_INDEX = 11
+    PARENT2_SWIFT_BIC_INDEX = 12
+    PARENT2_IBAN_INDEX = 13
+    PARENT2_IS_DEFAULT_INDEX = 14
+
+    CHILD1_NAME_INDEX = 15
+    CHILD1_YEAR_INDEX = 16
+    CHILD1_LEVEL_INDEX = 17
+
+    CHILD2_NAME_INDEX = 18
+    CHILD2_YEAR_INDEX = 19
+    CHILD2_LEVEL_INDEX = 20
+
+    CHILD3_NAME_INDEX = 21
+    CHILD3_YEAR_INDEX = 22
+    CHILD3_LEVEL_INDEX = 23
+
+    CHILD4_NAME_INDEX = 24
+    CHILD4_YEAR_INDEX = 25
+    CHILD4_LEVEL_INDEX = 26
+
+    CHILD5_NAME_INDEX = 27
+    CHILD5_YEAR_INDEX = 28
+    CHILD5_LEVEL_INDEX = 29
 
     results = []
     totals = {}
@@ -29,8 +69,13 @@ class Command(BaseCommand):
             self.logger = Logger()
             self.load_excel(options['file'])
 
-            self.family_importer = FamilyImporter(self.sheet, xls_settings)
-            self.parent_importer = ParentImporter(self.sheet, xls_settings)
+            self.family_importer = FamilyImporter(self.sheet, Command.FAMILY_SURNAMES_INDEX,
+                                                  Command.PARENT1_FULL_NAME_INDEX, Command.PARENT2_FULL_NAME_INDEX)
+            self.parent_importer = ParentImporter(self.sheet, Command.PARENT1_FULL_NAME_INDEX,
+                                                  Command.PARENT1_PHONE1_INDEX, Command.PARENT1_PHONE2_INDEX,
+                                                  Command.PARENT1_EMAIL_INDEX, Command.PARENT2_FULL_NAME_INDEX,
+                                                  Command.PARENT2_PHONE1_INDEX, Command.PARENT2_PHONE2_INDEX,
+                                                  Command.PARENT2_EMAIL_INDEX)
             self.child_importer = ChildImporter(self.sheet, xls_settings)
             self.bank_account_importer = BankAccountImporter(self.sheet, xls_settings)
 
