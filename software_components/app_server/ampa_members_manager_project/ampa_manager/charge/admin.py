@@ -1,6 +1,7 @@
 import codecs
 import csv
 import locale
+from typing import List
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -24,7 +25,6 @@ from .use_cases.membership.create_membership_remittance_for_unique_families.memb
     MembershipRemittanceCreatorOfActiveCourse
 from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
-
 
 TEXT_CSV = 'text/csv'
 RECEIPTS_SET_AS_SENT_MESSAGE = "%(num_receipts)s receipts set as sent"
@@ -259,24 +259,23 @@ class AfterSchoolReceiptInline(ReadOnlyTabularInline):
 
 
 class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at']
+    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
     inlines = [AfterSchoolReceiptInline]
     list_per_page = 25
 
-    # @admin.display(description=gettext_lazy('Total'))
-    # def receipts_total(self, remittance):
-    #     number_of_receipts = AfterSchoolReceipt.objects.of_remittance(remittance).count()
-    #     fee = Fee.objects.filter(academic_course=remittance.course).first()
-    #     if fee:
-    #         total = number_of_receipts * fee.amount
-    #         locale.setlocale(locale.LC_ALL, 'es_ES')
-    #         return locale.format_string('%d €', total, grouping=True)
-    #     return '0 €'
+    @admin.display(description=gettext_lazy('Total'))
+    def receipts_total(self, remittance):
+        receipts = AfterSchoolReceipt.objects.filter(remittance=remittance)
+        total = 0.0
+        for receipt in receipts:
+            total += receipt.amount
+        locale.setlocale(locale.LC_ALL, 'es_ES')
+        return locale.format_string('%d €', total, grouping=True)
 
-    # @admin.display(description=gettext_lazy('Receipts'))
-    # def receipts_count(self, remittance):
-    #     return MembershipReceipt.objects.of_remittance(remittance).count()
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_count(self, remittance):
+        return AfterSchoolReceipt.objects.filter(remittance=remittance).count()
 
     @admin.action(description=gettext_lazy("Export after-school remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
@@ -290,7 +289,9 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}"'}
         response = HttpResponse(content_type=TEXT_CSV, headers=headers)
         response.write(codecs.BOM_UTF8)
-        csv.writer(response).writerows(remittance.obtain_rows())
+        rows_to_add: List[List[str]] = [['Titular', 'BIC', 'IBAN', 'Autorizacion', 'Fecha Autorizacion', 'Cantidad']]
+        rows_to_add.extend(remittance.obtain_rows())
+        csv.writer(response).writerows(rows_to_add)
         return response
 
     actions = [download_membership_remittance_csv]
