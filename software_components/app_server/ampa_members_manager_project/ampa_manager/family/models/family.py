@@ -66,11 +66,11 @@ class Family(TimeStampedModel):
 
     def find_parent(self, name_and_surnames: str):
         if name_and_surnames:
-            for parent in self.parents.all():
+            family_parents = self.parents.all()
+            for parent in family_parents:
                 if parent.matches_name_and_surnames(name_and_surnames, strict=True):
                     return parent
-
-            for parent in self.parents.all():
+            for parent in family_parents:
                 if parent.matches_name_and_surnames(name_and_surnames, strict=False):
                     return parent
         return None
