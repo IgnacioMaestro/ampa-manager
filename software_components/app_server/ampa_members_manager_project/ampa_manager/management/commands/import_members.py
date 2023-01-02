@@ -8,10 +8,10 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.child import Child
 from ampa_manager.management.commands.utils.logger import Logger
-from ampa_manager.management.commands.utils.family_importer import FamilyImporter
-from ampa_manager.management.commands.utils.parent_importer import ParentImporter
-from ampa_manager.management.commands.utils.child_importer import ChildImporter
-from ampa_manager.management.commands.utils.bank_account_importer import BankAccountImporter
+from ampa_manager.management.commands.importers.family_importer import FamilyImporter
+from ampa_manager.management.commands.importers.parent_importer import ParentImporter
+from ampa_manager.management.commands.importers.child_importer import ChildImporter
+from ampa_manager.management.commands.importers.bank_account_importer import BankAccountImporter
 
 
 class Command(BaseCommand):
