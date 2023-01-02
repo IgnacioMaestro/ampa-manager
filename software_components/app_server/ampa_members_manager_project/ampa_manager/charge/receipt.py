@@ -9,7 +9,7 @@ class AuthorizationReceipt:
     date: datetime.date
 
     def obtain_date(self) -> str:
-        return self.date.strftime("%m/%d/%Y")
+        return self.date.strftime("%d/%m/%Y")
 
 
 @dataclass
