@@ -64,7 +64,7 @@ class Family(TimeStampedModel):
     def has_parent(self, parent_name_and_surnames):
         return self.find_parent(parent_name_and_surnames) is not None
 
-    def find_parent(self, name_and_surnames: str):
+    def find_parent(self, name_and_surnames: str) -> Optional[Parent]:
         if name_and_surnames:
             family_parents = self.parents.all()
             for parent in family_parents:
@@ -75,7 +75,7 @@ class Family(TimeStampedModel):
                     return parent
         return None
 
-    def find_child(self, name, exclude_id=None):
+    def find_child(self, name: str, exclude_id: Optional[int] = None) -> Optional[Child]:
         if name:
             family_children = Child.objects.with_family(self)
             for child in family_children:
@@ -91,7 +91,7 @@ class Family(TimeStampedModel):
         return None
 
     @staticmethod
-    def find(surnames, parents_name_and_surnames=None):
+    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None):
         family = None
         error = None
 
@@ -143,3 +143,17 @@ class Family(TimeStampedModel):
             if family.matches_surnames(surnames):
                 families.append(family)
         return families
+
+    @staticmethod
+    def review_data():
+        warnings = []
+
+        families_without_account = Family.objects.without_default_bank_account().count()
+        if families_without_account > 0:
+            warnings.append(f'- Families without bank account: {families_without_account}')
+
+        families_with_more_than_2_parents = Family.objects.with_more_than_two_parents().count()
+        if families_with_more_than_2_parents > 0:
+            warnings.append(f'- Families with more than 2 parents: {families_with_more_than_2_parents}')
+
+        return warnings
