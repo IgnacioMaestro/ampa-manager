@@ -52,3 +52,21 @@ class Parent(TimeStampedModel):
                 print(f'Parent name and surnames fixed: "{parent.name_and_surnames}" -> "{fixed_name_and_surnames}"')
                 parent.name_and_surnames = fixed_name_and_surnames
                 parent.save(update_fields=['name_and_surnames'])
+
+    @staticmethod
+    def review_data():
+        warnings = []
+
+        parents_without_family = Parent.objects.has_no_family().count()
+        if parents_without_family > 0:
+            warnings.append(f'- Parents without family: {parents_without_family}')
+
+        parents_in_multiple_families = Parent.objects.has_multiple_families().count()
+        if parents_in_multiple_families > 0:
+            warnings.append(f'- Parents with multiple families: {parents_in_multiple_families}')
+
+        parents_with_multiple_bank_accounts = Parent.objects.with_multiple_bank_accounts().count()
+        if len(parents_with_multiple_bank_accounts) > 0:
+            warnings.append(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
+
+        return warnings

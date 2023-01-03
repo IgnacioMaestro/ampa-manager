@@ -9,19 +9,19 @@ from ampa_manager.utils.surnames import SURNAMES
 class StringUtils:
 
     @classmethod
-    def compare_ignoring_everything(cls, value1: str, value2: str):
+    def compare_ignoring_everything(cls, value1: str, value2: str) -> bool:
         if value1 and value2:
             return cls.normalize(value1) == cls.normalize(value2)
         return False
 
     @classmethod
-    def normalize(cls, value: str):
+    def normalize(cls, value: str) -> Optional[str]:
         if value:
             return cls.lowercase(cls.remove_strip_spaces(cls.remove_duplicated_spaces(cls.remove_accents(value))))
         return None
 
     @classmethod
-    def contains_any_word(cls, value1: str, value2: str):
+    def contains_any_word(cls, value1: str, value2: str) -> bool:
         if value1 and value2:
             for word in cls.normalize(value1).split(' '):
                 pattern = rf'\b{word}\b'
@@ -60,7 +60,7 @@ class StringUtils:
         return None
 
     @classmethod
-    def fix_accents(cls, value) -> Optional[str]:
+    def fix_accents(cls, value: str) -> Optional[str]:
         if value:
             for wrong, right in SURNAMES.items():
                 pattern = rf'\b{wrong}\b'

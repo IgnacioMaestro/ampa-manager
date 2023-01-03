@@ -153,20 +153,13 @@ class Command(BaseCommand):
 
         self.logger.log(f'\nVALIDATIONS:\n')
 
-        parents_without_family = Parent.objects.has_no_family().count()
-        self.logger.log(f'- Parents without family: {parents_without_family}')
+        warnings = Parent.review_data()
+        for warning in warnings:
+            self.logger.log(warning)
 
-        parents_in_multiple_families = Parent.objects.has_multiple_families().count()
-        self.logger.log(f'- Parents with multiple families: {parents_in_multiple_families}')
-
-        parents_with_multiple_bank_accounts = Parent.objects.with_multiple_bank_accounts().count()
-        self.logger.log(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
-
-        families_without_account = Family.objects.without_default_bank_account().count()
-        self.logger.log(f'- Families without bank account: {families_without_account}')
-
-        families_with_more_than_2_parents = Family.objects.with_more_than_two_parents().count()
-        self.logger.log(f'- Families with more than 2 parents: {families_with_more_than_2_parents}')
+        warnings = Family.review_data()
+        for warning in warnings:
+            self.logger.log(warning)
 
         errors = self.get_errors()
         self.logger.log(f'\nERRORS ({len(errors)}):\n')
