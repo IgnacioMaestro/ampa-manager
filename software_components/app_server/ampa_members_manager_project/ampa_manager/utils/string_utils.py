@@ -17,7 +17,7 @@ class StringUtils:
     @classmethod
     def normalize(cls, value: str):
         if value:
-            return cls.remove_duplicate_spaces(cls.remove_accents(value)).casefold().strip()
+            return cls.lowercase(cls.remove_strip_spaces(cls.remove_duplicated_spaces(cls.remove_accents(value))))
         return None
 
     @classmethod
@@ -48,7 +48,7 @@ class StringUtils:
         return None
 
     @classmethod
-    def remove_duplicate_spaces(cls, value: str) -> Optional[str]:
+    def remove_duplicated_spaces(cls, value: str) -> Optional[str]:
         if value:
             return re.sub(' +', ' ', value)
         return None
@@ -75,3 +75,10 @@ class StringUtils:
             return StringUtils.remove_accents(value.strip().lower()) in ["si", "bai", "yes", "1", "true"]
         else:
             return False
+
+    @classmethod
+    def lowercase(cls, value: str) -> Optional[str]:
+        if value:
+            return value.casefold()
+        else:
+            return None
