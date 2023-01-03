@@ -10,19 +10,19 @@ class FieldsFormatter:
     @classmethod
     def clean_name(cls, value: str) -> Optional[str]:
         if value:
-            return StringUtils.capitalize(StringUtils.fix_accents(StringUtils.remove_duplicate_spaces(StringUtils.remove_strip_spaces(value))))
+            return StringUtils.capitalize(StringUtils.fix_accents(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))))
         return None
 
     @classmethod
     def clean_string(cls, value: str) -> Optional[str]:
         if value:
-            return StringUtils.remove_duplicate_spaces(StringUtils.remove_strip_spaces(value))
+            return StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))
         return None
 
     @classmethod
     def clean_email(cls, value: str) -> Optional[str]:
         if value:
-            return StringUtils.remove_all_spaces(StringUtils.remove_accents(value.lower()))
+            return StringUtils.lowercase(StringUtils.remove_all_spaces(StringUtils.remove_accents(value)))
         return None
 
     @classmethod
@@ -61,13 +61,4 @@ class FieldsFormatter:
     def clean_float(cls, value: str) -> Optional[float]:
         if value:
             return int(StringUtils.remove_all_spaces(value))
-        return None
-
-    @classmethod
-    def parse_level(cls, value) -> Optional[str]:
-        if value:
-            value = value.strip().lower()
-            for level_id, level_name in Level.LEVELS_NAMES.items():
-                if level_name.strip().lower() in value:
-                    return level_id
         return None

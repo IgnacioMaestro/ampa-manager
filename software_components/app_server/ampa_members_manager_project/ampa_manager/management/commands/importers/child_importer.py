@@ -83,7 +83,7 @@ class ChildImporter:
 
             name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=name_index))
             year = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=year_index))
-            level = FieldsFormatter.parse_level(self.sheet.cell_value(rowx=row_index, colx=level_index))
+            level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=level_index))
 
         return ChildImportedFields(name, year, level)
 
