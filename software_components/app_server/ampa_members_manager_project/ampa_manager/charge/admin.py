@@ -322,10 +322,11 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.xml"'}
         response = HttpResponse(content_type=TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
-        # TODO: Sacar a funcion o usar Stream. Tiene que tener dos decimales
+        # TODO: Sacar a funcion o usar Stream.
         suma: float = 0
         for receipt in remittance.receipts:
             suma = suma + receipt.amount
+        suma = format(suma, '.2f')
         print("Empiezo a rellenar")
         document: Document = Document()
         customerdirectdebitinitiationv02: CustomerDirectDebitInitiationV02 = CustomerDirectDebitInitiationV02()
@@ -432,15 +433,13 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             directdebittransactioninformation9.pmt_id = paymentidentification1
             activeorhistoriccurrencyandamount = ActiveOrHistoricCurrencyAndAmount()
             activeorhistoriccurrencyandamount.ccy = EURO
-            # TODO: Poner dos decimales
-            activeorhistoriccurrencyandamount.value = receipt.amount
+            activeorhistoriccurrencyandamount.value = format(receipt.amount, '.2f')
             directdebittransactioninformation9.instd_amt = activeorhistoriccurrencyandamount
             directdebittransaction6 = DirectDebitTransaction6()
             mandaterelatedinformation6 = MandateRelatedInformation6()
             mandaterelatedinformation6.mndt_id = receipt.authorization.number
             #TODO: Si no hay fecha de autorización da una Excepción.
-            #TODO: Hay que ver como comvertir fecha del formato dd/mm/yyyy
-            mandaterelatedinformation6.dt_of_sgntr = XmlDate.today()
+            mandaterelatedinformation6.dt_of_sgntr = XmlDate.from_date(receipt.authorization.date)
             directdebittransaction6.mndt_rltd_inf = mandaterelatedinformation6
             directdebittransactioninformation9.drct_dbt_tx = directdebittransaction6
             branchandfinancialinstitutionidentification4deudor = BranchAndFinancialInstitutionIdentification4()
