@@ -1,7 +1,7 @@
 import traceback
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.management.commands.results.import_member_result import ImportMemberResult
 
 
@@ -67,9 +67,9 @@ class BankAccountImporter:
                 iban_index = self.columns_indexes['parent2_iban']
                 is_default_account_index = self.columns_indexes['parent2_is_default']
 
-            swift_bic = FieldsFormatter.clean_iban(self.sheet.cell_value(rowx=row_index, colx=swift_bic_index))
-            iban = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=iban_index))
-            is_default_account = FieldsFormatter.parse_bool(self.sheet.cell_value(rowx=row_index, colx=is_default_account_index))
+            swift_bic = FieldsFormatters.clean_iban(self.sheet.cell_value(rowx=row_index, colx=swift_bic_index))
+            iban = FieldsFormatters.clean_string(self.sheet.cell_value(rowx=row_index, colx=iban_index))
+            is_default_account = FieldsFormatters.parse_bool(self.sheet.cell_value(rowx=row_index, colx=is_default_account_index))
 
         return BankAccountImportedFields(swift_bic, iban, is_default_account)
 

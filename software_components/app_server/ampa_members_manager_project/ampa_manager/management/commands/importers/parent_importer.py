@@ -1,7 +1,7 @@
 import traceback
 
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.management.commands.results.import_member_result import ImportMemberResult
 from ampa_manager.management.commands.imported_fields.parent_imported_fields import ParentImportedFields
 
@@ -77,12 +77,12 @@ class ParentImporter:
                 additional_phone_number_index = self.columns_indexes['parent2_phone2']
                 email_index = self.columns_indexes['parent2_email']
 
-            name_and_surnames = FieldsFormatter.clean_name(
+            name_and_surnames = FieldsFormatters.clean_name(
                 self.sheet.cell_value(rowx=row_index, colx=name_and_surnames_index))
-            phone_number = FieldsFormatter.clean_phone(self.sheet.cell_value(rowx=row_index, colx=phone_number_index))
-            additional_phone_number = FieldsFormatter.clean_phone(
+            phone_number = FieldsFormatters.clean_phone(self.sheet.cell_value(rowx=row_index, colx=phone_number_index))
+            additional_phone_number = FieldsFormatters.clean_phone(
                 self.sheet.cell_value(rowx=row_index, colx=additional_phone_number_index))
-            email = FieldsFormatter.clean_email(self.sheet.cell_value(rowx=row_index, colx=email_index))
+            email = FieldsFormatters.clean_email(self.sheet.cell_value(rowx=row_index, colx=email_index))
 
         return ParentImportedFields(name_and_surnames, phone_number, additional_phone_number, email)
 

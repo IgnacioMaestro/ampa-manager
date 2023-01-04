@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.authorization.authorization import Authorization
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
 class Command(BaseCommand):
@@ -68,9 +68,9 @@ class AuthorizationImporter:
         date_value = None
 
         try:
-            parent_full_name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
-            iban = FieldsFormatter.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
-            number = FieldsFormatter.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
+            parent_full_name = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
+            iban = FieldsFormatters.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
+            number = FieldsFormatters.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
             date_value = self.sheet.cell_value(rowx=row_index, colx=Command.DATE_INDEX)
             if date_value not in [None, '']:

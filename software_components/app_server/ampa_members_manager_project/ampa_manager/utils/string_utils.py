@@ -8,59 +8,59 @@ from ampa_manager.utils.surnames import SURNAMES
 
 class StringUtils:
 
-    @classmethod
-    def compare_ignoring_everything(cls, value1: str, value2: str) -> bool:
+    @staticmethod
+    def compare_ignoring_everything(value1: str, value2: str) -> bool:
         if value1 and value2:
-            return cls.normalize(value1) == cls.normalize(value2)
+            return StringUtils.normalize(value1) == StringUtils.normalize(value2)
         return False
 
-    @classmethod
-    def normalize(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def normalize(value: str) -> Optional[str]:
         if value:
-            return cls.lowercase(cls.remove_strip_spaces(cls.remove_duplicated_spaces(cls.remove_accents(value))))
+            return StringUtils.lowercase(StringUtils.remove_strip_spaces(StringUtils.remove_duplicated_spaces(StringUtils.remove_accents(value))))
         return None
 
-    @classmethod
-    def contains_any_word(cls, value1: str, value2: str) -> bool:
+    @staticmethod
+    def contains_any_word(value1: str, value2: str) -> bool:
         if value1 and value2:
-            for word in cls.normalize(value1).split(' '):
+            for word in StringUtils.normalize(value1).split(' '):
                 pattern = rf'\b{word}\b'
-                if re.search(pattern, cls.normalize(value2)):
+                if re.search(pattern, StringUtils.normalize(value2)):
                     return True
         return False
 
-    @classmethod
-    def remove_accents(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def remove_accents(value: str) -> Optional[str]:
         if value:
             return unidecode(value)
         return None
 
-    @classmethod
-    def capitalize(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def capitalize(value: str) -> Optional[str]:
         if value:
             return value.title()
         return None
 
-    @classmethod
-    def remove_strip_spaces(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def remove_strip_spaces(value: str) -> Optional[str]:
         if value:
             return value.strip()
         return None
 
-    @classmethod
-    def remove_duplicated_spaces(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def remove_duplicated_spaces(value: str) -> Optional[str]:
         if value:
             return re.sub(' +', ' ', value)
         return None
 
-    @classmethod
-    def remove_all_spaces(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def remove_all_spaces(value: str) -> Optional[str]:
         if value is not None:
             return value.replace(' ', '')
         return None
 
-    @classmethod
-    def fix_accents(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def fix_accents(value: str) -> Optional[str]:
         if value:
             for wrong, right in SURNAMES.items():
                 pattern = rf'\b{wrong}\b'
@@ -69,15 +69,15 @@ class StringUtils:
             return value
         return None
 
-    @classmethod
-    def parse_bool(cls, value: str) -> bool:
+    @staticmethod
+    def parse_bool(value: str) -> bool:
         if value:
             return StringUtils.remove_accents(value.strip().lower()) in ["si", "bai", "yes", "1", "true"]
         else:
             return False
 
-    @classmethod
-    def lowercase(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def lowercase(value: str) -> Optional[str]:
         if value:
             return value.casefold()
         else:
