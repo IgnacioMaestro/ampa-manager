@@ -2,7 +2,7 @@ import traceback
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.management.commands.imported_fields.child_imported_fields import ChildImportedFields
 from ampa_manager.management.commands.results.import_member_result import ImportMemberResult
 
@@ -81,8 +81,8 @@ class ChildImporter:
                 year_index = self.columns_indexes['child5_year']
                 level_index = self.columns_indexes['child5_level']
 
-            name = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=name_index))
-            year = FieldsFormatter.clean_integer(self.sheet.cell_value(rowx=row_index, colx=year_index))
+            name = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=name_index))
+            year = FieldsFormatters.clean_integer(self.sheet.cell_value(rowx=row_index, colx=year_index))
             level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=level_index))
 
         return ChildImportedFields(name, year, level)

@@ -6,27 +6,27 @@ from ampa_manager.academic_course.models.level import Level
 from ampa_manager.utils.string_utils import StringUtils
 
 
-class FieldsFormatter:
-    @classmethod
-    def clean_name(cls, value: str) -> Optional[str]:
+class FieldsFormatters:
+    @staticmethod
+    def clean_name(value: str) -> Optional[str]:
         if value:
             return StringUtils.capitalize(StringUtils.fix_accents(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))))
         return None
 
-    @classmethod
-    def clean_string(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def clean_string(value: str) -> Optional[str]:
         if value:
             return StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))
         return None
 
-    @classmethod
-    def clean_email(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def clean_email(value: str) -> Optional[str]:
         if value:
             return StringUtils.lowercase(StringUtils.remove_all_spaces(StringUtils.remove_accents(value)))
         return None
 
-    @classmethod
-    def clean_phone(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def clean_phone(value: str) -> Optional[str]:
         if value:
             value = StringUtils.remove_all_spaces(value)
             if value not in ['0', '0.0', '0,0']:
@@ -39,26 +39,26 @@ class FieldsFormatter:
                 return value
         return ''
 
-    @classmethod
-    def clean_iban(cls, value: str) -> Optional[str]:
+    @staticmethod
+    def clean_iban(value: str) -> Optional[str]:
         if value:
             return StringUtils.remove_all_spaces(value)
         return None
 
-    @classmethod
-    def clean_date(cls, value: str, date_format: str = '%d/%m/%y') -> Optional[datetime]:
+    @staticmethod
+    def clean_date(value: str, date_format: str = '%d/%m/%y') -> Optional[datetime]:
         if value:
             return datetime.strptime(StringUtils.remove_all_spaces(value), date_format)
         return None
 
-    @classmethod
-    def clean_integer(cls, value: str) -> Optional[int]:
+    @staticmethod
+    def clean_integer(value: str) -> Optional[int]:
         if value:
             return int(float(StringUtils.remove_all_spaces(value)))
         return None
 
-    @classmethod
-    def clean_float(cls, value: str) -> Optional[float]:
+    @staticmethod
+    def clean_float(value: str) -> Optional[float]:
         if value:
             return int(StringUtils.remove_all_spaces(value))
         return None

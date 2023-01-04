@@ -1,7 +1,7 @@
 import traceback
 
 from ampa_manager.family.models.family import Family
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.management.commands.results.import_member_result import ImportMemberResult
 
 
@@ -42,9 +42,9 @@ class FamilyImporter:
         return family, result
 
     def import_fields(self, row_index):
-        surnames = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['family_surnames']))
-        parent1_fullname = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['parent1_full_name']))
-        parent2_fullname = FieldsFormatter.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['parent2_full_name']))
+        surnames = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['family_surnames']))
+        parent1_fullname = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['parent1_full_name']))
+        parent2_fullname = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.columns_indexes['parent2_full_name']))
         return surnames, parent1_fullname, parent2_fullname
 
     @staticmethod

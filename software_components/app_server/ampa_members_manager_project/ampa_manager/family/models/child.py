@@ -6,7 +6,7 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 
 
@@ -46,7 +46,7 @@ class Child(TimeStampedModel):
         return self.age - self.repetition
 
     def clean_name(self):
-        return FieldsFormatter.clean_name(self.cleaned_data['name'])
+        return FieldsFormatters.clean_name(self.cleaned_data['name'])
 
     @staticmethod
     def get_children_ids(min_age, max_age):
@@ -64,7 +64,7 @@ class Child(TimeStampedModel):
     @staticmethod
     def fix_names():
         for child in Child.objects.all():
-            fixed_name = FieldsFormatter.clean_name(child.name)
+            fixed_name = FieldsFormatters.clean_name(child.name)
             if fixed_name != child.name:
                 print(f'Child name fixed: "{child.name}" -> "{fixed_name}"')
                 child.name = fixed_name

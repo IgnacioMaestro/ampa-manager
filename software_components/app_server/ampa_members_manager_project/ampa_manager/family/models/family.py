@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Union, Optional
+from typing import List, Optional
 
 from django.db import models
 from django.db.models import SET_NULL, QuerySet, Manager
@@ -12,7 +12,7 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.field_formatters.fields_formatter import FieldsFormatter
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 
 
@@ -52,7 +52,7 @@ class Family(TimeStampedModel):
         return Family.objects.all()
 
     def clean_surnames(self):
-        return FieldsFormatter.clean_name(self.cleaned_data['surnames'])
+        return FieldsFormatters.clean_name(self.cleaned_data['surnames'])
 
     def to_decline_membership(self):
         self.decline_membership = True
@@ -119,7 +119,7 @@ class Family(TimeStampedModel):
     @staticmethod
     def fix_surnames():
         for family in Family.objects.all():
-            fixed_surnames = FieldsFormatter.clean_name(family.surnames)
+            fixed_surnames = FieldsFormatters.clean_name(family.surnames)
             if fixed_surnames != family.surnames:
                 print(f'Family surnames fixed: "{family.surnames}" -> "{fixed_surnames}"')
                 family.surnames = fixed_surnames
