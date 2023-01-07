@@ -11,15 +11,19 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.management.commands.importers.registration_excel_importer import RegistrationExcelImporter, \
     RegistrationImportResult, RegistrationExcelRowFields
-from ampa_manager.management.commands.utils.log_to_file_command import LogToFileCommand
+from ampa_manager.management.commands.utils.logger import Logger
 
 
-class Command(LogToFileCommand):
+class Command(BaseCommand):
     help = 'Import after-schools registrations'
 
     SHEET_NUMBER = 0
-    FIRST_ROW_NUMBER = 2
+    FIRST_ROW_INDEX = 2
     CREATE_EDITION_IF_NOT_EXISTS = True
+
+    def __init__(self):
+        super().__init__()
+        self.logger = Logger('import_registrations')
 
     def add_arguments(self, parser):
         parser.add_argument('file', type=str)
@@ -27,21 +31,24 @@ class Command(LogToFileCommand):
     def handle(self, *args, **options):
         try:
             excel_file_name = options['file']
-            excel_importer = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_NUMBER)
+            excel_importer = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
 
             results = []
             counts_before = Command.count_objects()
             for registration_fields in excel_importer.get_data():
-                result = Command.import_registration(registration_fields)
-                result.print()
+                result = self.import_registration(registration_fields)
+                result.print(self.logger)
                 results.append(result)
 
             counts_after = Command.count_objects()
 
-            RegistrationImportResult.print_stats(results, counts_before, counts_after)
+            RegistrationImportResult.print_stats(self.logger, results, counts_before, counts_after)
 
         except:
-            print(traceback.format_exc())
+            self.logger.error(traceback.format_exc())
+        finally:
+            if self.logger:
+                self.logger.close_log_file()
 
     @staticmethod
     def count_objects():
@@ -55,14 +62,14 @@ class Command(LogToFileCommand):
             'registrations': AfterSchoolRegistration.objects.count()
         }
 
-    @staticmethod
-    def import_registration(fields: RegistrationExcelRowFields):
+    def import_registration(self, fields: RegistrationExcelRowFields):
         result = RegistrationImportResult(fields.row_index)
 
         try:
-            family, result.family_state, result.error = Family.import_family(fields.family_surnames,
-                                                                             fields.parent_name_and_surnames)
-            if not family:
+            partial_result = Family.import_family(fields.family_surnames, fields.parent_name_and_surnames)
+            if partial_result.success:
+                family = partial_result.imported_object
+            else:
                 return result
 
             child, result.child_state, result.error = Child.import_child(family, fields.child_name, fields.child_level,
@@ -97,7 +104,7 @@ class Command(LogToFileCommand):
                 after_school_edition, bank_account, child)
 
         except Exception as e:
-            print(f'Row {fields.row_index + 1}: {traceback.format_exc()}')
+            self.logger.error(f'Row {fields.row_index + 1}: {traceback.format_exc()}')
             result.error = str(e)
 
         return result

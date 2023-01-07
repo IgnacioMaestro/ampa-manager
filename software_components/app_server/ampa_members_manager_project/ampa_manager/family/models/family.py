@@ -12,6 +12,7 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.family.models.parent import Parent
+from ampa_manager.management.commands.results.import_result import ImportResult
 from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
@@ -190,3 +191,29 @@ class Family(TimeStampedModel):
             error = 'Missing surnames'
 
         return family, state, error
+
+    @staticmethod
+    def import_family(family_surnames: str, parent1_name_and_surnames: Optional[str] = None,
+                      parent2_name_and_surnames: Optional[str] = None) -> ImportResult:
+        result = ImportResult()
+
+        if family_surnames:
+            parents_name_and_surnames = []
+            if parent1_name_and_surnames:
+                parents_name_and_surnames.append(parent1_name_and_surnames)
+            if parent2_name_and_surnames:
+                parents_name_and_surnames.append(parent2_name_and_surnames)
+
+            family, error = Family.find(family_surnames, parents_name_and_surnames)
+
+            if family:
+                result.set_not_modified(family)
+            elif error:
+                result.set_error(error)
+            elif family_surnames:
+                family = Family.objects.create(surnames=family_surnames)
+                result.set_created(family)
+        else:
+            result.set_error('Missing surnames')
+
+        return result
