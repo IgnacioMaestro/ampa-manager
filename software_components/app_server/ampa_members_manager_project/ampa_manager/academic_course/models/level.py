@@ -124,6 +124,6 @@ class Level:
         if value:
             value = StringUtils.lowercase(StringUtils.remove_strip_spaces(value))
             for level_id, level_name in Level.LEVELS_NAMES.items():
-                if level_name in value:
+                if str(level_name) in value:
                     return level_id
         return None

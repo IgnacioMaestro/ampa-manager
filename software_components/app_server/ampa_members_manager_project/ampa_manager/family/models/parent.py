@@ -5,6 +5,7 @@ from django_extensions.db.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -44,6 +45,20 @@ class Parent(TimeStampedModel):
                 return True
         return False
 
+    def is_modified(self, phone_number, additional_phone_number, email):
+        return self.phone_number != phone_number \
+               or self.additional_phone_number != additional_phone_number \
+               or self.email != email
+
+    def update(self, phone_number, additional_phone_number, email):
+        fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
+        self.phone_number = phone_number
+        self.additional_phone_number = additional_phone_number
+        self.email = email
+        self.save()
+        fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
+        return fields_before, fields_after
+
     @staticmethod
     def fix_name_and_surnames():
         for parent in Parent.objects.all():
@@ -70,3 +85,45 @@ class Parent(TimeStampedModel):
             warnings.append(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
 
         return warnings
+
+    @staticmethod
+    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str):
+        parent = None
+        state = ProcessingState.NOT_PROCESSED
+        error = None
+
+        fields_ok, error = Parent.validate_fields(name_and_surnames,
+                                                          phone_number,
+                                                          additional_phone_number,
+                                                          email)
+        if fields_ok:
+            parent = family.find_parent(name_and_surnames)
+            if parent:
+                if parent.is_modified(phone_number, additional_phone_number, email):
+                    parent.update(phone_number, additional_phone_number, email)
+                    state = ProcessingState.UPDATED
+                else:
+                    state = ProcessingState.NOT_MODIFIED
+            else:
+                parent = Parent.objects.create(name_and_surnames=name_and_surnames,
+                                               phone_number=phone_number,
+                                               additional_phone_number=additional_phone_number,
+                                               email=email)
+                family.parents.add(parent)
+                state = ProcessingState.CREATED
+        else:
+            state = ProcessingState.ERROR
+
+        return parent, state, error
+
+    @staticmethod
+    def validate_fields(name_and_surnames, phone_number, additional_phone_number, email):
+        if not name_and_surnames or type(name_and_surnames) != str:
+            return False, f'Wrong name and surnames: {name_and_surnames} ({type(name_and_surnames)})'
+        if phone_number and type(phone_number) != str:
+            return False, f'Wrong phone number: {phone_number} ({type(phone_number)})'
+        if additional_phone_number and type(additional_phone_number) != str:
+            return False, f'Wrong additional phone number: {additional_phone_number} ({type(additional_phone_number)})'
+        if email and type(email) != str:
+            return False, f'Wrong email: {email} ({type(email)})'
+        return True, None

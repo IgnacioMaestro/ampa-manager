@@ -60,6 +60,16 @@ class StringUtils:
         return None
 
     @staticmethod
+    def remove_special_chars(value: str) -> Optional[str]:
+        if value is not None:
+            special_chars = [
+                '!', '¡', '¿', '?', '"', '\'', '.', ',', ':', ';', '-', '_', '#', '~', '@', '|', ',', '}', '[', ']',
+                '(', ')', '/', '\\', '&', '%', '$', '·', '='
+            ]
+            return value.translate({ord(x): '' for x in special_chars})
+        return None
+
+    @staticmethod
     def fix_accents(value: str) -> Optional[str]:
         if value:
             for wrong, right in SURNAMES.items():

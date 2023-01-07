@@ -9,6 +9,7 @@ from ampa_manager.activity.models.after_school.after_school_registration_queryse
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class AfterSchoolRegistration(models.Model):
@@ -47,3 +48,18 @@ class AfterSchoolRegistration(models.Model):
             return AfterSchoolRegistration.objects.get(after_school_edition=after_school_edition, child=child)
         except AfterSchoolRegistration.DoesNotExist:
             return None
+
+    @staticmethod
+    def import_registration(after_school_edition, bank_account, child):
+        registration = AfterSchoolRegistration.find(after_school_edition, child)
+        if registration:
+            if registration.bank_account != bank_account:
+                registration.bank_account = bank_account
+                registration.save()
+                return registration, ProcessingState.UPDATED
+            else:
+                return registration, ProcessingState.NOT_MODIFIED
+        else:
+            registration = AfterSchoolRegistration.objects.create(after_school_edition=after_school_edition,
+                                                                  bank_account=bank_account, child=child)
+            return registration, ProcessingState.CREATED

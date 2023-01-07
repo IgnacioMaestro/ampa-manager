@@ -56,7 +56,7 @@ class AuthorizationImporter:
     def __init__(self, sheet, book):
         self.book = book
         self.sheet = sheet
-    
+
     def import_authorization(self, row_index):
         authorization = None
         success = False
@@ -68,7 +68,8 @@ class AuthorizationImporter:
         date_value = None
 
         try:
-            parent_full_name = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
+            parent_full_name = FieldsFormatters.clean_name(
+                self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
             iban = FieldsFormatters.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
             number = FieldsFormatters.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
@@ -95,7 +96,9 @@ class AuthorizationImporter:
                                             success = True
                                             message = f'Updated'
                                         else:
-                                            authorization = Authorization.objects.create(number=number, date=date_value, bank_account=bank_account, year=date_value.year)
+                                            authorization = Authorization.objects.create(number=number, date=date_value,
+                                                                                         bank_account=bank_account,
+                                                                                         year=date_value.year)
 
                                             success = True
                                             message = f'Created'
@@ -117,24 +120,24 @@ class AuthorizationImporter:
             message = f'Exception: {e}'
         finally:
             status = 'OK' if success else 'ERROR'
-            print(f'- Row {row_index+1}: {parent_full_name}, {iban}, {number}, {date_value} -> {status}: {message}')
+            print(f'- Row {row_index + 1}: {parent_full_name}, {iban}, {number}, {date_value} -> {status}: {message}')
 
         return success, authorization
-    
+
     @staticmethod
     def get_parent(full_name):
         try:
             return Parent.objects.get(name_and_surnames=full_name)
         except Parent.DoesNotExist:
             return None
-    
+
     @staticmethod
     def get_bank_account(iban):
         try:
             return BankAccount.objects.get(iban=iban)
         except BankAccount.DoesNotExist:
             return None
-    
+
     @staticmethod
     def get_authorization(number):
         try:

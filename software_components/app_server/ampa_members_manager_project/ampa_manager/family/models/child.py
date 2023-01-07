@@ -6,6 +6,7 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -48,6 +49,17 @@ class Child(TimeStampedModel):
     def clean_name(self):
         return FieldsFormatters.clean_name(self.cleaned_data['name'])
 
+    def is_modified(self, year_of_birth, repetition):
+        return self.year_of_birth != year_of_birth or self.repetition != repetition
+
+    def update(self, year_of_birth, repetition):
+        fields_before = [self.name, self.year_of_birth, self.level, self.repetition]
+        self.year_of_birth = year_of_birth
+        self.repetition = repetition
+        self.save()
+        fields_after = [self.name, self.year_of_birth, self.level, self.repetition]
+        return fields_before, fields_after
+
     @staticmethod
     def get_children_ids(min_age, max_age):
         return [c.id for c in Child.objects.of_age_in_range(min_age, max_age)]
@@ -69,3 +81,39 @@ class Child(TimeStampedModel):
                 print(f'Child name fixed: "{child.name}" -> "{fixed_name}"')
                 child.name = fixed_name
                 child.save(update_fields=['name'])
+
+    @staticmethod
+    def import_child(family, name: str, level: str, year_of_birth: int):
+        child = None
+        state = ProcessingState.NOT_PROCESSED
+        error = None
+
+        repetition = Level.calculate_repetition(level, year_of_birth)
+
+        fields_ok, error = Child.validate_fields(name, year_of_birth, repetition)
+        if fields_ok:
+            child = family.find_child(name)
+            if child:
+                if child.is_modified(year_of_birth, repetition):
+                    child.update(year_of_birth, repetition)
+                    state = ProcessingState.UPDATED
+                else:
+                    state = ProcessingState.NOT_MODIFIED
+            else:
+                child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition,
+                                             family=family)
+                state = ProcessingState.CREATED
+        else:
+            state = ProcessingState.ERROR
+
+        return child, state, error
+
+    @staticmethod
+    def validate_fields(name, year_of_birth, repetition):
+        if not name or type(name) != str:
+            return False, f'Wrong name: {name} ({type(name)})'
+        if year_of_birth is None or type(year_of_birth) != int:
+            return False, f'Wrong year of birth: {year_of_birth} ({type(year_of_birth)})'
+        if repetition is None or type(repetition) != int:
+            return False, f'Wrong repetition: {repetition} ({type(repetition)})'
+        return True, None
