@@ -17,7 +17,6 @@ class ExcelImporter:
         data = []
         for row_index in range(self.first_row_index, self.sheet.nrows):
             row_fields = self.import_row_fields(row_index)
-
             data.append(row_fields)
         return data
 

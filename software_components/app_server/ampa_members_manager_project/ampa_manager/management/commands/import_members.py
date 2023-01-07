@@ -7,6 +7,8 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.child import Child
+from ampa_manager.management.commands.importers.member_excel_importer import MemberImportResult, MemberExcelImporter, \
+    MemberExcelRowFields
 from ampa_manager.management.commands.utils.logger import Logger
 from ampa_manager.management.commands.importers.family_importer import FamilyImporter
 from ampa_manager.management.commands.importers.parent_importer import ParentImporter
@@ -20,106 +22,37 @@ class Command(BaseCommand):
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 3
 
-    FAMILY_SURNAMES_INDEX = 0
-
-    COLUMNS_INDEXES = {
-        'family_surnames': 0,
-        'parent1_full_name': 1,
-        'parent1_phone1': 2,
-        'parent1_phone2': 3,
-        'parent1_email': 4,
-        'parent1_swift_bic': 5,
-        'parent1_iban': 6,
-        'parent1_is_default': 7,
-        'parent2_full_name': 8,
-        'parent2_phone1': 9,
-        'parent2_phone2': 10,
-        'parent2_email': 11,
-        'parent2_swift_bic': 12,
-        'parent2_iban': 13,
-        'parent2_is_default': 14,
-        'child1_name': 15,
-        'child1_year': 16,
-        'child1_level': 17,
-        'child2_name': 18,
-        'child2_year': 19,
-        'child2_level': 20,
-        'child3_name': 21,
-        'child3_year': 22,
-        'child3_level': 23,
-        'child4_name': 24,
-        'child4_year': 25,
-        'child4_level': 26,
-        'child5_name': 27,
-        'child5_year': 28,
-        'child5_level': 29,
-    }
-
     results = []
     totals = {}
+
+    def __init__(self):
+        super().__init__()
+        self.logger = Logger('import_registrations')
 
     def add_arguments(self, parser):
         parser.add_argument('file', type=str)
 
     def handle(self, *args, **options):
         try:
-            self.logger = Logger()
-            self.load_excel(options['file'])
+            excel_file_name = options['file']
+            excel_importer = MemberExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
 
-            self.family_importer = FamilyImporter(self.sheet, Command.COLUMNS_INDEXES)
-            self.parent_importer = ParentImporter(self.sheet, Command.COLUMNS_INDEXES)
-            self.child_importer = ChildImporter(self.sheet, Command.COLUMNS_INDEXES)
-            self.bank_account_importer = BankAccountImporter(self.sheet, Command.COLUMNS_INDEXES)
+            results = []
+            counts_before = Command.count_objects()
+            for member_fields in excel_importer.get_data():
+                result = self.import_member(member_fields)
+                result.print(self.logger)
+                results.append(result)
 
-            self.set_totals_before()
+            counts_after = Command.count_objects()
+            MemberImportResult.print_stats(self.logger, results, counts_before, counts_after)
 
-            for row_index in range(Command.FIRST_ROW_INDEX, self.sheet.nrows):
-                row_number = row_index + 1
-                self.logger.log(f'\nRow {row_number}')
-
-                family, result = self.family_importer.import_family(row_index)
-                self.process_result(result)
-
-                parent1, result = self.parent_importer.import_parent(row_index, 1, family)
-                self.process_result(result)
-
-                parent2, result = self.parent_importer.import_parent(row_index, 2, family)
-                self.process_result(result)
-
-                _, result = self.bank_account_importer.import_bank_account(row_index, 1, parent1, family)
-                self.process_result(result)
-
-                _, result = self.bank_account_importer.import_bank_account(row_index, 2, parent2, family)
-                self.process_result(result)
-
-                _, result = self.child_importer.import_child(row_index, 1, family)
-                self.process_result(result)
-
-                _, result = self.child_importer.import_child(row_index, 2, family)
-                self.process_result(result)
-
-                _, result = self.child_importer.import_child(row_index, 3, family)
-                self.process_result(result)
-
-                _, result = self.child_importer.import_child(row_index, 4, family)
-                self.process_result(result)
-
-                _, result = self.child_importer.import_child(row_index, 5, family)
-                self.process_result(result)
-
-            self.set_totals_after()
-            
-            self.print_stats()
         except:
-            print(traceback.format_exc())
+            self.logger.error(traceback.format_exc())
         finally:
-            self.logger.close_file()
-    
-    def load_excel(self, file_path):
-        self.logger.log(f'\nImporting file {file_path}')
-        self.book = xlrd.open_workbook(file_path)
-        self.sheet = self.book.sheet_by_index(Command.SHEET_NUMBER)
-    
+            if self.logger:
+                self.logger.close_log_file()
+
     def totalize_results(self):
         totals = {}
         for result in self.results:
@@ -137,38 +70,6 @@ class Command(BaseCommand):
     def get_total(self, state, class_name):
         return self.totals.get(class_name, {}).get(state, 0)
 
-    def print_stats(self):
-        self.logger.log('\nSUMMARY\n')
-
-        rows_with_data_count = self.sheet.nrows - Command.FIRST_ROW_INDEX
-        self.logger.log(f' - Rows with data: {rows_with_data_count} (rows {Command.FIRST_ROW_INDEX+1} to {self.sheet.nrows}). Sheet: "{self.sheet.name}"')
-
-        self.totals = self.totalize_results()
-        for class_name, states in self.totals.items():
-            variation = self.get_totals_variation(class_name)
-            self.logger.log(f' - {class_name} ({variation}):')
-
-            for state, total in states.items():
-                self.logger.log(f'   - {state.name}: {total}:')
-
-        self.logger.log(f'\nVALIDATIONS:\n')
-
-        warnings = Parent.review_data()
-        for warning in warnings:
-            self.logger.log(warning)
-
-        warnings = Family.review_data()
-        for warning in warnings:
-            self.logger.log(warning)
-
-        errors = self.get_errors()
-        self.logger.log(f'\nERRORS ({len(errors)}):\n')
-        if len(errors) > 0:
-            for error in errors:
-                self.logger.error(f'- {error} ')
-        else:
-            self.logger.log(f'- No errors\n')
-    
     def get_errors(self):
         errors = []
         for result in self.results:
@@ -177,25 +78,95 @@ class Command(BaseCommand):
                 errors.append(message)
         return errors
 
-    def process_result(self, result):
-        self.logger.log_result(result)
-        self.results.append(result)
+    @staticmethod
+    def count_objects():
+        return {
+            'families': Family.objects.count(),
+            'parents': Parent.objects.count(),
+            'children': Child.objects.count(),
+            'bank_accounts': BankAccount.objects.count(),
+        }
 
-    def set_totals_before(self):
-        self.totals_before = {}
+    def import_member(self, fields: MemberExcelRowFields):
+        result = MemberImportResult(fields.row_index)
 
-        self.totals_before[Family.__name__] = Family.objects.count()
-        self.totals_before[Parent.__name__] = Parent.objects.count()
-        self.totals_before[Child.__name__] = Child.objects.count()
-        self.totals_before[BankAccount.__name__] = BankAccount.objects.count()
+        try:
+            family, result.family_state, error = Family.import_family(fields.family_surnames,
+                                                                      fields.parent1_name_and_surnames,
+                                                                      fields.parent2_name_and_surnames)
+            if not family:
+                result.add_error(error)
+                return result
 
-    def set_totals_after(self):
-        self.totals_after = {}
+            child1, result.child1_state, error = Child.import_child(family, fields.child1_name,
+                                                                    fields.child1_level,
+                                                                    fields.child1_year_of_birth)
+            if fields.child1_has_data() and not child1:
+                result.add_error(error)
+                return result
 
-        self.totals_after[Family.__name__] = Family.objects.count()
-        self.totals_after[Parent.__name__] = Parent.objects.count()
-        self.totals_after[Child.__name__] = Child.objects.count()
-        self.totals_after[BankAccount.__name__] = BankAccount.objects.count()
+            child2, result.child2_state, error = Child.import_child(family, fields.child2_name,
+                                                                    fields.child2_level,
+                                                                    fields.child2_year_of_birth)
+            if fields.child2_has_data() and not child2:
+                result.add_error(error)
+                return result
 
-    def get_totals_variation(self, class_name):
-        return f'{self.totals_before[class_name]} -> {self.totals_after[class_name]}'
+            child3, result.child3_state, error = Child.import_child(family, fields.child3_name,
+                                                                    fields.child3_level,
+                                                                    fields.child3_year_of_birth)
+            if fields.child3_has_data() and not child3:
+                result.add_error(error)
+                return result
+
+            child4, result.child4_state, error = Child.import_child(family, fields.child4_name,
+                                                                    fields.child4_level,
+                                                                    fields.child4_year_of_birth)
+            if fields.child4_has_data() and not child4:
+                result.add_error(error)
+                return result
+
+            child5, result.child5_state, error = Child.import_child(family, fields.child5_name,
+                                                                    fields.child5_level,
+                                                                    fields.child5_year_of_birth)
+            if fields.child5_has_data() and not child5:
+                result.add_error(error)
+                return result
+
+            parent1, result.parent1_state, error = Parent.import_parent(family,
+                                                                        fields.parent1_name_and_surnames,
+                                                                        fields.parent1_phone_number,
+                                                                        fields.parent1_additional_phone_number,
+                                                                        fields.parent1_email)
+            if fields.parent1_has_data() and not parent1:
+                result.add_error(error)
+                return result
+
+            parent2, result.parent2_state, error = Parent.import_parent(family,
+                                                                        fields.parent2_name_and_surnames,
+                                                                        fields.parent2_phone_number,
+                                                                        fields.parent2_additional_phone_number,
+                                                                        fields.parent2_email)
+            if fields.parent2_has_data() and not parent2:
+                result.add_error(error)
+                return result
+
+            bank_account1, result.bank_account1_state, error = BankAccount.import_bank_account(parent1,
+                                                                                               fields.parent1_bank_account_iban,
+                                                                                               fields.parent1_bank_account_swift_bic)
+            if fields.parent1_bank_account_has_data() and not bank_account1:
+                result.add_error(error)
+                return result
+
+            bank_account2, result.bank_account2_state, error = BankAccount.import_bank_account(parent2,
+                                                                                               fields.parent2_bank_account_iban,
+                                                                                               fields.parent2_bank_account_swift_bic)
+            if fields.parent2_bank_account_has_data() and not bank_account2:
+                result.add_error(error)
+                return result
+
+        except Exception as e:
+            self.logger.error(f'Row {fields.row_index + 1}: {traceback.format_exc()}')
+            result.add_error(str(e))
+
+        return result

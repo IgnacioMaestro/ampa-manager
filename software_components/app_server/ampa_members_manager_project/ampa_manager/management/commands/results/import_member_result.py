@@ -36,11 +36,11 @@ class ImportMemberResult:
         self.message = message
     
     def set_added_to_family(self, message=None):
-        self.state2 = ProcessingState.ADDED_TO_FAMILY
+        self.state2 = ProcessingState.PARENT_ADDED_TO_FAMILY
         self.message = message
     
     def set_as_default(self, message=None):
-        self.state2 = ProcessingState.SET_AS_DEFAULT
+        self.state2 = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
         self.message = message
     
     def get_full_state(self):

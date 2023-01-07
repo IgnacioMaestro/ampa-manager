@@ -49,21 +49,38 @@ class BankAccount(TimeStampedModel):
             return None
 
     @staticmethod
-    def import_bank_account(parent, iban):
-        bank_account = BankAccount.find(iban)
+    def import_bank_account(parent, iban, swift_bic, is_default_account, family):
+        bank_account = None
         error = None
+        state_default_account = None
 
-        if bank_account:
-            if bank_account.owner == parent:
-                state = ProcessingState.NOT_MODIFIED
+        if parent:
+            if iban:
+                bank_account = BankAccount.find(iban)
+                if bank_account:
+                    if bank_account.owner == parent:
+                        if bank_account.swift_bic != swift_bic:
+                            bank_account.swift_bic = swift_bic
+                            bank_account.save()
+                            state = ProcessingState.UPDATED
+                        else:
+                            state = ProcessingState.NOT_MODIFIED
+
+                        if is_default_account and family.default_bank_account != bank_account:
+                            family.default_bank_account = bank_account
+                            family.save()
+                            state_default_account = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
+                    else:
+                        state = ProcessingState.ERROR
+                        error = f'Owner does not match. Current owner: {bank_account.owner}. New: {parent}'
+                else:
+                    bank_account = BankAccount.objects.create(iban=iban, owner=parent)
+                    state = ProcessingState.CREATED
             else:
                 state = ProcessingState.ERROR
-                error = f'Owner does not match. Current owner: {bank_account.owner}. New: {parent}'
-        elif iban:
-            bank_account = BankAccount.objects.create(iban=iban, owner=parent)
-            state = ProcessingState.CREATED
+                error = 'Missing IBAN'
         else:
             state = ProcessingState.ERROR
-            error = 'Missing IBAN'
+            error = 'Missing owner'
 
-        return bank_account, state, error
+        return bank_account, state, state_default_account, error

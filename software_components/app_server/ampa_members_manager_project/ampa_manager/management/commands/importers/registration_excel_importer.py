@@ -1,6 +1,7 @@
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
 from ampa_manager.management.commands.results.processing_state import ProcessingState
+from ampa_manager.management.commands.utils.logger import Logger
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
@@ -90,16 +91,16 @@ class RegistrationImportResult:
     def success(self):
         return self.registration is not None and self.error is None
 
-    def print(self):
+    def print(self, logger: Logger):
         summary = f'OK ({self.registration_state.name} #{self.registration.id})' if self.success else f'ERROR: {self.error}'
 
-        print(f'\nRow {self.row_index + 1} -> {summary}')
-        print(f' - Family: {self.fields.family_surnames} -> {self.family_state.name}')
-        print(f' - Child: {self.fields.child_name}, {self.fields.child_level}, {self.fields.child_year_of_birth} -> {self.child_state.name}')
-        print(f' - Parent: {self.fields.parent_name_and_surnames}, {self.fields.parent_phone_number}, {self.fields.parent_additional_phone_number}, {self.fields.parent_email} -> {self.parent_state.name}')
-        print(f' - Bank account: {self.fields.bank_account_iban} -> {self.bank_account_state.name}')
-        print(f' - After-school: {self.fields.after_school_name} -> {self.after_school_state.name}')
-        print(f' - Edition: {self.fields.edition_timetable}, {self.fields.edition_period}, {self.fields.edition_levels}, {self.fields.edition_price_for_members}, {self.fields.edition_price_for_no_members} -> {self.edition_state.name}')
+        logger.log(f'\nRow {self.row_index + 1} -> {summary}')
+        logger.log(f' - Family: {self.fields.family_surnames} -> {self.family_state.name}')
+        logger.log(f' - Child: {self.fields.child_name}, {self.fields.child_level}, {self.fields.child_year_of_birth} -> {self.child_state.name}')
+        logger.log(f' - Parent: {self.fields.parent_name_and_surnames}, {self.fields.parent_phone_number}, {self.fields.parent_additional_phone_number}, {self.fields.parent_email} -> {self.parent_state.name}')
+        logger.log(f' - Bank account: {self.fields.bank_account_iban} -> {self.bank_account_state.name}')
+        logger.log(f' - After-school: {self.fields.after_school_name} -> {self.after_school_state.name}')
+        logger.log(f' - Edition: {self.fields.edition_timetable}, {self.fields.edition_period}, {self.fields.edition_levels}, {self.fields.edition_price_for_members}, {self.fields.edition_price_for_no_members} -> {self.edition_state.name}')
 
     @staticmethod
     def get_variation(before, after):
@@ -111,7 +112,7 @@ class RegistrationImportResult:
             return f'{after} (=)'
 
     @staticmethod
-    def print_stats(results, counts_before, counts_after):
+    def print_stats(logger, results, counts_before, counts_after):
         imported_count = 0
         not_imported_count = 0
 
@@ -171,43 +172,43 @@ class RegistrationImportResult:
             else:
                 registration_totals[result.registration_state] += 1
 
-        print('\nTOTAL')
-        print(f'- IMPORTED: {imported_count}')
-        print(f'- NOT IMPORTED: {not_imported_count}')
+        logger.log('\nTOTAL')
+        logger.log(f'- IMPORTED: {imported_count}')
+        logger.log(f'- NOT IMPORTED: {not_imported_count}')
 
-        print(f'\nFAMILIES {RegistrationImportResult.get_variation(counts_before["families"], counts_after["families"])}')
+        logger.log(f'\nFAMILIES {RegistrationImportResult.get_variation(counts_before["families"], counts_after["families"])}')
         for state, total in family_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'CHILDREN {RegistrationImportResult.get_variation(counts_before["children"], counts_after["children"])}')
+        logger.log(f'CHILDREN {RegistrationImportResult.get_variation(counts_before["children"], counts_after["children"])}')
         for state, total in child_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'PARENTS {RegistrationImportResult.get_variation(counts_before["parents"], counts_after["parents"])}')
+        logger.log(f'PARENTS {RegistrationImportResult.get_variation(counts_before["parents"], counts_after["parents"])}')
         for state, total in parent_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'BANK ACCOUNTS {RegistrationImportResult.get_variation(counts_before["bank_accounts"], counts_after["bank_accounts"])}')
+        logger.log(f'BANK ACCOUNTS {RegistrationImportResult.get_variation(counts_before["bank_accounts"], counts_after["bank_accounts"])}')
         for state, total in bank_account_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'AFTER SCHOOLS {RegistrationImportResult.get_variation(counts_before["after_schools"], counts_after["after_schools"])}')
+        logger.log(f'AFTER SCHOOLS {RegistrationImportResult.get_variation(counts_before["after_schools"], counts_after["after_schools"])}')
         for state, total in after_school_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'EDITIONS {RegistrationImportResult.get_variation(counts_before["editions"], counts_after["editions"])}')
+        logger.log(f'EDITIONS {RegistrationImportResult.get_variation(counts_before["editions"], counts_after["editions"])}')
         for state, total in edition_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'REGISTRATIONS {RegistrationImportResult.get_variation(counts_before["registrations"], counts_after["registrations"])}')
+        logger.log(f'REGISTRATIONS {RegistrationImportResult.get_variation(counts_before["registrations"], counts_after["registrations"])}')
         for state, total in registration_totals.items():
-            print(f'- {state.name}: {total}')
+            logger.log(f'- {state.name}: {total}')
 
-        print(f'\nERRORS ({len(errors)}):')
+        logger.log(f'\nERRORS ({len(errors)}):')
         for error in errors:
-            print(f'- {error}')
+            logger.log(f'- {error}')
 
         if len(created_families) > 0:
-            print(f'\nWARNING: {len(created_families)} families were created:')
+            logger.log(f'\nWARNING: {len(created_families)} families were created:')
             for family_surnames in created_families:
-                print(f'- {family_surnames}')
+                logger.log(f'- {family_surnames}')
