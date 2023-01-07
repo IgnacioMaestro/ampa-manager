@@ -102,7 +102,10 @@ class Family(TimeStampedModel):
         elif len(families) > 1:
             family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
             if family is None:
-                parents = ', '.join(parents_name_and_surnames)
+                if parents_name_and_surnames:
+                    parents = ', '.join(parents_name_and_surnames)
+                else:
+                    parents = ''
                 error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
 
         return family, error
