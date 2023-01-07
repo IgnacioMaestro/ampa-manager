@@ -6,6 +6,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.price_per_level import PricePerLevel
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class AfterSchoolEdition(PricePerLevel):
@@ -42,3 +43,15 @@ class AfterSchoolEdition(PricePerLevel):
                                                  academic_course=ActiveCourse.load(),
                                                  price_for_member=price_for_member,
                                                  price_for_no_member=price_for_no_member)
+
+    @staticmethod
+    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members, create_if_not_exists):
+        edition = AfterSchoolEdition.find_edition_for_active_course(after_school, period, timetable, levels)
+        if edition:
+            return edition, ProcessingState.NOT_MODIFIED, None
+        elif create_if_not_exists:
+            edition = AfterSchoolEdition.create_edition_for_active_course(after_school, period, timetable, levels,
+                                                        price_for_members, price_for_no_members)
+            return edition, ProcessingState.CREATED, None
+        else:
+            return None, ProcessingState.ERROR, f'Not found: {after_school}, {period}, {timetable}, {levels}'

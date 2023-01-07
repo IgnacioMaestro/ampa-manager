@@ -10,7 +10,11 @@ class FieldsFormatters:
     @staticmethod
     def clean_name(value: str) -> Optional[str]:
         if value:
-            return StringUtils.capitalize(StringUtils.fix_accents(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))))
+            return StringUtils.capitalize(
+                    StringUtils.fix_accents(
+                     StringUtils.remove_duplicated_spaces(
+                      StringUtils.remove_special_chars(
+                       StringUtils.remove_strip_spaces(value)))))
         return None
 
     @staticmethod
@@ -28,7 +32,7 @@ class FieldsFormatters:
     @staticmethod
     def clean_phone(value: str) -> Optional[str]:
         if value:
-            value = StringUtils.remove_all_spaces(value)
+            value = StringUtils.remove_all_spaces(str(value))
             if value not in ['0', '0.0', '0,0']:
                 if not value.startswith('+34'):
                     value = f'+34{value}'
@@ -54,11 +58,11 @@ class FieldsFormatters:
     @staticmethod
     def clean_integer(value: str) -> Optional[int]:
         if value:
-            return int(float(StringUtils.remove_all_spaces(value)))
+            return int(float(StringUtils.remove_all_spaces(str(value))))
         return None
 
     @staticmethod
     def clean_float(value: str) -> Optional[float]:
         if value:
-            return int(StringUtils.remove_all_spaces(value))
+            return int(StringUtils.remove_all_spaces(str(value)))
         return None
