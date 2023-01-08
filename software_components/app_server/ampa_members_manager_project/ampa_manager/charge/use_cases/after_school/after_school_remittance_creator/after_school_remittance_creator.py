@@ -8,7 +8,7 @@ from ampa_manager.charge.models.after_school_charge.after_school_receipt import 
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 
 
-class AfterSchoolRemittanceWithReceiptsCreator:
+class AfterSchoolRemittanceCreator:
     def __init__(self, after_school_editions: QuerySet[AfterSchoolEdition]):
         self.__after_school_editions: QuerySet[AfterSchoolEdition] = after_school_editions
 
