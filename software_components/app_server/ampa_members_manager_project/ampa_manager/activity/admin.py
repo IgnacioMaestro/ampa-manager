@@ -9,9 +9,9 @@ from ampa_manager.activity.models.after_school.after_school_registration import 
 from ampa_manager.activity_registration.admin import ActivityRegistrationInline
 from ampa_manager.charge.use_cases.activity.create_activity_remittance_with_receipts.activity_remittance_with_receipts_creator import \
     ActivityRemittanceWithReceiptsCreator
-from ampa_manager.charge.use_cases.after_school.create_after_school_remittance_with_receipts.after_school_remittance_with_receipts_creator import \
-    AfterSchoolRemittanceWithReceiptsCreator
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
+    AfterSchoolRemittanceCreator
 
 
 def create_message_with_link(url):
@@ -91,13 +91,13 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        after_school_remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create()
+        after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create()
         message = create_message_with_link(after_school_remittance.get_admin_url())
         return self.message_user(request=request, message=message)
 
     @admin.action(description=_("Create after school remittance with half"))
     def create_after_school_remittance_half(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        after_school_remittance = AfterSchoolRemittanceWithReceiptsCreator(after_school_editions).create_with_fraction(0.5)
+        after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_with_fraction(0.5)
         message = create_message_with_link(after_school_remittance.get_admin_url())
         return self.message_user(request=request, message=message)
 
