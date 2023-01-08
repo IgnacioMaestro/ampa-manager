@@ -4,14 +4,16 @@ actor Admin
 package Charge {
     package Activity{
       Admin --> (Create a ActivityRemittance from ActivityPeriods)
-      Admin --> (Generate remittance from a ActivityRemittance with the list of ActivityReceipts)
+      Admin --> (Export remittance from an ActivityRemittance)
       Admin --> (Set all ActivityReceipts of a ActivityRemittance send)
       Admin --> (Set all ActivityReceipts of a ActivityRemittance paid)
       Admin --> (Check an ActivityRegistration state of payment or assignation)
     }
     package AfterSchool{
-      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions)
-      Admin --> (Generate remittance from a AfterSchoolRemittance with the list of AfterSchoolReceipts)
+      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions full amount)
+      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions half amount)
+      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions left amount)
+      Admin --> (Export remittance from a AfterSchoolRemittance)
       Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance send)
       Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance paid)
       Admin --> (Check an AfterSchoolRegistration state of payment or assignation)
@@ -19,7 +21,7 @@ package Charge {
     package Membership{
       Admin --> (Create a MembershipRemittance with selected families)
       Admin --> (Create a MembershipRemittance with families not included in a MembershipRemittance)
-      Admin --> (Generate remittance from a MembershipRemittance with the list of MembershipReceipts)
+      Admin --> (Export remittance from a MembershipRemittance)
       Admin --> (Set all MembershipReceipts of a MembershipRemittance send)
       Admin --> (Set all MembershipCharge of a MembershipChargeGroup paid)
       Admin --> (Check a Family Membership of an AcademicCourse state of payment or assignation)
