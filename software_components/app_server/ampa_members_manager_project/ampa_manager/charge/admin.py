@@ -31,7 +31,7 @@ from .sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02
     GenericFinancialIdentification1, RemittanceInformation5
 from .state import State
 from .use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
-from .use_cases.after_school.after_school_remittance_generator import AfterSchoolRemittanceGenerator
+from .use_cases.after_school.remittance_generator_from_after_school_remittance import RemittanceGeneratorFromAfterSchoolRemittance
 from .use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
@@ -297,7 +297,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
-        remittance: Remittance = AfterSchoolRemittanceGenerator(after_school_remittance=queryset.first()).generate()
+        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(after_school_remittance=queryset.first()).generate()
         return AfterSchoolRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))

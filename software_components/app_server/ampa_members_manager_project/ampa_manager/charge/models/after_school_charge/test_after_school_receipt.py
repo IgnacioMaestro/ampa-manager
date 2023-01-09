@@ -2,11 +2,11 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
-from ampa_manager.charge.receipt import Receipt
 from ampa_manager.family.models.authorization.authorization import Authorization
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.tests.generator_adder import bic_generator, phonenumbers_generator, iban_generator
+from .after_school_receipt import AfterSchoolReceipt
+from ...receipt import Receipt
 
 baker.generators.add('localflavor.generic.models.BICField', bic_generator)
 baker.generators.add('phonenumber_field.modelfields.PhoneNumberField', phonenumbers_generator)
