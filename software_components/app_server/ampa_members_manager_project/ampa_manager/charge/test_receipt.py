@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from charge.receipt import Receipt, AuthorizationReceipt
+from .receipt import AuthorizationReceipt, Receipt
 
 
 class TestReceipt(TestCase):

@@ -7,8 +7,8 @@ from django.utils import timezone
 from model_bakery import baker
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
-from ampa_manager.charge.no_after_school_edition_error import NoAfterSchoolEditionError
+from .after_school_remittance import AfterSchoolRemittance
+from ...no_after_school_edition_error import NoAfterSchoolEditionError
 
 
 class TestAfterSchoolRemittance(TestCase):

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.charge.no_after_school_edition_error import NoAfterSchoolEditionError
+from ...no_after_school_edition_error import NoAfterSchoolEditionError
 
 
 class AfterSchoolRemittance(models.Model):
