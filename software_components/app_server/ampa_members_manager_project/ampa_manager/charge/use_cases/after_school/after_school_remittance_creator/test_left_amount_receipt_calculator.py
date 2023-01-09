@@ -22,3 +22,11 @@ class TestLeftAmountReceiptCalculator(TestCase):
         baker.make('AfterSchoolReceipt', after_school_registration=after_school_registration, amount=third_of_amount)
         amount: float = LeftAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
         self.assertAlmostEqual(amount, third_of_amount * 2, 3)
+
+    def test_calculate_previous_after_school_receipt_with_more_than_amount(self):
+        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
+        after_school_registration: AfterSchoolRegistration = baker.make('AfterSchoolRegistration')
+        total_amount = after_school_registration.calculate_price()
+        baker.make('AfterSchoolReceipt', after_school_registration=after_school_registration, amount=total_amount * 2)
+        amount: float = LeftAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+        self.assertAlmostEqual(amount, 0.0, 3)
