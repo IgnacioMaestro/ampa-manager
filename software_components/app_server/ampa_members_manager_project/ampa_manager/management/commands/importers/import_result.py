@@ -7,7 +7,7 @@ from ampa_manager.management.commands.results.processing_state import Processing
 from ampa_manager.management.commands.utils.logger import Logger
 
 
-class RegistrationImportResult:
+class ImportResult:
 
     def __init__(self, row_index):
         self.row_index = row_index
@@ -58,14 +58,14 @@ class RegistrationImportResult:
     @staticmethod
     def print_stats(logger, results, counters_before, counters_after):
 
-        totals, errors, created_families, success_count, not_success_count = RegistrationImportResult.get_totals(results)
+        totals, errors, created_families, success_count, not_success_count = ImportResult.get_totals(results)
 
         logger.log(f'TOTAL: {len(results)}')
         logger.log(f'- Imported: {success_count}')
         logger.log(f'- Not imported: {not_success_count}')
 
         for class_name, class_totals in totals.items():
-            variation = RegistrationImportResult.get_variation(counters_before[class_name], counters_after[class_name])
+            variation = ImportResult.get_variation(counters_before[class_name], counters_after[class_name])
             logger.log(f'- {class_name}: {variation}')
             for state, state_count in class_totals.items():
                 logger.log(f'- {state.name}: {state_count}')
