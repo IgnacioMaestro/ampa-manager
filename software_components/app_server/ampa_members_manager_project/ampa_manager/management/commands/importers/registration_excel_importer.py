@@ -1,5 +1,9 @@
+from dataclasses import dataclass
+from typing import Optional
+
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
+from ampa_manager.management.commands.results.model_import_result import ModelImportResult
 from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.management.commands.utils.logger import Logger
 from ampa_manager.utils.fields_formatters import FieldsFormatters
@@ -26,7 +30,7 @@ class RegistrationExcelImporter(ExcelImporter):
         family_surnames = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_FAMILY_SURNAMES))
         child_name = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_NAME))
         child_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_LEVEL))
-        child_year = FieldsFormatters.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_YEAR))
+        child_year_of_birth = FieldsFormatters.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_YEAR))
         parent_name_and_surnames = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_NAME_AND_SURNAMES))
         parent_phone_number = FieldsFormatters.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_PHONE))
         parent_additional_phone_number = FieldsFormatters.clean_phone(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_PARENT_ADDITIONAL_PHONE))
@@ -39,44 +43,39 @@ class RegistrationExcelImporter(ExcelImporter):
         edition_price_for_members = FieldsFormatters.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_PRICE_FOR_MEMBERS))
         edition_price_for_no_members = FieldsFormatters.clean_integer(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_EDITION_PRICE_FOR_NO_MEMBERS))
 
-        return RegistrationExcelRowFields(row_index, family_surnames, child_name, child_level, child_year,
-                                       parent_name_and_surnames, parent_phone_number, parent_additional_phone_number,
-                                       parent_email, bank_account_iban, after_school_name, edition_timetable,
-                                       edition_period, edition_price_for_members, edition_price_for_no_members,
-                                       edition_levels)
+        return RegistrationExcelRow(row_index, family_surnames, child_name, child_level, child_year_of_birth,
+                                    parent_name_and_surnames, parent_phone_number, parent_additional_phone_number,
+                                    parent_email, bank_account_iban, after_school_name, edition_timetable,
+                                    edition_period, edition_levels, edition_price_for_members,
+                                    edition_price_for_no_members)
 
 
-class RegistrationExcelRowFields:
-
-    def __init__(self, row_index, family_surnames, child_name, child_level, child_year_of_birth, parent_name_and_surnames,
-                 parent_phone_number, parent_additional_phone_number, parent_email, bank_account_iban,
-                 after_school_name, edition_timetable, edition_period, edition_price_for_members,
-                 edition_price_for_no_members, edition_levels):
-
-        self.row_index = row_index
-        self.family_surnames = family_surnames
-        self.child_name = child_name
-        self.child_level = child_level
-        self.child_year_of_birth = child_year_of_birth
-        self.parent_name_and_surnames = parent_name_and_surnames
-        self.parent_phone_number = parent_phone_number
-        self.parent_additional_phone_number = parent_additional_phone_number
-        self.parent_email = parent_email
-        self.bank_account_iban = bank_account_iban
-        self.after_school_name = after_school_name
-        self.edition_timetable = edition_timetable
-        self.edition_period = edition_period
-        self.edition_levels = edition_levels
-        self.edition_price_for_members = edition_price_for_members
-        self.edition_price_for_no_members = edition_price_for_no_members
+@dataclass
+class RegistrationExcelRow:
+    row_index: Optional[int]
+    family_surnames: Optional[str]
+    child_name: Optional[str]
+    child_level: Optional[str]
+    child_year_of_birth: Optional[int]
+    parent_name_and_surnames: Optional[str]
+    parent_phone_number: Optional[str]
+    parent_additional_phone_number: Optional[str]
+    parent_email: Optional[str]
+    bank_account_iban: Optional[str]
+    after_school_name: Optional[str]
+    edition_timetable: Optional[str]
+    edition_period: Optional[str]
+    edition_levels: Optional[str]
+    edition_price_for_members: Optional[int]
+    edition_price_for_no_members: Optional[int]
 
 
 class RegistrationImportResult:
 
     def __init__(self, row_index):
         self.row_index = row_index
-        self.fields = RegistrationExcelRowFields(None, None, None, None, None, None, None, None, None, None, None, None,
-                                                 None, None, None, None)
+        self.fields = RegistrationExcelRow(None, None, None, None, None, None, None, None, None, None, None, None,
+                                           None, None, None, None)
         self.family_state = ProcessingState.NOT_PROCESSED
         self.child_state = ProcessingState.NOT_PROCESSED
         self.parent_state = ProcessingState.NOT_PROCESSED
@@ -86,6 +85,7 @@ class RegistrationImportResult:
         self.registration_state = ProcessingState.NOT_PROCESSED
         self.error = None
         self.registration = None
+        self.partial_results = []
 
     @property
     def success(self):
@@ -101,6 +101,9 @@ class RegistrationImportResult:
         logger.log(f' - Bank account: {self.fields.bank_account_iban} -> {self.bank_account_state.name}')
         logger.log(f' - After-school: {self.fields.after_school_name} -> {self.after_school_state.name}')
         logger.log(f' - Edition: {self.fields.edition_timetable}, {self.fields.edition_period}, {self.fields.edition_levels}, {self.fields.edition_price_for_members}, {self.fields.edition_price_for_no_members} -> {self.edition_state.name}')
+
+    def add_partial_result(self, partial_result: ModelImportResult):
+        self.partial_results.append(partial_result)
 
     @staticmethod
     def get_variation(before, after):

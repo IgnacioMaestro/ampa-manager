@@ -41,25 +41,3 @@ class AfterSchoolRegistration(models.Model):
             return float(self.after_school_edition.price_for_member)
         else:
             return float(self.after_school_edition.price_for_no_member)
-
-    @staticmethod
-    def find(after_school_edition, child):
-        try:
-            return AfterSchoolRegistration.objects.get(after_school_edition=after_school_edition, child=child)
-        except AfterSchoolRegistration.DoesNotExist:
-            return None
-
-    @staticmethod
-    def import_registration(after_school_edition, bank_account, child):
-        registration = AfterSchoolRegistration.find(after_school_edition, child)
-        if registration:
-            if registration.bank_account != bank_account:
-                registration.bank_account = bank_account
-                registration.save()
-                return registration, ProcessingState.UPDATED
-            else:
-                return registration, ProcessingState.NOT_MODIFIED
-        else:
-            registration = AfterSchoolRegistration.objects.create(after_school_edition=after_school_edition,
-                                                                  bank_account=bank_account, child=child)
-            return registration, ProcessingState.CREATED

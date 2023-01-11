@@ -41,46 +41,4 @@ class BankAccount(TimeStampedModel):
             self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
 
-    @staticmethod
-    def find(iban):
-        try:
-            return BankAccount.objects.get(iban=iban)
-        except BankAccount.DoesNotExist:
-            return None
 
-    @staticmethod
-    def import_bank_account(parent, iban, swift_bic, is_default_account, family):
-        bank_account = None
-        error = None
-        state_default_account = None
-
-        if parent:
-            if iban:
-                bank_account = BankAccount.find(iban)
-                if bank_account:
-                    if bank_account.owner == parent:
-                        if bank_account.swift_bic != swift_bic:
-                            bank_account.swift_bic = swift_bic
-                            bank_account.save()
-                            state = ProcessingState.UPDATED
-                        else:
-                            state = ProcessingState.NOT_MODIFIED
-
-                        if is_default_account and family.default_bank_account != bank_account:
-                            family.default_bank_account = bank_account
-                            family.save()
-                            state_default_account = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
-                    else:
-                        state = ProcessingState.ERROR
-                        error = f'Owner does not match. Current owner: {bank_account.owner}. New: {parent}'
-                else:
-                    bank_account = BankAccount.objects.create(iban=iban, owner=parent)
-                    state = ProcessingState.CREATED
-            else:
-                state = ProcessingState.ERROR
-                error = 'Missing IBAN'
-        else:
-            state = ProcessingState.ERROR
-            error = 'Missing owner'
-
-        return bank_account, state, state_default_account, error

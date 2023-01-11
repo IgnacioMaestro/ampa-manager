@@ -5,12 +5,20 @@ from django.core.management.base import BaseCommand
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.use_cases.import_after_school.after_school_importer import AfterSchoolImporter
+from ampa_manager.activity.use_cases.import_edition.after_school_edition_importer import AfterSchoolEditionImporter
+from ampa_manager.activity.use_cases.import_registration.after_school_registration_importer import \
+    AfterSchoolRegistrationImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
+from ampa_manager.family.use_cases.import_bank_account.bank_account_importer import BankAccountImporter
+from ampa_manager.family.use_cases.import_child.child_importer import ChildImporter
+from ampa_manager.family.use_cases.import_family.family_importer import FamilyImporter
+from ampa_manager.family.use_cases.import_parent.parent_importer import ParentImporter
 from ampa_manager.management.commands.importers.registration_excel_importer import RegistrationExcelImporter, \
-    RegistrationImportResult, RegistrationExcelRowFields
+    RegistrationImportResult, RegistrationExcelRow
 from ampa_manager.management.commands.utils.logger import Logger
 
 
@@ -34,15 +42,15 @@ class Command(BaseCommand):
             excel_importer = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
 
             results = []
-            counts_before = Command.count_objects()
+            counters_before = Command.count_objects()
             for registration_fields in excel_importer.get_data():
                 result = self.import_registration(registration_fields)
                 result.print(self.logger)
                 results.append(result)
 
-            counts_after = Command.count_objects()
+            counters_after = Command.count_objects()
 
-            RegistrationImportResult.print_stats(self.logger, results, counts_before, counts_after)
+            RegistrationImportResult.print_stats(self.logger, results, counters_before, counters_after)
 
         except:
             self.logger.error(traceback.format_exc())
@@ -62,46 +70,53 @@ class Command(BaseCommand):
             'registrations': AfterSchoolRegistration.objects.count()
         }
 
-    def import_registration(self, fields: RegistrationExcelRowFields):
+    def import_registration(self, fields: RegistrationExcelRow):
         result = RegistrationImportResult(fields.row_index)
 
         try:
-            partial_result = Family.import_family(fields.family_surnames, fields.parent_name_and_surnames)
-            if partial_result.success:
-                family = partial_result.imported_object
-            else:
+            family_result = FamilyImporter.import_family(fields.family_surnames, fields.parent_name_and_surnames)
+            result.add_partial_result(family_result)
+            if not family_result.success:
                 return result
 
-            child, result.child_state, result.error = Child.import_child(family, fields.child_name, fields.child_level,
-                                                                         fields.child_year_of_birth)
-            if not child:
+            family = family_result.imported_object
+            child_result = ChildImporter.import_child(family, fields.child_name, fields.child_level, fields.child_year_of_birth)
+            result.add_partial_result(child_result)
+            if not child_result.success:
                 return result
 
-            parent, result.parent_state, result.error = Parent.import_parent(family,
-                                                                             fields.parent_name_and_surnames,
-                                                                             fields.parent_phone_number,
-                                                                             fields.parent_additional_phone_number,
-                                                                             fields.parent_email)
-            if not parent:
+            child = child_result.imported_object
+            parent_result = ParentImporter.import_parent(family, fields.parent_name_and_surnames,
+                                                          fields.parent_phone_number, fields.parent_additional_phone_number,
+                                                          fields.parent_email)
+            result.add_partial_result(parent_result)
+            if not parent_result.success:
                 return result
 
-            bank_account, result.bank_account_state, result.error = BankAccount.import_bank_account(parent, fields.bank_account_iban)
-            if not bank_account:
+            parent = parent_result.imported_object
+            bank_account_result = BankAccountImporter.import_bank_account(parent, fields.bank_account_iban)
+            result.add_partial_result(bank_account_result)
+            if not bank_account_result.success:
                 return result
 
-            after_school, result.after_school_state, result.error = AfterSchool.import_after_school(fields.after_school_name)
-            if not after_school:
+            bank_account = bank_account_result.imported_object
+            after_school_result = AfterSchoolImporter.import_after_school(fields.after_school_name)
+            result.add_partial_result(after_school_result)
+            if not after_school_result.success:
                 return result
 
-            after_school_edition, result.edition_state, result.error = AfterSchoolEdition.import_edition(
+            after_school = after_school_result.imported_object
+            edition_result = AfterSchoolEditionImporter.import_edition(
                 after_school, fields.edition_period, fields.edition_timetable, fields.edition_levels,
                 fields.edition_price_for_members, fields.edition_price_for_no_members,
                 Command.CREATE_EDITION_IF_NOT_EXISTS)
-            if not after_school_edition:
+            result.add_partial_result(edition_result)
+            if not edition_result.success:
                 return result
 
-            result.registration, result.registration_state = AfterSchoolRegistration.import_registration(
-                after_school_edition, bank_account, child)
+            after_school_edition = edition_result.imported_object
+            registration_result = AfterSchoolRegistrationImporter.import_registration(after_school_edition, bank_account, child)
+            result.add_partial_result(registration_result)
 
         except Exception as e:
             self.logger.error(f'Row {fields.row_index + 1}: {traceback.format_exc()}')

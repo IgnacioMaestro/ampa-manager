@@ -1,19 +1,14 @@
 import traceback
-import xlrd
 
 from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.models.child import Child
 from ampa_manager.management.commands.importers.member_excel_importer import MemberImportResult, MemberExcelImporter, \
     MemberExcelRowFields
 from ampa_manager.management.commands.utils.logger import Logger
-from ampa_manager.management.commands.importers.family_importer import FamilyImporter
-from ampa_manager.management.commands.importers.parent_importer import ParentImporter
-from ampa_manager.management.commands.importers.child_importer import ChildImporter
-from ampa_manager.management.commands.importers.bank_account_importer import BankAccountImporter
 
 
 class Command(BaseCommand):
@@ -38,14 +33,14 @@ class Command(BaseCommand):
             excel_importer = MemberExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
 
             results = []
-            counts_before = Command.count_objects()
+            counters_before = Command.count_objects()
             for member_fields in excel_importer.get_data():
                 result = self.import_member(member_fields)
                 result.print(self.logger)
                 results.append(result)
 
-            counts_after = Command.count_objects()
-            MemberImportResult.print_stats(self.logger, results, counts_before, counts_after)
+            counters_after = Command.count_objects()
+            MemberImportResult.print_stats(self.logger, results, counters_before, counters_after)
 
         except:
             self.logger.error(traceback.format_exc())
