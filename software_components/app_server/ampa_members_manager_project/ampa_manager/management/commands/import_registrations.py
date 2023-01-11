@@ -5,21 +5,23 @@ from django.core.management.base import BaseCommand
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.use_cases.import_after_school.after_school_importer import AfterSchoolImporter
-from ampa_manager.activity.use_cases.import_edition.after_school_edition_importer import AfterSchoolEditionImporter
-from ampa_manager.activity.use_cases.import_registration.after_school_registration_importer import \
+from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
+from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
+from ampa_manager.activity.use_cases.importers.after_school_registration_importer import \
     AfterSchoolRegistrationImporter
+from ampa_manager.activity.use_cases.importers.registration_excel_importer import RegistrationExcelImporter
+from ampa_manager.activity.use_cases.importers.registration_excel_row import RegistrationExcelRow
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.use_cases.import_bank_account.bank_account_importer import BankAccountImporter
-from ampa_manager.family.use_cases.import_child.child_importer import ChildImporter
-from ampa_manager.family.use_cases.import_family.family_importer import FamilyImporter
-from ampa_manager.family.use_cases.import_parent.parent_importer import ParentImporter
-from ampa_manager.management.commands.importers.registration_excel_importer import RegistrationExcelImporter, \
-    RegistrationImportResult, RegistrationExcelRow
+from ampa_manager.family.use_cases.importers.bank_account_importer import BankAccountImporter
+from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
+from ampa_manager.family.use_cases.importers.family_importer import FamilyImporter
+from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
+from ampa_manager.management.commands.importers.registration_import_result import RegistrationImportResult
 from ampa_manager.management.commands.utils.logger import Logger
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
 class Command(BaseCommand):
@@ -28,6 +30,7 @@ class Command(BaseCommand):
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
     CREATE_EDITION_IF_NOT_EXISTS = True
+
 
     def __init__(self):
         super().__init__()
@@ -39,17 +42,17 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             excel_file_name = options['file']
-            excel_importer: RegistrationExcelImporter = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
+            excel_importer = RegistrationExcelImporter(excel_file_name, self.SHEET_NUMBER, self.FIRST_ROW_INDEX)
 
             results = []
-            counters_before = Command.count_objects()
+            counters_before = self.count_objects()
             registration_row: RegistrationExcelRow
             for registration_row in excel_importer.import_rows():
                 result: RegistrationImportResult = self.import_registration(registration_row)
                 result.print(self.logger)
                 results.append(result)
 
-            counters_after = Command.count_objects()
+            counters_after = self.count_objects()
 
             RegistrationImportResult.print_stats(self.logger, results, counters_before, counters_after)
 
@@ -62,13 +65,13 @@ class Command(BaseCommand):
     @staticmethod
     def count_objects():
         return {
-            'families': Family.objects.count(),
-            'parents': Parent.objects.count(),
-            'children': Child.objects.count(),
-            'bank_accounts': BankAccount.objects.count(),
-            'after_schools': AfterSchool.objects.count(),
-            'editions': AfterSchoolEdition.objects.count(),
-            'registrations': AfterSchoolRegistration.objects.count()
+            Family.__name__: Family.objects.count(),
+            Parent.__name__: Parent.objects.count(),
+            Child.__name__: Child.objects.count(),
+            BankAccount.__name__: BankAccount.objects.count(),
+            AfterSchool.__name__: AfterSchool.objects.count(),
+            AfterSchoolEdition.__name__: AfterSchoolEdition.objects.count(),
+            AfterSchoolRegistration.__name__: AfterSchoolRegistration.objects.count()
         }
 
     def import_registration(self, fields: RegistrationExcelRow) -> RegistrationImportResult:
@@ -110,7 +113,7 @@ class Command(BaseCommand):
             edition_result = AfterSchoolEditionImporter.import_edition(
                 after_school, fields.edition_period, fields.edition_timetable, fields.edition_levels,
                 fields.edition_price_for_members, fields.edition_price_for_no_members,
-                Command.CREATE_EDITION_IF_NOT_EXISTS)
+                self.CREATE_EDITION_IF_NOT_EXISTS)
             result.add_partial_result(edition_result)
             if not edition_result.success:
                 return result
