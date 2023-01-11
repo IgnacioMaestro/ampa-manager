@@ -7,7 +7,8 @@ class ExcelImporter:
         self.first_row_index = first_row_index
         self.book, self.sheet = self.open_excel(excel_file_path, sheet_number)
 
-    def open_excel(self, file_path: str, sheet_number: int):
+    @staticmethod
+    def open_excel(file_path: str, sheet_number: int):
         print(f'\nOpening sheet {sheet_number} from file {file_path}')
         book = xlrd.open_workbook(file_path)
         sheet = book.sheet_by_index(sheet_number)

@@ -82,38 +82,4 @@ class Child(TimeStampedModel):
                 child.name = fixed_name
                 child.save(update_fields=['name'])
 
-    @staticmethod
-    def import_child(family, name: str, level: str, year_of_birth: int):
-        child = None
-        state = ProcessingState.NOT_PROCESSED
-        error = None
 
-        repetition = Level.calculate_repetition(level, year_of_birth)
-
-        fields_ok, error = Child.validate_fields(name, year_of_birth, repetition)
-        if fields_ok:
-            child = family.find_child(name)
-            if child:
-                if child.is_modified(year_of_birth, repetition):
-                    child.update(year_of_birth, repetition)
-                    state = ProcessingState.UPDATED
-                else:
-                    state = ProcessingState.NOT_MODIFIED
-            else:
-                child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition,
-                                             family=family)
-                state = ProcessingState.CREATED
-        else:
-            state = ProcessingState.ERROR
-
-        return child, state, error
-
-    @staticmethod
-    def validate_fields(name, year_of_birth, repetition):
-        if not name or type(name) != str:
-            return False, f'Wrong name: {name} ({type(name)})'
-        if year_of_birth is None or type(year_of_birth) != int:
-            return False, f'Wrong year of birth: {year_of_birth} ({type(year_of_birth)})'
-        if repetition is None or type(repetition) != int:
-            return False, f'Wrong repetition: {repetition} ({type(repetition)})'
-        return True, None

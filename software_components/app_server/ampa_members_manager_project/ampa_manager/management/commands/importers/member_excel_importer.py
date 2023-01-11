@@ -1,4 +1,9 @@
+from dataclasses import dataclass
+from typing import Optional
+
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.parent import Parent
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
 from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.management.commands.utils.logger import Logger
@@ -54,31 +59,31 @@ class MemberExcelImporter(ExcelImporter):
         child1_name = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD1_NAME))
         child1_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD1_LEVEL))
-        child1_year = FieldsFormatters.clean_integer(
+        child1_year_of_birth = FieldsFormatters.clean_integer(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD1_YEAR_OF_BIRTH))
 
         child2_name = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD2_NAME))
         child2_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD2_LEVEL))
-        child2_year = FieldsFormatters.clean_integer(
+        child2_year_of_birth = FieldsFormatters.clean_integer(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD2_YEAR_OF_BIRTH))
 
         child3_name = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD3_NAME))
         child3_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD3_LEVEL))
-        child3_year = FieldsFormatters.clean_integer(
+        child3_year_of_birth = FieldsFormatters.clean_integer(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD3_YEAR_OF_BIRTH))
 
         child4_name = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD4_NAME))
         child4_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD4_LEVEL))
-        child4_year = FieldsFormatters.clean_integer(
+        child4_year_of_birth = FieldsFormatters.clean_integer(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD4_YEAR_OF_BIRTH))
 
         child5_name = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD5_NAME))
         child5_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD5_LEVEL))
-        child5_year = FieldsFormatters.clean_integer(
+        child5_year_of_birth = FieldsFormatters.clean_integer(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD5_YEAR_OF_BIRTH))
 
         parent1_name_and_surnames = FieldsFormatters.clean_name(
@@ -125,50 +130,40 @@ class MemberExcelImporter(ExcelImporter):
                                     parent2_bank_account_iban, parent2_bank_account_swift_bic, parent2_bank_account_is_default)
 
 
+@dataclass
 class MemberExcelRowFields:
 
-    def __init__(self, row_index, family_surnames,
-                 child1_name, child1_level, child1_year_of_birth,
-                 child2_name, child2_level, child2_year_of_birth,
-                 child3_name, child3_level, child3_year_of_birth,
-                 child4_name, child4_level, child4_year_of_birth,
-                 child5_name, child5_level, child5_year_of_birth,
-                 parent1_name_and_surnames, parent1_phone_number, parent1_additional_phone_number, parent1_email,
-                 parent2_name_and_surnames, parent2_phone_number, parent2_additional_phone_number, parent2_email,
-                 parent1_bank_account_iban, parent1_bank_account_swift_bic, parent1_bank_account_is_default,
-                 parent2_bank_account_iban, parent2_bank_account_swift_bic, parent2_bank_account_is_default):
-
-        self.row_index = row_index
-        self.family_surnames = family_surnames
-        self.child1_name = child1_name
-        self.child1_level = child1_level
-        self.child1_year_of_birth = child1_year_of_birth
-        self.child2_name = child2_name
-        self.child2_level = child2_level
-        self.child2_year_of_birth = child2_year_of_birth
-        self.child3_name = child3_name
-        self.child3_level = child3_level
-        self.child3_year_of_birth = child3_year_of_birth
-        self.child4_name = child4_name
-        self.child4_level = child4_level
-        self.child4_year_of_birth = child4_year_of_birth
-        self.child5_name = child5_name
-        self.child5_level = child5_level
-        self.child5_year_of_birth = child5_year_of_birth
-        self.parent1_name_and_surnames = parent1_name_and_surnames
-        self.parent1_phone_number = parent1_phone_number
-        self.parent1_additional_phone_number = parent1_additional_phone_number
-        self.parent1_email = parent1_email
-        self.parent2_name_and_surnames = parent2_name_and_surnames
-        self.parent2_phone_number = parent2_phone_number
-        self.parent2_additional_phone_number = parent2_additional_phone_number
-        self.parent2_email = parent2_email
-        self.parent1_bank_account_iban = parent1_bank_account_iban
-        self.parent1_bank_account_swift_bic = parent1_bank_account_swift_bic
-        self.parent1_bank_account_is_default = parent1_bank_account_is_default
-        self.parent2_bank_account_iban = parent2_bank_account_iban
-        self.parent2_bank_account_swift_bic = parent2_bank_account_swift_bic
-        self.parent2_bank_account_is_default = parent2_bank_account_is_default
+    row_index: Optional[int]
+    family_surnames: Optional[str]
+    child1_name: Optional[str]
+    child1_level: Optional[str]
+    child1_year_of_birth: Optional[int]
+    child2_name: Optional[str]
+    child2_level: Optional[str]
+    child2_year_of_birth: Optional[int]
+    child3_name: Optional[str]
+    child3_level: Optional[str]
+    child3_year_of_birth: Optional[int]
+    child4_name: Optional[str]
+    child4_level: Optional[str]
+    child4_year_of_birth: Optional[int]
+    child5_name: Optional[str]
+    child5_level: Optional[str]
+    child5_year_of_birth: Optional[int]
+    parent1_name_and_surnames: Optional[str]
+    parent1_phone_number: Optional[str]
+    parent1_additional_phone_number: Optional[str]
+    parent1_email: Optional[str]
+    parent2_name_and_surnames: Optional[str]
+    parent2_phone_number: Optional[str]
+    parent2_additional_phone_number: Optional[str]
+    parent2_email: Optional[str]
+    parent1_bank_account_iban: Optional[str]
+    parent1_bank_account_swift_bic: Optional[str]
+    parent1_bank_account_is_default: Optional[bool]
+    parent2_bank_account_iban: Optional[str]
+    parent2_bank_account_swift_bic: Optional[str]
+    parent2_bank_account_is_default: Optional[bool]
 
     def child1_has_data(self):
         return self.child1_name or self.child1_level or self.child1_year_of_birth
@@ -203,7 +198,7 @@ class MemberImportResult:
         self.row_index = row_index
         self.fields = MemberExcelRowFields(None, None, None, None, None, None, None, None, None, None, None, None,
                                            None, None, None, None, None, None, None, None, None, None, None, None,
-                                           None, None, None, None, None, None, None, )
+                                           None, None, None, None, None, None, None)
         self.family_state = ProcessingState.NOT_PROCESSED
         self.child1_state = ProcessingState.NOT_PROCESSED
         self.child2_state = ProcessingState.NOT_PROCESSED
@@ -218,7 +213,7 @@ class MemberImportResult:
 
     @property
     def success(self):
-        return len(self.error) == 0
+        return len(self.errors) == 0
 
     def print(self, logger: Logger):
         logger.log(f'\nRow {self.row_index + 1}')

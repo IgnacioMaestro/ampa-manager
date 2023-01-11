@@ -52,7 +52,7 @@ python manage.py import <FILE_PATH>
 ## Borrar ficheros del historial
 
 1. Instalar [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)
-2. Ejecutar
+2. Ejecutar en una nueva carpeta
 
 ```
 git clone --mirror https://github.com/IgnacioMaestro/ampa-manager.git
