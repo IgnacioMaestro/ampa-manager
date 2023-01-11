@@ -6,8 +6,8 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.importers.member_excel_importer import MemberImportResult, MemberExcelImporter, \
-    MemberExcelRowFields
+from ampa_manager.management.commands.importers.member_import_result import MemberImportResult, MemberExcelImporter, \
+    MemberExcelRow
 from ampa_manager.management.commands.utils.logger import Logger
 
 
@@ -82,7 +82,7 @@ class Command(BaseCommand):
             'bank_accounts': BankAccount.objects.count(),
         }
 
-    def import_member(self, fields: MemberExcelRowFields):
+    def import_member(self, fields: MemberExcelRow):
         result = MemberImportResult(fields.row_index)
 
         try:

@@ -2,11 +2,12 @@ from datetime import datetime
 from typing import Optional
 
 from ampa_manager.academic_course.models.level import Level
-
 from ampa_manager.utils.string_utils import StringUtils
 
 
 class FieldsFormatters:
+
+
     @staticmethod
     def clean_name(value: str) -> Optional[str]:
         if value:
@@ -15,6 +16,12 @@ class FieldsFormatters:
                      StringUtils.remove_duplicated_spaces(
                       StringUtils.remove_special_chars(
                        StringUtils.remove_strip_spaces(value)))))
+        return None
+
+    @staticmethod
+    def clean_level(value: str) -> Optional[str]:
+        if value:
+            Level.parse_level(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value)))
         return None
 
     @staticmethod
