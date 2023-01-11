@@ -9,6 +9,26 @@ from ampa_manager.management.commands.utils.logger import Logger
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
+@dataclass
+class RegistrationExcelRow:
+    row_index: Optional[int]
+    family_surnames: Optional[str]
+    child_name: Optional[str]
+    child_level: Optional[str]
+    child_year_of_birth: Optional[int]
+    parent_name_and_surnames: Optional[str]
+    parent_phone_number: Optional[str]
+    parent_additional_phone_number: Optional[str]
+    parent_email: Optional[str]
+    bank_account_iban: Optional[str]
+    after_school_name: Optional[str]
+    edition_timetable: Optional[str]
+    edition_period: Optional[str]
+    edition_levels: Optional[str]
+    edition_price_for_members: Optional[int]
+    edition_price_for_no_members: Optional[int]
+
+
 class RegistrationExcelImporter(ExcelImporter):
     COLUMN_INDEX_FAMILY_SURNAMES = 0
     COLUMN_INDEX_CHILD_NAME = 1
@@ -26,7 +46,7 @@ class RegistrationExcelImporter(ExcelImporter):
     COLUMN_INDEX_EDITION_PRICE_FOR_MEMBERS = 15
     COLUMN_INDEX_EDITION_PRICE_FOR_NO_MEMBERS = 16
 
-    def import_row_fields(self, row_index: int):
+    def import_row_columns(self, row_index: int) -> RegistrationExcelRow:
         family_surnames = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_FAMILY_SURNAMES))
         child_name = FieldsFormatters.clean_name(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_NAME))
         child_level = Level.parse_level(self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_CHILD_LEVEL))
@@ -50,26 +70,6 @@ class RegistrationExcelImporter(ExcelImporter):
                                     edition_price_for_no_members)
 
 
-@dataclass
-class RegistrationExcelRow:
-    row_index: Optional[int]
-    family_surnames: Optional[str]
-    child_name: Optional[str]
-    child_level: Optional[str]
-    child_year_of_birth: Optional[int]
-    parent_name_and_surnames: Optional[str]
-    parent_phone_number: Optional[str]
-    parent_additional_phone_number: Optional[str]
-    parent_email: Optional[str]
-    bank_account_iban: Optional[str]
-    after_school_name: Optional[str]
-    edition_timetable: Optional[str]
-    edition_period: Optional[str]
-    edition_levels: Optional[str]
-    edition_price_for_members: Optional[int]
-    edition_price_for_no_members: Optional[int]
-
-
 class RegistrationImportResult:
 
     def __init__(self, row_index):
@@ -89,18 +89,31 @@ class RegistrationImportResult:
 
     @property
     def success(self):
-        return self.registration is not None and self.error is None
+        if len(self.partial_results) > 0:
+            for result in self.partial_results:
+                if not result.success:
+                    return False
+            return True
+        return False
+
+    @property
+    def errors(self):
+        errors = []
+        for result in self.partial_results:
+            if result.error:
+                errors.append(result.error)
+        return ', '.join(errors)
 
     def print(self, logger: Logger):
-        summary = f'OK ({self.registration_state.name} #{self.registration.id})' if self.success else f'ERROR: {self.error}'
-
+        summary = f'OK' if self.success else f'ERROR: {self.errors}'
         logger.log(f'\nRow {self.row_index + 1} -> {summary}')
-        logger.log(f' - Family: {self.fields.family_surnames} -> {self.family_state.name}')
-        logger.log(f' - Child: {self.fields.child_name}, {self.fields.child_level}, {self.fields.child_year_of_birth} -> {self.child_state.name}')
-        logger.log(f' - Parent: {self.fields.parent_name_and_surnames}, {self.fields.parent_phone_number}, {self.fields.parent_additional_phone_number}, {self.fields.parent_email} -> {self.parent_state.name}')
-        logger.log(f' - Bank account: {self.fields.bank_account_iban} -> {self.bank_account_state.name}')
-        logger.log(f' - After-school: {self.fields.after_school_name} -> {self.after_school_state.name}')
-        logger.log(f' - Edition: {self.fields.edition_timetable}, {self.fields.edition_period}, {self.fields.edition_levels}, {self.fields.edition_price_for_members}, {self.fields.edition_price_for_no_members} -> {self.edition_state.name}')
+
+        if len(self.partial_results) > 0:
+            for result in self.partial_results:
+                logger.log(f' - {result}')
+            return True
+        else:
+            logger.log(f'\n-')
 
     def add_partial_result(self, partial_result: ModelImportResult):
         self.partial_results.append(partial_result)

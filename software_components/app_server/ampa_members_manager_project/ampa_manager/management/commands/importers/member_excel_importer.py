@@ -52,7 +52,7 @@ class MemberExcelImporter(ExcelImporter):
     COLUMN_INDEX_CHILD5_LEVEL = 28
     COLUMN_INDEX_CHILD5_YEAR_OF_BIRTH = 29
 
-    def import_row_fields(self, row_index: int):
+    def import_row_columns(self, row_index: int):
         family_surnames = FieldsFormatters.clean_name(
             self.sheet.cell_value(rowx=row_index, colx=self.COLUMN_INDEX_FAMILY_SURNAMES))
 

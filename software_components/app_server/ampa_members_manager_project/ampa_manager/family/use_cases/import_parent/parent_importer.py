@@ -6,7 +6,7 @@ class ParentImporter:
 
     @staticmethod
     def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str) -> ModelImportResult:
-        result = ModelImportResult(Parent.__name__)
+        result = ModelImportResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
         fields_ok, error = ParentImporter.validate_fields(name_and_surnames,
                                                           phone_number,

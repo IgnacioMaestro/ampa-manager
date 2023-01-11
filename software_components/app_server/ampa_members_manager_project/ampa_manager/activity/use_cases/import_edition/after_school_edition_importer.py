@@ -25,7 +25,7 @@ class AfterSchoolEditionImporter:
     @staticmethod
     def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members,
                        create_if_not_exists) -> ModelImportResult:
-        result = ModelImportResult(AfterSchoolEdition.__name__)
+        result = ModelImportResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members, price_for_no_members])
 
         edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable, levels)
         if edition:
