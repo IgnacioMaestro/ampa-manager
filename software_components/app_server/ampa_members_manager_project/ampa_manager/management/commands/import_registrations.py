@@ -39,12 +39,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             excel_file_name = options['file']
-            excel_importer = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
+            excel_importer: RegistrationExcelImporter = RegistrationExcelImporter(excel_file_name, Command.SHEET_NUMBER, Command.FIRST_ROW_INDEX)
 
             results = []
             counters_before = Command.count_objects()
-            for registration_fields in excel_importer.get_data():
-                result = self.import_registration(registration_fields)
+            registration_row: RegistrationExcelRow
+            for registration_row in excel_importer.import_rows():
+                result: RegistrationImportResult = self.import_registration(registration_row)
                 result.print(self.logger)
                 results.append(result)
 
@@ -70,7 +71,7 @@ class Command(BaseCommand):
             'registrations': AfterSchoolRegistration.objects.count()
         }
 
-    def import_registration(self, fields: RegistrationExcelRow):
+    def import_registration(self, fields: RegistrationExcelRow) -> RegistrationImportResult:
         result = RegistrationImportResult(fields.row_index)
 
         try:

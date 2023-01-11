@@ -7,7 +7,7 @@ class ChildImporter:
 
     @staticmethod
     def import_child(family, name: str, level: str, year_of_birth: int) -> ModelImportResult:
-        result = ModelImportResult(Child.__name__)
+        result = ModelImportResult(Child.__name__, [name, level, year_of_birth])
 
         repetition = Level.calculate_repetition(level, year_of_birth)
 

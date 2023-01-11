@@ -14,12 +14,12 @@ class ExcelImporter:
         sheet = book.sheet_by_index(sheet_number)
         return book, sheet
 
-    def get_data(self):
-        data = []
+    def import_rows(self):
+        rows = []
         for row_index in range(self.first_row_index, self.sheet.nrows):
-            row_fields = self.import_row_fields(row_index)
-            data.append(row_fields)
-        return data
+            row_columns = self.import_row_columns(row_index)
+            rows.append(row_columns)
+        return rows
 
-    def import_row_fields(self, row_index: int):
+    def import_row_columns(self, row_index: int):
         pass

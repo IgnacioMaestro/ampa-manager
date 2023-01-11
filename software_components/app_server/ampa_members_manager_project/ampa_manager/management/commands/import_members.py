@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
             results = []
             counters_before = Command.count_objects()
-            for member_fields in excel_importer.get_data():
+            for member_fields in excel_importer.import_rows():
                 result = self.import_member(member_fields)
                 result.print(self.logger)
                 results.append(result)

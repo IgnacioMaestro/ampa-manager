@@ -13,7 +13,7 @@ class AfterSchoolImporter:
 
     @staticmethod
     def import_after_school(name) -> ModelImportResult:
-        result = ModelImportResult(AfterSchool.__name__)
+        result = ModelImportResult(AfterSchool.__name__, [name])
 
         after_school = AfterSchoolImporter.find(name)
         if after_school:
