@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.family.admin.filters.child_filters import ChildCycleFilter, ChildLevelListFilter
 from ampa_manager.family.models.membership import Membership
 
 
 class ChildAdmin(admin.ModelAdmin):
-    list_display = ['name', 'family', 'parents', 'year_of_birth', 'repetition', 'child_course', 'is_member']
+    list_display = ['name', 'family', 'parents', 'registrations_count', 'year_of_birth', 'repetition', 'child_course', 'is_member']
     fields = ['name', 'family', 'year_of_birth', 'repetition', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name']
@@ -26,3 +27,7 @@ class ChildAdmin(admin.ModelAdmin):
     @admin.display(description=_('Parents'))
     def parents(self, child):
         return ', '.join(p.name_and_surnames for p in child.family.parents.all())
+
+    @admin.display(description=_('Registrations'))
+    def registrations_count(self, child):
+        return AfterSchoolRegistration.objects.of_child(child).count()
