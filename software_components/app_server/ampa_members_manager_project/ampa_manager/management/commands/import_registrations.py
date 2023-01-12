@@ -1,4 +1,5 @@
 import traceback
+from pathlib import Path
 
 from django.core.management.base import BaseCommand
 
@@ -48,26 +49,26 @@ class Command(BaseCommand):
     COLUMN_EDITION_PRICE_FOR_NO_MEMBERS = 'edition_price_for_no_members'
 
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_name, 'family_surnames'],
-        [1, FieldsFormatters.clean_name, 'child_name'],
-        [3, FieldsFormatters.clean_level, 'child_level'],
-        [4, FieldsFormatters.clean_integer, 'child_year_of_birth'],
-        [5, FieldsFormatters.clean_name, 'parent_name_and_surnames'],
-        [6, FieldsFormatters.clean_phone, 'parent_phone_number'],
-        [7, FieldsFormatters.clean_phone, 'parent_additional_phone_number'],
-        [8, FieldsFormatters.clean_email, 'parent_email'],
-        [10, FieldsFormatters.clean_iban, 'bank_account_iban'],
-        [11, FieldsFormatters.clean_string, 'after_school_name'],
-        [12, FieldsFormatters.clean_string, 'edition_timetable'],
-        [13, FieldsFormatters.clean_string, 'edition_period'],
-        [14, FieldsFormatters.clean_string, 'edition_levels'],
-        [15, FieldsFormatters.clean_integer, 'edition_price_for_members'],
-        [16, FieldsFormatters.clean_integer, 'edition_price_for_no_members'],
+        [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES],
+        [1, FieldsFormatters.clean_name, COLUMN_CHILD_NAME],
+        [3, FieldsFormatters.clean_level, COLUMN_CHILD_LEVEL],
+        [4, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH],
+        [5, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES],
+        [6, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER],
+        [7, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER],
+        [8, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL],
+        [10, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN],
+        [11, FieldsFormatters.clean_string, COLUMN_AFTER_SCHOOL_NAME],
+        [12, FieldsFormatters.clean_string, COLUMN_EDITION_TIMETABLE],
+        [13, FieldsFormatters.clean_string, COLUMN_EDITION_PERIOD],
+        [14, FieldsFormatters.clean_string, COLUMN_EDITION_LEVELS],
+        [15, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_MEMBERS],
+        [16, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_NO_MEMBERS],
     ]
 
     def __init__(self):
         super().__init__()
-        self.logger = Logger('import_registrations')
+        self.logger = Logger(Path(__file__).stem)
 
     def add_arguments(self, parser):
         parser.add_argument('file', type=str)
@@ -77,8 +78,9 @@ class Command(BaseCommand):
             excel_file_name = options['file']
             excel_importer = ExcelImporter(excel_file_name, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT)
 
-            results = []
             counters_before = self.count_objects()
+
+            results = []
             row: ExcelRow
             for row in excel_importer.import_rows():
                 result: ImportResult = self.import_registration(row)

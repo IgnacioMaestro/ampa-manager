@@ -30,7 +30,7 @@ class ExcelImporter:
         columns_values = {}
         for settings in self.columns_settings:
             index = settings[0]
-            formatter = settings[0]
-            name = settings[0]
+            formatter = settings[1]
+            name = settings[2]
             columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
         return columns_values
