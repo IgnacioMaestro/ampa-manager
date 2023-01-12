@@ -17,7 +17,12 @@ class StringUtils:
     @staticmethod
     def normalize(value: str) -> Optional[str]:
         if value:
-            return StringUtils.lowercase(StringUtils.remove_strip_spaces(StringUtils.remove_duplicated_spaces(StringUtils.remove_accents(value))))
+            return StringUtils.remove_strip_spaces(
+                    StringUtils.remove_duplicated_spaces(
+                     StringUtils.remove_basque_characters(
+                      StringUtils.lowercase(
+                       StringUtils.remove_special_chars(
+                        StringUtils.remove_accents(value))))))
         return None
 
     @staticmethod
@@ -54,6 +59,17 @@ class StringUtils:
         return None
 
     @staticmethod
+    def remove_basque_characters(value: str) -> Optional[str]:
+        if value:
+            new_value = value
+            for character in ['tx', 'tz', 'ts']:
+                new_value = new_value.replace(character, 'ch')
+            for character in ['tt']:
+                new_value = new_value.replace(character, 't')
+            return new_value
+        return None
+
+    @staticmethod
     def remove_all_spaces(value: str) -> Optional[str]:
         if value is not None:
             return value.replace(' ', '')
@@ -82,7 +98,9 @@ class StringUtils:
     @staticmethod
     def parse_bool(value: str) -> bool:
         if value:
-            return StringUtils.remove_accents(value.strip().lower()) in ["si", "bai", "yes", "1", "true"]
+            return StringUtils.remove_accents(
+                    StringUtils.lowercase(
+                     StringUtils.remove_strip_spaces(value))) in ["si", "bai", "yes", "1", "true"]
         else:
             return False
 

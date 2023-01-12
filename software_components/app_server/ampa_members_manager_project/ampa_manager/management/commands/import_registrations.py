@@ -53,14 +53,14 @@ class Command(BaseCommand):
         [1, FieldsFormatters.clean_name, COLUMN_CHILD_NAME],
         [3, FieldsFormatters.clean_level, COLUMN_CHILD_LEVEL],
         [4, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH],
-        [5, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES],
-        [6, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER],
-        [7, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER],
-        [8, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL],
+        [5, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER],
+        [6, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER],
+        [7, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL],
+        [8, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES],
         [10, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN],
         [11, FieldsFormatters.clean_string, COLUMN_AFTER_SCHOOL_NAME],
-        [12, FieldsFormatters.clean_string, COLUMN_EDITION_TIMETABLE],
-        [13, FieldsFormatters.clean_string, COLUMN_EDITION_PERIOD],
+        [12, FieldsFormatters.clean_string, COLUMN_EDITION_PERIOD],
+        [13, FieldsFormatters.clean_string, COLUMN_EDITION_TIMETABLE],
         [14, FieldsFormatters.clean_string, COLUMN_EDITION_LEVELS],
         [15, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_MEMBERS],
         [16, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_NO_MEMBERS],
@@ -171,12 +171,3 @@ class Command(BaseCommand):
             result.error = str(e)
 
         return result
-
-    def import_after_school_edition(self):
-        pass
-
-    def import_bank_account(self):
-        pass
-
-    def import_child(self):
-        pass

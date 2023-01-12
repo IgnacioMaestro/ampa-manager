@@ -77,13 +77,16 @@ class ModelImportResult:
         self.state2 = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
 
     def get_fields_before_csv(self) -> str:
-        return ', '.join(self.fields_before)
+        return self.get_fields_csv(self.fields_before)
 
     def get_fields_after_csv(self) -> str:
-        return ', '.join(self.fields_after)
+        return self.get_fields_csv(self.fields_after)
 
     def get_excel_fields_csv(self) -> str:
-        return ', '.join(self.excel_fields)
+        return self.get_fields_csv(self.excel_fields)
+
+    def get_fields_csv(self, values):
+        return ', '.join([str(f) if f is not None else '' for f in self.excel_fields])
 
     def get_full_state(self):
         full_state = ''
