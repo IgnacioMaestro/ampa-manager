@@ -142,6 +142,29 @@ class Family(TimeStampedModel):
                     duplicated.delete()
 
     @staticmethod
+    def find_duplicated_families():
+        for family1 in Family.objects.all():
+            for family2 in Family.objects.exclude(id=family1.id):
+                if StringUtils.compare_ignoring_everything(family1.surnames, family2.surnames):
+                    print(f'Duplicated family: {family1} ({family1.id}) - {family2} ({family2.id})')
+
+    @staticmethod
+    def find_duplicated_parents():
+        for family in Family.objects.all():
+            for parent1 in family.parents.all():
+                for parent2 in family.parents.exclude(id=parent1.id):
+                    if StringUtils.compare_ignoring_everything(parent1.name_and_surnames, parent2.name_and_surnames):
+                        print(f'Duplicated parent: {parent1} ({parent1.id}) - {parent2} ({parent2.id})')
+
+    @staticmethod
+    def find_duplicated_children():
+        for family in Family.objects.all():
+            for child1 in Child.objects.with_family(family):
+                for child2 in Child.objects.with_family(family).exclude(id=child1.id):
+                    if StringUtils.compare_ignoring_everything(child1.name, child2.name):
+                        print(f'Duplicated children: {child1} ({child1.id}) - {child2} ({child2.id})')
+
+    @staticmethod
     def filter_by_surnames(surnames) -> List[Family]:
         families = []
         for family in Family.objects.all():

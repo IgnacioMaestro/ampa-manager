@@ -95,7 +95,7 @@ class ImportResult:
                 not_success_count += 1
 
             if result.errors:
-                errors[result.row_index] = result.error
+                errors[result.row_index] = result.errors
 
             for partial_result in result.partial_results:
                 if partial_result.class_name not in totals:

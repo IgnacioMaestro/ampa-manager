@@ -14,26 +14,25 @@ class FieldsFormatters:
             return StringUtils.capitalize(
                     StringUtils.fix_accents(
                      StringUtils.remove_duplicated_spaces(
-                      StringUtils.remove_special_chars(
-                       StringUtils.remove_strip_spaces(value)))))
+                       StringUtils.remove_strip_spaces(str(value)))))
         return None
 
     @staticmethod
     def clean_level(value: str) -> Optional[str]:
         if value:
-            Level.parse_level(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value)))
+            Level.parse_level(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
         return None
 
     @staticmethod
     def clean_string(value: str) -> Optional[str]:
         if value:
-            return StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(value))
+            return StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value)))
         return None
 
     @staticmethod
     def clean_email(value: str) -> Optional[str]:
         if value:
-            return StringUtils.lowercase(StringUtils.remove_all_spaces(StringUtils.remove_accents(value)))
+            return StringUtils.lowercase(StringUtils.remove_all_spaces(StringUtils.remove_accents(str(value))))
         return None
 
     @staticmethod
@@ -53,13 +52,13 @@ class FieldsFormatters:
     @staticmethod
     def clean_iban(value: str) -> Optional[str]:
         if value:
-            return StringUtils.remove_all_spaces(value)
+            return StringUtils.remove_all_spaces(str(value))
         return None
 
     @staticmethod
     def clean_date(value: str, date_format: str = '%d/%m/%y') -> Optional[datetime]:
         if value:
-            return datetime.strptime(StringUtils.remove_all_spaces(value), date_format)
+            return datetime.strptime(StringUtils.remove_all_spaces(str(value)), date_format)
         return None
 
     @staticmethod

@@ -13,7 +13,7 @@ class BankAccountImporter:
 
     @staticmethod
     def import_bank_account(parent, iban, swift_bic, is_default_account=False, family=None) -> ModelImportResult:
-        result = ModelImportResult(BankAccount.__name__)
+        result = ModelImportResult(BankAccount.__name__, [iban, swift_bic, is_default_account])
 
         if parent:
             if iban:

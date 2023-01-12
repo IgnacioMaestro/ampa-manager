@@ -13,7 +13,7 @@ class AfterSchoolRegistrationImporter:
 
     @staticmethod
     def import_registration(after_school_edition, bank_account, child) -> ModelImportResult:
-        result = ModelImportResult(AfterSchoolRegistration.__name__)
+        result = ModelImportResult(AfterSchoolRegistration.__name__, [])
 
         registration = AfterSchoolRegistrationImporter.find(after_school_edition, child)
         if registration:
