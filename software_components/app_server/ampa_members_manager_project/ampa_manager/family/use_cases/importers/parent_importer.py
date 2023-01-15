@@ -28,7 +28,7 @@ class ParentImporter:
                 result.set_created(parent)
 
                 family.parents.add(parent)
-                result.set_added_to_family()
+                result.set_parent_added_to_family()
         else:
             result.set_error(error)
 

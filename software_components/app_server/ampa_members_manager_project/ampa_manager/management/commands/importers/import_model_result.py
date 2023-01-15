@@ -70,11 +70,14 @@ class ImportModelResult:
         self.imported_object = imported_object
         self.state = ProcessingState.CREATED
 
-    def set_added_to_family(self):
+    def set_parent_added_to_family(self):
         self.state2 = ProcessingState.PARENT_ADDED_TO_FAMILY
 
-    def set_as_default(self):
+    def set_bank_account_as_default(self):
         self.state2 = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
+
+    def set_family_as_member(self):
+        self.state2 = ProcessingState.FAMILY_SET_AS_MEMBER
 
     def get_fields_before_csv(self) -> str:
         return self.get_fields_csv(self.fields_before)
