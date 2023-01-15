@@ -1,6 +1,6 @@
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class AfterSchoolEditionImporter:
@@ -24,8 +24,8 @@ class AfterSchoolEditionImporter:
 
     @staticmethod
     def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members,
-                       create_if_not_exists) -> ModelImportResult:
-        result = ModelImportResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members, price_for_no_members])
+                       create_if_not_exists) -> ImportModelResult:
+        result = ImportModelResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members, price_for_no_members])
 
         edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable, levels)
         if edition:

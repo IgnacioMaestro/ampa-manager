@@ -9,7 +9,6 @@ from ampa_manager.activity.models.after_school.after_school_registration_queryse
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.membership import Membership
-from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class AfterSchoolRegistration(models.Model):

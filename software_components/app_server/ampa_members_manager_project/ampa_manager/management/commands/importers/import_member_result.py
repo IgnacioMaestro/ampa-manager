@@ -1,12 +1,12 @@
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.member_excel_row import MemberExcelRow
-from ampa_manager.management.commands.importers.import_result import ImportResult
-from ampa_manager.management.commands.results.processing_state import ProcessingState
-from ampa_manager.management.commands.utils.logger import Logger
+from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
+from ampa_manager.utils.processing_state import ProcessingState
+from ampa_manager.utils.logger import Logger
 
 
-class MemberImportResult:
+class ImportMemberResult:
 
     def __init__(self, row_index):
         self.row_index = row_index
@@ -116,31 +116,31 @@ class MemberImportResult:
         logger.log(f'- IMPORTED: {imported_count}')
         logger.log(f'- NOT IMPORTED: {not_imported_count}')
 
-        logger.log(f'FAMILIES {ImportResult.get_variation(counts_before["families"], counts_after["families"])}')
+        logger.log(f'FAMILIES {ImportRowResult.get_variation(counts_before["families"], counts_after["families"])}')
         for state, total in family_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'CHILDREN {ImportResult.get_variation(counts_before["children"], counts_after["children"])}')
+        logger.log(f'CHILDREN {ImportRowResult.get_variation(counts_before["children"], counts_after["children"])}')
         for state, total in child_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'PARENTS {ImportResult.get_variation(counts_before["parents"], counts_after["parents"])}')
+        logger.log(f'PARENTS {ImportRowResult.get_variation(counts_before["parents"], counts_after["parents"])}')
         for state, total in parent_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'BANK ACCOUNTS {ImportResult.get_variation(counts_before["bank_accounts"], counts_after["bank_accounts"])}')
+        logger.log(f'BANK ACCOUNTS {ImportRowResult.get_variation(counts_before["bank_accounts"], counts_after["bank_accounts"])}')
         for state, total in bank_account_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'AFTER SCHOOLS {ImportResult.get_variation(counts_before["after_schools"], counts_after["after_schools"])}')
+        logger.log(f'AFTER SCHOOLS {ImportRowResult.get_variation(counts_before["after_schools"], counts_after["after_schools"])}')
         for state, total in after_school_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'EDITIONS {ImportResult.get_variation(counts_before["editions"], counts_after["editions"])}')
+        logger.log(f'EDITIONS {ImportRowResult.get_variation(counts_before["editions"], counts_after["editions"])}')
         for state, total in edition_totals.items():
             logger.log(f'- {state.name}: {total}')
 
-        logger.log(f'REGISTRATIONS {ImportResult.get_variation(counts_before["registrations"], counts_after["registrations"])}')
+        logger.log(f'REGISTRATIONS {ImportRowResult.get_variation(counts_before["registrations"], counts_after["registrations"])}')
         for state, total in registration_totals.items():
             logger.log(f'- {state.name}: {total}')
 

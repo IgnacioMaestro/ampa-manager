@@ -3,10 +3,8 @@ from django.db import models
 from django.db.models import CASCADE
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.price_per_level import PricePerLevel
-from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class AfterSchoolEdition(PricePerLevel):

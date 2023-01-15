@@ -20,8 +20,8 @@ from ampa_manager.family.use_cases.importers.family_importer import FamilyImport
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
 from ampa_manager.management.commands.importers.excel_row import ExcelRow
-from ampa_manager.management.commands.importers.import_result import ImportResult
-from ampa_manager.management.commands.utils.logger import Logger
+from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
+from ampa_manager.utils.logger import Logger
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
@@ -83,13 +83,13 @@ class Command(BaseCommand):
             results = []
             row: ExcelRow
             for row in excel_importer.import_rows():
-                result: ImportResult = self.import_registration(row)
+                result: ImportRowResult = self.import_after_school_registration(row)
                 result.print(self.logger)
                 results.append(result)
 
             counters_after = self.count_objects()
 
-            ImportResult.print_stats(self.logger, results, counters_before, counters_after)
+            ImportRowResult.print_stats(self.logger, results, counters_before, counters_after)
 
         except:
             self.logger.error(traceback.format_exc())
@@ -109,8 +109,8 @@ class Command(BaseCommand):
             AfterSchoolRegistration.__name__: AfterSchoolRegistration.objects.count()
         }
 
-    def import_registration(self, row: ExcelRow) -> ImportResult:
-        result = ImportResult(row.index)
+    def import_after_school_registration(self, row: ExcelRow) -> ImportRowResult:
+        result = ImportRowResult(row.index)
 
         try:
             family_result = FamilyImporter.import_family(row.get(self.COLUMN_FAMILY_SURNAMES),
