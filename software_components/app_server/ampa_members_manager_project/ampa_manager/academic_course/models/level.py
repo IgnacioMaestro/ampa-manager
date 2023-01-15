@@ -1,6 +1,9 @@
+from typing import Optional
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.utils.string_utils import StringUtils
 
 
 class Level:
@@ -116,11 +119,11 @@ class Level:
         active_course = ActiveCourse.load()
         return active_course.initial_year - year_of_birth
 
-    @staticmethod
-    def parse_level(level):
-        if level:
-            cleaned_level = str(level).strip().lower()
+    @classmethod
+    def parse_level(cls, value) -> Optional[str]:
+        if value:
+            value = StringUtils.lowercase(StringUtils.remove_strip_spaces(value))
             for level_id, level_name in Level.LEVELS_NAMES.items():
-                if level_name.strip().lower() in cleaned_level:
+                if str(level_name) in value:
                     return level_id
         return None

@@ -9,6 +9,7 @@ from ampa_manager.activity.models.after_school.after_school_registration_queryse
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class AfterSchoolRegistration(models.Model):
@@ -40,10 +41,3 @@ class AfterSchoolRegistration(models.Model):
             return float(self.after_school_edition.price_for_member)
         else:
             return float(self.after_school_edition.price_for_no_member)
-
-    @staticmethod
-    def find(after_school_edition, child):
-        try:
-            return AfterSchoolRegistration.objects.get(after_school_edition=after_school_edition, child=child)
-        except AfterSchoolRegistration.DoesNotExist:
-            return None

@@ -48,3 +48,16 @@ En todos los casos si existe se actualiza, si no se crea. Si hubiera varias elem
 ```
 python manage.py import <FILE_PATH>
 ```
+
+## Borrar ficheros del historial
+
+1. Instalar [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)
+2. Ejecutar en una nueva carpeta
+
+```
+git clone --mirror https://github.com/IgnacioMaestro/ampa-manager.git
+java -jar .\bfg-1.14.0.jar --delete-files '<FILE TO REMOVE>' .\ampa-manager.git\
+cd .\ampa-manager.git\
+$ git reflog expire --expire=now --all && git gc --prune=now --aggressive
+git push
+```

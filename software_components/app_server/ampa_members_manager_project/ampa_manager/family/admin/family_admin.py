@@ -62,7 +62,7 @@ class FamilyAdmin(admin.ModelAdmin):
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
                    'is_defaulter', 'decline_membership', FamilyParentCountFilter]
-    search_fields = ['surnames', 'parents__name_and_surnames']
+    search_fields = ['surnames', 'parents__name_and_surnames', 'id']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline, MembershipReceiptInline, FamilyActivityReceiptInline]

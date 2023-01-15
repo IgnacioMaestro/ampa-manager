@@ -7,6 +7,7 @@ from localflavor.generic.models import IBANField, BICField
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_manager.family.bic_code import BicCode
 from ampa_manager.family.models.parent import Parent
+from ampa_manager.management.commands.results.processing_state import ProcessingState
 
 
 class BankAccount(TimeStampedModel):
@@ -40,9 +41,4 @@ class BankAccount(TimeStampedModel):
             self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
 
-    @staticmethod
-    def find(iban):
-        try:
-            return BankAccount.objects.get(iban=iban)
-        except BankAccount.DoesNotExist:
-            return None
+
