@@ -48,4 +48,5 @@ class TestActivityReceipt(TestCase):
     def assert_params_without_authorization(self, receipt: Receipt):
         self.assertEqual(receipt.bank_account_owner, str(self.bank_account.owner))
         self.assertEqual(receipt.iban, str(self.bank_account.iban))
+        self.assertEqual(receipt.bic, str(self.bank_account.swift_bic))
         self.assertIsNone(receipt.amount)
