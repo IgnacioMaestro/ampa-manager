@@ -8,7 +8,7 @@ from ampa_manager.charge.receipt import Receipt
 from ampa_manager.charge.remittance import Remittance
 
 
-class AfterSchoolRemittanceGenerator:
+class RemittanceGeneratorFromAfterSchoolRemittance:
     def __init__(self, after_school_remittance: AfterSchoolRemittance):
         self.__after_school_remittance = after_school_remittance
 

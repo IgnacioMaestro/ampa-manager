@@ -9,7 +9,7 @@ class AuthorizationReceipt:
     date: datetime.date
 
     def obtain_date(self) -> str:
-        return self.date.strftime("%m/%d/%Y")
+        return self.date.strftime("%d/%m/%Y")
 
 
 @dataclass
@@ -18,11 +18,17 @@ class Receipt:
     amount: float
     bank_account_owner: str
     iban: str
+    bic: str
     authorization: Optional[AuthorizationReceipt]
 
     def obtain_row(self) -> List[str]:
-        return ['"{}"'.format(str(self.amount)), self.bank_account_owner, self.iban, self.obtain_authorization_number(),
-                self.obtain_date()]
+
+        return [self.bank_account_owner, self.bic, self.iban, self.obtain_authorization_number(),
+                self.obtain_date(), self.obtain_formatted_amount()]
+
+    def obtain_formatted_amount(self) -> str:
+        amount_2_decimals = f'{self.amount:.2f}'
+        return amount_2_decimals.replace('.', ',')
 
     def obtain_authorization_number(self) -> str:
         number = Receipt.NO_AUTHORIZATION_MESSAGE

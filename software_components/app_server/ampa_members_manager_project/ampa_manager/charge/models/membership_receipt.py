@@ -37,5 +37,7 @@ class MembershipReceipt(models.Model):
             raise NoFeeForCourseException
         bank_account_owner = str(bank_account.owner)
         iban: str = bank_account.iban
+        bic: str = bank_account.swift_bic
         authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
-        return Receipt(amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, authorization=authorization)
+        return Receipt(
+            amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, bic=bic, authorization=authorization)
