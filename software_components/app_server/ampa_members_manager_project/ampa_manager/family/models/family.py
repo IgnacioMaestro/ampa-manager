@@ -12,8 +12,6 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family_queryset import FamilyQuerySet
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
-from ampa_manager.management.commands.results.processing_state import ProcessingState
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 

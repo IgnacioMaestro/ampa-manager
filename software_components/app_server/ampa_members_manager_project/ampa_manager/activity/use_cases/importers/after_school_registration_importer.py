@@ -1,5 +1,5 @@
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class AfterSchoolRegistrationImporter:
@@ -12,8 +12,8 @@ class AfterSchoolRegistrationImporter:
             return None
 
     @staticmethod
-    def import_registration(after_school_edition, bank_account, child) -> ModelImportResult:
-        result = ModelImportResult(AfterSchoolRegistration.__name__, [])
+    def import_registration(after_school_edition, bank_account, child) -> ImportModelResult:
+        result = ImportModelResult(AfterSchoolRegistration.__name__, [])
 
         registration = AfterSchoolRegistrationImporter.find(after_school_edition, child)
         if registration:

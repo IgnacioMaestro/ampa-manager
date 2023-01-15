@@ -1,15 +1,15 @@
 from typing import Optional
 
 from ampa_manager.family.models.family import Family
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class FamilyImporter:
 
     @staticmethod
     def import_family(family_surnames: str, parent1_name_and_surnames: Optional[str] = None,
-                      parent2_name_and_surnames: Optional[str] = None) -> ModelImportResult:
-        result = ModelImportResult(Family.__name__, [family_surnames])
+                      parent2_name_and_surnames: Optional[str] = None) -> ImportModelResult:
+        result = ImportModelResult(Family.__name__, [family_surnames])
 
         if family_surnames:
             parents_name_and_surnames = []

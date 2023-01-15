@@ -1,5 +1,5 @@
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class BankAccountImporter:
@@ -12,8 +12,8 @@ class BankAccountImporter:
             return None
 
     @staticmethod
-    def import_bank_account(parent, iban, swift_bic, is_default_account=False, family=None) -> ModelImportResult:
-        result = ModelImportResult(BankAccount.__name__, [iban, swift_bic, is_default_account])
+    def import_bank_account(parent, iban, swift_bic, is_default_account=False, family=None) -> ImportModelResult:
+        result = ImportModelResult(BankAccount.__name__, [iban, swift_bic, is_default_account])
 
         if parent:
             if iban:

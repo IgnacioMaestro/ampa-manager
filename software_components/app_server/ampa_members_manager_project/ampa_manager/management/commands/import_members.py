@@ -6,9 +6,9 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.importers.member_import_result import MemberImportResult, MemberExcelImporter, \
+from ampa_manager.management.commands.importers.import_member_result import ImportMemberResult, MemberExcelImporter, \
     MemberExcelRow
-from ampa_manager.management.commands.utils.logger import Logger
+from ampa_manager.utils.logger import Logger
 
 
 class Command(BaseCommand):
@@ -40,7 +40,7 @@ class Command(BaseCommand):
                 results.append(result)
 
             counters_after = Command.count_objects()
-            MemberImportResult.print_stats(self.logger, results, counters_before, counters_after)
+            ImportMemberResult.print_stats(self.logger, results, counters_before, counters_after)
 
         except:
             self.logger.error(traceback.format_exc())
@@ -83,7 +83,7 @@ class Command(BaseCommand):
         }
 
     def import_member(self, fields: MemberExcelRow):
-        result = MemberImportResult(fields.row_index)
+        result = ImportMemberResult(fields.row_index)
 
         try:
             family, result.family_state, error = Family.import_family(fields.family_surnames,

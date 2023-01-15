@@ -1,9 +1,9 @@
 from typing import Optional
 
-from ampa_manager.management.commands.results.processing_state import ProcessingState
+from ampa_manager.utils.processing_state import ProcessingState
 
 
-class ModelImportResult:
+class ImportModelResult:
     def __init__(self, class_name, excel_fields):
         self.class_name = class_name
         self.imported_object = None
