@@ -111,8 +111,9 @@ class ImportMembersCommand(BaseCommand):
             if self.logger:
                 self.logger.close_log_file()
 
-    def import_members_file(self) -> str:
-        return 'not implemented'
+    @staticmethod
+    def import_members_file(file) -> str:
+        return f'not implemented: {type(file)}'
 
     @staticmethod
     def count_objects():
