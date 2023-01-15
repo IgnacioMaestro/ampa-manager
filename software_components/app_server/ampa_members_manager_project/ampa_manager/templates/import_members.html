@@ -6,7 +6,6 @@
 {% block breadcrumbs %}
     <div class="breadcrumbs">
       <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo;  <a href="{% url 'admin:app_list' 'ampa_manager' %}">{% trans 'AMPA Manager' %}</a>
       &rsaquo; {% trans 'Import members' %}
     </div>
 {% endblock %}
@@ -15,7 +14,7 @@
     <h1>{% trans 'Import members' %}</h1>
 
     <h2>{% trans 'Upload file' %}</h2>
-    <form action="/ampa/import/members/" method="post">
+    <form action="/ampa/import/members/" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="{% trans 'Import file' %}">
