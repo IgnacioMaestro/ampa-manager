@@ -118,8 +118,8 @@ class Command(BaseCommand):
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
-
             family = family_result.imported_object
+
             child_result = ChildImporter.import_child(family,
                                                       row.get(self.COLUMN_CHILD_NAME),
                                                       row.get(self.COLUMN_CHILD_LEVEL),
@@ -127,8 +127,8 @@ class Command(BaseCommand):
             result.add_partial_result(child_result)
             if not child_result.success:
                 return result
-
             child = child_result.imported_object
+
             parent_result = ParentImporter.import_parent(family,
                                                          row.get(self.COLUMN_PARENT_NAME_AND_SURNAMES),
                                                          row.get(self.COLUMN_PARENT_PHONE_NUMBER),
@@ -137,20 +137,20 @@ class Command(BaseCommand):
             result.add_partial_result(parent_result)
             if not parent_result.success:
                 return result
-
             parent = parent_result.imported_object
+
             bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(self.COLUMN_BANK_ACCOUNT_IBAN), None)
             result.add_partial_result(bank_account_result)
             if not bank_account_result.success:
                 return result
-
             bank_account = bank_account_result.imported_object
+
             after_school_result = AfterSchoolImporter.import_after_school(row.get(self.COLUMN_AFTER_SCHOOL_NAME))
             result.add_partial_result(after_school_result)
             if not after_school_result.success:
                 return result
-
             after_school = after_school_result.imported_object
+
             edition_result = AfterSchoolEditionImporter.import_edition(after_school,
                                                                        row.get(self.COLUMN_EDITION_PERIOD),
                                                                        row.get(self.COLUMN_EDITION_TIMETABLE),

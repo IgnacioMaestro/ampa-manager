@@ -32,7 +32,7 @@ class BankAccountImporter:
                         if is_default_account and family and family.default_bank_account != bank_account:
                             family.default_bank_account = bank_account
                             family.save()
-                            result.set_as_default()
+                            result.set_bank_account_as_default()
                     else:
                         result.set_error(f'Owner does not match. Current owner: {bank_account.owner}. New: {parent}')
                 else:
