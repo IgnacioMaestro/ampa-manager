@@ -1,1 +1,14 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+  &rsaquo;  <a href="{% url 'admin:app_list' 'ampa_manager' %}">{% trans 'Ampa_Manager' %}</a>
+  &rsaquo; {% trans 'Import members' %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
 IMPORT MEMBERS
+{% endblock %}

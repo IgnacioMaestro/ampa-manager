@@ -19,7 +19,7 @@ from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 
 
-class Command(BaseCommand):
+class ImportMembersCommand(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
 
     SHEET_NUMBER = 0
@@ -111,6 +111,9 @@ class Command(BaseCommand):
         finally:
             if self.logger:
                 self.logger.close_log_file()
+
+    def import_members_file(self) -> str:
+        return 'not implemented'
 
     @staticmethod
     def count_objects():
