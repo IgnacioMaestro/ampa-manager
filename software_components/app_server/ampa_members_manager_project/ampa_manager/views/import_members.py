@@ -6,16 +6,24 @@ from ampa_manager.management.commands.import_members import ImportMembersCommand
 
 
 def import_members(request):
-    context = {}
+    context = {
+        'excel_columns': get_excel_columns(),
+    }
 
     if request.method == 'POST':
         form = ImportMembersForm(request.POST, request.FILES)
         if form.is_valid():
-            success, import_log = ImportMembersCommand.import_members_file(request.FILES['file'])
-            context['success'] = success
-            context['import_log'] = import_log
+            context['import_log'] = ImportMembersCommand.import_members_file(request.FILES['file'])
     else:
         form = ImportMembersForm()
 
     context['form'] = form
     return render(request, 'import_members.html', context)
+
+def get_excel_columns():
+    columns = []
+    for column in ImportMembersCommand.COLUMNS_TO_IMPORT:
+        index = column[0] + 1
+        name = column[2].replace('_', ' ').upper()
+        columns.append([index, name])
+    return columns

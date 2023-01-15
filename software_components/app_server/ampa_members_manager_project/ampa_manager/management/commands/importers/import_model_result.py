@@ -1,18 +1,21 @@
-from typing import Optional
+from typing import Optional, List
+
+from django.db.models import Model
 
 from ampa_manager.utils.processing_state import ProcessingState
 
 
 class ImportModelResult:
+
     def __init__(self, class_name, excel_fields):
-        self.class_name = class_name
-        self.imported_object = None
-        self.state = ProcessingState.NOT_PROCESSED
-        self.state2 = None
-        self.error = None
-        self.excel_fields = excel_fields
-        self.fields_before = []
-        self.fields_after = []
+        self.class_name: str = class_name
+        self.imported_object: Optional[Model] = None
+        self.state: ProcessingState = ProcessingState.NOT_PROCESSED
+        self.state2: Optional[ProcessingState] = None
+        self.error: Optional[str] = None
+        self.excel_fields: List = excel_fields
+        self.fields_before: List = []
+        self.fields_after: List = []
 
     def __str__(self):
         changes = ''

@@ -1,9 +1,10 @@
 {% extends "admin/index.html" %}
+{% load static %}
 
 {% block sidebar %}
     <div id="content-related">
         <div class="module" id="recent-actions-module">
-            <h1>Importar datos desde excel</h1>
+            <h1><img src="{% static 'xls.png' %}" width="24px"> Importar datos de excel</h1>
             <ul>
                 <li><a href="/ampa/import/members/">Miembros</a></li>
                 <li><a href="/ampa/import/afterschools/">Extraescolares</a></li>
