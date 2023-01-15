@@ -13,7 +13,6 @@ from ampa_manager.family.use_cases.importers.family_importer import FamilyImport
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
 from ampa_manager.management.commands.importers.excel_row import ExcelRow
-from ampa_manager.management.commands.importers.import_member_result import ImportMemberResult, MemberExcelRow
 from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
@@ -67,18 +66,18 @@ class ImportMembersCommand(BaseCommand):
         [15, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
         [16, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
         [17, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
-        [18, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
-        [19, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
-        [20, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
-        [21, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
-        [22, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
-        [23, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
-        [24, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
-        [25, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
-        [26, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
-        [27, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
-        [28, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
-        [29, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
+        [18, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME],
+        [19, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL],
+        [20, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH],
+        [21, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME],
+        [22, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL],
+        [23, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH],
+        [24, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME],
+        [25, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL],
+        [26, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH],
+        [27, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME],
+        [28, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL],
+        [29, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH],
     ]
 
     def __init__(self):

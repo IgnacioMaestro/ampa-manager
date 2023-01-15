@@ -22,8 +22,8 @@ class ExcelImporter:
     def import_rows(self) -> List[ExcelRow]:
         rows = []
         for row_index in range(self.first_row_index, self.sheet.nrows):
-            columns = self.import_row_columns(row_index)
-            rows.append(ExcelRow(row_index, columns))
+            columns_values = self.import_row_columns(row_index)
+            rows.append(ExcelRow(row_index, columns_values))
         return rows
 
     def import_row_columns(self, row_index: int) -> dict:
