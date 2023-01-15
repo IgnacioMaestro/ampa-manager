@@ -25,7 +25,7 @@ from ampa_manager.utils.logger import Logger
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
-class Command(BaseCommand):
+class ImportAfterSchoolsCommand(BaseCommand):
     help = 'Import after-schools registrations'
 
     SHEET_NUMBER = 0
