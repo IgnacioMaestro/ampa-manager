@@ -1,5 +1,3 @@
-import re
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import CASCADE, Manager
@@ -8,7 +6,8 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
-from ampa_manager.management.commands.import_command.importer import Importer
+from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.string_utils import StringUtils
 
 
 class Child(TimeStampedModel):
@@ -47,47 +46,36 @@ class Child(TimeStampedModel):
         return self.age - self.repetition
 
     def clean_name(self):
-        return Importer.clean_surname(self.cleaned_data['name'])
+        return FieldsFormatters.clean_name(self.cleaned_data['name'])
+
+    def is_modified(self, year_of_birth, repetition):
+        return self.year_of_birth != year_of_birth or self.repetition != repetition
+
+    def update(self, year_of_birth, repetition):
+        fields_before = [self.name, self.year_of_birth, self.level, self.repetition]
+        self.year_of_birth = year_of_birth
+        self.repetition = repetition
+        self.save()
+        fields_after = [self.name, self.year_of_birth, self.level, self.repetition]
+        return fields_before, fields_after
 
     @staticmethod
     def get_children_ids(min_age, max_age):
         return [c.id for c in Child.objects.of_age_in_range(min_age, max_age)]
 
-    def match(self, name):
-        if name and self.name:
-            if name in self.name or self.name in name:
-                return True
-            for word in self.name.strip().split(' '):
-                pattern = rf'\b{word}\b'
-                if re.search(pattern, name, re.IGNORECASE):
+    def matches_name(self, name, strict=False):
+        if self.name and name:
+            if strict:
+                if StringUtils.compare_ignoring_everything(self.name, name):
                     return True
+            elif StringUtils.contains_any_word(self.name, name):
+                return True
         return False
-
-    @staticmethod
-    def find(family, name, exclude_id=None):
-        if name:
-            if exclude_id:
-                children = Child.objects.with_name_and_of_family_excluding_id(name, family, exclude_id)
-            else:
-                children = Child.objects.with_name_and_of_family(name, family)
-
-            if children.count() == 1:
-                return children.first()
-            else:
-                if exclude_id:
-                    children = Child.objects.with_family_excluding_id(family, exclude_id)
-                else:
-                    children = Child.objects.with_family(family)
-
-                for child in children:
-                    if child.match(name):
-                        return child
-        return None
 
     @staticmethod
     def fix_names():
         for child in Child.objects.all():
-            fixed_name = Importer.clean_surname(child.name)
+            fixed_name = FieldsFormatters.clean_name(child.name)
             if fixed_name != child.name:
                 print(f'Child name fixed: "{child.name}" -> "{fixed_name}"')
                 child.name = fixed_name
