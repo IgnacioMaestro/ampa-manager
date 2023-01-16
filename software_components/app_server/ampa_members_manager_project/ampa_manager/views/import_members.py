@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.forms import ImportMembersForm
-from ampa_manager.management.commands.import_members import ImportMembersCommand
+from ampa_manager.management.commands.import_members import Command as ImportMembersCommand
 from ampa_manager.utils.string_utils import StringUtils
 
 
@@ -16,7 +16,8 @@ def import_members(request):
     if request.method == 'POST':
         form = ImportMembersForm(request.POST, request.FILES)
         if form.is_valid():
-            context['import_log'] = ImportMembersCommand.import_members_file(request.FILES['file'])
+            logs = ImportMembersCommand.import_members_file(file_content=request.FILES['file'].read())
+            context['import_log'] = '\n'.join(logs)
     else:
         form = ImportMembersForm()
 

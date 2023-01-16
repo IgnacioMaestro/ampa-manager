@@ -1,8 +1,9 @@
 import traceback
 from pathlib import Path
+from typing import List, Optional
 
-from django.utils.translation import gettext_lazy as _
 from django.core.management.base import BaseCommand
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
@@ -19,7 +20,7 @@ from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 
 
-class ImportMembersCommand(BaseCommand):
+class Command(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
 
     SHEET_NUMBER = 0
@@ -117,31 +118,45 @@ class ImportMembersCommand(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            excel_file_name = options['file']
-            excel_importer = ExcelImporter(excel_file_name, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT)
+            Command.import_members_file(file_path=options['file'])
+        except:
+            print(traceback.format_exc())
 
-            counters_before = self.count_objects()
+    @staticmethod
+    def import_members_file(file_path: str = None, file_content=None) -> Optional[List[str]]:
+        logger = None
+        try:
+            logger = Logger(Path(__file__).stem)
+
+            excel_importer = ExcelImporter(Command.SHEET_NUMBER,
+                                           Command.FIRST_ROW_INDEX,
+                                           Command.COLUMNS_TO_IMPORT,
+                                           file_path=file_path,
+                                           file_content=file_content)
+
+            counters_before = Command.count_objects()
 
             results = []
             row: ExcelRow
             for row in excel_importer.import_rows():
-                result: ImportRowResult = self.import_member(row)
-                result.print(self.logger)
+                result: ImportRowResult = Command.import_row(row, logger)
+                result.print(logger)
                 results.append(result)
 
-            counters_after = self.count_objects()
+            counters_after = Command.count_objects()
 
-            ImportRowResult.print_stats(self.logger, results, counters_before, counters_after)
+            ImportRowResult.print_stats(logger, results, counters_before, counters_after)
 
         except:
-            self.logger.error(traceback.format_exc())
+            logger.error(traceback.format_exc())
         finally:
-            if self.logger:
-                self.logger.close_log_file()
+            if logger:
+                logger.close_log_file()
 
-    @staticmethod
-    def import_members_file(file) -> str:
-        return f'not implemented: {type(file)}'
+        if logger:
+            return logger.logs
+        else:
+            return None
 
     @staticmethod
     def count_objects():
@@ -152,87 +167,88 @@ class ImportMembersCommand(BaseCommand):
             BankAccount.__name__: BankAccount.objects.count(),
         }
 
-    def import_member(self, row: ExcelRow) -> ImportRowResult:
+    @staticmethod
+    def import_row(row: ExcelRow, logger: Logger) -> ImportRowResult:
         result = ImportRowResult(row.index)
 
         try:
-            family_result = FamilyImporter.import_family(row.get(self.COLUMN_FAMILY_SURNAMES),
-                                                         row.get(self.COLUMN_PARENT1_NAME_AND_SURNAMES),
-                                                         row.get(self.COLUMN_PARENT2_NAME_AND_SURNAMES))
+            family_result = FamilyImporter.import_family(row.get(Command.COLUMN_FAMILY_SURNAMES),
+                                                         row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
+                                                         row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
             family = family_result.imported_object
 
             child1_result = ChildImporter.import_child(family,
-                                                      row.get(self.COLUMN_CHILD1_NAME),
-                                                      row.get(self.COLUMN_CHILD1_LEVEL),
-                                                      row.get(self.COLUMN_CHILD1_YEAR_OF_BIRTH))
+                                                      row.get(Command.COLUMN_CHILD1_NAME),
+                                                      row.get(Command.COLUMN_CHILD1_LEVEL),
+                                                      row.get(Command.COLUMN_CHILD1_YEAR_OF_BIRTH))
             result.add_partial_result(child1_result)
             if not child1_result.success:
                 return result
 
             child2_result = ChildImporter.import_child(family,
-                                                       row.get(self.COLUMN_CHILD2_NAME),
-                                                       row.get(self.COLUMN_CHILD2_LEVEL),
-                                                       row.get(self.COLUMN_CHILD2_YEAR_OF_BIRTH))
+                                                       row.get(Command.COLUMN_CHILD2_NAME),
+                                                       row.get(Command.COLUMN_CHILD2_LEVEL),
+                                                       row.get(Command.COLUMN_CHILD2_YEAR_OF_BIRTH))
             result.add_partial_result(child2_result)
             if not child2_result.success:
                 return result
 
             child3_result = ChildImporter.import_child(family,
-                                                       row.get(self.COLUMN_CHILD3_NAME),
-                                                       row.get(self.COLUMN_CHILD3_LEVEL),
-                                                       row.get(self.COLUMN_CHILD3_YEAR_OF_BIRTH))
+                                                       row.get(Command.COLUMN_CHILD3_NAME),
+                                                       row.get(Command.COLUMN_CHILD3_LEVEL),
+                                                       row.get(Command.COLUMN_CHILD3_YEAR_OF_BIRTH))
             result.add_partial_result(child3_result)
             if not child3_result.success:
                 return result
 
             child4_result = ChildImporter.import_child(family,
-                                                       row.get(self.COLUMN_CHILD4_NAME),
-                                                       row.get(self.COLUMN_CHILD4_LEVEL),
-                                                       row.get(self.COLUMN_CHILD4_YEAR_OF_BIRTH))
+                                                       row.get(Command.COLUMN_CHILD4_NAME),
+                                                       row.get(Command.COLUMN_CHILD4_LEVEL),
+                                                       row.get(Command.COLUMN_CHILD4_YEAR_OF_BIRTH))
             result.add_partial_result(child4_result)
             if not child4_result.success:
                 return result
 
             child5_result = ChildImporter.import_child(family,
-                                                       row.get(self.COLUMN_CHILD5_NAME),
-                                                       row.get(self.COLUMN_CHILD5_LEVEL),
-                                                       row.get(self.COLUMN_CHILD5_YEAR_OF_BIRTH))
+                                                       row.get(Command.COLUMN_CHILD5_NAME),
+                                                       row.get(Command.COLUMN_CHILD5_LEVEL),
+                                                       row.get(Command.COLUMN_CHILD5_YEAR_OF_BIRTH))
             result.add_partial_result(child5_result)
             if not child5_result.success:
                 return result
 
             parent1_result = ParentImporter.import_parent(family,
-                                                         row.get(self.COLUMN_PARENT1_NAME_AND_SURNAMES),
-                                                         row.get(self.COLUMN_PARENT1_PHONE_NUMBER),
-                                                         row.get(self.COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER),
-                                                         row.get(self.COLUMN_PARENT1_EMAIL))
+                                                         row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
+                                                         row.get(Command.COLUMN_PARENT1_PHONE_NUMBER),
+                                                         row.get(Command.COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER),
+                                                         row.get(Command.COLUMN_PARENT1_EMAIL))
             result.add_partial_result(parent1_result)
             if not parent1_result.success:
                 return result
             parent1 = parent1_result.imported_object
 
             parent2_result = ParentImporter.import_parent(family,
-                                                         row.get(self.COLUMN_PARENT2_NAME_AND_SURNAMES),
-                                                         row.get(self.COLUMN_PARENT2_PHONE_NUMBER),
-                                                         row.get(self.COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER),
-                                                         row.get(self.COLUMN_PARENT2_EMAIL))
+                                                         row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES),
+                                                         row.get(Command.COLUMN_PARENT2_PHONE_NUMBER),
+                                                         row.get(Command.COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER),
+                                                         row.get(Command.COLUMN_PARENT2_EMAIL))
             result.add_partial_result(parent2_result)
             if not parent2_result.success:
                 return result
 
             bank_account_result = BankAccountImporter.import_bank_account(parent1,
-                                                                          row.get(self.COLUMN_PARENT1_BANK_ACCOUNT_IBAN),
-                                                                          row.get(self.COLUMN_PARENT1_BANK_ACCOUNT_SWIFT),
+                                                                          row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN),
+                                                                          row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_SWIFT),
                                                                           True)
             result.add_partial_result(bank_account_result)
             if not bank_account_result.success:
                 return result
 
         except Exception as e:
-            self.logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
+            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
             result.error = str(e)
 
         return result
