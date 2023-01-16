@@ -1,6 +1,7 @@
 import traceback
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
@@ -51,33 +52,60 @@ class ImportMembersCommand(BaseCommand):
     COLUMN_CHILD5_LEVEL = 'child5_level'
     COLUMN_CHILD5_YEAR_OF_BIRTH = 'child5_year_of_birth'
 
+    LABEL_FAMILY_SURNAMES = _('Family') + ': ' + _('Surnames')
+    LABEL_PARENT1_NAME_AND_SURNAMES = _('Parent %(number)s') % {'number': 1} + ': ' + _('Name and surnames')
+    LABEL_PARENT1_PHONE_NUMBER = _('Parent %(number)s') % {'number': 1} + ': ' + _('Phone number')
+    LABEL_PARENT1_ADDITIONAL_PHONE_NUMBER = _('Parent %(number)s')  % {'number': 1} + ': ' + _('Additional phone number')
+    LABEL_PARENT1_EMAIL = _('Parent %(number)s') % {'number': 1} + ': ' + _('Email')
+    LABEL_PARENT1_BANK_ACCOUNT_IBAN = _('Parent %(number)s') % {'number': 1} + ': ' + _('Bank account IBAN')
+    LABEL_PARENT1_BANK_ACCOUNT_SWIFT = _('Parent %(number)s') % {'number': 1} + ': ' + _('Bank account SWIFT')
+    LABEL_PARENT2_NAME_AND_SURNAMES = _('Parent %(number)s') % {'number': 2} + ': ' + _('Name and surnames')
+    LABEL_PARENT2_PHONE_NUMBER = _('Parent %(number)s') % {'number': 2} + ': ' + _('Phone number')
+    LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER = _('Parent %(number)s')  % {'number': 2} + ': ' + _('Additional phone number')
+    LABEL_PARENT2_EMAIL = _('Parent %(number)s') % {'number': 2} + ': ' + _('Email')
+    LABEL_CHILD1_NAME = _('Child %(number)s') % {'number': 1} + ': ' + _('Name (without surnames)')
+    LABEL_CHILD1_LEVEL = _('Child %(number)s') % {'number': 1} + ': ' + _('Level (ex. HH4, LH3)')
+    LABEL_CHILD1_YEAR_OF_BIRTH = _('Child %(number)s') % {'number': 1} + ': ' + _('Year of birth (ex. 2015)')
+    LABEL_CHILD2_NAME = _('Child %(number)s') % {'number': 2} + ': ' + _('Name (without surnames)')
+    LABEL_CHILD2_LEVEL = _('Child %(number)s') % {'number': 2} + ': ' + _('Level (ex. HH4, LH3)')
+    LABEL_CHILD2_YEAR_OF_BIRTH = _('Child %(number)s')  % {'number': 2} + ': ' + _('Year of birth (ex. 2015)')
+    LABEL_CHILD3_NAME = _('Child %(number)s') % {'number': 3} + ': ' + _('Name (without surnames)')
+    LABEL_CHILD3_LEVEL = _('Child %(number)s') % {'number': 3} + ': ' + _('Level (ex. HH4, LH3)')
+    LABEL_CHILD3_YEAR_OF_BIRTH = _('Child %(number)s') % {'number': 3} + ': ' + _('Year of birth (ex. 2015)')
+    LABEL_CHILD4_NAME = _('Child %(number)s') % {'number': 4} + ': ' + _('Name (without surnames)')
+    LABEL_CHILD4_LEVEL = _('Child %(number)s') % {'number': 4} + ': ' + _('Level (ex. HH4, LH3)')
+    LABEL_CHILD4_YEAR_OF_BIRTH = _('Child %(number)s') % {'number': 4} + ': ' + _('Year of birth (ex. 2015)')
+    LABEL_CHILD5_NAME = _('Child %(number)s') % {'number': 5} + ': ' + _('Name (without surnames)')
+    LABEL_CHILD5_LEVEL = _('Child %(number)s') % {'number': 5} + ': ' + _('Level (ex. HH4, LH3)')
+    LABEL_CHILD5_YEAR_OF_BIRTH = _('Child %(number)s') % {'number': 5} + ': ' + _('Year of birth (ex. 2015)')
+
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES],
-        [1, FieldsFormatters.clean_name, COLUMN_PARENT1_NAME_AND_SURNAMES],
-        [2, FieldsFormatters.clean_phone, COLUMN_PARENT1_PHONE_NUMBER],
-        [3, FieldsFormatters.clean_phone, COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER],
-        [4, FieldsFormatters.clean_email, COLUMN_PARENT1_EMAIL],
-        [5, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_SWIFT],
-        [6, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_IBAN],
-        [8, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES],
-        [9, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER],
-        [10, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER],
-        [11, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL],
-        [15, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME],
-        [16, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL],
-        [17, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH],
-        [18, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME],
-        [19, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL],
-        [20, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH],
-        [21, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME],
-        [22, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL],
-        [23, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH],
-        [24, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME],
-        [25, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL],
-        [26, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH],
-        [27, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME],
-        [28, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL],
-        [29, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH],
+        [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES, LABEL_FAMILY_SURNAMES],
+        [1, FieldsFormatters.clean_name, COLUMN_PARENT1_NAME_AND_SURNAMES, LABEL_PARENT1_NAME_AND_SURNAMES],
+        [2, FieldsFormatters.clean_phone, COLUMN_PARENT1_PHONE_NUMBER, LABEL_PARENT1_PHONE_NUMBER],
+        [3, FieldsFormatters.clean_phone, COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT1_ADDITIONAL_PHONE_NUMBER],
+        [4, FieldsFormatters.clean_email, COLUMN_PARENT1_EMAIL, LABEL_PARENT1_EMAIL],
+        [5, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_SWIFT, LABEL_PARENT1_BANK_ACCOUNT_SWIFT],
+        [6, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
+        [8, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
+        [9, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
+        [10, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER],
+        [11, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
+        [15, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME, LABEL_CHILD1_NAME],
+        [16, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
+        [17, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
+        [18, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME, LABEL_CHILD2_NAME],
+        [19, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
+        [20, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
+        [21, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME, LABEL_CHILD3_NAME],
+        [22, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
+        [23, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
+        [24, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME, LABEL_CHILD4_NAME],
+        [25, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
+        [26, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
+        [27, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME, LABEL_CHILD5_NAME],
+        [28, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
+        [29, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
     ]
 
     def __init__(self):
