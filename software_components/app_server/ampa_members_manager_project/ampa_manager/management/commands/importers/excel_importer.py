@@ -31,7 +31,7 @@ class ExcelImporter:
         sheet = book.sheet_by_index(self.sheet_number)
         return book, sheet
 
-    def import_rows(self) -> List[ExcelRow]:
+    def get_rows(self) -> List[ExcelRow]:
         rows = []
         for row_index in range(self.first_row_index, self.sheet.nrows):
             columns_values = self.import_row_columns(row_index)

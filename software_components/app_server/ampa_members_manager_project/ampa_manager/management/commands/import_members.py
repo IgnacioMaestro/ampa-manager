@@ -117,10 +117,7 @@ class Command(BaseCommand):
         parser.add_argument('file', type=str)
 
     def handle(self, *args, **options):
-        try:
-            Command.import_members_file(file_path=options['file'])
-        except:
-            print(traceback.format_exc())
+        Command.import_members_file(file_path=options['file'])
 
     @staticmethod
     def import_members_file(file_path: str = None, file_content=None) -> Optional[List[str]]:
@@ -138,7 +135,7 @@ class Command(BaseCommand):
 
             results = []
             row: ExcelRow
-            for row in excel_importer.import_rows():
+            for row in excel_importer.get_rows():
                 result: ImportRowResult = Command.import_row(row, logger)
                 result.print(logger)
                 results.append(result)

@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import List, Dict
+
 from ampa_manager.activity.use_cases.importers.registration_excel_row import RegistrationExcelRow
 from ampa_manager.family.models.family import Family
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
@@ -54,7 +57,7 @@ class ImportRowResult:
             return f'{after} (=)'
 
     @staticmethod
-    def print_stats(logger, results, counters_before, counters_after):
+    def print_stats(logger: Logger, results: List[ImportRowResult], counters_before: Dict, counters_after: Dict):
 
         totals, errors, created_families, success_count, not_success_count = ImportRowResult.get_totals(results)
 
