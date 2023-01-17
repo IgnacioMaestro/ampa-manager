@@ -105,7 +105,7 @@ class Level:
         return Level.LEVELS_NAMES.get(level_id)
 
     @staticmethod
-    def calculate_repetition(current_level: int, year_of_birth: int) -> int:
+    def calculate_repetition(current_level: str, year_of_birth: int) -> int:
         if current_level:
             age = Level.calculate_age(year_of_birth)
             school_age = Level.get_age_by_level(str(current_level))

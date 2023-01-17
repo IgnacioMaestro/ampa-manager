@@ -1,5 +1,6 @@
 {% extends 'admin/base_site.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{{ importer_title }}{% endblock %}
 
@@ -26,6 +27,7 @@
 
                     <h2>{% trans 'Instructions' %}</h2>
                     <ul>
+                        <li><a href="{% static 'plantilla_importar_socios.xls' %}">{% trans 'Click here to download an excel template' %}</a>.</li>
                         <li>{% trans 'The file extension must be XLS (not XLSX)' %}.</li>
                         <li>{% trans 'Only the first sheet of the excel will be imported' %}.</li>
                         <li>{% trans 'The rows imported will be from row 2 onwards (a header row is expected)' %}.</li>

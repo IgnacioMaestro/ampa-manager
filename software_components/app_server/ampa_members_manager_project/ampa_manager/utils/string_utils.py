@@ -68,6 +68,8 @@ class StringUtils:
                 new_value = new_value.replace(character, 't')
             for character in ['dd']:
                 new_value = new_value.replace(character, 'd')
+            for character in ['gu']:
+                new_value = new_value.replace(character, 'g')
             return new_value
         return None
 

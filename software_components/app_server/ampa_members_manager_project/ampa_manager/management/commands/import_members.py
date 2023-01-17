@@ -24,7 +24,7 @@ class Command(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
 
     SHEET_NUMBER = 0
-    FIRST_ROW_INDEX = 3
+    FIRST_ROW_INDEX = 2
 
     COLUMN_FAMILY_SURNAMES = 'family_surnames'
     COLUMN_PARENT1_NAME_AND_SURNAMES = 'parent1_name_and_surnames'
@@ -52,6 +52,49 @@ class Command(BaseCommand):
     COLUMN_CHILD5_NAME = 'child5_name'
     COLUMN_CHILD5_LEVEL = 'child5_level'
     COLUMN_CHILD5_YEAR_OF_BIRTH = 'child5_year_of_birth'
+
+    FAMILY_FIELDS = [COLUMN_FAMILY_SURNAMES]
+    PARENT1_FIELDS = [
+        COLUMN_PARENT1_NAME_AND_SURNAMES,
+        COLUMN_PARENT1_PHONE_NUMBER,
+        COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER,
+        COLUMN_PARENT1_EMAIL,
+    ]
+    PARENT2_FIELDS = [
+        COLUMN_PARENT2_NAME_AND_SURNAMES,
+        COLUMN_PARENT2_PHONE_NUMBER,
+        COLUMN_PARENT2_PHONE_NUMBER,
+        COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER
+    ]
+    CHILD1_FIELDS = [
+        COLUMN_CHILD1_NAME,
+        COLUMN_CHILD1_LEVEL,
+        COLUMN_CHILD1_YEAR_OF_BIRTH
+    ]
+    CHILD2_FIELDS = [
+        COLUMN_CHILD2_NAME,
+        COLUMN_CHILD2_LEVEL,
+        COLUMN_CHILD2_YEAR_OF_BIRTH
+    ]
+    CHILD3_FIELDS = [
+        COLUMN_CHILD3_NAME,
+        COLUMN_CHILD3_LEVEL,
+        COLUMN_CHILD3_YEAR_OF_BIRTH
+    ]
+    CHILD4_FIELDS = [
+        COLUMN_CHILD4_NAME,
+        COLUMN_CHILD4_LEVEL,
+        COLUMN_CHILD4_YEAR_OF_BIRTH
+    ]
+    CHILD5_FIELDS = [
+        COLUMN_CHILD5_NAME,
+        COLUMN_CHILD5_LEVEL,
+        COLUMN_CHILD5_YEAR_OF_BIRTH
+    ]
+    PARENT1_BANK_ACCOUNT_FIELDS = [
+        COLUMN_PARENT1_BANK_ACCOUNT_IBAN,
+        COLUMN_PARENT1_BANK_ACCOUNT_SWIFT
+    ]
 
     LABEL_FAMILY_SURNAMES = _('Family') + ': ' + _('Surnames')
     LABEL_PARENT1_NAME_AND_SURNAMES = _('Parent %(number)s') % {'number': 1} + ': ' + _('Name and surnames')
@@ -88,25 +131,25 @@ class Command(BaseCommand):
         [4, FieldsFormatters.clean_email, COLUMN_PARENT1_EMAIL, LABEL_PARENT1_EMAIL],
         [5, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_SWIFT, LABEL_PARENT1_BANK_ACCOUNT_SWIFT],
         [6, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
-        [8, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
-        [9, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
-        [10, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER],
-        [11, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
-        [15, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME, LABEL_CHILD1_NAME],
-        [16, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
-        [17, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
-        [18, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME, LABEL_CHILD2_NAME],
-        [19, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
-        [20, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
-        [21, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME, LABEL_CHILD3_NAME],
-        [22, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
-        [23, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
-        [24, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME, LABEL_CHILD4_NAME],
-        [25, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
-        [26, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
-        [27, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME, LABEL_CHILD5_NAME],
-        [28, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
-        [29, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
+        [7, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
+        [8, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
+        [9, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER],
+        [10, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
+        [11, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME, LABEL_CHILD1_NAME],
+        [12, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
+        [13, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
+        [14, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME, LABEL_CHILD2_NAME],
+        [15, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
+        [16, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
+        [17, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME, LABEL_CHILD3_NAME],
+        [18, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
+        [19, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
+        [20, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME, LABEL_CHILD4_NAME],
+        [21, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
+        [22, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
+        [23, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME, LABEL_CHILD5_NAME],
+        [24, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
+        [25, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
     ]
 
     def __init__(self):
@@ -177,14 +220,28 @@ class Command(BaseCommand):
                 return result
             family = family_result.imported_object
 
+            result = Command.import_children(row, family, result)
+            result = Command.import_parents(row, family, result)
+
+        except Exception as e:
+            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
+            result.error = str(e)
+
+        return result
+
+    @staticmethod
+    def import_children(row: ExcelRow, family, result: ImportRowResult):
+
+        if row.any_column_has_value(Command.CHILD1_FIELDS):
             child1_result = ChildImporter.import_child(family,
-                                                      row.get(Command.COLUMN_CHILD1_NAME),
-                                                      row.get(Command.COLUMN_CHILD1_LEVEL),
-                                                      row.get(Command.COLUMN_CHILD1_YEAR_OF_BIRTH))
+                                                       row.get(Command.COLUMN_CHILD1_NAME),
+                                                       row.get(Command.COLUMN_CHILD1_LEVEL),
+                                                       row.get(Command.COLUMN_CHILD1_YEAR_OF_BIRTH))
             result.add_partial_result(child1_result)
             if not child1_result.success:
                 return result
 
+        if row.any_column_has_value(Command.CHILD2_FIELDS):
             child2_result = ChildImporter.import_child(family,
                                                        row.get(Command.COLUMN_CHILD2_NAME),
                                                        row.get(Command.COLUMN_CHILD2_LEVEL),
@@ -193,6 +250,7 @@ class Command(BaseCommand):
             if not child2_result.success:
                 return result
 
+        if row.any_column_has_value(Command.CHILD3_FIELDS):
             child3_result = ChildImporter.import_child(family,
                                                        row.get(Command.COLUMN_CHILD3_NAME),
                                                        row.get(Command.COLUMN_CHILD3_LEVEL),
@@ -201,6 +259,7 @@ class Command(BaseCommand):
             if not child3_result.success:
                 return result
 
+        if row.any_column_has_value(Command.CHILD4_FIELDS):
             child4_result = ChildImporter.import_child(family,
                                                        row.get(Command.COLUMN_CHILD4_NAME),
                                                        row.get(Command.COLUMN_CHILD4_LEVEL),
@@ -209,6 +268,7 @@ class Command(BaseCommand):
             if not child4_result.success:
                 return result
 
+        if row.any_column_has_value(Command.CHILD5_FIELDS):
             child5_result = ChildImporter.import_child(family,
                                                        row.get(Command.COLUMN_CHILD5_NAME),
                                                        row.get(Command.COLUMN_CHILD5_LEVEL),
@@ -217,35 +277,38 @@ class Command(BaseCommand):
             if not child5_result.success:
                 return result
 
+        return result
+
+    @staticmethod
+    def import_parents(row: ExcelRow, family, result: ImportRowResult):
+        if row.any_column_has_value(Command.PARENT1_FIELDS):
             parent1_result = ParentImporter.import_parent(family,
-                                                         row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
-                                                         row.get(Command.COLUMN_PARENT1_PHONE_NUMBER),
-                                                         row.get(Command.COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER),
-                                                         row.get(Command.COLUMN_PARENT1_EMAIL))
+                                                          row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
+                                                          row.get(Command.COLUMN_PARENT1_PHONE_NUMBER),
+                                                          row.get(Command.COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER),
+                                                          row.get(Command.COLUMN_PARENT1_EMAIL))
             result.add_partial_result(parent1_result)
             if not parent1_result.success:
                 return result
             parent1 = parent1_result.imported_object
 
+            if row.any_column_has_value(Command.PARENT1_BANK_ACCOUNT_FIELDS):
+                bank_account_result = BankAccountImporter.import_bank_account(parent1,
+                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN),
+                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_SWIFT),
+                                                                              True)
+                result.add_partial_result(bank_account_result)
+                if not bank_account_result.success:
+                    return result
+
+        if row.any_column_has_value(Command.PARENT2_FIELDS):
             parent2_result = ParentImporter.import_parent(family,
-                                                         row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES),
-                                                         row.get(Command.COLUMN_PARENT2_PHONE_NUMBER),
-                                                         row.get(Command.COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER),
-                                                         row.get(Command.COLUMN_PARENT2_EMAIL))
+                                                          row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES),
+                                                          row.get(Command.COLUMN_PARENT2_PHONE_NUMBER),
+                                                          row.get(Command.COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER),
+                                                          row.get(Command.COLUMN_PARENT2_EMAIL))
             result.add_partial_result(parent2_result)
             if not parent2_result.success:
                 return result
-
-            bank_account_result = BankAccountImporter.import_bank_account(parent1,
-                                                                          row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN),
-                                                                          row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_SWIFT),
-                                                                          True)
-            result.add_partial_result(bank_account_result)
-            if not bank_account_result.success:
-                return result
-
-        except Exception as e:
-            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
-            result.error = str(e)
 
         return result
