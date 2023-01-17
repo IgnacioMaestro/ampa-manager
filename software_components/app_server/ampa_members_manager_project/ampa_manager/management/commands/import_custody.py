@@ -19,7 +19,7 @@ from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 
 
-class ImportCustodyCommand(BaseCommand):
+class Command(BaseCommand):
     help = 'Import custody registrations'
 
     SHEET_NUMBER = 0
