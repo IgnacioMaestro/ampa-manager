@@ -27,12 +27,13 @@ class ExcelImporter:
             print('Unable to load excel file')
             return None, None
 
-        print(f'Loading excel sheet number {self.sheet_number}')
+        print(f'Loading excel sheet number {self.sheet_number+1}')
         sheet = book.sheet_by_index(self.sheet_number)
         return book, sheet
 
     def get_rows(self) -> List[ExcelRow]:
         rows = []
+        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
             columns_values = self.import_row_columns(row_index)
             rows.append(ExcelRow(row_index, columns_values))

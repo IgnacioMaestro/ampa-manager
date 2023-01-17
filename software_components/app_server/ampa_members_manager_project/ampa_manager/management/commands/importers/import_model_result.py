@@ -21,15 +21,15 @@ class ImportModelResult:
         changes = ''
         changed_fields = self.get_changed_fields()
         if changed_fields:
-            changes += f'Changes: {self.get_changed_fields()}'
+            changes += f'Changes: {self.get_changed_fields()}.'
 
         error = ''
         if self.error:
-            error += f'. Error: {self.error}'
+            error += f'. Error: {self.error}.'
 
         excel_fields = self.get_excel_fields_csv()
 
-        return f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}. {changes}. {error}'
+        return f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}. {changes} {error}'
 
     @property
     def states_names(self):
