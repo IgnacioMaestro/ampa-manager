@@ -64,7 +64,7 @@ class ImportCustodyCommand(BaseCommand):
 
             results = []
             row: ExcelRow
-            for row in excel_importer.import_rows():
+            for row in excel_importer.get_rows():
                 result: ImportRowResult = self.import_custody_registration(row)
                 result.print(self.logger)
                 results.append(result)
