@@ -24,7 +24,7 @@ class Command(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
 
     SHEET_NUMBER = 0
-    FIRST_ROW_INDEX = 2
+    FIRST_ROW_INDEX = 3
 
     COLUMN_FAMILY_SURNAMES = 'family_surnames'
     COLUMN_PARENT1_NAME_AND_SURNAMES = 'parent1_name_and_surnames'
@@ -151,10 +151,6 @@ class Command(BaseCommand):
         [24, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
         [25, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
     ]
-
-    def __init__(self):
-        super().__init__()
-        self.logger = Logger(Path(__file__).stem)
 
     def add_arguments(self, parser):
         parser.add_argument('file', type=str)

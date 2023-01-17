@@ -11,6 +11,7 @@ def import_members(request):
         'excel_columns': get_excel_columns(),
         'form_action': '/ampa/import/members/',
         'importer_title': _('Import members'),
+        'excel_template_file_name': 'plantilla_importar_socios.xls'
     }
 
     if request.method == 'POST':

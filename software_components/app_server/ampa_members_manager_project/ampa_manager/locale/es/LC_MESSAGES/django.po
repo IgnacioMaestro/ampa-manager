@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 15:46+0100\n"
+"POT-Creation-Date: 2023-01-17 17:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1041,10 +1041,10 @@ msgid "Only the first sheet of the excel will be imported"
 msgstr "Sólo se importa la primera hoja del excel"
 
 #: .\ampa_manager\templates\importer.html:33
-msgid "The rows imported will be from row 2 onwards (a header row is expected)"
+msgid ""
+"The rows imported will be from row 3 onwards (two header rows are expected)"
 msgstr ""
-"Se importa de la fila 2 en adelante (se espera que la fila 1 sea una "
-"cabecera)"
+"Se importa de la fila 3 en adelante (se cuenta con 2 filas de cabecera)"
 
 #: .\ampa_manager\templates\importer.html:34
 msgid "If there is no data for any column leave it empty"
