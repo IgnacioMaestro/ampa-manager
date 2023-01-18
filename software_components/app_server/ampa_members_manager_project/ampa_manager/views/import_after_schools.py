@@ -7,22 +7,24 @@ from ampa_manager.utils.string_utils import StringUtils
 
 
 def import_after_schools(request):
-    context = {
-        'excel_columns': get_excel_columns(),
-        'form_action': '/ampa/import/afterschools/',
-        'importer_title': _('Import after schools'),
-        'excel_template_file_name': 'plantilla_importar_extraescolares.xls'
-    }
+    import_log = None
 
     if request.method == 'POST':
         form = ImportMembersForm(request.POST, request.FILES)
         if form.is_valid():
             logs = ImportAfterSchools.import_after_schools_file(file_content=request.FILES['file'].read())
-            context['import_log'] = '\n'.join(logs)
+            import_log = '\n'.join(logs)
     else:
         form = ImportMembersForm()
 
-    context['form'] = form
+    context = {
+        'form': form,
+        'import_log': import_log,
+        'excel_columns': get_excel_columns(),
+        'form_action': '/ampa/import/afterschools/',
+        'importer_title': _('Import after schools'),
+        'excel_template_file_name': 'plantilla_importar_extraescolares.xls'
+    }
     return render(request, 'importer.html', context)
 
 def get_excel_columns():
