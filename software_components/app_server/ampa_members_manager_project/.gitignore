@@ -1,3 +1,5 @@
 *.sqlite3
 *.driveupload
 *.log
+/*.xls
+/*.xlsx
