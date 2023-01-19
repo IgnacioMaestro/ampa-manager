@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
@@ -7,7 +8,7 @@ from localflavor.generic.models import IBANField, BICField
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_manager.family.bic_code import BicCode
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.results.processing_state import ProcessingState
+from ampa_manager.iban import IBAN
 
 
 class BankAccount(TimeStampedModel):
@@ -41,4 +42,6 @@ class BankAccount(TimeStampedModel):
             self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
 
-
+    def clean_iban(self):
+        if not IBAN.is_valid(self.cleaned_data['iban']):
+            raise ValidationError(_('The IBAN code is not valid'))

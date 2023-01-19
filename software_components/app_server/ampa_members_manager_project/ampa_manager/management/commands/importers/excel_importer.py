@@ -7,23 +7,36 @@ from ampa_manager.management.commands.importers.excel_row import ExcelRow
 
 class ExcelImporter:
 
-    def __init__(self, excel_file_path: str, sheet_number: int, first_row_index: int, columns_settings):
+    def __init__(self, sheet_number: int, first_row_index: int, columns_settings, file_path: str = None, file_content=None):
+        self.sheet_number = sheet_number
         self.first_row_index = first_row_index
-        self.book, self.sheet = self.open_excel(excel_file_path, sheet_number)
         self.columns_settings = columns_settings
+        self.file_path = file_path
+        self.file_content = file_content
 
-    @staticmethod
-    def open_excel(file_path: str, sheet_number: int):
-        print(f'\nOpening sheet {sheet_number} from file {file_path}')
-        book = xlrd.open_workbook(file_path)
-        sheet = book.sheet_by_index(sheet_number)
+        self.book, self.sheet = self.open_excel()
+
+    def open_excel(self):
+        if self.file_path:
+            print(f'Loading excel file from path {self.file_path}')
+            book = xlrd.open_workbook(filename=self.file_path)
+        elif self.file_content:
+            print('Loading excel file from contents')
+            book = xlrd.open_workbook(file_contents=self.file_content)
+        else:
+            print('Unable to load excel file')
+            return None, None
+
+        print(f'Loading excel sheet number {self.sheet_number+1}')
+        sheet = book.sheet_by_index(self.sheet_number)
         return book, sheet
 
-    def import_rows(self) -> List[ExcelRow]:
+    def get_rows(self) -> List[ExcelRow]:
         rows = []
+        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
-            columns = self.import_row_columns(row_index)
-            rows.append(ExcelRow(row_index, columns))
+            columns_values = self.import_row_columns(row_index)
+            rows.append(ExcelRow(row_index, columns_values))
         return rows
 
     def import_row_columns(self, row_index: int) -> dict:
