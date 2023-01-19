@@ -6,9 +6,9 @@ from django_extensions.db.models import TimeStampedModel
 from localflavor.generic.models import IBANField, BICField
 
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
-from ampa_manager.family.bic_code import BicCode
+from ampa_manager.family.models.bank_account.bic_code import BicCode
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.iban import IBAN
+from ampa_manager.family.models.bank_account.iban import IBAN
 
 
 class BankAccount(TimeStampedModel):
