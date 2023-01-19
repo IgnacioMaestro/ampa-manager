@@ -1,12 +1,12 @@
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class ParentImporter:
 
     @staticmethod
-    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str) -> ModelImportResult:
-        result = ModelImportResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
+    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str) -> ImportModelResult:
+        result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
         fields_ok, error = ParentImporter.validate_fields(name_and_surnames,
                                                           phone_number,
@@ -28,7 +28,7 @@ class ParentImporter:
                 result.set_created(parent)
 
                 family.parents.add(parent)
-                result.set_added_to_family()
+                result.set_parent_added_to_family()
         else:
             result.set_error(error)
 

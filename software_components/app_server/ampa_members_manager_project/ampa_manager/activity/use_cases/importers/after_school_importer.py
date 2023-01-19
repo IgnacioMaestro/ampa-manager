@@ -1,5 +1,5 @@
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class AfterSchoolImporter:
@@ -12,8 +12,8 @@ class AfterSchoolImporter:
             return None
 
     @staticmethod
-    def import_after_school(name) -> ModelImportResult:
-        result = ModelImportResult(AfterSchool.__name__, [name])
+    def import_after_school(name) -> ImportModelResult:
+        result = ImportModelResult(AfterSchool.__name__, [name])
 
         after_school = AfterSchoolImporter.find(name)
         if after_school:

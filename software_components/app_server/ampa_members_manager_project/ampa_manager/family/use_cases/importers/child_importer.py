@@ -1,13 +1,13 @@
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
-from ampa_manager.management.commands.results.model_import_result import ModelImportResult
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class ChildImporter:
 
     @staticmethod
-    def import_child(family, name: str, level: str, year_of_birth: int) -> ModelImportResult:
-        result = ModelImportResult(Child.__name__, [name, level, year_of_birth])
+    def import_child(family, name: str, level: str, year_of_birth: int) -> ImportModelResult:
+        result = ImportModelResult(Child.__name__, [name, level, year_of_birth])
 
         repetition = Level.calculate_repetition(level, year_of_birth)
 

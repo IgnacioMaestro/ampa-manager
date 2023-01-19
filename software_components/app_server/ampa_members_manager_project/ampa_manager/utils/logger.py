@@ -10,6 +10,7 @@ class Logger:
     def __init__(self, log_file_base_name: Optional[str] = None):
         self.log_file_base_name = log_file_base_name
         self.log_file = None
+        self.logs = []
         self.open_log_file()
 
     def open_log_file(self):
@@ -22,6 +23,7 @@ class Logger:
         self.log(f'*** WARNING: {message}')
 
     def log(self, message: str):
+        self.logs.append(message)
         print(message)
         self.log_file.writelines([message + '\n'])
 

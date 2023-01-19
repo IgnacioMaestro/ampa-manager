@@ -1,32 +1,35 @@
-from typing import Optional
+from typing import Optional, List
 
-from ampa_manager.management.commands.results.processing_state import ProcessingState
+from django.db.models import Model
+
+from ampa_manager.utils.processing_state import ProcessingState
 
 
-class ModelImportResult:
+class ImportModelResult:
+
     def __init__(self, class_name, excel_fields):
-        self.class_name = class_name
-        self.imported_object = None
-        self.state = ProcessingState.NOT_PROCESSED
-        self.state2 = None
-        self.error = None
-        self.excel_fields = excel_fields
-        self.fields_before = []
-        self.fields_after = []
+        self.class_name: str = class_name
+        self.imported_object: Optional[Model] = None
+        self.state: ProcessingState = ProcessingState.NOT_PROCESSED
+        self.state2: Optional[ProcessingState] = None
+        self.error: Optional[str] = None
+        self.excel_fields: List = excel_fields
+        self.fields_before: List = []
+        self.fields_after: List = []
 
     def __str__(self):
         changes = ''
         changed_fields = self.get_changed_fields()
         if changed_fields:
-            changes += f'Changes: {self.get_changed_fields()}'
+            changes += f'Changes: {self.get_changed_fields()}.'
 
         error = ''
         if self.error:
-            error += f'. Error: {self.error}'
+            error += f'. Error: {self.error}.'
 
         excel_fields = self.get_excel_fields_csv()
 
-        return f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}. {changes}. {error}'
+        return f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}. {changes} {error}'
 
     @property
     def states_names(self):
@@ -70,11 +73,14 @@ class ModelImportResult:
         self.imported_object = imported_object
         self.state = ProcessingState.CREATED
 
-    def set_added_to_family(self):
+    def set_parent_added_to_family(self):
         self.state2 = ProcessingState.PARENT_ADDED_TO_FAMILY
 
-    def set_as_default(self):
+    def set_bank_account_as_default(self):
         self.state2 = ProcessingState.BANK_ACCOUNT_SET_AS_DEFAULT
+
+    def set_family_as_member(self):
+        self.state2 = ProcessingState.FAMILY_SET_AS_MEMBER
 
     def get_fields_before_csv(self) -> str:
         return self.get_fields_csv(self.fields_before)
