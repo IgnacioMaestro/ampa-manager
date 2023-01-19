@@ -69,21 +69,20 @@ class Command(BaseCommand):
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES, LABEL_FAMILY_SURNAMES],
-        [4, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
-        [1, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
-        [2, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT_ADDITIONAL_PHONE_NUMBER],
-        [3, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL, LABEL_PARENT_EMAIL],
-        [5, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_SWIFT, LABEL_BANK_ACCOUNT_SWIFT],
-        [6, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
-        [7, FieldsFormatters.clean_name, COLUMN_CHILD_NAME, LABEL_CHILD_NAME],
-        [9, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
+        [1, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
+        [2, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
+        [3, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT_ADDITIONAL_PHONE_NUMBER],
+        [4, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL, LABEL_PARENT_EMAIL],
+        [5, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [6, FieldsFormatters.clean_name, COLUMN_CHILD_NAME, LABEL_CHILD_NAME],
+        [7, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
         [8, FieldsFormatters.clean_level, COLUMN_CHILD_LEVEL, LABEL_CHILD_LEVEL],
-        [10, FieldsFormatters.clean_string, COLUMN_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [11, FieldsFormatters.clean_string, COLUMN_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [12, FieldsFormatters.clean_string, COLUMN_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [13, FieldsFormatters.clean_string, COLUMN_EDITION_LEVELS, LABEL_EDITION_LEVELS],
-        [14, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
-        [15, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
+        [9, FieldsFormatters.clean_string, COLUMN_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
+        [10, FieldsFormatters.clean_string, COLUMN_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [11, FieldsFormatters.clean_string, COLUMN_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [12, FieldsFormatters.clean_string, COLUMN_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [13, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
+        [14, FieldsFormatters.clean_integer, COLUMN_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
     ]
 
     def add_arguments(self, parser):
@@ -166,7 +165,7 @@ class Command(BaseCommand):
                 return result
             parent = parent_result.imported_object
 
-            bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(Command.COLUMN_BANK_ACCOUNT_IBAN), None)
+            bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(Command.COLUMN_BANK_ACCOUNT_IBAN))
             result.add_partial_result(bank_account_result)
             if not bank_account_result.success:
                 return result

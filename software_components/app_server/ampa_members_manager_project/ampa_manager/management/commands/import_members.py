@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.bank_account_importer import BankAccountImporter
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
@@ -18,6 +19,7 @@ from ampa_manager.management.commands.importers.excel_row import ExcelRow
 from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
 class Command(BaseCommand):
@@ -32,7 +34,6 @@ class Command(BaseCommand):
     COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER = 'parent1_additional_phone_number'
     COLUMN_PARENT1_EMAIL = 'parent1_email'
     COLUMN_PARENT1_BANK_ACCOUNT_IBAN = 'parent1_bank_account_iban'
-    COLUMN_PARENT1_BANK_ACCOUNT_SWIFT = 'parent1_bank_account_swift'
     COLUMN_PARENT2_NAME_AND_SURNAMES = 'parent2_name_and_surnames'
     COLUMN_PARENT2_PHONE_NUMBER = 'parent2_phone_number'
     COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER = 'parent2_additional_phone_number'
@@ -93,7 +94,6 @@ class Command(BaseCommand):
     ]
     PARENT1_BANK_ACCOUNT_FIELDS = [
         COLUMN_PARENT1_BANK_ACCOUNT_IBAN,
-        COLUMN_PARENT1_BANK_ACCOUNT_SWIFT
     ]
 
     LABEL_FAMILY_SURNAMES = _('Family') + ': ' + _('Surnames')
@@ -102,7 +102,6 @@ class Command(BaseCommand):
     LABEL_PARENT1_ADDITIONAL_PHONE_NUMBER = _('Parent %(number)s')  % {'number': 1} + ': ' + _('Additional phone number')
     LABEL_PARENT1_EMAIL = _('Parent %(number)s') % {'number': 1} + ': ' + _('Email')
     LABEL_PARENT1_BANK_ACCOUNT_IBAN = _('Parent %(number)s') % {'number': 1} + ': ' + _('Bank account IBAN')
-    LABEL_PARENT1_BANK_ACCOUNT_SWIFT = _('Parent %(number)s') % {'number': 1} + ': ' + _('Bank account SWIFT')
     LABEL_PARENT2_NAME_AND_SURNAMES = _('Parent %(number)s') % {'number': 2} + ': ' + _('Name and surnames')
     LABEL_PARENT2_PHONE_NUMBER = _('Parent %(number)s') % {'number': 2} + ': ' + _('Phone number')
     LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER = _('Parent %(number)s')  % {'number': 2} + ': ' + _('Additional phone number')
@@ -129,27 +128,26 @@ class Command(BaseCommand):
         [2, FieldsFormatters.clean_phone, COLUMN_PARENT1_PHONE_NUMBER, LABEL_PARENT1_PHONE_NUMBER],
         [3, FieldsFormatters.clean_phone, COLUMN_PARENT1_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT1_ADDITIONAL_PHONE_NUMBER],
         [4, FieldsFormatters.clean_email, COLUMN_PARENT1_EMAIL, LABEL_PARENT1_EMAIL],
-        [5, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_SWIFT, LABEL_PARENT1_BANK_ACCOUNT_SWIFT],
-        [6, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
-        [7, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
-        [8, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
-        [9, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER],
-        [10, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
-        [11, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME, LABEL_CHILD1_NAME],
-        [12, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
-        [13, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
-        [14, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME, LABEL_CHILD2_NAME],
-        [15, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
-        [16, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
-        [17, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME, LABEL_CHILD3_NAME],
-        [18, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
-        [19, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
-        [20, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME, LABEL_CHILD4_NAME],
-        [21, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
-        [22, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
-        [23, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME, LABEL_CHILD5_NAME],
-        [24, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
-        [25, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
+        [5, FieldsFormatters.clean_iban, COLUMN_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
+        [6, FieldsFormatters.clean_name, COLUMN_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
+        [7, FieldsFormatters.clean_phone, COLUMN_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
+        [8, FieldsFormatters.clean_phone, COLUMN_PARENT2_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT2_ADDITIONAL_PHONE_NUMBER],
+        [9, FieldsFormatters.clean_email, COLUMN_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
+        [10, FieldsFormatters.clean_name, COLUMN_CHILD1_NAME, LABEL_CHILD1_NAME],
+        [11, FieldsFormatters.clean_integer, COLUMN_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
+        [12, FieldsFormatters.clean_level, COLUMN_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
+        [13, FieldsFormatters.clean_name, COLUMN_CHILD2_NAME, LABEL_CHILD2_NAME],
+        [14, FieldsFormatters.clean_integer, COLUMN_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
+        [15, FieldsFormatters.clean_level, COLUMN_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
+        [16, FieldsFormatters.clean_name, COLUMN_CHILD3_NAME, LABEL_CHILD3_NAME],
+        [17, FieldsFormatters.clean_integer, COLUMN_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
+        [18, FieldsFormatters.clean_level, COLUMN_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
+        [19, FieldsFormatters.clean_name, COLUMN_CHILD4_NAME, LABEL_CHILD4_NAME],
+        [20, FieldsFormatters.clean_integer, COLUMN_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
+        [21, FieldsFormatters.clean_level, COLUMN_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
+        [22, FieldsFormatters.clean_name, COLUMN_CHILD5_NAME, LABEL_CHILD5_NAME],
+        [23, FieldsFormatters.clean_integer, COLUMN_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
+        [24, FieldsFormatters.clean_level, COLUMN_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
     ]
 
     def add_arguments(self, parser):
@@ -201,6 +199,7 @@ class Command(BaseCommand):
             Parent.__name__: Parent.objects.count(),
             Child.__name__: Child.objects.count(),
             BankAccount.__name__: BankAccount.objects.count(),
+            Membership.__name__: Membership.objects.count(),
         }
 
     @staticmethod
@@ -216,8 +215,10 @@ class Command(BaseCommand):
                 return result
             family = family_result.imported_object
 
-            result = Command.import_children(row, family, result)
-            result = Command.import_parents(row, family, result)
+            if family:
+                result = Command.import_children(row, family, result)
+                result = Command.import_parents(row, family, result)
+                result = Command.import_membership(family, result)
 
         except Exception as e:
             logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
@@ -290,9 +291,7 @@ class Command(BaseCommand):
 
             if row.any_column_has_value(Command.PARENT1_BANK_ACCOUNT_FIELDS):
                 bank_account_result = BankAccountImporter.import_bank_account(parent1,
-                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN),
-                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_SWIFT),
-                                                                              True)
+                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN))
                 result.add_partial_result(bank_account_result)
                 if not bank_account_result.success:
                     return result
@@ -306,5 +305,19 @@ class Command(BaseCommand):
             result.add_partial_result(parent2_result)
             if not parent2_result.success:
                 return result
+
+        return result
+
+    @staticmethod
+    def import_membership(family, result: ImportRowResult):
+        membership_result = ImportModelResult(Membership.__name__, [])
+
+        if Membership.is_member_family(family):
+            membership_result.set_not_modified(Membership.get_membership(family))
+        else:
+            Membership.make_member_for_active_course(family)
+            membership_result.set_created(Membership.get_membership(family))
+
+        result.add_partial_result(membership_result)
 
         return result

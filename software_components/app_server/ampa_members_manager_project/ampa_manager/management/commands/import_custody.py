@@ -118,7 +118,7 @@ class Command(BaseCommand):
                 return result
 
             parent = parent_result.imported_object
-            bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(self.COLUMN_BANK_ACCOUNT_IBAN), None)
+            bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(self.COLUMN_BANK_ACCOUNT_IBAN))
             result.add_partial_result(bank_account_result)
             if not bank_account_result.success:
                 return result
