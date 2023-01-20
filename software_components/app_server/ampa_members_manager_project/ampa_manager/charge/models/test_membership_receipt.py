@@ -7,7 +7,7 @@ from ampa_manager.baker_recipes import bank_account_recipe, membership_receipt_f
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_manager.charge.receipt import Receipt
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.family import Family
 
@@ -38,7 +38,7 @@ class TestMembershipReceipt(TestCase):
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        authorization: Authorization = baker.make('Authorization', bank_account=bank_account)
+        authorization: AuthorizationOld = baker.make('Authorization', bank_account=bank_account)
         family: Family = baker.make('Family', default_bank_account=bank_account)
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt', family=family)
         baker.make('Fee', academic_course=membership_receipt.remittance.course, amount=self.FEE)

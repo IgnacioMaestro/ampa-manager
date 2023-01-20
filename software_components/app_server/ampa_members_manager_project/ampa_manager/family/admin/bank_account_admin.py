@@ -9,13 +9,13 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.family.admin.filters.bank_account_filters import BankAccountAuthorizationFilter, \
     BankAccountBICCodeFilter
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.state import State
 
 
 class AuthorizationInline(admin.TabularInline):
-    model = Authorization
+    model = AuthorizationOld
     extra = 0
 
 
@@ -32,9 +32,9 @@ class BankAccountAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('Authorization'))
     def authorization_status(self, bank_account):
         try:
-            authorization = Authorization.objects.of_bank_account(bank_account).get()
+            authorization = AuthorizationOld.objects.of_bank_account(bank_account).get()
             return State.get_value_human_name(authorization.state)
-        except Authorization.DoesNotExist:
+        except AuthorizationOld.DoesNotExist:
             return gettext_lazy('No authorization')
 
     @admin.action(description=gettext_lazy("Export account owners"))
@@ -57,6 +57,6 @@ class BankAccountAdmin(admin.ModelAdmin):
     def create_authorization_for_this_year(self, _, bank_accounts: QuerySet[BankAccount]):
         year = ActiveCourse.load().initial_year
         for bank_account in bank_accounts.iterator():
-            Authorization.objects.create_next_authorization(year=year, bank_account=bank_account)
+            AuthorizationOld.objects.create_next_authorization(year=year, bank_account=bank_account)
 
     actions = ['export_owners', 'complete_swift_bic', 'create_authorization_for_this_year']

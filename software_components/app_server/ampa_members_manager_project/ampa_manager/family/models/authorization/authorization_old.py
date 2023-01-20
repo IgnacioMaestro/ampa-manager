@@ -8,13 +8,13 @@ from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.charge.receipt import AuthorizationReceipt
-from ampa_manager.family.models.authorization.authorization_manager import AuthorizationManager
-from ampa_manager.family.models.authorization.authorization_queryset import AuthorizationQueryset
+from ampa_manager.family.models.authorization.authorization_old_manager import AuthorizationOldManager
+from ampa_manager.family.models.authorization.authorization_old_queryset import AuthorizationOldQueryset
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.state import State
 
 
-class Authorization(models.Model):
+class AuthorizationOld(models.Model):
     number = models.CharField(max_length=50, verbose_name=_("Number"))
     order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
     year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year"))
@@ -23,12 +23,12 @@ class Authorization(models.Model):
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     bank_account = models.OneToOneField(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank account"))
 
-    objects = AuthorizationManager.from_queryset(AuthorizationQueryset)()
+    objects = AuthorizationOldManager.from_queryset(AuthorizationOldQueryset)()
 
     class Meta:
-        verbose_name = _('Authorization')
-        verbose_name_plural = _("Authorizations")
-        db_table = 'authorization'
+        verbose_name = _('AuthorizationOld')
+        verbose_name_plural = _("OldAuthorizations")
+        db_table = 'authorization_old'
         constraints = [
             models.UniqueConstraint(fields=['number', 'year'], name='unique_number_in_a_year')]
 
@@ -46,7 +46,7 @@ class Authorization(models.Model):
     @classmethod
     def generate_receipt_authorization(cls, bank_account: BankAccount) -> Optional[AuthorizationReceipt]:
         try:
-            authorization: Authorization = Authorization.objects.of_bank_account(bank_account).get()
+            authorization: AuthorizationOld = AuthorizationOld.objects.of_bank_account(bank_account).get()
             return AuthorizationReceipt(number=authorization.full_number, date=authorization.sign_date)
-        except Authorization.DoesNotExist:
+        except AuthorizationOld.DoesNotExist:
             return None

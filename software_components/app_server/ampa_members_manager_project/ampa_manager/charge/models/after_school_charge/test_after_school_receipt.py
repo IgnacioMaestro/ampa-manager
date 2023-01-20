@@ -2,7 +2,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.tests.generator_adder import bic_generator, phonenumbers_generator, iban_generator
 from .after_school_receipt import AfterSchoolReceipt
@@ -32,7 +32,7 @@ class TestAfterSchoolReceipt(TestCase):
 
     def test_generate_receipt_authorization(self):
         # Arrange
-        authorization: Authorization = baker.make(
+        authorization: AuthorizationOld = baker.make(
             'Authorization', bank_account=self.after_school_receipt.after_school_registration.bank_account)
 
         # Act

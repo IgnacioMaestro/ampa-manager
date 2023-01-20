@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
@@ -96,9 +96,9 @@ class AuthorizationImporter:
                                             success = True
                                             message = f'Updated'
                                         else:
-                                            authorization = Authorization.objects.create(number=number, date=date_value,
-                                                                                         bank_account=bank_account,
-                                                                                         year=date_value.year)
+                                            authorization = AuthorizationOld.objects.create(number=number, date=date_value,
+                                                                                            bank_account=bank_account,
+                                                                                            year=date_value.year)
 
                                             success = True
                                             message = f'Created'
@@ -141,6 +141,6 @@ class AuthorizationImporter:
     @staticmethod
     def get_authorization(number):
         try:
-            return Authorization.objects.get(number=number)
-        except Authorization.DoesNotExist:
+            return AuthorizationOld.objects.get(number=number)
+        except AuthorizationOld.DoesNotExist:
             return None
