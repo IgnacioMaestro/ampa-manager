@@ -4,9 +4,9 @@ from model_bakery import baker
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.family.models.child import Child
-from ampa_manager.family.models.family import Family
-from ampa_manager.family.models.membership import Membership
+from .child import Child
+from .family import Family
+from .membership import Membership
 
 
 class TestMembership(TestCase):

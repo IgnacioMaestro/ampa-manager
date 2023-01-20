@@ -8,12 +8,13 @@ from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.child import Child
-from ampa_manager.family.models.family_queryset import FamilyQuerySet
-from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
+from .family_queryset import FamilyQuerySet
+from .parent import Parent
+from .child import Child
+from .bank_account.bank_account import BankAccount
+from .holder.holder import Holder
 
 
 class Family(TimeStampedModel):
@@ -24,6 +25,9 @@ class Family(TimeStampedModel):
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     default_bank_account = models.ForeignKey(
         to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"),
+        help_text=_("Save the family to see its bank accounts"))
+    default_holder = models.ForeignKey(
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
         help_text=_("Save the family to see its bank accounts"))
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))

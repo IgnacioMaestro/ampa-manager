@@ -10,14 +10,14 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 class TestAuthorizationOld(TestCase):
     def test_str_1_digit(self):
         authorization: AuthorizationOld = baker.make(
-            'Authorization', order=1, bank_account=baker.make_recipe(bank_account_recipe))
+            'AuthorizationOld', order=1, bank_account=baker.make_recipe(bank_account_recipe))
         self.assertEqual(
             str(authorization),
             f'{authorization.year}/001-{str(authorization.bank_account)}')
 
     def test_str_3_digits(self):
         authorization: AuthorizationOld = baker.make(
-            'Authorization', order=123, bank_account=baker.make_recipe(bank_account_recipe))
+            'AuthorizationOld', order=123, bank_account=baker.make_recipe(bank_account_recipe))
         self.assertEqual(
             str(authorization),
             f'{authorization.year}/123-{str(authorization.bank_account)}')
@@ -30,7 +30,7 @@ class TestAuthorizationOld(TestCase):
         initial_order: int = 16
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Authorization', bank_account=bank_account, year=year, order=initial_order)
+        baker.make('AuthorizationOld', bank_account=bank_account, year=year, order=initial_order)
         next_number = AuthorizationOld.objects.next_order_for_year(2020)
         self.assertEqual(next_number, initial_order + 1)
 
@@ -39,8 +39,8 @@ class TestAuthorizationOld(TestCase):
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         other_bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Authorization', bank_account=bank_account, year=year, order=initial_order)
-        baker.make('Authorization', bank_account=other_bank_account, year=year, order=2)
+        baker.make('AuthorizationOld', bank_account=bank_account, year=year, order=initial_order)
+        baker.make('AuthorizationOld', bank_account=other_bank_account, year=year, order=2)
         next_number = AuthorizationOld.objects.next_order_for_year(2020)
         self.assertEqual(next_number, initial_order + 1)
 
@@ -61,7 +61,7 @@ class TestAuthorizationOld(TestCase):
 
     def test_generate_receipt_authorization_authorization(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        authorization: AuthorizationOld = baker.make('Authorization', bank_account=bank_account)
+        authorization: AuthorizationOld = baker.make('AuthorizationOld', bank_account=bank_account)
 
         authorization_receipt: AuthorizationReceipt = AuthorizationOld.generate_receipt_authorization(bank_account)
 
