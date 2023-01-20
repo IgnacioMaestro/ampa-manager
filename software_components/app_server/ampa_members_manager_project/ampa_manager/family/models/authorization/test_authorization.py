@@ -2,7 +2,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.baker_recipes import bank_account_recipe
-from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
+from ampa_manager.charge.receipt import AuthorizationReceipt
 from ampa_manager.family.models.authorization.authorization import Authorization
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 
