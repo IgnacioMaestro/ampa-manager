@@ -1,13 +1,12 @@
 from typing import List
 
 import phonenumbers
-from django.db import IntegrityError
 from django.test import TestCase
 from model_bakery import baker
 
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.family import Family
-from ampa_manager.family.models.parent import Parent
+from .bank_account.bank_account import BankAccount
+from .family import Family
+from .parent import Parent
 
 
 class TestFamily(TestCase):

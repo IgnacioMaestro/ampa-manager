@@ -1,0 +1,26 @@
+from django.db import IntegrityError
+from django.test import TestCase
+from model_bakery import baker
+
+from ampa_manager.baker_recipes import bank_account_recipe
+from ..bank_account.bank_account import BankAccount
+from .holder import Holder
+
+
+class TestHolder(TestCase):
+    def test_unique_holder_bank_account_constraint(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account)
+        with self.assertRaises(IntegrityError):
+            baker.make('Holder', parent=holder.parent, bank_account=holder.bank_account)
+
+    def test_unique_order_in_a_year_constraint(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account)
+        with self.assertRaises(IntegrityError):
+            baker.make('Holder', order=holder.order, year=holder.year)
+
+    def test_str(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account)
+        self.assertEqual(str(holder), f'{holder.parent}-{holder.bank_account}')
