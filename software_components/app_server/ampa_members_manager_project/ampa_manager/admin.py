@@ -29,7 +29,7 @@ from ampa_manager.family.admin.authorization_admin import AuthorizationAdmin
 from ampa_manager.family.admin.bank_account_admin import BankAccountAdmin
 from ampa_manager.family.admin.child_admin import ChildAdmin
 from ampa_manager.family.admin.parent_admin import ParentAdmin
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
@@ -57,7 +57,7 @@ admin.site.register(Family, FamilyAdmin)
 
 # noinspection DuplicatedCode
 admin.site.register(BankAccount, BankAccountAdmin)
-admin.site.register(Authorization, AuthorizationAdmin)
+admin.site.register(AuthorizationOld, AuthorizationAdmin)
 admin.site.register(Membership, MembershipAdmin)
 
 admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)

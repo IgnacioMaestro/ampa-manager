@@ -10,7 +10,7 @@ from ampa_manager.charge.models.membership_remittance import MembershipRemittanc
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException, NoFeeForCourseException
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.state import State
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.family import Family
 
@@ -38,6 +38,6 @@ class MembershipReceipt(models.Model):
         bank_account_owner = str(bank_account.owner)
         iban: str = bank_account.iban
         bic: str = bank_account.swift_bic
-        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
+        authorization: AuthorizationReceipt = AuthorizationOld.generate_receipt_authorization(bank_account=bank_account)
         return Receipt(
             amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, bic=bic, authorization=authorization)

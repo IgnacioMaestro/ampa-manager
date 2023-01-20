@@ -26,6 +26,12 @@ package Family {
     date: Date
     document: File
   }
+  class AuthorizationOld {
+    number: String
+    year: Integer
+    date: Date
+    document: File
+  }
   class State
   class NotSent
   class Sent
@@ -35,6 +41,7 @@ package Family {
   Sent -up-|> State
   Signed -up-|> State
   Authorization *-right- State
+  AuthorizationOld *-right- State
 
   class Membership
   Parent --o Holder: ""
@@ -46,7 +53,7 @@ package Family {
   Family *-- "N" Child
   Parent *-- "0..N" BankAccount
   Family o-- BankAccount: ""
-  BankAccount "1" *-- "1" Authorization
+  BankAccount "1" *-- "1" AuthorizationOld
   Holder <|-- Authorization
   Family *-- "N" Membership: ""
   Membership o-- AcademicCourse

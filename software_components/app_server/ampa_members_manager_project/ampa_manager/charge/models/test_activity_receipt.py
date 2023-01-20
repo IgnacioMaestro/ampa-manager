@@ -6,7 +6,7 @@ from ampa_manager.baker_recipes import bank_account_recipe
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_manager.charge.receipt import Receipt
-from ampa_manager.family.models.authorization.authorization import Authorization
+from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 
 
@@ -34,7 +34,7 @@ class TestActivityReceipt(TestCase):
         self.assertIsNone(receipt.authorization)
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
-        authorization: Authorization = baker.make('Authorization', bank_account=self.bank_account)
+        authorization: AuthorizationOld = baker.make('Authorization', bank_account=self.bank_account)
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         activity_receipt.activity_registrations.add(self.activity_registration)
 
