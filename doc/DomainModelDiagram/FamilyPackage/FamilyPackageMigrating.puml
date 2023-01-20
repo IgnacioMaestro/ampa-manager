@@ -39,10 +39,14 @@ package Family {
   class Membership
   Parent --o Holder: ""
   Holder o-- BankAccount
-  Membership o-- Holder
+  Family o-- Holder
+
 
   Family "1..N" o-- "1..N" Parent
   Family *-- "N" Child
+  Parent *-- "0..N" BankAccount
+  Family o-- BankAccount: ""
+  BankAccount "1" *-- "1" Authorization
   Holder <|-- Authorization
   Family *-- "N" Membership: ""
   Membership o-- AcademicCourse
