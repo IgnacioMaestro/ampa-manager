@@ -23,13 +23,13 @@ package Family {
   class Authorization {
     number: String
     year: Integer
-    date: Date
+    sign_date: Date
     document: File
   }
   class AuthorizationOld {
     number: String
     year: Integer
-    date: Date
+    sign_date: Date
     document: File
   }
   class State
