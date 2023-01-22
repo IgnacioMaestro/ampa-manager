@@ -56,7 +56,7 @@ class ChildInline(admin.TabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'default_bank_account', 'parent_count',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_bank_account', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_bank_account', 'default_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
