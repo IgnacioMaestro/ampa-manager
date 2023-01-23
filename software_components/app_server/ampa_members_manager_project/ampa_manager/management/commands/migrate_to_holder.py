@@ -7,4 +7,4 @@ class Command(BaseCommand):
     help = "Migration to Holder data model."
 
     def handle(self, *args, **options):
-        ToHolderMigrator.migrate()
+        ToHolderMigrator.migrate_after_school_registrations()
