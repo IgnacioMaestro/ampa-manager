@@ -45,5 +45,5 @@ class Holder(models.Model):
             raise ValidationError(_('The state can not be sent or signed if there is no document attached'))
 
     @property
-    def full_number(self) -> str:
+    def authorization_full_number(self) -> str:
         return f'{self.authorization_year}/{self.authorization_order:03}'
