@@ -8,7 +8,7 @@ class HolderQuerySet(QuerySet):
         return self.filter(bank_account=bank_account)
 
     def authorization_with_highest_number(self, year: int):
-        return self.filter(year=year).order_by('number').first()
+        return self.filter(authorization_year=year).order_by('number').first()
 
     def authorization_with_highest_order(self, year: int):
-        return self.filter(year=year).order_by('authorization_order').last()
+        return self.filter(authorization_year=year).order_by('authorization_order').last()

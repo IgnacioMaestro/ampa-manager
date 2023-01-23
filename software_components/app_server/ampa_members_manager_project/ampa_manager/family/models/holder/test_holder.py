@@ -21,7 +21,8 @@ class TestHolder(TestCase):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
         with self.assertRaises(IntegrityError):
-            baker.make('Holder', authorization_order=holder.authorization_order, year=holder.year)
+            baker.make(
+                'Holder', authorization_order=holder.authorization_order, authorization_year=holder.authorization_year)
 
     def test_str(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
@@ -38,4 +39,4 @@ class TestHolder(TestCase):
     def test_full_number(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        self.assertEqual(holder.full_number, f'{holder.year}/{holder.authorization_order:03}')
+        self.assertEqual(holder.full_number, f'{holder.authorization_year}/{holder.authorization_order:03}')
