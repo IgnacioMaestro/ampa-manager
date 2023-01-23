@@ -1,6 +1,6 @@
 from django.db.models import QuerySet
 
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ..bank_account.bank_account import BankAccount
 
 
 class HolderQuerySet(QuerySet):
