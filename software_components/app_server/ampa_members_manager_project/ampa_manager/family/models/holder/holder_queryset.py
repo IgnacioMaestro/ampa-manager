@@ -11,4 +11,4 @@ class HolderQuerySet(QuerySet):
         return self.filter(year=year).order_by('number').first()
 
     def authorization_with_highest_order(self, year: int):
-        return self.filter(year=year).order_by('order').last()
+        return self.filter(year=year).order_by('authorization_order').last()

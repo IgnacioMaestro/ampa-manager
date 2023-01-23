@@ -15,7 +15,7 @@ class TestHolderManager(TestCase):
         initial_order: int = 16
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Holder', bank_account=bank_account, year=year, order=initial_order)
+        baker.make('Holder', bank_account=bank_account, year=year, authorization_order=initial_order)
         next_number = Holder.objects.next_order_for_year(2020)
         self.assertEqual(next_number, initial_order + 1)
 
@@ -24,7 +24,7 @@ class TestHolderManager(TestCase):
         year: int = 2020
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         other_bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        baker.make('Holder', bank_account=bank_account, year=year, order=initial_order)
-        baker.make('Holder', bank_account=other_bank_account, year=year, order=2)
+        baker.make('Holder', bank_account=bank_account, year=year, authorization_order=initial_order)
+        baker.make('Holder', bank_account=other_bank_account, year=year, authorization_order=2)
         next_number = Holder.objects.next_order_for_year(2020)
         self.assertEqual(next_number, initial_order + 1)

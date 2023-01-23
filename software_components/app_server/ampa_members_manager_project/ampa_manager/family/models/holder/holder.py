@@ -16,8 +16,11 @@ from ..state import State
 class Holder(models.Model):
     parent = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Holder"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank Account"))
-    order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
-    year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year, verbose_name=_("Year"))
+    authorization_order = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
+    year = models.IntegerField(
+        validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year,
+        verbose_name=_("Year"))
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     sign_date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
@@ -29,8 +32,9 @@ class Holder(models.Model):
         verbose_name_plural = _("Holders")
         db_table = 'holder'
         constraints = [
-            models.UniqueConstraint(fields=['parent', 'bank_account'], name='%(class)s_unique_parent_and_bank_account'),
-            models.UniqueConstraint(fields=['order', 'year'], name='%(class)s_unique_order_in_a_year')]
+            models.UniqueConstraint(fields=['parent', 'bank_account'], name='unique_parent_and_bank_account'),
+            models.UniqueConstraint(fields=['authorization_order', 'year'], name='unique_authorization_order_in_a_year')
+        ]
 
     def __str__(self) -> str:
         return f'{self.parent}-{self.bank_account}'
@@ -41,4 +45,4 @@ class Holder(models.Model):
 
     @property
     def full_number(self) -> str:
-        return f'{self.year}/{self.order:03}'
+        return f'{self.year}/{self.authorization_order:03}'
