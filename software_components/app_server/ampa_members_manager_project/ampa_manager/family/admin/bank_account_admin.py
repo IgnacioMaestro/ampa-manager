@@ -11,7 +11,9 @@ from ampa_manager.family.admin.filters.bank_account_filters import BankAccountAu
     BankAccountBICCodeFilter
 from ampa_manager.family.models.authorization.authorization import Authorization
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.bank_account.iban import IBAN
 from ampa_manager.family.models.state import State
+from django.utils.translation import gettext_lazy as _
 
 
 class AuthorizationInline(admin.TabularInline):
@@ -59,4 +61,18 @@ class BankAccountAdmin(admin.ModelAdmin):
         for bank_account in bank_accounts.iterator():
             Authorization.objects.create_next_authorization(year=year, bank_account=bank_account)
 
-    actions = ['export_owners', 'complete_swift_bic', 'create_authorization_for_this_year']
+    @admin.action(description=gettext_lazy("Validate IBAN"))
+    def validate_iban(self, request, bank_accounts: QuerySet[BankAccount]):
+        not_valid_bank_accounts = []
+        for bank_account in bank_accounts.iterator():
+            if not IBAN.is_valid(str(bank_account.iban)):
+                not_valid_bank_accounts.append(str(bank_account.iban))
+
+        if len(not_valid_bank_accounts) == 0:
+            return self.message_user(request=request, message=_('All validated IBANs are valid'))
+        else:
+            return self.message_user(request=request, message=_('%(number)s IBANs are invalid: %(ibans)s') %
+                                                              {'number': len(not_valid_bank_accounts),
+                                                               'ibans': ', '.join(not_valid_bank_accounts)})
+
+    actions = ['export_owners', 'complete_swift_bic', 'create_authorization_for_this_year', 'validate_iban']
