@@ -17,7 +17,7 @@ class Holder(models.Model):
     parent = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Holder"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank Account"))
     order = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
-    year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year"))
+    year = models.IntegerField(validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year, verbose_name=_("Year"))
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     sign_date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
