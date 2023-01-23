@@ -34,7 +34,7 @@ class TestActivityReceipt(TestCase):
         self.assertIsNone(receipt.authorization)
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
-        authorization: AuthorizationOld = baker.make('Authorization', bank_account=self.bank_account)
+        authorization: AuthorizationOld = baker.make('AuthorizationOld', bank_account=self.bank_account)
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         activity_receipt.activity_registrations.add(self.activity_registration)
 

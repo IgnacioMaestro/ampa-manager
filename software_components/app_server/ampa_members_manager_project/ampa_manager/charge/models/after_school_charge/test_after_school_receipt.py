@@ -33,7 +33,7 @@ class TestAfterSchoolReceipt(TestCase):
     def test_generate_receipt_authorization(self):
         # Arrange
         authorization: AuthorizationOld = baker.make(
-            'Authorization', bank_account=self.after_school_receipt.after_school_registration.bank_account)
+            'AuthorizationOld', bank_account=self.after_school_receipt.after_school_registration.bank_account)
 
         # Act
         receipt: Receipt = self.after_school_receipt.generate_receipt()
