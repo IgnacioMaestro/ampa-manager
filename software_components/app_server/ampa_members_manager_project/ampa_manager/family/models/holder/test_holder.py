@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 from model_bakery import baker
@@ -5,6 +6,8 @@ from model_bakery import baker
 from ampa_manager.baker_recipes import bank_account_recipe
 from ..bank_account.bank_account import BankAccount
 from .holder import Holder
+from ..parent import Parent
+from ..state import State
 
 
 class TestHolder(TestCase):
@@ -24,3 +27,15 @@ class TestHolder(TestCase):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
         self.assertEqual(str(holder), f'{holder.parent}-{holder.bank_account}')
+
+    def test_clean(self):
+        with self.assertRaises(ValidationError):
+            parent: Parent = baker.make('Parent')
+            bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+            holder: Holder = Holder(parent=parent, bank_account=bank_account, state=State.SIGNED)
+            holder.clean()
+
+    def test_full_number(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account)
+        self.assertEqual(holder.full_number, f'{holder.year}/{holder.order:03}')
