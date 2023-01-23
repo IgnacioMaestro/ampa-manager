@@ -36,7 +36,7 @@ class TestHolder(TestCase):
             holder: Holder = Holder(parent=parent, bank_account=bank_account, authorization_state=State.SIGNED)
             holder.clean()
 
-    def test_full_number(self):
+    def test_authorization_full_number(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        self.assertEqual(holder.full_number, f'{holder.authorization_year}/{holder.authorization_order:03}')
+        self.assertEqual(holder.authorization_full_number, f'{holder.authorization_year}/{holder.authorization_order:03}')
