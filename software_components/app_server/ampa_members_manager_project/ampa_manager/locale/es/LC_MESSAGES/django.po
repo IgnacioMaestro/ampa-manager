@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 19:49+0100\n"
+"POT-Creation-Date: 2023-01-23 22:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -661,32 +661,49 @@ msgstr "Marcar como firmadas"
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:32
+#: .\ampa_manager\family\admin\bank_account_admin.py:41
+msgid "After schools"
+msgstr "Extraescolares"
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:45
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:8
 #: .\ampa_manager\family\models\authorization\authorization.py:29
 msgid "Authorization"
 msgstr "Autorización"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:38
+#: .\ampa_manager\family\admin\bank_account_admin.py:51
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:14
 msgid "No authorization"
 msgstr "Sin autorización"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:40
+#: .\ampa_manager\family\admin\bank_account_admin.py:53
 msgid "Export account owners"
 msgstr "Exportar titulares de las cuentas"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:42
+#: .\ampa_manager\family\admin\bank_account_admin.py:55
 msgid "Bank account owners"
 msgstr "Titulares de cuentas bancarias"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:49
+#: .\ampa_manager\family\admin\bank_account_admin.py:62
 msgid "Complete SWIFT/BIC codes"
 msgstr "Completar código SWIFT/BIC"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:56
+#: .\ampa_manager\family\admin\bank_account_admin.py:69
 msgid "Create authorization for this year"
 msgstr "Crear autorización para este año"
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:75
+msgid "Validate IBAN"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:83
+msgid "All validated IBANs are valid"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:85
+#, python-format
+msgid "%(number)s IBANs are invalid: %(ibans)s"
+msgstr ""
 
 #: .\ampa_manager\family\admin\child_admin.py:19
 #: .\ampa_manager\family\admin\family_admin.py:133
@@ -892,7 +909,8 @@ msgstr "Código BIC"
 #: .\ampa_manager\family\models\bank_account\bank_bic_code.py:9
 msgid ""
 "8-11 characters: Entity (4), Country (2), City (2), Office (3, Optional)"
-msgstr "8-11 caracteres: Entidad (4), País (2), Localidad (2), Oficina (3, Opcional)"
+msgstr ""
+"8-11 caracteres: Entidad (4), País (2), Localidad (2), Oficina (3, Opcional)"
 
 #: .\ampa_manager\family\models\child.py:16
 msgid "Year of birth"
