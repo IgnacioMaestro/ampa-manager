@@ -21,7 +21,7 @@ class Holder(models.Model):
     authorization_year = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year,
         verbose_name=_("Year"))
-    state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
+    authorization_state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     sign_date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
 
@@ -41,7 +41,7 @@ class Holder(models.Model):
         return f'{self.parent}-{self.bank_account}'
 
     def clean(self):
-        if self.state == State.SIGNED and not self.document:
+        if self.authorization_state == State.SIGNED and not self.document:
             raise ValidationError(_('The state can not be sent or signed if there is no document attached'))
 
     @property
