@@ -9,7 +9,7 @@ class HolderInline(admin.TabularInline):
 
 
 class HolderAdmin(admin.ModelAdmin):
-    list_display = ['parent', 'bank_account', 'full_number', 'state']
+    list_display = ['parent', 'bank_account', 'full_number', 'authorization_state']
     ordering = ['parent__name_and_surnames']
     search_fields = ['parent__name_and_surnames']
     list_per_page = 25

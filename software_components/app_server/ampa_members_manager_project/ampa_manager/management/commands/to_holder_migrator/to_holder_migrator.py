@@ -13,7 +13,7 @@ class ToHolderMigrator:
             holder: Holder = Holder.objects.create(
                 parent=bank_account.owner, bank_account=bank_account, authorization_order=authorization_old.order,
                 authorization_year=authorization_old.year, sign_date=authorization_old.sign_date,
-                state=authorization_old.state)
+                authorization_state=authorization_old.state)
             authorization_old.delete()
             try:
                 family: Family = Family.objects.filter(default_bank_account=bank_account).get()

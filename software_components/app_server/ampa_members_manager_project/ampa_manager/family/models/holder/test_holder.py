@@ -33,7 +33,7 @@ class TestHolder(TestCase):
         with self.assertRaises(ValidationError):
             parent: Parent = baker.make('Parent')
             bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-            holder: Holder = Holder(parent=parent, bank_account=bank_account, state=State.SIGNED)
+            holder: Holder = Holder(parent=parent, bank_account=bank_account, authorization_state=State.SIGNED)
             holder.clean()
 
     def test_full_number(self):
