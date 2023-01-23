@@ -6,9 +6,10 @@ from django_extensions.db.models import TimeStampedModel
 from localflavor.generic.models import IBANField, BICField
 
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
-from ampa_manager.family.models.bank_account.bic_code import BicCode
+from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.models.bank_account.iban import IBAN
+from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
 class BankAccount(TimeStampedModel):
@@ -28,7 +29,17 @@ class BankAccount(TimeStampedModel):
         return f'{self.owner} {self.iban}'
 
     def complete_swift_bic(self):
-        self.swift_bic = BicCode.get_bic_code(self.iban)
+        self.swift_bic = BankBicCode.get_bic_code(self.bank_code)
+
+    @property
+    def bank_code(self):
+        iban_value = str(self.iban)
+        if iban_value:
+            if len(iban_value) == 24:
+                return self.iban[4:8]
+            elif len(iban_value) == 20:
+                return self.iban[0:4]
+        return None
 
     @staticmethod
     def get_csv_fields(bank_accounts):
@@ -43,5 +54,5 @@ class BankAccount(TimeStampedModel):
         super(BankAccount, self).save(**kwargs)
 
     def clean_iban(self):
-        if not IBAN.is_valid(self.cleaned_data['iban']):
+        if not IBAN.is_valid(FieldsFormatters.clean_iban(self.cleaned_data['iban'])):
             raise ValidationError(_('The IBAN code is not valid'))
