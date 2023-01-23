@@ -12,7 +12,7 @@ class ToHolderMigrator:
             authorization_old: AuthorizationOld = AuthorizationOld.objects.of_bank_account(bank_account).get()
             holder: Holder = Holder.objects.create(
                 parent=bank_account.owner, bank_account=bank_account, authorization_order=authorization_old.order,
-                authorization_year=authorization_old.year, sign_date=authorization_old.sign_date,
+                authorization_year=authorization_old.year, authorization_sign_date=authorization_old.sign_date,
                 authorization_state=authorization_old.state)
             authorization_old.delete()
             try:

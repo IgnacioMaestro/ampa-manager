@@ -48,7 +48,7 @@ class TestToHolderMigrator(TestCase):
         self.assertEqual(holder.parent, parent)
         self.assertEqual(holder.bank_account, bank_account)
         self.assertEqual(holder.full_number, authorization_old.full_number)
-        self.assertEqual(holder.sign_date, authorization_old.sign_date)
+        self.assertEqual(holder.authorization_sign_date, authorization_old.sign_date)
         self.assertEqual(holder.authorization_state, authorization_old.state)
         self.assertFalse(holder.document)
         return holder
