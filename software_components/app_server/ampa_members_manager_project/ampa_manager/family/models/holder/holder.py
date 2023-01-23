@@ -22,7 +22,7 @@ class Holder(models.Model):
         validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year,
         verbose_name=_("Year"))
     authorization_state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
-    sign_date = models.DateField(default=datetime.date.today)
+    authorization_sign_date = models.DateField(default=datetime.date.today)
     document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
 
     objects = HolderManager.from_queryset(HolderQuerySet)()
