@@ -13,4 +13,4 @@ class HolderManager(Manager):
         holder: Holder = self.authorization_with_highest_order(year=year)
         if not holder:
             return 1
-        return holder.order + 1
+        return holder.authorization_order + 1
