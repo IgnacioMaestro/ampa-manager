@@ -18,7 +18,7 @@ class Holder(models.Model):
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank Account"))
     authorization_order = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
-    year = models.IntegerField(
+    authorization_year = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year,
         verbose_name=_("Year"))
     state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
@@ -33,7 +33,8 @@ class Holder(models.Model):
         db_table = 'holder'
         constraints = [
             models.UniqueConstraint(fields=['parent', 'bank_account'], name='unique_parent_and_bank_account'),
-            models.UniqueConstraint(fields=['authorization_order', 'year'], name='unique_authorization_order_in_a_year')
+            models.UniqueConstraint(
+                fields=['authorization_order', 'authorization_year'], name='unique_authorization_order_in_a_year')
         ]
 
     def __str__(self) -> str:
@@ -45,4 +46,4 @@ class Holder(models.Model):
 
     @property
     def full_number(self) -> str:
-        return f'{self.year}/{self.authorization_order:03}'
+        return f'{self.authorization_year}/{self.authorization_order:03}'
