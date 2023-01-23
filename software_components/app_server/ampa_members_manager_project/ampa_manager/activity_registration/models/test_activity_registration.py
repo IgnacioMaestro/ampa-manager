@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.test import TestCase
 from model_bakery import baker
@@ -6,6 +7,9 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.activity_period import ActivityPeriod
 from ampa_manager.activity_registration.models.activity_registration import ActivityRegistration
+from ampa_manager.baker_recipes import bank_account_recipe
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.tests.generator_adder import GeneratorAdder
@@ -59,3 +63,12 @@ class TestActivityRegistration(TestCase):
         Membership.objects.create(
             family=self.activity_registration.child.family, academic_course=self.academic_course)
         self.assertTrue(self.activity_registration.is_membership())
+
+    def test_clean(self):
+        with self.assertRaises(ValidationError):
+            activity_period: ActivityPeriod = baker.make('ActivityPeriod')
+            child: Child = baker.make('Child')
+            bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+            activity_registration: ActivityRegistration = ActivityRegistration(
+                activity_period=activity_period, child=child, bank_account=bank_account)
+            activity_registration.clean()
