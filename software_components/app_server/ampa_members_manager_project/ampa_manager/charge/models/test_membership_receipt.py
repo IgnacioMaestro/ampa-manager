@@ -38,7 +38,7 @@ class TestMembershipReceipt(TestCase):
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        authorization: AuthorizationOld = baker.make('Authorization', bank_account=bank_account)
+        authorization: AuthorizationOld = baker.make('AuthorizationOld', bank_account=bank_account)
         family: Family = baker.make('Family', default_bank_account=bank_account)
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt', family=family)
         baker.make('Fee', academic_course=membership_receipt.remittance.course, amount=self.FEE)
