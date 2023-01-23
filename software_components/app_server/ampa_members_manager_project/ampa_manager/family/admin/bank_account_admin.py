@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.activity.models.after_school.after_school import AfterSchool
+from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.family.admin.filters.bank_account_filters import BankAccountAuthorizationFilter, \
     BankAccountBICCodeFilter
 from ampa_manager.family.models.authorization.authorization import Authorization
@@ -15,21 +17,30 @@ from ampa_manager.family.models.bank_account.iban import IBAN
 from ampa_manager.family.models.state import State
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.read_only_inline import ReadOnlyTabularInline
+
 
 class AuthorizationInline(admin.TabularInline):
     model = Authorization
     extra = 0
 
+class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
+    model = AfterSchoolRegistration
+
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
+    list_display = ['owner', 'iban', 'swift_bic', 'authorization_status', 'after_school_count']
     fields = ['owner', 'iban', 'swift_bic', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['owner__name_and_surnames']
     list_filter = [BankAccountAuthorizationFilter, BankAccountBICCodeFilter]
     search_fields = ['swift_bic', 'iban', 'owner__name_and_surnames']
-    inlines = [AuthorizationInline]
+    inlines = [AuthorizationInline, AfterSchoolRegistrationInline]
     list_per_page = 25
+
+    @admin.display(description=gettext_lazy('After schools'))
+    def after_school_count(self, bank_account):
+        return AfterSchoolRegistration.objects.filter(bank_account=bank_account).count()
 
     @admin.display(description=gettext_lazy('Authorization'))
     def authorization_status(self, bank_account):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 19:49+0100\n"
+"POT-Creation-Date: 2023-01-23 22:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -657,31 +657,48 @@ msgstr ""
 msgid "%(num_authorizations)s authorizations set as signed"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:32
+#: .\ampa_manager\family\admin\bank_account_admin.py:41
+msgid "After schools"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:45
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:8
 #: .\ampa_manager\family\models\authorization\authorization.py:29
 msgid "Authorization"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:38
+#: .\ampa_manager\family\admin\bank_account_admin.py:51
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:14
 msgid "No authorization"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:40
+#: .\ampa_manager\family\admin\bank_account_admin.py:53
 msgid "Export account owners"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:42
+#: .\ampa_manager\family\admin\bank_account_admin.py:55
 msgid "Bank account owners"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:49
+#: .\ampa_manager\family\admin\bank_account_admin.py:62
 msgid "Complete SWIFT/BIC codes"
 msgstr ""
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:56
+#: .\ampa_manager\family\admin\bank_account_admin.py:69
 msgid "Create authorization for this year"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:75
+msgid "Validate IBAN"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:83
+msgid "All validated IBANs are valid"
+msgstr ""
+
+#: .\ampa_manager\family\admin\bank_account_admin.py:85
+#, python-format
+msgid "%(number)s IBANs are invalid: %(ibans)s"
 msgstr ""
 
 #: .\ampa_manager\family\admin\child_admin.py:19
