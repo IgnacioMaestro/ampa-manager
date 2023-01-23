@@ -15,16 +15,15 @@ package Family {
     year_of_birth : Integer
     repetition : Integer
   }
-  class Holder
+  class Holder {
+      number: String
+      year: Integer
+      sign_date: Date
+      document: File
+  }
   class BankAccount {
     swift_bic : String
     iban : String
-  }
-  class Authorization {
-    number: String
-    year: Integer
-    sign_date: Date
-    document: File
   }
   class AuthorizationOld {
     number: String
@@ -40,7 +39,7 @@ package Family {
   NotSent -up-|> State
   Sent -up-|> State
   Signed -up-|> State
-  Authorization *-right- State
+  Holder *-right- State
   AuthorizationOld *-right- State
 
   class Membership
@@ -54,7 +53,6 @@ package Family {
   Parent *-- "0..N" BankAccount
   Family o-- BankAccount: ""
   BankAccount "1" *-- "1" AuthorizationOld
-  Holder <|-- Authorization
   Family *-- "N" Membership: ""
   Membership o-- AcademicCourse
 }

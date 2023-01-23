@@ -2,16 +2,11 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.baker_recipes import bank_account_recipe
-from ..bank_account.bank_account import BankAccount
-from ..holder.holder import Holder
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 
 
-class TestAuthorization(TestCase):
-    def test_full_number(self):
-        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        holder: Holder = baker.make('Holder', bank_account=bank_account)
-        self.assertEqual(holder.full_number, f'{holder.year}/{holder.order:03}')
-
+class TestHolderManager(TestCase):
     def test_next_order_for_year_no_authorization_that_year_returns_one(self):
         order = Holder.objects.next_order_for_year(2020)
         self.assertEqual(order, 1)
