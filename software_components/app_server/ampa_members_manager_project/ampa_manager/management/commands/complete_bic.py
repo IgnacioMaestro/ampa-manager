@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.bank_account.bic_code import BicCode
+from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 
 
 class Command(BaseCommand):
@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for bank_account in BankAccount.objects.without_swift_bic():
-            swift_bic = BicCode.get_bic_code(bank_account.iban)
+            swift_bic = BankBicCode.get_bic_code(bank_account.iban)
 
             if swift_bic:
                 bank_account.swift_bic = swift_bic
