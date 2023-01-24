@@ -1,12 +1,12 @@
-import xlrd
 import traceback
 from datetime import datetime
 
+import xlrd
 from django.core.management.base import BaseCommand
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.family.models.authorization.authorization import Authorization
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
@@ -38,13 +38,13 @@ class Command(BaseCommand):
                     success_count += 1
                 else:
                     errors_count += 1
-            
+
             print(f'\nERRORS: {errors_count}')
             print(f'IMPORTED OK: {success_count}\n')
 
         except:
             print(traceback.format_exc())
-    
+
     def load_excel(self, file_path):
         print(f'\nImporting file {file_path}')
         self.book = xlrd.open_workbook(file_path)
@@ -84,30 +84,29 @@ class AuthorizationImporter:
                     if parent_full_name:
                         parent = AuthorizationImporter.get_parent(parent_full_name)
                         if parent:
-                            if bank_account.owner == parent:
-                                if number not in [None, '']:
-                                    if date_value not in [None, '']:
-                                        authorization = AuthorizationImporter.get_authorization(number)
-                                        if authorization:
-                                            authorization.date = date_value
-                                            authorization.year = date_value.year
-                                            authorization.save()
+                            if number not in [None, '']:
+                                if date_value not in [None, '']:
+                                    try:
+                                        holder: Holder = Holder.objects.get(parent=parent, bank_account=bank_account)
+                                        if holder:
+                                            holder.authorization_sign_date = date_value
+                                            holder.authorization_year = date_value.year
+                                            holder.save()
 
                                             success = True
                                             message = f'Updated'
                                         else:
-                                            authorization = Authorization.objects.create(number=number, date=date_value,
-                                                                                         bank_account=bank_account,
-                                                                                         year=date_value.year)
-
+                                            Holder.objects.create(
+                                                parent=parent, bank_account=bank_account, authorization_order=number,
+                                                authorization_sign_date=date_value, authorization_year=date_value.year)
                                             success = True
                                             message = f'Created'
-                                    else:
-                                        message = f'Missing date'
+                                    except Holder.DoesNotExist:
+                                        message = f'Account owner does not match'
                                 else:
-                                    message = f'Missing number'
+                                    message = f'Missing date'
                             else:
-                                message = f'Account owner does not match'
+                                message = f'Missing number'
                         else:
                             message = f'Account owner not found'
                     else:
@@ -136,11 +135,4 @@ class AuthorizationImporter:
         try:
             return BankAccount.objects.get(iban=iban)
         except BankAccount.DoesNotExist:
-            return None
-
-    @staticmethod
-    def get_authorization(number):
-        try:
-            return Authorization.objects.get(number=number)
-        except Authorization.DoesNotExist:
             return None

@@ -39,9 +39,9 @@ package Activity{
 }
 package Family{
     class Child
-    class BankAccount
+    class Holder
 }
 AfterSchoolRegistration o-- Child
-AfterSchoolRegistration o-- BankAccount
+AfterSchoolRegistration o-- Holder
 
 @enduml

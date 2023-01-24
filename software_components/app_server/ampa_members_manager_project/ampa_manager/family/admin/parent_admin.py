@@ -8,7 +8,7 @@ from ampa_manager.family.models.membership import Membership
 
 class BankAccountInline(admin.TabularInline):
     model = BankAccount
-    fields = ['swift_bic', 'iban', 'owner']
+    fields = ['swift_bic', 'iban']
     extra = 0
 
 
@@ -19,7 +19,7 @@ class ParentAdmin(admin.ModelAdmin):
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
     search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
-    inlines = [BankAccountInline]
+    # inlines = [BankAccountInline]
     list_per_page = 25
     list_filter = [ParentFamilyEmailsFilter, ParentFamiliesCountFilter]
 

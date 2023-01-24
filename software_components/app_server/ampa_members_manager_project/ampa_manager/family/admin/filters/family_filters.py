@@ -60,9 +60,9 @@ class FamilyDefaultAccountFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value():
             if self.value() == 'with':
-                return queryset.with_default_bank_account()
+                return queryset.with_default_holder()
             elif self.value() == 'without':
-                return queryset.without_default_bank_account()
+                return queryset.without_default_holder()
         else:
             return queryset
 

@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.test import TestCase
 from model_bakery import baker
 
-from ampa_manager.family.models.parent import Parent
+from .parent import Parent
 
 
 class TestParent(TestCase):

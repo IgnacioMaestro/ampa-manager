@@ -63,7 +63,7 @@ class ActivityAdmin(admin.ModelAdmin):
 
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['after_school_edition', 'child', 'bank_account']
+    list_display = ['after_school_edition', 'child', 'holder']
     ordering = ['after_school_edition__after_school__name', 'after_school_edition']
     list_filter = ['after_school_edition__after_school__name']
     search_fields = ['child__name', 'after_school_edition__after_school__name']
