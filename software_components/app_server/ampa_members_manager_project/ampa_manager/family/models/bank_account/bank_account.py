@@ -29,12 +29,12 @@ class BankAccount(TimeStampedModel):
     def complete_swift_bic(self):
         self.swift_bic = BicCode.get_bic_code(self.iban)
 
-    @staticmethod
-    def get_csv_fields(bank_accounts):
-        csv_fields = []
-        for bank_account in bank_accounts:
-            csv_fields.append([str(bank_account.owner), bank_account.iban])
-        return csv_fields
+    # @staticmethod
+    # def get_csv_fields(bank_accounts):
+    #     csv_fields = []
+    #     for bank_account in bank_accounts:
+    #         csv_fields.append([str(bank_account.owner), bank_account.iban])
+    #     return csv_fields
 
     def save(self, *args, **kwargs):
         if self.swift_bic in [None, '']:
