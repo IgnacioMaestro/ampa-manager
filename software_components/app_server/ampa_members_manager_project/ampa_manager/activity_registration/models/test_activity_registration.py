@@ -7,10 +7,9 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.activity_period import ActivityPeriod
 from ampa_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_manager.baker_recipes import bank_account_recipe
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.tests.generator_adder import GeneratorAdder
 
@@ -68,7 +67,7 @@ class TestActivityRegistration(TestCase):
         with self.assertRaises(ValidationError):
             activity_period: ActivityPeriod = baker.make('ActivityPeriod')
             child: Child = baker.make('Child')
-            bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+            holder: Holder = baker.make('Holder')
             activity_registration: ActivityRegistration = ActivityRegistration(
-                activity_period=activity_period, child=child, bank_account=bank_account)
+                activity_period=activity_period, child=child, holder=holder)
             activity_registration.clean()
