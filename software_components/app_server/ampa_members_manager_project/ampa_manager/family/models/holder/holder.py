@@ -6,7 +6,6 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.charge.receipt import AuthorizationReceipt
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount
