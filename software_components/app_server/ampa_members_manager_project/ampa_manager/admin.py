@@ -30,6 +30,7 @@ from ampa_manager.family.admin.holder_admin import HolderAdmin
 from ampa_manager.family.admin.membership_admin import MembershipAdmin
 from ampa_manager.family.admin.parent_admin import ParentAdmin
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -58,6 +59,7 @@ admin.site.register(Family, FamilyAdmin)
 # noinspection DuplicatedCode
 admin.site.register(BankAccount, BankAccountAdmin)
 admin.site.register(Holder, HolderAdmin)
+admin.site.register(BankBicCode, BankBicCodeAdmin)
 admin.site.register(Membership, MembershipAdmin)
 
 admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)
