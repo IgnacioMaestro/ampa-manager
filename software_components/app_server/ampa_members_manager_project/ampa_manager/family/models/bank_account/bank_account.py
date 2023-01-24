@@ -25,8 +25,12 @@ class BankAccount(TimeStampedModel):
     def __str__(self) -> str:
         return f'{self.iban}'
 
+    @property
+    def bank_code(self):
+        return IBAN.get_bank_code(str(self.iban))
+
     def complete_swift_bic(self):
-        self.swift_bic = BankBicCode.get_bic_code(self.iban.bank_code)
+        self.swift_bic = BankBicCode.get_bic_code(self.bank_code)
 
     def save(self, *args, **kwargs):
         if self.swift_bic in [None, '']:
@@ -34,5 +38,7 @@ class BankAccount(TimeStampedModel):
         super(BankAccount, self).save(**kwargs)
 
     def clean_iban(self):
-        if not IBAN.is_valid(FieldsFormatters.clean_iban(self.cleaned_data['iban'])):
+        cleaned_iban = FieldsFormatters.clean_iban(self.cleaned_data['iban'])
+        if not IBAN.is_valid(cleaned_iban):
             raise ValidationError(_('The IBAN code is not valid'))
+        return cleaned_iban
