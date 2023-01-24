@@ -116,6 +116,13 @@ class StringUtils:
             return None
 
     @staticmethod
+    def uppercase(value: str) -> Optional[str]:
+        if value:
+            return value.upper()
+        else:
+            return None
+
+    @staticmethod
     def get_excel_column_letter(column_index: int):
         letters = {
             0: 'A',
