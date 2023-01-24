@@ -20,7 +20,7 @@ class FieldsFormatters:
     @staticmethod
     def clean_level(value: str) -> Optional[str]:
         if value:
-            Level.parse_level(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
+            return StringUtils.uppercase(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
         return None
 
     @staticmethod

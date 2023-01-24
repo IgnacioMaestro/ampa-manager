@@ -11,26 +11,6 @@ class BankBicCode(models.Model):
     def __str__(self) -> str:
         return f'{self.bic_code} {self.bank_code}'
 
-    CODES = {
-        "2100": "CAIXESBBXXX",
-        "3035": "CLPEES2MXXX",
-        "0073": "OPENESMMXXX",
-        "2095": "BASKES2BXXX",
-        "3008": "BCOEESMM008",
-        "0081": "BSABESBBXXX",
-        "0239": "EVOBESMMXXX",
-        "0128": "BKBKESMMXXX",
-        "2085": "CAZRES2ZXXX",
-        "0138": "BKOAES22XXX",
-        "0182": "BBVAESMMXXX",
-        "0216": "CMCIESMMXXX",
-        "0049": "BSCHESMMXXX",
-        "1465": "INGDESMMXXX",
-        "2080": "CAGLESMMXXX",
-        "3076": "BCOEESMM076",
-        "1491": "TRIOESMMXXX"
-    }
-
     @staticmethod
     def get_bic_code(bank_code: str) -> Optional[str]:
         try:

@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount
@@ -48,3 +49,11 @@ class Holder(models.Model):
     @property
     def authorization_full_number(self) -> str:
         return f'{self.authorization_year}/{self.authorization_order:03}'
+
+    @staticmethod
+    def find(parent: Parent, bank_account: BankAccount):
+        holders = Holder.objects.of_parent_and_bank_account(parent, bank_account)
+        if holders.count() == 1:
+            return holders.first()
+        else:
+            return None

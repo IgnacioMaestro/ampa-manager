@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.bank_account_importer import BankAccountImporter
@@ -199,6 +200,7 @@ class Command(BaseCommand):
             Parent.__name__: Parent.objects.count(),
             Child.__name__: Child.objects.count(),
             BankAccount.__name__: BankAccount.objects.count(),
+            Holder.__name__: Holder.objects.count(),
             Membership.__name__: Membership.objects.count(),
         }
 
@@ -290,10 +292,12 @@ class Command(BaseCommand):
             parent1 = parent1_result.imported_object
 
             if row.any_column_has_value(Command.PARENT1_BANK_ACCOUNT_FIELDS):
-                bank_account_result = BankAccountImporter.import_bank_account(parent1,
-                                                                              row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN))
+                bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(parent1,
+                                                                                                        row.get(Command.COLUMN_PARENT1_BANK_ACCOUNT_IBAN))
                 result.add_partial_result(bank_account_result)
-                if not bank_account_result.success:
+                result.add_partial_result(holder_result)
+
+                if not bank_account_result.success or not holder_result.success:
                     return result
 
         if row.any_column_has_value(Command.PARENT2_FIELDS):
