@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.family.admin.filters.bank_account_filters import BankAccountBICCodeFilter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.bank_account.iban import IBAN
+from django.utils.translation import gettext_lazy as _
 
 
 class BankAccountAdmin(admin.ModelAdmin):
@@ -21,4 +23,18 @@ class BankAccountAdmin(admin.ModelAdmin):
                 bank_account.complete_swift_bic()
                 bank_account.save()
 
-    actions = ['complete_swift_bic']
+    @admin.action(description=gettext_lazy("Validate IBAN"))
+    def validate_iban(self, request, bank_accounts: QuerySet[BankAccount]):
+        not_valid_bank_accounts = []
+        for bank_account in bank_accounts.iterator():
+            if not IBAN.is_valid(str(bank_account.iban)):
+                not_valid_bank_accounts.append(str(bank_account.iban))
+
+        if len(not_valid_bank_accounts) == 0:
+            return self.message_user(request=request, message=_('All validated IBANs are valid'))
+        else:
+            return self.message_user(request=request, message=_('%(number)s IBANs are invalid: %(ibans)s') %
+                                                              {'number': len(not_valid_bank_accounts),
+                                                               'ibans': ', '.join(not_valid_bank_accounts)})
+
+    actions = ['complete_swift_bic', 'validate_iban']
