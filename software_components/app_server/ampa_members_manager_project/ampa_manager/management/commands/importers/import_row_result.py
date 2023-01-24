@@ -12,8 +12,6 @@ class ImportRowResult:
 
     def __init__(self, row_index):
         self.row_index = row_index
-        self.fields = RegistrationExcelRow(None, None, None, None, None, None, None, None, None, None, None, None,
-                                           None, None, None, None)
         self.partial_results = []
 
     @property
@@ -67,9 +65,9 @@ class ImportRowResult:
 
         for class_name, class_totals in totals.items():
             variation = ImportRowResult.get_variation(counters_before[class_name], counters_after[class_name])
-            logger.log(f'- {class_name}: {variation}')
+            logger.log(f'* {class_name}: {variation}')
             for state, state_count in class_totals.items():
-                logger.log(f'- {state.name}: {state_count}')
+                logger.log(f'  - {state.name}: {state_count}')
 
         logger.log(f'ERRORS: {len(errors)}:')
         for row_index, error in errors.items():
