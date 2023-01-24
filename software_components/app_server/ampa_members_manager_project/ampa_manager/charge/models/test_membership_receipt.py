@@ -30,16 +30,16 @@ class TestMembershipReceipt(TestCase):
             membership_receipt.generate_receipt()
 
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
-        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
-        holder: Holder = baker.make('Holder', bank_account=bank_account)
+        baker.make('BankBicCode', bank_code='2095')
+        holder: Holder = baker.make('Holder')
         family: Family = baker.make('Family', default_holder=holder)
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt', family=family)
         baker.make('Fee', academic_course=membership_receipt.remittance.course, amount=self.FEE)
 
         receipt: Receipt = membership_receipt.generate_receipt()
 
-        self.assertEqual(receipt.bank_account_owner, str(membership_receipt.family.default_holder.parent))
-        self.assertEqual(receipt.iban, str(membership_receipt.family.default_holder.bank_account.iban))
-        self.assertEqual(receipt.bic, str(membership_receipt.family.default_holder.bank_account.swift_bic))
+        self.assertEqual(receipt.bank_account_owner, str(holder.parent))
+        self.assertEqual(receipt.iban, str(holder.bank_account.iban))
+        self.assertEqual(receipt.bic, str(holder.bank_account.swift_bic))
         self.assertEqual(receipt.amount, self.FEE)
         self.assertEqual(receipt.authorization.number, holder.authorization_full_number)

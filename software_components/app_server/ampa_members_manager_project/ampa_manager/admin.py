@@ -24,6 +24,7 @@ from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.family.admin.bank_account_admin import BankAccountAdmin
+from ampa_manager.family.admin.bank_bic_code_admin import BankBicCodeAdmin
 from ampa_manager.family.admin.child_admin import ChildAdmin
 from ampa_manager.family.admin.family_admin import FamilyAdmin
 from ampa_manager.family.admin.holder_admin import HolderAdmin
