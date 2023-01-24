@@ -10,8 +10,8 @@ from ampa_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.state import State
-from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 
 
 class NotFound(Exception):
@@ -42,11 +42,13 @@ class ActivityReceipt(models.Model):
         if not activity_registration:
             raise NoBankAccountException
 
-        bank_account: BankAccount = activity_registration.bank_account
-        authorization: AuthorizationReceipt = AuthorizationOld.generate_receipt_authorization(bank_account=bank_account)
+        holder: Holder = activity_registration.holder
+
+        authorization: AuthorizationReceipt = AuthorizationReceipt(
+            number=holder.authorization_full_number, date=holder.authorization_sign_date)
         return Receipt(
-            amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
-            bic=bank_account.swift_bic, authorization=authorization)
+            amount=self.amount, bank_account_owner=str(holder.parent), iban=holder.bank_account.iban,
+            bic=holder.bank_account.swift_bic, authorization=authorization)
 
     @classmethod
     def find_activity_receipt_with_bank_account(

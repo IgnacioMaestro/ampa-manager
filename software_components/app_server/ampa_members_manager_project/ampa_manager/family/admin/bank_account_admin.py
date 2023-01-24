@@ -11,7 +11,6 @@ from ampa_manager.family.admin.filters.bank_account_filters import BankAccountAu
     BankAccountBICCodeFilter
 from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.state import State
 
 
 class AuthorizationInline(admin.TabularInline):
@@ -20,22 +19,13 @@ class AuthorizationInline(admin.TabularInline):
 
 
 class BankAccountAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'iban', 'swift_bic', 'authorization_status']
-    fields = ['owner', 'iban', 'swift_bic', 'created', 'modified']
+    list_display = ['iban', 'swift_bic']
+    fields = ['iban', 'swift_bic', 'created', 'modified']
     readonly_fields = ['created', 'modified']
-    ordering = ['owner__name_and_surnames']
     list_filter = [BankAccountAuthorizationFilter, BankAccountBICCodeFilter]
-    search_fields = ['swift_bic', 'iban', 'owner__name_and_surnames']
+    search_fields = ['swift_bic', 'iban']
     inlines = [AuthorizationInline]
     list_per_page = 25
-
-    @admin.display(description=gettext_lazy('Authorization'))
-    def authorization_status(self, bank_account):
-        try:
-            authorization = AuthorizationOld.objects.of_bank_account(bank_account).get()
-            return State.get_value_human_name(authorization.state)
-        except AuthorizationOld.DoesNotExist:
-            return gettext_lazy('No authorization')
 
     @admin.action(description=gettext_lazy("Export account owners"))
     def export_owners(self, _, bank_accounts: QuerySet[BankAccount]):

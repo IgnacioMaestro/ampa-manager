@@ -14,7 +14,6 @@ from ampa_manager.family.models.bank_account.iban import IBAN
 class BankAccount(TimeStampedModel):
     swift_bic = BICField(verbose_name=_("SWIFT/BIC"), null=True, blank=True)
     iban = IBANField(unique=True, verbose_name=_("IBAN"))
-    owner = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Owner"))
 
     objects = Manager.from_queryset(BankAccountQuerySet)()
 
@@ -22,10 +21,10 @@ class BankAccount(TimeStampedModel):
         verbose_name = _('Bank account')
         verbose_name_plural = _('Bank accounts')
         db_table = 'bank_account'
-        ordering = ['owner__name_and_surnames', 'iban']
+        ordering = ['iban']
 
     def __str__(self) -> str:
-        return f'{self.owner} {self.iban}'
+        return f'{self.iban}'
 
     def complete_swift_bic(self):
         self.swift_bic = BicCode.get_bic_code(self.iban)

@@ -7,8 +7,8 @@ from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.baker_recipes import bank_account_recipe
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
+from ampa_manager.family.models.holder.holder import Holder
 
 
 class TestAfterSchoolRegistration(TestCase):
@@ -61,7 +61,7 @@ class TestAfterSchoolRegistration(TestCase):
         with self.assertRaises(ValidationError):
             after_school_edition: AfterSchoolEdition = baker.make('AfterSchoolEdition')
             child: Child = baker.make('Child')
-            bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+            holder: Holder = baker.make('Holder')
             after_school_registration: AfterSchoolRegistration = AfterSchoolRegistration(
-                after_school_edition=after_school_edition, child=child, bank_account=bank_account)
+                after_school_edition=after_school_edition, child=child, holder=holder)
             after_school_registration.clean()

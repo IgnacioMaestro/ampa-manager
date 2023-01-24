@@ -10,18 +10,18 @@ from ampa_manager.charge.receipt import Receipt
 from ampa_manager.charge.remittance import Remittance
 from ampa_manager.charge.use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import \
     RemittanceGenerator
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()
 
 
 class TestRemittanceGenerator(TestCase):
-    bank_account: BankAccount
+    holder: Holder
 
     @classmethod
     def setUpTestData(cls):
-        cls.bank_account: BankAccount = baker.make('BankAccount')
+        cls.holder: Holder = baker.make('Holder')
 
     def test_generate_remittance_no_activity_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
@@ -34,7 +34,7 @@ class TestRemittanceGenerator(TestCase):
     def test_generate_remittance_one_activity_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt', remittance=activity_remittance, amount=1.0)
-        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', bank_account=self.bank_account)
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', holder=self.holder)
         activity_receipt.activity_registrations.add(activity_registration)
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
@@ -43,10 +43,9 @@ class TestRemittanceGenerator(TestCase):
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts.pop()
         self.assertEqual(receipt.amount, activity_receipt.amount)
-        self.assertEqual(receipt.bank_account_owner, self.bank_account.owner.full_name)
-        self.assertIsNone(receipt.authorization)
-        self.assertEqual(receipt.iban, self.bank_account.iban)
-        self.assertEqual(receipt.bic, self.bank_account.swift_bic)
+        self.assertEqual(receipt.bank_account_owner, self.holder.parent.full_name)
+        self.assertEqual(receipt.iban, self.holder.bank_account.iban)
+        self.assertEqual(receipt.bic, self.holder.bank_account.swift_bic)
 
     def test_generate_remittance_two_activity_receipts(self):
         receipt_count: Final[int] = 2
@@ -55,7 +54,7 @@ class TestRemittanceGenerator(TestCase):
             'ActivityReceipt', _quantity=receipt_count, remittance=activity_remittance)
         for activity_receipt in activity_receipts:
             activity_registration: ActivityRegistration = baker.make(
-                'ActivityRegistration', bank_account=self.bank_account)
+                'ActivityRegistration', holder=self.holder)
             activity_receipt.activity_registrations.add(activity_registration)
 
         remittance: Remittance = RemittanceGenerator(activity_remittance).generate()
