@@ -4,6 +4,9 @@ from ..bank_account.bank_account import BankAccount
 
 
 class HolderQuerySet(QuerySet):
+    def of_family(self, family):
+        return self.filter(parent__family=family)
+
     def of_bank_account(self, bank_account: BankAccount) -> QuerySet:
         return self.filter(bank_account=bank_account)
 

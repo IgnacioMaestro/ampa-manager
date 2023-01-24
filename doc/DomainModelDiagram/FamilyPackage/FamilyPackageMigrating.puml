@@ -50,8 +50,7 @@ package Family {
 
   Family "1..N" o-- "1..N" Parent
   Family *-- "N" Child
-  Parent *-- "0..N" BankAccount
-  Family o-- BankAccount: ""
+  Parent *-- "0..N" BankAccount: ""
   BankAccount "1" *-- "1" AuthorizationOld
   Family *-- "N" Membership: ""
   Membership o-- AcademicCourse

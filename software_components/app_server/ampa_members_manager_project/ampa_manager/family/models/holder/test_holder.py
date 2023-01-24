@@ -4,9 +4,8 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.baker_recipes import bank_account_recipe
-from ampa_manager.charge.receipt import AuthorizationReceipt
-from ..bank_account.bank_account import BankAccount
 from .holder import Holder
+from ..bank_account.bank_account import BankAccount
 from ..parent import Parent
 from ..state import State
 

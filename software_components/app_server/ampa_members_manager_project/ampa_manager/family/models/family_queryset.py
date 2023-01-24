@@ -24,11 +24,11 @@ class FamilyQuerySet(QuerySet):
                 distinct_families_ids.append(child.family.id)
         return distinct_families_ids
 
-    def with_default_bank_account(self):
-        return self.exclude(default_bank_account__isnull=True)
+    def with_default_holder(self):
+        return self.exclude(default_holder__isnull=True)
 
-    def without_default_bank_account(self):
-        return self.filter(default_bank_account__isnull=True)
+    def without_default_holder(self):
+        return self.filter(default_holder__isnull=True)
 
     def members(self):
         return self.filter(membership__academic_course=ActiveCourse.load())
