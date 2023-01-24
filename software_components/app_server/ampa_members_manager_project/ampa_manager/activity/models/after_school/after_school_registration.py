@@ -1,12 +1,11 @@
-from django.db.models import Manager
-from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration_queryset import \
     AfterSchoolRegistrationQuerySet
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
@@ -16,7 +15,6 @@ class AfterSchoolRegistration(models.Model):
     after_school_edition = models.ForeignKey(
         to=AfterSchoolEdition, on_delete=models.CASCADE, verbose_name=_("After-school edition"))
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
-    bank_account = models.ForeignKey(to=BankAccount, on_delete=models.CASCADE, verbose_name=_("Bank account"))
     holder = models.ForeignKey(to=Holder, on_delete=models.CASCADE, verbose_name=_("Holder"))
 
     objects = Manager.from_queryset(AfterSchoolRegistrationQuerySet)()
