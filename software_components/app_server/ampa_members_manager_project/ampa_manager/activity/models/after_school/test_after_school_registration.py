@@ -6,14 +6,13 @@ from model_bakery import baker
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.baker_recipes import bank_account_recipe
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 
 
 class TestAfterSchoolRegistration(TestCase):
     def test_meet_unique_constraint(self):
-        baker.make('AfterSchoolRegistration', bank_account=baker.make_recipe(bank_account_recipe))
+        baker.make('AfterSchoolRegistration')
 
         after_school_registration: AfterSchoolRegistration = baker.make('AfterSchoolRegistration')
 
@@ -29,6 +28,8 @@ class TestAfterSchoolRegistration(TestCase):
 
     def test_str(self):
         after_school_registration: AfterSchoolRegistration = baker.make('AfterSchoolRegistration')
+
+        # Act
         self.assertEqual(
             str(after_school_registration),
             f'{after_school_registration.after_school_edition} {after_school_registration.child}')
@@ -48,8 +49,7 @@ class TestAfterSchoolRegistration(TestCase):
         # Arrange
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
         after_school_registration: AfterSchoolRegistration = baker.make('AfterSchoolRegistration')
-        family = after_school_registration.child.family
-        baker.make('Membership', family=family, academic_course=ActiveCourse.load())
+        baker.make('Membership', family=after_school_registration.child.family, academic_course=ActiveCourse.load())
 
         # Act
         price: float = after_school_registration.calculate_price()
@@ -64,4 +64,6 @@ class TestAfterSchoolRegistration(TestCase):
             holder: Holder = baker.make('Holder')
             after_school_registration: AfterSchoolRegistration = AfterSchoolRegistration(
                 after_school_edition=after_school_edition, child=child, holder=holder)
+
+            # Act
             after_school_registration.clean()
