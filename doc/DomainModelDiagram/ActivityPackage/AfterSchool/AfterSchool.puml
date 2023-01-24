@@ -6,11 +6,11 @@ package Activity{
     package AfterSchool{
 
         class AfterSchool{
-            Name : String
+            name : String
         }
         class AfterSchoolEdition{
-            Period: String
-            Timetable: String
+            period: String
+            timetable: String
         }
         class AfterSchoolRegistration
 
@@ -30,9 +30,9 @@ package Activity{
           AfterSchool o-- Funding
     }
     abstract class PricePerLevel{
-        Levels: String
-        PriceForMember: float
-        PriceForNoMember: float
+        levels: String
+        price_for_member: float
+        price_for_no_member: float
     }
 
     AfterSchoolEdition <|-- PricePerLevel
