@@ -2,22 +2,18 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_manager.baker_recipes import bank_account_recipe
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_manager.charge.receipt import Receipt
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.holder.holder import Holder
 
 
 class TestActivityReceipt(TestCase):
-    bank_account: BankAccount
     activity_registration: ActivityRegistration
 
     @classmethod
     def setUpTestData(cls):
-        cls.bank_account = baker.make_recipe(bank_account_recipe)
-        cls.activity_registration = baker.make('ActivityRegistration', bank_account=cls.bank_account)
+        cls.activity_registration = baker.make('ActivityRegistration')
 
     def test_generate_receipt_no_activity_registration(self):
         activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')

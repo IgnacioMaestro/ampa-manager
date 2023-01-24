@@ -10,7 +10,7 @@ from ampa_manager.charge.use_cases.activity.create_activity_remittance_with_rece
     ActivityReceiptsCreator
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.activity_remittance import ActivityRemittance
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.tests.generator_adder import GeneratorAdder
 
 GeneratorAdder.add_all()
@@ -46,11 +46,10 @@ class TestActivityReceiptsCreator(TestCase):
             ActivityReceipt.objects.get(activity_registrations__exact=activity_registration, amount=amount)
 
     def test_create_activity_registrations_same_bank_accounts(self):
-        bank_account: BankAccount = baker.make('BankAccount')
+        holder: Holder = baker.make('Holder')
         activity_registrations: List[ActivityRegistration] = baker.make(
-            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, bank_account=bank_account, amount=2.3)
-        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(
-            ActivityPeriod.objects.all())
+            'ActivityRegistration', _quantity=self.ACTIVITY_REGISTRATION_COUNT, holder=holder, amount=2.3)
+        activity_remittance: ActivityRemittance = ActivityRemittance.create_filled(ActivityPeriod.objects.all())
 
         ActivityReceiptsCreator(activity_remittance).create()
 
@@ -86,11 +85,9 @@ class TestActivityReceiptsCreator(TestCase):
 
     def test_find_or_create_receipt_create_instead_other_receipt(self):
         activity_remittance: ActivityRemittance = baker.make('ActivityRemittance')
-        bank_account: BankAccount = baker.make('BankAccount')
-        activity_registration: ActivityRegistration = baker.make(
-            'ActivityRegistration', amount=2.3, bank_account=bank_account)
-        other_activity_registration: ActivityRegistration = baker.make(
-            'ActivityRegistration', bank_account=bank_account)
+        holder: Holder = baker.make('Holder')
+        activity_registration: ActivityRegistration = baker.make('ActivityRegistration', amount=2.3, holder=holder)
+        other_activity_registration: ActivityRegistration = baker.make('ActivityRegistration', holder=holder)
         other_activity_receipt: ActivityReceipt = baker.make('ActivityReceipt')
         other_activity_receipt.activity_registrations.add(other_activity_registration)
 

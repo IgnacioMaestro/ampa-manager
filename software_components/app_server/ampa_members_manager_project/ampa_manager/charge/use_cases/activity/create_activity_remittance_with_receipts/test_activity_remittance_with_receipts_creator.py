@@ -22,7 +22,7 @@ class TestActivityRemittanceWithReceiptsCreator(TestCase):
             ActivityRemittanceWithReceiptsCreator(ActivityPeriod.objects.all()).create()
 
     def test_create_activity_registrations_same_bank_accounts(self):
-        baker.make('ActivityRegistration', bank_account=baker.make('BankAccount'))
+        baker.make('ActivityRegistration')
 
         ActivityRemittanceWithReceiptsCreator(ActivityPeriod.objects.all()).create()
 
