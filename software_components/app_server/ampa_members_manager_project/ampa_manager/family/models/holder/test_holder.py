@@ -39,4 +39,17 @@ class TestHolder(TestCase):
     def test_authorization_full_number(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        self.assertEqual(holder.authorization_full_number, f'{holder.authorization_year}/{holder.authorization_order:03}')
+        self.assertEqual(
+            holder.authorization_full_number, f'{holder.authorization_year}/{holder.authorization_order:03}')
+
+    def test_authorization_full_number_1_digit(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account, authorization_order=1)
+        self.assertEqual(
+            holder.authorization_full_number, f'{holder.authorization_year}/001')
+
+    def test_authorization_full_number_3_digits(self):
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account, authorization_order=123)
+        self.assertEqual(
+            holder.authorization_full_number, f'{holder.authorization_year}/123')
