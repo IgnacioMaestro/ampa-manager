@@ -8,12 +8,12 @@ from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.child import Child
-from ampa_manager.family.models.family_queryset import FamilyQuerySet
-from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
+from .child import Child
+from .family_queryset import FamilyQuerySet
+from .holder.holder import Holder
+from .parent import Parent
 
 
 class Family(TimeStampedModel):
@@ -22,8 +22,8 @@ class Family(TimeStampedModel):
         default=False, verbose_name=_("Decline membership"), help_text=_(
             'It prevents the family from becoming a member. For example, if they no longer have children at school but you do not want to delete the record.'))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
-    default_bank_account = models.ForeignKey(
-        to=BankAccount, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default bank account"),
+    default_holder = models.ForeignKey(
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
         help_text=_("Save the family to see its bank accounts"))
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
@@ -189,7 +189,7 @@ class Family(TimeStampedModel):
     def review_data():
         warnings = []
 
-        families_without_account = Family.objects.without_default_bank_account().count()
+        families_without_account = Family.objects.without_default_holder().count()
         if families_without_account > 0:
             warnings.append(f'- Families without bank account: {families_without_account}')
 

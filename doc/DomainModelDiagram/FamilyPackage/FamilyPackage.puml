@@ -1,5 +1,5 @@
 @startuml
-package Family{
+package Family {
   class Family {
     surnames : String
     decline_membership : Boolean
@@ -15,15 +15,15 @@ package Family{
     year_of_birth : Integer
     repetition : Integer
   }
+  class Holder {
+      number: String
+      year: Integer
+      sign_date: Date
+      document: File
+  }
   class BankAccount {
     swift_bic : String
     iban : String
-  }
-  class Authorization{
-    number: String
-    year: Integer
-    date: Date
-    document: File
   }
   class State
   class NotSent
@@ -33,20 +33,21 @@ package Family{
   NotSent -up-|> State
   Sent -up-|> State
   Signed -up-|> State
-  Authorization *-right- State
+  Holder *-right- State
 
   class Membership
+  Parent --o Holder: ""
+  Holder o-- BankAccount
+  Family o-- Holder
+
 
   Family "1..N" o-- "1..N" Parent
   Family *-- "N" Child
-  Parent *-- "0..N" BankAccount
-  Family o-- BankAccount: ""
-  BankAccount "1" *-- "1" Authorization
   Family *-- "N" Membership: ""
   Membership o-- AcademicCourse
 }
 
-package AcademicCourse{
+package AcademicCourse {
   class AcademicCourse {
     initial_year: Integer
   }

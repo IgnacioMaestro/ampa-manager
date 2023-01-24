@@ -10,8 +10,7 @@ from ampa_manager.charge.models.activity_remittance import ActivityRemittance
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.state import State
-from ampa_manager.family.models.authorization.authorization import Authorization
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 
 
 class NotFound(Exception):
@@ -31,9 +30,9 @@ class ActivityReceipt(models.Model):
         verbose_name_plural = _('Activity Receipts')
         db_table = 'activity_receipt'
 
-    def check_bank_account(self, bank_account: BankAccount) -> bool:
+    def check_holder(self, holder: Holder) -> bool:
         for activity_registration in self.activity_registrations.all():
-            if activity_registration.bank_account == bank_account:
+            if activity_registration.holder == holder:
                 return True
         return False
 
@@ -42,16 +41,18 @@ class ActivityReceipt(models.Model):
         if not activity_registration:
             raise NoBankAccountException
 
-        bank_account: BankAccount = activity_registration.bank_account
-        authorization: AuthorizationReceipt = Authorization.generate_receipt_authorization(bank_account=bank_account)
+        holder: Holder = activity_registration.holder
+
+        authorization: AuthorizationReceipt = AuthorizationReceipt(
+            number=holder.authorization_full_number, date=holder.authorization_sign_date)
         return Receipt(
-            amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
-            bic=bank_account.swift_bic, authorization=authorization)
+            amount=self.amount, bank_account_owner=str(holder.parent), iban=holder.bank_account.iban,
+            bic=holder.bank_account.swift_bic, authorization=authorization)
 
     @classmethod
-    def find_activity_receipt_with_bank_account(
-            cls, activity_remittance: ActivityRemittance, bank_account: BankAccount) -> ActivityReceipt:
+    def find_activity_receipt_with_holder(
+            cls, activity_remittance: ActivityRemittance, holder: Holder) -> ActivityReceipt:
         for activity_receipt in ActivityReceipt.objects.filter(remittance=activity_remittance):
-            if activity_receipt.check_bank_account(bank_account=bank_account):
+            if activity_receipt.check_holder(holder=holder):
                 return activity_receipt
         raise NotFound

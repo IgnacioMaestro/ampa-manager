@@ -2,10 +2,10 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from model_bakery import baker
 
-from ampa_manager.family.models.child import Child
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from .child import Child
 
 
 class TestChild(TestCase):

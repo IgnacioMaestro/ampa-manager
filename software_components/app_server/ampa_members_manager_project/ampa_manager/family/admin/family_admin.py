@@ -13,9 +13,9 @@ from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
     FamilyDefaultAccountFilter, FamilyParentCountFilter
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.non_related_inlines import NonrelatedTabularInline
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -25,9 +25,9 @@ class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance:
-            self.fields['default_bank_account'].queryset = BankAccount.objects.of_family(self.instance)
+            self.fields['default_holder'].queryset = Holder.objects.of_family(self.instance)
         else:
-            self.fields['default_bank_account'].queryset = BankAccount.objects.none()
+            self.fields['default_holder'].queryset = Holder.objects.none()
 
 
 class FamilyActivityReceiptInline(NonrelatedTabularInline):
@@ -54,9 +54,9 @@ class ChildInline(admin.TabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'default_bank_account', 'parent_count',
+    list_display = ['surnames', 'default_holder', 'parent_count',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_bank_account', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']

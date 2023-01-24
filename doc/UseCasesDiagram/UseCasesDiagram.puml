@@ -10,9 +10,11 @@ package Family {
     Admin --> (Register Family)
     Admin --> (Add Child to a Family)
     Admin --> (Add Parent to a Family)
-    Admin --> (Assign BankAccount to a Parent)
-    Admin --> (Assign Authorization to a BankAccount)
-    Admin --> (Change Family BankAccount)
+    Admin --> (Assign BankAccount to a Parent) #line:red;line.bold
+    Admin --> (Add Holder with a BankAccount)
+    Admin --> (Assign Authorization to a BankAccount) #line:red;line.bold
+    Admin --> (Change Family BankAccount) #line:red;line.bold
+    Admin --> (Change Family Holder)
     Admin --> (Add Membership for a Family)
 }
 package Activity {
