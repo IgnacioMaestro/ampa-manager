@@ -1,12 +1,9 @@
-from typing import Optional
-
 from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.family.models.authorization.authorization_old import AuthorizationOld
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
+from ampa_manager.family.models.holder.holder import Holder
 from .after_school_remittance import AfterSchoolRemittance
 from ...receipt import Receipt, AuthorizationReceipt
 from ...state import State
@@ -26,9 +23,9 @@ class AfterSchoolReceipt(models.Model):
         db_table = 'after_school_receipt'
 
     def generate_receipt(self) -> Receipt:
-        bank_account: BankAccount = self.after_school_registration.bank_account
-        authorization: Optional[AuthorizationReceipt] = AuthorizationOld.generate_receipt_authorization(
-            bank_account=bank_account)
+        holder: Holder = self.after_school_registration.holder
+        authorization: AuthorizationReceipt = AuthorizationReceipt(
+            number=holder.authorization_full_number, date=holder.authorization_sign_date)
         return Receipt(
-            amount=self.amount, bank_account_owner=str(bank_account.owner), iban=bank_account.iban,
-            bic=bank_account.swift_bic, authorization=authorization)
+            amount=self.amount, bank_account_owner=str(holder.parent), iban=holder.bank_account.iban,
+            bic=holder.bank_account.swift_bic, authorization=authorization)
