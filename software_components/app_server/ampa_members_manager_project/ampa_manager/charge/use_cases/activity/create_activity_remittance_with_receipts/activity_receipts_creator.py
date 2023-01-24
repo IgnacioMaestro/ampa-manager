@@ -26,7 +26,7 @@ class ActivityReceiptsCreator:
 
     def find_or_create_receipt(self, activity_registration: ActivityRegistration) -> ActivityReceipt:
         try:
-            return ActivityReceipt.find_activity_receipt_with_bank_account(
-                activity_remittance=self.__activity_remittance, bank_account=activity_registration.bank_account)
+            return ActivityReceipt.find_activity_receipt_with_holder(
+                activity_remittance=self.__activity_remittance, holder=activity_registration.holder)
         except NotFound:
             return ActivityReceipt.objects.create(remittance=self.__activity_remittance, amount=0.0)
