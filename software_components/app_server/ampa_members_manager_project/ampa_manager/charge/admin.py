@@ -31,7 +31,8 @@ from .sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02
     GenericFinancialIdentification1, RemittanceInformation5
 from .state import State
 from .use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
-from .use_cases.after_school.remittance_generator_from_after_school_remittance import RemittanceGeneratorFromAfterSchoolRemittance
+from .use_cases.after_school.remittance_generator_from_after_school_remittance import \
+    RemittanceGeneratorFromAfterSchoolRemittance
 from .use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
 from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
@@ -297,14 +298,16 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
-        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(after_school_remittance=queryset.first()).generate()
+        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
+            after_school_remittance=queryset.first()).generate()
         return AfterSchoolRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
-        remittance: Remittance = AfterSchoolRemittanceGenerator(after_school_remittance=queryset.first()).generate()
+        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
+            after_school_remittance=queryset.first()).generate()
         return AfterSchoolRemittanceAdmin.create_sepa_response_from_remittance(remittance)
 
     @staticmethod
@@ -339,6 +342,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         groupheader39.msg_id = "Nombre Remesa"
         # TODO: Fecha de creación de la remesa. Se supone que es cuando le das a la opción de crear. Quitar milisegundos
         creation_date: XmlDateTime = XmlDateTime.now()
+        # creation_date.fractional_second = 0
         groupheader39.cre_dt_tm = creation_date
         groupheader39.nb_of_txs = len(remittance.obtain_rows())
         groupheader39.ctrl_sum = suma
@@ -354,8 +358,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         partyidentification32Cabecera.id = party6choice_cabecera
         groupheader39.initg_pty = partyidentification32Cabecera
 
-        # TODO: Aqui se pone un identificador de la remesa. Por ejemplo año/numero de remesa
-        paymentinstructioninformation4.pmt_inf_id = "2022/006"
+        paymentinstructioninformation4.pmt_inf_id = remittance.name
         paymentinstructioninformation4.pmt_mtd = PaymentMethod2Code.DD
         paymentinstructioninformation4.nb_of_txs = len(remittance.obtain_rows())
         paymentinstructioninformation4.ctrl_sum = suma
@@ -438,7 +441,6 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             directdebittransaction6 = DirectDebitTransaction6()
             mandaterelatedinformation6 = MandateRelatedInformation6()
             mandaterelatedinformation6.mndt_id = receipt.authorization.number
-            #TODO: Si no hay fecha de autorización da una Excepción.
             mandaterelatedinformation6.dt_of_sgntr = XmlDate.from_date(receipt.authorization.date)
             directdebittransaction6.mndt_rltd_inf = mandaterelatedinformation6
             directdebittransactioninformation9.drct_dbt_tx = directdebittransaction6
@@ -460,11 +462,11 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             cashaccount16deudor.id = accountidentification4choicedeudor
             directdebittransactioninformation9.dbtr_acct = cashaccount16deudor
             remittanceinformation5 = RemittanceInformation5()
-            #TODO: Poner concepto del recibo variable
+            # TODO: Poner concepto del recibo variable
             remittanceinformation5.ustrd.append("Cuota socio 2022/23")
             directdebittransactioninformation9.rmt_inf = remittanceinformation5
             paymentinstructioninformation4.drct_dbt_tx_inf.append(directdebittransactioninformation9)
-            #Fin de bucle
+            # Fin de bucle
         # Escribo el fichero al response
         print("Empiezo a serializar")
         config = SerializerConfig(pretty_print=True)
