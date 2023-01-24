@@ -10,11 +10,11 @@ from django_extensions.db.models import TimeStampedModel
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
-from .family_queryset import FamilyQuerySet
-from .parent import Parent
-from .child import Child
 from .bank_account.bank_account import BankAccount
+from .child import Child
+from .family_queryset import FamilyQuerySet
 from .holder.holder import Holder
+from .parent import Parent
 
 
 class Family(TimeStampedModel):

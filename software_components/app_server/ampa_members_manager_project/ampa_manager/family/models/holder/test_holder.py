@@ -4,6 +4,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from ampa_manager.baker_recipes import bank_account_recipe
+from ampa_manager.charge.receipt import AuthorizationReceipt
 from ..bank_account.bank_account import BankAccount
 from .holder import Holder
 from ..parent import Parent
@@ -53,3 +54,4 @@ class TestHolder(TestCase):
         holder: Holder = baker.make('Holder', bank_account=bank_account, authorization_order=123)
         self.assertEqual(
             holder.authorization_full_number, f'{holder.authorization_year}/123')
+

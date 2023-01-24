@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.charge.receipt import AuthorizationReceipt
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount
@@ -23,7 +24,8 @@ class Holder(models.Model):
         verbose_name=_("Year"))
     authorization_state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     authorization_sign_date = models.DateField(default=datetime.date.today)
-    authorization_document = models.FileField(null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
+    authorization_document = models.FileField(
+        null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
 
     objects = HolderManager.from_queryset(HolderQuerySet)()
 
