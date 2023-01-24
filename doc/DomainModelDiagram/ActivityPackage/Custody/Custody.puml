@@ -1,0 +1,35 @@
+@startuml
+package AcademicCourse{
+  class AcademicCourse
+}
+package Activity{
+    package Custody{
+
+        class CustodyEdition{
+            period: String
+            max_days_for_charge: int
+        }
+        class CustodyRegistration{
+            assisted_days: int
+        }
+
+        CustodyEdition o-- AcademicCourse
+
+        CustodyRegistration o-- CustodyEdition
+
+    }
+    abstract class PricePerLevel{
+        levels: String
+        price_for_member: float
+        price_for_no_member: float
+    }
+
+    CustodyEdition <|-- PricePerLevel
+}
+package Family{
+    class Child
+    class Holder
+}
+CustodyRegistration o-- Child
+CustodyRegistration o-- Holder
+@enduml
