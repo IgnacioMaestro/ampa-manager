@@ -26,17 +26,7 @@ class BankAccount(TimeStampedModel):
         return f'{self.iban}'
 
     def complete_swift_bic(self):
-        self.swift_bic = BankBicCode.get_bic_code(self.bank_code)
-
-    @property
-    def bank_code(self):
-        iban_value = str(self.iban)
-        if iban_value:
-            if len(iban_value) == 24:
-                return self.iban[4:8]
-            elif len(iban_value) == 20:
-                return self.iban[0:4]
-        return None
+        self.swift_bic = BankBicCode.get_bic_code(self.iban.bank_code)
 
     def save(self, *args, **kwargs):
         if self.swift_bic in [None, '']:

@@ -5,7 +5,11 @@ from ampa_manager.activity_registration.models.activity_registration import Acti
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.receipt_exceptions import NoBankAccountException
 from ampa_manager.charge.receipt import Receipt
+from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.tests.generator_adder import iban_generator
+
+baker.generators.add('localflavor.generic.models.IBANField', iban_generator)
 
 
 class TestActivityReceipt(TestCase):
@@ -13,6 +17,7 @@ class TestActivityReceipt(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        baker.make('BankBicCode', bank_code='2095')
         cls.activity_registration = baker.make('ActivityRegistration')
 
     def test_generate_receipt_no_activity_registration(self):

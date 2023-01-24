@@ -3,8 +3,10 @@ from typing import List
 from django.test import TestCase
 from model_bakery import baker
 
+from .bank_account.bank_account import BankAccount
 from .family import Family
 from .holder.holder import Holder
+from ...baker_recipes import bank_account_recipe
 
 
 class TestFamily(TestCase):
@@ -32,7 +34,8 @@ class TestFamily(TestCase):
         self.assertQuerysetEqual(Family.objects.with_default_holder(), Family.objects.none())
 
     def test_all_families_with_holder_one_family(self):
-        holder: Holder = baker.make('Holder')
+        bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
+        holder: Holder = baker.make('Holder', bank_account=bank_account)
         family: Family = baker.make('Family', default_holder=holder)
         self.assertQuerysetEqual(Family.objects.with_default_holder(), [family])
 
