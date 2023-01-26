@@ -66,7 +66,8 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     list_display = ['after_school_edition', 'child', 'holder']
     ordering = ['after_school_edition__after_school__name', 'after_school_edition']
     list_filter = ['after_school_edition__after_school__name']
-    search_fields = ['child__name', 'after_school_edition__after_school__name']
+    search_fields = ['child__name', 'after_school_edition__after_school__name', 'holder__bank_account__iban',
+                     'holder__parent__name_and_surnames']
     list_per_page = 25
 
 

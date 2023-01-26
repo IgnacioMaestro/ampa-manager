@@ -75,7 +75,7 @@ class ImportRowResult:
 
         if len(created_families) > 0:
             logger.log(f'WARNING: {len(created_families)} families were created:')
-            for row_index, family in created_families:
+            for row_index, family in created_families.items():
                 logger.log(f'- {family}')
 
     @staticmethod
