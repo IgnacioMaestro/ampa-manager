@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -14,6 +15,13 @@ from ..parent import Parent
 from ..state import State
 
 
+def generate_holder_authorization_file_name(instance, filename):
+    path = 'authorizations/'
+    extension = filename.split('.')[-1]
+    filename = f'{instance.authorization_year}_{instance.authorization_order}'
+    return f'{path}{filename}.{extension}'
+
+
 class Holder(models.Model):
     parent = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Holder"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank Account"))
@@ -25,7 +33,7 @@ class Holder(models.Model):
     authorization_state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     authorization_sign_date = models.DateField(default=datetime.date.today)
     authorization_document = models.FileField(
-        null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
+        null=True, blank=True, upload_to=generate_holder_authorization_file_name, verbose_name=_("Document"))
 
     objects = HolderManager.from_queryset(HolderQuerySet)()
 
