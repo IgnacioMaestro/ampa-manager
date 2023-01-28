@@ -3,6 +3,7 @@ from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from localflavor.generic.models import IBANField, BICField
+from localflavor.generic.validators import IBANValidator
 
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
@@ -27,7 +28,12 @@ class BankAccount(TimeStampedModel):
 
     @property
     def bank_code(self):
-        return IBAN.get_bank_code(str(self.iban))
+        if str(self.iban):
+            if len(str(self.iban)) == 24:
+                return self.iban[4:8]
+            elif len(str(self.iban)) == 20:
+                return str(self.iban)[0:4]
+        return None
 
     def complete_swift_bic(self):
         self.swift_bic = BankBicCode.get_bic_code(self.bank_code)
@@ -39,6 +45,15 @@ class BankAccount(TimeStampedModel):
 
     def clean_iban(self):
         cleaned_iban = FieldsFormatters.clean_iban(self.cleaned_data['iban'])
-        if not IBAN.is_valid(cleaned_iban):
+        if not BankAccount.iban_is_valid(cleaned_iban):
             raise ValidationError(_('The IBAN code is not valid'))
         return cleaned_iban
+
+    @staticmethod
+    def iban_is_valid(iban: str) -> bool:
+        try:
+            validator = IBANValidator()
+            validator(iban)
+        except ValidationError:
+            return False
+        return True

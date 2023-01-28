@@ -30,7 +30,7 @@ class BankAccountImporter:
             bank_account = BankAccountImporter.find(iban)
             if bank_account:
                 result.set_not_modified(bank_account)
-            elif IBAN.is_valid(iban):
+            elif BankAccount.iban_is_valid(iban):
                 bank_account = BankAccount.objects.create(iban=iban)
                 result.set_created(bank_account)
             else:

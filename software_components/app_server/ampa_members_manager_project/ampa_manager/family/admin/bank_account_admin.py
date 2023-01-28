@@ -27,7 +27,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     def validate_iban(self, request, bank_accounts: QuerySet[BankAccount]):
         not_valid_bank_accounts = []
         for bank_account in bank_accounts.iterator():
-            if not IBAN.is_valid(str(bank_account.iban)):
+            if not BankAccount.iban_is_valid(str(bank_account.iban)):
                 not_valid_bank_accounts.append(str(bank_account.iban))
 
         if len(not_valid_bank_accounts) == 0:
