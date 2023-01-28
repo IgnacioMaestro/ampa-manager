@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.family.admin.filters.bank_account_filters import BankAccountBICCodeFilter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.bank_account.iban import IBAN
 from django.utils.translation import gettext_lazy as _
 
 

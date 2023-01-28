@@ -2,6 +2,7 @@ from typing import Optional, List
 
 from django.db.models import Model
 
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.processing_state import ProcessingState
 
 
@@ -16,12 +17,13 @@ class ImportModelResult:
         self.excel_fields: List = excel_fields
         self.fields_before: List = []
         self.fields_after: List = []
+        self.not_reset_fields: List = []
 
     def __str__(self):
         changes = ''
         changed_fields = self.get_changed_fields()
         if changed_fields:
-            changes += f'Changes: {self.get_changed_fields()}.'
+            changes += f'Changes: {changed_fields}.'
 
         error = ''
         if self.error:
@@ -56,11 +58,12 @@ class ImportModelResult:
         self.state = ProcessingState.ERROR
         self.error = error
 
-    def set_updated(self, imported_object, fields_before, fields_after):
+    def set_updated(self, imported_object, fields_changes: FieldsChanges):
         self.imported_object = imported_object
         self.state = ProcessingState.UPDATED
-        self.fields_before = fields_before
-        self.fields_after = fields_after
+        self.fields_before = fields_changes.values_before
+        self.fields_after = fields_changes.values_after
+        self.not_reset_fields = fields_changes.not_reset_fields
 
     def set_not_modified(self, imported_object):
         self.imported_object = imported_object
@@ -109,8 +112,14 @@ class ImportModelResult:
     def get_changed_fields(self) -> str:
         changed_fields = ''
         for i in range(len(self.fields_before)):
-            if self.fields_before[i] != self.fields_after[i]:
+            if self.fields_before[i] != self.fields_after[i] or self.field_not_reset(self.fields_after[i]):
                 if changed_fields:
                     changed_fields += ', '
-                changed_fields += f' {self.fields_before[i]} -> {self.fields_after[i]}'
+                if self.field_not_reset(self.fields_after[i]):
+                    changed_fields += f' {self.fields_after[i]} (Reset prevented)'
+                else:
+                    changed_fields += f' {self.fields_before[i]} -> {self.fields_after[i]}'
         return changed_fields
+
+    def field_not_reset(self, field):
+        return field in self.not_reset_fields

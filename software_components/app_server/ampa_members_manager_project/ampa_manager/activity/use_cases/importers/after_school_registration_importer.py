@@ -1,6 +1,7 @@
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
@@ -24,7 +25,7 @@ class AfterSchoolRegistrationImporter:
                 registration.holder = holder
                 fields_after = [registration.holder]
                 registration.save()
-                result.set_updated(registration, fields_before, fields_after)
+                result.set_updated(registration, FieldsChanges(fields_before, fields_after, []))
             else:
                 result.set_not_modified(registration)
         else:
