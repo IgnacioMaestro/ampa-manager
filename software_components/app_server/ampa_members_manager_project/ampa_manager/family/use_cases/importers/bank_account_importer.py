@@ -1,5 +1,4 @@
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.bank_account.iban import IBAN
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult

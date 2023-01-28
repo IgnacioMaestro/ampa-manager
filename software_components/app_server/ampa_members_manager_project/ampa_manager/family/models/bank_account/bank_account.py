@@ -7,7 +7,6 @@ from localflavor.generic.validators import IBANValidator
 
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
-from ampa_manager.family.models.bank_account.iban import IBAN
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
