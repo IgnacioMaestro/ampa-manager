@@ -5,6 +5,8 @@ from django.utils import timezone
 
 from ..models.holder.holder import Holder
 from ..models.state import State
+from ...activity.admin import AfterSchoolRegistrationInline
+from ...activity.models.after_school.after_school_registration import AfterSchoolRegistration
 
 
 class HolderInline(admin.TabularInline):
@@ -13,12 +15,13 @@ class HolderInline(admin.TabularInline):
 
 
 class HolderAdmin(admin.ModelAdmin):
-    list_display = ['parent', 'bank_account', 'authorization_full_number', 'authorization_state']
+    list_display = ['parent', 'bank_account', 'authorization_full_number', 'authorization_state', 'after_schools_count']
     ordering = ['parent__name_and_surnames']
     list_filter = ['authorization_year', 'authorization_state']
     search_fields = ['parent__name_and_surnames', 'authorization_sign_date',
                      'bank_account__iban', 'parent__name_and_surnames']
     list_per_page = 25
+    inlines = [AfterSchoolRegistrationInline]
 
     @admin.action(description=_("Set authorization as  not sent"))
     def set_as_not_sent(self, request, queryset: QuerySet[Holder]):
@@ -47,3 +50,7 @@ class HolderAdmin(admin.ModelAdmin):
         year: int = timezone.now().year
         next_number = Holder.objects.next_order_for_year(year)
         return {'year': year, 'number': str(next_number)}
+
+    @admin.display(description=_('After-schools'))
+    def after_schools_count(self, holder):
+        return AfterSchoolRegistration.objects.of_holder(holder).count()
