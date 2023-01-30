@@ -29,7 +29,7 @@ class AfterSchoolRegistration(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f'{self.after_school_edition} {self.child}'
+        return f'{self.after_school_edition}, {self.child}'
 
     def clean(self):
         if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():

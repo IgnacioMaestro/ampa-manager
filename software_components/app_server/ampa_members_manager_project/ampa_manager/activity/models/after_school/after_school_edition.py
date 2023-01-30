@@ -23,6 +23,6 @@ class AfterSchoolEdition(PricePerLevel):
         ]
 
     def __str__(self) -> str:
-        return f'{self.after_school} {self.period} {self.timetable} {self.academic_course}'
+        return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}'
 
 

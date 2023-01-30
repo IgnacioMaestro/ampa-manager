@@ -65,7 +65,11 @@ class ActivityAdmin(admin.ModelAdmin):
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     list_display = ['after_school_edition', 'child', 'holder']
     ordering = ['after_school_edition__after_school__name', 'after_school_edition']
-    list_filter = ['after_school_edition__after_school__name']
+    list_filter = ['after_school_edition__academic_course__initial_year',
+                   'after_school_edition__period',
+                   'after_school_edition__timetable',
+                   'after_school_edition__levels',
+                   'after_school_edition__after_school__name']
     search_fields = ['child__name', 'after_school_edition__after_school__name', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25
@@ -80,15 +84,11 @@ class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
 
 class AfterSchoolEditionAdmin(admin.ModelAdmin):
     inlines = [AfterSchoolRegistrationInline]
-    list_display = ['after_school', 'price_for_member', 'price_for_no_member', 'academic_course', 'registrations_count']
+    list_display = ['academic_course', 'after_school', 'price_for_member', 'price_for_no_member', 'after_schools_count']
     ordering = ['-academic_course', 'after_school']
-    list_filter = ['after_school__name']
+    list_filter = ['academic_course__initial_year', 'after_school__name']
     search_fields = ['after_school__name']
     list_per_page = 25
-
-    @admin.display(description=_('Registrations'))
-    def registrations_count(self, after_school_edition):
-        return after_school_edition.afterschoolregistration_set.count()
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
@@ -107,6 +107,10 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_left()
         message = create_message_with_link(after_school_remittance.get_admin_url())
         return self.message_user(request=request, message=message)
+
+    @admin.display(description=_('Registrations'))
+    def after_schools_count(self, edition):
+        return AfterSchoolRegistration.objects.of_edition(edition).count()
 
     actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left]
 
