@@ -1,6 +1,9 @@
 from datetime import datetime
 from typing import Optional
 
+from django.core.exceptions import ValidationError
+from localflavor.generic.validators import IBANValidator
+
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -20,7 +23,11 @@ class FieldsFormatters:
     @staticmethod
     def clean_level(value: str) -> Optional[str]:
         if value:
-            return StringUtils.uppercase(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
+            level = StringUtils.uppercase(StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
+            if Level.is_valid(level):
+                return level
+            else:
+                raise ValueError('Wrong level')
         return None
 
     @staticmethod
@@ -52,7 +59,13 @@ class FieldsFormatters:
     @staticmethod
     def clean_iban(value: str) -> Optional[str]:
         if value:
-            return StringUtils.remove_all_spaces(str(value))
+            iban = StringUtils.remove_all_spaces(str(value))
+            try:
+                validator = IBANValidator()
+                validator(iban)
+            except ValidationError:
+                raise ValueError('Wrong IBAN')
+            return True
         return None
 
     @staticmethod
@@ -70,5 +83,5 @@ class FieldsFormatters:
     @staticmethod
     def clean_float(value: str) -> Optional[float]:
         if value:
-            return int(StringUtils.remove_all_spaces(str(value)))
+            return float(StringUtils.remove_all_spaces(str(value)))
         return None

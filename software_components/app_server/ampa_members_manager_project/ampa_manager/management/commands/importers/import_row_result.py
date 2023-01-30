@@ -1,8 +1,8 @@
 from __future__ import annotations
 from typing import List, Dict
 
-from ampa_manager.activity.use_cases.importers.registration_excel_row import RegistrationExcelRow
 from ampa_manager.family.models.family import Family
+from ampa_manager.management.commands.importers.excel_row import ExcelRow
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.utils.logger import Logger
@@ -10,13 +10,14 @@ from ampa_manager.utils.logger import Logger
 
 class ImportRowResult:
 
-    def __init__(self, row_index):
-        self.row_index = row_index
+    def __init__(self, row: ExcelRow):
+        self.row = row
         self.partial_results = []
+        self.error = None
 
     @property
     def success(self):
-        if len(self.partial_results) > 0:
+        if self.error is None and len(self.partial_results) > 0:
             for result in self.partial_results:
                 if not result.success:
                     return False
@@ -26,14 +27,19 @@ class ImportRowResult:
     @property
     def errors(self):
         errors = []
+
+        if self.error is not None:
+            errors.append(self.error)
+
         for result in self.partial_results:
             if result.error:
                 errors.append(result.error)
+
         return ', '.join(errors)
 
     def print(self, logger: Logger):
         summary = f'OK' if self.success else f'ERROR: {self.errors}'
-        logger.log(f'\nRow {self.row_index + 1} -> {summary}')
+        logger.log(f'\nRow {self.row.index + 1} -> {summary}')
 
         if len(self.partial_results) > 0:
             for result in self.partial_results:
@@ -86,7 +92,7 @@ class ImportRowResult:
                 logger.log(f'· · · {model_name}: {model_count}')
 
     @staticmethod
-    def get_totals(results):
+    def get_totals(results: List[ImportRowResult]):
         totals_by_model = {}
         totals_by_status = {}
         errors = {}
@@ -102,7 +108,7 @@ class ImportRowResult:
                 not_success_count += 1
 
             if result.errors:
-                errors[result.row_index] = result.errors
+                errors[result.row.index] = result.errors
 
             for partial_result in result.partial_results:
                 totals_by_model = ImportRowResult.add_total_by_model(totals_by_model, partial_result.class_name, partial_result.state, partial_result.state2)

@@ -7,7 +7,6 @@ from localflavor.generic.validators import IBANValidator
 
 from ampa_manager.family.models.bank_account.bank_account_queryset import BankAccountQuerySet
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
-from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
 class BankAccount(TimeStampedModel):
@@ -41,12 +40,6 @@ class BankAccount(TimeStampedModel):
         if self.swift_bic in [None, '']:
             self.complete_swift_bic()
         super(BankAccount, self).save(**kwargs)
-
-    def clean_iban(self):
-        cleaned_iban = FieldsFormatters.clean_iban(self.cleaned_data['iban'])
-        if not BankAccount.iban_is_valid(cleaned_iban):
-            raise ValidationError(_('The IBAN code is not valid'))
-        return cleaned_iban
 
     @staticmethod
     def iban_is_valid(iban: str) -> bool:
