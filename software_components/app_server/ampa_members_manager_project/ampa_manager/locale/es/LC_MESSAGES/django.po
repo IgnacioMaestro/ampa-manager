@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 22:42+0100\n"
+"POT-Creation-Date: 2023-01-30 16:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,14 +27,14 @@ msgid "Is active"
 msgstr "Está activo"
 
 #: .\ampa_manager\academic_course\admin.py:24
-#: .\ampa_manager\family\admin\child_admin.py:21
+#: .\ampa_manager\family\admin\child_admin.py:23
 #: .\ampa_manager\family\admin\family_admin.py:135
 #: .\ampa_manager\family\admin\parent_admin.py:28
 msgid "Yes"
 msgstr "Sí"
 
 #: .\ampa_manager\academic_course\admin.py:24
-#: .\ampa_manager\family\admin\child_admin.py:21
+#: .\ampa_manager\family\admin\child_admin.py:23
 #: .\ampa_manager\family\admin\family_admin.py:135
 #: .\ampa_manager\family\admin\parent_admin.py:28
 msgid "No"
@@ -71,10 +71,10 @@ msgid "Families with children in school"
 msgstr "Familias con hijos en la ikastola"
 
 #: .\ampa_manager\academic_course\admin.py:69
-#: .\ampa_manager\family\admin\child_admin.py:27
+#: .\ampa_manager\family\admin\child_admin.py:29
 #: .\ampa_manager\family\admin\family_admin.py:121
 #: .\ampa_manager\family\models\family.py:24
-#: .\ampa_manager\family\models\parent.py:22
+#: .\ampa_manager\family\models\parent.py:23
 msgid "Parents"
 msgstr "Padres"
 
@@ -153,7 +153,7 @@ msgid "Academic courses"
 msgstr "Cursos académicos"
 
 #: .\ampa_manager\academic_course\models\active_course.py:9
-#: .\ampa_manager\family\admin\child_admin.py:23
+#: .\ampa_manager\family\admin\child_admin.py:25
 #: .\ampa_manager\family\admin\filters\child_filters.py:38
 msgid "Course"
 msgstr "Curso"
@@ -224,24 +224,23 @@ msgstr "Apuntados"
 msgid "Periods"
 msgstr "Períodos"
 
-#: .\ampa_manager\activity\admin.py:88
-#: .\ampa_manager\family\admin\child_admin.py:31
-msgid "Registrations"
-msgstr "Inscripciones"
-
-#: .\ampa_manager\activity\admin.py:92
+#: .\ampa_manager\activity\admin.py:93
 msgid "Create after school remittance"
 msgstr "Crear remesa de extraescolares"
 
-#: .\ampa_manager\activity\admin.py:98
-msgid "Create after school remittance with half"
+#: .\ampa_manager\activity\admin.py:99
+msgid "Create after school remittance half"
 msgstr "Crear remesa de extraescolares con el 50% del importe"
 
-#: .\ampa_manager\activity\admin.py:104
+#: .\ampa_manager\activity\admin.py:105
 msgid "Create after school remittance with left"
 msgstr "Crear remesa de extraescolares con el importe restante"
 
-#: .\ampa_manager\activity\admin.py:128
+#: .\ampa_manager\activity\admin.py:111
+msgid "Registrations"
+msgstr "Inscripciones"
+
+#: .\ampa_manager\activity\admin.py:133
 msgid "Editions"
 msgstr "Ediciones"
 
@@ -257,7 +256,7 @@ msgstr "Financiación"
 #: .\ampa_manager\activity\models\activity.py:16
 #: .\ampa_manager\activity\models\activity.py:17
 #: .\ampa_manager\activity\models\activity_period.py:16
-#: .\ampa_manager\activity_registration\admin.py:27
+#: .\ampa_manager\activity_registration\admin.py:26
 #: .\ampa_manager_project\settings.py:162
 msgid "Activity"
 msgstr "Actividad"
@@ -268,13 +267,13 @@ msgstr "Nombre del período"
 
 #: .\ampa_manager\activity\models\activity_period.py:13
 #: .\ampa_manager\activity\models\price_per_level.py:8
-#: .\ampa_manager\management\commands\import_after_schools.py:67
+#: .\ampa_manager\management\commands\import_after_schools.py:68
 msgid "Price for members"
 msgstr "Precio para socios"
 
 #: .\ampa_manager\activity\models\activity_period.py:14
 #: .\ampa_manager\activity\models\price_per_level.py:9
-#: .\ampa_manager\management\commands\import_after_schools.py:68
+#: .\ampa_manager\management\commands\import_after_schools.py:69
 msgid "Price for no members"
 msgstr "Precio para no socios"
 
@@ -301,6 +300,8 @@ msgid "After-school"
 msgstr "Extraescolar"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:13
+#: .\ampa_manager\family\admin\child_admin.py:33
+#: .\ampa_manager\family\admin\holder_admin.py:54
 msgid "After-schools"
 msgstr "Extraescolares"
 
@@ -322,17 +323,17 @@ msgid "After-school editions"
 msgstr "Ediciones de extraescolares"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:17
-#: .\ampa_manager\activity_registration\models\activity_registration.py:18
-#: .\ampa_manager\family\models\child.py:23
+#: .\ampa_manager\activity_registration\models\activity_registration.py:17
+#: .\ampa_manager\family\models\child.py:24
 msgid "Child"
 msgstr "Hijo"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:18
-#: .\ampa_manager\activity_registration\models\activity_registration.py:17
-#: .\ampa_manager\family\models\authorization\authorization.py:24
-#: .\ampa_manager\family\models\bank_account\bank_account.py:23
-msgid "Bank account"
-msgstr "Cuenta bancaria"
+#: .\ampa_manager\activity_registration\models\activity_registration.py:18
+#: .\ampa_manager\family\models\holder\holder.py:26
+#: .\ampa_manager\family\models\holder\holder.py:41
+msgid "Holder"
+msgstr "Titular"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:23
 msgid "After-school registration"
@@ -394,7 +395,7 @@ msgid "Activity registration"
 msgstr "Registro en actividad"
 
 #: .\ampa_manager\activity_registration\models\activity_registration.py:22
-#: .\ampa_manager\charge\models\activity_receipt.py:24
+#: .\ampa_manager\charge\models\activity_receipt.py:23
 msgid "Activity registrations"
 msgstr "Registros en actividad"
 
@@ -404,7 +405,6 @@ msgstr "Administración del AMPA"
 
 #: .\ampa_manager\charge\admin.py:60 .\ampa_manager\charge\admin.py:231
 #: .\ampa_manager\charge\admin.py:255
-#: .\ampa_manager\family\admin\authorization_admin.py:24
 msgid "Set as sent"
 msgstr "Marcar como envíado"
 
@@ -414,19 +414,19 @@ msgid "Set as paid"
 msgstr "Marcar como pagado"
 
 #: .\ampa_manager\charge\admin.py:74
-#: .\ampa_manager\charge\models\membership_receipt.py:21
+#: .\ampa_manager\charge\models\membership_receipt.py:20
 #: .\ampa_manager\family\admin\parent_admin.py:30
-#: .\ampa_manager\family\models\child.py:18
+#: .\ampa_manager\family\models\child.py:19
 #: .\ampa_manager\family\models\family.py:34
 #: .\ampa_manager\family\models\membership.py:13
-#: .\ampa_manager\management\commands\import_members.py:99
+#: .\ampa_manager\management\commands\import_members.py:100
 #: .\ampa_manager_project\settings.py:153
 msgid "Family"
 msgstr "Familia"
 
 #: .\ampa_manager\charge\admin.py:82
 #: .\ampa_manager\family\admin\family_admin.py:125
-#: .\ampa_manager\family\models\child.py:24
+#: .\ampa_manager\family\models\child.py:25
 msgid "Children"
 msgstr "Hijos"
 
@@ -517,34 +517,34 @@ msgstr "Exportar la remesa de extraescolares a CSV"
 msgid "Export after-school remittance to SEPA file"
 msgstr "Exportar la remesa de extraescolares a fichero SEPA"
 
-#: .\ampa_manager\charge\models\activity_receipt.py:22
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:16
+#: .\ampa_manager\charge\models\activity_receipt.py:21
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:13
 msgid "Total (€)"
 msgstr "Total (€)"
 
-#: .\ampa_manager\charge\models\activity_receipt.py:23
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:17
-#: .\ampa_manager\charge\models\membership_receipt.py:19
-#: .\ampa_manager\family\models\authorization\authorization.py:23
+#: .\ampa_manager\charge\models\activity_receipt.py:22
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:14
+#: .\ampa_manager\charge\models\membership_receipt.py:18
+#: .\ampa_manager\family\models\holder\holder.py:33
 msgid "State"
 msgstr "Estado"
 
-#: .\ampa_manager\charge\models\activity_receipt.py:25
+#: .\ampa_manager\charge\models\activity_receipt.py:24
 #: .\ampa_manager\charge\models\activity_remittance.py:19
 msgid "Activity remittance"
 msgstr "Remesa de actividad"
 
-#: .\ampa_manager\charge\models\activity_receipt.py:30
+#: .\ampa_manager\charge\models\activity_receipt.py:29
 msgid "Activity Receipt"
 msgstr "Recibo de actividad"
 
-#: .\ampa_manager\charge\models\activity_receipt.py:31
+#: .\ampa_manager\charge\models\activity_receipt.py:30
 msgid "Activity Receipts"
 msgstr "Recibos de actividad"
 
 #: .\ampa_manager\charge\models\activity_remittance.py:13
 #: .\ampa_manager\charge\models\after_school_charge\after_school_remittance.py:13
-#: .\ampa_manager\family\models\child.py:14
+#: .\ampa_manager\family\models\child.py:15
 msgid "Name"
 msgstr "Nombre"
 
@@ -566,19 +566,19 @@ msgstr "Períodos de actividad"
 msgid "Activity remittances"
 msgstr "Remesas de actividad"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:19
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:16
 msgid "After School registrations"
 msgstr "Inscripciones en extraescolares"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:21
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:18
 msgid "After School remittance"
 msgstr "Remesa de extraescolares"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:24
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:21
 msgid "After-school receipt"
 msgstr "Recibo de extraescolar"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:25
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:22
 msgid "After-school receipts"
 msgstr "Recibos de extraescolares"
 
@@ -598,15 +598,15 @@ msgstr "Remesas de extraescolares"
 msgid "Fee"
 msgstr "Cuota"
 
-#: .\ampa_manager\charge\models\membership_receipt.py:20
+#: .\ampa_manager\charge\models\membership_receipt.py:19
 msgid "Membership Remittance"
 msgstr "Remesa de socios"
 
-#: .\ampa_manager\charge\models\membership_receipt.py:26
+#: .\ampa_manager\charge\models\membership_receipt.py:25
 msgid "Membership receipt"
 msgstr "Recibo de socio"
 
-#: .\ampa_manager\charge\models\membership_receipt.py:27
+#: .\ampa_manager\charge\models\membership_receipt.py:26
 msgid "Membership receipts"
 msgstr "Recibos de socios"
 
@@ -624,13 +624,10 @@ msgstr "Remesas de socios"
 
 #: .\ampa_manager\charge\state.py:6
 #: .\ampa_manager\family\admin\family_admin.py:137
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:15
 msgid "Created"
 msgstr "Creado"
 
-#: .\ampa_manager\charge\state.py:7
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:16
-#: .\ampa_manager\family\models\state.py:7
+#: .\ampa_manager\charge\state.py:7 .\ampa_manager\family\models\state.py:7
 msgid "Sent"
 msgstr "Enviado"
 
@@ -638,74 +635,29 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
-#: .\ampa_manager\family\admin\authorization_admin.py:17
-msgid "Set as not sent"
-msgstr "Marcar como no enviado"
+#: .\ampa_manager\family\admin\bank_account_admin.py:22
+#: .\ampa_manager\family\models\holder\holder.py:42
+msgid "Holders"
+msgstr "Titulares"
 
-#: .\ampa_manager\family\admin\authorization_admin.py:21
-#, python-format
-msgid "%(num_authorizations)s authorizations set as NOT sent"
-msgstr "%(num_authorizations)s autorizaciones marcadas como no pagadas"
-
-#: .\ampa_manager\family\admin\authorization_admin.py:28
-#, python-format
-msgid "%(num_authorizations)s authorizations set as sent"
-msgstr "%(num_authorizations)s autorizaciones marcadas como enviadas"
-
-#: .\ampa_manager\family\admin\authorization_admin.py:31
-msgid "Set as signed"
-msgstr "Marcar como firmadas"
-
-#: .\ampa_manager\family\admin\authorization_admin.py:35
-#, python-format
-msgid "%(num_authorizations)s authorizations set as signed"
-msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:41
-msgid "After schools"
-msgstr "Extraescolares"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:45
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:8
-#: .\ampa_manager\family\models\authorization\authorization.py:29
-msgid "Authorization"
-msgstr "Autorización"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:51
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:14
-msgid "No authorization"
-msgstr "Sin autorización"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:53
-msgid "Export account owners"
-msgstr "Exportar titulares de las cuentas"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:55
-msgid "Bank account owners"
-msgstr "Titulares de cuentas bancarias"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:62
+#: .\ampa_manager\family\admin\bank_account_admin.py:26
 msgid "Complete SWIFT/BIC codes"
 msgstr "Completar código SWIFT/BIC"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:69
-msgid "Create authorization for this year"
-msgstr "Crear autorización para este año"
-
-#: .\ampa_manager\family\admin\bank_account_admin.py:75
+#: .\ampa_manager\family\admin\bank_account_admin.py:33
 msgid "Validate IBAN"
-msgstr ""
+msgstr "Validar IBAN"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:83
+#: .\ampa_manager\family\admin\bank_account_admin.py:41
 msgid "All validated IBANs are valid"
-msgstr ""
+msgstr "Todos los IBANes validados son correctos"
 
-#: .\ampa_manager\family\admin\bank_account_admin.py:85
+#: .\ampa_manager\family\admin\bank_account_admin.py:43
 #, python-format
 msgid "%(number)s IBANs are invalid: %(ibans)s"
-msgstr ""
+msgstr "%(number)s IBANes son incorrectos: %(ibans)s"
 
-#: .\ampa_manager\family\admin\child_admin.py:19
+#: .\ampa_manager\family\admin\child_admin.py:21
 #: .\ampa_manager\family\admin\family_admin.py:133
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "Is member"
@@ -745,21 +697,16 @@ msgstr "'No quiere ser socio' activado"
 msgid "In school"
 msgstr "En la ikastola"
 
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:17
-#: .\ampa_manager\family\models\state.py:8
-msgid "Signed"
-msgstr "Firmado"
-
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:31
-#: .\ampa_manager\family\models\bank_account\bank_account.py:16
+#: .\ampa_manager\family\admin\filters\bank_account_filters.py:6
+#: .\ampa_manager\family\models\bank_account\bank_account.py:14
 msgid "SWIFT/BIC"
 msgstr "SWIFT/BIC"
 
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:37
+#: .\ampa_manager\family\admin\filters\bank_account_filters.py:12
 msgid "With SWIFT/BIC"
 msgstr "Con SWIFT/BIC"
 
-#: .\ampa_manager\family\admin\filters\bank_account_filters.py:38
+#: .\ampa_manager\family\admin\filters\bank_account_filters.py:13
 msgid "Without SWIFT/BIC"
 msgstr "Sin SWIFT/BIC"
 
@@ -853,44 +800,46 @@ msgstr "1 familia"
 msgid "More than one family"
 msgstr "Mas de 1 familia"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:18
-msgid "Number"
-msgstr "Número"
+#: .\ampa_manager\family\admin\holder_admin.py:26
+msgid "Set authorization as  not sent"
+msgstr "Marcar autorizaciones como no enviadas"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:19
-msgid "Order"
-msgstr "Orden"
+#: .\ampa_manager\family\admin\holder_admin.py:30
+#, python-format
+msgid "%(num_authorizations)s authorizations set as NOT sent"
+msgstr "%(num_authorizations)s autorizaciones marcadas como no pagadas"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:20
-msgid "Year"
-msgstr "Año"
+#: .\ampa_manager\family\admin\holder_admin.py:33
+msgid "Set authorization as sent"
+msgstr "Sin autorización"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:22
-msgid "Document"
-msgstr "Documento"
+#: .\ampa_manager\family\admin\holder_admin.py:37
+#, python-format
+msgid "%(num_authorizations)s authorizations set as sent"
+msgstr "%(num_authorizations)s autorizaciones marcadas como enviadas"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:30
-msgid "Authorizations"
-msgstr "Autorizaciones"
+#: .\ampa_manager\family\admin\holder_admin.py:40
+msgid "Set authorization as signed"
+msgstr "Marcar autorizaciones como firmadas"
 
-#: .\ampa_manager\family\models\authorization\authorization.py:40
-msgid "The state can not be sent or signed if there is no document attached"
-msgstr ""
-"El estado no puede ser envíado o firmado si no hay un documento adjunto"
+#: .\ampa_manager\family\admin\holder_admin.py:44
+#, python-format
+msgid "%(num_authorizations)s authorizations set as signed"
+msgstr "%(num_authorizations)s autorizaciones marcadas como firmadas"
 
-#: .\ampa_manager\family\models\bank_account\bank_account.py:17
+#: .\ampa_manager\family\models\bank_account\bank_account.py:15
 msgid "IBAN"
 msgstr "IBAN"
 
-#: .\ampa_manager\family\models\bank_account\bank_account.py:18
-msgid "Owner"
-msgstr "Titular"
+#: .\ampa_manager\family\models\bank_account\bank_account.py:20
+msgid "Bank account"
+msgstr "Cuenta bancaria"
 
-#: .\ampa_manager\family\models\bank_account\bank_account.py:24
+#: .\ampa_manager\family\models\bank_account\bank_account.py:21
 msgid "Bank accounts"
 msgstr "Cuentas bancarias"
 
-#: .\ampa_manager\family\models\bank_account\bank_account.py:58
+#: .\ampa_manager\family\models\bank_account\bank_account.py:48
 msgid "The IBAN code is not valid"
 msgstr "El código IBAN no es válido"
 
@@ -912,16 +861,16 @@ msgid ""
 msgstr ""
 "8-11 caracteres: Entidad (4), País (2), Localidad (2), Oficina (3, Opcional)"
 
-#: .\ampa_manager\family\models\child.py:16
+#: .\ampa_manager\family\models\child.py:17
 msgid "Year of birth"
 msgstr "Año de nacimiento"
 
-#: .\ampa_manager\family\models\child.py:17
+#: .\ampa_manager\family\models\child.py:18
 msgid "Repetition"
 msgstr "Repetición"
 
 #: .\ampa_manager\family\models\family.py:20
-#: .\ampa_manager\management\commands\import_members.py:99
+#: .\ampa_manager\management\commands\import_members.py:100
 msgid "Surnames"
 msgstr "Apellidos"
 
@@ -938,8 +887,8 @@ msgstr ""
 "escuela pero no se quiere eliminar el registro."
 
 #: .\ampa_manager\family\models\family.py:26
-msgid "Default bank account"
-msgstr "Cuenta bancaria por defecto"
+msgid "Default holder"
+msgstr "Titular por defecto"
 
 #: .\ampa_manager\family\models\family.py:27
 msgid "Save the family to see its bank accounts"
@@ -953,29 +902,50 @@ msgstr "Moroso"
 msgid "Informative field only"
 msgstr "Campo sólo informativo"
 
-#: .\ampa_manager\family\models\parent.py:13
-#: .\ampa_manager\management\commands\import_members.py:100
-#: .\ampa_manager\management\commands\import_members.py:105
-msgid "Name and surnames"
-msgstr "Nombre y apellidos"
+#: .\ampa_manager\family\models\holder\holder.py:27
+msgid "Bank Account"
+msgstr "Cuenta bancaria"
+
+#: .\ampa_manager\family\models\holder\holder.py:29
+msgid "Order"
+msgstr "Orden"
+
+#: .\ampa_manager\family\models\holder\holder.py:32
+msgid "Year"
+msgstr "Año"
+
+#: .\ampa_manager\family\models\holder\holder.py:36
+msgid "Document"
+msgstr "Documento"
+
+#: .\ampa_manager\family\models\holder\holder.py:55
+msgid "The state can not be sent or signed if there is no document attached"
+msgstr ""
+"El estado no puede ser envíado o firmado si no hay un documento adjunto"
 
 #: .\ampa_manager\family\models\parent.py:14
 #: .\ampa_manager\management\commands\import_members.py:101
 #: .\ampa_manager\management\commands\import_members.py:106
+msgid "Name and surnames"
+msgstr "Nombre y apellidos"
+
+#: .\ampa_manager\family\models\parent.py:15
+#: .\ampa_manager\management\commands\import_members.py:102
+#: .\ampa_manager\management\commands\import_members.py:107
 msgid "Phone number"
 msgstr "Número de teléfono"
 
-#: .\ampa_manager\family\models\parent.py:15
+#: .\ampa_manager\family\models\parent.py:16
 msgid "Other phone"
 msgstr "Otro teléfono"
 
-#: .\ampa_manager\family\models\parent.py:16
-#: .\ampa_manager\management\commands\import_members.py:103
-#: .\ampa_manager\management\commands\import_members.py:108
+#: .\ampa_manager\family\models\parent.py:17
+#: .\ampa_manager\management\commands\import_members.py:104
+#: .\ampa_manager\management\commands\import_members.py:109
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: .\ampa_manager\family\models\parent.py:21
+#: .\ampa_manager\family\models\parent.py:22
 msgid "Parent"
 msgstr "Padre"
 
@@ -983,63 +953,66 @@ msgstr "Padre"
 msgid "Not sent"
 msgstr "No enviado"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:53
+#: .\ampa_manager\family\models\state.py:8
+msgid "Signed"
+msgstr "Firmado"
+
+#: .\ampa_manager\management\commands\import_after_schools.py:54
 msgid "Family surnames"
 msgstr "Apellidos de la familia"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:54
+#: .\ampa_manager\management\commands\import_after_schools.py:55
 msgid "Parent name and surnames"
 msgstr "Nombre y apellidos del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:55
+#: .\ampa_manager\management\commands\import_after_schools.py:56
 msgid "Parent phone number"
 msgstr "Número de teléfono del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:56
+#: .\ampa_manager\management\commands\import_after_schools.py:57
 msgid "Parent additional phone number"
 msgstr "Teléfono adicional del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:57
+#: .\ampa_manager\management\commands\import_after_schools.py:58
 msgid "Parent email"
 msgstr "Correo del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:58
+#: .\ampa_manager\management\commands\import_after_schools.py:59
 msgid "Parent bank account IBAN"
 msgstr "IBAN cuenta bancaria del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:59
+#: .\ampa_manager\management\commands\import_after_schools.py:60
 msgid "Parent bank account SWIFT"
 msgstr "SWIFT cuenta bancaria del padre"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:60
+#: .\ampa_manager\management\commands\import_after_schools.py:61
 msgid "Child name (without surnames)"
 msgstr "Nombre del hijo (sin apellidos)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:61
+#: .\ampa_manager\management\commands\import_after_schools.py:62
 msgid "Child level (ex. HH4, LH3)"
 msgstr "Nivel del hijo (ej. HH4, LH3)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:62
+#: .\ampa_manager\management\commands\import_after_schools.py:63
 msgid "Child year of birth (ex. 2015)"
 msgstr "Año de nacimiento del hijo (ej. 2015)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:63
+#: .\ampa_manager\management\commands\import_after_schools.py:64
 msgid "After school name (ex. Basket)"
 msgstr "Nombre de la extraescolar (ej. Baloncesto)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:64
+#: .\ampa_manager\management\commands\import_after_schools.py:65
 msgid "Edition period (ex. All year)"
 msgstr "Período de la edición (ej. Todo el año)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:65
+#: .\ampa_manager\management\commands\import_after_schools.py:66
 msgid "Edition timetable (ex. Monday/Wednesday 17-18)"
 msgstr "Horario de la edición (ej. Lunes/Miércoles 17-18)"
 
-#: .\ampa_manager\management\commands\import_after_schools.py:66
+#: .\ampa_manager\management\commands\import_after_schools.py:67
 msgid "Edition levels (ex. Primary)"
 msgstr "Niveles de la edición (ej. Primaria)"
 
-#: .\ampa_manager\management\commands\import_members.py:100
 #: .\ampa_manager\management\commands\import_members.py:101
 #: .\ampa_manager\management\commands\import_members.py:102
 #: .\ampa_manager\management\commands\import_members.py:103
@@ -1048,20 +1021,20 @@ msgstr "Niveles de la edición (ej. Primaria)"
 #: .\ampa_manager\management\commands\import_members.py:106
 #: .\ampa_manager\management\commands\import_members.py:107
 #: .\ampa_manager\management\commands\import_members.py:108
+#: .\ampa_manager\management\commands\import_members.py:109
 #, python-format
 msgid "Parent %(number)s"
 msgstr "Padre %(number)s"
 
-#: .\ampa_manager\management\commands\import_members.py:102
-#: .\ampa_manager\management\commands\import_members.py:107
+#: .\ampa_manager\management\commands\import_members.py:103
+#: .\ampa_manager\management\commands\import_members.py:108
 msgid "Additional phone number"
 msgstr "Teléfono adicional"
 
-#: .\ampa_manager\management\commands\import_members.py:104
+#: .\ampa_manager\management\commands\import_members.py:105
 msgid "Bank account IBAN"
 msgstr "IBAN cuenta bancaria"
 
-#: .\ampa_manager\management\commands\import_members.py:109
 #: .\ampa_manager\management\commands\import_members.py:110
 #: .\ampa_manager\management\commands\import_members.py:111
 #: .\ampa_manager\management\commands\import_members.py:112
@@ -1076,31 +1049,32 @@ msgstr "IBAN cuenta bancaria"
 #: .\ampa_manager\management\commands\import_members.py:121
 #: .\ampa_manager\management\commands\import_members.py:122
 #: .\ampa_manager\management\commands\import_members.py:123
+#: .\ampa_manager\management\commands\import_members.py:124
 #, python-format
 msgid "Child %(number)s"
 msgstr "Hijo %(number)s"
 
-#: .\ampa_manager\management\commands\import_members.py:109
-#: .\ampa_manager\management\commands\import_members.py:112
-#: .\ampa_manager\management\commands\import_members.py:115
-#: .\ampa_manager\management\commands\import_members.py:118
-#: .\ampa_manager\management\commands\import_members.py:121
-msgid "Name (without surnames)"
-msgstr "Nombre (sin apellidos)"
-
 #: .\ampa_manager\management\commands\import_members.py:110
 #: .\ampa_manager\management\commands\import_members.py:113
 #: .\ampa_manager\management\commands\import_members.py:116
 #: .\ampa_manager\management\commands\import_members.py:119
 #: .\ampa_manager\management\commands\import_members.py:122
-msgid "Level (ex. HH4, LH3)"
-msgstr "Nivel (ej. HH4, LH3)"
+msgid "Name (without surnames)"
+msgstr "Nombre (sin apellidos)"
 
 #: .\ampa_manager\management\commands\import_members.py:111
 #: .\ampa_manager\management\commands\import_members.py:114
 #: .\ampa_manager\management\commands\import_members.py:117
 #: .\ampa_manager\management\commands\import_members.py:120
 #: .\ampa_manager\management\commands\import_members.py:123
+msgid "Level (ex. HH4, LH3)"
+msgstr "Nivel (ej. HH4, LH3)"
+
+#: .\ampa_manager\management\commands\import_members.py:112
+#: .\ampa_manager\management\commands\import_members.py:115
+#: .\ampa_manager\management\commands\import_members.py:118
+#: .\ampa_manager\management\commands\import_members.py:121
+#: .\ampa_manager\management\commands\import_members.py:124
 msgid "Year of birth (ex. 2015)"
 msgstr "Año de nacimiento (ej. 2015)"
 
@@ -1196,3 +1170,30 @@ msgstr "Registro en actividad"
 #: .\ampa_manager_project\settings.py:169
 msgid "Charge"
 msgstr "Cargo"
+
+#~ msgid "Set as signed"
+#~ msgstr "Marcar como firmadas"
+
+#~ msgid "After schools"
+#~ msgstr "Extraescolares"
+
+#~ msgid "Authorization"
+#~ msgstr "Autorización"
+
+#~ msgid "Export account owners"
+#~ msgstr "Exportar titulares de las cuentas"
+
+#~ msgid "Bank account owners"
+#~ msgstr "Titulares de cuentas bancarias"
+
+#~ msgid "Number"
+#~ msgstr "Número"
+
+#~ msgid "Authorizations"
+#~ msgstr "Autorizaciones"
+
+#~ msgid "Owner"
+#~ msgstr "Titular"
+
+#~ msgid "Default bank account"
+#~ msgstr "Cuenta bancaria por defecto"
