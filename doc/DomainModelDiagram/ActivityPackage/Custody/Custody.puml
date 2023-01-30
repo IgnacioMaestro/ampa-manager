@@ -7,10 +7,11 @@ package Activity{
 
         class CustodyEdition{
             period: String
-            max_days_for_charge: int
+            max_days_for_charge: integer
+            primary: boolean
         }
         class CustodyRegistration{
-            assisted_days: int
+            assisted_days: integer
         }
 
         CustodyEdition o-- AcademicCourse
