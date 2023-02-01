@@ -1,18 +1,19 @@
 from __future__ import annotations
 
-from django.db import models, transaction
-from django.db.models import QuerySet
+from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from .after_school_remittance_manager import AfterSchoolRemittanceManager
 from ..nameable_with_date import NameableWithDate
-from ...no_after_school_edition_error import NoAfterSchoolEditionError
 
 
 class AfterSchoolRemittance(NameableWithDate, models.Model):
     after_school_editions = models.ManyToManyField(
         to=AfterSchoolEdition, verbose_name=_("AfterSchoolEditions"), related_name="after_school_remittance")
+
+    objects = AfterSchoolRemittanceManager()
 
     class Meta:
         verbose_name = _('After-school remittance')
@@ -24,13 +25,3 @@ class AfterSchoolRemittance(NameableWithDate, models.Model):
 
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])
-
-    @classmethod
-    def create_filled(cls, after_school_editions: QuerySet[AfterSchoolEdition]) -> AfterSchoolRemittance:
-        if not after_school_editions.exists():
-            raise NoAfterSchoolEditionError
-
-        with transaction.atomic():
-            after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.objects.create()
-            after_school_remittance.after_school_editions.set(after_school_editions)
-            return after_school_remittance

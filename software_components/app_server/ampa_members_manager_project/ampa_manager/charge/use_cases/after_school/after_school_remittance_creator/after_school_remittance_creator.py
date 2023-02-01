@@ -30,7 +30,7 @@ class AfterSchoolRemittanceCreator:
         return self.create_with_calculator(calculator=LeftAmountReceiptCalculator())
 
     def create_with_calculator(self, calculator: AmountReceiptCalculator):
-        after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.create_filled(self.__editions)
+        after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.objects.create_filled(self.__editions)
         after_school_registrations: AfterSchoolRegistrationQuerySet = AfterSchoolRegistration.objects.of_after_school_remittance(
             after_school_remittance)
         for after_school_registration in after_school_registrations.iterator():
