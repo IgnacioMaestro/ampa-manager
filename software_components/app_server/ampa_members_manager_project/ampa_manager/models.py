@@ -21,3 +21,4 @@ from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
