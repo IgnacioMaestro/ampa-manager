@@ -20,7 +20,7 @@ class AfterSchoolRemittance(NameableWithDate, models.Model):
         db_table = 'after_school_remittance'
 
     def __str__(self) -> str:
-        return self.complete_name
+        return self.name_with_date
 
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])

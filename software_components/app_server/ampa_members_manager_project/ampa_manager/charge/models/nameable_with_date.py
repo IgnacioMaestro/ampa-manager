@@ -10,7 +10,7 @@ class NameableWithDate(models.Model):
         abstract = True
 
     @property
-    def complete_name(self) -> str:
+    def name_with_date(self) -> str:
         time_name = '_' + self.created_at.strftime("%Y%m%d_%H%M%S")
         if self.name:
             return self.name + time_name
