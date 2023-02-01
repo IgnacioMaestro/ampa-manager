@@ -6,13 +6,13 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ..nameable_with_date import NameableWithDate
 from ...no_after_school_edition_error import NoAfterSchoolEditionError
 
 
-class AfterSchoolRemittance(models.Model):
-    name = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Name"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
-    after_school_editions = models.ManyToManyField(to=AfterSchoolEdition, verbose_name=_("AfterSchoolEditions"), related_name="after_school_remittance")
+class AfterSchoolRemittance(NameableWithDate, models.Model):
+    after_school_editions = models.ManyToManyField(
+        to=AfterSchoolEdition, verbose_name=_("AfterSchoolEditions"), related_name="after_school_remittance")
 
     class Meta:
         verbose_name = _('After-school remittance')
@@ -24,13 +24,6 @@ class AfterSchoolRemittance(models.Model):
 
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])
-
-    @property
-    def complete_name(self) -> str:
-        time_name = '_' + self.created_at.strftime("%Y%m%d_%H%M%S")
-        if self.name:
-            return self.name + time_name
-        return time_name
 
     @classmethod
     def create_filled(cls, after_school_editions: QuerySet[AfterSchoolEdition]) -> AfterSchoolRemittance:
