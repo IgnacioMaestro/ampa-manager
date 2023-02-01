@@ -19,4 +19,4 @@ class TestCustodyEdition(TestCase):
         with self.assertRaises(IntegrityError):
             baker.make(
                 'CustodyEdition', academic_course=custody_edition.academic_course,
-                period_and_level=custody_edition.period_and_level)
+                period=custody_edition.period, primary=custody_edition.primary)
