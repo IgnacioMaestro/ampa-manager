@@ -1,5 +1,14 @@
 @startuml
 package Charge{
+    package AfterSchoolCharge{
+        class AfterSchoolRemittance{
+            name: string
+            created_at: datetime
+        }
+        class AfterSchoolReceipt {
+            amount: float
+        }
+    }
     package Membership{
         class MembershipRemittance {
             identifier: string
@@ -8,15 +17,6 @@ package Charge{
         class MembershipReceipt
         class Fee{
             amount: integer
-        }
-    }
-    package AfterSchoolCharge{
-        class AfterSchoolRemittance{
-            name: string
-            created_at: datetime
-        }
-        class AfterSchoolReceipt {
-            amount: float
         }
     }
     package CustodyCharge{
@@ -70,7 +70,7 @@ package AcademicCourse{
 }
 
 Fee --o AcademicCourse
-MembershipRemittance o-- AcademicCourse
+MembershipRemittance o-left- AcademicCourse
 
 package Family{
     class Family
