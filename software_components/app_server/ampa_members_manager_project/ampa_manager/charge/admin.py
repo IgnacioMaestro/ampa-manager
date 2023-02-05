@@ -12,7 +12,6 @@ from django.utils.translation import gettext_lazy
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 from xsdata.models.datatype import XmlDateTime, XmlDate
-from xsdata.utils.dates import format_date
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from .models.activity_receipt import ActivityReceipt
@@ -343,8 +342,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
 
         groupheader39.msg_id = "Nombre Remesa"
         # Fecha cuando se crea la remesa
-        now: datetime = datetime.now()
-        now_str: str = now.strftime("%Y-%m-%dT%H:%M:%S")
+        now_str: str = remittance.created_date.strftime("%Y-%m-%dT%H:%M:%S")
         creation_date: XmlDateTime = XmlDateTime.from_string(now_str)
         groupheader39.cre_dt_tm = creation_date
         groupheader39.nb_of_txs = len(remittance.obtain_rows())
@@ -398,7 +396,8 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         cashaccount16.ccy = EURO
         paymentinstructioninformation4.cdtr_acct = cashaccount16
 
-        branchandfinancialinstitutionidentification4: BranchAndFinancialInstitutionIdentification4 = BranchAndFinancialInstitutionIdentification4()
+        branchandfinancialinstitutionidentification4: BranchAndFinancialInstitutionIdentification4 = \
+            BranchAndFinancialInstitutionIdentification4()
         financialinstitutionidentification7: FinancialInstitutionIdentification7 = FinancialInstitutionIdentification7()
         financialinstitutionidentification7.bic = "CLPEES2MXXX"
         branchandfinancialinstitutionidentification4.fin_instn_id = financialinstitutionidentification7
@@ -409,7 +408,8 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         personidentification5: PersonIdentification5 = PersonIdentification5()
         genericpersonidentification1: GenericPersonIdentification1 = GenericPersonIdentification1()
         genericpersonidentification1.id = "ES28000G01025451"
-        personidentificationschemename1choice: PersonIdentificationSchemeName1Choice = PersonIdentificationSchemeName1Choice()
+        personidentificationschemename1choice: PersonIdentificationSchemeName1Choice = \
+            PersonIdentificationSchemeName1Choice()
         personidentificationschemename1choice.prtry = SEPA
         genericpersonidentification1.schme_nm = personidentificationschemename1choice
         personidentification5.othr.append(genericpersonidentification1)
@@ -421,7 +421,8 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         postaladdress6deudor: PostalAddress6 = PostalAddress6()
         postaladdress6deudor.ctry = PAIS
         paymentidentification1: PaymentIdentification1 = PaymentIdentification1()
-        # TODO: Esto tiene que ser variable
+        # TODO: Esto tiene que ser variable. El sistema genera una clave exclusiva para cada pago, formada por
+        #  la cuenta bancaria, el proveedor, la fecha del pago y el número de control del cheque.
         paymentidentification1.end_to_end_id = "2022/Socio"
         # Definimos varables que se usan dentro del bucle
         directdebittransactioninformation9: DirectDebitTransactionInformation9
