@@ -14,7 +14,7 @@ from ampa_manager.activity.models.after_school.after_school_edition import After
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity_registration.admin import ActivityRegistrationAdmin
 from ampa_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_manager.charge.admin_to_divide import ActivityRemittanceAdmin, ActivityReceiptAdmin
+from ampa_manager.charge.admin_to_delete import ActivityRemittanceAdmin, ActivityReceiptAdmin
 from ampa_manager.charge.admin.membership_admin import MembershipRemittanceAdmin, MembershipReceiptAdmin
 from ampa_manager.charge.admin.after_school_admin import AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
