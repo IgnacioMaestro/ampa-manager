@@ -159,6 +159,9 @@ ADMIN_REORDER = (
      'models': (
          'ampa_manager.AfterSchool', 'ampa_manager.AfterSchoolEdition',
          'ampa_manager.AfterSchoolRegistration')},
+    {'app': 'ampa_manager', 'label': _('Custody'),
+     'models': (
+         'ampa_manager.CustodyEdition', 'ampa_manager.CustodyRegistration')},
     {'app': 'ampa_manager', 'label': _('Activity'),
      'models': (
          'ampa_manager.ActivityInheritance', 'ampa_manager.Activity',
