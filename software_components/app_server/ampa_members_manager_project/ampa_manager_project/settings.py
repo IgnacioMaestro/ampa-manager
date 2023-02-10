@@ -170,7 +170,8 @@ ADMIN_REORDER = (
      'models': ('ampa_manager.ActivityReceipt', 'ampa_manager.ActivityRemittance',
                 'ampa_manager.MembershipReceipt', 'ampa_manager.MembershipRemittance',
                 'ampa_manager.Fee',
-                'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance')},
+                'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
+                'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
     # Keep original label and models
     'auth',
 )
