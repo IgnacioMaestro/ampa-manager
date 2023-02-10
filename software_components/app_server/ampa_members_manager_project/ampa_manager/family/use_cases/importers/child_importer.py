@@ -1,5 +1,6 @@
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
@@ -16,8 +17,8 @@ class ChildImporter:
             child = family.find_child(name)
             if child:
                 if child.is_modified(year_of_birth, repetition):
-                    fields_before, fields_after = child.update(year_of_birth, repetition)
-                    result.set_updated(child, fields_before, fields_after)
+                    fields_changes: FieldsChanges = child.update(year_of_birth, repetition)
+                    result.set_updated(child, fields_changes)
                 else:
                     result.set_not_modified(child)
             else:

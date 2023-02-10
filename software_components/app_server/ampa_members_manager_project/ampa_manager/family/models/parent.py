@@ -5,6 +5,7 @@ from django_extensions.db.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -49,14 +50,30 @@ class Parent(TimeStampedModel):
                or self.additional_phone_number != additional_phone_number \
                or self.email != email
 
-    def update(self, phone_number, additional_phone_number, email):
+    def update(self, phone_number, additional_phone_number, email, allow_reset=True) -> FieldsChanges:
         fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-        self.phone_number = phone_number
-        self.additional_phone_number = additional_phone_number
-        self.email = email
+        not_reset_fields = []
+
+        if phone_number is not None or allow_reset:
+            self.phone_number = phone_number
+        else:
+            not_reset_fields.append(self.phone_number)
+
+        if additional_phone_number is not None or allow_reset:
+            self.additional_phone_number = additional_phone_number
+        else:
+            not_reset_fields.append(self.additional_phone_number)
+
+        if email is not None or allow_reset:
+            self.email = email
+        else:
+            not_reset_fields.append(self.email)
+
         self.save()
+
         fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-        return fields_before, fields_after
+
+        return FieldsChanges(fields_before, fields_after, not_reset_fields)
 
     @staticmethod
     def fix_name_and_surnames():

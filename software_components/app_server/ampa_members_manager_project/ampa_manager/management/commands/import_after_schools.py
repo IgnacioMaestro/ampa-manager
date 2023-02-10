@@ -14,6 +14,7 @@ from ampa_manager.activity.use_cases.importers.after_school_registration_importe
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.bank_account_importer import BankAccountImporter
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
@@ -122,6 +123,11 @@ class Command(BaseCommand):
             if logger:
                 logger.close_log_file()
 
+        if logger:
+            return logger.logs
+        else:
+            return None
+
     @staticmethod
     def count_objects():
         return {
@@ -129,6 +135,7 @@ class Command(BaseCommand):
             Parent.__name__: Parent.objects.count(),
             Child.__name__: Child.objects.count(),
             BankAccount.__name__: BankAccount.objects.count(),
+            Holder.__name__: Holder.objects.count(),
             AfterSchool.__name__: AfterSchool.objects.count(),
             AfterSchoolEdition.__name__: AfterSchoolEdition.objects.count(),
             AfterSchoolRegistration.__name__: AfterSchoolRegistration.objects.count()
@@ -165,11 +172,13 @@ class Command(BaseCommand):
                 return result
             parent = parent_result.imported_object
 
-            bank_account_result = BankAccountImporter.import_bank_account(parent, row.get(Command.COLUMN_BANK_ACCOUNT_IBAN))
+            bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(parent, row.get(Command.COLUMN_BANK_ACCOUNT_IBAN))
             result.add_partial_result(bank_account_result)
-            if not bank_account_result.success:
+            result.add_partial_result(holder_result)
+
+            if not bank_account_result.success or not holder_result.success:
                 return result
-            bank_account = bank_account_result.imported_object
+            holder = holder_result.imported_object
 
             after_school_result = AfterSchoolImporter.import_after_school(row.get(Command.COLUMN_AFTER_SCHOOL_NAME))
             result.add_partial_result(after_school_result)
@@ -189,7 +198,7 @@ class Command(BaseCommand):
                 return result
 
             after_school_edition = edition_result.imported_object
-            registration_result = AfterSchoolRegistrationImporter.import_registration(after_school_edition, bank_account, child)
+            registration_result = AfterSchoolRegistrationImporter.import_registration(after_school_edition, holder, child)
             result.add_partial_result(registration_result)
 
         except Exception as e:

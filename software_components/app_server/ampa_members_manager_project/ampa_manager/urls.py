@@ -6,6 +6,6 @@ from ampa_manager.views.import_after_schools import  import_after_schools
 
 urlpatterns = [
     path('import/members/', import_members, name='import_members'),
-    path('import/afterschools/', import_custody, name='import_custody'),
-    path('import/custody/', import_after_schools, name='import_after_schools'),
+    path('import/afterschools/', import_after_schools, name='import_custody'),
+    path('import/custody/', import_custody, name='import_after_schools'),
 ]

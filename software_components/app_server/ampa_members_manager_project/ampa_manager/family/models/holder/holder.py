@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -6,11 +7,19 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount
 from ..parent import Parent
 from ..state import State
+
+
+def generate_holder_authorization_file_name(instance, filename):
+    path = 'authorizations/'
+    extension = filename.split('.')[-1]
+    filename = f'{instance.authorization_year}_{instance.authorization_order}'
+    return f'{path}{filename}.{extension}'
 
 
 class Holder(models.Model):
@@ -24,7 +33,7 @@ class Holder(models.Model):
     authorization_state = models.IntegerField(choices=State.choices, default=State.NOT_SENT, verbose_name=_("State"))
     authorization_sign_date = models.DateField(default=datetime.date.today)
     authorization_document = models.FileField(
-        null=True, blank=True, upload_to='authorizations/', verbose_name=_("Document"))
+        null=True, blank=True, upload_to=generate_holder_authorization_file_name, verbose_name=_("Document"))
 
     objects = HolderManager.from_queryset(HolderQuerySet)()
 
@@ -48,3 +57,11 @@ class Holder(models.Model):
     @property
     def authorization_full_number(self) -> str:
         return f'{self.authorization_year}/{self.authorization_order:03}'
+
+    @staticmethod
+    def find(parent: Parent, bank_account: BankAccount):
+        holders = Holder.objects.of_parent_and_bank_account(parent, bank_account)
+        if holders.count() == 1:
+            return holders.first()
+        else:
+            return None

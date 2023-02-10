@@ -1,13 +1,18 @@
+from typing import Optional
+
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.string_utils import StringUtils
 
 
 class AfterSchoolImporter:
 
     @staticmethod
-    def find(name):
+    def find(name) -> Optional[AfterSchool]:
         try:
-            return AfterSchool.objects.get(name=name)
+            for after_school in AfterSchool.objects.all():
+                if StringUtils.compare_ignoring_everything(after_school.name, name):
+                    return after_school
         except AfterSchool.DoesNotExist:
             return None
 

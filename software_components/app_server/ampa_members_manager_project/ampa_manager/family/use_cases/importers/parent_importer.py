@@ -1,4 +1,5 @@
 from ampa_manager.family.models.parent import Parent
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
@@ -16,8 +17,8 @@ class ParentImporter:
             parent = family.find_parent(name_and_surnames)
             if parent:
                 if parent.is_modified(phone_number, additional_phone_number, email):
-                    fields_before, fields_after = parent.update(phone_number, additional_phone_number, email)
-                    result.set_updated(parent, fields_before, fields_after)
+                    fields_changes: FieldsChanges = parent.update(phone_number, additional_phone_number, email, False)
+                    result.set_updated(parent, fields_changes)
                 else:
                     result.set_not_modified(parent)
             else:
