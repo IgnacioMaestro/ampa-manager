@@ -1,5 +1,3 @@
-from typing import List
-
 from django.db.models import QuerySet
 
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
@@ -13,7 +11,7 @@ class RemittanceGeneratorFromAfterSchoolRemittance:
         self.__after_school_remittance = after_school_remittance
 
     def generate(self) -> Remittance:
-        receipts: List[Receipt] = []
+        receipts: list[Receipt] = []
         after_school_receipts: QuerySet[AfterSchoolReceipt] = AfterSchoolReceipt.objects.filter(
             remittance=self.__after_school_remittance)
         for after_school_receipt in after_school_receipts:

@@ -24,7 +24,7 @@ class TestAfterSchoolEdition(TestCase):
 
     def test_str(self):
         after_school_edition: AfterSchoolEdition = baker.make('AfterSchoolEdition')
-        after_school_edition_str: str = f'{after_school_edition.after_school}'
-        after_school_edition_str += f' {after_school_edition.period} {after_school_edition.timetable}'
-        after_school_edition_str += f' {after_school_edition.academic_course}'
+        after_school_edition_str: str = f'{after_school_edition.academic_course}, '
+        after_school_edition_str += f'{after_school_edition.after_school}, '
+        after_school_edition_str += f'{after_school_edition.period}, {after_school_edition.timetable}'
         self.assertEqual(str(after_school_edition), after_school_edition_str)

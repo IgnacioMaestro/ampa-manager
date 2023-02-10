@@ -32,7 +32,7 @@ class TestAfterSchoolRegistration(TestCase):
         # Act
         self.assertEqual(
             str(after_school_registration),
-            f'{after_school_registration.after_school_edition} {after_school_registration.child}')
+            f'{after_school_registration.after_school_edition}, {after_school_registration.child}')
 
     def test_calculate_price_for_no_member(self):
         # Arrange

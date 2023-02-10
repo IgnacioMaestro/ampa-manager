@@ -15,4 +15,4 @@ class MembershipRemittanceGenerator:
         receipts: List[Receipt] = []
         for membership_receipt in self.__membership_remittance.membershipreceipt_set.iterator():
             receipts.append(membership_receipt.generate_receipt())
-        return Remittance(receipts, str(self.__membership_remittance))
+        return Remittance(receipts, str(self.__membership_remittance), self.__membership_remittance.created_at)

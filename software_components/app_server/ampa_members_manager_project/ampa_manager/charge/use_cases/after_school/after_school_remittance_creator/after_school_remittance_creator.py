@@ -17,8 +17,8 @@ from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.
 
 
 class AfterSchoolRemittanceCreator:
-    def __init__(self, after_school_editions: QuerySet[AfterSchoolEdition]):
-        self.__after_school_editions: QuerySet[AfterSchoolEdition] = after_school_editions
+    def __init__(self, editions: QuerySet[AfterSchoolEdition]):
+        self.__editions: QuerySet[AfterSchoolEdition] = editions
 
     def create_full(self) -> AfterSchoolRemittance:
         return self.create_with_calculator(calculator=FullAmountReceiptCalculator())
@@ -30,8 +30,7 @@ class AfterSchoolRemittanceCreator:
         return self.create_with_calculator(calculator=LeftAmountReceiptCalculator())
 
     def create_with_calculator(self, calculator: AmountReceiptCalculator):
-        after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.create_filled(
-            self.__after_school_editions)
+        after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.objects.create_filled(self.__editions)
         after_school_registrations: AfterSchoolRegistrationQuerySet = AfterSchoolRegistration.objects.of_after_school_remittance(
             after_school_remittance)
         for after_school_registration in after_school_registrations.iterator():

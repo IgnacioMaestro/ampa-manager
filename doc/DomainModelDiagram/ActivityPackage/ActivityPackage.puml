@@ -4,14 +4,7 @@ package AcademicCourse{
 }
 package Activity{
     package AfterSchool{}
-    package Custody{
-        class Custody
-        class CustodyLevel{
-            Period: String
-        }
-        Custody *-- "1..N" CustodyLevel: ""
-        Custody o-- AcademicCourse
-    }
+    package Custody{}
 
     package Camps{
         class Camps
@@ -27,7 +20,8 @@ package Activity{
     }
 
     CampsLevel <|-- PricePerLevel
-    CustodyLevel <|-- PricePerLevel
+    Custody <|-- PricePerLevel
+    AfterSchool <|-- PricePerLevel
 }
 
 @enduml

@@ -29,7 +29,7 @@ class BankAccount(TimeStampedModel):
     def bank_code(self):
         if str(self.iban):
             if len(str(self.iban)) == 24:
-                return self.iban[4:8]
+                return str(self.iban)[4:8]
             elif len(str(self.iban)) == 20:
                 return str(self.iban)[0:4]
         return None

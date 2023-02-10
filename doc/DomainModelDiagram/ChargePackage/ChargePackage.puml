@@ -1,7 +1,17 @@
 @startuml
 package Charge{
+    package AfterSchoolCharge{
+        class AfterSchoolRemittance{
+            name: string
+            created_at: datetime
+        }
+        class AfterSchoolReceipt {
+            amount: float
+        }
+    }
     package Membership{
         class MembershipRemittance {
+            identifier: string
             created_at: datetime
         }
         class MembershipReceipt
@@ -9,21 +19,12 @@ package Charge{
             amount: integer
         }
     }
-    package ActivityCharge{
-        class ActivityRemittance{
+    package CustodyCharge{
+        class CustodyRemittance{
             name: string
             created_at: datetime
         }
-        class ActivityReceipt {
-            amount: float
-        }
-    }
-    package AfterSchoolCharge{
-        class AfterSchoolRemittance{
-            name: string
-            created_at: datetime
-        }
-        class AfterSchoolReceipt {
+        class CustodyReceipt {
             amount: float
         }
     }
@@ -37,7 +38,7 @@ package Charge{
     State <|-- Send
     State <|-- Paid
 
-    class Remittance__Remesa {
+    class Remittance {
         name: string
     }
     class Receipt {
@@ -47,42 +48,29 @@ package Charge{
         authorization: string
     }
 
-    Remittance__Remesa *--> Receipt
-    ActivityReceipt --> Receipt
-    ActivityRemittance --> Remittance__Remesa
-    MembershipReceipt --> Receipt
-    MembershipRemittance --> Remittance__Remesa
-    AfterSchoolReceipt --> Receipt
-    AfterSchoolRemittance --> Remittance__Remesa
+    Remittance *--> Receipt
 
-    ActivityReceipt *-- State
-    ActivityRemittance *-- "1..N" ActivityReceipt
+    MembershipReceipt --> Receipt
+    MembershipRemittance --> Remittance
+    AfterSchoolReceipt --> Receipt
+    AfterSchoolRemittance --> Remittance
+    CustodyReceipt --> Receipt
+    CustodyRemittance --> Remittance
+
     MembershipReceipt *-- State
     MembershipRemittance *-- "1..N" MembershipReceipt
     AfterSchoolReceipt *-- State
     AfterSchoolRemittance *-- "1..N" AfterSchoolReceipt
+    CustodyReceipt *-- State
+    CustodyRemittance *-- "1..N" CustodyReceipt
 }
-
-package Activity{
-    class ActivityPeriod
-}
-
-ActivityPeriod "1..N" -right-o ActivityRemittance
-
-package ActivityRegistration {
-    class ActivityRegistration
-}
-
-ActivityRegistration "1..N" --o ActivityReceipt
-
-ActivityRegistration o--left ActivityPeriod
 
 package AcademicCourse{
     class AcademicCourse
 }
 
 Fee --o AcademicCourse
-MembershipRemittance o-- AcademicCourse
+MembershipRemittance o-left- AcademicCourse
 
 package Family{
     class Family
@@ -96,4 +84,11 @@ package AfterSchool{
 AfterSchoolRemittance o-- "1..N" AfterSchoolEdition
 AfterSchoolReceipt o-- AfterSchoolRegistration
 AfterSchoolEdition --o AfterSchoolRegistration
+package Custody{
+    class CustodyEdition
+    class CustodyRegistration
+}
+CustodyRemittance o-- "1..N" CustodyEdition
+CustodyReceipt o-- CustodyRegistration
+CustodyEdition --o CustodyRegistration
 @enduml
