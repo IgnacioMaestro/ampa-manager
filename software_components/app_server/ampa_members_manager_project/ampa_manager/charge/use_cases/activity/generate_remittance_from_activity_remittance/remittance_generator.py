@@ -13,4 +13,4 @@ class RemittanceGenerator:
         receipts: List[Receipt] = []
         for activity_receipt in self.__activity_remittance.activityreceipt_set.all():
             receipts.append(activity_receipt.generate_receipt())
-        return Remittance(receipts, str(self.__activity_remittance))
+        return Remittance(receipts, str(self.__activity_remittance), self.__activity_remittance.created_at)

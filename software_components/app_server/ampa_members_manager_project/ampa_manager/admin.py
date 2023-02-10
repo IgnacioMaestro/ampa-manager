@@ -5,6 +5,7 @@ from ampa_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_manager.academic_course.admin import ActiveCourseAdmin
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.activity.admin.custody_admin import CustodyEditionAdmin, CustodyRegistrationAdmin
 from ampa_manager.activity.admin_to_divide import ActivityPeriodAdmin, ActivityAdmin
 from ampa_manager.activity.admin.after_school_admin import AfterSchoolRegistrationAdmin, AfterSchoolEditionAdmin, \
     AfterSchoolAdmin
@@ -59,8 +60,8 @@ admin.site.register(AfterSchool, AfterSchoolAdmin)
 admin.site.register(AfterSchoolEdition, AfterSchoolEditionAdmin)
 admin.site.register(AfterSchoolRegistration, AfterSchoolRegistrationAdmin)
 
-# admin.site.register(CustodyEdition, CustodyEditionAdmin)
-# admin.site.register(CustodyRegistration, CustodyRegistrationAdmin)
+admin.site.register(CustodyEdition, CustodyEditionAdmin)
+admin.site.register(CustodyRegistration, CustodyRegistrationAdmin)
 
 admin.site.register(Child, ChildAdmin)
 admin.site.register(Parent, ParentAdmin)

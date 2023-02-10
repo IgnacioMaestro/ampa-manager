@@ -1,5 +1,3 @@
-from ampa_manager.charge.baker_recipes import membership_receipt_family_bank_account_local_recipe, \
-    after_school_registration_local_recipe
 from ampa_manager.family.baker_recipes import bank_account_local_recipe, family_bank_account_local_recipe
 
 bank_account_recipe_name = bank_account_local_recipe
@@ -7,8 +5,3 @@ family_bank_account_recipe_name = family_bank_account_local_recipe
 bank_account_recipe = 'ampa_manager.bank_account_recipe_name'
 family_bank_account_recipe = 'ampa_manager.family_bank_account_recipe_name'
 
-membership_receipt_family_bank_account_recipe_name = membership_receipt_family_bank_account_local_recipe
-membership_receipt_family_bank_account_recipe = 'ampa_manager.membership_receipt_family_bank_account_recipe_name'
-
-after_school_registration_recipe_name = after_school_registration_local_recipe
-after_school_registration_recipe = 'ampa_manager.after_school_registration_recipe_name'
