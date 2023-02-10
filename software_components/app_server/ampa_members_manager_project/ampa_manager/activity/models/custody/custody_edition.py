@@ -7,10 +7,15 @@ from ampa_manager.activity.models.price_per_level import PricePerLevel
 
 
 class CustodyEdition(PricePerLevel):
+    CYCLES = [
+        (1, _('Pre-school')),
+        (2, _('Primary education')),
+    ]
+
     period = models.CharField(max_length=300, verbose_name=_("Period"))
     max_days_for_charge = models.PositiveIntegerField(verbose_name=_("Max days for charge"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
-    primary = models.BooleanField()
+    cycle = models.IntegerField(null=False, blank=False, choices=CYCLES, verbose_name=_("Cycle"))
 
     class Meta:
         verbose_name = _('Custody edition')
@@ -18,5 +23,5 @@ class CustodyEdition(PricePerLevel):
         db_table = 'custody_edition'
         constraints = [
             models.UniqueConstraint(
-                fields=['academic_course', 'period', 'primary'], name='unique_academic_course_with_period_and_primary'),
+                fields=['academic_course', 'period', 'cycle'], name='unique_academic_course_with_period_and_cycle'),
         ]

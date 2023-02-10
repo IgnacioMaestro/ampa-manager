@@ -31,7 +31,7 @@ class CustodyRegistrationInline(ReadOnlyTabularInline):
 
 class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
-    list_display = ['academic_course', 'price_for_member', 'price_for_no_member']
+    list_display = ['academic_course', 'period', 'cycle', 'price_for_member', 'price_for_no_member']
     ordering = ['-academic_course']
     list_filter = ['academic_course__initial_year']
     list_per_page = 25
