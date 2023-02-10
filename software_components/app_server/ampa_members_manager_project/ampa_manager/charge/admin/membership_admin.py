@@ -9,7 +9,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.charge.admin import TEXT_CSV, RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE
-from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
@@ -86,14 +85,14 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))
-    def set_as_sent(self, request, queryset: QuerySet[ActivityReceipt]):
+    def set_as_sent(self, request, queryset: QuerySet[MembershipReceipt]):
         queryset.update(state=State.SEND)
 
         message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Set as paid"))
-    def set_as_paid(self, request, queryset: QuerySet[ActivityReceipt]):
+    def set_as_paid(self, request, queryset: QuerySet[MembershipReceipt]):
         queryset.update(state=State.PAID)
 
         message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}

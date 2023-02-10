@@ -14,8 +14,6 @@ from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.charge.models.activity_remittance import ActivityRemittance
-from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.fee.fee import Fee
