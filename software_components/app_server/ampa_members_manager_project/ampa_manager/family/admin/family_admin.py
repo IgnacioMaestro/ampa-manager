@@ -8,7 +8,6 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.admin.membership_admin import MembershipReceiptInline
-from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
@@ -17,7 +16,6 @@ from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
-from ampa_manager.non_related_inlines import NonrelatedTabularInline
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 
 
@@ -28,19 +26,6 @@ class FamilyAdminForm(forms.ModelForm):
             self.fields['default_holder'].queryset = Holder.objects.of_family(self.instance)
         else:
             self.fields['default_holder'].queryset = Holder.objects.none()
-
-
-class FamilyActivityReceiptInline(NonrelatedTabularInline):
-
-    def save_new_instance(self, parent, instance):
-        """ must be implemented but not used"""
-        pass
-
-    model = ActivityReceipt
-    fields = ['amount', 'state']
-
-    def get_form_queryset(self, family):
-        return ActivityReceipt.objects.of_family(family)
 
 
 class MembershipInline(ReadOnlyTabularInline):
@@ -65,7 +50,7 @@ class FamilyAdmin(admin.ModelAdmin):
     search_fields = ['surnames', 'parents__name_and_surnames', 'id']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline, MembershipInline, MembershipReceiptInline, FamilyActivityReceiptInline]
+    inlines = [ChildInline, MembershipInline, MembershipReceiptInline]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))
