@@ -5,7 +5,7 @@ from ampa_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_manager.academic_course.admin import ActiveCourseAdmin
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.activity.admin import ActivityPeriodAdmin, ActivityAdmin, AfterSchoolAdmin, \
+from ampa_manager.activity.admin_to_divide import ActivityPeriodAdmin, ActivityAdmin, AfterSchoolAdmin, \
     AfterSchoolEditionAdmin, AfterSchoolRegistrationAdmin
 from ampa_manager.activity.models.activity import Activity
 from ampa_manager.activity.models.activity_period import ActivityPeriod

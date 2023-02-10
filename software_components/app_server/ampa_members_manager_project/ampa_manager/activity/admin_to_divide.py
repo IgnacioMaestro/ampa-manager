@@ -96,7 +96,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         message = create_message_with_link(after_school_remittance.get_admin_url())
         return self.message_user(request=request, message=message)
 
-    @admin.action(description=_("Create after school remittance half"))
+    @admin.action(description=_("Create after school remittance with half"))
     def create_after_school_remittance_half(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
         after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_half()
         message = create_message_with_link(after_school_remittance.get_admin_url())
