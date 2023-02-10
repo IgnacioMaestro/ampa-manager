@@ -146,7 +146,6 @@ MEDIA_URL = ''
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 ADMIN_REORDER = (
     {'app': 'ampa_manager', 'label': _('Academic course'),
      'models': ('ampa_manager.AcademicCourse', 'ampa_manager.ActiveCourse')},
@@ -162,22 +161,16 @@ ADMIN_REORDER = (
     {'app': 'ampa_manager', 'label': _('Custody'),
      'models': (
          'ampa_manager.CustodyEdition', 'ampa_manager.CustodyRegistration')},
-    {'app': 'ampa_manager', 'label': _('Activity'),
-     'models': (
-         'ampa_manager.ActivityInheritance', 'ampa_manager.Activity',
-         'ampa_manager.RepetitiveActivity', 'ampa_manager.UniqueActivity',
-         'ampa_manager.ActivityPeriod')},
-    {'app': 'ampa_manager', 'label': _('ActivityRegistration'),
-     'models': ('ampa_manager.ActivityRegistration',)},
     {'app': 'ampa_manager', 'label': _('Charge'),
-     'models': ('ampa_manager.ActivityReceipt', 'ampa_manager.ActivityRemittance',
-                'ampa_manager.MembershipReceipt', 'ampa_manager.MembershipRemittance',
-                'ampa_manager.Fee',
-                'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
-                'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
+     'models': (
+         'ampa_manager.Fee',
+         'ampa_manager.MembershipReceipt', 'ampa_manager.MembershipRemittance',
+         'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
+         'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
     # Keep original label and models
     'auth',
 )
+
 
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'ES'
