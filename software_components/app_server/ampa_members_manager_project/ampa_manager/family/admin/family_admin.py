@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.charge.admin import MembershipReceiptInline
+from ampa_manager.charge.admin.membership_admin import MembershipReceiptInline
 from ampa_manager.charge.models.activity_receipt import ActivityReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
