@@ -23,9 +23,9 @@ class Command(BaseCommand):
 
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
-    CREATE_EDITION_IF_NOT_EXISTS = True
 
     COLUMN_FAMILY_SURNAMES = 'family_surnames'
+    COLUMN_FAMILY_IS_MEMBER = 'family_is_member'
     COLUMN_CHILD_NAME = 'child_name'
     COLUMN_CHILD_LEVEL = 'child_level'
     COLUMN_CHILD_YEAR_OF_BIRTH = 'child_year_of_birth'
@@ -34,6 +34,8 @@ class Command(BaseCommand):
     COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER = 'parent_additional_phone_number'
     COLUMN_PARENT_EMAIL = 'parent_email'
     COLUMN_BANK_ACCOUNT_IBAN = 'bank_account_iban'
+    COLUMN_EDITION_PERIOD = 'edition_period'
+    COLUMN_EDITION_CYCLE = 'edition_cycle'
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES],
