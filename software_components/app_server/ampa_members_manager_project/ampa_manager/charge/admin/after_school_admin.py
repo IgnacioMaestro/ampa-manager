@@ -13,15 +13,14 @@ from xsdata.formats.dataclass.serializers.config import SerializerConfig
 from xsdata.models.datatype import XmlDateTime, XmlDate
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
-from .models.activity_receipt import ActivityReceipt
-from .models.activity_remittance import ActivityRemittance
-from .models.after_school_charge.after_school_receipt import AfterSchoolReceipt
-from .models.after_school_charge.after_school_remittance import AfterSchoolRemittance
-from .models.fee.fee import Fee
-from .models.membership_receipt import MembershipReceipt
-from .models.membership_remittance import MembershipRemittance
-from .remittance import Remittance
-from .sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, GroupHeader39, \
+from ..models.activity_remittance import ActivityRemittance
+from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
+from ..models.fee.fee import Fee
+from ..models.membership_receipt import MembershipReceipt
+from ..models.membership_remittance import MembershipRemittance
+from ..remittance import Remittance
+from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, GroupHeader39, \
     PaymentInstructionInformation4, PartyIdentification32, Party6Choice, OrganisationIdentification4, \
     GenericOrganisationIdentification1, PaymentMethod2Code, PaymentTypeInformation20, ServiceLevel8Choice, \
     LocalInstrument2Choice, SequenceType1Code, PostalAddress6, CashAccount16, AccountIdentification4Choice, \
@@ -29,13 +28,14 @@ from .sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02
     GenericPersonIdentification1, PersonIdentificationSchemeName1Choice, DirectDebitTransactionInformation9, \
     PaymentIdentification1, ActiveOrHistoricCurrencyAndAmount, DirectDebitTransaction6, MandateRelatedInformation6, \
     GenericFinancialIdentification1, RemittanceInformation5
-from .state import State
-from .use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
-from .use_cases.after_school.remittance_generator_from_after_school_remittance import RemittanceGeneratorFromAfterSchoolRemittance
-from .use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
+from ..state import State
+from ..use_cases.activity.generate_remittance_from_activity_remittance.remittance_generator import RemittanceGenerator
+from ..use_cases.after_school.remittance_generator_from_after_school_remittance import RemittanceGeneratorFromAfterSchoolRemittance
+from ..use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
-from .use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
+from ..use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
+from ..models.activity_receipt import ActivityReceipt
 
 TEXT_CSV = 'text/csv'
 TEXT_XML = 'text/xml'
@@ -458,7 +458,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             directdebittransactioninformation9.dbtr_agt = branchandfinancialinstitutionidentification4deudor
             partyidentification32deudor = PartyIdentification32()
             partyidentification32deudor.nm = receipt.bank_account_owner
-            partyidentification32deudor.pstl_adr = postaladdress6Deudor
+            partyidentification32deudor.pstl_adr = postaladdress6deudor
             partyidentification32deudor.ctry_of_res = PAIS
             directdebittransactioninformation9.dbtr = partyidentification32deudor
             cashaccount16deudor = CashAccount16()

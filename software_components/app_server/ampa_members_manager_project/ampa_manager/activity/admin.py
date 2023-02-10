@@ -108,6 +108,10 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         message = create_message_with_link(after_school_remittance.get_admin_url())
         return self.message_user(request=request, message=message)
 
+    @admin.display(description=_('Registrations'))
+    def after_schools_count(self, edition):
+        return AfterSchoolRegistration.objects.of_edition(edition).count()
+
     actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left]
 
 
