@@ -3,7 +3,6 @@ from pathlib import Path
 
 from django.core.management.base import BaseCommand
 
-from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family

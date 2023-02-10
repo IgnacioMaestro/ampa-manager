@@ -27,7 +27,7 @@ class Command(BaseCommand):
     help = 'Import families, parents, children and bank accounts from an excel file'
 
     SHEET_NUMBER = 0
-    FIRST_ROW_INDEX = 3
+    FIRST_ROW_INDEX = 2
 
     COLUMN_FAMILY_SURNAMES = 'family_surnames'
     COLUMN_PARENT1_NAME_AND_SURNAMES = 'parent1_name_and_surnames'
@@ -206,21 +206,25 @@ class Command(BaseCommand):
 
     @staticmethod
     def import_row(row: ExcelRow, logger: Logger) -> ImportRowResult:
-        result = ImportRowResult(row.index)
+        result = ImportRowResult(row)
 
         try:
-            family_result = FamilyImporter.import_family(row.get(Command.COLUMN_FAMILY_SURNAMES),
-                                                         row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
-                                                         row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES))
-            result.add_partial_result(family_result)
-            if not family_result.success:
-                return result
-            family = family_result.imported_object
+            if not row.error:
+                family_result = FamilyImporter.import_family(row.get(Command.COLUMN_FAMILY_SURNAMES),
+                                                             row.get(Command.COLUMN_PARENT1_NAME_AND_SURNAMES),
+                                                             row.get(Command.COLUMN_PARENT2_NAME_AND_SURNAMES))
+                result.add_partial_result(family_result)
+                if not family_result.success:
+                    return result
+                family = family_result.imported_object
 
-            if family:
-                result = Command.import_children(row, family, result)
-                result = Command.import_parents(row, family, result)
-                result = Command.import_membership(family, result)
+                if family:
+                    result = Command.import_children(row, family, result)
+                    result = Command.import_parents(row, family, result)
+                    result = Command.import_membership(family, result)
+
+            else:
+                result.error = row.error
 
         except Exception as e:
             logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')

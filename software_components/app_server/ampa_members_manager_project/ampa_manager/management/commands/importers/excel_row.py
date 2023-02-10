@@ -3,9 +3,10 @@ from typing import List
 
 class ExcelRow:
 
-    def __init__(self, index: int, values: dict):
+    def __init__(self, index: int):
         self.index = index
-        self.values = values
+        self.values = {}
+        self.error = None
 
     def get(self, column_name, default_value=None):
         return self.values.get(column_name, default_value)

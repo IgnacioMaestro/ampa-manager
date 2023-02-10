@@ -35,8 +35,12 @@ class ExcelImporter:
         rows = []
         print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
-            columns_values = self.import_row_columns(row_index)
-            rows.append(ExcelRow(row_index, columns_values))
+            row = ExcelRow(row_index)
+            try:
+                row.values = self.import_row_columns(row.index)
+            except Exception as e:
+                row.error = str(e)
+            rows.append(row)
         return rows
 
     def import_row_columns(self, row_index: int) -> dict:

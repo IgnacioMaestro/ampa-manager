@@ -1,9 +1,6 @@
-from typing import Optional
-
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.utils.string_utils import StringUtils
 
 
 class Level:
@@ -79,19 +76,6 @@ class Level:
         ID_LH6: AGE_LH6,
     }
 
-    QUOTAS = {
-        ID_HH2: 75,
-        ID_HH3: 75,
-        ID_HH4: 75,
-        ID_HH5: 75,
-        ID_LH1: 75,
-        ID_LH2: 75,
-        ID_LH3: 75,
-        ID_LH4: 75,
-        ID_LH5: 75,
-        ID_LH6: 75,
-    }
-
     @staticmethod
     def get_level_by_age(age: int) -> str:
         return Level.LEVEL_BY_AGE.get(age)
@@ -118,3 +102,7 @@ class Level:
     def calculate_age(year_of_birth):
         active_course = ActiveCourse.load()
         return active_course.initial_year - year_of_birth
+
+    @staticmethod
+    def is_valid(level: str) -> bool:
+        return level in Level.LEVELS_NAMES.keys()
