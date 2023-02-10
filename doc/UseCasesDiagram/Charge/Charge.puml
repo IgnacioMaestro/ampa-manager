@@ -2,13 +2,6 @@
 left to right direction
 actor Admin
 package Charge {
-    package Activity{
-      Admin --> (Create a ActivityRemittance from ActivityPeriods)
-      Admin --> (Export remittance from an ActivityRemittance)
-      Admin --> (Set all ActivityReceipts of a ActivityRemittance send)
-      Admin --> (Set all ActivityReceipts of a ActivityRemittance paid)
-      Admin --> (Check an ActivityRegistration state of payment or assignation)
-    }
     package Custody{
       Admin --> (Create a CustodyRemittance from CustodyEditions full amount)
       Admin --> (Export remittance from a CustodyRemittance)

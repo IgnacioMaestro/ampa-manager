@@ -15,17 +15,15 @@ package Family {
     Admin --> (Add Membership for a Family)
 }
 package Activity {
-    Admin --> (Register Activity in the system)
-
     package AfterSchool {
         Admin --> (Register AfterSchool in the system)
         Admin --> (Register AfterSchoolEdition in the system)
         Admin --> (Register AfterSchoolRegistration in the system)
     }
-}
-package ActivityRegistration {
-    Admin --> (Join Activity)
-    Admin --> (Establish amount of an ActivityRegistration)
+    package Custody {
+        Admin --> (Register CustodyEdition in the system)
+        Admin --> (Register CustodyRegistration in the system)
+    }
 }
 package Charge {
 }
