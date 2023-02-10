@@ -5,25 +5,17 @@ from ampa_manager.academic_course.admin import AcademicCourseAdmin
 from ampa_manager.academic_course.admin import ActiveCourseAdmin
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.activity.admin.custody_admin import CustodyEditionAdmin, CustodyRegistrationAdmin
-from ampa_manager.activity.admin_to_divide import ActivityPeriodAdmin, ActivityAdmin
 from ampa_manager.activity.admin.after_school_admin import AfterSchoolRegistrationAdmin, AfterSchoolEditionAdmin, \
     AfterSchoolAdmin
-from ampa_manager.activity.models.activity import Activity
-from ampa_manager.activity.models.activity_period import ActivityPeriod
+from ampa_manager.activity.admin.custody_admin import CustodyEditionAdmin, CustodyRegistrationAdmin
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
-from ampa_manager.activity_registration.admin import ActivityRegistrationAdmin
-from ampa_manager.activity_registration.models.activity_registration import ActivityRegistration
-from ampa_manager.charge.admin.custody_admin import CustodyReceiptAdmin, CustodyRemittanceAdmin
-from ampa_manager.charge.admin_to_delete import ActivityRemittanceAdmin, ActivityReceiptAdmin
-from ampa_manager.charge.admin.membership_admin import MembershipRemittanceAdmin, MembershipReceiptAdmin
 from ampa_manager.charge.admin.after_school_admin import AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
-from ampa_manager.charge.models.activity_receipt import ActivityReceipt
-from ampa_manager.charge.models.activity_remittance import ActivityRemittance
+from ampa_manager.charge.admin.custody_admin import CustodyReceiptAdmin, CustodyRemittanceAdmin
+from ampa_manager.charge.admin.membership_admin import MembershipRemittanceAdmin, MembershipReceiptAdmin
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
@@ -53,9 +45,6 @@ admin.site.site_title = _('PTA Administration')
 admin.site.register(AcademicCourse, AcademicCourseAdmin)
 admin.site.register(ActiveCourse, ActiveCourseAdmin)
 
-admin.site.register(ActivityPeriod, ActivityPeriodAdmin)
-admin.site.register(Activity, ActivityAdmin)
-
 admin.site.register(AfterSchool, AfterSchoolAdmin)
 admin.site.register(AfterSchoolEdition, AfterSchoolEditionAdmin)
 admin.site.register(AfterSchoolRegistration, AfterSchoolRegistrationAdmin)
@@ -64,8 +53,8 @@ admin.site.register(CustodyEdition, CustodyEditionAdmin)
 admin.site.register(CustodyRegistration, CustodyRegistrationAdmin)
 
 admin.site.register(Child, ChildAdmin)
-admin.site.register(Parent, ParentAdmin)
 # noinspection DuplicatedCode
+admin.site.register(Parent, ParentAdmin)
 admin.site.register(Family, FamilyAdmin)
 
 # noinspection DuplicatedCode
@@ -74,9 +63,6 @@ admin.site.register(Holder, HolderAdmin)
 admin.site.register(BankBicCode, BankBicCodeAdmin)
 admin.site.register(Membership, MembershipAdmin)
 
-admin.site.register(ActivityRegistration, ActivityRegistrationAdmin)
-admin.site.register(ActivityRemittance, ActivityRemittanceAdmin)
-admin.site.register(ActivityReceipt, ActivityReceiptAdmin)
 admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)
 admin.site.register(MembershipReceipt, MembershipReceiptAdmin)
 admin.site.register(Fee)
