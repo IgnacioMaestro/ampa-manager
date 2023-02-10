@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from ..models.holder.holder import Holder
 from ..models.state import State
-from ...activity.admin_to_divide import AfterSchoolRegistrationInline
+from ...activity.admin.after_school_admin import AfterSchoolRegistrationInline
 from ...activity.models.after_school.after_school_registration import AfterSchoolRegistration
 
 
