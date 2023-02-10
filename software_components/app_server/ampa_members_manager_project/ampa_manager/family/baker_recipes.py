@@ -11,4 +11,3 @@ baker.generators.add('localflavor.generic.models.IBANField', iban_generator)
 
 
 bank_account_local_recipe = Recipe(BankAccount)
-family_bank_account_local_recipe = Recipe(Family, default_bank_account=foreign_key(bank_account_local_recipe))

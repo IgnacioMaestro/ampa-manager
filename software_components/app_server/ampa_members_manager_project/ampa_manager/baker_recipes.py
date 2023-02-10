@@ -1,7 +1,5 @@
-from ampa_manager.family.baker_recipes import bank_account_local_recipe, family_bank_account_local_recipe
+from ampa_manager.family.baker_recipes import bank_account_local_recipe
 
 bank_account_recipe_name = bank_account_local_recipe
-family_bank_account_recipe_name = family_bank_account_local_recipe
 bank_account_recipe = 'ampa_manager.bank_account_recipe_name'
-family_bank_account_recipe = 'ampa_manager.family_bank_account_recipe_name'
 
