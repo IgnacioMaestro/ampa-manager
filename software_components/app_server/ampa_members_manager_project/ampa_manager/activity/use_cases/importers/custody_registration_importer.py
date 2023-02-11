@@ -1,3 +1,4 @@
+from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
@@ -15,8 +16,8 @@ class CustodyRegistrationImporter:
             return None
 
     @staticmethod
-    def import_registration(custody_edition: CustodyRegistration, holder: Holder, child: Child, assisted_days: int) -> ImportModelResult:
-        result = ImportModelResult(CustodyRegistration.__name__, [])
+    def import_registration(custody_edition: CustodyEdition, holder: Holder, child: Child, assisted_days: int) -> ImportModelResult:
+        result = ImportModelResult(CustodyRegistration.__name__, [custody_edition, holder, child, assisted_days])
 
         registration = CustodyRegistrationImporter.find(custody_edition, child)
         if registration:
@@ -30,8 +31,8 @@ class CustodyRegistrationImporter:
             else:
                 result.set_not_modified(registration)
         else:
-            registration = CustodyRegistrationImporter.objects.create(custody_edition=custody_edition, holder=holder,
-                                                                      child=child, assisted_days=assisted_days)
+            registration = CustodyRegistration.objects.create(custody_edition=custody_edition, holder=holder,
+                                                              child=child, assisted_days=assisted_days)
             result.set_created(registration)
 
         return result

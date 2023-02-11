@@ -33,7 +33,7 @@ class ImportRowResult:
 
         for result in self.partial_results:
             if result.error:
-                errors.append(result.error)
+                errors.append(f'{result.class_name}: {result.error}')
 
         return ', '.join(errors)
 
@@ -83,13 +83,13 @@ class ImportRowResult:
             variation = ImportRowResult.get_variation(counters_before[model_name], counters_after[model_name])
             logger.log(f'- {model_name}: {variation}')
             for state, state_count in model_totals.items():
-                logger.log(f'· · · {state.name}: {state_count}')
+                logger.log(f'--- {state.name}: {state_count}')
 
         logger.log(f'\n\nRESULTS BY STATUS\n')
         for state, state_totals in totals_by_status.items():
             logger.log(f'- {state.name}')
             for model_name, model_count in state_totals.items():
-                logger.log(f'· · · {model_name}: {model_count}')
+                logger.log(f'--- {model_name}: {model_count}')
 
     @staticmethod
     def get_totals(results: List[ImportRowResult]):
@@ -115,7 +115,7 @@ class ImportRowResult:
                 totals_by_status = ImportRowResult.add_total_by_status(totals_by_status, partial_result.class_name, partial_result.state, partial_result.state2)
 
                 if partial_result.class_name == Family.__name__ and partial_result.state == ProcessingState.CREATED:
-                    created_families[result.row_index] = partial_result.imported_object
+                    created_families[result.row.index] = partial_result.imported_object
 
         return totals_by_model, totals_by_status, errors, created_families, success_count, not_success_count
 

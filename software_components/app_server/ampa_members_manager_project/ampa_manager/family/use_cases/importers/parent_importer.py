@@ -9,7 +9,8 @@ class ParentImporter:
     def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str) -> ImportModelResult:
         result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
-        fields_ok, error = ParentImporter.validate_fields(name_and_surnames,
+        fields_ok, error = ParentImporter.validate_fields(family,
+                                                          name_and_surnames,
                                                           phone_number,
                                                           additional_phone_number,
                                                           email)
@@ -36,13 +37,15 @@ class ParentImporter:
         return result
 
     @staticmethod
-    def validate_fields(name_and_surnames, phone_number, additional_phone_number, email):
+    def validate_fields(family, name_and_surnames, phone_number, additional_phone_number, email):
+        if not family:
+            return False, f'Missing family'
         if not name_and_surnames or type(name_and_surnames) != str:
-            return False, f'Wrong name and surnames: {name_and_surnames} ({type(name_and_surnames)})'
+            return False, f'Missing/Wrong name and surnames: {name_and_surnames} ({type(name_and_surnames)})'
         if phone_number and type(phone_number) != str:
-            return False, f'Wrong phone number: {phone_number} ({type(phone_number)})'
+            return False, f'Missing/Wrong phone number: {phone_number} ({type(phone_number)})'
         if additional_phone_number and type(additional_phone_number) != str:
-            return False, f'Wrong additional phone number: {additional_phone_number} ({type(additional_phone_number)})'
+            return False, f'Missing/Wrong additional phone number: {additional_phone_number} ({type(additional_phone_number)})'
         if email and type(email) != str:
-            return False, f'Wrong email: {email} ({type(email)})'
+            return False, f'Missing/Wrong email: {email} ({type(email)})'
         return True, None

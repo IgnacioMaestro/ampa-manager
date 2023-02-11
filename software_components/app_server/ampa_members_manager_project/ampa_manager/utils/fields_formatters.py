@@ -65,7 +65,7 @@ class FieldsFormatters:
                 validator(iban)
             except ValidationError:
                 raise ValueError('Wrong IBAN')
-            return True
+            return iban
         return None
 
     @staticmethod
@@ -76,12 +76,12 @@ class FieldsFormatters:
 
     @staticmethod
     def clean_integer(value: str) -> Optional[int]:
-        if value:
+        if value is not None:
             return int(float(StringUtils.remove_all_spaces(str(value))))
         return None
 
     @staticmethod
     def clean_float(value: str) -> Optional[float]:
-        if value:
+        if value is not None:
             return float(StringUtils.remove_all_spaces(str(value)))
         return None

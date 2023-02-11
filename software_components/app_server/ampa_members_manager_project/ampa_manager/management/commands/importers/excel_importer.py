@@ -1,3 +1,4 @@
+import traceback
 from typing import Dict, List
 
 import xlrd
@@ -31,6 +32,17 @@ class ExcelImporter:
         sheet = book.sheet_by_index(self.sheet_number)
         return book, sheet
 
+    def get_row_range(self, columns_indexes, row_index, formatter):
+        values = []
+        for column_index in columns_indexes:
+            try:
+                value = self.sheet.cell_value(rowx=row_index, colx=column_index)
+                value = formatter(value)
+            except IndexError:
+                value = None
+            values.append(value)
+        return values
+
     def get_rows(self) -> List[ExcelRow]:
         rows = []
         print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
@@ -49,5 +61,8 @@ class ExcelImporter:
             index = settings[0]
             formatter = settings[1]
             name = settings[2]
-            columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
+            try:
+                columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
+            except IndexError:
+                columns_values[name] = None
         return columns_values
