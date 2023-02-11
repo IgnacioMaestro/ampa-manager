@@ -9,12 +9,10 @@ class AfterSchoolImporter:
 
     @staticmethod
     def find(name) -> Optional[AfterSchool]:
-        try:
-            for after_school in AfterSchool.objects.all():
-                if StringUtils.compare_ignoring_everything(after_school.name, name):
-                    return after_school
-        except AfterSchool.DoesNotExist:
-            return None
+        for after_school in AfterSchool.objects.all():
+            if StringUtils.compare_ignoring_everything(after_school.name, name):
+                return after_school
+        return None
 
     @staticmethod
     def import_after_school(name) -> ImportModelResult:

@@ -39,6 +39,10 @@ class Child(TimeStampedModel):
         return Level.get_level_by_age(self.school_age)
 
     @property
+    def cycle(self):
+        return Level.get_cycle_by_level(self.level)
+
+    @property
     def age(self):
         return Level.calculate_age(self.year_of_birth)
 

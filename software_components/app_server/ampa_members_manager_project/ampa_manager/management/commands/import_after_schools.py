@@ -196,8 +196,8 @@ class Command(BaseCommand):
             result.add_partial_result(edition_result)
             if not edition_result.success:
                 return result
-
             after_school_edition = edition_result.imported_object
+
             registration_result = AfterSchoolRegistrationImporter.import_registration(after_school_edition, holder, child)
             result.add_partial_result(registration_result)
 
