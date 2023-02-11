@@ -30,9 +30,11 @@ class CustodyRegistrationImporter:
                 result.set_updated(registration, FieldsChanges(fields_before, fields_after, []))
             else:
                 result.set_not_modified(registration)
-        else:
+        elif assisted_days > 0:
             registration = CustodyRegistration.objects.create(custody_edition=custody_edition, holder=holder,
                                                               child=child, assisted_days=assisted_days)
             result.set_created(registration)
+        else:
+            result.set_omitted()
 
         return result

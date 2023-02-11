@@ -19,7 +19,7 @@ class ExcelImporter:
 
     def open_excel(self):
         if self.file_path:
-            print(f'Loading excel file from path {self.file_path}')
+            print(f'Loading excel file from path "{self.file_path}"')
             book = xlrd.open_workbook(filename=self.file_path)
         elif self.file_content:
             print('Loading excel file from contents')
@@ -28,8 +28,9 @@ class ExcelImporter:
             print('Unable to load excel file')
             return None, None
 
-        print(f'Loading excel sheet number {self.sheet_number+1}')
         sheet = book.sheet_by_index(self.sheet_number)
+        print(f'Loading excel sheet "{sheet.name}"')
+
         return book, sheet
 
     def get_row_range(self, columns_indexes, row_index, formatter):
@@ -45,7 +46,7 @@ class ExcelImporter:
 
     def get_rows(self) -> List[ExcelRow]:
         rows = []
-        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
+        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
             row = ExcelRow(row_index)
             try:

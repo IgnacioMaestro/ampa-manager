@@ -72,6 +72,9 @@ class ImportModelResult:
     def set_not_processed(self):
         self.state = ProcessingState.NOT_PROCESSED
 
+    def set_omitted(self):
+        self.state = ProcessingState.OMITTED
+
     def set_created(self, imported_object):
         self.imported_object = imported_object
         self.state = ProcessingState.CREATED

@@ -15,7 +15,7 @@ from ampa_manager.read_only_inline import ReadOnlyTabularInline
 
 
 class CustodyRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['custody_edition', 'child', 'holder']
+    list_display = ['custody_edition', 'child', 'holder', 'assisted_days']
     ordering = ['custody_edition']
     list_filter = ['custody_edition__academic_course__initial_year', 'custody_edition__period',
                    'custody_edition__levels']
@@ -26,7 +26,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):
     model = CustodyRegistration
-    list_display = ['custody_edition', 'child', 'holder']
+    list_display = ['custody_edition', 'child', 'holder', 'assisted_days']
     ordering = ['custody_edition']
     extra = 0
 
