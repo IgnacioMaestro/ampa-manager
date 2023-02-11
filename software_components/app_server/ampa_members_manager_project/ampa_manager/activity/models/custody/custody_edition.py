@@ -4,20 +4,17 @@ from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.academic_course.models.level import Level
 from ampa_manager.activity.models.custody.custody_edition_queryset import CustodyEditionQuerySet
 from ampa_manager.activity.models.price_per_level import PricePerLevel
 
 
 class CustodyEdition(PricePerLevel):
-    CYCLES = [
-        (1, _('Pre-school')),
-        (2, _('Primary education')),
-    ]
-
     period = models.CharField(max_length=300, verbose_name=_("Period"))
     max_days_for_charge = models.PositiveIntegerField(verbose_name=_("Max days for charge"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
-    cycle = models.IntegerField(null=False, blank=False, choices=CYCLES, verbose_name=_("Cycle"))
+    cycle = models.CharField(max_length=3, null=False, blank=False, choices=Level.CYCLES,
+                             default=Level.ID_CYCLE_PRIMARY, verbose_name=_("Cycle"))
 
     objects = Manager.from_queryset(CustodyEditionQuerySet)()
 

@@ -76,9 +76,32 @@ class Level:
         ID_LH6: AGE_LH6,
     }
 
+    ID_CYCLE_PRE_SCHOOL = 'PRE'
+    ID_CYCLE_PRIMARY = 'PRI'
+
+    CYCLE_LEVELS_PRE_SCHOOL = [
+        ID_HH2, ID_HH3, ID_HH4, ID_HH5
+    ]
+
+    CYCLE_LEVELS_PRIMARY = [
+        ID_LH1, ID_LH2, ID_LH3, ID_LH4, ID_LH5, ID_LH6
+    ]
+
+    CYCLES = [
+        ('PRE', _('Pre-school')),
+        ('PRI', _('Primary education')),
+    ]
+
     @staticmethod
     def get_level_by_age(age: int) -> str:
         return Level.LEVEL_BY_AGE.get(age)
+
+    @staticmethod
+    def get_cycle_by_level(level: str) -> str:
+        if level in Level.CYCLE_LEVELS_PRIMARY:
+            return Level.ID_CYCLE_PRIMARY
+        elif level in Level.CYCLE_LEVELS_PRE_SCHOOL:
+            return Level.ID_CYCLE_PRE_SCHOOL
 
     @staticmethod
     def get_age_by_level(level_id: str) -> int:
