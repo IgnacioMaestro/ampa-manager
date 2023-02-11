@@ -65,11 +65,11 @@ class ImportRowResult:
 
         totals_by_model, totals_by_status, errors, created_families, success_count, not_success_count = ImportRowResult.get_totals(results)
 
-        logger.log(f'\n\nTOTAL: {len(results)}\n')
-        logger.log(f'- Imported: {success_count}')
-        logger.log(f'- Not imported: {not_success_count}')
+        logger.log('\n\nTOTAL:')
+        logger.log(f'- Rows imported successfully: {success_count}/{len(results)}')
+        logger.log(f'- Rows not imported: {not_success_count}/{len(results)}')
 
-        logger.log(f'\n\nERRORS: {len(errors)}\n')
+        logger.log(f'\n\nERRORS: {len(errors)}')
         for row_index, error in errors.items():
             logger.log(f'- Row {row_index+1}: {error}')
 

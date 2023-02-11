@@ -52,7 +52,7 @@ class ImportModelResult:
 
     @property
     def success(self):
-        return self.imported_object is not None
+        return self.imported_object is not None or self.state == ProcessingState.OMITTED
 
     def set_error(self, error):
         self.state = ProcessingState.ERROR
