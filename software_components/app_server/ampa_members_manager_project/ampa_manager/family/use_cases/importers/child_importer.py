@@ -1,3 +1,4 @@
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
@@ -26,7 +27,17 @@ class ChildImporter:
                         result.set_error('Wrong level or year of birth')
                 else:
                     result.set_not_modified(child)
-            elif level and year_of_birth:
+            elif level or year_of_birth:
+                if level and not year_of_birth:
+                    current_course = ActiveCourse.load()
+                    year_of_birth = current_course.initial_year - Level.get_age_by_level(level)
+                    result.add_warning(f'Missing year of birth calculated from level: {level} -> {year_of_birth}')
+                if not level and year_of_birth:
+                    current_course = ActiveCourse.load()
+                    age = current_course.initial_year - year_of_birth
+                    level = Level.get_level_by_age(age)
+                    result.add_warning(f'Missing level calculated from year of birth: {year_of_birth} -> {level}')
+
                 repetition = Level.calculate_repetition(level, year_of_birth)
                 if repetition >= 0:
                     child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition,

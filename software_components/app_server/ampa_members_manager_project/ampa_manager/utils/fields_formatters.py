@@ -54,7 +54,7 @@ class FieldsFormatters:
                 if value.endswith(',0'):
                     value = value[:-2]
                 return value
-        return ''
+        return None
 
     @staticmethod
     def clean_iban(value: str) -> Optional[str]:

@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional, List
 
 from django.core.management.base import BaseCommand
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
@@ -49,22 +50,38 @@ class Command(BaseCommand):
     COLUMN_EDITION5_ASSISTED_DAYS = 'edition5_assisted_days'
     COLUMN_EDITION6_ASSISTED_DAYS = 'edition6_assisted_days'
 
+    LABEL_FAMILY_SURNAMES = _('Family surnames')
+    LABEL_PARENT_NAME_AND_SURNAMES = _('Parent name and surnames')
+    LABEL_PARENT_PHONE_NUMBER = _('Parent phone number')
+    LABEL_PARENT_ADDITIONAL_PHONE_NUMBER = _('Parent additional phone number')
+    LABEL_PARENT_EMAIL = _('Parent email')
+    LABEL_BANK_ACCOUNT_IBAN = _('Parent bank account IBAN')
+    LABEL_CHILD_NAME = _('Child name (without surnames)')
+    LABEL_CHILD_LEVEL = _('Child level (ex. HH4, LH3)')
+    LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')
+    LABEL_EDITION1_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 1} + ': ' + _('Assisted days')
+    LABEL_EDITION2_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 2} + ': ' + _('Assisted days')
+    LABEL_EDITION3_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 3} + ': ' + _('Assisted days')
+    LABEL_EDITION4_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 4} + ': ' + _('Assisted days')
+    LABEL_EDITION5_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 5} + ': ' + _('Assisted days')
+    LABEL_EDITION6_ASSISTED_DAYS = _("Edition %(num_edition)s") % {'num_edition': 6} + ': ' + _('Assisted days')
+
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES],
-        [1, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES],
-        [2, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER],
-        [3, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER],
-        [4, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL],
-        [5, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN],
-        [6, FieldsFormatters.clean_name, COLUMN_CHILD_NAME],
-        [7, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH],
-        [8, FieldsFormatters.clean_level, COLUMN_CHILD_LEVEL],
-        [9, FieldsFormatters.clean_integer, COLUMN_EDITION1_ASSISTED_DAYS],
-        [10, FieldsFormatters.clean_integer, COLUMN_EDITION2_ASSISTED_DAYS],
-        [11, FieldsFormatters.clean_integer, COLUMN_EDITION3_ASSISTED_DAYS],
-        [12, FieldsFormatters.clean_integer, COLUMN_EDITION4_ASSISTED_DAYS],
-        [13, FieldsFormatters.clean_integer, COLUMN_EDITION5_ASSISTED_DAYS],
-        [14, FieldsFormatters.clean_integer, COLUMN_EDITION6_ASSISTED_DAYS],
+        [0, FieldsFormatters.clean_name, COLUMN_FAMILY_SURNAMES, LABEL_FAMILY_SURNAMES],
+        [1, FieldsFormatters.clean_name, COLUMN_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
+        [2, FieldsFormatters.clean_phone, COLUMN_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
+        [3, FieldsFormatters.clean_phone, COLUMN_PARENT_ADDITIONAL_PHONE_NUMBER, LABEL_PARENT_ADDITIONAL_PHONE_NUMBER],
+        [4, FieldsFormatters.clean_email, COLUMN_PARENT_EMAIL, LABEL_PARENT_EMAIL],
+        [5, FieldsFormatters.clean_iban, COLUMN_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [6, FieldsFormatters.clean_name, COLUMN_CHILD_NAME, LABEL_CHILD_NAME],
+        [7, FieldsFormatters.clean_integer, COLUMN_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
+        [8, FieldsFormatters.clean_level, COLUMN_CHILD_LEVEL, LABEL_CHILD_LEVEL],
+        [9, FieldsFormatters.clean_integer, COLUMN_EDITION1_ASSISTED_DAYS, LABEL_EDITION1_ASSISTED_DAYS],
+        [10, FieldsFormatters.clean_integer, COLUMN_EDITION2_ASSISTED_DAYS, LABEL_EDITION2_ASSISTED_DAYS],
+        [11, FieldsFormatters.clean_integer, COLUMN_EDITION3_ASSISTED_DAYS, LABEL_EDITION3_ASSISTED_DAYS],
+        [12, FieldsFormatters.clean_integer, COLUMN_EDITION4_ASSISTED_DAYS, LABEL_EDITION4_ASSISTED_DAYS],
+        [13, FieldsFormatters.clean_integer, COLUMN_EDITION5_ASSISTED_DAYS, LABEL_EDITION5_ASSISTED_DAYS],
+        [14, FieldsFormatters.clean_integer, COLUMN_EDITION6_ASSISTED_DAYS, LABEL_EDITION6_ASSISTED_DAYS],
     ]
 
     EDITIONS_PERIOD_COLUMN_INDEXES = [9, 10, 11, 12, 13, 14]

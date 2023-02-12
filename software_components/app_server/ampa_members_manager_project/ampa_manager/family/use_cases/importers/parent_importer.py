@@ -18,7 +18,7 @@ class ParentImporter:
             parent = family.find_parent(name_and_surnames)
             if parent:
                 if parent.is_modified(phone_number, additional_phone_number, email):
-                    fields_changes: FieldsChanges = parent.update(phone_number, additional_phone_number, email, False)
+                    fields_changes: FieldsChanges = parent.update(phone_number, additional_phone_number, email, allow_reset=False)
                     result.set_updated(parent, fields_changes)
                 else:
                     result.set_not_modified(parent)

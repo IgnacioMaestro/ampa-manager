@@ -19,7 +19,7 @@ class HolderAdmin(admin.ModelAdmin):
     ordering = ['parent__name_and_surnames']
     list_filter = ['authorization_year', 'authorization_state']
     search_fields = ['parent__name_and_surnames', 'authorization_sign_date',
-                     'bank_account__iban', 'parent__name_and_surnames']
+                     'bank_account__iban', 'parent__name_and_surnames', 'id']
     list_per_page = 25
     inlines = [AfterSchoolRegistrationInline]
 

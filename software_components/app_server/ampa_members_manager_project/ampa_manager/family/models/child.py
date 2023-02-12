@@ -62,12 +62,12 @@ class Child(TimeStampedModel):
 
         if year_of_birth is not None or allow_reset:
             self.year_of_birth = year_of_birth
-        else:
+        elif self.year_of_birth:
             not_reset_fields.append(self.year_of_birth)
 
         if repetition is not None or allow_reset:
             self.repetition = repetition
-        else:
+        elif self.repetition:
             not_reset_fields.append(self.repetition)
 
         self.save()

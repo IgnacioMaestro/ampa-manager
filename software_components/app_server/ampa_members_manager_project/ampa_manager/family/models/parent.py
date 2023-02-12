@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db import models
 from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
@@ -53,23 +55,28 @@ class Parent(TimeStampedModel):
     def update(self, phone_number, additional_phone_number, email, allow_reset=True) -> FieldsChanges:
         fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
         not_reset_fields = []
+        updated = False
 
         if phone_number is not None or allow_reset:
             self.phone_number = phone_number
-        else:
+            updated = True
+        elif self.phone_number:
             not_reset_fields.append(self.phone_number)
 
         if additional_phone_number is not None or allow_reset:
             self.additional_phone_number = additional_phone_number
-        else:
+            updated = True
+        elif self.additional_phone_number:
             not_reset_fields.append(self.additional_phone_number)
 
         if email is not None or allow_reset:
             self.email = email
-        else:
+            updated = True
+        elif self.email:
             not_reset_fields.append(self.email)
 
-        self.save()
+        if updated:
+            self.save()
 
         fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
 
@@ -101,3 +108,12 @@ class Parent(TimeStampedModel):
             warnings.append(f'- Parents with multiple bank accounts: {parents_with_multiple_bank_accounts}')
 
         return warnings
+
+    @staticmethod
+    def find(name_and_surnames: str):
+        if name_and_surnames:
+            family_parents = Parent.objects.all()
+            for parent in family_parents:
+                if parent.matches_name_and_surnames(name_and_surnames, strict=True):
+                    return parent
+        return None

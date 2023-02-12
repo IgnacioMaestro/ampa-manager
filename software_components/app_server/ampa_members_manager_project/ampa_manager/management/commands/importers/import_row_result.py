@@ -37,6 +37,16 @@ class ImportRowResult:
 
         return ', '.join(errors)
 
+    @property
+    def warnings(self):
+        warnings = []
+
+        for result in self.partial_results:
+            if len(result.warnings) > 0:
+                warnings.extend(result.warnings)
+
+        return ', '.join(warnings)
+
     def print(self, logger: Logger):
         summary = f'OK' if self.success else f'ERROR: {self.errors}'
         logger.log(f'\nRow {self.row.index + 1} -> {summary}')
@@ -63,7 +73,8 @@ class ImportRowResult:
     @staticmethod
     def print_stats(logger: Logger, results: List[ImportRowResult], counters_before: Dict, counters_after: Dict):
 
-        totals_by_model, totals_by_status, errors, created_families, success_count, not_success_count = ImportRowResult.get_totals(results)
+        totals_by_model, totals_by_status, errors, warnings, created_families, success_count, not_success_count = \
+            ImportRowResult.get_totals(results)
 
         logger.log('\n\nTOTAL:')
         logger.log(f'- Rows imported successfully: {success_count}/{len(results)}')
@@ -73,10 +84,13 @@ class ImportRowResult:
         for row_index, error in errors.items():
             logger.log(f'- Row {row_index+1}: {error}')
 
+        logger.log(f'\n\nWARNINGS:')
         if len(created_families) > 0:
-            logger.log(f'\n\nWARNING: {len(created_families)} families were created\n')
+            logger.log(f'- {len(created_families)} families were created')
             for row_index, family in created_families.items():
-                logger.log(f'- {family}')
+                logger.log(f'--- {family}')
+        for row_index, warning in warnings.items():
+            logger.log(f'- Row {row_index + 1}: {warning}')
 
         logger.log(f'\n\nRESULTS BY MODEL\n')
         for model_name, model_totals in totals_by_model.items():
@@ -96,6 +110,7 @@ class ImportRowResult:
         totals_by_model = {}
         totals_by_status = {}
         errors = {}
+        warnings = {}
         created_families = {}
         success_count = 0
         not_success_count = 0
@@ -110,6 +125,9 @@ class ImportRowResult:
             if result.errors:
                 errors[result.row.index] = result.errors
 
+            if result.warnings:
+                warnings[result.row.index] = result.warnings
+
             for partial_result in result.partial_results:
                 totals_by_model = ImportRowResult.add_total_by_model(totals_by_model, partial_result.class_name, partial_result.state, partial_result.state2)
                 totals_by_status = ImportRowResult.add_total_by_status(totals_by_status, partial_result.class_name, partial_result.state, partial_result.state2)
@@ -117,7 +135,7 @@ class ImportRowResult:
                 if partial_result.class_name == Family.__name__ and partial_result.state == ProcessingState.CREATED:
                     created_families[result.row.index] = partial_result.imported_object
 
-        return totals_by_model, totals_by_status, errors, created_families, success_count, not_success_count
+        return totals_by_model, totals_by_status, errors, warnings, created_families, success_count, not_success_count
 
     @staticmethod
     def add_total_by_model(totals_by_model, class_name, state, state2):
