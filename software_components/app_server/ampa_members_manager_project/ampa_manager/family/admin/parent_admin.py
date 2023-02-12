@@ -18,7 +18,7 @@ class ParentAdmin(admin.ModelAdmin):
     fields = ['name_and_surnames', 'phone_number', 'additional_phone_number', 'email', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['name_and_surnames']
-    search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number']
+    search_fields = ['name_and_surnames', 'family__surnames', 'phone_number', 'additional_phone_number', 'id']
     # inlines = [BankAccountInline]
     list_per_page = 25
     list_filter = [ParentFamilyEmailsFilter, ParentFamiliesCountFilter]

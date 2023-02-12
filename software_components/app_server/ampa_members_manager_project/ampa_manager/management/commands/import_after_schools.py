@@ -57,7 +57,6 @@ class Command(BaseCommand):
     LABEL_PARENT_ADDITIONAL_PHONE_NUMBER = _('Parent additional phone number')
     LABEL_PARENT_EMAIL = _('Parent email')
     LABEL_BANK_ACCOUNT_IBAN = _('Parent bank account IBAN')
-    LABEL_BANK_ACCOUNT_SWIFT = _('Parent bank account SWIFT')
     LABEL_CHILD_NAME = _('Child name (without surnames)')
     LABEL_CHILD_LEVEL = _('Child level (ex. HH4, LH3)')
     LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')

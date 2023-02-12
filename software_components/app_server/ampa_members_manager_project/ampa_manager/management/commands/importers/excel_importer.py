@@ -1,3 +1,4 @@
+import traceback
 from typing import Dict, List
 
 import xlrd
@@ -18,7 +19,7 @@ class ExcelImporter:
 
     def open_excel(self):
         if self.file_path:
-            print(f'Loading excel file from path {self.file_path}')
+            print(f'Loading excel file from path "{self.file_path}"')
             book = xlrd.open_workbook(filename=self.file_path)
         elif self.file_content:
             print('Loading excel file from contents')
@@ -27,13 +28,25 @@ class ExcelImporter:
             print('Unable to load excel file')
             return None, None
 
-        print(f'Loading excel sheet number {self.sheet_number+1}')
         sheet = book.sheet_by_index(self.sheet_number)
+        print(f'Loading excel sheet "{sheet.name}"')
+
         return book, sheet
+
+    def get_row_range(self, columns_indexes, row_index, formatter):
+        values = []
+        for column_index in columns_indexes:
+            try:
+                value = self.sheet.cell_value(rowx=row_index, colx=column_index)
+                value = formatter(value)
+            except IndexError:
+                value = None
+            values.append(value)
+        return values
 
     def get_rows(self) -> List[ExcelRow]:
         rows = []
-        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows+1}')
+        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
             row = ExcelRow(row_index)
             try:
@@ -49,5 +62,8 @@ class ExcelImporter:
             index = settings[0]
             formatter = settings[1]
             name = settings[2]
-            columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
+            try:
+                columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
+            except IndexError:
+                columns_values[name] = None
         return columns_values

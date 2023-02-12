@@ -15,7 +15,7 @@ class BankAccountAdmin(admin.ModelAdmin):
     fields = ['iban', 'swift_bic', 'created', 'modified']
     readonly_fields = ['created', 'modified']
     list_filter = [BankAccountBICCodeFilter]
-    search_fields = ['swift_bic', 'iban']
+    search_fields = ['swift_bic', 'iban', 'id']
     list_per_page = 25
     inlines = [HolderInline]
 

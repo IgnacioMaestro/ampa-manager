@@ -41,7 +41,7 @@ class BankAccountImporter:
 
     @staticmethod
     def import_holder(parent: Parent, bank_account: BankAccount) -> ImportModelResult:
-        result = ImportModelResult(Holder.__name__, [])
+        result = ImportModelResult(Holder.__name__, [parent, bank_account])
 
         if parent:
             if bank_account:

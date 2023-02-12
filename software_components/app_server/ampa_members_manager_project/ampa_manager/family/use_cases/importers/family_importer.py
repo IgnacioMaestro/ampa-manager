@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership

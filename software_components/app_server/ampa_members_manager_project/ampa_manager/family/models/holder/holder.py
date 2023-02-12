@@ -48,7 +48,7 @@ class Holder(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f'{self.parent}-{self.bank_account}'
+        return f'{self.parent}, {self.bank_account}'
 
     def clean(self):
         if self.authorization_state == State.SIGNED and not self.authorization_document:

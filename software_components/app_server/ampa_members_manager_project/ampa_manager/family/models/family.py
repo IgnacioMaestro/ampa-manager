@@ -58,11 +58,52 @@ class Family(TimeStampedModel):
         self.decline_membership = True
         self.save()
 
-    def matches_surnames(self, surnames):
-        return StringUtils.compare_ignoring_everything(self.surnames, surnames)
+    def matches_surnames(self, surnames, strict=False):
+        if surnames and self.surnames:
+            if strict:
+                if StringUtils.compare_ignoring_everything(self.surnames, surnames):
+                    return True
+            elif StringUtils.contains_any_word(self.surnames, surnames):
+                return True
+        return False
 
     def has_parent(self, parent_name_and_surnames):
         return self.find_parent(parent_name_and_surnames) is not None
+
+    @staticmethod
+    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None):
+        family = None
+        error = None
+
+        families = Family.filter_by_surnames(surnames, strict=True)
+
+        if len(families) == 1:
+            family = families[0]
+        elif len(families) > 1:
+            family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
+            if family is None:
+                if parents_name_and_surnames:
+                    parents = ', '.join(parents_name_and_surnames)
+                else:
+                    parents = ''
+                error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
+        elif len(parents_name_and_surnames) > 0:
+            for parent_name_and_surnames in parents_name_and_surnames:
+                parent = Parent.find(parent_name_and_surnames)
+                if parent:
+                    for parent_family in Family.objects.of_parent(parent):
+                        if parent_family.matches_surnames(surnames, strict=False):
+                            family = parent_family
+
+        return family, error
+
+    @staticmethod
+    def filter_by_surnames(surnames, strict=True) -> List[Family]:
+        families = []
+        for family in Family.objects.all():
+            if family.matches_surnames(surnames, strict):
+                families.append(family)
+        return families
 
     def find_parent(self, name_and_surnames: str) -> Optional[Parent]:
         if name_and_surnames:
@@ -89,26 +130,6 @@ class Family(TimeStampedModel):
                 if child.matches_name(name, strict=False):
                     return child
         return None
-
-    @staticmethod
-    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None):
-        family = None
-        error = None
-
-        families = Family.filter_by_surnames(surnames)
-
-        if len(families) == 1:
-            family = families[0]
-        elif len(families) > 1:
-            family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
-            if family is None:
-                if parents_name_and_surnames:
-                    parents = ', '.join(parents_name_and_surnames)
-                else:
-                    parents = ''
-                error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
-
-        return family, error
 
     @staticmethod
     def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:
@@ -176,14 +197,6 @@ class Family(TimeStampedModel):
                             duplicated.append([child1, child2])
                             processed.extend([child1.id, child2.id])
         return duplicated
-
-    @staticmethod
-    def filter_by_surnames(surnames) -> List[Family]:
-        families = []
-        for family in Family.objects.all():
-            if family.matches_surnames(surnames):
-                families.append(family)
-        return families
 
     @staticmethod
     def review_data():

@@ -53,3 +53,6 @@ class FamilyQuerySet(QuerySet):
     def not_included_in_receipt_of_course(self, academic_course: AcademicCourse):
         return self.filter(
             Q(membershipreceipt__isnull=True) | ~Q(membershipreceipt__remittance__course=academic_course))
+
+    def of_parent(self, parent):
+        return self.filter(parents=parent)

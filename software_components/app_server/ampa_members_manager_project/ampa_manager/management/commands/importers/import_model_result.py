@@ -14,6 +14,7 @@ class ImportModelResult:
         self.state: ProcessingState = ProcessingState.NOT_PROCESSED
         self.state2: Optional[ProcessingState] = None
         self.error: Optional[str] = None
+        self.warnings: List[str] = []
         self.excel_fields: List = excel_fields
         self.fields_before: List = []
         self.fields_after: List = []
@@ -31,7 +32,19 @@ class ImportModelResult:
 
         excel_fields = self.get_excel_fields_csv()
 
-        return f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}. {changes} {error}'
+        description = f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}'
+
+        if changes:
+            description += f'. {changes}'
+
+        if error:
+            description += f'. {error}'
+
+        if len(self.warnings) > 0:
+            warnings = ', '.join(self.warnings)
+            description += f'. Warnings: {warnings}'
+
+        return description
 
     @property
     def states_names(self):
@@ -52,7 +65,10 @@ class ImportModelResult:
 
     @property
     def success(self):
-        return self.imported_object is not None
+        return self.imported_object is not None or self.state == ProcessingState.OMITTED
+
+    def add_warning(self, warning):
+        self.warnings.append(warning)
 
     def set_error(self, error):
         self.state = ProcessingState.ERROR
@@ -71,6 +87,9 @@ class ImportModelResult:
 
     def set_not_processed(self):
         self.state = ProcessingState.NOT_PROCESSED
+
+    def set_omitted(self):
+        self.state = ProcessingState.OMITTED
 
     def set_created(self, imported_object):
         self.imported_object = imported_object

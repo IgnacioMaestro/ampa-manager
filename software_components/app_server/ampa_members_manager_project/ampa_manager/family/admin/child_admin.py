@@ -14,7 +14,7 @@ class ChildAdmin(admin.ModelAdmin):
     readonly_fields = ['created', 'modified']
     ordering = ['name']
     list_filter = [ChildCycleFilter, ChildLevelListFilter, 'year_of_birth', 'repetition']
-    search_fields = ['name', 'year_of_birth', 'family__surnames']
+    search_fields = ['name', 'year_of_birth', 'family__surnames', 'id']
     list_per_page = 25
     inlines = [AfterSchoolRegistrationInline]
 

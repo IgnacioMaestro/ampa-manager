@@ -10,3 +10,4 @@ class ProcessingState(Enum):
     FAMILY_SET_AS_MEMBER = 5
     NOT_MODIFIED = 6
     ERROR = 7
+    OMITTED = 8
