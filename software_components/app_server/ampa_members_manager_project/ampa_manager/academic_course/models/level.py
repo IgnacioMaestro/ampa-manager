@@ -99,10 +99,10 @@ class Level:
         return Level.LEVEL_IDS_BY_AGE.get(age)
 
     @staticmethod
-    def get_cycle_by_level(level: str) -> Optional[str]:
-        if level in Level.CYCLE_LEVELS_PRIMARY:
+    def get_cycle_by_level(level_id: str) -> Optional[str]:
+        if level_id in Level.CYCLE_LEVELS_PRIMARY:
             return Level.ID_CYCLE_PRIMARY
-        elif level in Level.CYCLE_LEVELS_PRE_SCHOOL:
+        elif level_id in Level.CYCLE_LEVELS_PRE_SCHOOL:
             return Level.ID_CYCLE_PRE_SCHOOL
         return None
 
@@ -130,5 +130,5 @@ class Level:
         return active_course.initial_year - year_of_birth
 
     @staticmethod
-    def is_valid(level: str) -> bool:
-        return level in Level.LEVELS_NAMES.keys()
+    def is_valid(level_name: str) -> bool:
+        return level_name in Level.LEVELS_NAMES.keys()
