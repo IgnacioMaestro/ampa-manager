@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
@@ -37,7 +39,7 @@ class Level:
     NAME_LH5 = _('LH5')
     NAME_LH6 = _('LH6')
 
-    LEVEL_BY_AGE = {
+    LEVEL_IDS_BY_AGE = {
         AGE_HH2: ID_HH2,
         AGE_HH3: ID_HH3,
         AGE_HH4: ID_HH4,
@@ -63,7 +65,7 @@ class Level:
         ID_LH6: NAME_LH6,
     }
 
-    AGE_BY_LEVEL = {
+    LEVEL_AGES = {
         ID_HH2: AGE_HH2,
         ID_HH3: AGE_HH3,
         ID_HH4: AGE_HH4,
@@ -76,9 +78,6 @@ class Level:
         ID_LH6: AGE_LH6,
     }
 
-    ID_CYCLE_PRE_SCHOOL = 'PRE'
-    ID_CYCLE_PRIMARY = 'PRI'
-
     CYCLE_LEVELS_PRE_SCHOOL = [
         ID_HH2, ID_HH3, ID_HH4, ID_HH5
     ]
@@ -87,25 +86,29 @@ class Level:
         ID_LH1, ID_LH2, ID_LH3, ID_LH4, ID_LH5, ID_LH6
     ]
 
+    ID_CYCLE_PRE_SCHOOL = 'PRE'
+    ID_CYCLE_PRIMARY = 'PRI'
+
     CYCLES = [
-        ('PRE', _('Pre-school')),
-        ('PRI', _('Primary education')),
+        (ID_CYCLE_PRE_SCHOOL, _('Pre-school')),
+        (ID_CYCLE_PRIMARY, _('Primary education')),
     ]
 
     @staticmethod
     def get_level_by_age(age: int) -> str:
-        return Level.LEVEL_BY_AGE.get(age)
+        return Level.LEVEL_IDS_BY_AGE.get(age)
 
     @staticmethod
-    def get_cycle_by_level(level: str) -> str:
+    def get_cycle_by_level(level: str) -> Optional[str]:
         if level in Level.CYCLE_LEVELS_PRIMARY:
             return Level.ID_CYCLE_PRIMARY
         elif level in Level.CYCLE_LEVELS_PRE_SCHOOL:
             return Level.ID_CYCLE_PRE_SCHOOL
+        return None
 
     @staticmethod
     def get_age_by_level(level_id: str) -> int:
-        return Level.AGE_BY_LEVEL.get(level_id)
+        return Level.LEVEL_AGES.get(level_id)
 
     @staticmethod
     def get_level_name(level_id: str) -> int:
