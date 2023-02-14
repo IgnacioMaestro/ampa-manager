@@ -78,6 +78,11 @@ class Level:
         ID_LH6: AGE_LH6,
     }
 
+    LEVELS_IDS = [
+        ID_HH2, ID_HH3, ID_HH4, ID_HH5,
+        ID_LH1, ID_LH2, ID_LH3, ID_LH4, ID_LH5, ID_LH6,
+    ]
+
     CYCLE_LEVELS_PRE_SCHOOL = [
         ID_HH2, ID_HH3, ID_HH4, ID_HH5
     ]
@@ -130,5 +135,5 @@ class Level:
         return active_course.initial_year - year_of_birth
 
     @staticmethod
-    def is_valid(level_name: str) -> bool:
-        return level_name in Level.LEVELS_NAMES.keys()
+    def is_valid(level_id: str) -> bool:
+        return level_id in Level.LEVELS_IDS
