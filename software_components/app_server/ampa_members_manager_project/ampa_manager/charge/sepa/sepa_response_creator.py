@@ -2,6 +2,7 @@ import codecs
 
 from django.http import HttpResponse
 
+from ..receipt import Receipt
 from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, GroupHeader39, \
     PaymentInstructionInformation4, PartyIdentification32, Party6Choice, OrganisationIdentification4, \
     GenericOrganisationIdentification1, PaymentMethod2Code, PaymentTypeInformation20, ServiceLevel8Choice, \
@@ -14,7 +15,7 @@ from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 from xsdata.models.datatype import XmlDateTime, XmlDate
 
-from ampa_manager.charge.admin import TEXT_XML, SEPA, CORE, PAIS, EURO
+from ..admin import TEXT_XML, SEPA, CORE, PAIS, EURO
 from ampa_manager.charge.remittance import Remittance
 
 
@@ -24,8 +25,9 @@ class SEPAResponseCreator:
         response = HttpResponse(content_type=TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
         # TODO: Sacar a funcion o usar Stream.
+        receipts_by_iban: list[Receipt] = self.group_receipts_by_iban(remittance.receipts)
         suma: float = 0
-        for receipt in remittance.receipts:
+        for receipt in receipts_by_iban:
             suma = suma + receipt.amount
         suma = float(format(suma, '.2f'))
         print("Empiezo a rellenar")
@@ -42,7 +44,7 @@ class SEPAResponseCreator:
         now_str: str = remittance.created_date.strftime("%Y-%m-%dT%H:%M:%S")
         creation_date: XmlDateTime = XmlDateTime.from_string(now_str)
         groupheader39.cre_dt_tm = creation_date
-        groupheader39.nb_of_txs = len(remittance.obtain_rows())
+        groupheader39.nb_of_txs = len(receipts_by_iban)
         groupheader39.ctrl_sum = suma
 
         partyidentification32cabecera: PartyIdentification32 = PartyIdentification32()
@@ -134,7 +136,7 @@ class SEPAResponseCreator:
         accountidentification4choicedeudor: AccountIdentification4Choice
         remittanceinformation5: RemittanceInformation5
         # Empieza el bucle por cada uno de los recibos
-        for receipt in remittance.receipts:
+        for receipt in receipts_by_iban:
             directdebittransactioninformation9 = DirectDebitTransactionInformation9()
             directdebittransactioninformation9.pmt_id = paymentidentification1
             activeorhistoriccurrencyandamount = ActiveOrHistoricCurrencyAndAmount()
@@ -179,3 +181,16 @@ class SEPAResponseCreator:
         response.write(xml)
 
         return response
+
+    def group_receipts_by_iban(self, receipts: list[Receipt]) -> list[Receipt]:
+        grouped_receipts = {}
+        for receipt in receipts:
+            if receipt.iban in grouped_receipts:
+                grouped_receipts[receipt.iban].amount += receipt.amount
+            else:
+                grouped_receipts[receipt.iban] = Receipt(amount=receipt.amount,
+                                                         bank_account_owner=receipt.bank_account_owner,
+                                                         iban=receipt.iban,
+                                                         bic=receipt.bic,
+                                                         authorization=receipt.authorization)
+        return list(grouped_receipts.values())
