@@ -61,5 +61,22 @@ class CustodyEditionAdmin(admin.ModelAdmin):
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
+    
+    @admin.action(description=_("Calculate prices"))
+    def calculate_prices(self, request, custody_editions: QuerySet[CustodyEdition]):
+        calculated = 0
+        not_calculated = 0
+        for edition in custody_editions:
+            if edition.calculate_prices():
+                calculated += 1
+            else:
+                not_calculated += 1
+        
+        message = _("%(calculated)s editions' prices calculated") % {'calculated': calculated}
+        if not_calculated:
+            message += '. ' + _("Unable to calculate %(not_calculated)s editions' prices") % {'not_calculated': not_calculated}
+        message += '. ' + _("Prices calculated based on edition cost and number of registrations")
 
-    actions = [create_custody_remittance]
+        return self.message_user(request=request, message=message)
+
+    actions = [create_custody_remittance, calculate_prices]
