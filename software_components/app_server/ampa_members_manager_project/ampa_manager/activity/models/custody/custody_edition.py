@@ -9,6 +9,7 @@ from ampa_manager.academic_course.models.level import Level
 from ampa_manager.activity.models.custody.custody_edition_queryset import CustodyEditionQuerySet
 from ampa_manager.activity.models.price_per_level import PricePerLevel
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.family.models.membership import Membership
 
 
 class CustodyEdition(PricePerLevel):
@@ -35,14 +36,31 @@ class CustodyEdition(PricePerLevel):
     
     @property
     def no_members_registrations_count(self):
-        return CustodyRegistration.of_edition(self).no_members().count()
+        return CustodyRegistration.objects.of_edition(self).no_members().count()
     
     @property
     def members_registrations_count(self):
-        return CustodyRegistration.of_edition(self).members().count()
+        return CustodyRegistration.objects.of_edition(self).members().count()
+
+    def get_topped_assisted_days(self):
+        members = 0
+        non_members = 0
+        for registration in CustodyRegistration.objects.of_edition(self):
+
+            topped_assisted_days = registration.assisted_days
+            if topped_assisted_days > self.max_days_for_charge:
+                topped_assisted_days = self.max_days_for_charge
+
+            if Membership.is_member_child(registration.child):
+                members += topped_assisted_days
+            else:
+                non_members += topped_assisted_days
+
+        return members, non_members
     
     def calculate_prices(self):
-        registrations_count = (settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE * self.no_members_registrations_count) + self.members_registrations_count
+        members_assisted_days, non_members_assisted_days = self.get_topped_assisted_days()
+        registrations_count = (settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE * non_members_assisted_days) + members_assisted_days
         if self.cost > 0 and registrations_count > 0:
             self.price_for_member = self.cost / registrations_count
             self.price_for_non_member = self.price_for_member * settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE

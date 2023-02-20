@@ -20,9 +20,3 @@ class CustodyRegistrationQuerySet(QuerySet):
 
     def of_edition(self, custody_edition: CustodyEdition):
         return self.filter(custody_edition=custody_edition)
-    
-    def members(self):
-        return self.filter(child__family__membership__academic_course=ActiveCourse.load())
-
-    def no_members(self):
-        return self.exclude(child__family__membership__academic_course=ActiveCourse.load())

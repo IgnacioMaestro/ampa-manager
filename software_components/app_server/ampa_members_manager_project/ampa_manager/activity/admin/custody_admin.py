@@ -34,7 +34,8 @@ class CustodyRegistrationInline(ReadOnlyTabularInline):
 class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
     list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
-                    'max_days_for_charge', 'registrations_count', 'remittance']
+                    'max_days_for_charge', 'no_members_registrations_count', 'members_registrations_count',
+                    'registrations_count', 'remittance']
     fields = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member', 'max_days_for_charge']
     ordering = ['-academic_course', 'cycle', '-id']
     list_filter = ['academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
