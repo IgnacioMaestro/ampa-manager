@@ -26,6 +26,9 @@ class CustodyRegistration(models.Model):
             models.UniqueConstraint(fields=['custody_edition', 'child'], name='unique_custody_edition_for_child'),
         ]
 
+    def __str__(self):
+        return f'{self.custody_edition}, {self.child}'
+
     def clean(self):
         if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
             raise ValidationError(_('The selected bank account does not belong to the child\'s family'))

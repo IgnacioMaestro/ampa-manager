@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-12 19:03+0100\n"
+"POT-Creation-Date: 2023-02-20 15:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,7 @@ msgid "Is active"
 msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:24
+#: .\ampa_manager\activity\admin\custody_admin.py:30
 #: .\ampa_manager\family\admin\child_admin.py:23
 #: .\ampa_manager\family\admin\family_admin.py:120
 #: .\ampa_manager\family\admin\parent_admin.py:28
@@ -34,6 +35,7 @@ msgid "Yes"
 msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:24
+#: .\ampa_manager\activity\admin\custody_admin.py:30
 #: .\ampa_manager\family\admin\child_admin.py:23
 #: .\ampa_manager\family\admin\family_admin.py:120
 #: .\ampa_manager\family\admin\parent_admin.py:28
@@ -42,7 +44,10 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:26
 #: .\ampa_manager\academic_course\admin.py:57
-#: .\ampa_manager\family\admin\filters\family_filters.py:14
+#: .\ampa_manager\activity\admin\custody_admin.py:70
+#: .\ampa_manager\activity\admin\custody_admin.py:94
+#: .\ampa_manager\activity\admin\custody_registration_filters.py:14
+#: .\ampa_manager\family\admin\filters\family_filters.py:12
 msgid "Members"
 msgstr ""
 
@@ -74,7 +79,7 @@ msgstr ""
 #: .\ampa_manager\family\admin\child_admin.py:29
 #: .\ampa_manager\family\admin\family_admin.py:106
 #: .\ampa_manager\family\models\family.py:24
-#: .\ampa_manager\family\models\parent.py:23
+#: .\ampa_manager\family\models\parent.py:25
 msgid "Parents"
 msgstr ""
 
@@ -83,7 +88,7 @@ msgid "Children in school"
 msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:77
-#: .\ampa_manager\academic_course\models\level.py:91
+#: .\ampa_manager\academic_course\models\level.py:98
 #: .\ampa_manager\family\admin\filters\child_filters.py:16
 msgid "Pre-school"
 msgstr ""
@@ -143,7 +148,7 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\models\academic_course.py:11
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:14
-#: .\ampa_manager\activity\models\custody\custody_edition.py:15
+#: .\ampa_manager\activity\models\custody\custody_edition.py:18
 #: .\ampa_manager\family\models\membership.py:14
 #: .\ampa_manager_project\settings.py:150
 msgid "Academic course"
@@ -154,6 +159,7 @@ msgid "Academic courses"
 msgstr ""
 
 #: .\ampa_manager\academic_course\models\active_course.py:9
+#: .\ampa_manager\activity\admin\custody_registration_filters.py:28
 #: .\ampa_manager\family\admin\child_admin.py:25
 #: .\ampa_manager\family\admin\filters\child_filters.py:38
 msgid "Course"
@@ -164,47 +170,47 @@ msgstr ""
 msgid "Active course"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:29
+#: .\ampa_manager\academic_course\models\level.py:31
 msgid "HH2"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:30
+#: .\ampa_manager\academic_course\models\level.py:32
 msgid "HH3"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:31
+#: .\ampa_manager\academic_course\models\level.py:33
 msgid "HH4"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:32
+#: .\ampa_manager\academic_course\models\level.py:34
 msgid "HH5"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:33
+#: .\ampa_manager\academic_course\models\level.py:35
 msgid "LH1"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:34
+#: .\ampa_manager\academic_course\models\level.py:36
 msgid "LH2"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:35
+#: .\ampa_manager\academic_course\models\level.py:37
 msgid "LH3"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:36
+#: .\ampa_manager\academic_course\models\level.py:38
 msgid "LH4"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:37
+#: .\ampa_manager\academic_course\models\level.py:39
 msgid "LH5"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:38
+#: .\ampa_manager\academic_course\models\level.py:40
 msgid "LH6"
 msgstr ""
 
-#: .\ampa_manager\academic_course\models\level.py:92
+#: .\ampa_manager\academic_course\models\level.py:99
 #: .\ampa_manager\family\admin\filters\child_filters.py:17
 msgid "Primary education"
 msgstr ""
@@ -216,14 +222,14 @@ msgstr ""
 #: .\ampa_manager\activity\admin\after_school_admin.py:47
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
-#: .\ampa_manager\activity\admin\custody_admin.py:62
+#: .\ampa_manager\activity\admin\custody_admin.py:117
 msgid "Activity remittance created"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:47
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
-#: .\ampa_manager\activity\admin\custody_admin.py:62
+#: .\ampa_manager\activity\admin\custody_admin.py:117
 #: .\ampa_manager\charge\admin\membership_admin.py:63
 #: .\ampa_manager\family\admin\family_admin.py:64
 msgid "View details"
@@ -238,7 +244,7 @@ msgid "Create after school remittance with left"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:66
-#: .\ampa_manager\activity\admin\custody_admin.py:43
+#: .\ampa_manager\activity\admin\custody_admin.py:52
 msgid "Registrations"
 msgstr ""
 
@@ -246,17 +252,83 @@ msgstr ""
 msgid "Editions"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:47
+#: .\ampa_manager\activity\admin\custody_admin.py:28
+#: .\ampa_manager\family\admin\child_admin.py:21
+#: .\ampa_manager\family\admin\family_admin.py:118
+#: .\ampa_manager\family\admin\parent_admin.py:26
+msgid "Is member"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:49
+msgid "Prices"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:55
+#: .\ampa_manager\management\commands\import_custody.py:62
+#: .\ampa_manager\management\commands\import_custody.py:63
+#: .\ampa_manager\management\commands\import_custody.py:64
+#: .\ampa_manager\management\commands\import_custody.py:65
+#: .\ampa_manager\management\commands\import_custody.py:66
+#: .\ampa_manager\management\commands\import_custody.py:67
+msgid "Assisted days"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:59
+msgid "Remmitance"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:74
+msgid "Members (topped)"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:78
+#: .\ampa_manager\activity\admin\custody_admin.py:86
+#: .\ampa_manager\activity\admin\custody_admin.py:90
+#: .\ampa_manager\activity\admin\custody_registration_filters.py:15
+#: .\ampa_manager\family\admin\filters\family_filters.py:13
+msgid "No members"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:82
+msgid "No members (topped)"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:98
+#: .\ampa_manager\charge\admin\after_school_admin.py:57
+#: .\ampa_manager\charge\admin\custody_admin.py:56
+#: .\ampa_manager\charge\admin\membership_admin.py:35
+msgid "Total"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:102
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
 msgid "Remittance"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:55
+#: .\ampa_manager\activity\admin\custody_admin.py:110
 msgid "Multiple remmitances"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:57
+#: .\ampa_manager\activity\admin\custody_admin.py:112
 msgid "Create custody remittance"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:120
+msgid "Calculate prices"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:132
+#, python-format
+msgid "%(calculated)s editions' prices calculated"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:136
+#, python-format
+msgid "Unable to calculate %(not_calculated)s editions' prices"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:137
+msgid "Prices calculated based on edition cost and number of registrations"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:14
@@ -265,6 +337,13 @@ msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:15
 msgid "No remittance"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_registration_filters.py:8
+#: .\ampa_manager\family\admin\filters\family_filters.py:6
+#: .\ampa_manager\family\models\membership.py:19
+#: .\ampa_manager\family\models\membership.py:20
+msgid "Membership"
 msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:8
@@ -288,7 +367,7 @@ msgid "After-schools"
 msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:12
-#: .\ampa_manager\activity\models\custody\custody_edition.py:13
+#: .\ampa_manager\activity\models\custody\custody_edition.py:16
 msgid "Period"
 msgstr ""
 
@@ -327,25 +406,29 @@ msgid "After-school registrations"
 msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:36
-#: .\ampa_manager\activity\models\custody\custody_registration.py:31
+#: .\ampa_manager\activity\models\custody\custody_registration.py:34
 msgid "The selected bank account does not belong to the child's family"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:14
+#: .\ampa_manager\activity\models\custody\custody_edition.py:17
 msgid "Max days for charge"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:17
+#: .\ampa_manager\activity\models\custody\custody_edition.py:20
 #: .\ampa_manager\family\admin\filters\child_filters.py:10
 msgid "Cycle"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:22
+#: .\ampa_manager\activity\models\custody\custody_edition.py:21
+msgid "Cost"
+msgstr ""
+
+#: .\ampa_manager\activity\models\custody\custody_edition.py:26
 #: .\ampa_manager\activity\models\custody\custody_registration.py:14
 msgid "Custody edition"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:23
+#: .\ampa_manager\activity\models\custody\custody_edition.py:27
 msgid "Custody editions"
 msgstr ""
 
@@ -414,12 +497,6 @@ msgstr ""
 #: .\ampa_manager\charge\admin\custody_admin.py:35
 #: .\ampa_manager\charge\admin\membership_admin.py:94
 msgid "Set as paid"
-msgstr ""
-
-#: .\ampa_manager\charge\admin\after_school_admin.py:57
-#: .\ampa_manager\charge\admin\custody_admin.py:56
-#: .\ampa_manager\charge\admin\membership_admin.py:35
-msgid "Total"
 msgstr ""
 
 #: .\ampa_manager\charge\admin\after_school_admin.py:66
@@ -617,12 +694,6 @@ msgstr ""
 msgid "%(number)s IBANs are invalid: %(ibans)s"
 msgstr ""
 
-#: .\ampa_manager\family\admin\child_admin.py:21
-#: .\ampa_manager\family\admin\family_admin.py:118
-#: .\ampa_manager\family\admin\parent_admin.py:26
-msgid "Is member"
-msgstr ""
-
 #: .\ampa_manager\family\admin\family_admin.py:56
 msgid "Generate MembershipRemittance for current year"
 msgstr ""
@@ -672,57 +743,47 @@ msgstr ""
 msgid "Without SWIFT/BIC"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:8
-#: .\ampa_manager\family\models\membership.py:19
-#: .\ampa_manager\family\models\membership.py:20
-msgid "Membership"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:15
-msgid "No members"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:29
+#: .\ampa_manager\family\admin\filters\family_filters.py:27
 msgid "Children count"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:35
+#: .\ampa_manager\family\admin\filters\family_filters.py:33
 msgid "Any children in school"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:36
+#: .\ampa_manager\family\admin\filters\family_filters.py:34
 msgid "No children in school"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:50
+#: .\ampa_manager\family\admin\filters\family_filters.py:48
 msgid "Default account"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:56
+#: .\ampa_manager\family\admin\filters\family_filters.py:54
 msgid "With account"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:57
+#: .\ampa_manager\family\admin\filters\family_filters.py:55
 msgid "Without account"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:71
+#: .\ampa_manager\family\admin\filters\family_filters.py:69
 msgid "Numer of parents"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:77
+#: .\ampa_manager\family\admin\filters\family_filters.py:75
 msgid "No parents"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:78
+#: .\ampa_manager\family\admin\filters\family_filters.py:76
 msgid "1 parent"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:79
+#: .\ampa_manager\family\admin\filters\family_filters.py:77
 msgid "2 parent"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:80
+#: .\ampa_manager\family\admin\filters\family_filters.py:78
 msgid "More than 2 parents"
 msgstr ""
 
@@ -869,29 +930,29 @@ msgstr ""
 msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:14
+#: .\ampa_manager\family\models\parent.py:16
 #: .\ampa_manager\management\commands\import_members.py:101
 #: .\ampa_manager\management\commands\import_members.py:106
 msgid "Name and surnames"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:15
+#: .\ampa_manager\family\models\parent.py:17
 #: .\ampa_manager\management\commands\import_members.py:102
 #: .\ampa_manager\management\commands\import_members.py:107
 msgid "Phone number"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:16
+#: .\ampa_manager\family\models\parent.py:18
 msgid "Other phone"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:17
+#: .\ampa_manager\family\models\parent.py:19
 #: .\ampa_manager\management\commands\import_members.py:104
 #: .\ampa_manager\management\commands\import_members.py:109
 msgid "Email"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:22
+#: .\ampa_manager\family\models\parent.py:24
 msgid "Parent"
 msgstr ""
 
@@ -972,15 +1033,6 @@ msgstr ""
 #: .\ampa_manager\management\commands\import_custody.py:67
 #, python-format
 msgid "Edition %(num_edition)s"
-msgstr ""
-
-#: .\ampa_manager\management\commands\import_custody.py:62
-#: .\ampa_manager\management\commands\import_custody.py:63
-#: .\ampa_manager\management\commands\import_custody.py:64
-#: .\ampa_manager\management\commands\import_custody.py:65
-#: .\ampa_manager\management\commands\import_custody.py:66
-#: .\ampa_manager\management\commands\import_custody.py:67
-msgid "Assisted days"
 msgstr ""
 
 #: .\ampa_manager\management\commands\import_members.py:101

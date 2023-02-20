@@ -1,8 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.family.models.family import Family
-
 
 class FamilyIsMemberFilter(admin.SimpleListFilter):
     title = _('Membership')
@@ -18,9 +16,9 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value():
             if self.value() == 'yes':
-                return Family.objects.members()
+                return queryset.members()
             elif self.value() == 'no':
-                return Family.objects.no_members()
+                return queryset.no_members()
         else:
             return queryset
 
