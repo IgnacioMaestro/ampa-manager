@@ -67,11 +67,12 @@ class CustodyEdition(PricePerLevel):
     def calculate_prices(self):
         members_assisted_days = self.get_assisted_days(members=True, topped=True)
         non_members_assisted_days = self.get_assisted_days(members=False, topped=True)
+        non_members_surcharge = decimal.Decimal(settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE)
 
-        registrations_count = (settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE * non_members_assisted_days) + members_assisted_days
-        if self.cost and registrations_count:
-            self.price_for_member = self.cost / decimal.Decimal(registrations_count)
-            self.price_for_no_member = self.price_for_member * decimal.Decimal(settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE)
+        assisted_days = decimal.Decimal((non_members_assisted_days * non_members_surcharge) + members_assisted_days)
+        if self.cost and assisted_days:
+            self.price_for_member = self.cost / assisted_days
+            self.price_for_no_member = self.price_for_member * non_members_surcharge
             self.save()
             return True
         return False
