@@ -24,7 +24,6 @@ class SEPAResponseCreator:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.xml"'}
         response = HttpResponse(content_type=TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
-        # TODO: Sacar a funcion o usar Stream.
         receipts_by_iban: list[Receipt] = self.group_receipts_by_iban(remittance.receipts)
         suma: float = 0
         for receipt in receipts_by_iban:
@@ -39,7 +38,7 @@ class SEPAResponseCreator:
         paymentinstructioninformation4: PaymentInstructionInformation4 = PaymentInstructionInformation4()
         customerdirectdebitinitiationv02.pmt_inf.append(paymentinstructioninformation4)
 
-        groupheader39.msg_id = "Nombre Remesa"
+        groupheader39.msg_id = remittance.name
         # Fecha cuando se crea la remesa
         now_str: str = remittance.created_date.strftime("%Y-%m-%dT%H:%M:%S")
         creation_date: XmlDateTime = XmlDateTime.from_string(now_str)
