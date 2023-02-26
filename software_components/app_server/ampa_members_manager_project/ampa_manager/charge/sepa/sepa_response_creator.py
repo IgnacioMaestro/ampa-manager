@@ -1,4 +1,5 @@
 import codecs
+from typing import List
 
 from django.http import HttpResponse
 
@@ -24,7 +25,7 @@ class SEPAResponseCreator:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.xml"'}
         response = HttpResponse(content_type=TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
-        receipts_by_iban: list[Receipt] = self.group_receipts_by_iban(remittance.receipts)
+        receipts_by_iban: List[Receipt] = self.group_receipts_by_iban(remittance.receipts)
         suma: float = 0
         for receipt in receipts_by_iban:
             suma = suma + receipt.amount
@@ -74,7 +75,7 @@ class SEPAResponseCreator:
         paymenttypeinformation20.seq_tp = SequenceType1Code.RCUR
         paymentinstructioninformation4.pmt_tp_inf = paymenttypeinformation20
         # TODO: Fecha cuando se va a cobrar la remesa. Formato YYYY-MM-DD
-        paymentinstructioninformation4.reqd_colltn_dt = XmlDateTime.now()
+        paymentinstructioninformation4.reqd_colltn_dt = remittance.payment_date
 
         partyidentification32informacionpago: PartyIdentification32 = PartyIdentification32()
         partyidentification32informacionpago.nm = "AMPA IKASTOLA ABENDANO"
@@ -181,7 +182,7 @@ class SEPAResponseCreator:
 
         return response
 
-    def group_receipts_by_iban(self, receipts: list[Receipt]) -> list[Receipt]:
+    def group_receipts_by_iban(self, receipts: List[Receipt]) -> List[Receipt]:
         grouped_receipts = {}
         for receipt in receipts:
             if receipt.iban in grouped_receipts:
@@ -192,4 +193,4 @@ class SEPAResponseCreator:
                                                          iban=receipt.iban,
                                                          bic=receipt.bic,
                                                          authorization=receipt.authorization)
-        return list(grouped_receipts.values())
+        return List[grouped_receipts.values()]
