@@ -25,7 +25,7 @@ class SEPAResponseCreator:
         headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.xml"'}
         response = HttpResponse(content_type=TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
-        receipts_by_iban: List[Receipt] = self.group_receipts_by_iban(remittance.receipts)
+        receipts_by_iban: list[Receipt] = self.group_receipts_by_iban(remittance.receipts)
         suma: float = 0
         for receipt in receipts_by_iban:
             suma = suma + receipt.amount
@@ -74,8 +74,9 @@ class SEPAResponseCreator:
         paymenttypeinformation20.lcl_instrm = localinstrument2choice
         paymenttypeinformation20.seq_tp = SequenceType1Code.RCUR
         paymentinstructioninformation4.pmt_tp_inf = paymenttypeinformation20
-        # TODO: Fecha cuando se va a cobrar la remesa. Formato YYYY-MM-DD
-        paymentinstructioninformation4.reqd_colltn_dt = remittance.payment_date
+        payment_date_str: str = remittance.payment_date.strftime("%Y-%m-%d")
+        payment_date: XmlDate = XmlDate.from_string(payment_date_str)
+        paymentinstructioninformation4.reqd_colltn_dt = payment_date
 
         partyidentification32informacionpago: PartyIdentification32 = PartyIdentification32()
         partyidentification32informacionpago.nm = "AMPA IKASTOLA ABENDANO"
@@ -168,8 +169,7 @@ class SEPAResponseCreator:
             cashaccount16deudor.id = accountidentification4choicedeudor
             directdebittransactioninformation9.dbtr_acct = cashaccount16deudor
             remittanceinformation5 = RemittanceInformation5()
-            #TODO: Poner concepto del recibo variable
-            remittanceinformation5.ustrd.append("Cuota socio 2022/23")
+            remittanceinformation5.ustrd.append(remittance.concept)
             directdebittransactioninformation9.rmt_inf = remittanceinformation5
             paymentinstructioninformation4.drct_dbt_tx_inf.append(directdebittransactioninformation9)
             #Fin de bucle
@@ -182,7 +182,7 @@ class SEPAResponseCreator:
 
         return response
 
-    def group_receipts_by_iban(self, receipts: List[Receipt]) -> List[Receipt]:
+    def group_receipts_by_iban(self, receipts: list[Receipt]) -> list[Receipt]:
         grouped_receipts = {}
         for receipt in receipts:
             if receipt.iban in grouped_receipts:
@@ -193,4 +193,4 @@ class SEPAResponseCreator:
                                                          iban=receipt.iban,
                                                          bic=receipt.bic,
                                                          authorization=receipt.authorization)
-        return List[grouped_receipts.values()]
+        return list(grouped_receipts.values())
