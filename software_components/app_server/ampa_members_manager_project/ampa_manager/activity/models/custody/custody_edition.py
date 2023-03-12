@@ -46,6 +46,12 @@ class CustodyEdition(PricePerLevel):
     def registrations_count(self):
         return self.custodyregistration_set.count()
 
+    @property
+    def charged(self):
+        charged_members = self.price_for_member * self.get_assisted_days(members=True, topped=True)
+        charged_no_members = self.price_for_no_member * self.get_assisted_days(members=False, topped=True)
+        return charged_members + charged_no_members
+
     def get_assisted_days(self, members=False, topped=False):
         assisted_days = 0
 

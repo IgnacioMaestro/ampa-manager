@@ -47,7 +47,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
             'fields': ('academic_course', 'cycle', 'period')
         }),
         (_('Prices'), {
-            'fields': ('cost', 'max_days_for_charge', 'price_for_member', 'price_for_no_member'),
+            'fields': ('cost', 'max_days_for_charge', 'price_for_member', 'price_for_no_member', 'charged'),
         }),
         (_('Registrations'), {
             'fields': ('members_registrations_count', 'no_members_registrations_count', 'registrations_count'),
@@ -62,10 +62,14 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     )
     readonly_fields = ['remittance', 'members_registrations_count', 'no_members_registrations_count',
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
-                       'no_members_assisted_days', 'topped_no_members_assisted_days']
+                       'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
     ordering = ['-academic_course', 'cycle', '-id']
     list_filter = ['academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
     list_per_page = 25
+
+    @admin.display(description=gettext_lazy('Total charged'))
+    def charged(self, edition):
+        return edition.charged
 
     @admin.display(description=gettext_lazy('Members'))
     def members_assisted_days(self, edition):
@@ -82,10 +86,6 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('No members (topped)'))
     def topped_no_members_assisted_days(self, edition):
         return edition.get_assisted_days(members=False, topped=True)
-
-    @admin.display(description=gettext_lazy('No members'))
-    def no_members_assisted_days(self, edition):
-        return edition.no_members_registrations_count
 
     @admin.display(description=gettext_lazy('No members'))
     def no_members_registrations_count(self, edition):

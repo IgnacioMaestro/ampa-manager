@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 15:45+0100\n"
+"POT-Creation-Date: 2023-03-12 20:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "No"
 
 #: .\ampa_manager\academic_course\admin.py:26
 #: .\ampa_manager\academic_course\admin.py:57
-#: .\ampa_manager\activity\admin\custody_admin.py:70
+#: .\ampa_manager\activity\admin\custody_admin.py:74
 #: .\ampa_manager\activity\admin\custody_admin.py:94
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:14
 #: .\ampa_manager\family\admin\filters\family_filters.py:12
@@ -277,21 +277,24 @@ msgstr "Días asistidos"
 msgid "Remmitance"
 msgstr "Remesa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:74
-msgid "Members (topped)"
-msgstr "Socios (sin límite)"
+#: .\ampa_manager\activity\admin\custody_admin.py:70
+msgid "Total charged"
+msgstr "Total cobrado"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:78
-#: .\ampa_manager\activity\admin\custody_admin.py:86
+msgid "Members (topped)"
+msgstr "Socios (limitado)"
+
+#: .\ampa_manager\activity\admin\custody_admin.py:82
 #: .\ampa_manager\activity\admin\custody_admin.py:90
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:15
 #: .\ampa_manager\family\admin\filters\family_filters.py:13
 msgid "No members"
 msgstr "No socios"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:82
+#: .\ampa_manager\activity\admin\custody_admin.py:86
 msgid "No members (topped)"
-msgstr "No socios (sin límite)"
+msgstr "No socios (limitado)"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:98
 #: .\ampa_manager\charge\admin\after_school_admin.py:57
@@ -325,11 +328,13 @@ msgstr "Precios de %(calculated)s ediciones calculador"
 #: .\ampa_manager\activity\admin\custody_admin.py:136
 #, python-format
 msgid "Unable to calculate %(not_calculated)s editions' prices"
-msgstr "No ha sido posible calcular los precios de %(not_calculated)s ediciones"
+msgstr ""
+"No ha sido posible calcular los precios de %(not_calculated)s ediciones"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:137
 msgid "Prices calculated based on edition cost and number of registrations"
-msgstr "Precios calculados en base al coste de la edición y el nº de inscripciones"
+msgstr ""
+"Precios calculados en base al coste de la edición y el nº de inscripciones"
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:14
 msgid "Has remittance"

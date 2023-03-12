@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 15:45+0100\n"
+"POT-Creation-Date: 2023-03-12 20:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:26
 #: .\ampa_manager\academic_course\admin.py:57
-#: .\ampa_manager\activity\admin\custody_admin.py:70
+#: .\ampa_manager\activity\admin\custody_admin.py:74
 #: .\ampa_manager\activity\admin\custody_admin.py:94
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:14
 #: .\ampa_manager\family\admin\filters\family_filters.py:12
@@ -277,19 +277,22 @@ msgstr ""
 msgid "Remmitance"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:74
-msgid "Members (topped)"
+#: .\ampa_manager\activity\admin\custody_admin.py:70
+msgid "Total charged"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:78
-#: .\ampa_manager\activity\admin\custody_admin.py:86
+msgid "Members (topped)"
+msgstr ""
+
+#: .\ampa_manager\activity\admin\custody_admin.py:82
 #: .\ampa_manager\activity\admin\custody_admin.py:90
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:15
 #: .\ampa_manager\family\admin\filters\family_filters.py:13
 msgid "No members"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:82
+#: .\ampa_manager\activity\admin\custody_admin.py:86
 msgid "No members (topped)"
 msgstr ""
 
