@@ -1,7 +1,6 @@
 from xsdata.models.datatype import XmlDate
 
 from .group_header_creator import GroupHeaderCreator
-from ..admin import SEPA, EURO
 from ..receipt import Receipt
 from ..remittance import Remittance
 from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, PaymentInstructionInformation4, \
@@ -25,6 +24,8 @@ class DocumentCreator:
     BIC = "CLPEES2MXXX"
     GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
     CORE = 'CORE'
+    EURO = 'EUR'
+    SEPA = 'SEPA'
 
     def __init__(self, remittance: Remittance):
         self.remittance = remittance
@@ -75,7 +76,7 @@ class DocumentCreator:
         direct_debit_transaction_information = DirectDebitTransactionInformation9()
         direct_debit_transaction_information.pmt_id = payment_identification
         active_or_historic_currency_and_amount = ActiveOrHistoricCurrencyAndAmount()
-        active_or_historic_currency_and_amount.ccy = EURO
+        active_or_historic_currency_and_amount.ccy = self.EURO
         active_or_historic_currency_and_amount.value = format(receipt.amount, '.2f')
         direct_debit_transaction_information.instd_amt = active_or_historic_currency_and_amount
         direct_debit_transaction = DirectDebitTransaction6()
@@ -113,13 +114,13 @@ class DocumentCreator:
         generic_person_identification = GenericPersonIdentification1()
         generic_person_identification.id = self.GENERIC_ORGANISATION_IDENTIFICATION_ID
         person_identification_scheme_name_choice = PersonIdentificationSchemeName1Choice()
-        person_identification_scheme_name_choice.prtry = SEPA
+        person_identification_scheme_name_choice.prtry = self.SEPA
         generic_person_identification.schme_nm = person_identification_scheme_name_choice
         person_identification = PersonIdentification5()
         person_identification.othr.append(generic_person_identification)
-        party6choice = Party6Choice()
-        party6choice.prvt_id = person_identification
-        party_identification.id = party6choice
+        party_choice = Party6Choice()
+        party_choice.prvt_id = person_identification
+        party_identification.id = party_choice
         return party_identification
 
     def create_branch_and_financial_institution_id(self) -> BranchAndFinancialInstitutionIdentification4:
@@ -134,7 +135,7 @@ class DocumentCreator:
         account_identification_choice.iban = self.IBAN_ACCOUNT
         cash_account = CashAccount16()
         cash_account.id = account_identification_choice
-        cash_account.ccy = EURO
+        cash_account.ccy = self.EURO
         return cash_account
 
     def create_payment_date(self) -> XmlDate:
@@ -157,7 +158,7 @@ class DocumentCreator:
     def create_payment_type_information(self) -> PaymentTypeInformation20:
         payment_type_information_20 = PaymentTypeInformation20()
         service_level_8_choice = ServiceLevel8Choice()
-        service_level_8_choice.cd = SEPA
+        service_level_8_choice.cd = self.SEPA
         payment_type_information_20.svc_lvl = service_level_8_choice
         local_instrument_2_choice = LocalInstrument2Choice()
         local_instrument_2_choice.cd = self.CORE
