@@ -35,7 +35,11 @@ class CustodyRegistration(models.Model):
 
     def calculate_price(self) -> float:
         assisted_days_for_charge: int = min([self.assisted_days, self.custody_edition.max_days_for_charge])
-        if Membership.is_member_child(self.child):
+        if self.is_member:
             return float(assisted_days_for_charge) * float(self.custody_edition.price_for_member)
         else:
             return float(assisted_days_for_charge) * float(self.custody_edition.price_for_no_member)
+
+    @property
+    def is_member(self):
+        return Membership.is_member_child(self.child)

@@ -32,9 +32,13 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):
     model = CustodyRegistration
-    list_display = ['custody_edition', 'child', 'holder', 'assisted_days']
-    ordering = ['custody_edition']
-    extra = 0
+    fields = ['custody_edition', 'child', 'is_member', 'holder', 'assisted_days']
+    readonly_fields = fields
+    ordering = ['custody_edition', 'child__name', 'child__family__surnames']
+
+    @admin.display(description=gettext_lazy('Is member'), boolean=True)
+    def is_member(self, registration):
+        return Membership.is_member_child(registration.child)
 
 
 class CustodyEditionAdmin(admin.ModelAdmin):

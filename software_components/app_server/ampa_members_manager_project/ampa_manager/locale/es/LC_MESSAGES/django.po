@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 20:21+0100\n"
+"POT-Creation-Date: 2023-03-12 21:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,8 @@ msgstr "No"
 
 #: .\ampa_manager\academic_course\admin.py:26
 #: .\ampa_manager\academic_course\admin.py:57
-#: .\ampa_manager\activity\admin\custody_admin.py:74
-#: .\ampa_manager\activity\admin\custody_admin.py:94
+#: .\ampa_manager\activity\admin\custody_admin.py:78
+#: .\ampa_manager\activity\admin\custody_admin.py:98
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:14
 #: .\ampa_manager\family\admin\filters\family_filters.py:12
 msgid "Members"
@@ -222,14 +222,14 @@ msgstr "Crear remesa de extraescolares"
 #: .\ampa_manager\activity\admin\after_school_admin.py:47
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
-#: .\ampa_manager\activity\admin\custody_admin.py:117
+#: .\ampa_manager\activity\admin\custody_admin.py:121
 msgid "Activity remittance created"
 msgstr "Remesa de actividad creada"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:47
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
-#: .\ampa_manager\activity\admin\custody_admin.py:117
+#: .\ampa_manager\activity\admin\custody_admin.py:121
 #: .\ampa_manager\charge\admin\membership_admin.py:63
 #: .\ampa_manager\family\admin\family_admin.py:64
 msgid "View details"
@@ -244,7 +244,7 @@ msgid "Create after school remittance with left"
 msgstr "Crear remesa de extraescolares con el importe restante"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:66
-#: .\ampa_manager\activity\admin\custody_admin.py:52
+#: .\ampa_manager\activity\admin\custody_admin.py:56
 msgid "Registrations"
 msgstr "Inscripciones"
 
@@ -253,17 +253,18 @@ msgid "Editions"
 msgstr "Ediciones"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:28
+#: .\ampa_manager\activity\admin\custody_admin.py:39
 #: .\ampa_manager\family\admin\child_admin.py:21
 #: .\ampa_manager\family\admin\family_admin.py:118
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "Is member"
 msgstr "Es socio"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:49
+#: .\ampa_manager\activity\admin\custody_admin.py:53
 msgid "Prices"
 msgstr "Precios"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:55
+#: .\ampa_manager\activity\admin\custody_admin.py:59
 #: .\ampa_manager\management\commands\import_custody.py:62
 #: .\ampa_manager\management\commands\import_custody.py:63
 #: .\ampa_manager\management\commands\import_custody.py:64
@@ -273,65 +274,65 @@ msgstr "Precios"
 msgid "Assisted days"
 msgstr "Días asistidos"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:59
+#: .\ampa_manager\activity\admin\custody_admin.py:63
 msgid "Remmitance"
 msgstr "Remesa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:70
+#: .\ampa_manager\activity\admin\custody_admin.py:74
 msgid "Total charged"
 msgstr "Total cobrado"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:78
+#: .\ampa_manager\activity\admin\custody_admin.py:82
 msgid "Members (topped)"
 msgstr "Socios (limitado)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:82
-#: .\ampa_manager\activity\admin\custody_admin.py:90
+#: .\ampa_manager\activity\admin\custody_admin.py:86
+#: .\ampa_manager\activity\admin\custody_admin.py:94
 #: .\ampa_manager\activity\admin\custody_registration_filters.py:15
 #: .\ampa_manager\family\admin\filters\family_filters.py:13
 msgid "No members"
 msgstr "No socios"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:86
+#: .\ampa_manager\activity\admin\custody_admin.py:90
 msgid "No members (topped)"
 msgstr "No socios (limitado)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:98
+#: .\ampa_manager\activity\admin\custody_admin.py:102
 #: .\ampa_manager\charge\admin\after_school_admin.py:57
 #: .\ampa_manager\charge\admin\custody_admin.py:56
 #: .\ampa_manager\charge\admin\membership_admin.py:35
 msgid "Total"
 msgstr "Total"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:102
+#: .\ampa_manager\activity\admin\custody_admin.py:106
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
 msgid "Remittance"
 msgstr "Remesa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:110
+#: .\ampa_manager\activity\admin\custody_admin.py:114
 msgid "Multiple remmitances"
 msgstr "Varias remesas"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:112
+#: .\ampa_manager\activity\admin\custody_admin.py:116
 msgid "Create custody remittance"
 msgstr "Crear remesa de custodia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:120
+#: .\ampa_manager\activity\admin\custody_admin.py:124
 msgid "Calculate prices"
 msgstr "Calcular precios"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:132
+#: .\ampa_manager\activity\admin\custody_admin.py:136
 #, python-format
 msgid "%(calculated)s editions' prices calculated"
 msgstr "Precios de %(calculated)s ediciones calculador"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:136
+#: .\ampa_manager\activity\admin\custody_admin.py:140
 #, python-format
 msgid "Unable to calculate %(not_calculated)s editions' prices"
 msgstr ""
 "No ha sido posible calcular los precios de %(not_calculated)s ediciones"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:137
+#: .\ampa_manager\activity\admin\custody_admin.py:141
 msgid "Prices calculated based on edition cost and number of registrations"
 msgstr ""
 "Precios calculados en base al coste de la edición y el nº de inscripciones"
@@ -430,12 +431,22 @@ msgstr "Ciclo"
 msgid "Cost"
 msgstr "Coste"
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:26
+#: .\ampa_manager\activity\models\custody\custody_edition.py:22
+#, python-format
+msgid ""
+"Prices can be automatically calculated with the action \"Calculate prices\" "
+"based on this cost and assisted days. No members have a surcharge of "
+"%(surcharge)s "
+msgstr ""
+"Los precios se pueden calcular automáticamente con la acción \"Calcular precios\" a partir de este coste y "
+"los días asistidos. Los no socios tienen un recargo del %(surcharge)s "
+
+#: .\ampa_manager\activity\models\custody\custody_edition.py:30
 #: .\ampa_manager\activity\models\custody\custody_registration.py:14
 msgid "Custody edition"
 msgstr "Edición de custodia"
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:27
+#: .\ampa_manager\activity\models\custody\custody_edition.py:31
 msgid "Custody editions"
 msgstr "Ediciones de custodia"
 
@@ -665,6 +676,14 @@ msgstr "Nombre"
 #: .\ampa_manager\charge\models\nameable_with_date.py:7
 msgid "Created at"
 msgstr "Creado"
+
+#: .\ampa_manager\charge\models\nameable_with_date.py:8
+msgid "Payment date"
+msgstr ""
+
+#: .\ampa_manager\charge\models\nameable_with_date.py:9
+msgid "Concept"
+msgstr ""
 
 #: .\ampa_manager\charge\state.py:6
 #: .\ampa_manager\family\admin\family_admin.py:122

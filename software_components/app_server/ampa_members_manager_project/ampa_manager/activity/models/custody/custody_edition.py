@@ -18,8 +18,12 @@ class CustodyEdition(PricePerLevel):
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
     cycle = models.CharField(max_length=3, null=False, blank=False, choices=Level.CYCLES,
                              default=Level.ID_CYCLE_PRIMARY, verbose_name=_("Cycle"))
-    cost = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name=_("Cost"))
-    
+    cost = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name=_("Cost"),
+                               help_text=_('Prices can be automatically calculated with the action "Calculate prices" '
+                                           'based on this cost and assisted days. '
+                                           'No members have a surcharge of %(surcharge)s ') %
+                                         {'surcharge': f'{int((settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE-1)*100)}%'})
+
     objects = Manager.from_queryset(CustodyEditionQuerySet)()
 
     class Meta:
@@ -50,7 +54,8 @@ class CustodyEdition(PricePerLevel):
     def charged(self):
         charged_members = self.price_for_member * self.get_assisted_days(members=True, topped=True)
         charged_no_members = self.price_for_no_member * self.get_assisted_days(members=False, topped=True)
-        return charged_members + charged_no_members
+        charged = charged_members + charged_no_members
+        return charged
 
     def get_assisted_days(self, members=False, topped=False):
         assisted_days = 0
