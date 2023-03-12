@@ -77,9 +77,14 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export custody remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[CustodyRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
+            return self.message_user(request=request, message=gettext_lazy("Only can select one custody remittance"))
+        custody_remittance = queryset.first()
+        if custody_remittance.payment_date is None or custody_remittance.concept is None:
+            return self.message_user(
+                request=request, message=gettext_lazy(
+                    "Concept and payment date must be filled in custody remittance"))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
-            custody_remittance=queryset.first()).generate()
+            custody_remittance=custody_remittance).generate()
         return SEPAResponseCreator().create(remittance)
 
     @staticmethod
