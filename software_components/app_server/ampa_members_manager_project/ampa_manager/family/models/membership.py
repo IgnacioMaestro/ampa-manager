@@ -4,13 +4,13 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.family.models.membership_queryset import MembershipQuerySet
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
-from ampa_manager.family.models.membership_queryset import MembershipQuerySet
 
 
 class Membership(models.Model):
-    family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+    family = models.ForeignKey(to='Family', on_delete=CASCADE, verbose_name=_("Family"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
 
     objects = Manager.from_queryset(MembershipQuerySet)()
