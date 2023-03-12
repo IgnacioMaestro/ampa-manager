@@ -13,7 +13,7 @@ from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, TEXT_C
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
-from ..sepa.sepa_response_creator import SEPAResponseCreator
+from ..sepa.response_creator import ResponseCreator
 from ..state import State
 from ..use_cases.custody.remittance_generator_from_custody_remittance import RemittanceGeneratorFromCustodyRemittance
 
@@ -80,7 +80,7 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
             custody_remittance=queryset.first()).generate()
-        return SEPAResponseCreator().create(remittance)
+        return ResponseCreator().create(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:

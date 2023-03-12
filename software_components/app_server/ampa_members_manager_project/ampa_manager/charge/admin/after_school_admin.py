@@ -13,7 +13,7 @@ from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, TEXT_C
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ..remittance import Remittance
-from ..sepa.sepa_response_creator import SEPAResponseCreator
+from ..sepa.response_creator import ResponseCreator
 from ..state import State
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
@@ -81,7 +81,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
         remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=queryset.first()).generate()
-        return SEPAResponseCreator().create(remittance)
+        return ResponseCreator().create(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:

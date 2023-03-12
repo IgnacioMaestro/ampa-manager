@@ -1,6 +1,6 @@
 import datetime
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
 
 @dataclass
@@ -19,22 +19,15 @@ class Receipt:
     bank_account_owner: str
     iban: str
     bic: str
-    authorization: Optional[AuthorizationReceipt]
+    authorization: AuthorizationReceipt
 
     def obtain_row(self) -> List[str]:
-
-        return [self.bank_account_owner, self.bic, self.iban, self.obtain_authorization_number(),
-                self.obtain_date(), self.obtain_formatted_amount()]
+        return [self.bank_account_owner, self.bic, self.iban, self.authorization.number, self.obtain_date(),
+                self.obtain_formatted_amount()]
 
     def obtain_formatted_amount(self) -> str:
         amount_2_decimals = f'{self.amount:.2f}'
         return amount_2_decimals.replace('.', ',')
-
-    def obtain_authorization_number(self) -> str:
-        number = Receipt.NO_AUTHORIZATION_MESSAGE
-        if self.authorization is not None:
-            number = self.authorization.number
-        return number
 
     def obtain_date(self) -> str:
         str_date = ''

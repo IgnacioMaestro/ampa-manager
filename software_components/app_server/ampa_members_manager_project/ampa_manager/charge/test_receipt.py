@@ -19,9 +19,3 @@ class TestReceipt(TestCase):
             receipt.obtain_row(),
             [self.bank_account_owner, self.bic, self.iban, self.authorization_receipt.number,
              self.authorization_receipt.obtain_date(), '3,20'])
-
-    def test_obtain_row_without_authorization(self):
-        receipt = Receipt(self.amount, self.bank_account_owner, self.iban, self.bic, None)
-        self.assertEqual(
-            receipt.obtain_row(),
-            [self.bank_account_owner, self.bic, self.iban, Receipt.NO_AUTHORIZATION_MESSAGE, '', '3,20'])

@@ -27,7 +27,7 @@ class TestHolder(TestCase):
     def test_str(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        self.assertEqual(str(holder), f'{holder.parent}-{holder.bank_account}')
+        self.assertEqual(str(holder), f'{holder.parent}, {holder.bank_account}')
 
     def test_clean(self):
         with self.assertRaises(ValidationError):
