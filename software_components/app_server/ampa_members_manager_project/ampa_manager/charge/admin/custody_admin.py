@@ -1,7 +1,4 @@
-import codecs
-import csv
 import locale
-from typing import List
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -9,7 +6,9 @@ from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
-from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, TEXT_CSV
+from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
+    ERROR_ONLY_ONE_REMITTANCE
+from .http_response_csv_creator import HttpResponseCSVCreator
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
@@ -77,24 +76,16 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export custody remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[CustodyRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one custody remittance"))
+            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
         custody_remittance = queryset.first()
-        if custody_remittance.payment_date is None or custody_remittance.concept is None:
-            return self.message_user(
-                request=request, message=gettext_lazy(
-                    "Concept and payment date must be filled in custody remittance"))
+        if not custody_remittance.is_filled():
+            return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
             custody_remittance=custody_remittance).generate()
         return ResponseCreator().create(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.csv"'}
-        response = HttpResponse(content_type=TEXT_CSV, headers=headers)
-        response.write(codecs.BOM_UTF8)
-        rows_to_add: List[List[str]] = [['Titular', 'BIC', 'IBAN', 'Autorizacion', 'Fecha Autorizacion', 'Cantidad']]
-        rows_to_add.extend(remittance.obtain_rows())
-        csv.writer(response).writerows(rows_to_add)
-        return response
+        return HttpResponseCSVCreator(remittance=remittance).create()
 
     actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]

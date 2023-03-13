@@ -1,3 +1,5 @@
+from datetime import datetime, date
+from typing import List
 import copy
 from datetime import date, datetime
 from typing import List, Optional
@@ -6,13 +8,12 @@ from .receipt import Receipt
 
 
 class Remittance:
-    def __init__(self, receipts: List[Receipt], name: str, created_date: datetime, payment_date: date,
-                 concept: str):
+    def __init__(self, receipts: List[Receipt], name: str, created_date: datetime, payment_date: date, concept: str):
         self.receipts: List[Receipt] = receipts
-        self.name = name
-        self.created_date = created_date
-        self.payment_date = payment_date
-        self.concept = concept
+        self.name: str = name
+        self.created_date: datetime = created_date
+        self.payment_date: date = payment_date
+        self.concept: str = concept
 
     def obtain_rows(self) -> List[List[str]]:
         rows: List[List[str]] = []
