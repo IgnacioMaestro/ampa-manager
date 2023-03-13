@@ -4,7 +4,7 @@ from ampa_manager.charge.remittance import Remittance
 from .xml_creator import XMLCreator
 
 
-class ResponseCreator:
+class SEPAResponseCreator:
     TEXT_XML = 'text/xml'
 
     def create(self, remittance: Remittance) -> HttpResponse:

@@ -8,12 +8,12 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
     ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from ampa_manager.charge.admin.http_response_csv_creator import HttpResponseCSVCreator
+from ampa_manager.charge.admin.csv_response_creator import CSVResponseCreator
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.remittance import Remittance
-from ampa_manager.charge.sepa.response_creator import ResponseCreator
+from ampa_manager.charge.sepa.sepa_response_creator import SEPAResponseCreator
 from ampa_manager.charge.state import State
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
@@ -62,7 +62,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         if not membership_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=membership_remittance).generate()
-        return ResponseCreator().create(remittance)
+        return SEPAResponseCreator().create(remittance)
 
     @admin.action(description=gettext_lazy("Create Membership Remittance with families not included yet"))
     def create_remittance(self, request, _: QuerySet[MembershipRemittance]):
@@ -79,7 +79,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return HttpResponseCSVCreator(remittance=remittance).create()
+        return CSVResponseCreator(remittance=remittance).create()
 
     actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file, create_remittance]
 

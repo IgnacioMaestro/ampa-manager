@@ -8,11 +8,11 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .http_response_csv_creator import HttpResponseCSVCreator
+from .csv_response_creator import CSVResponseCreator
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
-from ..sepa.response_creator import ResponseCreator
+from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.custody.remittance_generator_from_custody_remittance import RemittanceGeneratorFromCustodyRemittance
 
@@ -82,10 +82,10 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
             custody_remittance=custody_remittance).generate()
-        return ResponseCreator().create(remittance)
+        return SEPAResponseCreator().create(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return HttpResponseCSVCreator(remittance=remittance).create()
+        return CSVResponseCreator(remittance=remittance).create()
 
     actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]
