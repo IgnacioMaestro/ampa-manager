@@ -16,4 +16,6 @@ class RemittanceGeneratorFromCustodyRemittance:
             remittance=self.__custody_remittance)
         for custody_receipt in custody_receipts:
             receipts.append(custody_receipt.generate_receipt())
-        return Remittance(receipts, self.__custody_remittance.name, self.__custody_remittance.created_at, self.__custody_remittance.payment_date, self.__custody_remittance.concept)
+        return Remittance(
+            receipts=receipts, name=self.__custody_remittance.name, created_date=self.__custody_remittance.created_at,
+            payment_date=self.__custody_remittance.payment_date, concept=self.__custody_remittance.concept)
