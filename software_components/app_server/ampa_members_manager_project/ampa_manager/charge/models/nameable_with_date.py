@@ -17,3 +17,6 @@ class NameableWithDate(models.Model):
         if self.name:
             return self.name + time_name
         return time_name
+
+    def is_filled(self) -> bool:
+        return (self.name is not None) and (self.payment_date is not None) and (self.concept is not None)
