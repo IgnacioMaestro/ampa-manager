@@ -78,9 +78,15 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
+            return self.message_user(
+                request=request, message=gettext_lazy("Only can select one after-school remittance"))
+        after_school_remittance = queryset.first()
+        if after_school_remittance.payment_date is None or after_school_remittance.concept is None:
+            return self.message_user(
+                request=request, message=gettext_lazy(
+                    "Concept and payment date must be filled in after-school remittance"))
         remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
-            after_school_remittance=queryset.first()).generate()
+            after_school_remittance=after_school_remittance).generate()
         return SEPAResponseCreator().create(remittance)
 
     @staticmethod
