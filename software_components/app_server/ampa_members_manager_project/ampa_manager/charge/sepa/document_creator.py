@@ -31,9 +31,7 @@ class DocumentCreator:
         self.remittance = remittance
 
     def create(self) -> Document:
-        document: Document = Document()
-        document.cstmr_drct_dbt_initn = self.create_customer_direct_debit_initiation()
-        return document
+        return Document(cstmr_drct_dbt_initn=self.create_customer_direct_debit_initiation())
 
     def create_customer_direct_debit_initiation(self) -> CustomerDirectDebitInitiationV02:
         customer_direct_debit_initiation = CustomerDirectDebitInitiationV02()

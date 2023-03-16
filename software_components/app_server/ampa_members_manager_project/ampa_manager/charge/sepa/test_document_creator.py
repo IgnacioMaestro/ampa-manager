@@ -4,7 +4,7 @@ from unittest import TestCase
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.remittance import Remittance
 from ampa_manager.charge.sepa.document_creator import DocumentCreator
-from ampa_manager.charge.sepa.xml_pain_008_001_02 import Document
+from ampa_manager.charge.sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02
 
 
 class TestDocumentCreator(TestCase):
@@ -16,3 +16,5 @@ class TestDocumentCreator(TestCase):
         remittance = Remittance(
             [receipt], 'One Receipt Remittance', datetime.datetime.now(), datetime.datetime.now(), '')
         document: Document = DocumentCreator(remittance).create()
+        self.assertTrue(isinstance(document.cstmr_drct_dbt_initn, CustomerDirectDebitInitiationV02))
+        self.assertTrue(hasattr(document, 'cstmr_drct_dbt_initn'))
