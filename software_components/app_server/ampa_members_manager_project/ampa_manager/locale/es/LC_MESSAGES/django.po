@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 21:17+0100\n"
+"POT-Creation-Date: 2023-03-16 13:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,7 +230,7 @@ msgstr "Remesa de actividad creada"
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
 #: .\ampa_manager\activity\admin\custody_admin.py:121
-#: .\ampa_manager\charge\admin\membership_admin.py:63
+#: .\ampa_manager\charge\admin\membership_admin.py:74
 #: .\ampa_manager\family\admin\family_admin.py:64
 msgid "View details"
 msgstr "Ver detalles"
@@ -283,8 +283,8 @@ msgid "Total charged"
 msgstr "Total cobrado"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:82
-msgid "Members (topped)"
-msgstr "Socios (limitado)"
+msgid "Members (topped by \"Max days for charge\")"
+msgstr "Socios (limitado por los \"Días máximos a cobrar\")"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:86
 #: .\ampa_manager\activity\admin\custody_admin.py:94
@@ -294,13 +294,13 @@ msgid "No members"
 msgstr "No socios"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:90
-msgid "No members (topped)"
-msgstr "No socios (limitado)"
+msgid "No members (topped by \"Max days for charge\")"
+msgstr "No socios (limitado por los \"Días máximos a cobrar\")"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:102
-#: .\ampa_manager\charge\admin\after_school_admin.py:57
-#: .\ampa_manager\charge\admin\custody_admin.py:56
-#: .\ampa_manager\charge\admin\membership_admin.py:35
+#: .\ampa_manager\charge\admin\after_school_admin.py:56
+#: .\ampa_manager\charge\admin\custody_admin.py:55
+#: .\ampa_manager\charge\admin\membership_admin.py:36
 msgid "Total"
 msgstr "Total"
 
@@ -438,8 +438,9 @@ msgid ""
 "based on this cost and assisted days. No members have a surcharge of "
 "%(surcharge)s "
 msgstr ""
-"Los precios se pueden calcular automáticamente con la acción \"Calcular precios\" a partir de este coste y "
-"los días asistidos. Los no socios tienen un recargo del %(surcharge)s "
+"Los precios se pueden calcular automáticamente con la acción \"Calcular "
+"precios\" a partir de este coste y los días asistidos. Los no socios tienen "
+"un recargo del %(surcharge)s "
 
 #: .\ampa_manager\activity\models\custody\custody_edition.py:30
 #: .\ampa_manager\activity\models\custody\custody_registration.py:14
@@ -505,62 +506,64 @@ msgstr "Precio no socios"
 msgid "PTA Administration"
 msgstr "Administración del AMPA"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:29
-#: .\ampa_manager\charge\admin\custody_admin.py:28
-#: .\ampa_manager\charge\admin\membership_admin.py:87
+#: .\ampa_manager\charge\admin\after_school_admin.py:28
+#: .\ampa_manager\charge\admin\custody_admin.py:27
+#: .\ampa_manager\charge\admin\membership_admin.py:98
 msgid "Set as sent"
 msgstr "Marcar como envíado"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:36
-#: .\ampa_manager\charge\admin\custody_admin.py:35
-#: .\ampa_manager\charge\admin\membership_admin.py:94
+#: .\ampa_manager\charge\admin\after_school_admin.py:35
+#: .\ampa_manager\charge\admin\custody_admin.py:34
+#: .\ampa_manager\charge\admin\membership_admin.py:105
 msgid "Set as paid"
 msgstr "Marcar como pagado"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:66
-#: .\ampa_manager\charge\admin\custody_admin.py:65
-#: .\ampa_manager\charge\admin\membership_admin.py:45
+#: .\ampa_manager\charge\admin\after_school_admin.py:65
+#: .\ampa_manager\charge\admin\custody_admin.py:64
+#: .\ampa_manager\charge\admin\membership_admin.py:46
 msgid "Receipts"
 msgstr "Recibos"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:70
+#: .\ampa_manager\charge\admin\after_school_admin.py:69
 msgid "Export after-school remittance to CSV"
 msgstr "Exportar la remesa de extraescolares a CSV"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:73
-#: .\ampa_manager\charge\admin\after_school_admin.py:81
-#: .\ampa_manager\charge\admin\custody_admin.py:72
-#: .\ampa_manager\charge\admin\custody_admin.py:80
-#: .\ampa_manager\charge\admin\membership_admin.py:52
+#: .\ampa_manager\charge\admin\after_school_admin.py:72
+#: .\ampa_manager\charge\admin\custody_admin.py:71
+#: .\ampa_manager\charge\admin\membership_admin.py:53
 msgid "Only can select one membership remittance"
 msgstr "Solo se puede seleccionar una remesa de socios cada vez"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:78
+#: .\ampa_manager\charge\admin\after_school_admin.py:77
 msgid "Export after-school remittance to SEPA file"
 msgstr "Exportar la remesa de extraescolares a fichero SEPA"
 
-#: .\ampa_manager\charge\admin\custody_admin.py:69
+#: .\ampa_manager\charge\admin\custody_admin.py:68
 msgid "Export custody remittance to CSV"
 msgstr "Exportar la remesa de custodia a CSV"
 
-#: .\ampa_manager\charge\admin\custody_admin.py:77
+#: .\ampa_manager\charge\admin\custody_admin.py:76
 msgid "Export custody remittance to SEPA file"
 msgstr "Exportar la remesa de custodia a fichero SEPA"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:49
+#: .\ampa_manager\charge\admin\membership_admin.py:50
 msgid "Export Membership Remittance to CSV"
 msgstr "Exportar la remesa de socios a CSV"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:56
+#: .\ampa_manager\charge\admin\membership_admin.py:57
+msgid "Export Membership remittance to SEPA file"
+msgstr "Exportar la remesa de socios a fichero SEPA"
+
+#: .\ampa_manager\charge\admin\membership_admin.py:67
 msgid "Create Membership Remittance with families not included yet"
 msgstr "Generar la remesa de socios con familias aún no incluidas"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:62
+#: .\ampa_manager\charge\admin\membership_admin.py:73
 #: .\ampa_manager\family\admin\family_admin.py:63
 msgid "Membership remittance created"
 msgstr "Remesa de socios creada"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:66
+#: .\ampa_manager\charge\admin\membership_admin.py:77
 #: .\ampa_manager\family\admin\family_admin.py:66
 msgid "No families to include in Membership Remittance"
 msgstr "No hay familias que incluir en la remesa de socios"
@@ -652,19 +655,15 @@ msgstr "Recibo de socio"
 msgid "Membership receipts"
 msgstr "Recibos de socios"
 
-#: .\ampa_manager\charge\models\membership_remittance.py:10
-msgid "Identifier"
-msgstr "Identificador"
-
-#: .\ampa_manager\charge\models\membership_remittance.py:12
+#: .\ampa_manager\charge\models\membership_remittance.py:11
 msgid "AcademicCourse"
 msgstr "Curso académico"
 
-#: .\ampa_manager\charge\models\membership_remittance.py:15
+#: .\ampa_manager\charge\models\membership_remittance.py:14
 msgid "Membership remittance"
 msgstr "Remesa de socios"
 
-#: .\ampa_manager\charge\models\membership_remittance.py:16
+#: .\ampa_manager\charge\models\membership_remittance.py:15
 msgid "Membership remittances"
 msgstr "Remesas de socios"
 
@@ -679,11 +678,11 @@ msgstr "Creado"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:8
 msgid "Payment date"
-msgstr ""
+msgstr "Fecha de pago"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:9
 msgid "Concept"
-msgstr ""
+msgstr "Concepto"
 
 #: .\ampa_manager\charge\state.py:6
 #: .\ampa_manager\family\admin\family_admin.py:122
@@ -1218,10 +1217,4 @@ msgstr "Español"
 msgid "Basque"
 msgstr "Euskera"
 
-#: .\ampa_manager_project\settings.py:161
-msgid "Custody"
-msgstr "Custodia"
-
-#: .\ampa_manager_project\settings.py:164
-msgid "Charge"
-msgstr "Cargo"
+#: .\ampa

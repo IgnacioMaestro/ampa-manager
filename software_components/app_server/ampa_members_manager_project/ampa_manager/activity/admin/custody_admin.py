@@ -79,7 +79,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     def members_assisted_days(self, edition):
         return edition.get_assisted_days(members=True, topped=False)
 
-    @admin.display(description=gettext_lazy('Members (topped)'))
+    @admin.display(description=gettext_lazy('Members (topped by "Max days for charge")'))
     def topped_members_assisted_days(self, edition):
         return edition.get_assisted_days(members=True, topped=True)
 
@@ -87,7 +87,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     def no_members_assisted_days(self, edition):
         return edition.get_assisted_days(members=False, topped=False)
 
-    @admin.display(description=gettext_lazy('No members (topped)'))
+    @admin.display(description=gettext_lazy('No members (topped by "Max days for charge")'))
     def topped_no_members_assisted_days(self, edition):
         return edition.get_assisted_days(members=False, topped=True)
 
