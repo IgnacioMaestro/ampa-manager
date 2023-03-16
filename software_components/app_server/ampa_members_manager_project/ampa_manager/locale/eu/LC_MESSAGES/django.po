@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 21:17+0100\n"
+"POT-Creation-Date: 2023-03-16 13:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,7 +230,7 @@ msgstr ""
 #: .\ampa_manager\activity\admin\after_school_admin.py:55
 #: .\ampa_manager\activity\admin\after_school_admin.py:63
 #: .\ampa_manager\activity\admin\custody_admin.py:121
-#: .\ampa_manager\charge\admin\membership_admin.py:63
+#: .\ampa_manager\charge\admin\membership_admin.py:74
 #: .\ampa_manager\family\admin\family_admin.py:64
 msgid "View details"
 msgstr ""
@@ -283,7 +283,7 @@ msgid "Total charged"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:82
-msgid "Members (topped)"
+msgid "Members (topped by \"Max days for charge\")"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:86
@@ -294,13 +294,13 @@ msgid "No members"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:90
-msgid "No members (topped)"
+msgid "No members (topped by \"Max days for charge\")"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:102
-#: .\ampa_manager\charge\admin\after_school_admin.py:57
-#: .\ampa_manager\charge\admin\custody_admin.py:56
-#: .\ampa_manager\charge\admin\membership_admin.py:35
+#: .\ampa_manager\charge\admin\after_school_admin.py:56
+#: .\ampa_manager\charge\admin\custody_admin.py:55
+#: .\ampa_manager\charge\admin\membership_admin.py:36
 msgid "Total"
 msgstr ""
 
@@ -499,62 +499,64 @@ msgstr ""
 msgid "PTA Administration"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:29
-#: .\ampa_manager\charge\admin\custody_admin.py:28
-#: .\ampa_manager\charge\admin\membership_admin.py:87
+#: .\ampa_manager\charge\admin\after_school_admin.py:28
+#: .\ampa_manager\charge\admin\custody_admin.py:27
+#: .\ampa_manager\charge\admin\membership_admin.py:98
 msgid "Set as sent"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:36
-#: .\ampa_manager\charge\admin\custody_admin.py:35
-#: .\ampa_manager\charge\admin\membership_admin.py:94
+#: .\ampa_manager\charge\admin\after_school_admin.py:35
+#: .\ampa_manager\charge\admin\custody_admin.py:34
+#: .\ampa_manager\charge\admin\membership_admin.py:105
 msgid "Set as paid"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:66
-#: .\ampa_manager\charge\admin\custody_admin.py:65
-#: .\ampa_manager\charge\admin\membership_admin.py:45
+#: .\ampa_manager\charge\admin\after_school_admin.py:65
+#: .\ampa_manager\charge\admin\custody_admin.py:64
+#: .\ampa_manager\charge\admin\membership_admin.py:46
 msgid "Receipts"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:70
+#: .\ampa_manager\charge\admin\after_school_admin.py:69
 msgid "Export after-school remittance to CSV"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:73
-#: .\ampa_manager\charge\admin\after_school_admin.py:81
-#: .\ampa_manager\charge\admin\custody_admin.py:72
-#: .\ampa_manager\charge\admin\custody_admin.py:80
-#: .\ampa_manager\charge\admin\membership_admin.py:52
+#: .\ampa_manager\charge\admin\after_school_admin.py:72
+#: .\ampa_manager\charge\admin\custody_admin.py:71
+#: .\ampa_manager\charge\admin\membership_admin.py:53
 msgid "Only can select one membership remittance"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:78
+#: .\ampa_manager\charge\admin\after_school_admin.py:77
 msgid "Export after-school remittance to SEPA file"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\custody_admin.py:69
+#: .\ampa_manager\charge\admin\custody_admin.py:68
 msgid "Export custody remittance to CSV"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\custody_admin.py:77
+#: .\ampa_manager\charge\admin\custody_admin.py:76
 msgid "Export custody remittance to SEPA file"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\membership_admin.py:49
+#: .\ampa_manager\charge\admin\membership_admin.py:50
 msgid "Export Membership Remittance to CSV"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\membership_admin.py:56
+#: .\ampa_manager\charge\admin\membership_admin.py:57
+msgid "Export Membership remittance to SEPA file"
+msgstr ""
+
+#: .\ampa_manager\charge\admin\membership_admin.py:67
 msgid "Create Membership Remittance with families not included yet"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\membership_admin.py:62
+#: .\ampa_manager\charge\admin\membership_admin.py:73
 #: .\ampa_manager\family\admin\family_admin.py:63
 msgid "Membership remittance created"
 msgstr ""
 
-#: .\ampa_manager\charge\admin\membership_admin.py:66
+#: .\ampa_manager\charge\admin\membership_admin.py:77
 #: .\ampa_manager\family\admin\family_admin.py:66
 msgid "No families to include in Membership Remittance"
 msgstr ""
@@ -646,19 +648,15 @@ msgstr ""
 msgid "Membership receipts"
 msgstr ""
 
-#: .\ampa_manager\charge\models\membership_remittance.py:10
-msgid "Identifier"
-msgstr ""
-
-#: .\ampa_manager\charge\models\membership_remittance.py:12
+#: .\ampa_manager\charge\models\membership_remittance.py:11
 msgid "AcademicCourse"
 msgstr ""
 
-#: .\ampa_manager\charge\models\membership_remittance.py:15
+#: .\ampa_manager\charge\models\membership_remittance.py:14
 msgid "Membership remittance"
 msgstr ""
 
-#: .\ampa_manager\charge\models\membership_remittance.py:16
+#: .\ampa_manager\charge\models\membership_remittance.py:15
 msgid "Membership remittances"
 msgstr ""
 
