@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from xsdata.models.datatype import XmlDate
 
 from .group_header_creator import GroupHeaderCreator
@@ -9,7 +11,7 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
     BranchAndFinancialInstitutionIdentification4, FinancialInstitutionIdentification7, PersonIdentification5, \
     GenericPersonIdentification1, PersonIdentificationSchemeName1Choice, DirectDebitTransactionInformation9, \
     PaymentIdentification1, ActiveOrHistoricCurrencyAndAmount, DirectDebitTransaction6, MandateRelatedInformation6, \
-    GenericFinancialIdentification1, RemittanceInformation5
+    GenericFinancialIdentification1, RemittanceInformation5, GroupHeader39
 
 
 class DocumentCreator:
@@ -34,27 +36,22 @@ class DocumentCreator:
         return Document(cstmr_drct_dbt_initn=self.create_customer_direct_debit_initiation())
 
     def create_customer_direct_debit_initiation(self) -> CustomerDirectDebitInitiationV02:
-        customer_direct_debit_initiation = CustomerDirectDebitInitiationV02()
-        customer_direct_debit_initiation.grp_hdr = GroupHeaderCreator(
+        grp_hdr: GroupHeader39 = GroupHeaderCreator(
             self.remittance, self.PARTY_IDENTIFICATION, self.GENERIC_ORGANISATION_IDENTIFICATION_ID).create()
-        customer_direct_debit_initiation.pmt_inf.append(self.create_payment_instruction_information())
-        return customer_direct_debit_initiation
+        pmt_inf: list[PaymentInstructionInformation4] = self.create_payment_instruction_information_list()
+        return CustomerDirectDebitInitiationV02(grp_hdr=grp_hdr, pmt_inf=pmt_inf)
 
-    def create_payment_instruction_information(self) -> PaymentInstructionInformation4:
-        payment_instruction_information = PaymentInstructionInformation4()
-        payment_instruction_information.pmt_inf_id = self.REMITTANCE_ID
-        payment_instruction_information.pmt_mtd = PaymentMethod2Code.DD
-        payment_instruction_information.nb_of_txs = len(self.remittance.obtain_rows())
-        payment_instruction_information.ctrl_sum = float(format(self.remittance.calculate_total_amount(), '.2f'))
-        payment_instruction_information.btch_bookg = True
-        payment_instruction_information.pmt_tp_inf = self.create_payment_type_information()
-        payment_instruction_information.reqd_colltn_dt = self.create_payment_date()
-        payment_instruction_information.cdtr = self.create_party_identification_cdtr()
-        payment_instruction_information.cdtr_acct = self.create_cash_account()
-        payment_instruction_information.cdtr_agt = self.create_branch_and_financial_institution_id()
-        payment_instruction_information.cdtr_schme_id = self.create_party_identification_ctr_scheme()
-        payment_instruction_information.drct_dbt_tx_inf.extend(self.create_direct_debit_transaction_informations())
-        return payment_instruction_information
+    def create_payment_instruction_information_list(self) -> list[PaymentInstructionInformation4]:
+        payment_instruction_information = PaymentInstructionInformation4(
+            pmt_inf_id=self.REMITTANCE_ID, pmt_mtd=PaymentMethod2Code.DD,
+            nb_of_txs=str(len(self.remittance.obtain_rows())),
+            ctrl_sum=Decimal(format(self.remittance.calculate_total_amount(), '.2f')), btch_bookg=True,
+            pmt_tp_inf=self.create_payment_type_information(), reqd_colltn_dt=self.create_payment_date(),
+            cdtr=self.create_party_identification_cdtr(), cdtr_acct=self.create_cash_account(),
+            cdtr_agt=self.create_branch_and_financial_institution_id(),
+            cdtr_schme_id=self.create_party_identification_ctr_scheme(),
+            drct_dbt_tx_inf=self.create_direct_debit_transaction_informations())
+        return [payment_instruction_information]
 
     def create_direct_debit_transaction_informations(self) -> list[DirectDebitTransactionInformation9]:
         payment_identification = PaymentIdentification1()
