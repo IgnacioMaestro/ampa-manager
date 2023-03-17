@@ -15,8 +15,9 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
 
 
 class DocumentCreator:
-    REMITTANCE_ID = "2023/001"
     PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
+    GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
+    REMITTANCE_ID = "2023/001"
     POSTAL_CODE = "01008"
     TOWN = "VITORIA-GASTEIZ"
     PAIS = 'ES'
@@ -24,7 +25,6 @@ class DocumentCreator:
     # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
     IBAN_ACCOUNT = "ES2430350061920611157807"
     BIC = "CLPEES2MXXX"
-    GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
     CORE = 'CORE'
     EURO = 'EUR'
     SEPA = 'SEPA'
@@ -37,7 +37,8 @@ class DocumentCreator:
 
     def create_customer_direct_debit_initiation(self) -> CustomerDirectDebitInitiationV02:
         grp_hdr: GroupHeader39 = GroupHeaderCreator(
-            self.remittance, self.PARTY_IDENTIFICATION, self.GENERIC_ORGANISATION_IDENTIFICATION_ID).create()
+            remittance=self.remittance, party_identification=self.PARTY_IDENTIFICATION,
+            organization_id=self.GENERIC_ORGANISATION_IDENTIFICATION_ID).create()
         pmt_inf: list[PaymentInstructionInformation4] = self.create_payment_instruction_information_list()
         return CustomerDirectDebitInitiationV02(grp_hdr=grp_hdr, pmt_inf=pmt_inf)
 
