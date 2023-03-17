@@ -3,6 +3,7 @@ from decimal import Decimal
 from xsdata.models.datatype import XmlDate
 
 from .group_header_creator import GroupHeaderCreator
+from .postal_address_creator import PostalAddressCreator
 from ..receipt import Receipt
 from ..remittance import Remittance
 from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, PaymentInstructionInformation4, \
@@ -18,10 +19,7 @@ class DocumentCreator:
     PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
     GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
     REMITTANCE_ID = "2023/001"
-    POSTAL_CODE = "01008"
-    TOWN = "VITORIA-GASTEIZ"
-    PAIS = 'ES'
-    ADDRESS_LINE = "Mexico Kalea, 9"
+    COUNTRY = 'ES'
     # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
     IBAN_ACCOUNT = "ES2430350061920611157807"
     BIC = "CLPEES2MXXX"
@@ -91,9 +89,9 @@ class DocumentCreator:
         party_identification_deudor = PartyIdentification32()
         party_identification_deudor.nm = receipt.bank_account_owner
         postal_address_deudor: PostalAddress6 = PostalAddress6()
-        postal_address_deudor.ctry = self.PAIS
+        postal_address_deudor.ctry = self.COUNTRY
         party_identification_deudor.pstl_adr = postal_address_deudor
-        party_identification_deudor.ctry_of_res = self.PAIS
+        party_identification_deudor.ctry_of_res = self.COUNTRY
         direct_debit_transaction_information.dbtr = party_identification_deudor
         cash_account_deudor = CashAccount16()
         account_identification_choice_deudor = AccountIdentification4Choice()
@@ -140,16 +138,8 @@ class DocumentCreator:
     def create_party_identification_cdtr(self) -> PartyIdentification32:
         party_identification_32_payment_information = PartyIdentification32()
         party_identification_32_payment_information.nm = self.PARTY_IDENTIFICATION
-        party_identification_32_payment_information.pstl_adr = self.create_postal_address()
+        party_identification_32_payment_information.pstl_adr = PostalAddressCreator().create(self.COUNTRY)
         return party_identification_32_payment_information
-
-    def create_postal_address(self) -> PostalAddress6:
-        postal_address_6 = PostalAddress6()
-        postal_address_6.pst_cd = self.POSTAL_CODE
-        postal_address_6.twn_nm = self.TOWN
-        postal_address_6.ctry = self.PAIS
-        postal_address_6.adr_line = self.ADDRESS_LINE
-        return postal_address_6
 
     def create_payment_type_information(self) -> PaymentTypeInformation20:
         payment_type_information_20 = PaymentTypeInformation20()

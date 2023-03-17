@@ -9,7 +9,7 @@ from ampa_manager.charge.remittance import Remittance
 from ampa_manager.charge.sepa.document_creator import DocumentCreator
 from ampa_manager.charge.sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV02, GroupHeader39, \
     PaymentInstructionInformation4, PaymentMethod2Code, PaymentTypeInformation20, PartyIdentification32, CashAccount16, \
-    BranchAndFinancialInstitutionIdentification4
+    BranchAndFinancialInstitutionIdentification4, PostalAddress6
 
 
 class TestDocumentCreator(TestCase):
