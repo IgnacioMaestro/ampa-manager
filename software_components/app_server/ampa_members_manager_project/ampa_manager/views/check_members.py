@@ -1,4 +1,3 @@
-import pandas
 import xlrd
 
 from django.http import HttpResponse
@@ -34,19 +33,26 @@ def check_members(request):
 
 
 def prepare_response(book: Book) -> HttpResponse:
-    # response = HttpResponse(content_type='application/vnd.ms-excel')
-    # response['Content-Disposition'] = 'attachment; filename="socios.xls"'
-    # book.save(response)
-    # return response
-    df = pandas.read_excel("ruta/nombre_archivo.xls")
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="socios.xls"'
-    df.to_excel(response, index=False)
+
+    # book.save(response)
+    # return response
+
+    for sheet_index in range(book.nsheets):
+        sheet = book.sheet_by_index(sheet_index)
+
+        for row_index in range(sheet.nrows):
+            row = sheet.row(row_index)
+
+            for col_index, cell in enumerate(row):
+                response.write(cell.value)
+
     return response
 
 
 def set_member_header(sheet: Sheet):
-    sheet.put_cell(0, sheet.ncols, xlrd.XL_CELL_TEXT, 'Familia es socia', None)
+    sheet.put_cell(0, sheet.ncols, xlrd.XL_CELL_TEXT, 'La familia es socia', None)
 
 
 def set_member_value(sheet: Sheet, row_index: int, is_member: bool):
