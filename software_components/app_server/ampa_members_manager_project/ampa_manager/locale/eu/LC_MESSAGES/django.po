@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-16 13:08+0100\n"
+"POT-Creation-Date: 2023-04-11 10:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -984,11 +984,13 @@ msgstr ""
 
 #: .\ampa_manager\management\commands\import_after_schools.py:54
 #: .\ampa_manager\management\commands\import_custody.py:53
+#: .\ampa_manager\templates\check_members.html:32
 msgid "Family surnames"
 msgstr ""
 
 #: .\ampa_manager\management\commands\import_after_schools.py:55
 #: .\ampa_manager\management\commands\import_custody.py:54
+#: .\ampa_manager\templates\check_members.html:33
 msgid "Parent name and surnames"
 msgstr ""
 
@@ -1118,8 +1120,76 @@ msgstr ""
 msgid "Year of birth (ex. 2015)"
 msgstr ""
 
+#: .\ampa_manager\templates\check_members.html:5
+#: .\ampa_manager\templates\check_members.html:10
+#: .\ampa_manager\templates\check_members.html:15
+#: .\ampa_manager\templates\check_members.html:21
+msgid "Check members"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:9
 #: .\ampa_manager\templates\importer.html:9
 msgid "Home"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:17
+msgid ""
+"Upload an Excel file with multiple families to check if they are members"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:24
+#: .\ampa_manager\templates\importer.html:28
+msgid "Instructions"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:26
+msgid "Upload an Excel with the families you want to check"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:28
+msgid "Click here to download a template"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:29
+msgid "The uploaded Excel needs the following format in the first sheet"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:31
+msgid "The first row is the header"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:32
+#: .\ampa_manager\templates\check_members.html:33
+#: .\ampa_manager\templates\check_members.html:34
+#: .\ampa_manager\templates\check_members.html:35
+#: .\ampa_manager\templates\importer.html:38
+msgid "Column"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:32
+msgid "Compulsory"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:33
+#: .\ampa_manager\templates\check_members.html:34
+#: .\ampa_manager\templates\check_members.html:35
+msgid "Optional"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:34
+msgid "Other parent name and surnames"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:35
+msgid "Children names. Without surnames. Separated by commas"
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:40
+msgid "Click the button above \"Check members\""
+msgstr ""
+
+#: .\ampa_manager\templates\check_members.html:41
+msgid "A new Excel file will be downloaded with an extra column \"Is member\""
 msgstr ""
 
 #: .\ampa_manager\templates\importer.html:17
@@ -1128,10 +1198,6 @@ msgstr ""
 
 #: .\ampa_manager\templates\importer.html:21
 msgid "Import file"
-msgstr ""
-
-#: .\ampa_manager\templates\importer.html:28
-msgid "Instructions"
 msgstr ""
 
 #: .\ampa_manager\templates\importer.html:30
@@ -1157,10 +1223,6 @@ msgstr ""
 
 #: .\ampa_manager\templates\importer.html:35
 msgid "The columns must be in the following order"
-msgstr ""
-
-#: .\ampa_manager\templates\importer.html:38
-msgid "Column"
 msgstr ""
 
 #: .\ampa_manager\templates\importer.html:45

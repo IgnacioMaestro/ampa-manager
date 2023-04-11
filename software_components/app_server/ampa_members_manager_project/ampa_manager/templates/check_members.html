@@ -1,0 +1,43 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Check members' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {% trans 'Check members' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Check members' %}</h1>
+
+    <h2>{% trans 'Upload an Excel file with multiple families to check if they are members' %}</h2>
+    <form action="{{ form_action }}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="{% trans 'Check members' %}">
+    </form>
+
+    <h2>{% trans 'Instructions' %}</h2>
+    <ol>
+        <li>{% trans 'Upload an Excel with the families you want to check' %}
+            <ul>
+                <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download a template' %}</a></li>
+                <li>{% trans 'The uploaded Excel needs the following format in the first sheet' %}.
+                    <ul>
+                        <li>{% trans 'The first row is the header' %}</li>
+                        <li>{% trans 'Column' %} A:  {% trans 'Family surnames' %} ({% trans 'Compulsory' %})</li>
+                        <li>{% trans 'Column' %} B:  {% trans 'Parent name and surnames' %} ({% trans 'Optional' %})</li>
+                        <li>{% trans 'Column' %} C:  {% trans 'Other parent name and surnames' %} ({% trans 'Optional' %})</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>{% trans 'Click the button above "Check members"' %}.</li>
+        <li>{% trans 'A new Excel file will be downloaded with an extra column "Is member"' %}.</li>
+    </ol>
+
+{% endblock %}

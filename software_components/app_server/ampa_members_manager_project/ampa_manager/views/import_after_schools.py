@@ -21,7 +21,7 @@ def import_after_schools(request):
         'form': form,
         'import_log': import_log,
         'excel_columns': get_excel_columns(),
-        'form_action': '/ampa/import/afterschools/',
+        'form_action': '/ampa/afterschools/import/',
         'importer_title': _('Import after schools'),
         'excel_template_file_name': 'plantilla_importar_extraescolares.xls'
     }
