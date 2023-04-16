@@ -1,0 +1,32 @@
+@startuml
+package AcademicCoursePackage{
+  class AcademicCourse
+}
+
+package Activity{
+    package Camps{
+        class CampsEdition{
+        }
+        class CampsRegistration{
+        }
+
+        CampsEdition o-- AcademicCourse
+
+        CampsRegistration o-- CampsEdition
+
+    }
+    abstract class PricePerLevel{
+        levels: String
+        price_for_member: float
+        price_for_no_member: float
+    }
+
+    CampsEdition <|-- PricePerLevel
+}
+package Family{
+    class Child
+    class Holder
+}
+CampsRegistration o-- Child
+CampsRegistration o-- Holder
+@enduml
