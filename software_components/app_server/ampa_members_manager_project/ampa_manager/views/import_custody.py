@@ -23,7 +23,7 @@ def import_custody(request):
         'excel_columns': get_excel_columns(),
         'form_action': '/ampa/custody/import/',
         'importer_title': _('Import custody'),
-        'excel_template_file_name': 'plantilla_importar_ludoteca.xls'
+        'excel_template_file_name': 'templates/plantilla_importar_ludoteca.xls'
     }
     return render(request, 'importer.html', context)
 

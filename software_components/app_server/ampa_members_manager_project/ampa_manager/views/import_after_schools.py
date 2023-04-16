@@ -23,7 +23,7 @@ def import_after_schools(request):
         'excel_columns': get_excel_columns(),
         'form_action': '/ampa/afterschools/import/',
         'importer_title': _('Import after schools'),
-        'excel_template_file_name': 'plantilla_importar_extraescolares.xls'
+        'excel_template_file_name': 'templates/plantilla_importar_extraescolares.xls'
     }
     return render(request, 'importer.html', context)
 
