@@ -13,6 +13,6 @@ def check_members(request):
     context = {
         'form': CheckMembersForm(),
         'form_action': '/ampa/members/check/',
-        'excel_template_file_name': 'plantilla_consultar_socios.xls'
+        'excel_template_file_name': 'templates/plantilla_consultar_socios.xls'
     }
     return render(request, 'check_members.html', context)
