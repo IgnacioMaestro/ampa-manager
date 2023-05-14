@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from ampa_manager.family.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.forms import ImportMembersForm
-from ampa_manager.utils.string_utils import StringUtils
+from ampa_manager.utils.importers_utils import get_excel_columns
 
 
 def import_members(request):
@@ -19,18 +19,8 @@ def import_members(request):
     context = {
         'form': form,
         'import_log': import_log,
-        'excel_columns': get_excel_columns(),
+        'excel_columns': get_excel_columns(MembersImporter.COLUMNS_TO_IMPORT),
         'form_action': '/ampa/members/import/',
         'excel_template_file_name': 'templates/plantilla_importar_socios.xls'
     }
     return render(request, 'import_members.html', context)
-
-
-def get_excel_columns():
-    columns = []
-    for column in MembersImporter.COLUMNS_TO_IMPORT:
-        index = column[0]
-        letter = StringUtils.get_excel_column_letter(index).upper()
-        label = column[3]
-        columns.append([letter, label])
-    return columns

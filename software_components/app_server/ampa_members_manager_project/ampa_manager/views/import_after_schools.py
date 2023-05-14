@@ -5,7 +5,7 @@ from ampa_manager.activity.use_cases.importers.after_school_activities_importer 
 from ampa_manager.activity.use_cases.importers.after_school_registrations_importer import \
     AfterSchoolsRegistrationsImporter
 from ampa_manager.forms import ImportAfterSchoolsRegistrationsForm, ImportAfterSchoolsActivitiesForm
-from ampa_manager.utils.string_utils import StringUtils
+from ampa_manager.utils.importers_utils import get_excel_columns
 
 
 def import_after_schools_registrations(request):
@@ -22,7 +22,7 @@ def import_after_schools_registrations(request):
     context = {
         'form': form,
         'import_log': import_log,
-        'excel_columns': get_excel_columns(),
+        'excel_columns': get_excel_columns(AfterSchoolsRegistrationsImporter.COLUMNS_TO_IMPORT),
         'form_action': reverse('import_after_schools_registrations'),
         'excel_template_file_name': 'templates/plantilla_importar_inscripciones_extraescolares.xls'
     }
@@ -43,18 +43,8 @@ def import_after_schools_activities(request):
     context = {
         'form': form,
         'import_log': import_log,
-        'excel_columns': get_excel_columns(),
+        'excel_columns': get_excel_columns(AfterSchoolsActivitiesImporter.COLUMNS_TO_IMPORT),
         'form_action': reverse('import_after_schools_activities'),
         'excel_template_file_name': 'templates/plantilla_importar_actividades_extraescolares.xls'
     }
     return render(request, 'import_after_schools_activities.html', context)
-
-
-def get_excel_columns():
-    columns = []
-    for column in AfterSchoolsExcelImporter.COLUMNS_TO_IMPORT:
-        index = column[0]
-        letter = StringUtils.get_excel_column_letter(index).upper()
-        label = column[3]
-        columns.append([letter, label])
-    return columns

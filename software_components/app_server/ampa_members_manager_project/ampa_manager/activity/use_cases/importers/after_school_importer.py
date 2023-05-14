@@ -22,6 +22,7 @@ class AfterSchoolImporter:
         if after_school:
             result.set_not_modified(after_school)
         else:
-            result.set_error(f'Not found: "{name}"')
+            after_school = AfterSchool.objects.create(name=name)
+            result.set_created(after_school)
 
         return result

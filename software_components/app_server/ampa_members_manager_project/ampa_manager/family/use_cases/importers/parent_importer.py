@@ -9,7 +9,7 @@ class ParentImporter:
 
     @staticmethod
     def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
-                      email:str) -> ImportModelResult:
+                      email: str) -> ImportModelResult:
         result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
         fields_ok, error = ParentImporter.validate_fields(family,

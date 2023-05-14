@@ -2,17 +2,17 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans 'Import after schools registrations' %}{% endblock %}
+{% block title %}{% trans 'Import after schools activities' %}{% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
       <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo; {% trans 'Import after schools registrations' %}
+      &rsaquo; {% trans 'Import after schools activities' %}
     </div>
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Import after schools registrations' %}</h1>
+    <h1>{% trans 'Import after schools activities' %}</h1>
 
     <h2>{% trans 'Upload file' %}</h2>
     <form action="{{ form_action }}" enctype="multipart/form-data" method="post">

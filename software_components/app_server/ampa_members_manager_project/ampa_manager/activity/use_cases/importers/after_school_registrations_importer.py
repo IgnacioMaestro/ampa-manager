@@ -2,21 +2,12 @@ import traceback
 from pathlib import Path
 from typing import Optional, List
 
-from django.core.management.base import BaseCommand
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
-from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
-from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
 from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
-from ampa_manager.activity.use_cases.importers.custody_edition_importer import CustodyEditionImporter
-from ampa_manager.activity.use_cases.importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
@@ -28,6 +19,7 @@ from ampa_manager.family.use_cases.importers.family_importer import FamilyImport
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
 from ampa_manager.management.commands.importers.excel_row import ExcelRow
+from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
@@ -36,23 +28,17 @@ from ampa_manager.utils.logger import Logger
 class AfterSchoolsRegistrationsImporter:
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
-    CREATE_EDITION_IF_NOT_EXISTS = True
 
     KEY_PARENT_NAME_AND_SURNAMES = 'parent_name_and_surnames'
     KEY_PARENT_PHONE_NUMBER = 'parent_phone_number'
     KEY_PARENT_EMAIL = 'parent_email'
     KEY_BANK_ACCOUNT_SWIFT = 'bank_account_swift'
     KEY_BANK_ACCOUNT_IBAN = 'bank_account_iban'
-    KEY_AFTER_SCHOOL_NAME = 'after_school_name'
     KEY_CHILD_NAME = 'child_name'
     KEY_CHILD_SURNAMES = 'child_surnames'
     KEY_CHILD_LEVEL = 'child_level'
     KEY_CHILD_YEAR_OF_BIRTH = 'child_year_of_birth'
-    KEY_EDITION_PERIOD = 'edition_period'
-    KEY_EDITION_TIMETABLE = 'edition_timetable'
-    KEY_EDITION_LEVELS = 'edition_levels'
-    KEY_EDITION_PRICE_FOR_MEMBERS = 'edition_price_for_members'
-    KEY_EDITION_PRICE_FOR_NO_MEMBERS = 'edition_price_for_no_members'
+    KEY_AFTER_SCHOOL_EDITION_CODE = 'after_school_edition_code'
 
     LABEL_PARENT_NAME_AND_SURNAMES = _('Parent name and surnames')
     LABEL_PARENT_PHONE_NUMBER = _('Parent phone number')
@@ -62,12 +48,7 @@ class AfterSchoolsRegistrationsImporter:
     LABEL_CHILD_SURNAMES = _('Child surnames')
     LABEL_CHILD_LEVEL = _('Child level (ex. HH4, LH3)')
     LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')
-    LABEL_AFTER_SCHOOL_NAME = _('After school name (ex. Basket)')
-    LABEL_EDITION_PERIOD = _('Edition period (ex. All year)')
-    LABEL_EDITION_TIMETABLE = _('Edition timetable (ex. Monday/Wednesday 17-18)')
-    LABEL_EDITION_LEVELS = _('Edition levels (ex. Primary)')
-    LABEL_EDITION_PRICE_FOR_MEMBERS = _('Price for members')
-    LABEL_EDITION_PRICE_FOR_NO_MEMBERS = _('Price for no members')
+    LABEL_AFTER_SCHOOL_EDITION_CODE = _('After school edition ID')
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
@@ -78,12 +59,7 @@ class AfterSchoolsRegistrationsImporter:
         [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
         [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
         [7, FieldsFormatters.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
-        [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [9, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [10, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [11, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
-        [12, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
-        [13, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
+        [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_EDITION_CODE, LABEL_AFTER_SCHOOL_EDITION_CODE],
     ]
 
     @classmethod
@@ -129,8 +105,6 @@ class AfterSchoolsRegistrationsImporter:
             Child.__name__: Child.objects.count(),
             BankAccount.__name__: BankAccount.objects.count(),
             Holder.__name__: Holder.objects.count(),
-            AfterSchool.__name__: AfterSchool.objects.count(),
-            AfterSchoolEdition.__name__: AfterSchoolEdition.objects.count(),
             AfterSchoolRegistration.__name__: AfterSchoolRegistration.objects.count()
         }
 
@@ -178,19 +152,8 @@ class AfterSchoolsRegistrationsImporter:
                 return result
             holder = holder_result.imported_object
 
-            after_school_result = AfterSchoolImporter.import_after_school(row.get(cls.KEY_AFTER_SCHOOL_NAME))
-            result.add_partial_result(after_school_result)
-            if not after_school_result.success:
-                return result
-            after_school = after_school_result.imported_object
-
-            edition_result = AfterSchoolEditionImporter.import_edition(after_school,
-                                                                       row.get(cls.KEY_EDITION_PERIOD),
-                                                                       row.get(cls.KEY_EDITION_TIMETABLE),
-                                                                       row.get(cls.KEY_EDITION_LEVELS),
-                                                                       row.get(cls.KEY_EDITION_PRICE_FOR_MEMBERS),
-                                                                       row.get(cls.KEY_EDITION_PRICE_FOR_NO_MEMBERS),
-                                                                       cls.CREATE_EDITION_IF_NOT_EXISTS)
+            edition_code = row.get(cls.KEY_AFTER_SCHOOL_EDITION_CODE)
+            edition_result = AfterSchoolEditionImporter.import_edition_by_code(edition_code)
             result.add_partial_result(edition_result)
             if not edition_result.success:
                 return result

@@ -1,5 +1,6 @@
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
+from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
 
 
@@ -23,18 +24,36 @@ class AfterSchoolEditionImporter:
                                                  price_for_no_member=price_for_no_member)
 
     @staticmethod
-    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members,
-                       create_if_not_exists) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members, price_for_no_members])
+    def import_edition(after_school, code, period, timetable, levels, price_for_members, price_for_no_members) -> ImportModelResult:
+        result = ImportModelResult(AfterSchoolEdition.__name__, [code, period, timetable, levels, price_for_members,
+                                                                 price_for_no_members])
 
-        edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable, levels)
+        edition = AfterSchoolEdition.find(code)
+        if not edition:
+            edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable, levels)
+
+        if edition:
+            if edition.is_modified(after_school, code, period, timetable, levels, price_for_members, price_for_no_members):
+                fields_changes: FieldsChanges = edition.update(after_school, code, period, timetable, levels, price_for_members, price_for_no_members)
+                result.set_updated(edition, fields_changes)
+            else:
+                result.set_not_modified(edition)
+        else:
+            edition = AfterSchoolEditionImporter.create_edition_for_active_course(after_school, period, timetable,
+                                                                                  levels, price_for_members,
+                                                                                  price_for_no_members)
+            result.set_created(edition)
+
+        return result
+
+    @staticmethod
+    def import_edition_by_code(code) -> ImportModelResult:
+        result = ImportModelResult(AfterSchoolEdition.__name__, [code])
+
+        edition = AfterSchoolEdition.find(code)
         if edition:
             result.set_not_modified(edition)
-        elif create_if_not_exists:
-            edition = AfterSchoolEditionImporter.create_edition_for_active_course(after_school, period, timetable, levels,
-                                                        price_for_members, price_for_no_members)
-            result.set_created(edition)
         else:
-            result.set_error(f'Not found: {after_school}, {period}, {timetable}, {levels}')
+            result.set_not_found()
 
         return result

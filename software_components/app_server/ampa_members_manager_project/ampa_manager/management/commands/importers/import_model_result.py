@@ -74,6 +74,10 @@ class ImportModelResult:
         self.state = ProcessingState.ERROR
         self.error = error
 
+    def set_not_found(self):
+        self.state = ProcessingState.ERROR
+        self.error = 'Not found'
+
     def set_updated(self, imported_object, fields_changes: FieldsChanges):
         self.imported_object = imported_object
         self.state = ProcessingState.UPDATED
