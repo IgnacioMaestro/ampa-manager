@@ -2,6 +2,7 @@ import traceback
 from typing import Dict, List
 
 import xlrd
+from django.core.exceptions import ValidationError
 
 from ampa_manager.management.commands.importers.excel_row import ExcelRow
 
@@ -44,26 +45,29 @@ class ExcelImporter:
             values.append(value)
         return values
 
-    def get_rows(self) -> List[ExcelRow]:
+    def import_rows(self) -> List[ExcelRow]:
         rows = []
         print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows}')
         for row_index in range(self.first_row_index, self.sheet.nrows):
-            row = ExcelRow(row_index)
-            try:
-                row.values = self.import_row_columns(row.index)
-            except Exception as e:
-                row.error = str(e)
-            rows.append(row)
+            rows.append(self.import_row(row_index))
         return rows
 
-    def import_row_columns(self, row_index: int) -> dict:
-        columns_values = {}
-        for settings in self.columns_settings:
-            index = settings[0]
-            formatter = settings[1]
-            name = settings[2]
+    def import_row(self, row_index: int) -> ExcelRow:
+        row = ExcelRow(row_index)
+
+        for column_settings in self.columns_settings:
+            col_index = column_settings[0]
+            formatter = column_settings[1]
+            key = column_settings[2]
+            value = self.get_cell_value(row_index, col_index)
             try:
-                columns_values[name] = formatter(self.sheet.cell_value(rowx=row_index, colx=index))
-            except IndexError:
-                columns_values[name] = None
-        return columns_values
+                row.values[key] = formatter(value)
+            except ValidationError as e:
+                row.values[key] = None
+                row.error = str(e)
+                break
+
+        return row
+
+    def get_cell_value(self, row_index, col_index):
+        return self.sheet.cell_value(rowx=row_index, colx=col_index)

@@ -7,8 +7,13 @@
             <h1><img src="{% static 'images/xls.png' %}" width="24px"> Importar datos de excel</h1>
             <ul>
                 <li><a href="/ampa/members/import/">Miembros</a></li>
-                <li><a href="/ampa/afterschools/import/">Extraescolares</a></li>
                 <li><a href="/ampa/custody/import/">Ludoteca</a></li>
+                <li>Extraescolares
+                    <ul>
+                        <li><a href="/ampa/afterschools-activities/import/">Actividades</a></li>
+                        <li><a href="/ampa/afterschools-registrations/import/">Inscripciones</a></li>
+                    </ul>
+                </li>
             </ul>
             <h1><img src="{% static 'images/member.png' %}" width="24px"> <a href="/ampa/members/check/">Consultar socios subiendo un excel</a></h1>
             <h1><img src="{% static 'images/family.png' %}" width="24px"> Alta de familia</h1>
