@@ -1,0 +1,52 @@
+@startuml
+package Charge{
+
+    package Membership{
+        class MembershipRemittance {
+            identifier: string
+            created_at: datetime
+        }
+        class MembershipReceipt
+        class Fee{
+            amount: integer
+        }
+        MembershipRemittance *-- "1..N" MembershipReceipt
+    }
+
+    package AcademicCourse{
+        class AcademicCourse
+    }
+    Fee --o AcademicCourse
+    MembershipRemittance o-- AcademicCourse
+
+    package Family{
+        class Family
+    }
+    MembershipReceipt o--  Family
+
+    MembershipReceipt --> Receipt
+    MembershipRemittance --> Remittance
+
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
+
+    class Remittance {
+        name: string
+    }
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
+
+    Remittance *--> Receipt
+
+    MembershipReceipt *-- State
+}
+@enduml

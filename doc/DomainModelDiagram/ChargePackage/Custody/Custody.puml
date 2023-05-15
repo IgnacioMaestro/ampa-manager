@@ -1,0 +1,47 @@
+@startuml
+package Charge{
+    package CustodyCharge{
+        class CustodyRemittance{
+            name: string
+            created_at: datetime
+        }
+        class CustodyReceipt {
+            amount: float
+        }
+    }
+
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
+
+    class Remittance {
+        name: string
+    }
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
+
+    Remittance *--> Receipt
+
+    CustodyReceipt --> Receipt
+    CustodyRemittance --> Remittance
+
+    CustodyReceipt *-- State
+    CustodyRemittance *-- "1..N" CustodyReceipt
+}
+
+package Custody{
+    class CustodyEdition
+    class CustodyRegistration
+}
+CustodyRemittance o-- "1..N" CustodyEdition
+CustodyReceipt o-- CustodyRegistration
+CustodyEdition --o CustodyRegistration
+@enduml
