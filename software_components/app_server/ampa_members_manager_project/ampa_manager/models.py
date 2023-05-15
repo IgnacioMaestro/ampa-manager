@@ -6,6 +6,7 @@ from ampa_manager.activity.models.after_school.after_school_registration import 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
+from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
