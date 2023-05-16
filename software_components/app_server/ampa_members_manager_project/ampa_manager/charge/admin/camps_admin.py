@@ -2,13 +2,11 @@ import locale
 
 from django.contrib import admin
 from django.db.models import QuerySet
-from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .http_response_csv_creator import HttpResponseCSVCreator
 from ..models.camps.camps_receipt import CampsReceipt
 from ..models.camps.camps_remittance import CampsRemittance
 from ..remittance import Remittance
@@ -65,14 +63,6 @@ class CampsRemittanceAdmin(admin.ModelAdmin):
     def receipts_count(self, remittance):
         return CampsReceipt.objects.filter(remittance=remittance).count()
 
-    @admin.action(description=gettext_lazy("Export camps remittance to CSV"))
-    def download_membership_remittance_csv(self, request, queryset: QuerySet[CampsRemittance]):
-        if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
-        remittance: Remittance = RemittanceGeneratorFromCampsRemittance(
-            camps_remittance=queryset.first()).generate()
-        return CampsRemittanceAdmin.create_csv_response_from_remittance(remittance)
-
     @admin.action(description=gettext_lazy("Export camps remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[CampsRemittance]):
         if queryset.count() > 1:
@@ -84,8 +74,4 @@ class CampsRemittanceAdmin(admin.ModelAdmin):
             camps_remittance=camps_remittance).generate()
         return SEPAResponseCreator().create(remittance)
 
-    @staticmethod
-    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return HttpResponseCSVCreator(remittance=remittance).create()
-
-    actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]
+    actions = [download_membership_remittance_sepa_file]
