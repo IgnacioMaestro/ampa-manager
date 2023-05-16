@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.activity.admin.custody_edition_filters import CustodyEditionHasRemittanceFilter
-from ampa_manager.activity.admin.custody_registration_filters import CustodyRegistrationFilter, ChildLevelListFilter
+from ampa_manager.activity.admin.registration_filters import RegistrationFilter, ChildLevelListFilter
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
@@ -20,7 +20,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
     list_display = ['custody_edition', 'child', 'holder', 'assisted_days', 'is_member']
     ordering = ['custody_edition']
     list_filter = ['custody_edition__academic_course__initial_year', 'custody_edition__period',
-                   'custody_edition__cycle', CustodyRegistrationFilter, ChildLevelListFilter]
+                   'custody_edition__cycle', RegistrationFilter, ChildLevelListFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25

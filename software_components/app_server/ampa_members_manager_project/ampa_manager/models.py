@@ -20,3 +20,5 @@ from ampa_manager.charge.models.after_school_charge.after_school_remittance impo
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
+from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
+from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
