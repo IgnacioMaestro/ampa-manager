@@ -4,6 +4,8 @@ package Charge{
         class CustodyRemittance{
             name: string
             created_at: datetime
+            payment_date: datetime
+            concept: string
         }
         class CustodyReceipt {
             amount: float

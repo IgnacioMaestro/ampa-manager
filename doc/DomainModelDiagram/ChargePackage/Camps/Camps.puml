@@ -4,6 +4,8 @@ package Charge{
         class CampsRemittance{
             name: string
             created_at: datetime
+            payment_date: datetime
+            concept: string
         }
         class CampsReceipt {
             amount: float
