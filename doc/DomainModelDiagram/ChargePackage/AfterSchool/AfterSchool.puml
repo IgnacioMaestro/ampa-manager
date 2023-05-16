@@ -1,0 +1,48 @@
+@startuml
+package Charge{
+    package AfterSchoolCharge{
+        class AfterSchoolRemittance{
+            name: string
+            created_at: datetime
+        }
+        class AfterSchoolReceipt {
+            amount: float
+        }
+    }
+
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
+
+    class Remittance {
+        name: string
+    }
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
+
+    Remittance *--> Receipt
+
+    AfterSchoolReceipt --> Receipt
+    AfterSchoolRemittance --> Remittance
+
+    AfterSchoolReceipt *-- State
+    AfterSchoolRemittance *-- "1..N" AfterSchoolReceipt
+}
+
+
+package AfterSchool{
+    class AfterSchoolEdition
+    class AfterSchoolRegistration
+}
+AfterSchoolRemittance o-- "1..N" AfterSchoolEdition
+AfterSchoolReceipt o-- AfterSchoolRegistration
+AfterSchoolEdition --o AfterSchoolRegistration
+@enduml

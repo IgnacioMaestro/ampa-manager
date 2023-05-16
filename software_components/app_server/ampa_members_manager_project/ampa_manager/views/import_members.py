@@ -21,9 +21,9 @@ def import_members(request):
         'form': form,
         'import_log': import_log,
         'excel_columns': get_excel_columns(),
-        'form_action': '/ampa/import/members/',
+        'form_action': '/ampa/members/import/',
         'importer_title': _('Import members'),
-        'excel_template_file_name': 'plantilla_importar_socios.xls'
+        'excel_template_file_name': 'templates/plantilla_importar_socios.xls'
     }
     return render(request, 'importer.html', context)
 

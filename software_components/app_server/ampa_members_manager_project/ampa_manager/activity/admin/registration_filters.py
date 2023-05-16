@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.academic_course.models.level import Level
 
 
-class CustodyRegistrationFilter(admin.SimpleListFilter):
+class RegistrationFilter(admin.SimpleListFilter):
     title = _('Membership')
 
     parameter_name = 'member'
