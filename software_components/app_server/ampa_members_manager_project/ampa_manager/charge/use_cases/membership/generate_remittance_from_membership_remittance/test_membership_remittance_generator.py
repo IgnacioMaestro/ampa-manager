@@ -23,7 +23,7 @@ class TestMembershipRemittanceGenerator(TestCase):
 
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance).generate()
 
-        self.assertEqual(remittance.name, str(membership_remittance))
+        self.assertEqual(remittance.name, membership_remittance.name)
         self.assertEqual(len(remittance.receipts), 0)
 
     def test_generate_remittance_one_membership_receipt(self):
@@ -37,7 +37,7 @@ class TestMembershipRemittanceGenerator(TestCase):
 
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance).generate()
 
-        self.assertEqual(remittance.name, str(membership_remittance))
+        self.assertEqual(remittance.name, membership_remittance.name)
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, self.FEE)
@@ -55,5 +55,5 @@ class TestMembershipRemittanceGenerator(TestCase):
 
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance).generate()
 
-        self.assertEqual(remittance.name, str(membership_remittance))
+        self.assertEqual(remittance.name, membership_remittance.name)
         self.assertEqual(len(remittance.receipts), receipt_count)

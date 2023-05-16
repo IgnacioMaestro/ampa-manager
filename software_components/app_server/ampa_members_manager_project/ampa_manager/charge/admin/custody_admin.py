@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .http_response_csv_creator import HttpResponseCSVCreator
+from .csv_response_creator import CSVResponseCreator
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
@@ -68,7 +68,7 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export custody remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[CustodyRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
+            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
             custody_remittance=queryset.first()).generate()
         return CustodyRemittanceAdmin.create_csv_response_from_remittance(remittance)
@@ -86,6 +86,6 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return HttpResponseCSVCreator(remittance=remittance).create()
+        return CSVResponseCreator(remittance=remittance).create()
 
     actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]

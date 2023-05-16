@@ -22,7 +22,7 @@ class TestRemittanceGeneratorFromAfterSchoolRemittance(TestCase):
             after_school_remittance=after_school_remittance).generate()
 
         # Assert
-        self.assertEqual(remittance.name, str(after_school_remittance))
+        self.assertEqual(remittance.name, after_school_remittance.name)
         self.assertEqual(remittance.created_date, after_school_remittance.created_at)
         self.assertEqual(len(remittance.receipts), 0)
 
@@ -37,6 +37,6 @@ class TestRemittanceGeneratorFromAfterSchoolRemittance(TestCase):
             after_school_remittance=after_school_remittance).generate()
 
         # Assert
-        self.assertEqual(remittance.name, str(after_school_remittance))
+        self.assertEqual(remittance.name, after_school_remittance.name)
         self.assertEqual(remittance.created_date, after_school_remittance.created_at)
         self.assertEqual(len(remittance.receipts), 1)

@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
     ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from ampa_manager.charge.admin.http_response_csv_creator import HttpResponseCSVCreator
+from ampa_manager.charge.admin.csv_response_creator import CSVResponseCreator
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
@@ -50,7 +50,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Export Membership Remittance to CSV"))
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
         if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy("Only can select one membership remittance"))
+            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=queryset.first()).generate()
         return MembershipRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
@@ -79,11 +79,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return HttpResponseCSVCreator(remittance=remittance).create()
-
-    @classmethod
-    def generate_header_for_export_csv(cls, name):
-        return {'Content-Disposition': f'attachment; filename="{name}.csv"'}
+        return CSVResponseCreator(remittance=remittance).create()
 
     actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file, create_remittance]
 
