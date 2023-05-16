@@ -7,17 +7,23 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.admin.after_school_admin import AfterSchoolRegistrationAdmin, AfterSchoolEditionAdmin, \
     AfterSchoolAdmin
+from ampa_manager.activity.admin.camps_admin import CampsEditionAdmin, CampsRegistrationAdmin
 from ampa_manager.activity.admin.custody_admin import CustodyEditionAdmin, CustodyRegistrationAdmin
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.models.camps.camps_edition import CampsEdition
+from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.admin.after_school_admin import AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
+from ampa_manager.charge.admin.camps_admin import CampsReceiptAdmin, CampsRemittanceAdmin
 from ampa_manager.charge.admin.custody_admin import CustodyReceiptAdmin, CustodyRemittanceAdmin
 from ampa_manager.charge.admin.membership_admin import MembershipRemittanceAdmin, MembershipReceiptAdmin
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
+from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
+from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.models.fee.fee import Fee
@@ -52,6 +58,9 @@ admin.site.register(AfterSchoolRegistration, AfterSchoolRegistrationAdmin)
 admin.site.register(CustodyEdition, CustodyEditionAdmin)
 admin.site.register(CustodyRegistration, CustodyRegistrationAdmin)
 
+admin.site.register(CampsEdition, CampsEditionAdmin)
+admin.site.register(CampsRegistration, CampsRegistrationAdmin)
+
 admin.site.register(Child, ChildAdmin)
 # noinspection DuplicatedCode
 admin.site.register(Parent, ParentAdmin)
@@ -70,3 +79,5 @@ admin.site.register(AfterSchoolReceipt, AfterSchoolReceiptAdmin)
 admin.site.register(AfterSchoolRemittance, AfterSchoolRemittanceAdmin)
 admin.site.register(CustodyReceipt, CustodyReceiptAdmin)
 admin.site.register(CustodyRemittance, CustodyRemittanceAdmin)
+admin.site.register(CampsReceipt, CampsReceiptAdmin)
+admin.site.register(CampsRemittance, CampsRemittanceAdmin)

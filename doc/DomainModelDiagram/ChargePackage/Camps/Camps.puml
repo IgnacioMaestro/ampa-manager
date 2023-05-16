@@ -1,0 +1,49 @@
+@startuml
+package Charge{
+    package CampsCharge{
+        class CampsRemittance{
+            name: string
+            created_at: datetime
+            payment_date: datetime
+            concept: string
+        }
+        class CampsReceipt {
+            amount: float
+        }
+    }
+
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
+
+    class Remittance {
+        name: string
+    }
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
+
+    Remittance *--> Receipt
+
+    CampsReceipt --> Receipt
+    CampsRemittance --> Remittance
+
+    CampsReceipt *-- State
+    CampsRemittance *-- "1..N" CampsReceipt
+}
+
+package Camps{
+    class CampsEdition
+    class CampsRegistration
+}
+CampsRemittance o-- "1..N" CampsEdition
+CampsReceipt o-- CampsRegistration
+CampsEdition --o CampsRegistration
+@enduml

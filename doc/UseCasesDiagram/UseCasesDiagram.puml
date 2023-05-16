@@ -24,6 +24,10 @@ package Activity {
         Admin --> (Register CustodyEdition in the system)
         Admin --> (Register CustodyRegistration in the system)
     }
+    package Camps {
+        Admin --> (Register CampsEdition in the system)
+        Admin --> (Register CampsRegistration in the system)
+    }
 }
 package Charge {
 }
