@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from ampa_manager.family.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.forms import ImportMembersForm
-from ampa_manager.utils.importers_utils import get_excel_columns
+from ampa_manager.utils.excel.importers_utils import get_excel_columns
 
 
 def import_members(request):

@@ -3,7 +3,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class CustodyRegistrationImporter:

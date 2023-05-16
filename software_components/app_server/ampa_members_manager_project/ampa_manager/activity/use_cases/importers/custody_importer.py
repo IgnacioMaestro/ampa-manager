@@ -2,14 +2,10 @@ import traceback
 from pathlib import Path
 from typing import Optional, List
 
-from django.core.management.base import BaseCommand
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
-from ampa_manager.activity.use_cases.importers.custody_edition_importer import CustodyEditionImporter
 from ampa_manager.activity.use_cases.importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
@@ -20,9 +16,10 @@ from ampa_manager.family.use_cases.importers.bank_account_importer import BankAc
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
 from ampa_manager.family.use_cases.importers.family_importer import FamilyImporter
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
-from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
-from ampa_manager.management.commands.importers.excel_row import ExcelRow
-from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
+from ampa_manager.utils.excel.excel_importer import ExcelImporter
+from ampa_manager.utils.excel.excel_row import ExcelRow
+from ampa_manager.utils.excel.import_row_result import ImportRowResult
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 
@@ -64,39 +61,18 @@ class CustodyImporter:
     ]
 
     @classmethod
-    def import_custody(cls, file_content, custody_edition) -> Optional[List[str]]:
-        logger = None
-        try:
-            logger = Logger(Path(__file__).stem)
+    def import_custody(cls, file_content, custody_edition) -> (int, int, TitledList, List[str]):
+        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
-            excel_importer = ExcelImporter(cls.SHEET_NUMBER,
-                                           cls.FIRST_ROW_INDEX,
-                                           cls.COLUMNS_TO_IMPORT,
-                                           file_content=file_content)
+        importer.counters_before = cls.count_objects()
 
-            counters_before = cls.count_objects()
+        for row in importer.get_rows():
+            result = cls.process_row(row, custody_edition)
+            importer.add_result(result)
 
-            results = []
-            row: ExcelRow
-            for row in excel_importer.import_rows():
-                result: ImportRowResult = cls.process_row(row, custody_edition, logger)
-                result.print(logger)
-                results.append(result)
+        importer.counters_after = cls.count_objects()
 
-            counters_after = cls.count_objects()
-
-            ImportRowResult.print_stats(logger, results, counters_before, counters_after)
-
-        except:
-            logger.error(traceback.format_exc())
-        finally:
-            if logger:
-                logger.close_log_file()
-
-        if logger:
-            return logger.logs
-        else:
-            return None
+        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_logs()
 
     @classmethod
     def count_objects(cls):
@@ -111,7 +87,7 @@ class CustodyImporter:
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow, custody_edition: CustodyEdition, logger: Logger) -> ImportRowResult:
+    def process_row(cls, row: ExcelRow, custody_edition: CustodyEdition) -> ImportRowResult:
         result = ImportRowResult(row)
 
         if row.error:
@@ -160,7 +136,6 @@ class CustodyImporter:
             result.add_partial_result(registration_result)
 
         except Exception as e:
-            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
             result.error = str(e)
 
         return result

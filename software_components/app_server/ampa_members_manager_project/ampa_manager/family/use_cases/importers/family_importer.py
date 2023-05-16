@@ -1,8 +1,8 @@
-from typing import Optional, List
+from typing import Optional
 
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class FamilyImporter:

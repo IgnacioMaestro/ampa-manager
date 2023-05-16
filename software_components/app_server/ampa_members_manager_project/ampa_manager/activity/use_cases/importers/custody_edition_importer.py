@@ -1,9 +1,8 @@
 from typing import Optional
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel import ImportModelResult
 from ampa_manager.utils.string_utils import StringUtils
 
 

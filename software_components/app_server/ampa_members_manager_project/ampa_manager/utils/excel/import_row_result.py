@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import List, Dict
 
 from ampa_manager.family.models.family import Family
-from ampa_manager.management.commands.importers.excel_row import ExcelRow
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.excel_row import ExcelRow
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.utils.logger import Logger
 
@@ -47,16 +47,17 @@ class ImportRowResult:
 
         return ', '.join(warnings)
 
-    def print(self, logger: Logger):
-        summary = f'OK' if self.success else f'ERROR: {self.errors}'
-        logger.log(f'\nRow {self.row.index + 1} -> {summary}')
+    def __str__(self):
+        summary = 'OK' if self.success else f'ERROR: {self.errors}'
+        description = f'\nRow {self.row.index + 1} -> {summary}'
 
         if len(self.partial_results) > 0:
             for result in self.partial_results:
-                logger.log(f' - {result}')
-            return True
+                description += f' - {result}'
         else:
-            logger.log(f'-')
+            description += f' -'
+
+        return description
 
     def add_partial_result(self, partial_result: ImportModelResult):
         self.partial_results.append(partial_result)

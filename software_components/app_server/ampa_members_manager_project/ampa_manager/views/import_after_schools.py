@@ -5,7 +5,7 @@ from ampa_manager.activity.use_cases.importers.after_school_activities_importer 
 from ampa_manager.activity.use_cases.importers.after_school_registrations_importer import \
     AfterSchoolsRegistrationsImporter
 from ampa_manager.forms import ImportAfterSchoolsRegistrationsForm, ImportAfterSchoolsActivitiesForm
-from ampa_manager.utils.importers_utils import get_excel_columns
+from ampa_manager.utils.excel.importers_utils import get_excel_columns
 
 
 def import_after_schools_registrations(request):

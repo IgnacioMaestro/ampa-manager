@@ -2,7 +2,7 @@ from typing import Optional
 
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class ParentImporter:

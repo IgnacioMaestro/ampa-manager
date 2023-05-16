@@ -9,7 +9,6 @@ from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 
 
 class AfterSchoolEdition(PricePerLevel):
-    code = models.CharField(max_length=500, verbose_name=_("Code"), unique=True)
     after_school = models.ForeignKey(to=AfterSchool, on_delete=CASCADE, verbose_name=_("After-school"))
     period = models.CharField(max_length=300, verbose_name=_("Period"))
     timetable = models.CharField(max_length=300, verbose_name=_("Timetable"))

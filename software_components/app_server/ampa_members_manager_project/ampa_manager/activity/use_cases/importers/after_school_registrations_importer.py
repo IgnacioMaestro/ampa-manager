@@ -4,7 +4,6 @@ from typing import Optional, List
 
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
 from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
@@ -17,10 +16,9 @@ from ampa_manager.family.use_cases.importers.bank_account_importer import BankAc
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
 from ampa_manager.family.use_cases.importers.family_importer import FamilyImporter
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
-from ampa_manager.management.commands.importers.excel_importer import ExcelImporter
-from ampa_manager.management.commands.importers.excel_row import ExcelRow
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
-from ampa_manager.management.commands.importers.import_row_result import ImportRowResult
+from ampa_manager.utils.excel.excel_importer import ExcelImporter
+from ampa_manager.utils.excel.excel_row import ExcelRow
+from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 

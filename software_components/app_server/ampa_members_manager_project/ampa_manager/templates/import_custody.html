@@ -1,4 +1,5 @@
 {% extends 'admin/base_site.html' %}
+{% load custom_filters %}
 {% load i18n %}
 {% load static %}
 
@@ -24,7 +25,6 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 35%;">
-
                     <h2>{% trans 'Instructions' %}</h2>
                     <ul>
                         <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
@@ -44,7 +44,14 @@
             <td style="width: 65%;">
                 <h2>{% trans 'Results' %}</h2>
                 {% if import_log %}
-                    <p>{% trans 'A file with the following contents has been saved in the project directory' %}. </p>
+                    {% if success %}
+                    <img src="{% static 'images/success.png' %}" width="48px">
+                    {% else %}
+                    <img src="{% static 'images/warning.png' %}" width="48px">
+                    {% endif %}
+
+                    <p>{{ import_summary|titled_list_to_ul }}</p>
+
                     <p>{{ import_log|linebreaks }}</p>
                 {% else %}
                     <p>{% trans 'Choose an excel file and click "Import file" to see here the results of the import' %}.</p>
