@@ -68,7 +68,7 @@ class ExcelImporter:
                 row.values[key] = formatter(value)
             except ValidationError as e:
                 row.values[key] = None
-                row.error = f'Error formatting column {key} = {value}: {str(e)}'
+                row.error = f'Error formatting column: {key} = {value}: {str(e)}'
                 break
 
         return row
@@ -81,7 +81,7 @@ class ExcelImporter:
 
     @property
     def total_rows(self) -> int:
-        return self.sheet.nrows - (self.first_row_index + 1)
+        return self.sheet.nrows - self.first_row_index
 
     @property
     def successfully_imported_rows(self) -> int:
@@ -121,7 +121,7 @@ class ExcelImporter:
 
         summary_warnings = TitledList('Warnings')
         if len(created_families) > 0:
-            summary_created_families = TitledList(f'- {len(created_families)} families were created')
+            summary_created_families = TitledList(f'{len(created_families)} families were created')
             for row_index, family in created_families.items():
                 summary_created_families.append_element(str(family))
             summary_warnings.append_sublist(summary_created_families)

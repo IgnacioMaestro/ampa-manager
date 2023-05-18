@@ -1,7 +1,7 @@
 from typing import Optional
 
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
-from ampa_manager.utils.excel import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.string_utils import StringUtils
 
 

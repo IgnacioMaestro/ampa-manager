@@ -7,8 +7,8 @@ register = template.Library()
 
 
 @register.filter
-def titled_list_to_ul(titled_list: TitledList):
-    html = f'{titled_list.title}'
+def titled_list_to_ul(titled_list: TitledList, level=1):
+    html = f'<h{level}>{titled_list.title}</h{level}>'
     html += '<ul>'
 
     if titled_list.elements:
@@ -18,7 +18,7 @@ def titled_list_to_ul(titled_list: TitledList):
     if titled_list.sublists:
         for sublist in titled_list.sublists:
             html += '<li>'
-            html += titled_list_to_ul(sublist)
+            html += titled_list_to_ul(sublist, level=level+1)
             html += '</li>'
 
     html += '</ul>'

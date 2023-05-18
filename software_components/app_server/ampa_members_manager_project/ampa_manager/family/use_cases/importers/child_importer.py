@@ -24,7 +24,7 @@ class ChildImporter:
                         else:
                             result.set_not_modified(child)
                     else:
-                        result.set_error('Wrong level or year of birth')
+                        result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
                 else:
                     result.set_not_modified(child)
             elif level or year_of_birth:
@@ -44,7 +44,7 @@ class ChildImporter:
                                                  family=family)
                     result.set_created(child)
                 else:
-                    result.set_error('Wrong level or year of birth')
+                    result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
             elif not level:
                 result.set_error('Missing level')
             elif not year_of_birth:

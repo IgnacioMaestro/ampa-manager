@@ -1,7 +1,3 @@
-import traceback
-from pathlib import Path
-from typing import Optional, List
-
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
@@ -16,10 +12,10 @@ from ampa_manager.family.use_cases.importers.family_importer import FamilyImport
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
-from ampa_manager.utils.excel import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
-from ampa_manager.utils.logger import Logger
 
 
 class MembersImporter:
@@ -141,39 +137,18 @@ class MembersImporter:
     ]
 
     @classmethod
-    def import_members(cls, file_content) -> Optional[List[str]]:
-        logger = None
-        try:
-            logger = Logger(Path(__file__).stem)
+    def import_members(cls, file_content) -> (int, int, TitledList, TitledList):
+        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
-            excel_importer = ExcelImporter(cls.SHEET_NUMBER,
-                                           cls.FIRST_ROW_INDEX,
-                                           cls.COLUMNS_TO_IMPORT,
-                                           file_content=file_content)
+        importer.counters_before = cls.count_objects()
 
-            counters_before = cls.count_objects()
+        for row in importer.get_rows():
+            result = cls.process_row(row)
+            importer.add_result(result)
 
-            results = []
-            row: ExcelRow
-            for row in excel_importer.import_rows():
-                result: ImportRowResult = cls.process_row(row, logger)
-                result.print(logger)
-                results.append(result)
+        importer.counters_after = cls.count_objects()
 
-            counters_after = cls.count_objects()
-
-            ImportRowResult.print_stats(logger, results, counters_before, counters_after)
-
-        except:
-            logger.error(traceback.format_exc())
-        finally:
-            if logger:
-                logger.close_log_file()
-
-        if logger:
-            return logger.logs
-        else:
-            return None
+        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
 
     @classmethod
     def count_objects(cls):
@@ -187,7 +162,7 @@ class MembersImporter:
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow, logger: Logger) -> ImportRowResult:
+    def process_row(cls, row: ExcelRow) -> ImportRowResult:
         result = ImportRowResult(row)
 
         if row.error:
@@ -209,7 +184,6 @@ class MembersImporter:
                 result = cls.import_membership(family, result)
 
         except Exception as e:
-            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
             result.error = str(e)
 
         return result
