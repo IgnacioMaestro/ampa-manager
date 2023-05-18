@@ -43,7 +43,7 @@
             </td>
             <td style="width: 65%;">
                 <h2>{% trans 'Results' %}</h2>
-                {% if import_log %}
+                {% if import_summary %}
                     {% if success %}
                     <img src="{% static 'images/success.png' %}" width="48px">
                     {% else %}
@@ -52,7 +52,7 @@
 
                     <p>{{ import_summary|titled_list_to_ul }}</p>
 
-                    <p>{{ import_log|linebreaks }}</p>
+                    <p>{{ import_results|titled_list_to_ul }}</p>
                 {% else %}
                     <p>{% trans 'Choose an excel file and click "Import file" to see here the results of the import' %}.</p>
                 {% endif %}

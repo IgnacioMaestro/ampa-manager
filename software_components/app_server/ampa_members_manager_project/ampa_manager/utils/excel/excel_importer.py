@@ -97,6 +97,12 @@ class ExcelImporter:
             logs.append(str(result))
         return logs
 
+    def get_results(self) -> TitledList:
+        logs = TitledList('Results')
+        for result in self.results:
+            logs.append_sublist(result.as_titled_list())
+        return logs
+
     def get_summary(self) -> TitledList:
         summary = TitledList('Summary')
 
@@ -104,13 +110,13 @@ class ExcelImporter:
             ImportRowResult.get_totals(self.results)
 
         summary_totals = TitledList('Total')
-        summary_totals.append_element(f'- Rows imported successfully: {success_count}/{len(self.results)}')
-        summary_totals.append_element(f'- Rows not imported: {not_success_count}/{len(self.results)}')
+        summary_totals.append_element(f'Rows imported successfully: {success_count}/{len(self.results)}')
+        summary_totals.append_element(f'Rows not imported: {not_success_count}/{len(self.results)}')
         summary.append_sublist(summary_totals)
 
         summary_errors = TitledList(f'Errors: {len(errors)}')
         for row_index, error in errors.items():
-            summary_errors.append_element(f'- Row {row_index+1}: {error}')
+            summary_errors.append_element(f'Row {row_index+1}: {error}')
         summary.append_sublist(summary_errors)
 
         summary_warnings = TitledList('Warnings')

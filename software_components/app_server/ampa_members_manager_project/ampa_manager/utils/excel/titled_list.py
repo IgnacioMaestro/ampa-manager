@@ -12,6 +12,9 @@ class TitledList:
         self.elements = []
         self.sublists = []
 
+    def __str__(self):
+        return f'{self.title} ({len(self.elements)} elements, {len(self.sublists)} lists)'
+
     def append_element(self, element: str):
         self.elements.append(element)
 

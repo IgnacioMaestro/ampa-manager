@@ -4,6 +4,7 @@ from typing import List, Dict
 from ampa_manager.family.models.family import Family
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.utils.logger import Logger
 
@@ -49,7 +50,7 @@ class ImportRowResult:
 
     def __str__(self):
         summary = 'OK' if self.success else f'ERROR: {self.errors}'
-        description = f'\nRow {self.row.index + 1} -> {summary}'
+        description = f'\nRow {self.row.number} -> {summary}'
 
         if len(self.partial_results) > 0:
             for result in self.partial_results:
@@ -58,6 +59,13 @@ class ImportRowResult:
             description += f' -'
 
         return description
+
+    def as_titled_list(self) -> TitledList:
+        row_status = 'OK' if self.success else f'ERROR: {self.errors}'
+        details = TitledList(f'\nRow {self.row.number} -> {row_status}')
+        for result in self.partial_results:
+            details.append_element(str(result))
+        return details
 
     def add_partial_result(self, partial_result: ImportModelResult):
         self.partial_results.append(partial_result)

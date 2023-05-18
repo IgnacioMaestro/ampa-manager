@@ -1,7 +1,3 @@
-import traceback
-from pathlib import Path
-from typing import Optional, List
-
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
@@ -21,7 +17,6 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
-from ampa_manager.utils.logger import Logger
 
 
 class CustodyImporter:
@@ -61,7 +56,7 @@ class CustodyImporter:
     ]
 
     @classmethod
-    def import_custody(cls, file_content, custody_edition) -> (int, int, TitledList, List[str]):
+    def import_custody(cls, file_content, custody_edition) -> (int, int, TitledList, TitledList):
         importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
         importer.counters_before = cls.count_objects()
@@ -72,7 +67,7 @@ class CustodyImporter:
 
         importer.counters_after = cls.count_objects()
 
-        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_logs()
+        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
 
     @classmethod
     def count_objects(cls):
