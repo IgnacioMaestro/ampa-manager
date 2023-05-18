@@ -8,6 +8,10 @@ class ExcelRow:
         self.values = {}
         self.error = None
 
+    @property
+    def number(self):
+        return self.index + 1
+
     def get(self, column_name, default_value=None):
         return self.values.get(column_name, default_value)
 

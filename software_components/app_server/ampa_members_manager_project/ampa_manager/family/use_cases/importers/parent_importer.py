@@ -1,12 +1,15 @@
+from typing import Optional
+
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class ParentImporter:
 
     @staticmethod
-    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: str, email:str) -> ImportModelResult:
+    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
+                      email: str) -> ImportModelResult:
         result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
         fields_ok, error = ParentImporter.validate_fields(family,

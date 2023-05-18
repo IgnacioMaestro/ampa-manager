@@ -2,7 +2,7 @@ from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.management.commands.importers.import_model_result import ImportModelResult
+from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class ChildImporter:
@@ -24,7 +24,7 @@ class ChildImporter:
                         else:
                             result.set_not_modified(child)
                     else:
-                        result.set_error('Wrong level or year of birth')
+                        result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
                 else:
                     result.set_not_modified(child)
             elif level or year_of_birth:
@@ -44,7 +44,7 @@ class ChildImporter:
                                                  family=family)
                     result.set_created(child)
                 else:
-                    result.set_error('Wrong level or year of birth')
+                    result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
             elif not level:
                 result.set_error('Missing level')
             elif not year_of_birth:

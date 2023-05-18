@@ -27,7 +27,7 @@ class FieldsFormatters:
             if Level.is_valid(level):
                 return level
             else:
-                raise ValueError('Wrong level')
+                raise ValidationError('Wrong level')
         return None
 
     @staticmethod
@@ -65,7 +65,7 @@ class FieldsFormatters:
                 validator(iban)
                 return iban
             except ValidationError:
-                raise ValueError('Wrong IBAN')
+                raise ValidationError('Wrong IBAN')
         return None
 
     @staticmethod

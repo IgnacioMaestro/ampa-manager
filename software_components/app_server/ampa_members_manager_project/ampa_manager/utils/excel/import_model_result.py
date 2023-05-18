@@ -3,6 +3,7 @@ from typing import Optional, List
 from django.db.models import Model
 
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.processing_state import ProcessingState
 
 
@@ -73,6 +74,10 @@ class ImportModelResult:
     def set_error(self, error):
         self.state = ProcessingState.ERROR
         self.error = error
+
+    def set_not_found(self):
+        self.state = ProcessingState.ERROR
+        self.error = 'Not found'
 
     def set_updated(self, imported_object, fields_changes: FieldsChanges):
         self.imported_object = imported_object
