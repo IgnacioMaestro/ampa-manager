@@ -17,6 +17,7 @@ from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
 
@@ -26,7 +27,6 @@ class AfterSchoolsActivitiesImporter:
     FIRST_ROW_INDEX = 2
 
     KEY_AFTER_SCHOOL_NAME = 'after_school_name'
-    KEY_EDITION_CODE = 'edition_code'
     KEY_EDITION_PERIOD = 'edition_period'
     KEY_EDITION_TIMETABLE = 'edition_timetable'
     KEY_EDITION_LEVELS = 'edition_levels'
@@ -34,7 +34,6 @@ class AfterSchoolsActivitiesImporter:
     KEY_EDITION_PRICE_FOR_NO_MEMBERS = 'edition_price_for_no_members'
 
     LABEL_AFTER_SCHOOL_NAME = _('After school name (ex. Basket)')
-    LABEL_EDITION_CODE = _('Edition code')
     LABEL_EDITION_PERIOD = _('Edition period (ex. All year)')
     LABEL_EDITION_TIMETABLE = _('Edition timetable (ex. Monday/Wednesday 17-18)')
     LABEL_EDITION_LEVELS = _('Edition levels (ex. Primary)')
@@ -43,48 +42,27 @@ class AfterSchoolsActivitiesImporter:
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [1, FieldsFormatters.clean_string, KEY_EDITION_CODE, LABEL_EDITION_CODE],
-        [2, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [3, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [4, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
-        [5, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
-        [6, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
+        [1, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [2, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [3, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [4, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
+        [5, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
     ]
 
     @classmethod
-    def import_after_schools_activities(cls, file_content) -> Optional[List[str]]:
-        logger = None
-        try:
-            logger = Logger(Path(__file__).stem)
+    def import_after_schools_activities(cls, file_content) -> (int, int, TitledList, TitledList):
+        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
-            excel_importer = ExcelImporter(cls.SHEET_NUMBER,
-                                           cls.FIRST_ROW_INDEX,
-                                           cls.COLUMNS_TO_IMPORT,
-                                           file_content=file_content)
+        importer.counters_before = cls.count_objects()
 
-            counters_before = cls.count_objects()
+        for row in importer.get_rows():
+            result = cls.process_row(row)
+            importer.add_result(result)
 
-            results = []
-            row: ExcelRow
-            for row in excel_importer.import_rows():
-                result: ImportRowResult = cls.process_row(row, logger)
-                result.print(logger)
-                results.append(result)
+        importer.counters_after = cls.count_objects()
 
-            counters_after = cls.count_objects()
+        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
 
-            ImportRowResult.print_stats(logger, results, counters_before, counters_after)
-
-        except:
-            logger.error(traceback.format_exc())
-        finally:
-            if logger:
-                logger.close_log_file()
-
-        if logger:
-            return logger.logs
-        else:
-            return None
 
     @classmethod
     def count_objects(cls):
@@ -100,7 +78,7 @@ class AfterSchoolsActivitiesImporter:
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow, logger: Logger) -> ImportRowResult:
+    def process_row(cls, row: ExcelRow) -> ImportRowResult:
         result = ImportRowResult(row)
 
         if row.error:
@@ -108,14 +86,13 @@ class AfterSchoolsActivitiesImporter:
             return result
 
         try:
-            after_school_result = AfterSchoolImporter.import_after_school(row.get(cls.KEY_AFTER_SCHOOL_NAME))
+            after_school_result = AfterSchoolImporter.import_after_school(row.get(cls.KEY_AFTER_SCHOOL_NAME), True)
             result.add_partial_result(after_school_result)
             if not after_school_result.success:
                 return result
             after_school = after_school_result.imported_object
 
             edition_result = AfterSchoolEditionImporter.import_edition(after_school,
-                                                                       row.get(cls.KEY_EDITION_CODE),
                                                                        row.get(cls.KEY_EDITION_PERIOD),
                                                                        row.get(cls.KEY_EDITION_TIMETABLE),
                                                                        row.get(cls.KEY_EDITION_LEVELS),
@@ -124,7 +101,6 @@ class AfterSchoolsActivitiesImporter:
             result.add_partial_result(edition_result)
 
         except Exception as e:
-            logger.error(f'Row {row.index + 1}: {traceback.format_exc()}')
             result.error = str(e)
 
         return result

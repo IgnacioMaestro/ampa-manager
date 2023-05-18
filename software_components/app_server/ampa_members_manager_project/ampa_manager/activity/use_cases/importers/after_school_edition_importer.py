@@ -7,10 +7,10 @@ from ampa_manager.utils.excel.import_model_result import ImportModelResult
 class AfterSchoolEditionImporter:
 
     @staticmethod
-    def find_edition_for_active_course(after_school, period, timetable, levels):
+    def find_edition_for_active_course(after_school, period, timetable):
         academic_course = ActiveCourse.load()
         editions = AfterSchoolEdition.objects.filter(period=period, timetable=timetable, after_school=after_school,
-                                                     levels=levels, academic_course=academic_course)
+                                                     academic_course=academic_course)
         if editions.count() == 1:
             return editions[0]
         return None
@@ -24,17 +24,16 @@ class AfterSchoolEditionImporter:
                                                  price_for_no_member=price_for_no_member)
 
     @staticmethod
-    def import_edition(after_school, code, period, timetable, levels, price_for_members, price_for_no_members) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolEdition.__name__, [code, period, timetable, levels, price_for_members,
+    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members) -> ImportModelResult:
+        result = ImportModelResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members,
                                                                  price_for_no_members])
 
-        edition = AfterSchoolEdition.find(code)
-        if not edition:
-            edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable, levels)
+        edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable)
 
         if edition:
-            if edition.is_modified(after_school, code, period, timetable, levels, price_for_members, price_for_no_members):
-                fields_changes: FieldsChanges = edition.update(after_school, code, period, timetable, levels, price_for_members, price_for_no_members)
+            if edition.is_modified(after_school, period, timetable, levels, price_for_members, price_for_no_members):
+                fields_changes: FieldsChanges = edition.update(after_school, period, timetable, levels,
+                                                               price_for_members, price_for_no_members)
                 result.set_updated(edition, fields_changes)
             else:
                 result.set_not_modified(edition)
@@ -43,17 +42,5 @@ class AfterSchoolEditionImporter:
                                                                                   levels, price_for_members,
                                                                                   price_for_no_members)
             result.set_created(edition)
-
-        return result
-
-    @staticmethod
-    def import_edition_by_code(code) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolEdition.__name__, [code])
-
-        edition = AfterSchoolEdition.find(code)
-        if edition:
-            result.set_not_modified(edition)
-        else:
-            result.set_not_found()
 
         return result

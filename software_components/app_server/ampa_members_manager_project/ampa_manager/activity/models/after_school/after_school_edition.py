@@ -27,33 +27,29 @@ class AfterSchoolEdition(PricePerLevel):
         return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}'
 
     @staticmethod
-    def find(code):
+    def find(after_school: AfterSchool, period: str, timetable: str, levels: str):
         try:
-            return AfterSchoolEdition.objects.get(code=code)
+            return AfterSchoolEdition.objects.get(after_school=after_school, period=period, timetable=timetable,
+                                                  levels=levels)
         except AfterSchoolEdition.DoesNotExist:
             return None
 
-    def is_modified(self, after_school, code, period, timetable, levels, price_for_member, price_for_no_member):
+    def is_modified(self, after_school, period, timetable, levels, price_for_member, price_for_no_member):
         return self.after_school != after_school \
-               or self.code != code \
                or self.period != period \
                or self.timetable != timetable \
                or self.levels != levels \
                or self.price_for_member != price_for_member \
                or self.price_for_no_member != price_for_no_member
 
-    def update(self, after_school, code, period, timetable, levels, price_for_member, price_for_no_member) -> FieldsChanges:
-        fields_before = [self.after_school, self.code, self.period, self.timetable, self.levels, self.price_for_member,
+    def update(self, after_school, period, timetable, levels, price_for_member, price_for_no_member) -> FieldsChanges:
+        fields_before = [self.after_school, self.period, self.timetable, self.levels, self.price_for_member,
                          self.price_for_no_member]
         not_reset_fields = []
         updated = False
 
         if after_school and after_school != self.after_school:
             self.after_school = after_school
-            updated = True
-
-        if code != self.code:
-            self.code = code
             updated = True
 
         if period != self.period:
@@ -79,7 +75,7 @@ class AfterSchoolEdition(PricePerLevel):
         if updated:
             self.save()
 
-        fields_after = [self.after_school, self.code, self.period, self.timetable, self.levels, self.price_for_member,
+        fields_after = [self.after_school, self.period, self.timetable, self.levels, self.price_for_member,
                         self.price_for_no_member]
 
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
