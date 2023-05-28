@@ -18,7 +18,7 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
 class DocumentCreator:
     PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
     GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
-    REMITTANCE_ID = "2023/001"
+    REMITTANCE_ID = "2023/003"
     COUNTRY = 'ES'
     # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
     IBAN_ACCOUNT = "ES2430350061920611157807"
@@ -56,7 +56,7 @@ class DocumentCreator:
         payment_identification = PaymentIdentification1()
         # TODO: Esto tiene que ser variable. El sistema genera una clave exclusiva para cada pago, formada por
         #  la cuenta bancaria, el proveedor, la fecha del pago y el número de control del cheque.
-        payment_identification.end_to_end_id = "2022/Socio"
+        payment_identification.end_to_end_id = "2023/Extraescolares_2"
         receipts_by_iban: list[Receipt] = self.remittance.obtain_receipts_grouped_by_iban()
         direct_debit_transaction_informations: list[DirectDebitTransactionInformation9] = []
         for receipt in receipts_by_iban:
