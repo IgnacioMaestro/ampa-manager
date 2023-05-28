@@ -4,6 +4,7 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
+from openpyxl import Workbook
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
@@ -77,6 +78,44 @@ class FamilyAdmin(admin.ModelAdmin):
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
 
+    @admin.action(description=gettext_lazy("Export families to XLS"))
+    def export_families_xls(self, _, families: QuerySet[Family]):
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',)
+        response['Content-Disposition'] = 'attachment; filename=familias.xlsx'
+        wb = Workbook()
+        ws = wb.active
+
+        active_course = str(ActiveCourse.load())
+
+        column_titles = ['Apellidos familia', f'Socios curso {active_course}', 'Padre 1', 'Padre 2', 'Hijo 1', 'Hijo 2',
+                         'Hijo 3', 'Hijo 4', 'Hijo 5']
+        ws.append(column_titles)
+
+        for family in families:
+            ws.append(FamilyAdmin.get_family_xls_fields(family))
+
+        wb.save(response)
+
+        return response
+
+    @classmethod
+    def get_family_xls_fields(cls, family):
+        parents = [p.name_and_surnames.encode('utf-8') for p in family.parents.all()]
+        for i in range(len(parents), 2):
+            parents.append('')
+
+        children = [c.name.encode('utf-8') for c in family.child_set.all()]
+        for i in range(len(parents), 5):
+            children.append('')
+
+        is_member = Membership.is_member_family(family)
+        is_member_text = 'Sí' if is_member else 'No'
+
+        fields = [family.surnames, is_member_text]
+        fields.extend(parents)
+        fields.extend(children)
+        return fields
+
     @admin.action(description=gettext_lazy("Make families member"))
     def make_members(self, request, families: QuerySet[Family]):
         new_members = 0
@@ -125,4 +164,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, make_members]
+    actions = [generate_remittance, export_emails, make_members, export_families_xls]
