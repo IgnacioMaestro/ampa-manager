@@ -42,7 +42,7 @@ class FamilyQuerySet(QuerySet):
     def with_number_of_parents(self, number):
         self = self.annotate(parents_count=Count('parents'))
         return self.filter(parents_count=number)
-    
+
     def with_more_than_two_parents(self):
         self = self.annotate(parents_count=Count('parents'))
         return self.filter(parents_count__gt=2)

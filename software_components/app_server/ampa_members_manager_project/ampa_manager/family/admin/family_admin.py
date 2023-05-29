@@ -52,7 +52,7 @@ class FamilyAdmin(admin.ModelAdmin):
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline, MembershipReceiptInline]
-    list_per_page = 25
+    list_per_page = 50
 
     @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))
     def generate_remittance(self, request, families: QuerySet[Family]):

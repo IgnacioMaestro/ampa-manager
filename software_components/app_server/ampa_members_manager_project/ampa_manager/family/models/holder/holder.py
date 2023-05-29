@@ -1,5 +1,4 @@
 import datetime
-import os
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -7,7 +6,6 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.academic_course.models.active_course import ActiveCourse
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount

@@ -1,0 +1,22 @@
+{% extends 'admin/base_site.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Validate families data' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {% trans 'Validate families data' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Validate families data' %}</h1>
+    <p>{{ families_with_same_surnames|titled_list_to_ul }}</p>
+    <p>{{ families_with_same_number_and_name_children|titled_list_to_ul }}</p>
+    <p>{{ families_without_default_holder|titled_list_to_ul }}</p>
+    <p>{{ families_with_more_than_2_parents|titled_list_to_ul }}</p>
+    <p>{{ families_with_only_1_parent|titled_list_to_ul }}</p>
+{% endblock %}

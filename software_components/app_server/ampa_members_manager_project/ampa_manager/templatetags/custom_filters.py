@@ -8,7 +8,11 @@ register = template.Library()
 
 @register.filter
 def titled_list_to_ul(titled_list: TitledList, level=1):
-    html = f'<h{level}>{titled_list.title}</h{level}>'
+    if titled_list.title:
+        html = f'<h{level}>{titled_list.title}</h{level}>'
+    else:
+        html = ''
+
     html += '<ul>'
 
     if titled_list.elements:
