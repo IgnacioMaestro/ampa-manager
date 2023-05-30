@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -10,7 +11,7 @@ from ampa_manager.utils.string_utils import StringUtils
 
 def validate_families_data(request):
     context = {
-        'families_with_same_number_and_name_children': get_families_with_same_number_and_name_children(),
+        'families_with_same_children_names': get_families_with_same_children_names(),
         'families_without_default_holder': get_families_families_without_default_holder(),
         'families_with_same_surnames': get_families_with_same_surnames(),
         'families_with_more_than_2_parents': get_families_with_more_than_2_parents(),
@@ -18,86 +19,90 @@ def validate_families_data(request):
     }
     return render(request, 'validate_families_data.html', context)
 
+
 def get_families_with_more_than_2_parents() -> TitledList:
-    families = TitledList('Familias con mas de 2 padres')
+    families = []
     for family in Family.objects.with_more_than_two_parents():
         parents = TitledList(get_family_link(family))
         for parent in family.parents.all():
             parents.append_element(get_parent_link(parent))
-        families.append_sublist(parents)
-    return families
+        families.append(parents)
+
+    return TitledList(_('Families with more than 2 parents') + f' ({len(families)})', sublists=families)
+
 
 def get_families_with_only_1_parent() -> TitledList:
-    families = TitledList('Familias con 1 sólo padre')
+    families = []
     for family in Family.objects.with_number_of_parents(1):
         parents = TitledList(get_family_link(family))
         for parent in family.parents.all():
             parents.append_element(get_parent_link(parent))
-        families.append_sublist(parents)
-    return families
+        families.append(parents)
+
+    return TitledList(_('Families with 1 only father') + f' ({len(families)})', sublists=families)
+
 
 def get_families_families_without_default_holder() -> TitledList:
-    families = TitledList('Familias sin titular por defecto')
+    families = []
     for family in Family.objects.without_default_holder():
         holders = TitledList(get_family_link(family))
         for holder in Holder.objects.of_family(family):
             holders.append_element(get_holder_link(holder))
-        families.append_sublist(holders)
-    return families
+        families.append(holders)
+
+    return TitledList(_('Families without default holder') + f' ({len(families)})', sublists=families)
+
 
 def get_families_with_same_surnames() -> TitledList:
     processed_ids = []
-    surnames = TitledList('Familias con apellidos repetidos')
+    same_surnames = []
     for family1 in Family.objects.all():
-        surname = None
         processed_ids.append(family1.id)
+
+        surname = None
         for family2 in Family.objects.exclude(id__in=processed_ids):
             if StringUtils.compare_ignoring_everything(family1.surnames, family2.surnames):
+                processed_ids.append(family2.id)
                 if surname is None:
                     surname = TitledList(family1.surnames)
                     surname.append_element(get_family_link(family1, True, True))
                 surname.append_element(get_family_link(family2, True, True))
 
         if surname is not None:
-            surnames.append_sublist(surname)
+            same_surnames.append(surname)
 
-    return surnames
+    return TitledList(_('Families with same surnames') + f' ({len(same_surnames)})', sublists=same_surnames)
 
-def get_families_with_same_number_and_name_children() -> TitledList:
+
+def get_families_with_same_children_names() -> TitledList:
     processed_ids = []
-    processed_child_csv = []
-    children = TitledList('Familias con el mismo nº de hijos y nombres')
+    same_children = []
     for family1 in Family.objects.all():
         processed_ids.append(family1.id)
 
         family1_child_csv = StringUtils.normalize(get_family_children_csv(family1))
-
-        if family1_child_csv in processed_child_csv:
-            continue
-
-        processed_child_csv.append(family1_child_csv)
-
         child_csv = None
-
         for family2 in Family.objects.exclude(id__in=processed_ids):
-            family2_child_csv = StringUtils.normalize(get_family_children_csv(family2))
-
-            if family1_child_csv == family2_child_csv:
+            if family1_child_csv == StringUtils.normalize(get_family_children_csv(family2)):
+                processed_ids.append(family2.id)
                 if child_csv is None:
                     child_csv = TitledList(family1_child_csv)
                     child_csv.append_element(get_family_link(family1, True, True))
                 child_csv.append_element(get_family_link(family2, True, True))
 
         if child_csv is not None:
-            children.append_sublist(child_csv)
+            same_children.append(child_csv)
 
-    return children
+    return TitledList(_('Families with same children names') + f' ({len(same_children)})', sublists=same_children)
+
 
 def get_family_children_csv(family):
     return ', '.join([c.name for c in family.child_set.all()])
 
+
 def get_holder_link(holder) -> str:
     return get_model_link('holder', holder.id, str(holder))
+
 
 def get_family_link(family, print_parents=False, print_children=False) -> str:
     link_text = str(family)
@@ -110,8 +115,10 @@ def get_family_link(family, print_parents=False, print_children=False) -> str:
 
     return get_model_link('family', family.id, link_text)
 
+
 def get_parent_link(parent) -> str:
     return get_model_link('parent', parent.id, str(parent))
+
 
 def get_model_link(model_name: str, model_id: int, link_text) -> str:
     app_label = 'ampa_manager'

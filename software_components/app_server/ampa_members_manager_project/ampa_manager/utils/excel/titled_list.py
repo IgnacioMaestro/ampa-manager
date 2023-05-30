@@ -7,10 +7,10 @@ class TitledList:
     elements: List[str]
     sublists: List[TitledList]
 
-    def __init__(self, title):
+    def __init__(self, title, sublists=None, elements=None):
         self.title = title
-        self.elements = []
-        self.sublists = []
+        self.elements = elements if elements is not None else []
+        self.sublists = sublists if sublists is not None else []
 
     def __str__(self):
         return f'{self.title} ({len(self.elements)} elements, {len(self.sublists)} lists)'
