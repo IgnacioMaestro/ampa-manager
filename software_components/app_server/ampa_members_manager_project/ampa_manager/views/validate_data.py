@@ -12,7 +12,7 @@ from ampa_manager.utils.string_utils import StringUtils
 
 def validate_families_data(request):
     context = {
-        'families_with_same_children_names': None, # get_families_with_same_children_names(),
+        'families_with_same_children_names': get_families_with_same_children_names(),
         'families_without_default_holder': get_families_without_default_holder(),
         'families_with_same_surnames': get_families_with_same_surnames(),
         'families_with_more_than_2_parents': get_families_with_more_than_2_parents(),
