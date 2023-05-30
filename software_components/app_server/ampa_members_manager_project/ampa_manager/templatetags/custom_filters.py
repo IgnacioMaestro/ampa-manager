@@ -7,9 +7,30 @@ register = template.Library()
 
 
 @register.filter
-def titled_list_to_ul(titled_list: TitledList, level=1):
-    html = f'<h{level}>{titled_list.title}</h{level}>'
-    html += '<ul>'
+def titled_list_to_ul(titled_list: TitledList):
+    return generate_html_list_from_title_list(titled_list, numbered=False)
+
+
+@register.filter
+def titled_list_to_ol(titled_list: TitledList):
+    return generate_html_list_from_title_list(titled_list, numbered=True)
+
+
+def generate_html_list_from_title_list(titled_list: TitledList, level=1, numbered=False, collapsable=True):
+    if titled_list is None:
+        return ''
+
+    if titled_list.title:
+        onclick = ''
+        if collapsable:
+            onclick = f'showHideSection(\'{titled_list.id}\')'
+        html = f'<h{level} onclick="{onclick}">{titled_list.title}</h{level}>'
+    else:
+        html = ''
+
+    list_tag = 'ol' if numbered else 'ul'
+
+    html += f'<{list_tag} id="{titled_list.id}">'
 
     if titled_list.elements:
         for element in titled_list.elements:
@@ -18,9 +39,9 @@ def titled_list_to_ul(titled_list: TitledList, level=1):
     if titled_list.sublists:
         for sublist in titled_list.sublists:
             html += '<li>'
-            html += titled_list_to_ul(sublist, level=level+1)
+            html += generate_html_list_from_title_list(sublist, level=level+1, numbered=numbered, collapsable=False)
             html += '</li>'
 
-    html += '</ul>'
+    html += f'</{list_tag}>'
 
     return mark_safe(html)
