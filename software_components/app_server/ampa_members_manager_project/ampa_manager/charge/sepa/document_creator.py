@@ -43,7 +43,7 @@ class DocumentCreator:
     def create_payment_instruction_information_list(self) -> list[PaymentInstructionInformation4]:
         payment_instruction_information = PaymentInstructionInformation4(
             pmt_inf_id=self.REMITTANCE_ID, pmt_mtd=PaymentMethod2Code.DD,
-            nb_of_txs=str(len(self.remittance.obtain_rows())),
+            nb_of_txs=str(len(self.remittance.obtain_receipts_grouped_by_iban())),
             ctrl_sum=Decimal(format(self.remittance.calculate_total_amount(), '.2f')), btch_bookg=True,
             pmt_tp_inf=self.create_payment_type_information(), reqd_colltn_dt=self.create_payment_date(),
             cdtr=self.create_party_identification_cdtr(), cdtr_acct=self.create_cash_account(),
