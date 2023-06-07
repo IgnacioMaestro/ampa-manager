@@ -15,8 +15,8 @@ from ampa_manager.family.use_cases.importers.parent_importer import ParentImport
 from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.views.import_info import ImportInfo
 
 
 class CustodyImporter:
@@ -56,7 +56,7 @@ class CustodyImporter:
     ]
 
     @classmethod
-    def import_custody(cls, file_content, custody_edition: CustodyEdition) -> (int, int, TitledList, TitledList):
+    def import_custody(cls, file_content, custody_edition: CustodyEdition) -> ImportInfo:
         importer = ExcelImporter(
             cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
@@ -68,7 +68,8 @@ class CustodyImporter:
 
         importer.counters_after = cls.count_objects()
 
-        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
+        import_info = ImportInfo(importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
+        return import_info
 
     @classmethod
     def count_objects(cls):
