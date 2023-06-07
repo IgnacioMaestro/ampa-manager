@@ -17,8 +17,8 @@ class ImportAfterSchoolsActivitiesForm(forms.Form):
 
 
 class ImportCustodyForm(forms.Form):
-    custody_edition = forms.ModelChoiceField(queryset=CustodyEdition.objects.order_by('-id'),
-                                             label=_('Custody edition to import to'))
+    custody_edition = forms.ModelChoiceField(
+        queryset=CustodyEdition.objects.order_by('-id'), label=_('Custody edition to import to'))
     file = forms.FileField()
 
 
