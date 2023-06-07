@@ -11,6 +11,6 @@ urlpatterns = [
     path('members/check/', check_members, name='check_members'),
     path('afterschools-registrations/import/', import_after_schools_registrations, name='import_after_schools_registrations'),
     path('afterschools-activities/import/', import_after_schools_activities, name='import_after_schools_activities'),
-    path('custody/import/', import_custody, name='import_after_schools'),
+    path('custody/import/', import_custody, name='import_custody'),
     path('validations/family/', validate_families_data, name='validate_data'),
 ]
