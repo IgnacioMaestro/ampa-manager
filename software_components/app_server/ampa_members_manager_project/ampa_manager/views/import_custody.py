@@ -17,8 +17,8 @@ def import_custody(request):
             edition_id = request.POST.get('custody_edition')
             custody_edition = CustodyEdition.objects.get(id=edition_id)
             total_rows, success_rows, summary, results = \
-                CustodyImporter.import_custody(file_content=request.FILES['file'].read(),
-                                               custody_edition=custody_edition)
+                CustodyImporter.import_custody(
+                    file_content=request.FILES['file'].read(), custody_edition=custody_edition)
             success = total_rows > 0 and total_rows == success_rows
     else:
         form = ImportCustodyForm()
