@@ -69,6 +69,13 @@ class ImportCustodyViewTest(TestCase):
         self.assertEqual(response.context['form'].data, {})
         self.assertEqual(response.context['form'].errors, {})
 
+    def test_import_custody_put(self):
+        # Act
+        response = self.client.put(self.URL)
+
+        # Assert
+        self.assertEqual(response.status_code, 405)
+
     def assert_200_and_template(self, response):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.TEMPLATE)

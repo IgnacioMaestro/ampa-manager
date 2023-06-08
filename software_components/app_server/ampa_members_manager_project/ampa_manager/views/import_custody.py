@@ -10,6 +10,7 @@ from ampa_manager.views.import_info import ImportInfo
 
 
 class ImportCustodyView(View):
+    http_method_names = ['post', 'get']
     TEMPLATE = 'import_custody.html'
 
     @classmethod
