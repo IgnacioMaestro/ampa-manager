@@ -52,12 +52,7 @@ class ImportCustodyView(View):
 
     @classmethod
     def __create_context_with_form(cls, form) -> dict:
-        context = {
-            'form': form,
-            'success': None,
-            'import_results': None,
-            'import_summary': None
-        }
+        context = {'form': form}
         context.update(cls.__create_context_fix_part())
         return context
 

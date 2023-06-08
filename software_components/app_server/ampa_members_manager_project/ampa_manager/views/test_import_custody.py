@@ -81,8 +81,8 @@ class ImportCustodyViewTest(TestCase):
         self.assertTemplateUsed(response, self.TEMPLATE)
 
     def assert_context_common_data(self, response):
-        self.assertIsNone(response.context['success'])
-        self.assertIsNone(response.context['import_results'])
-        self.assertIsNone(response.context['import_summary'])
+        self.assertFalse('success' in response.context)
+        self.assertFalse('import_results' in response.context)
+        self.assertFalse('import_summary' in response.context)
         self.assertEqual(response.context['excel_columns'], get_excel_columns(CustodyImporter.COLUMNS_TO_IMPORT))
         self.assertEqual(response.context['form_action'], self.FORM_ACTION)
