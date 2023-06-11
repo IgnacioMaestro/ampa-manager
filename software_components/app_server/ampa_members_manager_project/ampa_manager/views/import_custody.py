@@ -9,7 +9,7 @@ from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.views.import_info import ImportInfo
 
 
-class ImportCustodyView(View):
+class ImportCustody(View):
     TEMPLATE = 'import_custody.html'
 
     @classmethod
