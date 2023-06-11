@@ -22,6 +22,7 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.logger import Logger
+from ampa_manager.views.import_info import ImportInfo
 
 
 class AfterSchoolsRegistrationsImporter:
@@ -70,8 +71,9 @@ class AfterSchoolsRegistrationsImporter:
     ]
 
     @classmethod
-    def import_after_schools_registrations(cls, file_content) -> Optional[List[str]]:
-        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
+    def import_registrations(cls, file_content) -> ImportInfo:
+        importer = ExcelImporter(
+            cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
         importer.counters_before = cls.count_objects()
 
@@ -81,7 +83,8 @@ class AfterSchoolsRegistrationsImporter:
 
         importer.counters_after = cls.count_objects()
 
-        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
+        return ImportInfo(
+            importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
 
     @classmethod
     def count_objects(cls):
@@ -103,34 +106,38 @@ class AfterSchoolsRegistrationsImporter:
             return result
 
         try:
-            family_result = FamilyImporter.import_family(row.get(cls.KEY_CHILD_SURNAMES),
-                                                         row.get(cls.KEY_PARENT_NAME_AND_SURNAMES))
+            family_result = FamilyImporter.import_family(
+                row.get(cls.KEY_CHILD_SURNAMES),
+                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
             family = family_result.imported_object
 
-            child_result = ChildImporter.import_child(family,
-                                                      row.get(cls.KEY_CHILD_NAME),
-                                                      row.get(cls.KEY_CHILD_LEVEL),
-                                                      row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
+            child_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD_NAME),
+                row.get(cls.KEY_CHILD_LEVEL),
+                row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
             result.add_partial_result(child_result)
             if not child_result.success:
                 return result
             child = child_result.imported_object
 
-            parent_result = ParentImporter.import_parent(family,
-                                                         row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
-                                                         row.get(cls.KEY_PARENT_PHONE_NUMBER),
-                                                         None,
-                                                         row.get(cls.KEY_PARENT_EMAIL))
+            parent_result = ParentImporter.import_parent(
+                family,
+                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                row.get(cls.KEY_PARENT_PHONE_NUMBER),
+                None,
+                row.get(cls.KEY_PARENT_EMAIL))
             result.add_partial_result(parent_result)
             if not parent_result.success:
                 return result
             parent = parent_result.imported_object
 
-            bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(parent, row.get(
-                cls.KEY_BANK_ACCOUNT_IBAN))
+            bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
+                parent, row.get(
+                    cls.KEY_BANK_ACCOUNT_IBAN))
             result.add_partial_result(bank_account_result)
             result.add_partial_result(holder_result)
 
@@ -144,16 +151,18 @@ class AfterSchoolsRegistrationsImporter:
                 return result
             after_school = after_school_result.imported_object
 
-            edition_result = AfterSchoolEditionImporter.find_edition_for_active_course(after_school,
-                                                                                       row.get(cls.KEY_EDITION_PERIOD),
-                                                                                       row.get(cls.KEY_EDITION_TIMETABLE))
+            edition_result = AfterSchoolEditionImporter.find_edition_for_active_course(
+                after_school,
+                row.get(cls.KEY_EDITION_PERIOD),
+                row.get(cls.KEY_EDITION_TIMETABLE))
             result.add_partial_result(edition_result)
             if not edition_result.success:
                 return result
             after_school_edition = edition_result.imported_object
 
-            registration_result = AfterSchoolRegistrationImporter.import_registration(after_school_edition, holder,
-                                                                                      child)
+            registration_result = AfterSchoolRegistrationImporter.import_registration(
+                after_school_edition, holder,
+                child)
             result.add_partial_result(registration_result)
 
         except Exception as e:
