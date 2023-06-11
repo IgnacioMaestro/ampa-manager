@@ -1,7 +1,3 @@
-import traceback
-from pathlib import Path
-from typing import Optional, List
-
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
@@ -17,9 +13,8 @@ from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
-from ampa_manager.utils.logger import Logger
+from ampa_manager.views.import_info import ImportInfo
 
 
 class AfterSchoolsActivitiesImporter:
@@ -50,8 +45,9 @@ class AfterSchoolsActivitiesImporter:
     ]
 
     @classmethod
-    def import_after_schools_activities(cls, file_content) -> (int, int, TitledList, TitledList):
-        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
+    def import_activities(cls, file_content) -> ImportInfo:
+        importer = ExcelImporter(
+            cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
         importer.counters_before = cls.count_objects()
 
@@ -61,8 +57,8 @@ class AfterSchoolsActivitiesImporter:
 
         importer.counters_after = cls.count_objects()
 
-        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
-
+        return ImportInfo(
+            importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
 
     @classmethod
     def count_objects(cls):
@@ -92,12 +88,13 @@ class AfterSchoolsActivitiesImporter:
                 return result
             after_school = after_school_result.imported_object
 
-            edition_result = AfterSchoolEditionImporter.import_edition(after_school,
-                                                                       row.get(cls.KEY_EDITION_PERIOD),
-                                                                       row.get(cls.KEY_EDITION_TIMETABLE),
-                                                                       row.get(cls.KEY_EDITION_LEVELS),
-                                                                       row.get(cls.KEY_EDITION_PRICE_FOR_MEMBERS),
-                                                                       row.get(cls.KEY_EDITION_PRICE_FOR_NO_MEMBERS))
+            edition_result = AfterSchoolEditionImporter.import_edition(
+                after_school,
+                row.get(cls.KEY_EDITION_PERIOD),
+                row.get(cls.KEY_EDITION_TIMETABLE),
+                row.get(cls.KEY_EDITION_LEVELS),
+                row.get(cls.KEY_EDITION_PRICE_FOR_MEMBERS),
+                row.get(cls.KEY_EDITION_PRICE_FOR_NO_MEMBERS))
             result.add_partial_result(edition_result)
 
         except Exception as e:
