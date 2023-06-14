@@ -18,6 +18,7 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
 class DocumentCreator:
     PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
     GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
+    # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
     REMITTANCE_ID = "2023/003"
     COUNTRY = 'ES'
     # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
