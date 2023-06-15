@@ -83,7 +83,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
-        return SEPAResponseCreator().create(remittance)
+        return SEPAResponseCreator().create_sepa_response(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:

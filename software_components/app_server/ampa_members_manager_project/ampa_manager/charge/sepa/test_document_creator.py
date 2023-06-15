@@ -23,7 +23,7 @@ class TestDocumentCreator(TestCase):
             [receipt], 'One Receipt Remittance', datetime.datetime.now(), datetime.datetime.now(), '')
 
     def test_create_receipt_with_authorization(self):
-        document: Document = DocumentCreator(self.remittance).create()
+        document: Document = DocumentCreator(self.remittance, "2023/001").create()
         self.assertTrue(hasattr(document, 'cstmr_drct_dbt_initn'))
         self.assertTrue(isinstance(document.cstmr_drct_dbt_initn, CustomerDirectDebitInitiationV02))
         self.assertTrue(hasattr(document.cstmr_drct_dbt_initn, 'grp_hdr'))
@@ -35,7 +35,7 @@ class TestDocumentCreator(TestCase):
 
     def test_create_customer_direct_debit_initiation(self):
         cstmr_drct_dbt_initn: CustomerDirectDebitInitiationV02 = DocumentCreator(
-            self.remittance).create_customer_direct_debit_initiation()
+            self.remittance, "2023/001").create_customer_direct_debit_initiation()
         self.assertTrue(isinstance(cstmr_drct_dbt_initn, CustomerDirectDebitInitiationV02))
         self.assertTrue(hasattr(cstmr_drct_dbt_initn, 'grp_hdr'))
         self.assertTrue(isinstance(cstmr_drct_dbt_initn.grp_hdr, GroupHeader39))
@@ -45,12 +45,14 @@ class TestDocumentCreator(TestCase):
         self.assertTrue(isinstance(cstmr_drct_dbt_initn.pmt_inf[0], PaymentInstructionInformation4))
 
     def test_create_payment_instruction_information_list(self):
+        remittance_id = "2023/001"
         pmt_inf: list[PaymentInstructionInformation4] = DocumentCreator(
-            self.remittance).create_payment_instruction_information_list()
+            self.remittance, remittance_id).create_payment_information_list()
         self.assertTrue(isinstance(pmt_inf, list))
         self.assertEqual(len(pmt_inf), 1)
         self.assertTrue(isinstance(pmt_inf[0], PaymentInstructionInformation4))
         self.assertTrue(isinstance(pmt_inf[0].pmt_inf_id, str))
+        self.assertEqual(pmt_inf[0].pmt_inf_id, remittance_id)
         self.assertEqual(pmt_inf[0].pmt_mtd, PaymentMethod2Code.DD)
         self.assertTrue(isinstance(pmt_inf[0].nb_of_txs, str))
         self.assertTrue(isinstance(pmt_inf[0].ctrl_sum, Decimal))

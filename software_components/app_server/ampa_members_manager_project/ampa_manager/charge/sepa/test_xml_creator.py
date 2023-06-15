@@ -14,4 +14,4 @@ class TestXMLCreator(TestCase):
             authorization=authorization_receipt)
         remittance = Remittance(
             [receipt], 'One Receipt Remittance', datetime.datetime.now(), datetime.datetime.now(), '')
-        XMLCreator(remittance).create()
+        XMLCreator(remittance, "2023/003").create()
