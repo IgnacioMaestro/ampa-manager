@@ -8,9 +8,13 @@ class SEPAResponseCreator:
     TEXT_XML = 'text/xml'
 
     def create(self, remittance: Remittance) -> HttpResponse:
-        headers = {'Content-Disposition': f'attachment; filename="{remittance.name}.xml"'}
+        xml: str = XMLCreator(remittance).create()
+        return self.__create_response(remittance.name, xml)
+
+    def __create_response(self, remittance_name, xml):
+        filename = f'{remittance_name}.xml'
+        headers = {'Content-Disposition': f'attachment; filename="{filename}"'}
         response = HttpResponse(content_type=self.TEXT_XML, headers=headers)
         response.write(codecs.BOM_UTF8)
-        xml: str = XMLCreator(remittance).create()
         response.write(xml)
         return response
