@@ -7,7 +7,6 @@ from django.test import TestCase
 from django.urls import reverse
 
 from ampa_manager.forms import CheckMembersForm
-from ampa_manager.views.membership_excel_checker import MembershipExcelChecker
 
 
 class TestMemberChecker(TestCase):
@@ -15,7 +14,7 @@ class TestMemberChecker(TestCase):
     TEMPLATE = 'check_members.html'
     FORM_ACTION = '/ampa/members/check/'
 
-    @mock.patch('ampa_manager.views.check_members.obtain_checked_file')
+    @mock.patch('ampa_manager.views.check_members.MemberChecker.obtain_checked_file')
     def test_check_members_post_valid_form(self, mock_checker: MagicMock):
         # Arrange
         example_file = SimpleUploadedFile('example.xls', b'file_content', content_type='text/plain')
@@ -33,8 +32,10 @@ class TestMemberChecker(TestCase):
         response = self.client.get(self.URL)
 
         # Assert
-        self.assert_200_and_template(response)
-        self.assert_context_common_data(response)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, self.TEMPLATE)
+        self.assertEqual(response.context['form_action'], self.FORM_ACTION)
+        self.assertEqual(response.context['excel_template_file_name'], 'templates/plantilla_consultar_socios.xls')
         self.assertEqual(type(response.context['form']), CheckMembersForm)
         self.assertEqual(response.context['form'].data, {})
         self.assertEqual(response.context['form'].errors, {})
@@ -45,11 +46,3 @@ class TestMemberChecker(TestCase):
 
         # Assert
         self.assertEqual(response.status_code, 405)
-
-    def assert_200_and_template(self, response):
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, self.TEMPLATE)
-
-    def assert_context_common_data(self, response):
-        self.assertEqual(response.context['form_action'], self.FORM_ACTION)
-        self.assertEqual(response.context['excel_template_file_name'], 'templates/plantilla_consultar_socios.xls')
