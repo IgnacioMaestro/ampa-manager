@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 
 from xsdata.models.datatype import XmlDate
@@ -25,9 +26,8 @@ class DocumentCreator:
     EURO = 'EUR'
     SEPA = 'SEPA'
 
-    def __init__(self, remittance: Remittance, remittance_id: str):
+    def __init__(self, remittance: Remittance):
         self.remittance = remittance
-        self.remittance_id = remittance_id
 
     def create(self) -> Document:
         return Document(cstmr_drct_dbt_initn=self.create_customer_direct_debit_initiation())
@@ -41,7 +41,7 @@ class DocumentCreator:
 
     def create_payment_information_list(self) -> list[PaymentInstructionInformation4]:
         payment_instruction_information = PaymentInstructionInformation4(
-            pmt_inf_id=self.remittance_id, pmt_mtd=PaymentMethod2Code.DD,
+            pmt_inf_id=self.remittance.sepa_id, pmt_mtd=PaymentMethod2Code.DD,
             nb_of_txs=str(len(self.remittance.obtain_receipts_grouped_by_iban())),
             ctrl_sum=Decimal(format(self.remittance.calculate_total_amount(), '.2f')), btch_bookg=True,
             pmt_tp_inf=self.create_payment_type_information(), reqd_colltn_dt=self.create_payment_date(),
@@ -54,15 +54,16 @@ class DocumentCreator:
     def create_direct_debit_transaction_informations(self) -> list[DirectDebitTransactionInformation9]:
         receipts_by_iban: list[Receipt] = self.remittance.obtain_receipts_grouped_by_iban()
         direct_debit_transaction_informations: list[DirectDebitTransactionInformation9] = []
-        for receipt in receipts_by_iban:
+        for index, receipt in enumerate(receipts_by_iban):
             payment_identification = PaymentIdentification1()
-            # TODO: Esto tiene que ser variable. El sistema genera una clave exclusiva para cada pago, formada por
-            #  la cuenta bancaria, el proveedor, la fecha del pago y el número de control del cheque.
-            payment_identification.end_to_end_id = "2023/Extraescolares_2"
+            payment_identification.end_to_end_id = self.generate_receipt_id(index)
             direct_debit_transaction_information = self.create_direct_debit_transaction_information(
                 payment_identification, receipt)
             direct_debit_transaction_informations.append(direct_debit_transaction_information)
         return direct_debit_transaction_informations
+
+    def generate_receipt_id(self, receipt_index: int) -> str:
+        return self.remittance.sepa_id + str(receipt_index+1) + datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
     def create_direct_debit_transaction_information(
             self, payment_identification: PaymentIdentification1,

@@ -17,5 +17,6 @@ class RemittanceGeneratorFromCampsRemittance:
         for camps_receipt in camps_receipts:
             receipts.append(camps_receipt.generate_receipt())
         return Remittance(
-            receipts=receipts, name=self.__camps_remittance.name, created_date=self.__camps_remittance.created_at,
-            payment_date=self.__camps_remittance.payment_date, concept=self.__camps_remittance.concept)
+            receipts=receipts, name=self.__camps_remittance.name, sepa_id=self.__camps_remittance.sepa_id,
+            created_date=self.__camps_remittance.created_at, payment_date=self.__camps_remittance.payment_date,
+            concept=self.__camps_remittance.concept)

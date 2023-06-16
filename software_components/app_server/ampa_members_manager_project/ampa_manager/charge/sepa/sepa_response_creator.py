@@ -9,7 +9,7 @@ class SEPAResponseCreator:
     REMITTANCE_ID = "2023/003"
 
     def create_sepa_response(self, remittance: Remittance) -> HttpResponse:
-        xml: str = XMLCreator(remittance, self.REMITTANCE_ID).create()
+        xml: str = XMLCreator(remittance).create()
         return self.__create_response(remittance.name, xml)
 
     def __create_response(self, remittance_name, xml):
