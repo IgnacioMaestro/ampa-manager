@@ -1,34 +1,17 @@
 @startuml
+!include ..\ChargeCommon.puml
 package Charge{
     package AfterSchoolCharge{
         class AfterSchoolRemittance{
             name: string
             created_at: datetime
+            payment_date: datetime
+            concept: string
         }
         class AfterSchoolReceipt {
             amount: float
         }
     }
-
-    class State
-    class Created
-    class Send
-    class Paid
-    State <|-- Created
-    State <|-- Send
-    State <|-- Paid
-
-    class Remittance {
-        name: string
-    }
-    class Receipt {
-        amount: float
-        bank_account_owner: string
-        iban: string
-        authorization: string
-    }
-
-    Remittance *--> Receipt
 
     AfterSchoolReceipt --> Receipt
     AfterSchoolRemittance --> Remittance
@@ -36,7 +19,6 @@ package Charge{
     AfterSchoolReceipt *-- State
     AfterSchoolRemittance *-- "1..N" AfterSchoolReceipt
 }
-
 
 package AfterSchool{
     class AfterSchoolEdition

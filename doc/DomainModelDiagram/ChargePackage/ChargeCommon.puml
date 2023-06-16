@@ -1,0 +1,27 @@
+@startuml
+package Charge{
+    class Remittance {
+        name: string
+        created_at: datetime
+        payment_date: datetime
+        concept: string
+    }
+
+    class Receipt {
+        amount: float
+        bank_account_owner: string
+        iban: string
+        authorization: string
+    }
+
+    Remittance *--> Receipt
+
+    class State
+    class Created
+    class Send
+    class Paid
+    State <|-- Created
+    State <|-- Send
+    State <|-- Paid
+}
+@enduml

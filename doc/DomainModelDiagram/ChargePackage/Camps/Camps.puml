@@ -1,4 +1,6 @@
 @startuml
+!include ..\ChargeCommon.puml
+
 package Charge{
     package CampsCharge{
         class CampsRemittance{
@@ -11,26 +13,6 @@ package Charge{
             amount: float
         }
     }
-
-    class State
-    class Created
-    class Send
-    class Paid
-    State <|-- Created
-    State <|-- Send
-    State <|-- Paid
-
-    class Remittance {
-        name: string
-    }
-    class Receipt {
-        amount: float
-        bank_account_owner: string
-        iban: string
-        authorization: string
-    }
-
-    Remittance *--> Receipt
 
     CampsReceipt --> Receipt
     CampsRemittance --> Remittance
