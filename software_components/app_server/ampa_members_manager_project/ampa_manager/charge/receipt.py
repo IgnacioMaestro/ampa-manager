@@ -14,7 +14,6 @@ class AuthorizationReceipt:
 
 @dataclass
 class Receipt:
-    NO_AUTHORIZATION_MESSAGE = 'No authorization'
     amount: float
     bank_account_owner: str
     iban: str

@@ -13,5 +13,5 @@ class TestXMLCreator(TestCase):
             amount=2.0, bank_account_owner='bank_account_owner', iban='iban', bic='bic',
             authorization=authorization_receipt)
         remittance = Remittance(
-            [receipt], 'One Receipt Remittance', datetime.datetime.now(), datetime.datetime.now(), '')
+            [receipt], 'One Receipt Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '')
         XMLCreator(remittance).create()

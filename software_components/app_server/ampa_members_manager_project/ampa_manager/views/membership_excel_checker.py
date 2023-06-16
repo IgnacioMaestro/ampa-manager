@@ -35,7 +35,7 @@ class MembershipExcelChecker:
         family_surnames = str(row[0])
         parent1_full_name = str(row[1])
         parent2_full_name = str(row[2])
-        family, error = Family.find(family_surnames, [parent1_full_name, parent2_full_name])
+        family, _ = Family.find(family_surnames, [parent1_full_name, parent2_full_name])
         if family:
             return family
         return None

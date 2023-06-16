@@ -8,9 +8,11 @@ from .receipt import Receipt
 
 
 class Remittance:
-    def __init__(self, receipts: List[Receipt], name: str, created_date: datetime, payment_date: date, concept: str):
+    def __init__(self, receipts: List[Receipt], name: str, sepa_id: str, created_date: datetime, payment_date: date,
+                 concept: str):
         self.receipts: List[Receipt] = receipts
         self.name: str = name
+        self.sepa_id: str = sepa_id
         self.created_date: datetime = created_date
         self.payment_date: date = payment_date
         self.concept: str = concept

@@ -28,7 +28,7 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
     inlines = [MembershipReceiptInline]
     list_per_page = 25
@@ -62,7 +62,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         if not membership_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=membership_remittance).generate()
-        return SEPAResponseCreator().create(remittance)
+        return SEPAResponseCreator().create_sepa_response(remittance)
 
     @admin.action(description=gettext_lazy("Create Membership Remittance with families not included yet"))
     def create_remittance(self, request, _: QuerySet[MembershipRemittance]):

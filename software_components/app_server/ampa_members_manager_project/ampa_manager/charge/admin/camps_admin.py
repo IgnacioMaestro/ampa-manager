@@ -45,7 +45,7 @@ class CampsReceiptInline(ReadOnlyTabularInline):
 
 
 class CampsRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
     inlines = [CampsReceiptInline]
     list_per_page = 25
@@ -72,6 +72,6 @@ class CampsRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = RemittanceGeneratorFromCampsRemittance(
             camps_remittance=camps_remittance).generate()
-        return SEPAResponseCreator().create(remittance)
+        return SEPAResponseCreator().create_sepa_response(remittance)
 
     actions = [download_membership_remittance_sepa_file]

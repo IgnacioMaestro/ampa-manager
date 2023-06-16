@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 
 from xsdata.models.datatype import XmlDate
@@ -18,9 +19,7 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
 class DocumentCreator:
     PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
     GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
-    REMITTANCE_ID = "2023/003"
     COUNTRY = 'ES'
-    # TODO: Modificar para que se pueda elegir entre las cuentas que tiene el AMPA
     IBAN_ACCOUNT = "ES2430350061920611157807"
     BIC = "CLPEES2MXXX"
     CORE = 'CORE'
@@ -34,15 +33,15 @@ class DocumentCreator:
         return Document(cstmr_drct_dbt_initn=self.create_customer_direct_debit_initiation())
 
     def create_customer_direct_debit_initiation(self) -> CustomerDirectDebitInitiationV02:
-        grp_hdr: GroupHeader39 = GroupHeaderCreator(
+        group_header: GroupHeader39 = GroupHeaderCreator(
             remittance=self.remittance, party_identification=self.PARTY_IDENTIFICATION,
             organization_id=self.GENERIC_ORGANISATION_IDENTIFICATION_ID).create()
-        pmt_inf: list[PaymentInstructionInformation4] = self.create_payment_instruction_information_list()
-        return CustomerDirectDebitInitiationV02(grp_hdr=grp_hdr, pmt_inf=pmt_inf)
+        payment_information: list[PaymentInstructionInformation4] = self.create_payment_information_list()
+        return CustomerDirectDebitInitiationV02(grp_hdr=group_header, pmt_inf=payment_information)
 
-    def create_payment_instruction_information_list(self) -> list[PaymentInstructionInformation4]:
+    def create_payment_information_list(self) -> list[PaymentInstructionInformation4]:
         payment_instruction_information = PaymentInstructionInformation4(
-            pmt_inf_id=self.REMITTANCE_ID, pmt_mtd=PaymentMethod2Code.DD,
+            pmt_inf_id=self.remittance.sepa_id, pmt_mtd=PaymentMethod2Code.DD,
             nb_of_txs=str(len(self.remittance.obtain_receipts_grouped_by_iban())),
             ctrl_sum=Decimal(format(self.remittance.calculate_total_amount(), '.2f')), btch_bookg=True,
             pmt_tp_inf=self.create_payment_type_information(), reqd_colltn_dt=self.create_payment_date(),
@@ -53,20 +52,22 @@ class DocumentCreator:
         return [payment_instruction_information]
 
     def create_direct_debit_transaction_informations(self) -> list[DirectDebitTransactionInformation9]:
-        payment_identification = PaymentIdentification1()
-        # TODO: Esto tiene que ser variable. El sistema genera una clave exclusiva para cada pago, formada por
-        #  la cuenta bancaria, el proveedor, la fecha del pago y el número de control del cheque.
-        payment_identification.end_to_end_id = "2023/Extraescolares_2"
         receipts_by_iban: list[Receipt] = self.remittance.obtain_receipts_grouped_by_iban()
         direct_debit_transaction_informations: list[DirectDebitTransactionInformation9] = []
-        for receipt in receipts_by_iban:
+        for index, receipt in enumerate(receipts_by_iban):
+            payment_identification = PaymentIdentification1()
+            payment_identification.end_to_end_id = self.generate_receipt_id(index)
             direct_debit_transaction_information = self.create_direct_debit_transaction_information(
                 payment_identification, receipt)
             direct_debit_transaction_informations.append(direct_debit_transaction_information)
         return direct_debit_transaction_informations
 
+    def generate_receipt_id(self, receipt_index: int) -> str:
+        return self.remittance.sepa_id + str(receipt_index+1) + datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
     def create_direct_debit_transaction_information(
-            self, payment_identification, receipt) -> DirectDebitTransactionInformation9:
+            self, payment_identification: PaymentIdentification1,
+            receipt: Receipt) -> DirectDebitTransactionInformation9:
         direct_debit_transaction_information = DirectDebitTransactionInformation9()
         direct_debit_transaction_information.pmt_id = payment_identification
         active_or_historic_currency_and_amount = ActiveOrHistoricCurrencyAndAmount()

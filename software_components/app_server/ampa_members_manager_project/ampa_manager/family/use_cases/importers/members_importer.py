@@ -14,8 +14,8 @@ from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.views.import_info import ImportInfo
 
 
 class MembersImporter:
@@ -137,8 +137,9 @@ class MembersImporter:
     ]
 
     @classmethod
-    def import_members(cls, file_content) -> (int, int, TitledList, TitledList):
-        importer = ExcelImporter(cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
+    def import_members(cls, file_content) -> ImportInfo:
+        importer = ExcelImporter(
+            cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
         importer.counters_before = cls.count_objects()
 
@@ -148,7 +149,8 @@ class MembersImporter:
 
         importer.counters_after = cls.count_objects()
 
-        return importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results()
+        return ImportInfo(
+            importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
 
     @classmethod
     def count_objects(cls):
@@ -170,9 +172,10 @@ class MembersImporter:
             return result
 
         try:
-            family_result = FamilyImporter.import_family(row.get(cls.KEY_FAMILY_SURNAMES),
-                                                         row.get(cls.KEY_PARENT1_NAME_AND_SURNAMES),
-                                                         row.get(cls.KEY_PARENT2_NAME_AND_SURNAMES))
+            family_result = FamilyImporter.import_family(
+                row.get(cls.KEY_FAMILY_SURNAMES),
+                row.get(cls.KEY_PARENT1_NAME_AND_SURNAMES),
+                row.get(cls.KEY_PARENT2_NAME_AND_SURNAMES))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
@@ -192,46 +195,51 @@ class MembersImporter:
     def import_children(cls, row: ExcelRow, family, result: ImportRowResult):
 
         if row.any_column_has_value(cls.CHILD1_FIELDS):
-            child1_result = ChildImporter.import_child(family,
-                                                       row.get(cls.KEY_CHILD1_NAME),
-                                                       row.get(cls.KEY_CHILD1_LEVEL),
-                                                       row.get(cls.KEY_CHILD1_YEAR_OF_BIRTH))
+            child1_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD1_NAME),
+                row.get(cls.KEY_CHILD1_LEVEL),
+                row.get(cls.KEY_CHILD1_YEAR_OF_BIRTH))
             result.add_partial_result(child1_result)
             if not child1_result.success:
                 return result
 
         if row.any_column_has_value(cls.CHILD2_FIELDS):
-            child2_result = ChildImporter.import_child(family,
-                                                       row.get(cls.KEY_CHILD2_NAME),
-                                                       row.get(cls.KEY_CHILD2_LEVEL),
-                                                       row.get(cls.KEY_CHILD2_YEAR_OF_BIRTH))
+            child2_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD2_NAME),
+                row.get(cls.KEY_CHILD2_LEVEL),
+                row.get(cls.KEY_CHILD2_YEAR_OF_BIRTH))
             result.add_partial_result(child2_result)
             if not child2_result.success:
                 return result
 
         if row.any_column_has_value(cls.CHILD3_FIELDS):
-            child3_result = ChildImporter.import_child(family,
-                                                       row.get(cls.KEY_CHILD3_NAME),
-                                                       row.get(cls.KEY_CHILD3_LEVEL),
-                                                       row.get(cls.KEY_CHILD3_YEAR_OF_BIRTH))
+            child3_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD3_NAME),
+                row.get(cls.KEY_CHILD3_LEVEL),
+                row.get(cls.KEY_CHILD3_YEAR_OF_BIRTH))
             result.add_partial_result(child3_result)
             if not child3_result.success:
                 return result
 
         if row.any_column_has_value(cls.CHILD4_FIELDS):
-            child4_result = ChildImporter.import_child(family,
-                                                       row.get(cls.KEY_CHILD4_NAME),
-                                                       row.get(cls.KEY_CHILD4_LEVEL),
-                                                       row.get(cls.KEY_CHILD4_YEAR_OF_BIRTH))
+            child4_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD4_NAME),
+                row.get(cls.KEY_CHILD4_LEVEL),
+                row.get(cls.KEY_CHILD4_YEAR_OF_BIRTH))
             result.add_partial_result(child4_result)
             if not child4_result.success:
                 return result
 
         if row.any_column_has_value(cls.CHILD5_FIELDS):
-            child5_result = ChildImporter.import_child(family,
-                                                       row.get(cls.KEY_CHILD5_NAME),
-                                                       row.get(cls.KEY_CHILD5_LEVEL),
-                                                       row.get(cls.KEY_CHILD5_YEAR_OF_BIRTH))
+            child5_result = ChildImporter.import_child(
+                family,
+                row.get(cls.KEY_CHILD5_NAME),
+                row.get(cls.KEY_CHILD5_LEVEL),
+                row.get(cls.KEY_CHILD5_YEAR_OF_BIRTH))
             result.add_partial_result(child5_result)
             if not child5_result.success:
                 return result
@@ -241,19 +249,21 @@ class MembersImporter:
     @classmethod
     def import_parents(cls, row: ExcelRow, family, result: ImportRowResult):
         if row.any_column_has_value(cls.PARENT1_FIELDS):
-            parent1_result = ParentImporter.import_parent(family,
-                                                          row.get(cls.KEY_PARENT1_NAME_AND_SURNAMES),
-                                                          row.get(cls.KEY_PARENT1_PHONE_NUMBER),
-                                                          None,
-                                                          row.get(cls.KEY_PARENT1_EMAIL))
+            parent1_result = ParentImporter.import_parent(
+                family,
+                row.get(cls.KEY_PARENT1_NAME_AND_SURNAMES),
+                row.get(cls.KEY_PARENT1_PHONE_NUMBER),
+                None,
+                row.get(cls.KEY_PARENT1_EMAIL))
             result.add_partial_result(parent1_result)
             if not parent1_result.success:
                 return result
             parent1 = parent1_result.imported_object
 
             if row.any_column_has_value(cls.PARENT1_BANK_ACCOUNT_FIELDS):
-                bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(parent1,
-                                                                                                        row.get(cls.KEY_PARENT1_BANK_ACCOUNT_IBAN))
+                bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
+                    parent1,
+                    row.get(cls.KEY_PARENT1_BANK_ACCOUNT_IBAN))
                 result.add_partial_result(bank_account_result)
                 result.add_partial_result(holder_result)
 
@@ -261,11 +271,12 @@ class MembersImporter:
                     return result
 
         if row.any_column_has_value(cls.PARENT2_FIELDS):
-            parent2_result = ParentImporter.import_parent(family,
-                                                          row.get(cls.KEY_PARENT2_NAME_AND_SURNAMES),
-                                                          row.get(cls.KEY_PARENT2_PHONE_NUMBER),
-                                                          None,
-                                                          row.get(cls.KEY_PARENT2_EMAIL))
+            parent2_result = ParentImporter.import_parent(
+                family,
+                row.get(cls.KEY_PARENT2_NAME_AND_SURNAMES),
+                row.get(cls.KEY_PARENT2_PHONE_NUMBER),
+                None,
+                row.get(cls.KEY_PARENT2_EMAIL))
             result.add_partial_result(parent2_result)
             if not parent2_result.success:
                 return result

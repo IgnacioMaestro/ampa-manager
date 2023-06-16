@@ -47,7 +47,7 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 
 
 class CustodyRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
     inlines = [CustodyReceiptInline]
     list_per_page = 25
@@ -82,7 +82,7 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Remittance = RemittanceGeneratorFromCustodyRemittance(
             custody_remittance=custody_remittance).generate()
-        return SEPAResponseCreator().create(remittance)
+        return SEPAResponseCreator().create_sepa_response(remittance)
 
     @staticmethod
     def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:

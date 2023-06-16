@@ -17,6 +17,6 @@ class RemittanceGeneratorFromAfterSchoolRemittance:
         for after_school_receipt in after_school_receipts:
             receipts.append(after_school_receipt.generate_receipt())
         return Remittance(
-            receipts=receipts, name=self.__after_school_remittance.name,
+            receipts=receipts, name=self.__after_school_remittance.name, sepa_id=self.__after_school_remittance.sepa_id,
             created_date=self.__after_school_remittance.created_at,
             payment_date=self.__after_school_remittance.payment_date, concept=self.__after_school_remittance.concept)
