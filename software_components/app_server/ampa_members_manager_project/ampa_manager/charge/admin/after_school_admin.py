@@ -48,7 +48,7 @@ class AfterSchoolReceiptInline(ReadOnlyTabularInline):
 
 
 class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
     inlines = [AfterSchoolReceiptInline]
     list_per_page = 25

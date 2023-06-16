@@ -28,7 +28,7 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
     inlines = [MembershipReceiptInline]
     list_per_page = 25
