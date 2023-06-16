@@ -2,7 +2,7 @@
 package Charge{
     class Remittance {
         name: string
-        id: string
+        sepa_id: string
         created_at: datetime
         payment_date: datetime
         concept: string
