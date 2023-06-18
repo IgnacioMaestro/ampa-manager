@@ -8,7 +8,8 @@ from openpyxl import Workbook
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.charge.admin.membership_admin import MembershipReceiptInline
+from ampa_manager.academic_course.models.level import Level
+from django.utils.translation import gettext_lazy as _
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
@@ -34,9 +35,15 @@ class MembershipInline(ReadOnlyTabularInline):
     extra = 0
 
 
-class ChildInline(admin.TabularInline):
+class ChildInline(ReadOnlyTabularInline):
     model = Child
+    fields = ['name', 'year_of_birth', 'repetition', 'child_course']
+    readonly_fields = ['child_course']
     extra = 0
+
+    @admin.display(description=_('Course'))
+    def child_course(self, child):
+        return Level.get_level_name(child.level)
 
 
 class FamilyAdmin(admin.ModelAdmin):
@@ -51,7 +58,7 @@ class FamilyAdmin(admin.ModelAdmin):
     search_fields = ['surnames', 'parents__name_and_surnames', 'id']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
-    inlines = [ChildInline, MembershipInline, MembershipReceiptInline]
+    inlines = [ChildInline, MembershipInline]
     list_per_page = 50
 
     @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))

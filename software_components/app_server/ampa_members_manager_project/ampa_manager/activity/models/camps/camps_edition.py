@@ -8,7 +8,7 @@ from ampa_manager.activity.models.camps.camps_edition_queryset import CampsEditi
 
 class CampsEdition(models.Model):
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
-    levels = models.CharField(max_length=300, verbose_name=_("Levels"))
+    levels = models.CharField(max_length=300, verbose_name=_("Levels"), help_text=_('For example: Primary, Pre-school, LH1-LH3'))
     price_for_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for members"))
     price_for_no_member = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Price for no members"))
 

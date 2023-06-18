@@ -1,5 +1,3 @@
-# from ampa_manager.charge.use_cases.camps.camps_remittance_creator.camps_remittance_creator import \
-#     CampsRemittanceCreator
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
@@ -43,11 +41,11 @@ class CampsRegistrationInline(ReadOnlyTabularInline):
 
 class CampsEditionAdmin(admin.ModelAdmin):
     inlines = [CampsRegistrationInline]
-    list_display = ['academic_course', 'price_for_member', 'price_for_no_member',
+    list_display = ['academic_course', 'levels', 'price_for_member', 'price_for_no_member',
                     'members_registrations_count', 'no_members_registrations_count',
                     'registrations_count', 'remittance']
     fieldsets = (
-        (None, {'fields': ('academic_course',)}),
+        (None, {'fields': ('academic_course', 'levels')}),
         (_('Prices'), {'fields': ('price_for_member', 'price_for_no_member'), }),
         (_('Registrations'), {
             'fields': ('members_registrations_count', 'no_members_registrations_count', 'registrations_count'),
