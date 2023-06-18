@@ -2,9 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
-from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
-from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
+from ampa_manager.activity.models.camps.camps_edition import CampsEdition
+from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
+from ampa_manager.activity.use_cases.importers.camps_registration_importer import CampsRegistrationImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
@@ -21,7 +21,7 @@ from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.views.import_info import ImportInfo
 
 
-class AfterSchoolsRegistrationsImporter:
+class CampsImporter:
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
@@ -33,10 +33,6 @@ class AfterSchoolsRegistrationsImporter:
     KEY_CHILD_SURNAMES = 'child_surnames'
     KEY_CHILD_YEAR_OF_BIRTH = 'child_year_of_birth'
     KEY_CHILD_LEVEL = 'child_level'
-    KEY_AFTER_SCHOOL_NAME = 'after_school_name'
-    KEY_EDITION_PERIOD = 'edition_period'
-    KEY_EDITION_TIMETABLE = 'edition_timetable'
-    KEY_EDITION_LEVELS = 'edition_levels'
 
     LABEL_PARENT_NAME_AND_SURNAMES = _('Parent name and surnames')
     LABEL_PARENT_PHONE_NUMBER = _('Parent phone number')
@@ -46,10 +42,6 @@ class AfterSchoolsRegistrationsImporter:
     LABEL_CHILD_SURNAMES = _('Child surnames')
     LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')
     LABEL_CHILD_LEVEL = _('Child level (ex. HH4, LH3)')
-    LABEL_AFTER_SCHOOL_NAME = _('After school name')
-    LABEL_EDITION_PERIOD = _('After school edition period')
-    LABEL_EDITION_TIMETABLE = _('After school edition timetable')
-    LABEL_EDITION_LEVELS = _('After school edition levels')
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
@@ -60,21 +52,17 @@ class AfterSchoolsRegistrationsImporter:
         [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
         [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
         [7, FieldsFormatters.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
-        [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
     ]
 
     @classmethod
-    def import_registrations(cls, file_content) -> ImportInfo:
+    def import_camps_registrations(cls, file_content, camps_edition: CampsEdition) -> ImportInfo:
         importer = ExcelImporter(
             cls.SHEET_NUMBER, cls.FIRST_ROW_INDEX, cls.COLUMNS_TO_IMPORT, file_content=file_content)
 
         importer.counters_before = cls.count_objects()
 
         for row in importer.get_rows():
-            result = cls.process_row(row)
+            result = cls.process_row(row, camps_edition)
             importer.add_result(result)
 
         importer.counters_after = cls.count_objects()
@@ -90,12 +78,11 @@ class AfterSchoolsRegistrationsImporter:
             Child.__name__: Child.objects.count(),
             BankAccount.__name__: BankAccount.objects.count(),
             Holder.__name__: Holder.objects.count(),
-            AfterSchool.__name__: AfterSchool.objects.count(),
-            AfterSchoolRegistration.__name__: AfterSchoolRegistration.objects.count()
+            CampsRegistration.__name__: AfterSchoolRegistration.objects.count()
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow) -> ImportRowResult:
+    def process_row(cls, row: ExcelRow, camps_edition: CampsEdition) -> ImportRowResult:
         result = ImportRowResult(row)
 
         if row.error:
@@ -142,23 +129,7 @@ class AfterSchoolsRegistrationsImporter:
                 return result
             holder = holder_result.imported_object
 
-            after_school_result = AfterSchoolImporter.import_after_school(row.get(cls.KEY_AFTER_SCHOOL_NAME), False)
-            result.add_partial_result(after_school_result)
-            if not after_school_result.success:
-                return result
-            after_school = after_school_result.imported_object
-
-            edition_result = AfterSchoolEditionImporter.find_edition_for_active_course(
-                after_school,
-                row.get(cls.KEY_EDITION_PERIOD),
-                row.get(cls.KEY_EDITION_TIMETABLE))
-            result.add_partial_result(edition_result)
-            if not edition_result.success:
-                return result
-            after_school_edition = edition_result.imported_object
-
-            registration_result = AfterSchoolRegistrationImporter.import_registration(
-                after_school_edition, holder, child)
+            registration_result = CampsRegistrationImporter.import_registration(camps_edition, holder, child)
             result.add_partial_result(registration_result)
 
         except Exception as e:
