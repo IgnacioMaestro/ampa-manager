@@ -26,6 +26,10 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
     model = MembershipReceipt
     extra = 0
 
+    @admin.display(description=gettext_lazy('Course'))
+    def remittance_course(self, receipt):
+        return receipt.remittance.course
+
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count', 'sepa_id']

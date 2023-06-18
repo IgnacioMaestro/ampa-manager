@@ -36,7 +36,18 @@ class Family(TimeStampedModel):
         db_table = 'family'
 
     def __str__(self) -> str:
-        return f'{self.surnames}'
+        return f'{self.surnames}: {self.parents_names} ({self.children_names})'
+
+    @property
+    def children_names(self):
+        return ', '.join(c.name for c in self.child_set.all())
+
+    @property
+    def parents_names(self):
+        names = []
+        for parent in self.parents.all():
+            names.append(StringUtils.subtract_words(parent.name_and_surnames, self.surnames))
+        return ', '.join(names)
 
     def get_parent_count(self):
         return self.parents.all().count()

@@ -9,6 +9,13 @@ from ampa_manager.utils.surnames import SURNAMES
 class StringUtils:
 
     @staticmethod
+    def subtract_words(text: str, words_to_subtract: str):
+        words = words_to_subtract.split()
+        text_words = text.split()
+        filtered_words = [word for word in text_words if word not in words]
+        return ' '.join(filtered_words)
+
+    @staticmethod
     def compare_ignoring_everything(value1: str, value2: str) -> bool:
         if value1 and value2:
             return StringUtils.normalize(value1) == StringUtils.normalize(value2)
