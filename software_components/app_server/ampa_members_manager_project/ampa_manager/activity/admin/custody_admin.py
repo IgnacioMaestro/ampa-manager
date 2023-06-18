@@ -60,7 +60,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
             'fields': ('members_assisted_days', 'topped_members_assisted_days', 'no_members_assisted_days',
                        'topped_no_members_assisted_days'),
         }),
-        (_('Remmitance'), {
+        (_('Remittance'), {
             'fields': ('remittance',),
         }),
     )
