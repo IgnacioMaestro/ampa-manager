@@ -1,6 +1,7 @@
 from django.db.models import F
 from django.db.models.query import QuerySet
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.family.models.child import Child
@@ -15,6 +16,9 @@ class CustodyRegistrationQuerySet(QuerySet):
 
     def of_child(self, child: Child):
         return self.filter(child=child)
+
+    def of_academic_course(self, course: AcademicCourse):
+        return self.filter(custody_edition__academic_course=course)
 
     def of_holder(self, holder: Holder):
         return self.filter(holder=holder)

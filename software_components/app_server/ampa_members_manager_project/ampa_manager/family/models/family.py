@@ -46,7 +46,7 @@ class Family(TimeStampedModel):
     def parents_names(self):
         names = []
         for parent in self.parents.all():
-            names.append(StringUtils.subtract_words(parent.name_and_surnames, self.surnames))
+            names.append(parent.name_and_surnames)
         return ', '.join(names)
 
     def get_parent_count(self):
