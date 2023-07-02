@@ -25,6 +25,10 @@ class Family(TimeStampedModel):
     default_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
         help_text=_("Save the family to see its bank accounts"))
+    custody_holder = models.ForeignKey(to=Holder, on_delete=SET_NULL, null=True, blank=True,
+                                       verbose_name=_("Custody holder"),
+                                       help_text=_("Save the family to see its bank accounts"),
+                                       related_name='custody_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
 
@@ -46,7 +50,7 @@ class Family(TimeStampedModel):
     def parents_names(self):
         names = []
         for parent in self.parents.all():
-            names.append(StringUtils.subtract_words(parent.name_and_surnames, self.surnames))
+            names.append(parent.name_and_surnames)
         return ', '.join(names)
 
     def get_parent_count(self):

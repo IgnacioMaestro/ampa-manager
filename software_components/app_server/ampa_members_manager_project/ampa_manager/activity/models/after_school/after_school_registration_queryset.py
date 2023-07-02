@@ -1,5 +1,6 @@
 from django.db.models.query import QuerySet
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.family.models.child import Child
@@ -13,6 +14,9 @@ class AfterSchoolRegistrationQuerySet(QuerySet):
 
     def of_child(self, child: Child):
         return self.filter(child=child)
+
+    def of_academic_course(self, course: AcademicCourse):
+        return self.filter(after_school_edition__academic_course=course)
 
     def of_holder(self, holder: Holder):
         return self.filter(holder=holder)

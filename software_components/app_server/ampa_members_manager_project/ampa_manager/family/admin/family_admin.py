@@ -10,6 +10,10 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from django.utils.translation import gettext_lazy as _
+
+from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
+from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
@@ -37,25 +41,39 @@ class MembershipInline(ReadOnlyTabularInline):
 
 class ChildInline(ReadOnlyTabularInline):
     model = Child
-    fields = ['name', 'year_of_birth', 'repetition', 'child_course']
-    readonly_fields = ['child_course']
+    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registration_count',
+              'custody_registration_count', 'camps_registration_count']
+    readonly_fields = ['child_course', 'after_school_registration_count', 'custody_registration_count',
+                       'camps_registration_count']
     extra = 0
 
     @admin.display(description=_('Course'))
     def child_course(self, child):
         return Level.get_level_name(child.level)
 
+    @admin.display(description=_('After-schools'))
+    def after_school_registration_count(self, child):
+        return AfterSchoolRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+
+    @admin.display(description=_('Custody'))
+    def custody_registration_count(self, child):
+        return CustodyRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+
+    @admin.display(description=_('Camps'))
+    def camps_registration_count(self, child):
+        return CampsRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'default_holder', 'parent_count',
+    list_display = ['surnames', 'parents_names', 'children_names',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_holder', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
                    'is_defaulter', 'decline_membership', FamilyParentCountFilter]
-    search_fields = ['surnames', 'parents__name_and_surnames', 'id']
+    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
@@ -72,6 +90,20 @@ class FamilyAdmin(admin.ModelAdmin):
                     "View details") + "</a>)")
         else:
             message = gettext_lazy("No families to include in Membership Remittance")
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
+    def complete_custody_holder(self, request, families: QuerySet[Family]):
+        updated = 0
+        for family in families:
+            if not family.custody_holder:
+                last_registration = CustodyRegistration.objects.filter(child__family=family).order_by('-id').last()
+                if last_registration and last_registration.holder:
+                    family.custody_holder = last_registration.holder
+                    family.save()
+                    updated += 1
+
+        message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export emails to CSV"))
@@ -150,6 +182,14 @@ class FamilyAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=message)
 
     @admin.display(description=gettext_lazy('Parents'))
+    def parents_names(self, family):
+        return family.parents_names
+
+    @admin.display(description=gettext_lazy('Children'))
+    def children_names(self, family):
+        return family.children_names
+
+    @admin.display(description=gettext_lazy('Parents'))
     def parent_count(self, family):
         return family.get_parent_count()
 
@@ -171,4 +211,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, make_members, export_families_xls]
+    actions = [generate_remittance, export_emails, make_members, export_families_xls, complete_custody_holder]
