@@ -25,6 +25,10 @@ class Family(TimeStampedModel):
     default_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
         help_text=_("Save the family to see its bank accounts"))
+    custody_holder = models.ForeignKey(to=Holder, on_delete=SET_NULL, null=True, blank=True,
+                                       verbose_name=_("Custody holder"),
+                                       help_text=_("Save the family to see its bank accounts"),
+                                       related_name='custody_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
 

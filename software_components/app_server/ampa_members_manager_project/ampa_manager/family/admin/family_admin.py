@@ -65,9 +65,9 @@ class ChildInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'parents_names', 'children_names', 'default_holder',
+    list_display = ['surnames', 'parents_names', 'children_names',
                     'children_in_school_count', 'is_member', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_holder', 'decline_membership', 'is_defaulter',
+    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
@@ -90,6 +90,19 @@ class FamilyAdmin(admin.ModelAdmin):
                     "View details") + "</a>)")
         else:
             message = gettext_lazy("No families to include in Membership Remittance")
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
+    def complete_custody_holder(self, request, families: QuerySet[Family]):
+        updated = 0
+        for family in families:
+            if not family.custody_holder:
+                last_registration = CustodyRegistration.objects.filter(child__family=family).order_by('-id').last()
+                if last_registration and last_registration.holder:
+                    family.custody_holder = last_registration.holder
+                    updated += 1
+
+        message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export emails to CSV"))
