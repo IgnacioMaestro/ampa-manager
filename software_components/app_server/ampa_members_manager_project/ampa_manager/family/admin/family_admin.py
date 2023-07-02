@@ -100,6 +100,7 @@ class FamilyAdmin(admin.ModelAdmin):
                 last_registration = CustodyRegistration.objects.filter(child__family=family).order_by('-id').last()
                 if last_registration and last_registration.holder:
                     family.custody_holder = last_registration.holder
+                    family.save()
                     updated += 1
 
         message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
@@ -210,4 +211,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, make_members, export_families_xls]
+    actions = [generate_remittance, export_emails, make_members, export_families_xls, complete_custody_holder]
