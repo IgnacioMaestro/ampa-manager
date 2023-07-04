@@ -100,6 +100,10 @@ class ImportModelResult:
         self.imported_object = imported_object
         self.state = ProcessingState.CREATED
 
+    def set_default_used(self, imported_object):
+        self.imported_object = imported_object
+        self.state = ProcessingState.DEFAULT_USED
+
     def set_parent_added_to_family(self):
         self.state2 = ProcessingState.PARENT_ADDED_TO_FAMILY
 

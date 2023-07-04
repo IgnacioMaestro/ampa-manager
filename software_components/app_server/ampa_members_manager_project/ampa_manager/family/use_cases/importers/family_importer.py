@@ -9,7 +9,8 @@ class FamilyImporter:
 
     @staticmethod
     def import_family(family_surnames: str, parent1_name_and_surnames: Optional[str] = None,
-                      parent2_name_and_surnames: Optional[str] = None, set_as_member = False) -> ImportModelResult:
+                      parent2_name_and_surnames: Optional[str] = None, set_as_member=False,
+                      child_name: Optional[str] = None) -> ImportModelResult:
         result = ImportModelResult(Family.__name__, [family_surnames])
 
         if family_surnames:
@@ -19,7 +20,7 @@ class FamilyImporter:
             if parent2_name_and_surnames:
                 parents_name_and_surnames.append(parent2_name_and_surnames)
 
-            family, error = Family.find(family_surnames, parents_name_and_surnames)
+            family, error = Family.find(family_surnames, parents_name_and_surnames, child_name)
 
             if family:
                 result.set_not_modified(family)
