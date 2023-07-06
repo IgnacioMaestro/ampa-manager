@@ -32,9 +32,7 @@
 
 {% block content %}
     <h1>{% trans 'Validate families data' %}</h1>
-    <p>{{ families_with_same_surnames|titled_list_to_ol }}</p>
-    <p>{{ families_with_same_children_names|titled_list_to_ol }}</p>
-    <p>{{ families_without_default_holder|titled_list_to_ol }}</p>
-    <p>{{ families_with_more_than_2_parents|titled_list_to_ol }}</p>
-    <p>{{ families_with_only_1_parent|titled_list_to_ol }}</p>
+    {% for validation in validations %}
+        <p>{{ validation|titled_list_to_ol }}</p>
+    {% endfor %}
 {% endblock %}

@@ -17,7 +17,7 @@ def titled_list_to_ol(titled_list: TitledList):
 
 
 def generate_html_list_from_title_list(titled_list: TitledList, level=1, numbered=False, collapsable=True):
-    if titled_list is None:
+    if titled_list is None or titled_list == '':
         return ''
 
     if titled_list.title:

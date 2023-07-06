@@ -30,7 +30,7 @@ class CustodyRegistration(models.Model):
         return f'{self.custody_edition}, {self.child}'
 
     def clean(self):
-        if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
+        if self.holder and not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
             raise ValidationError(_('The selected bank account does not belong to the child\'s family'))
 
     def calculate_price(self) -> float:

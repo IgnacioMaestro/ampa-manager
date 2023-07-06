@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db.models import QuerySet
+from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
@@ -11,8 +12,18 @@ from ampa_manager.activity.models.camps.camps_registration import CampsRegistrat
 from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
 from ampa_manager.charge.use_cases.camps.camps_remittance_creator.camps_remittance_creator import \
     CampsRemittanceCreator
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+
+
+class CampsRegistrationAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['holder'].queryset = Holder.objects.of_family(self.instance.child.family)
+        else:
+            self.fields['holder'].queryset = Holder.objects.none()
 
 
 class CampsRegistrationAdmin(admin.ModelAdmin):
@@ -22,6 +33,7 @@ class CampsRegistrationAdmin(admin.ModelAdmin):
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25
+    form = CampsRegistrationAdminForm
 
     @admin.display(description=gettext_lazy('Is member'))
     def is_member(self, registration):

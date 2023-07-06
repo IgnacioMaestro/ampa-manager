@@ -2,12 +2,23 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django import forms
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+
+
+class AfterSchoolRegistrationAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['holder'].queryset = Holder.objects.of_family(self.instance.child.family)
+        else:
+            self.fields['holder'].queryset = Holder.objects.none()
 
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
@@ -22,6 +33,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
                      'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25
+    form = AfterSchoolRegistrationAdminForm
 
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
