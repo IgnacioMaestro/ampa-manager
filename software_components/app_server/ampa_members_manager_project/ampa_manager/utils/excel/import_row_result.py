@@ -70,6 +70,10 @@ class ImportRowResult:
     def add_partial_result(self, partial_result: ImportModelResult):
         self.partial_results.append(partial_result)
 
+    def add_partial_results(self, partial_results: List[ImportModelResult]):
+        for partial_result in partial_results:
+            self.add_partial_result(partial_result)
+
     @staticmethod
     def get_variation(before, after):
         if before < after:

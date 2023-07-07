@@ -17,6 +17,7 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -102,7 +103,7 @@ class CustodyImporter:
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
-            family = family_result.imported_object
+            family: Family = family_result.imported_object
 
             child_result = ChildImporter.import_child(
                 family,
@@ -112,25 +113,21 @@ class CustodyImporter:
             result.add_partial_result(child_result)
             if not child_result.success:
                 return result
-            child = child_result.imported_object
+            child: Child = child_result.imported_object
 
-            parent_name_and_surnames = row.get(cls.KEY_PARENT_NAME_AND_SURNAMES)
-            parent_phone_number = row.get(cls.KEY_PARENT_PHONE_NUMBER)
-            parent_email = row.get(cls.KEY_PARENT_EMAIL)
+            parent_result = ParentImporter.import_parent(
+                family,
+                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                row.get(cls.KEY_PARENT_PHONE_NUMBER),
+                None,
+                row.get(cls.KEY_PARENT_EMAIL),
+                optional=True)
+            result.add_partial_result(parent_result)
+            if not parent_result.success:
+                return result
+            parent = parent_result.imported_object
 
-            parent_data = parent_name_and_surnames or parent_phone_number or parent_email
-            if parent_data or not family.custody_holder:
-                parent_result = ParentImporter.import_parent(
-                    family,
-                    row.get(parent_name_and_surnames),
-                    row.get(parent_phone_number),
-                    None,
-                    row.get(parent_email))
-                result.add_partial_result(parent_result)
-                if not parent_result.success:
-                    return result
-                parent = parent_result.imported_object
-
+            if parent:
                 bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
                     parent, row.get(
                         cls.KEY_BANK_ACCOUNT_IBAN))
@@ -139,12 +136,14 @@ class CustodyImporter:
 
                 if not bank_account_result.success or not holder_result.success:
                     return result
-                holder = holder_result.imported_object
             else:
-                holder_result = ImportModelResult(Holder.__name__, [])
-                holder_result.set_default_used(family.custody_holder)
-                result.add_partial_result(holder_result)
-                holder = family.custody_holder
+                holder_result = ImportModelResult(Holder.__name__)
+                if family.custody_holder:
+                    holder_result.set_default_used(family.custody_holder)
+                else:
+                    holder_result.set_error('Missing parent and no default holder')
+
+            holder: Holder = holder_result.imported_object
 
             registration_result = CustodyRegistrationImporter.import_registration(
                 custody_edition, holder, child,

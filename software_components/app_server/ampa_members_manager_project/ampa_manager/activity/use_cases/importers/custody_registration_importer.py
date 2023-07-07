@@ -35,6 +35,6 @@ class CustodyRegistrationImporter:
                                                               child=child, assisted_days=assisted_days)
             result.set_created(registration)
         else:
-            result.set_omitted()
+            result.set_omitted('0 días asistidos')
 
         return result
