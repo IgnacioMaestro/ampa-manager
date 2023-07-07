@@ -169,6 +169,14 @@ class Family(TimeStampedModel):
     def get_children_names_csv(self):
         return ', '.join([c.name for c in self.child_set.all()])
 
+    def get_similar_names_families(self):
+        similar = []
+        for family in Family.objects.exclude(id=self.id):
+            for normalized_surname in StringUtils.normalize(self.surnames).split(' '):
+                if normalized_surname in StringUtils.normalize(family.surnames):
+                    similar.append(family)
+        return similar
+
     @staticmethod
     def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:
         if parents_name_and_surnames:

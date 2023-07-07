@@ -123,7 +123,10 @@ class ExcelImporter:
         if len(created_families) > 0:
             summary_created_families = TitledList(f'{len(created_families)} families were created')
             for row_index, family in created_families.items():
-                summary_created_families.append_element(str(family))
+                created_family_element = TitledList(family.get_html_link())
+                for similar_family in family.get_similar_names_families():
+                    created_family_element.append_element(similar_family.get_html_link())
+                summary_created_families.append_sublist(created_family_element)
             summary_warnings.append_sublist(summary_created_families)
 
         for row_index, warning in warnings.items():
