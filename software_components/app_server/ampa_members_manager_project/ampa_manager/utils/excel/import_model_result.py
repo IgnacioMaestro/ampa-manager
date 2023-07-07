@@ -30,11 +30,12 @@ class ImportModelResult:
 
         error = ''
         if self.error:
-            error += f'. Error: {self.error}.'
+            error += f'. {self.error}.'
 
         excel_fields = self.get_excel_fields_csv()
 
-        description = f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}'
+        message = self.message if self.message else ''
+        description = f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names} {message}'
 
         if changes:
             description += f'. {changes}'

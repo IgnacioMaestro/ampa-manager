@@ -141,7 +141,10 @@ class CustodyImporter:
                 if family.custody_holder:
                     holder_result.set_default_used(family.custody_holder)
                 else:
-                    holder_result.set_error('Missing parent and no default holder')
+                    holder_result.set_error(_('Missing parent and no default custody holder'))
+                result.add_partial_result(holder_result)
+                if not holder_result.success:
+                    return result
 
             holder: Holder = holder_result.imported_object
 

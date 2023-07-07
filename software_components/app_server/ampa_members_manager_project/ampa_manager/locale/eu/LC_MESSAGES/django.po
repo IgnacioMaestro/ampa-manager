@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 16:21+0200\n"
+"POT-Creation-Date: 2023-07-07 19:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\ampa_manager\academic_course\admin.py:18
+#: .\ampa_manager\utils\excel\excel_importer.py:107
 msgid "Summary"
 msgstr ""
 
@@ -301,6 +302,7 @@ msgstr ""
 #: .\ampa_manager\charge\admin\camps_admin.py:53
 #: .\ampa_manager\charge\admin\custody_admin.py:55
 #: .\ampa_manager\charge\admin\membership_admin.py:40
+#: .\ampa_manager\utils\excel\excel_importer.py:112
 msgid "Total"
 msgstr ""
 
@@ -565,50 +567,50 @@ msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:41
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:37
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:37
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:38
 #: .\ampa_manager\templates\check_members.html:33
 msgid "Parent name and surnames"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:42
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:38
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:38
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:39
 msgid "Parent phone number"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:43
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:39
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:39
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:40
 msgid "Parent email"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:44
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:40
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:40
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:41
 msgid "Parent bank account IBAN"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:45
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:41
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:41
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:42
 msgid "Child name (without surnames)"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:46
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:42
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:42
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:43
 msgid "Child surnames"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:47
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:43
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:44
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:45
 msgid "Child year of birth (ex. 2015)"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\after_school_registrations_importer.py:48
 #: .\ampa_manager\activity\use_cases\importers\camps_importer.py:44
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:43
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:44
 msgid "Child level (ex. HH4, LH3)"
 msgstr ""
 
@@ -628,8 +630,16 @@ msgstr ""
 msgid "After school edition levels"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:45
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:46
 msgid "Assisted days in the selected edition"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:144
+msgid "Missing parent and no default custody holder"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:39
+msgid "0 assisted days"
 msgstr ""
 
 #: .\ampa_manager\admin.py:47 .\ampa_manager\admin.py:48
@@ -1461,6 +1471,39 @@ msgstr ""
 #: .\ampa_manager\templates\validate_families_data.html:29
 #: .\ampa_manager\templates\validate_families_data.html:34
 msgid "Validate families data"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:113
+msgid "Rows imported successfully"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:114
+msgid "Rows not imported"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:117
+msgid "Errors"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:119
+msgid "Row"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:122
+msgid "Warnings"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:124
+#, python-format
+msgid "%(created_families)s families created"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:137
+msgid "Results by model"
+msgstr ""
+
+#: .\ampa_manager\utils\excel\excel_importer.py:147
+msgid "Results by status"
 msgstr ""
 
 #: .\ampa_manager\views\validate_data.py:43
