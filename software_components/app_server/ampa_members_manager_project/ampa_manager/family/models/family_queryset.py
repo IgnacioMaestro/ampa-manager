@@ -30,6 +30,12 @@ class FamilyQuerySet(QuerySet):
     def without_default_holder(self):
         return self.filter(default_holder__isnull=True)
 
+    def with_custody_holder(self):
+        return self.exclude(custody_holder__isnull=True)
+
+    def without_custody_holder(self):
+        return self.filter(custody_holder__isnull=True)
+
     def members(self):
         return self.filter(membership__academic_course=ActiveCourse.load())
 

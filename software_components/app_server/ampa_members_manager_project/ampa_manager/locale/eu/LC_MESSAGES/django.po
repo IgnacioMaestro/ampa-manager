@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 15:36+0200\n"
+"POT-Creation-Date: 2023-07-07 16:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:41
 #: .\ampa_manager\academic_course\admin.py:61
-#: .\ampa_manager\family\models\family.py:39
+#: .\ampa_manager\family\models\family.py:40
 msgid "Families"
 msgstr ""
 
@@ -83,8 +83,8 @@ msgstr ""
 #: .\ampa_manager\family\admin\child_admin.py:39
 #: .\ampa_manager\family\admin\family_admin.py:186
 #: .\ampa_manager\family\admin\family_admin.py:194
-#: .\ampa_manager\family\models\family.py:24
-#: .\ampa_manager\family\models\parent.py:25
+#: .\ampa_manager\family\models\family.py:25
+#: .\ampa_manager\family\models\parent.py:26
 msgid "Parents"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgid "Timetable"
 msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:18
-#: .\ampa_manager\activity\models\after_school\after_school_registration.py:16
+#: .\ampa_manager\activity\models\after_school\after_school_registration.py:17
 msgid "After-school edition"
 msgstr ""
 
@@ -410,34 +410,34 @@ msgstr ""
 msgid "After-school editions"
 msgstr ""
 
-#: .\ampa_manager\activity\models\after_school\after_school_registration.py:17
-#: .\ampa_manager\activity\models\camps\camps_registration.py:16
-#: .\ampa_manager\activity\models\custody\custody_registration.py:15
-#: .\ampa_manager\family\models\child.py:24
-#: .\ampa_manager\views\validate_data.py:108
-msgid "Child"
-msgstr ""
-
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:18
 #: .\ampa_manager\activity\models\camps\camps_registration.py:17
 #: .\ampa_manager\activity\models\custody\custody_registration.py:16
-#: .\ampa_manager\family\models\holder\holder.py:24
-#: .\ampa_manager\family\models\holder\holder.py:39
-#: .\ampa_manager\views\validate_data.py:109
+#: .\ampa_manager\family\models\child.py:25
+#: .\ampa_manager\views\validate_data.py:105
+msgid "Child"
+msgstr ""
+
+#: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
+#: .\ampa_manager\activity\models\camps\camps_registration.py:18
+#: .\ampa_manager\activity\models\custody\custody_registration.py:17
+#: .\ampa_manager\family\models\holder\holder.py:25
+#: .\ampa_manager\family\models\holder\holder.py:40
+#: .\ampa_manager\views\validate_data.py:106
 msgid "Holder"
 msgstr ""
 
-#: .\ampa_manager\activity\models\after_school\after_school_registration.py:23
+#: .\ampa_manager\activity\models\after_school\after_school_registration.py:24
 msgid "After-school registration"
 msgstr ""
 
-#: .\ampa_manager\activity\models\after_school\after_school_registration.py:24
+#: .\ampa_manager\activity\models\after_school\after_school_registration.py:25
 msgid "After-school registrations"
 msgstr ""
 
-#: .\ampa_manager\activity\models\after_school\after_school_registration.py:36
-#: .\ampa_manager\activity\models\camps\camps_registration.py:35
-#: .\ampa_manager\activity\models\custody\custody_registration.py:34
+#: .\ampa_manager\activity\models\after_school\after_school_registration.py:37
+#: .\ampa_manager\activity\models\camps\camps_registration.py:36
+#: .\ampa_manager\activity\models\custody\custody_registration.py:35
 msgid "The selected bank account does not belong to the child's family"
 msgstr ""
 
@@ -463,7 +463,7 @@ msgid "Price for no members"
 msgstr ""
 
 #: .\ampa_manager\activity\models\camps\camps_edition.py:18
-#: .\ampa_manager\activity\models\camps\camps_registration.py:15
+#: .\ampa_manager\activity\models\camps\camps_registration.py:16
 msgid "Camps edition"
 msgstr ""
 
@@ -471,11 +471,11 @@ msgstr ""
 msgid "Camps editions"
 msgstr ""
 
-#: .\ampa_manager\activity\models\camps\camps_registration.py:22
+#: .\ampa_manager\activity\models\camps\camps_registration.py:23
 msgid "Camps registration"
 msgstr ""
 
-#: .\ampa_manager\activity\models\camps\camps_registration.py:23
+#: .\ampa_manager\activity\models\camps\camps_registration.py:24
 #: .\ampa_manager\charge\models\camps\camps_receipt.py:17
 msgid "Camps registrations"
 msgstr ""
@@ -502,7 +502,7 @@ msgid ""
 msgstr ""
 
 #: .\ampa_manager\activity\models\custody\custody_edition.py:30
-#: .\ampa_manager\activity\models\custody\custody_registration.py:14
+#: .\ampa_manager\activity\models\custody\custody_registration.py:15
 msgid "Custody edition"
 msgstr ""
 
@@ -510,11 +510,11 @@ msgstr ""
 msgid "Custody editions"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:22
+#: .\ampa_manager\activity\models\custody\custody_registration.py:23
 msgid "Custody registration"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:23
+#: .\ampa_manager\activity\models\custody\custody_registration.py:24
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:16
 msgid "Custody registrations"
 msgstr ""
@@ -709,7 +709,7 @@ msgstr ""
 #: .\ampa_manager\charge\models\camps\camps_receipt.py:15
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:14
 #: .\ampa_manager\charge\models\membership_receipt.py:18
-#: .\ampa_manager\family\models\holder\holder.py:31
+#: .\ampa_manager\family\models\holder\holder.py:32
 msgid "State"
 msgstr ""
 
@@ -793,11 +793,11 @@ msgstr ""
 
 #: .\ampa_manager\charge\models\membership_receipt.py:20
 #: .\ampa_manager\family\admin\parent_admin.py:30
-#: .\ampa_manager\family\models\child.py:19
-#: .\ampa_manager\family\models\family.py:38
+#: .\ampa_manager\family\models\child.py:20
+#: .\ampa_manager\family\models\family.py:39
 #: .\ampa_manager\family\models\membership.py:13
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:89
-#: .\ampa_manager\views\validate_data.py:107
+#: .\ampa_manager\views\validate_data.py:104
 #: .\ampa_manager_project\settings.py:152
 msgid "Family"
 msgstr ""
@@ -823,7 +823,7 @@ msgid "Membership remittances"
 msgstr ""
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:6
-#: .\ampa_manager\family\models\child.py:15
+#: .\ampa_manager\family\models\child.py:16
 msgid "Name"
 msgstr ""
 
@@ -857,7 +857,7 @@ msgid "Paid"
 msgstr ""
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:22
-#: .\ampa_manager\family\models\holder\holder.py:40
+#: .\ampa_manager\family\models\holder\holder.py:41
 msgid "Holders"
 msgstr ""
 
@@ -930,7 +930,7 @@ msgstr ""
 
 #: .\ampa_manager\family\admin\family_admin.py:190
 #: .\ampa_manager\family\admin\family_admin.py:198
-#: .\ampa_manager\family\models\child.py:25
+#: .\ampa_manager\family\models\child.py:26
 msgid "Children"
 msgstr ""
 
@@ -964,34 +964,42 @@ msgid "No children in school"
 msgstr ""
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:48
-msgid "Default account"
+#: .\ampa_manager\family\models\family.py:27
+msgid "Default holder"
 msgstr ""
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:54
-msgid "With account"
+#: .\ampa_manager\family\admin\filters\family_filters.py:75
+msgid "Completed"
 msgstr ""
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:55
-msgid "Without account"
+#: .\ampa_manager\family\admin\filters\family_filters.py:76
+msgid "Not completed"
 msgstr ""
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:69
+#: .\ampa_manager\family\models\family.py:30
+msgid "Custody holder"
+msgstr ""
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:90
 msgid "Numer of parents"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:75
+#: .\ampa_manager\family\admin\filters\family_filters.py:96
 msgid "No parents"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:76
+#: .\ampa_manager\family\admin\filters\family_filters.py:97
 msgid "1 parent"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:77
+#: .\ampa_manager\family\admin\filters\family_filters.py:98
 msgid "2 parent"
 msgstr ""
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:78
+#: .\ampa_manager\family\admin\filters\family_filters.py:99
 msgid "More than 2 parents"
 msgstr ""
 
@@ -1079,93 +1087,85 @@ msgid ""
 "8-11 characters: Entity (4), Country (2), City (2), Office (3, Optional)"
 msgstr ""
 
-#: .\ampa_manager\family\models\child.py:17
+#: .\ampa_manager\family\models\child.py:18
 msgid "Year of birth"
 msgstr ""
 
-#: .\ampa_manager\family\models\child.py:18
+#: .\ampa_manager\family\models\child.py:19
 msgid "Repetition"
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:20
+#: .\ampa_manager\family\models\family.py:21
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:89
 msgid "Surnames"
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:22
+#: .\ampa_manager\family\models\family.py:23
 msgid "Decline membership"
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:23
+#: .\ampa_manager\family\models\family.py:24
 msgid ""
 "It prevents the family from becoming a member. For example, if they no "
 "longer have children at school but you do not want to delete the record."
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:26
-msgid "Default holder"
-msgstr ""
-
-#: .\ampa_manager\family\models\family.py:27
-#: .\ampa_manager\family\models\family.py:30
+#: .\ampa_manager\family\models\family.py:28
+#: .\ampa_manager\family\models\family.py:31
 msgid "Save the family to see its bank accounts"
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:29
-msgid "Custody holder"
-msgstr ""
-
-#: .\ampa_manager\family\models\family.py:33
+#: .\ampa_manager\family\models\family.py:34
 msgid "Defaulter"
 msgstr ""
 
-#: .\ampa_manager\family\models\family.py:33
+#: .\ampa_manager\family\models\family.py:34
 msgid "Informative field only"
 msgstr ""
 
-#: .\ampa_manager\family\models\holder\holder.py:25
+#: .\ampa_manager\family\models\holder\holder.py:26
 msgid "Bank Account"
 msgstr ""
 
-#: .\ampa_manager\family\models\holder\holder.py:27
+#: .\ampa_manager\family\models\holder\holder.py:28
 msgid "Order"
 msgstr ""
 
-#: .\ampa_manager\family\models\holder\holder.py:30
+#: .\ampa_manager\family\models\holder\holder.py:31
 msgid "Year"
 msgstr ""
 
-#: .\ampa_manager\family\models\holder\holder.py:34
+#: .\ampa_manager\family\models\holder\holder.py:35
 msgid "Document"
 msgstr ""
 
-#: .\ampa_manager\family\models\holder\holder.py:53
+#: .\ampa_manager\family\models\holder\holder.py:54
 msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:16
+#: .\ampa_manager\family\models\parent.py:17
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:90
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:94
 msgid "Name and surnames"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:17
+#: .\ampa_manager\family\models\parent.py:18
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:91
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:95
 msgid "Phone number"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:18
+#: .\ampa_manager\family\models\parent.py:19
 msgid "Other phone"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:19
+#: .\ampa_manager\family\models\parent.py:20
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:92
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:96
 msgid "Email"
 msgstr ""
 
-#: .\ampa_manager\family\models\parent.py:24
+#: .\ampa_manager\family\models\parent.py:25
 msgid "Parent"
 msgstr ""
 
@@ -1463,39 +1463,39 @@ msgstr ""
 msgid "Validate families data"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:46
+#: .\ampa_manager\views\validate_data.py:43
 msgid "Families with more than 2 parents"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:58
+#: .\ampa_manager\views\validate_data.py:55
 msgid "Families with 1 only father"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:70
+#: .\ampa_manager\views\validate_data.py:67
 msgid "Families without default holder"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:82
+#: .\ampa_manager\views\validate_data.py:79
 msgid "Families with wrong holder"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:88
+#: .\ampa_manager\views\validate_data.py:85
 msgid "Custody registration with wrong holder"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:94
+#: .\ampa_manager\views\validate_data.py:91
 msgid "Camps registration with wrong holder"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:100
+#: .\ampa_manager\views\validate_data.py:97
 msgid "After-school registration with wrong holder"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:137
+#: .\ampa_manager\views\validate_data.py:134
 msgid "Families with same surnames"
 msgstr ""
 
-#: .\ampa_manager\views\validate_data.py:160
+#: .\ampa_manager\views\validate_data.py:157
 msgid "Families with same children names"
 msgstr ""
 

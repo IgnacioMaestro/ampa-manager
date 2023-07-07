@@ -17,7 +17,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
-    FamilyDefaultAccountFilter, FamilyParentCountFilter
+    DefaultHolder, CustodyHolder, FamilyParentCountFilter
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -73,8 +73,8 @@ class FamilyAdmin(admin.ModelAdmin):
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, FamilyDefaultAccountFilter, 'created', 'modified',
-                   'is_defaulter', 'decline_membership', FamilyParentCountFilter]
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, 'created', 'modified', 'is_defaulter',
+                   'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
     search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
