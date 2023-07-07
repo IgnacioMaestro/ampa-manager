@@ -30,8 +30,10 @@ class FamilyAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance:
             self.fields['default_holder'].queryset = Holder.objects.of_family(self.instance)
+            self.fields['custody_holder'].queryset = Holder.objects.of_family(self.instance)
         else:
             self.fields['default_holder'].queryset = Holder.objects.none()
+            self.fields['custody_holder'].queryset = Holder.objects.none()
 
 
 class MembershipInline(ReadOnlyTabularInline):

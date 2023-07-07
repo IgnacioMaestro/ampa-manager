@@ -20,7 +20,7 @@ from ampa_manager.read_only_inline import ReadOnlyTabularInline
 class CampsRegistrationAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance:
+        if self.instance and self.instance.child:
             self.fields['holder'].queryset = Holder.objects.of_family(self.instance.child.family)
         else:
             self.fields['holder'].queryset = Holder.objects.none()

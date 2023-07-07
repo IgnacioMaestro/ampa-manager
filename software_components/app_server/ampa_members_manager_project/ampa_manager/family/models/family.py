@@ -14,6 +14,7 @@ from .child import Child
 from .family_queryset import FamilyQuerySet
 from .holder.holder import Holder
 from .parent import Parent
+from ...utils.utils import Utils
 
 
 class Family(TimeStampedModel):
@@ -151,6 +152,22 @@ class Family(TimeStampedModel):
                 if child.matches_name(name, strict=False):
                     return child
         return None
+
+    def get_html_link(self, print_parents=False, print_children=False, print_id=False) -> str:
+        link_text = str(self)
+        if print_id:
+            link_text += f' ({self.id})'
+        if print_parents:
+            parents_names = [p.full_name for p in self.parents.all()]
+            link_text += '. <b>Padres</b>: ' + ', '.join(parents_names)
+        if print_children:
+            children_names = [c.name for c in self.child_set.all()]
+            link_text += '. <b>Hijos</b>: ' + ', '.join(children_names)
+
+        return Utils.get_model_link(Family.__name__.lower(), self.id, link_text)
+
+    def get_children_names_csv(self):
+        return ', '.join([c.name for c in self.child_set.all()])
 
     @staticmethod
     def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:

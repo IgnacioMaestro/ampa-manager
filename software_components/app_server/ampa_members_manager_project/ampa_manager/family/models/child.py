@@ -9,6 +9,7 @@ from ampa_manager.family.models.child_queryset import ChildQuerySet
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
+from ampa_manager.utils.utils import Utils
 
 
 class Child(TimeStampedModel):
@@ -75,6 +76,9 @@ class Child(TimeStampedModel):
         fields_after = [self.name, self.year_of_birth, self.level, self.repetition]
 
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
+
+    def get_html_link(self) -> str:
+        return Utils.get_model_link(Child.__name__.lower(), self.id, str(self))
 
     @staticmethod
     def get_children_ids(min_age, max_age):

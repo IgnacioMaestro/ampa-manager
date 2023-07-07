@@ -8,6 +8,7 @@ from ampa_manager.activity.models.custody.custody_registration_queryset import C
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.utils.utils import Utils
 
 
 class CustodyRegistration(models.Model):
@@ -43,3 +44,6 @@ class CustodyRegistration(models.Model):
     @property
     def is_member(self):
         return Membership.is_member_child(self.child)
+
+    def get_html_link(self) -> str:
+        return Utils.get_model_link(CustodyRegistration.__name__.lower(), self.id, str(self))
