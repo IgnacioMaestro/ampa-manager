@@ -45,5 +45,6 @@ class CampsRegistration(models.Model):
     def is_member(self):
         return Membership.is_member_child(self.child)
 
-    def get_html_link(self) -> str:
-        return Utils.get_model_link(CampsRegistration.__name__.lower(), self.id, str(self))
+    def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
+        link_text = str(self.id) if id_as_link_text else str(self)
+        return Utils.get_model_link(AfterSchoolRegistration.__name__.lower(), self.id, link_text, new_tab)

@@ -41,7 +41,10 @@ class Family(TimeStampedModel):
         db_table = 'family'
 
     def __str__(self) -> str:
-        return f'{self.surnames}: {self.parents_names} ({self.children_names})'
+        children_names = self.children_names
+        if not children_names or children_names == '':
+            children_names = _('Sin hijos')
+        return f'{self.surnames}: {self.parents_names} ({children_names}) {self.id}'
 
     @property
     def children_names(self):

@@ -42,13 +42,17 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):
     model = CustodyRegistration
-    fields = ['custody_edition', 'child', 'is_member', 'holder', 'assisted_days']
+    fields = ['custody_edition', 'child', 'is_member', 'holder', 'assisted_days', 'link']
     readonly_fields = fields
     ordering = ['custody_edition', 'child__name', 'child__family__surnames']
 
     @admin.display(description=gettext_lazy('Is member'), boolean=True)
     def is_member(self, registration):
         return Membership.is_member_child(registration.child)
+
+    @admin.display(description=_('Id'))
+    def link(self, registration):
+        return registration.get_html_link(True)
 
 
 class CustodyEditionAdmin(admin.ModelAdmin):
@@ -77,7 +81,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     readonly_fields = ['remittance', 'members_registrations_count', 'no_members_registrations_count',
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
                        'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
-    ordering = ['-academic_course', 'cycle', '-id']
+    ordering = ['-academic_course', 'cycle', 'period', '-id']
     list_filter = ['academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
     list_per_page = 25
 

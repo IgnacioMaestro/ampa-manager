@@ -24,6 +24,7 @@ class Child(TimeStampedModel):
     class Meta:
         verbose_name = _('Child')
         verbose_name_plural = _('Children')
+        ordering = ['name', 'family__surnames']
         db_table = 'child'
         constraints = [
             models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'), ]
@@ -77,8 +78,9 @@ class Child(TimeStampedModel):
 
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
 
-    def get_html_link(self) -> str:
-        return Utils.get_model_link(Child.__name__.lower(), self.id, str(self))
+    def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
+        link_text = str(self.id) if id_as_link_text else str(self)
+        return Utils.get_model_link(Child.__name__.lower(), self.id, link_text, new_tab)
 
     @staticmethod
     def get_children_ids(min_age, max_age):

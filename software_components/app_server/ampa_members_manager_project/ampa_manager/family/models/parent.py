@@ -27,11 +27,15 @@ class Parent(TimeStampedModel):
         db_table = 'parent'
 
     def __str__(self) -> str:
-        return self.full_name
+        return f'{self.full_name} ({self.id})'
 
     @property
     def full_name(self) -> str:
         return str(self.name_and_surnames)
+
+    @property
+    def families_ids(self) -> List[int]:
+        return [f.id for f in self.family_set.order_by('id')]
 
     def belong_to_family(self, family):
         return self.family_set.filter(surnames=family.surnames).exists()

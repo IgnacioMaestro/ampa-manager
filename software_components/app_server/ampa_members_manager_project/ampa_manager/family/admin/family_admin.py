@@ -44,10 +44,14 @@ class MembershipInline(ReadOnlyTabularInline):
 class ChildInline(ReadOnlyTabularInline):
     model = Child
     fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registration_count',
-              'custody_registration_count', 'camps_registration_count']
+              'custody_registration_count', 'camps_registration_count', 'link']
     readonly_fields = ['child_course', 'after_school_registration_count', 'custody_registration_count',
-                       'camps_registration_count']
+                       'camps_registration_count', 'link']
     extra = 0
+
+    @admin.display(description=_('Id'))
+    def link(self, child):
+        return child.get_html_link(True)
 
     @admin.display(description=_('Course'))
     def child_course(self, child):
@@ -95,7 +99,7 @@ class FamilyAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
-    def complete_custody_holder(self, request, families: QuerySet[Family]):
+    def complete_custody_holder_with_last_registration(self, request, families: QuerySet[Family]):
         updated = 0
         for family in families:
             if not family.custody_holder:
@@ -104,6 +108,18 @@ class FamilyAdmin(admin.ModelAdmin):
                     family.custody_holder = last_registration.holder
                     family.save()
                     updated += 1
+
+        message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=gettext_lazy("Complete empty custody holders with default_holder"))
+    def complete_custody_holder_with_default_holder(self, request, families: QuerySet[Family]):
+        updated = 0
+        for family in families:
+            if not family.custody_holder and family.default_holder:
+                family.custody_holder = family.default_holder
+                family.save()
+                updated += 1
 
         message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
         return self.message_user(request=request, message=message)
@@ -213,4 +229,5 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, make_members, export_families_xls, complete_custody_holder]
+    actions = [generate_remittance, export_emails, make_members, export_families_xls,
+               complete_custody_holder_with_last_registration, complete_custody_holder_with_default_holder]

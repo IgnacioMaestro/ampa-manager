@@ -42,13 +42,17 @@ class CampsRegistrationAdmin(admin.ModelAdmin):
 
 class CampsRegistrationInline(ReadOnlyTabularInline):
     model = CampsRegistration
-    fields = ['camps_edition', 'child', 'is_member', 'holder']
+    fields = ['camps_edition', 'child', 'is_member', 'holder', 'link']
     readonly_fields = fields
     ordering = ['camps_edition', 'child__name', 'child__family__surnames']
 
     @admin.display(description=gettext_lazy('Is member'), boolean=True)
     def is_member(self, registration):
         return Membership.is_member_child(registration.child)
+
+    @admin.display(description=_('Id'))
+    def link(self, registration):
+        return registration.get_html_link(True)
 
 
 class CampsEditionAdmin(admin.ModelAdmin):

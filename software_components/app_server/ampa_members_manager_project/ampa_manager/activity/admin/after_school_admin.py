@@ -38,9 +38,13 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
     model = AfterSchoolRegistration
-    list_display = ['after_school_edition', 'child', 'holder']
+    list_display = ['after_school_edition', 'child', 'holder', 'link']
+    readonly_fields = list_display
     ordering = ['after_school_edition__after_school__name', 'after_school_edition']
-    extra = 0
+
+    @admin.display(description=_('Id'))
+    def link(self, registration):
+        return registration.get_html_link(True)
 
 
 class AfterSchoolEditionAdmin(admin.ModelAdmin):

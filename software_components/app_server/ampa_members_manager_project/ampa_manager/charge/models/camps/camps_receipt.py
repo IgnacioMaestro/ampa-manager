@@ -23,6 +23,9 @@ class CampsReceipt(models.Model):
         verbose_name_plural = _('Camps receipts')
         db_table = 'camps_receipt'
 
+    def __str__(self):
+        return f'{self.camps_registration}, {self.get_state_display()}, {self.amount}'
+
     def generate_receipt(self) -> Receipt:
         holder: Holder = self.camps_registration.holder
         authorization: AuthorizationReceipt = AuthorizationReceipt(
