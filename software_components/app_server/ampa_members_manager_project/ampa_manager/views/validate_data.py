@@ -19,34 +19,40 @@ from ampa_manager.utils.utils import Utils
 def validate_data(request):
     context = {
         'validations': [
-            # get_families_with_same_children_names(),
-            get_children_with_same_names_and_year(),
+            get_families_with_same_children_names(),
+            get_families_with_same_surnames(),
+            get_families_with_zero_or_more_than_2_parents(),
+            get_families_without_default_holder(),
+            get_families_with_other_family_holder(),
+            get_families_with_only_1_parent(),
             get_parents_with_same_email_and_different_family(),
             get_parents_with_zero_or_more_than_one_families(),
-            # get_families_without_default_holder(),
-            # get_families_with_other_family_holder(),
-            # get_custody_registration_with_wrong_holder(),
-            # get_camps_registration_with_wrong_holder(),
-            # get_after_school_registration_with_wrong_holder(),
-            # get_families_with_same_surnames(),
-            # get_families_with_more_than_2_parents(),
-            # get_families_with_only_1_parent(),
+            get_children_with_same_names_and_year(),
+            get_custody_registration_with_wrong_holder(),
+            get_camps_registration_with_wrong_holder(),
+            get_after_school_registration_with_wrong_holder(),
         ],
     }
     return render(request, 'validate_families_data.html', context)
 
 
-def get_families_with_more_than_2_parents() -> TitledList:
+def get_families_with_zero_or_more_than_2_parents() -> TitledList:
     start = timezone.now()
     families = []
-    for family in Family.objects.with_more_than_two_parents():
-        parents = TitledList(family.get_html_link())
-        for parent in family.parents.all():
-            parents.append_element(parent.get_html_link())
-        families.append(parents)
 
-    print(f'get_families_with_more_than_2_parents {timezone.now() - start}')
-    return TitledList(_('Families with more than 2 parents') + f' ({len(families)})', sublists=families)
+    for family in Family.objects.with_more_than_two_parents():
+        family_element = TitledList(family.get_html_link())
+        for parent in family.parents.all():
+            family_element.append_element(parent.get_html_link())
+        families.append(family_element)
+
+    for family in Family.objects.with_number_of_parents(0):
+        family_element = TitledList(family.get_html_link())
+        family_element.append_element(_('No parents'))
+        families.append(family_element)
+
+    print(f'get_families_with_zero_or_more_than_2_parents {timezone.now() - start}')
+    return TitledList(_('Families with zero or more than 2 parents') + f' ({len(families)})', sublists=families)
 
 
 def get_families_with_only_1_parent() -> TitledList:

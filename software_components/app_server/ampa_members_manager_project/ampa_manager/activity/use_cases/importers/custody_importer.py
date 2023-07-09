@@ -17,7 +17,6 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
-from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.views.import_info import ImportInfo
 
 

@@ -72,7 +72,7 @@ class ChildInline(ReadOnlyTabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names',
-                    'children_in_school_count', 'is_member', 'created_formatted']
+                    'children_in_school_count', 'is_member', 'has_default_holder', 'created_formatted']
     fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
@@ -222,6 +222,10 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('Is member'))
     def is_member(self, family):
         return gettext_lazy('Yes') if Membership.is_member_family(family) else gettext_lazy('No')
+
+    @admin.display(description=gettext_lazy('Default holder'))
+    def has_default_holder(self, family):
+        return gettext_lazy('Yes') if family.default_holder is not None else gettext_lazy('No')
 
     @admin.display(description=gettext_lazy('Created'))
     def created_formatted(self, family):

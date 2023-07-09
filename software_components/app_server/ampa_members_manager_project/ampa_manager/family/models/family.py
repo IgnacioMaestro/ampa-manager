@@ -174,10 +174,11 @@ class Family(TimeStampedModel):
 
     def get_similar_names_families(self):
         similar = []
-        for family in Family.objects.exclude(id=self.id):
-            for normalized_surname in StringUtils.normalize(self.surnames).split(' '):
-                if normalized_surname in StringUtils.normalize(family.surnames):
-                    similar.append(family)
+        for family in Family.objects.exclude(id=self.id).order_by('surnames'):
+            for normalized_surname_word in StringUtils.normalize(self.surnames).split(' '):
+                if normalized_surname_word not in StringUtils.SURNAMES_IGNORE_WORDS:
+                    if normalized_surname_word in StringUtils.normalize(family.surnames):
+                        similar.append(family)
         return similar
 
     @staticmethod

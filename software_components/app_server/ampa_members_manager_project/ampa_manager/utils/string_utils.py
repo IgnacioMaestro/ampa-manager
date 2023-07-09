@@ -8,6 +8,8 @@ from ampa_manager.utils.surnames import SURNAMES
 
 class StringUtils:
 
+    SURNAMES_IGNORE_WORDS = ['de']
+
     @staticmethod
     def subtract_words(text: str, words_to_subtract: str):
         words = words_to_subtract.split()
