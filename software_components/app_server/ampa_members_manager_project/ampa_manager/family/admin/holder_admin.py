@@ -7,9 +7,15 @@ from ..models.holder.holder import Holder
 from ..models.state import State
 from ...activity.admin.after_school_admin import AfterSchoolRegistrationInline
 from ...activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ...read_only_inline import ReadOnlyTabularInline
 
 
 class HolderInline(admin.TabularInline):
+    model = Holder
+    extra = 0
+
+
+class ReadOnlyHolderInline(ReadOnlyTabularInline):
     model = Holder
     extra = 0
 

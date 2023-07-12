@@ -70,6 +70,10 @@ class ChildInline(ReadOnlyTabularInline):
         return CampsRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
 
 
+class FamilyInline(ReadOnlyTabularInline):
+    model = Family.parents.through
+
+
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names',
                     'children_in_school_count', 'is_member', 'has_default_holder', 'created_formatted']

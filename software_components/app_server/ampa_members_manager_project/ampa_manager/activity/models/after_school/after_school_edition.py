@@ -24,7 +24,19 @@ class AfterSchoolEdition(PricePerLevel):
         ]
 
     def __str__(self) -> str:
-        return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}'
+        return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}, {self.registrations_count} {_("registrations")}'
+
+    @property
+    def no_members_registrations_count(self):
+        return self.afterschoolregistration_set.no_members().count()
+
+    @property
+    def members_registrations_count(self):
+        return self.afterschoolregistration_set.members().count()
+
+    @property
+    def registrations_count(self):
+        return self.afterschoolregistration_set.count()
 
     @staticmethod
     def find(after_school: AfterSchool, period: str, timetable: str, levels: str):

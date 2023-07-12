@@ -23,7 +23,7 @@ class CampsEdition(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f'{self.academic_course}, {self.levels}'
+        return f'{self.academic_course}, {self.levels}, {self.registrations_count} {_("registrations")}'
 
     @property
     def no_members_registrations_count(self):
