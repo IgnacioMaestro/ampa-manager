@@ -8,6 +8,7 @@ from ampa_manager.activity.models.custody.custody_registration_queryset import C
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.utils.utils import Utils
 
 
 class CustodyRegistration(models.Model):
@@ -30,7 +31,7 @@ class CustodyRegistration(models.Model):
         return f'{self.custody_edition}, {self.child}'
 
     def clean(self):
-        if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
+        if self.holder and not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
             raise ValidationError(_('The selected bank account does not belong to the child\'s family'))
 
     def calculate_price(self) -> float:
@@ -43,3 +44,7 @@ class CustodyRegistration(models.Model):
     @property
     def is_member(self):
         return Membership.is_member_child(self.child)
+
+    def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
+        link_text = str(self.id) if id_as_link_text else str(self)
+        return Utils.get_model_link(CustodyRegistration.__name__.lower(), self.id, link_text, new_tab)

@@ -1,5 +1,4 @@
-# from ampa_manager.charge.use_cases.custody.custody_remittance_creator.custody_remittance_creator import \
-#     CustodyRemittanceCreator
+from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
@@ -12,8 +11,18 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.use_cases.custody.custody_remittance_creator.custody_remittance_creator import \
     CustodyRemittanceCreator
+from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+
+
+class CustodyRegistrationAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.id:
+            self.fields['holder'].queryset = Holder.objects.of_family(self.instance.child.family)
+        else:
+            self.fields['holder'].queryset = Holder.objects.none()
 
 
 class CustodyRegistrationAdmin(admin.ModelAdmin):
@@ -24,6 +33,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25
+    # form = CustodyRegistrationAdminForm
 
     @admin.display(description=gettext_lazy('Is member'))
     def is_member(self, registration):
@@ -32,13 +42,17 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):
     model = CustodyRegistration
-    fields = ['custody_edition', 'child', 'is_member', 'holder', 'assisted_days']
+    fields = ['custody_edition', 'child', 'is_member', 'holder', 'assisted_days', 'link']
     readonly_fields = fields
     ordering = ['custody_edition', 'child__name', 'child__family__surnames']
 
     @admin.display(description=gettext_lazy('Is member'), boolean=True)
     def is_member(self, registration):
         return Membership.is_member_child(registration.child)
+
+    @admin.display(description=_('Id'))
+    def link(self, registration):
+        return registration.get_html_link(True)
 
 
 class CustodyEditionAdmin(admin.ModelAdmin):
@@ -67,7 +81,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     readonly_fields = ['remittance', 'members_registrations_count', 'no_members_registrations_count',
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
                        'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
-    ordering = ['-academic_course', 'cycle', '-id']
+    ordering = ['-academic_course', 'cycle', 'period', '-id']
     list_filter = ['academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
     list_per_page = 25
 

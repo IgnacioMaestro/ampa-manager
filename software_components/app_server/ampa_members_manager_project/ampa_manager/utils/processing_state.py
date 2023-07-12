@@ -11,3 +11,4 @@ class ProcessingState(Enum):
     NOT_MODIFIED = 6
     ERROR = 7
     OMITTED = 8
+    DEFAULT_USED = 9

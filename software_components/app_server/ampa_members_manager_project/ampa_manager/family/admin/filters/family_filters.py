@@ -44,15 +44,15 @@ class FamilyChildrenCountFilter(admin.SimpleListFilter):
             return queryset
 
 
-class FamilyDefaultAccountFilter(admin.SimpleListFilter):
-    title = _('Default account')
+class DefaultHolder(admin.SimpleListFilter):
+    title = _('Default holder')
 
-    parameter_name = 'account'
+    parameter_name = 'default_holder'
 
     def lookups(self, request, model_admin):
         return (
-            ('with', _('With account')),
-            ('without', _('Without account')),
+            ('with', _('Completed')),
+            ('without', _('Not completed')),
         )
 
     def queryset(self, request, queryset):
@@ -61,6 +61,27 @@ class FamilyDefaultAccountFilter(admin.SimpleListFilter):
                 return queryset.with_default_holder()
             elif self.value() == 'without':
                 return queryset.without_default_holder()
+        else:
+            return queryset
+
+
+class CustodyHolder(admin.SimpleListFilter):
+    title = _('Custody holder')
+
+    parameter_name = 'custody_holder'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('with', _('Completed')),
+            ('without', _('Not completed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'with':
+                return queryset.with_custody_holder()
+            elif self.value() == 'without':
+                return queryset.without_custody_holder()
         else:
             return queryset
 

@@ -14,6 +14,7 @@ from .child import Child
 from .family_queryset import FamilyQuerySet
 from .holder.holder import Holder
 from .parent import Parent
+from ...utils.utils import Utils
 
 
 class Family(TimeStampedModel):
@@ -40,7 +41,10 @@ class Family(TimeStampedModel):
         db_table = 'family'
 
     def __str__(self) -> str:
-        return f'{self.surnames}: {self.parents_names} ({self.children_names})'
+        children_names = self.children_names
+        if not children_names or children_names == '':
+            children_names = _('Sin hijos')
+        return f'{self.surnames}: {self.parents_names} ({children_names}) {self.id}'
 
     @property
     def children_names(self):
@@ -86,7 +90,7 @@ class Family(TimeStampedModel):
         return self.find_parent(parent_name_and_surnames) is not None
 
     @staticmethod
-    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None):
+    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None, child_name: Optional[str] = None):
         family = None
         error = None
 
@@ -97,11 +101,17 @@ class Family(TimeStampedModel):
         elif len(families) > 1:
             family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
             if family is None:
-                if parents_name_and_surnames:
-                    parents = ', '.join(parents_name_and_surnames)
-                else:
-                    parents = ''
-                error = f'Multiple families with surnames "{surnames}". Parents: "{parents}"'
+                family = Family.get_family_filtered_by_child(families, child_name)
+                if family is None:
+                    if parents_name_and_surnames:
+                        parents = ', '.join(parents_name_and_surnames)
+                    else:
+                        parents = '-'
+
+                    child = child_name if child_name else '-'
+                    error = f'Multiple families with surnames "{surnames}". ' \
+                            f'Parents: {parents}. ' \
+                            f'Child: {child}'
         elif len(parents_name_and_surnames) > 0:
             for parent_name_and_surnames in parents_name_and_surnames:
                 parent = Parent.find(parent_name_and_surnames)
@@ -146,12 +156,46 @@ class Family(TimeStampedModel):
                     return child
         return None
 
+    def get_html_link(self, print_parents=False, print_children=False, print_id=False) -> str:
+        link_text = str(self)
+        if print_id:
+            link_text += f' ({self.id})'
+        if print_parents:
+            parents_names = [p.full_name for p in self.parents.all()]
+            link_text += '. <b>Padres</b>: ' + ', '.join(parents_names)
+        if print_children:
+            children_names = [c.name for c in self.child_set.all()]
+            link_text += '. <b>Hijos</b>: ' + ', '.join(children_names)
+
+        return Utils.get_model_link(Family.__name__.lower(), self.id, link_text)
+
+    def get_children_names_csv(self):
+        return ', '.join([c.name for c in self.child_set.all()])
+
+    def get_similar_names_families(self):
+        similar = []
+        for family in Family.objects.exclude(id=self.id).order_by('surnames'):
+            for normalized_surname_word in StringUtils.normalize(self.surnames).split(' '):
+                if normalized_surname_word not in StringUtils.SURNAMES_IGNORE_WORDS:
+                    if normalized_surname_word in StringUtils.normalize(family.surnames):
+                        similar.append(family)
+        return similar
+
     @staticmethod
     def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:
         if parents_name_and_surnames:
             for family in families:
                 for parent_name_and_surnames in parents_name_and_surnames:
                     if family.has_parent(parent_name_and_surnames):
+                        return family
+        return None
+
+    @staticmethod
+    def get_family_filtered_by_child(families: List[Family], child_name: str) -> Optional[Family]:
+        if child_name:
+            for family in families:
+                for child in family.child_set.all():
+                    if StringUtils.compare_ignoring_everything(child.name, child_name):
                         return family
         return None
 

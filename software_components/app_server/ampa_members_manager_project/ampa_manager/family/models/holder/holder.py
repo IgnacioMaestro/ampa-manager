@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.utils.utils import Utils
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
 from ..bank_account.bank_account import BankAccount
@@ -51,6 +52,15 @@ class Holder(models.Model):
     def clean(self):
         if self.authorization_state == State.SIGNED and not self.authorization_document:
             raise ValidationError(_('The state can not be sent or signed if there is no document attached'))
+
+    def get_html_link(self, print_family_id=False) -> str:
+        link_text = str(self)
+        if print_family_id:
+            families_ids = [str(f.id) for f in self.parent.family_set.all()]
+            families_ids_csv = ', '.join(families_ids)
+            link_text += f' (Family: {families_ids_csv})'
+
+        return Utils.get_model_link(Holder.__name__.lower(), self.id, link_text)
 
     @property
     def authorization_full_number(self) -> str:

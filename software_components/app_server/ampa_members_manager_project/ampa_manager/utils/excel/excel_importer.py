@@ -2,7 +2,7 @@ from typing import List
 
 import xlrd
 from django.core.exceptions import ValidationError
-
+from django.utils.translation import gettext_lazy as _
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.excel.titled_list import TitledList
@@ -104,33 +104,37 @@ class ExcelImporter:
         return logs
 
     def get_summary(self) -> TitledList:
-        summary = TitledList('Summary')
+        summary = TitledList(_('Summary'))
 
         totals_by_model, totals_by_status, errors, warnings, created_families, success_count, not_success_count = \
             ImportRowResult.get_totals(self.results)
 
-        summary_totals = TitledList('Total')
-        summary_totals.append_element(f'Rows imported successfully: {success_count}/{len(self.results)}')
-        summary_totals.append_element(f'Rows not imported: {not_success_count}/{len(self.results)}')
+        summary_totals = TitledList(_('Total'))
+        summary_totals.append_element(_('Rows imported successfully') + ': ' + f'{success_count}/{len(self.results)}')
+        summary_totals.append_element(_('Rows not imported') + ': ' + f'{not_success_count}/{len(self.results)}')
         summary.append_sublist(summary_totals)
 
-        summary_errors = TitledList(f'Errors: {len(errors)}')
+        summary_errors = TitledList(_('Errors') + ': ' + str(len(errors)))
         for row_index, error in errors.items():
-            summary_errors.append_element(f'Row {row_index+1}: {error}')
+            summary_errors.append_element(_('Row') + f' {row_index+1}: {error}')
         summary.append_sublist(summary_errors)
 
-        summary_warnings = TitledList('Warnings')
+        summary_warnings = TitledList(_('Warnings'))
         if len(created_families) > 0:
-            summary_created_families = TitledList(f'{len(created_families)} families were created')
+            summary_created_families = TitledList(_("%(created_families)s families created") % {'created_families': len(created_families)})
+
             for row_index, family in created_families.items():
-                summary_created_families.append_element(str(family))
+                created_family_element = TitledList(family.get_html_link())
+                for similar_family in family.get_similar_names_families():
+                    created_family_element.append_element(similar_family.get_html_link())
+                summary_created_families.append_sublist(created_family_element)
             summary_warnings.append_sublist(summary_created_families)
 
         for row_index, warning in warnings.items():
             summary_warnings.append_element(f'- Row {row_index + 1}: {warning}')
         summary.append_sublist(summary_warnings)
 
-        summary_by_model = TitledList('Results by model')
+        summary_by_model = TitledList(_('Results by model'))
         for model_name, model_totals in totals_by_model.items():
             variation = ImportRowResult.get_variation(self.counters_before[model_name], self.counters_after[model_name])
 
@@ -140,7 +144,7 @@ class ExcelImporter:
             summary_by_model.append_sublist(summary_model)
         summary.append_sublist(summary_by_model)
 
-        summary_by_status = TitledList('Results by status')
+        summary_by_status = TitledList(_('Results by status'))
         for state, state_totals in totals_by_status.items():
             summary_state = TitledList(str(state.name))
             for model_name, model_count in state_totals.items():

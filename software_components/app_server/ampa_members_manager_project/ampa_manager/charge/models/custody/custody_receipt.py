@@ -22,6 +22,9 @@ class CustodyReceipt(models.Model):
         verbose_name_plural = _('Custody receipts')
         db_table = 'custody_receipt'
 
+    def __str__(self):
+        return f'{self.custody_registration}, {self.get_state_display()}, {self.amount}'
+
     def generate_receipt(self) -> Receipt:
         holder: Holder = self.custody_registration.holder
         authorization: AuthorizationReceipt = AuthorizationReceipt(

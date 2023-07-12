@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.utils.utils import Utils
 
 from .camps_edition import CampsEdition
 from .camps_registration_queryset import CampsRegistrationQuerySet
@@ -43,3 +44,7 @@ class CampsRegistration(models.Model):
     @property
     def is_member(self):
         return Membership.is_member_child(self.child)
+
+    def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
+        link_text = str(self.id) if id_as_link_text else str(self)
+        return Utils.get_model_link(AfterSchoolRegistration.__name__.lower(), self.id, link_text, new_tab)

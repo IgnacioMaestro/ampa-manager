@@ -9,6 +9,7 @@ from ampa_manager.activity.models.after_school.after_school_registration_queryse
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.utils.utils import Utils
 
 
 class AfterSchoolRegistration(models.Model):
@@ -40,3 +41,7 @@ class AfterSchoolRegistration(models.Model):
             return float(self.after_school_edition.price_for_member)
         else:
             return float(self.after_school_edition.price_for_no_member)
+
+    def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
+        link_text = str(self.id) if id_as_link_text else str(self)
+        return Utils.get_model_link(AfterSchoolRegistration.__name__.lower(), self.id, link_text, new_tab)

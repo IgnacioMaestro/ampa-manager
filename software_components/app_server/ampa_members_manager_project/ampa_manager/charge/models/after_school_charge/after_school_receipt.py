@@ -22,6 +22,9 @@ class AfterSchoolReceipt(models.Model):
         verbose_name_plural = _('After-school receipts')
         db_table = 'after_school_receipt'
 
+    def __str__(self):
+        return f'{self.after_school_registration}, {self.get_state_display()}, {self.amount}'
+
     def generate_receipt(self) -> Receipt:
         holder: Holder = self.after_school_registration.holder
         authorization: AuthorizationReceipt = AuthorizationReceipt(

@@ -4,6 +4,7 @@ from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
+from django.utils.translation import gettext_lazy as _
 
 
 class CustodyRegistrationImporter:
@@ -35,6 +36,6 @@ class CustodyRegistrationImporter:
                                                               child=child, assisted_days=assisted_days)
             result.set_created(registration)
         else:
-            result.set_omitted()
+            result.set_omitted(_('0 assisted days'))
 
         return result

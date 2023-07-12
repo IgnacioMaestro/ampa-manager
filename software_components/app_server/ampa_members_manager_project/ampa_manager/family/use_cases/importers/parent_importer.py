@@ -9,33 +9,38 @@ class ParentImporter:
 
     @staticmethod
     def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
-                      email: str) -> ImportModelResult:
+                      email: str, optional=False) -> ImportModelResult:
         result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
 
-        fields_ok, error = ParentImporter.validate_fields(family,
-                                                          name_and_surnames,
-                                                          phone_number,
-                                                          additional_phone_number,
-                                                          email)
-        if fields_ok:
-            parent = family.find_parent(name_and_surnames)
-            if parent:
-                if parent.is_modified(phone_number, additional_phone_number, email):
-                    fields_changes: FieldsChanges = parent.update(phone_number, additional_phone_number, email, allow_reset=False)
-                    result.set_updated(parent, fields_changes)
+        if name_and_surnames or phone_number or additional_phone_number or email:
+            fields_ok, error = ParentImporter.validate_fields(family,
+                                                              name_and_surnames,
+                                                              phone_number,
+                                                              additional_phone_number,
+                                                              email)
+            if fields_ok:
+                parent = family.find_parent(name_and_surnames)
+                if parent:
+                    if parent.is_modified(phone_number, additional_phone_number, email):
+                        fields_changes: FieldsChanges = parent.update(phone_number, additional_phone_number, email, allow_reset=False)
+                        result.set_updated(parent, fields_changes)
+                    else:
+                        result.set_not_modified(parent)
                 else:
-                    result.set_not_modified(parent)
-            else:
-                parent = Parent.objects.create(name_and_surnames=name_and_surnames,
-                                               phone_number=phone_number,
-                                               additional_phone_number=additional_phone_number,
-                                               email=email)
-                result.set_created(parent)
+                    parent = Parent.objects.create(name_and_surnames=name_and_surnames,
+                                                   phone_number=phone_number,
+                                                   additional_phone_number=additional_phone_number,
+                                                   email=email)
+                    result.set_created(parent)
 
-                family.parents.add(parent)
-                result.set_parent_added_to_family()
+                    family.parents.add(parent)
+                    result.set_parent_added_to_family()
+            else:
+                result.set_error(error)
+        elif optional:
+            result.set_omitted('No data')
         else:
-            result.set_error(error)
+            result.set_error('Missing all data')
 
         return result
 

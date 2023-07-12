@@ -9,14 +9,15 @@ from ampa_manager.utils.processing_state import ProcessingState
 
 class ImportModelResult:
 
-    def __init__(self, class_name, excel_fields):
+    def __init__(self, class_name, excel_fields=None, state=ProcessingState.NOT_PROCESSED, imported_object=None):
         self.class_name: str = class_name
-        self.imported_object: Optional[Model] = None
-        self.state: ProcessingState = ProcessingState.NOT_PROCESSED
+        self.imported_object: Optional[Model] = imported_object
+        self.state: ProcessingState = state
         self.state2: Optional[ProcessingState] = None
         self.error: Optional[str] = None
+        self.message: Optional[str] = None
         self.warnings: List[str] = []
-        self.excel_fields: List = excel_fields
+        self.excel_fields: List = excel_fields if excel_fields else []
         self.fields_before: List = []
         self.fields_after: List = []
         self.not_reset_fields: List = []
@@ -29,11 +30,12 @@ class ImportModelResult:
 
         error = ''
         if self.error:
-            error += f'. Error: {self.error}.'
+            error += f'. {self.error}.'
 
         excel_fields = self.get_excel_fields_csv()
 
-        description = f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names}'
+        message = self.message if self.message else ''
+        description = f'{self.class_name} ({self.object_id}): {excel_fields} -> {self.states_names} {message}'
 
         if changes:
             description += f'. {changes}'
@@ -93,12 +95,19 @@ class ImportModelResult:
     def set_not_processed(self):
         self.state = ProcessingState.NOT_PROCESSED
 
-    def set_omitted(self):
+    def set_omitted(self, message=None):
         self.state = ProcessingState.OMITTED
+
+        if message:
+            self.message = message
 
     def set_created(self, imported_object):
         self.imported_object = imported_object
         self.state = ProcessingState.CREATED
+
+    def set_default_used(self, imported_object):
+        self.imported_object = imported_object
+        self.state = ProcessingState.DEFAULT_USED
 
     def set_parent_added_to_family(self):
         self.state2 = ProcessingState.PARENT_ADDED_TO_FAMILY

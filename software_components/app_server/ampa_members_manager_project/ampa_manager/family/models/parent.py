@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from django.db import models
 from django.db.models import Manager
@@ -10,6 +10,7 @@ from ampa_manager.family.models.parent_queryset import ParentQuerySet
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
+from ampa_manager.utils.utils import Utils
 
 
 class Parent(TimeStampedModel):
@@ -26,11 +27,15 @@ class Parent(TimeStampedModel):
         db_table = 'parent'
 
     def __str__(self) -> str:
-        return self.full_name
+        return f'{self.full_name} ({self.id})'
 
     @property
     def full_name(self) -> str:
         return str(self.name_and_surnames)
+
+    @property
+    def families_ids(self) -> List[int]:
+        return [f.id for f in self.family_set.order_by('id')]
 
     def belong_to_family(self, family):
         return self.family_set.filter(surnames=family.surnames).exists()
@@ -81,6 +86,9 @@ class Parent(TimeStampedModel):
         fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
 
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
+
+    def get_html_link(self) -> str:
+        return Utils.get_model_link(Parent.__name__.lower(), self.id, str(self))
 
     @staticmethod
     def fix_name_and_surnames():
