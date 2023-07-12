@@ -49,7 +49,7 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 class CustodyRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
-    inlines = [CustodyReceiptInline]
+    # inlines = [CustodyReceiptInline]
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Total'))
