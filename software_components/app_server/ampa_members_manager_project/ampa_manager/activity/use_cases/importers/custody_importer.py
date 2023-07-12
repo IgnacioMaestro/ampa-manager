@@ -147,6 +147,8 @@ class CustodyImporter:
 
             holder: Holder = holder_result.imported_object
 
+            cls.ensure_family_holders(family, holder)
+
             registration_result = CustodyRegistrationImporter.import_registration(
                 custody_edition, holder, child,
                 row.get(cls.KEY_ASSISTED_DAYS))
@@ -156,3 +158,13 @@ class CustodyImporter:
             result.error = str(e)
 
         return result
+
+    @classmethod
+    def ensure_family_holders(cls, family, holder):
+        if holder:
+            if not family.default_holder or not family.custody_holder:
+                if not family.default_holder:
+                    family.default_holder = holder
+                if not family.custody_holder:
+                    family.custody_holder = holder
+                family.save()

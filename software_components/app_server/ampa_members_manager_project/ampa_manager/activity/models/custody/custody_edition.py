@@ -36,7 +36,7 @@ class CustodyEdition(PricePerLevel):
         ]
 
     def __str__(self) -> str:
-        return f'{self.academic_course}, {self.period}, {self.get_cycle_display()}'
+        return f'{self.academic_course}, {self.period}, {self.get_cycle_display()}, {self.registrations_count} {_("registrations")}'
     
     @property
     def no_members_registrations_count(self):
