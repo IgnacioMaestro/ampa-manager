@@ -2,6 +2,7 @@ from typing import List
 
 from django.test import TestCase
 from model_bakery import baker
+from django.utils.translation import gettext_lazy as _
 
 from .bank_account.bank_account import BankAccount
 from .family import Family
@@ -15,9 +16,18 @@ class TestFamily(TestCase):
         baker.make('Family')
         Family.objects.create(surnames="surnames")
 
-    def test_str(self):
+    def test_str_no_children(self):
         family: Family = baker.make('Family')
-        self.assertEqual(str(family), str(family.surnames))
+        self.assertEqual(
+            str(family),
+            str(family.surnames) + ": " + family.parents_names + " (" + _('Sin hijos') + ") " + str(family.id))
+
+    def test_str_with_children(self):
+        family: Family = baker.make('Family')
+        baker.make('Child', family=family)
+        self.assertEqual(
+            str(family),
+            str(family.surnames) + ": " + family.parents_names + " (" + family.children_names + ") " + str(family.id))
 
     def test_all_families_no_families(self):
         self.assertQuerysetEqual(Family.all_families(), Family.objects.none())

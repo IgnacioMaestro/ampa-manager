@@ -26,10 +26,11 @@ class Family(TimeStampedModel):
     default_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
         help_text=_("Save the family to see its bank accounts"))
-    custody_holder = models.ForeignKey(to=Holder, on_delete=SET_NULL, null=True, blank=True,
-                                       verbose_name=_("Custody holder"),
-                                       help_text=_("Save the family to see its bank accounts"),
-                                       related_name='custody_holder')
+    custody_holder = models.ForeignKey(
+        to=Holder, on_delete=SET_NULL, null=True, blank=True,
+        verbose_name=_("Custody holder"),
+        help_text=_("Save the family to see its bank accounts"),
+        related_name='custody_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
 
@@ -47,23 +48,23 @@ class Family(TimeStampedModel):
         return f'{self.surnames}: {self.parents_names} ({children_names}) {self.id}'
 
     @property
-    def children_names(self):
+    def children_names(self) -> str:
         return ', '.join(c.name for c in self.child_set.all())
 
     @property
-    def parents_names(self):
+    def parents_names(self) -> str:
         names = []
         for parent in self.parents.all():
             names.append(parent.name_and_surnames)
         return ', '.join(names)
 
-    def get_parent_count(self):
+    def get_parent_count(self) -> int:
         return self.parents.all().count()
 
-    def get_children_count(self):
+    def get_children_count(self) -> int:
         return self.child_set.count()
 
-    def get_children_in_school_count(self):
+    def get_children_in_school_count(self) -> int:
         return self.child_set.of_age_in_range(Level.AGE_HH2, Level.AGE_LH6).count()
 
     @classmethod
@@ -215,8 +216,10 @@ class Family(TimeStampedModel):
                 duplicated = family.find_child(child.name, child.id)
                 if duplicated:
                     print(f'\nDuplicated child: Family "{family.surnames}"')
-                    print(f'- Kept: #{child.id}, {child.name}, {child.year_of_birth}, {child.repetition}, {child.family.id}')
-                    print(f'- Removed: #{duplicated.id}, {duplicated.name}, {duplicated.year_of_birth}, {duplicated.repetition}, {duplicated.family.id}')
+                    print(
+                        f'- Kept: #{child.id}, {child.name}, {child.year_of_birth}, {child.repetition}, {child.family.id}')
+                    print(
+                        f'- Removed: #{duplicated.id}, {duplicated.name}, {duplicated.year_of_birth}, {duplicated.repetition}, {duplicated.family.id}')
                     duplicated.delete()
 
     @staticmethod
@@ -239,7 +242,8 @@ class Family(TimeStampedModel):
             for parent1 in family.parents.all():
                 if parent1.id not in processed:
                     for parent2 in family.parents.exclude(id=parent1.id):
-                        if StringUtils.compare_ignoring_everything(parent1.name_and_surnames, parent2.name_and_surnames):
+                        if StringUtils.compare_ignoring_everything(
+                                parent1.name_and_surnames, parent2.name_and_surnames):
                             duplicated.append([parent1, parent2])
                             processed.extend([parent1.id, parent2.id])
         return duplicated
