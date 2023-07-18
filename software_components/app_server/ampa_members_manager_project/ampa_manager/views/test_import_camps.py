@@ -11,15 +11,14 @@ from ampa_manager.activity.use_cases.importers.camps_importer import CampsImport
 from ampa_manager.forms import ImportCampsForm
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.utils.excel.titled_list import TitledList
+from ampa_manager.views.import_camps import ImportCamps
 from ampa_manager.views.import_info import ImportInfo
 
 
 class ImportCampsViewTest(TestCase):
-    URL = reverse('import_camps')
-    TEMPLATE = 'import_camps.html'
-    FORM_ACTION = '/ampa/camps/import/'
+    URL = reverse(ImportCamps.ENDPOINT)
 
-    @mock.patch('ampa_manager.activity.use_cases.importers.camps_importer.CampsImporter.import_camps')
+    @mock.patch('ampa_manager.activity.use_cases.importers.camps_importer.CampsImporter.import_camps_registrations')
     def test_import_camps_post_valid_form(self, mock_import_camps: MagicMock):
         # Arrange
 
@@ -39,7 +38,7 @@ class ImportCampsViewTest(TestCase):
         self.assertEqual(response.context['import_results'], titled_list_results)
         self.assertEqual(response.context['import_summary'], titled_list_summary)
         self.assertEqual(response.context['excel_columns'], get_excel_columns(CampsImporter.COLUMNS_TO_IMPORT))
-        self.assertEqual(response.context['form_action'], self.FORM_ACTION)
+        self.assertEqual(response.context['form_action'], self.URL)
         self.assertEqual(type(response.context['form']), ImportCampsForm)
         self.assertEqual(len(response.context['form'].data), 1)
         self.assertEqual(response.context['form'].data['camps_edition'], str(camps_edition.id))
@@ -79,11 +78,11 @@ class ImportCampsViewTest(TestCase):
 
     def assert_200_and_template(self, response):
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, self.TEMPLATE)
+        self.assertTemplateUsed(response, ImportCamps.TEMPLATE)
 
     def assert_context_common_data(self, response):
         self.assertFalse('success' in response.context)
         self.assertFalse('import_results' in response.context)
         self.assertFalse('import_summary' in response.context)
         self.assertEqual(response.context['excel_columns'], get_excel_columns(CampsImporter.COLUMNS_TO_IMPORT))
-        self.assertEqual(response.context['form_action'], self.FORM_ACTION)
+        self.assertEqual(response.context['form_action'], self.URL)

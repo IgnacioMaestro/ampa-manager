@@ -11,6 +11,7 @@ from ampa_manager.views.import_info import ImportInfo
 
 class ImportCamps(View):
     TEMPLATE = 'import_camps.html'
+    ENDPOINT = 'import_camps'
 
     @classmethod
     def post(cls, request):
@@ -59,6 +60,6 @@ class ImportCamps(View):
     def __create_context_fix_part(cls) -> dict:
         return {
             'excel_columns': get_excel_columns(CampsImporter.COLUMNS_TO_IMPORT),
-            'form_action': reverse('import_camps'),
+            'form_action': reverse(cls.ENDPOINT),
             'excel_template_file_name': 'templates/plantilla_importar_campamentos.xls'
         }
