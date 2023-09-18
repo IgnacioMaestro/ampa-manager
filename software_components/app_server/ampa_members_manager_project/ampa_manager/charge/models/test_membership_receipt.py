@@ -38,7 +38,7 @@ class TestMembershipReceipt(TestCase):
 
         receipt: Receipt = membership_receipt.generate_receipt()
 
-        self.assertEqual(receipt.bank_account_owner, str(holder.parent))
+        self.assertEqual(receipt.bank_account_owner, holder.parent.full_name)
         self.assertEqual(receipt.iban, str(holder.bank_account.iban))
         self.assertEqual(receipt.bic, str(holder.bank_account.swift_bic))
         self.assertEqual(receipt.amount, self.FEE)
