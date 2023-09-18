@@ -30,5 +30,5 @@ class AfterSchoolReceipt(models.Model):
         authorization: AuthorizationReceipt = AuthorizationReceipt(
             number=holder.authorization_full_number, date=holder.authorization_sign_date)
         return Receipt(
-            amount=self.amount, bank_account_owner=str(holder.parent), iban=holder.bank_account.iban,
+            amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
             bic=holder.bank_account.swift_bic, authorization=authorization)
