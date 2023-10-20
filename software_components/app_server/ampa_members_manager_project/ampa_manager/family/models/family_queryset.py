@@ -42,6 +42,9 @@ class FamilyQuerySet(QuerySet):
     def no_members(self):
         return self.exclude(membership__academic_course=ActiveCourse.load())
 
+    def members_last_year(self):
+        return self.filter(membership__academic_course=ActiveCourse.get_previous())
+
     def with_surnames(self, surnames):
         return self.filter(surnames__iexact=surnames)
 

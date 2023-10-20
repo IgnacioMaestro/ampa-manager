@@ -16,7 +16,7 @@ from ampa_manager.activity.models.camps.camps_registration import CampsRegistrat
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
-from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenCountFilter, \
+from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
     DefaultHolder, CustodyHolder, FamilyParentCountFilter
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
@@ -75,13 +75,13 @@ class FamilyInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'parents_names', 'children_names',
-                    'children_in_school_count', 'is_member', 'has_default_holder', 'created_formatted']
+    list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
+                    'has_default_holder', 'created_formatted']
     fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'decline_membership', 'is_defaulter',
               'created', 'modified']
     readonly_fields = ['created', 'modified']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenCountFilter, 'created', 'modified', 'is_defaulter',
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
     search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name']
     form = FamilyAdminForm

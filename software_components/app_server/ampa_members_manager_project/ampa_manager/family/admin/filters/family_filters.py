@@ -9,8 +9,9 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('yes', _('Members')),
-            ('no', _('No members')),
+            ('yes', _('Yes')),
+            ('no', _('No')),
+            ('last_year', _('Last year')),
         )
 
     def queryset(self, request, queryset):
@@ -19,14 +20,16 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
                 return queryset.members()
             elif self.value() == 'no':
                 return queryset.no_members()
+            elif self.value() == 'last_year':
+                return queryset.members_last_year()
         else:
             return queryset
 
 
-class FamilyChildrenCountFilter(admin.SimpleListFilter):
-    title = _('Children count')
+class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
+    title = _('Children in school')
 
-    parameter_name = 'children'
+    parameter_name = 'children_in_school'
 
     def lookups(self, request, model_admin):
         return (
