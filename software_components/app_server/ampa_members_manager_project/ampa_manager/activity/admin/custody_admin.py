@@ -4,7 +4,8 @@ from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
-from ampa_manager.activity.admin.custody_edition_filters import CustodyEditionHasRemittanceFilter
+from ampa_manager.activity.admin.custody_edition_filters import CustodyEditionHasRemittanceFilter, \
+    CustodyEditionAcademicCourse
 from ampa_manager.activity.admin.registration_filters import RegistrationFilter, ChildLevelListFilter
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
@@ -82,7 +83,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
                        'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
     ordering = ['-academic_course', 'cycle', 'period', '-id']
-    list_filter = ['academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
+    list_filter = [CustodyEditionAcademicCourse, 'academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Total charged'))
