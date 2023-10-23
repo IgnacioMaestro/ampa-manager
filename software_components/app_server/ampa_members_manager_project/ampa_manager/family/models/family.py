@@ -182,6 +182,20 @@ class Family(TimeStampedModel):
                         similar.append(family)
         return similar
 
+    def get_parents_emails(self) -> List[str]:
+        emails = []
+        for parent in self.parents.all():
+            if parent.email and parent.email not in emails:
+                emails.append(parent.email)
+        return emails
+
+    @staticmethod
+    def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
+        emails = []
+        for family in families:
+            emails.extend(family.get_parents_emails())
+        return emails
+
     @staticmethod
     def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:
         if parents_name_and_surnames:

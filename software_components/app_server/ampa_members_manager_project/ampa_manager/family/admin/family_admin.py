@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib import admin
+from django.conf import settings
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -83,7 +84,7 @@ class FamilyAdmin(admin.ModelAdmin):
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
-    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name']
+    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
@@ -129,15 +130,20 @@ class FamilyAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export emails to CSV"))
-    def export_emails(self, _, families: QuerySet[Family]):
-        emails = []
-        for family in families:
-            for parent in family.parents.all():
-                if parent.email and parent.email not in emails:
-                    emails.append(parent.email)
-
+    def export_emails(self, request, families: QuerySet[Family]):
+        emails = Family.get_families_parents_emails(families)
+        emails_csv = ",".join(emails)
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
-        return HttpResponse(content_type='text/csv', headers=headers, content=",".join(emails))
+        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+
+    @admin.action(description=gettext_lazy("Send email to the parents of selected families"))
+    def send_email_to_parents(self, request, families: QuerySet[Family]):
+        emails = Family.get_families_parents_emails(families)
+        emails_csv = ",".join(emails)
+        email = settings.FROM_EMAIL
+        send_email_link = f"<a target=\"_new\" href=\"mailto:{email}?bcc={emails_csv}\">" \
+                          f"{gettext_lazy('Click here to send an email to the parents')}</a>"
+        return messages.success(request, mark_safe(send_email_link))
 
     @admin.action(description=gettext_lazy("Export families to XLS"))
     def export_families_xls(self, _, families: QuerySet[Family]):
@@ -237,5 +243,5 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, make_members, export_families_xls,
+    actions = [generate_remittance, export_emails, send_email_to_parents, make_members, export_families_xls,
                complete_custody_holder_with_last_registration, complete_custody_holder_with_default_holder]
