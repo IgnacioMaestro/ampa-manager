@@ -44,10 +44,13 @@ class MembershipInline(ReadOnlyTabularInline):
 
 class ChildInline(ReadOnlyTabularInline):
     model = Child
-    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registration_count',
-              'custody_registration_count', 'camps_registration_count', 'link']
-    readonly_fields = ['child_course', 'after_school_registration_count', 'custody_registration_count',
-                       'camps_registration_count', 'link']
+    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_active_course',
+              'after_school_previous_courses', 'custody_registration_active_course',
+              'custody_registration_previous_courses', 'camps_registration_active_course',
+              'camps_registration_previous_courses', 'link']
+    readonly_fields = ['child_course', 'after_school_active_course', 'after_school_previous_courses',
+                       'custody_registration_active_course', 'custody_registration_previous_courses',
+                       'camps_registration_active_course', 'camps_registration_previous_courses', 'link']
     extra = 0
 
     @admin.display(description=_('Id'))
@@ -58,17 +61,29 @@ class ChildInline(ReadOnlyTabularInline):
     def child_course(self, child):
         return Level.get_level_name(child.level)
 
-    @admin.display(description=_('After-schools'))
-    def after_school_registration_count(self, child):
-        return AfterSchoolRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+    @admin.display(description=_('After-schools') + ' (' + _('This year') + ')')
+    def after_school_active_course(self, child):
+        return AfterSchoolRegistration.objects.of_child(child).of_active_course().count()
 
-    @admin.display(description=_('Custody'))
-    def custody_registration_count(self, child):
-        return CustodyRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+    @admin.display(description=_('After-schools') + ' (' + _('Previously') + ')')
+    def after_school_previous_courses(self, child):
+        return AfterSchoolRegistration.objects.of_child(child).of_previous_courses().count()
 
-    @admin.display(description=_('Camps'))
-    def camps_registration_count(self, child):
-        return CampsRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+    @admin.display(description=_('Custody') + ' (' + _('This year') + ')')
+    def custody_registration_active_course(self, child):
+        return CustodyRegistration.objects.of_child(child).of_active_course().count()
+
+    @admin.display(description=_('Custody') + ' (' + _('Previously') + ')')
+    def custody_registration_previous_courses(self, child):
+        return CustodyRegistration.objects.of_child(child).of_previous_courses().count()
+
+    @admin.display(description=_('Camps') + ' (' + _('This year') + ')')
+    def camps_registration_active_course(self, child):
+        return CampsRegistration.objects.of_child(child).of_active_course().count()
+
+    @admin.display(description=_('Camps') + ' (' + _('Previously') + ')')
+    def camps_registration_previous_courses(self, child):
+        return CampsRegistration.objects.of_child(child).of_previous_courses().count()
 
 
 class FamilyInline(ReadOnlyTabularInline):
@@ -141,9 +156,10 @@ class FamilyAdmin(admin.ModelAdmin):
         emails = Family.get_families_parents_emails(families)
         emails_csv = ",".join(emails)
         email = settings.FROM_EMAIL
-        send_email_link = f"<a target=\"_new\" href=\"mailto:{email}?bcc={emails_csv}\">" \
-                          f"{gettext_lazy('Click here to send an email to the parents')}</a>"
-        return messages.success(request, mark_safe(send_email_link))
+        link_href = f"mailto:{email}?bcc={emails_csv}"
+        link_text = gettext_lazy("Click here to send an email to the parents")
+        link_html = f'<a target="_new" href="{link_href}">{link_text}</a>'
+        return messages.success(request, mark_safe(link_html))
 
     @admin.action(description=gettext_lazy("Export families to XLS"))
     def export_families_xls(self, _, families: QuerySet[Family]):
