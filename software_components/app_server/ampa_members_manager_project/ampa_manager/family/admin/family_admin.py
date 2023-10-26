@@ -44,13 +44,10 @@ class MembershipInline(ReadOnlyTabularInline):
 
 class ChildInline(ReadOnlyTabularInline):
     model = Child
-    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_active_course',
-              'after_school_previous_courses', 'custody_registration_active_course',
-              'custody_registration_previous_courses', 'camps_registration_active_course',
-              'camps_registration_previous_courses', 'link']
-    readonly_fields = ['child_course', 'after_school_active_course', 'after_school_previous_courses',
-                       'custody_registration_active_course', 'custody_registration_previous_courses',
-                       'camps_registration_active_course', 'camps_registration_previous_courses', 'link']
+    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registrations',
+              'custody_registrations', 'camps_registrations', 'link']
+    readonly_fields = ['child_course', 'after_school_registrations', 'custody_registrations', 'camps_registrations',
+                       'link']
     extra = 0
 
     @admin.display(description=_('Id'))
@@ -61,30 +58,23 @@ class ChildInline(ReadOnlyTabularInline):
     def child_course(self, child):
         return Level.get_level_name(child.level)
 
-    @admin.display(description=_('After-schools') + ' (' + _('This year') + ')')
-    def after_school_active_course(self, child):
-        return AfterSchoolRegistration.objects.of_child(child).of_active_course().count()
+    @admin.display(description=_('After-schools') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def after_school_registrations(self, child):
+        active_course = AfterSchoolRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = AfterSchoolRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
-    @admin.display(description=_('After-schools') + ' (' + _('Previously') + ')')
-    def after_school_previous_courses(self, child):
-        return AfterSchoolRegistration.objects.of_child(child).of_previous_courses().count()
+    @admin.display(description=_('Custody') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def custody_registrations(self, child):
+        active_course = CustodyRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = CustodyRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
-    @admin.display(description=_('Custody') + ' (' + _('This year') + ')')
-    def custody_registration_active_course(self, child):
-        return CustodyRegistration.objects.of_child(child).of_active_course().count()
-
-    @admin.display(description=_('Custody') + ' (' + _('Previously') + ')')
-    def custody_registration_previous_courses(self, child):
-        return CustodyRegistration.objects.of_child(child).of_previous_courses().count()
-
-    @admin.display(description=_('Camps') + ' (' + _('This year') + ')')
-    def camps_registration_active_course(self, child):
-        return CampsRegistration.objects.of_child(child).of_active_course().count()
-
-    @admin.display(description=_('Camps') + ' (' + _('Previously') + ')')
-    def camps_registration_previous_courses(self, child):
-        return CampsRegistration.objects.of_child(child).of_previous_courses().count()
-
+    @admin.display(description=_('Camps') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def camps_registrations(self, child):
+        active_course = CampsRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = CampsRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
 class FamilyInline(ReadOnlyTabularInline):
     model = Family.parents.through
