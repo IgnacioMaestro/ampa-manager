@@ -44,4 +44,4 @@ class AfterSchoolRegistration(models.Model):
 
     def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
         link_text = str(self.id) if id_as_link_text else str(self)
-        return Utils.get_model_link(AfterSchoolRegistration.__name__.lower(), self.id, link_text, new_tab)
+        return Utils.get_model_instance_link(AfterSchoolRegistration.__name__.lower(), self.id, link_text, new_tab)

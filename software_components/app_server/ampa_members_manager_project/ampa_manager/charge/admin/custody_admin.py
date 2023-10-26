@@ -9,6 +9,7 @@ from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
 from .csv_response_creator import CSVResponseCreator
+from .filters.receipt_filters import CustodyReceiptFilter
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
@@ -18,10 +19,10 @@ from ..use_cases.custody.remittance_generator_from_custody_remittance import Rem
 
 
 class CustodyReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'custody_registration', 'state', 'amount']
+    list_display = ['remittance', 'custody_registration', 'state', 'amount', 'id']
     ordering = ['state']
     search_fields = ['custody_registration__child__family']
-    list_filter = ['state']
+    list_filter = ['state', CustodyReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))

@@ -168,7 +168,7 @@ class Family(TimeStampedModel):
             children_names = [c.name for c in self.child_set.all()]
             link_text += '. <b>Hijos</b>: ' + ', '.join(children_names)
 
-        return Utils.get_model_link(Family.__name__.lower(), self.id, link_text)
+        return Utils.get_model_instance_link(Family.__name__.lower(), self.id, link_text)
 
     def get_children_names_csv(self):
         return ', '.join([c.name for c in self.child_set.all()])

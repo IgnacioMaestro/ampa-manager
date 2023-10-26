@@ -1,11 +1,12 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.state import State
 from ampa_manager.family.models.holder.holder import Holder
+from .camps_receipt_queryset import CampsReceiptQuerySet
 
 from .camps_remittance import CampsRemittance
 
@@ -17,6 +18,8 @@ class CampsReceipt(models.Model):
         to=CampsRegistration, on_delete=CASCADE, verbose_name=_("Camps registrations"))
     remittance = models.ForeignKey(
         to=CampsRemittance, on_delete=CASCADE, verbose_name=_("Camps remittance"))
+
+    objects = Manager.from_queryset(CampsReceiptQuerySet)()
 
     class Meta:
         verbose_name = _('Camps receipt')
