@@ -1,5 +1,6 @@
 import locale
 
+from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy
@@ -7,6 +8,7 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
+from .filters.receipt_filters import CampsReceiptFilter
 from ..models.camps.camps_receipt import CampsReceipt
 from ..models.camps.camps_remittance import CampsRemittance
 from ..remittance import Remittance
@@ -16,10 +18,12 @@ from ..use_cases.camps.remittance_generator_from_camps_remittance import Remitta
 
 
 class CampsReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'camps_registration', 'state', 'amount']
+    list_display = ['remittance', 'camps_registration', 'child', 'state', 'amount', 'id']
     ordering = ['state']
-    search_fields = ['camps_registration__child__family']
-    list_filter = ['state']
+    search_fields = ['camps_registration__child__family__surnames', 'camps_registration__child__name',
+                     'camps_registration__holder__bank_account__iban',
+                     'camps_registration__holder__parent__name_and_surnames']
+    list_filter = ['state', CampsReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))
@@ -36,6 +40,10 @@ class CampsReceiptAdmin(admin.ModelAdmin):
         message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
         self.message_user(request=request, message=message)
 
+    @admin.display(description=_('Child'))
+    def child(self, camps_receipt):
+        return camps_receipt.camps_registration.child.name
+
     actions = [set_as_sent, set_as_paid]
 
 
@@ -47,7 +55,7 @@ class CampsReceiptInline(ReadOnlyTabularInline):
 class CampsRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
     ordering = ['-created_at']
-    inlines = [CampsReceiptInline]
+    # inlines = [CampsReceiptInline]
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Total'))

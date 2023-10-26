@@ -9,6 +9,7 @@ from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
 from .csv_response_creator import CSVResponseCreator
+from .filters.receipt_filters import AfterSchoolReceiptFilter
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ..remittance import Remittance
@@ -19,10 +20,10 @@ from ..use_cases.after_school.remittance_generator_from_after_school_remittance 
 
 
 class AfterSchoolReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'after_school_registration', 'state', 'amount']
+    list_display = ['remittance', 'after_school_registration', 'state', 'amount', 'id']
     ordering = ['state']
     search_fields = ['after_school_registration__child__family']
-    list_filter = ['state']
+    list_filter = ['state', AfterSchoolReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))

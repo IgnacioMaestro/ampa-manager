@@ -1,8 +1,9 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.charge.models.custody.custody_receipt_queryset import CustodyReceiptQuerySet
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.charge.state import State
@@ -16,6 +17,8 @@ class CustodyReceipt(models.Model):
         to=CustodyRegistration, on_delete=CASCADE, verbose_name=_("Custody registrations"))
     remittance = models.ForeignKey(
         to=CustodyRemittance, on_delete=CASCADE, verbose_name=_("Custody remittance"))
+
+    objects = Manager.from_queryset(CustodyReceiptQuerySet)()
 
     class Meta:
         verbose_name = _('Custody receipt')

@@ -1,9 +1,10 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.family.models.holder.holder import Holder
+from .after_school_receipt_queryset import AfterSchoolReceiptQuerySet
 from .after_school_remittance import AfterSchoolRemittance
 from ...receipt import Receipt, AuthorizationReceipt
 from ...state import State
@@ -16,6 +17,8 @@ class AfterSchoolReceipt(models.Model):
         to=AfterSchoolRegistration, on_delete=CASCADE, verbose_name=_("After School registrations"))
     remittance = models.ForeignKey(
         to=AfterSchoolRemittance, on_delete=CASCADE, verbose_name=_("After School remittance"))
+
+    objects = Manager.from_queryset(AfterSchoolReceiptQuerySet)()
 
     class Meta:
         verbose_name = _('After-school receipt')

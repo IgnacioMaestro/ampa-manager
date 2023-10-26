@@ -15,6 +15,9 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
+from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
+from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
@@ -24,6 +27,7 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.utils import Utils
 
 
 class FamilyAdminForm(forms.ModelForm):
@@ -44,10 +48,10 @@ class MembershipInline(ReadOnlyTabularInline):
 
 class ChildInline(ReadOnlyTabularInline):
     model = Child
-    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registration_count',
-              'custody_registration_count', 'camps_registration_count', 'link']
-    readonly_fields = ['child_course', 'after_school_registration_count', 'custody_registration_count',
-                       'camps_registration_count', 'link']
+    fields = ['name', 'year_of_birth', 'repetition', 'child_course', 'after_school_registrations',
+              'custody_registrations', 'camps_registrations', 'link']
+    readonly_fields = ['child_course', 'after_school_registrations', 'custody_registrations', 'camps_registrations',
+                       'link']
     extra = 0
 
     @admin.display(description=_('Id'))
@@ -58,18 +62,23 @@ class ChildInline(ReadOnlyTabularInline):
     def child_course(self, child):
         return Level.get_level_name(child.level)
 
-    @admin.display(description=_('After-schools'))
-    def after_school_registration_count(self, child):
-        return AfterSchoolRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+    @admin.display(description=_('After-schools') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def after_school_registrations(self, child):
+        active_course = AfterSchoolRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = AfterSchoolRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
-    @admin.display(description=_('Custody'))
-    def custody_registration_count(self, child):
-        return CustodyRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
+    @admin.display(description=_('Custody') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def custody_registrations(self, child):
+        active_course = CustodyRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = CustodyRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
-    @admin.display(description=_('Camps'))
-    def camps_registration_count(self, child):
-        return CampsRegistration.objects.of_child(child).of_academic_course(ActiveCourse.load()).count()
-
+    @admin.display(description=_('Camps') + ' (' + _('This year') + ' / ' + _('Previously') + ')')
+    def camps_registrations(self, child):
+        active_course = CampsRegistration.objects.of_child(child).of_active_course().count()
+        previous_courses = CampsRegistration.objects.of_child(child).of_previous_courses().count()
+        return f'{active_course} / {previous_courses}'
 
 class FamilyInline(ReadOnlyTabularInline):
     model = Family.parents.through
@@ -78,9 +87,9 @@ class FamilyInline(ReadOnlyTabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
                     'has_default_holder', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'decline_membership', 'is_defaulter',
-              'created', 'modified']
-    readonly_fields = ['created', 'modified']
+    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'camps_receipts', 'custody_receipts',
+              'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    readonly_fields = ['created', 'modified', 'camps_receipts', 'custody_receipts', 'after_school_receipts']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
@@ -88,7 +97,7 @@ class FamilyAdmin(admin.ModelAdmin):
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
-    list_per_page = 50
+    list_per_page = 25
 
     @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))
     def generate_remittance(self, request, families: QuerySet[Family]):
@@ -141,9 +150,10 @@ class FamilyAdmin(admin.ModelAdmin):
         emails = Family.get_families_parents_emails(families)
         emails_csv = ",".join(emails)
         email = settings.FROM_EMAIL
-        send_email_link = f"<a target=\"_new\" href=\"mailto:{email}?bcc={emails_csv}\">" \
-                          f"{gettext_lazy('Click here to send an email to the parents')}</a>"
-        return messages.success(request, mark_safe(send_email_link))
+        link_href = f"mailto:{email}?bcc={emails_csv}"
+        link_text = gettext_lazy("Click here to send an email to the parents")
+        link_html = f'<a target="_new" href="{link_href}">{link_text}</a>'
+        return messages.success(request, mark_safe(link_html))
 
     @admin.action(description=gettext_lazy("Export families to XLS"))
     def export_families_xls(self, _, families: QuerySet[Family]):
@@ -240,6 +250,36 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('Created'))
     def created_formatted(self, family):
         return family.created.strftime('%d/%m/%y, %H:%M')
+
+    @admin.display(description=gettext_lazy('Camps receipts'))
+    def camps_receipts(self, family):
+        receipts_count = CampsReceipt.objects.of_family(family).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=CampsReceipt.__name__.lower(), link_text=link_text, filters=filters)
+
+    @admin.display(description=gettext_lazy('Custody receipts'))
+    def custody_receipts(self, family):
+        receipts_count = CustodyReceipt.objects.of_family(family).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=CustodyReceipt.__name__.lower(), link_text=link_text, filters=filters)
+
+    @admin.display(description=gettext_lazy('After-school receipts'))
+    def after_school_receipts(self, family):
+        receipts_count = AfterSchoolReceipt.objects.of_family(family).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     created_formatted.admin_order_field = 'created'
 

@@ -60,7 +60,7 @@ class Holder(models.Model):
             families_ids_csv = ', '.join(families_ids)
             link_text += f' (Family: {families_ids_csv})'
 
-        return Utils.get_model_link(Holder.__name__.lower(), self.id, link_text)
+        return Utils.get_model_instance_link(Holder.__name__.lower(), self.id, link_text)
 
     @property
     def authorization_full_number(self) -> str:

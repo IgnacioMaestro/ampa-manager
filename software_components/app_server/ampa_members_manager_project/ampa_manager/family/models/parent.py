@@ -88,7 +88,7 @@ class Parent(TimeStampedModel):
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
 
     def get_html_link(self) -> str:
-        return Utils.get_model_link(Parent.__name__.lower(), self.id, str(self))
+        return Utils.get_model_instance_link(Parent.__name__.lower(), self.id, str(self))
 
     @staticmethod
     def fix_name_and_surnames():
