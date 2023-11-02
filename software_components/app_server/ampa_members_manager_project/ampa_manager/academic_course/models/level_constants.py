@@ -1,0 +1,11 @@
+class LevelConstants:
+    ID_HH2 = 'HH2'
+    ID_HH3 = 'HH3'
+    ID_HH4 = 'HH4'
+    ID_HH5 = 'HH5'
+    ID_LH1 = 'LH1'
+    ID_LH2 = 'LH2'
+    ID_LH3 = 'LH3'
+    ID_LH4 = 'LH4'
+    ID_LH5 = 'LH5'
+    ID_LH6 = 'LH6'

@@ -6,7 +6,6 @@ from .xml_creator import XMLCreator
 
 class SEPAResponseCreator:
     TEXT_XML = 'text/xml'
-    REMITTANCE_ID = "2023/003"
 
     def create_sepa_response(self, remittance: Remittance) -> HttpResponse:
         xml: str = XMLCreator(remittance).create()

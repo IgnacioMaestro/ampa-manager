@@ -3,19 +3,20 @@ from typing import Optional
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.academic_course.models.level_constants import LevelConstants
 
 
 class Level:
-    ID_HH2 = 'HH2'
-    ID_HH3 = 'HH3'
-    ID_HH4 = 'HH4'
-    ID_HH5 = 'HH5'
-    ID_LH1 = 'LH1'
-    ID_LH2 = 'LH2'
-    ID_LH3 = 'LH3'
-    ID_LH4 = 'LH4'
-    ID_LH5 = 'LH5'
-    ID_LH6 = 'LH6'
+    ID_HH2 = LevelConstants.ID_HH2
+    ID_HH3 = LevelConstants.ID_HH3
+    ID_HH4 = LevelConstants.ID_HH4
+    ID_HH5 = LevelConstants.ID_HH5
+    ID_LH1 = LevelConstants.ID_LH1
+    ID_LH2 = LevelConstants.ID_LH2
+    ID_LH3 = LevelConstants.ID_LH3
+    ID_LH4 = LevelConstants.ID_LH4
+    ID_LH5 = LevelConstants.ID_LH5
+    ID_LH6 = LevelConstants.ID_LH6
 
     AGE_HH2 = 2
     AGE_HH3 = 3
