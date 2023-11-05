@@ -14,7 +14,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_correct_complete(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/correct/custody_one_line_correct_complete.xls', 'rb') as file_handler:
+        with open('./assets/correct/custody_one_line_correct_complete.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             holder_import_data: HolderImportData = LineImporterHolderData(sheet, 2).import_line()
@@ -25,7 +25,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_correct_without_holder_data(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/correct/custody_one_line_correct_without_holder_data.xls', 'rb') as file_handler:
+        with open('./assets/correct/custody_one_line_correct_without_holder_data.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             holder_import_data: HolderImportData = LineImporterHolderData(sheet, 2).import_line()
@@ -36,7 +36,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_error_no_email(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/errors/holder/custody_one_line_no_email.xls', 'rb') as file_handler:
+        with open('./assets/errors/holder/custody_one_line_no_email.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             with self.assertRaises(LinesImporterErrors) as errors:
@@ -48,7 +48,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_error_no_phone_number(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/errors/holder/custody_one_line_no_phone.xls', 'rb') as file_handler:
+        with open('./assets/errors/holder/custody_one_line_no_phone.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             with self.assertRaises(LinesImporterErrors) as errors:
@@ -60,7 +60,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_error_no_name_and_surnames(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/errors/holder/custody_one_line_no_parent_name_and_surnames.xls', 'rb') as file_handler:
+        with open('./assets/errors/holder/custody_one_line_no_parent_name_and_surnames.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             with self.assertRaises(LinesImporterErrors) as errors:
@@ -72,7 +72,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_error_no_iban(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/errors/holder/custody_one_line_no_iban.xls', 'rb') as file_handler:
+        with open('./assets/errors/holder/custody_one_line_no_iban.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             with self.assertRaises(LinesImporterErrors) as errors:
@@ -84,7 +84,7 @@ class TestLineImporterHolderData(TestLineImporterAsserts):
     def test_import_lines_error_no_iban_and_no_email(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/errors/holder/custody_one_line_no_iban_and_no_email.xls', 'rb') as file_handler:
+        with open('./assets/errors/holder/custody_one_line_no_iban_and_no_email.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             with self.assertRaises(LinesImporterErrors) as errors:

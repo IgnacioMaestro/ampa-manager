@@ -12,7 +12,7 @@ class TestLineImporter(TestLineImporterAsserts):
     def test_import_lines_correct_complete(self):
         # Arrange
         file_handler: IO
-        with open('./importers/custody/assets/correct/custody_one_line_correct_complete.xls', 'rb') as file_handler:
+        with open('./assets/correct/custody_one_line_correct_complete.xls', 'rb') as file_handler:
             sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
             # Act
             custody_import_line: CustodyImportLine = LineImporter(sheet, 2).import_line()
