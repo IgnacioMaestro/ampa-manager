@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class LinesImporterErrorType(Enum):
+class RowsImporterErrorType(Enum):
     SURNAMES_NOT_FOUND = 'SURNAMES_NOT_FOUND'
     NAME_NOT_FOUND = 'NAME_NOT_FOUND'
     BIRTH_YEAR_NOT_FOUND = 'BIRTH_YEAR_NOT_FOUND'
@@ -15,27 +15,27 @@ class LinesImporterErrorType(Enum):
     HOLDER_EMAIL_NOT_FOUND = 'HOLDER_EMAIL_NOT_FOUND'
 
 
-class LinesImporterError(Exception):
-    def __init__(self, error: LinesImporterErrorType):
-        self.__error: LinesImporterErrorType = error
+class RowsImporterError(Exception):
+    def __init__(self, error: RowsImporterErrorType):
+        self.__error: RowsImporterErrorType = error
 
     @property
-    def error(self) -> LinesImporterErrorType:
+    def error(self) -> RowsImporterErrorType:
         return self.__error
 
 
-class LinesImporterErrors(Exception):
-    def __init__(self, errors: list[LinesImporterErrorType]):
-        self.__errors: list[LinesImporterErrorType] = errors
+class RowsImporterErrors(Exception):
+    def __init__(self, errors: list[RowsImporterErrorType]):
+        self.__errors: list[RowsImporterErrorType] = errors
 
     @property
-    def errors(self) -> list[LinesImporterErrorType]:
+    def errors(self) -> list[RowsImporterErrorType]:
         return self.__errors
 
-class LinesImporterTotalErrors(Exception):
-    def __init__(self, errors: list[LinesImporterErrorType]):
-        self.__errors: list[LinesImporterErrorType] = errors
+class RowsImporterTotalErrors(Exception):
+    def __init__(self, errors: list[RowsImporterErrorType]):
+        self.__errors: list[RowsImporterErrorType] = errors
 
     @property
-    def errors(self) -> list[LinesImporterErrorType]:
+    def errors(self) -> list[RowsImporterErrorType]:
         return self.__errors

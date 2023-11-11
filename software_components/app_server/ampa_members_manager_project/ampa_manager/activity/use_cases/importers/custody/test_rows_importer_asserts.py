@@ -10,7 +10,7 @@ from ampa_manager.activity.use_cases.importers.excel_extracted_types.holder_impo
 from ampa_manager.activity.use_cases.importers.excel_extracted_types.parent_import_data import ParentImportData
 
 
-class TestLineImporterAsserts(TestCase):
+class TestRowImporterAsserts(TestCase):
     def assert_holder(self, holder_import_data: Optional[HolderImportData]):
         self.assertIsNotNone(holder_import_data)
         self.assertEqual(holder_import_data.iban, 'ES3731908578142288961735')

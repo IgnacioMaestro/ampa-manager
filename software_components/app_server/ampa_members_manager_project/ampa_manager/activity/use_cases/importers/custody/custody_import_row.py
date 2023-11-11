@@ -4,16 +4,16 @@ from .custody_child_import_data import CustodyChildImportData
 from ampa_manager.activity.use_cases.importers.excel_extracted_types.holder_import_data import HolderImportData
 
 
-class CustodyImportLine:
-    def __init__(self, line: int, custody_child_import_data: CustodyChildImportData,
+class CustodyImportRow:
+    def __init__(self, row: int, custody_child_import_data: CustodyChildImportData,
                  holder_import_data: Optional[HolderImportData] = None):
-        self.__line: int = line
+        self.__row: int = row
         self.__custody_child_import_data: CustodyChildImportData = custody_child_import_data
         self.__holder_import_data: Optional[HolderImportData] = holder_import_data
 
     @property
-    def line(self) -> int:
-        return self.__line
+    def row(self) -> int:
+        return self.__row
 
     @property
     def custody_child_import_data(self) -> CustodyChildImportData:
