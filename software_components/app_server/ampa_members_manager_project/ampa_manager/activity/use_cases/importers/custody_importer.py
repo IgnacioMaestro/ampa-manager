@@ -70,7 +70,8 @@ class CustodyImporter:
 
         importer.counters_after = cls.count_objects()
 
-        import_info = ImportInfo(importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
+        import_info = ImportInfo(
+            importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
         return import_info
 
     @classmethod
@@ -163,8 +164,8 @@ class CustodyImporter:
     @classmethod
     def ensure_family_holders(cls, family, holder):
         if holder and (not family.default_holder or not family.custody_holder):
-                if not family.default_holder:
-                    family.default_holder = holder
-                if not family.custody_holder:
-                    family.custody_holder = holder
-                family.save()
+            if not family.default_holder:
+                family.default_holder = holder
+            if not family.custody_holder:
+                family.custody_holder = holder
+            family.save()

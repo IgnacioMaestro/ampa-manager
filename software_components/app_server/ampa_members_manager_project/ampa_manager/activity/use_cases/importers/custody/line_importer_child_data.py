@@ -16,7 +16,7 @@ class LineImporterChildData:
     NAME_COLUMN = 4
     SURNAMES_COLUMN = 5
     BIRTH_YEAR_COLUMN = 6
-    # LEVEL_COLUMN = 7
+    LEVEL_COLUMN = 7
     DAYS_ATTENDED_COLUMN = 8
 
     def __init__(self, sheet: Sheet, row_index: int):
@@ -42,19 +42,42 @@ class LineImporterChildData:
         return CustodyChildImportData(child_with_surnames_import_data, days_attended)
 
     def import_line_child_with_surnames_import_data(self) -> ChildWithSurnamesImportData:
-        child_import_data = self.import_line_child_import_data()
-        return ChildWithSurnamesImportData(child_import_data, self.import_line_surnames())
+        errors: list[LinesImporterErrorType] = []
+        child_import_data: Optional[ChildImportData] = None
+        surnames: Optional[str] = None
+        try:
+            child_import_data = self.import_line_child_import_data()
+        except LinesImporterErrors as e:
+            errors.extend(e.errors)
+        try:
+            surnames: str = self.import_line_surnames()
+        except LinesImporterError as e:
+            errors.append(e.error)
+        if errors:
+            raise LinesImporterErrors(errors)
+        return ChildWithSurnamesImportData(child_import_data, surnames)
 
     def import_line_child_import_data(self) -> ChildImportData:
         errors: list[LinesImporterErrorType] = []
         try:
             name: str = self.import_line_name()
             birth_year: int = self.import_line_birth_year()
-            return ChildImportData(name, birth_year, LevelConstants.ID_LH4)
+            level: Optional[LevelConstants] = self.import_line_level()
+            return ChildImportData(name, birth_year, level)
         except LinesImporterError as e:
             errors.append(e.error)
         if errors:
             raise LinesImporterErrors(errors)
+
+    def import_line_level(self) -> Optional[LevelConstants]:
+        raw_level: str = FieldsFormatters.clean_string(
+            self.__sheet.cell_value(rowx=self.__row_index, colx=self.LEVEL_COLUMN))
+        if not raw_level:
+            return None
+        level: Optional[LevelConstants] = LevelConstants.obtain_level_from_str(raw_level)
+        if not level:
+            raise LinesImporterError(LinesImporterErrorType.LEVEL_NOT_CORRECT)
+        return level
 
     def import_line_name(self) -> str:
         name: str = FieldsFormatters.clean_string(self.__sheet.cell_value(rowx=self.__row_index, colx=self.NAME_COLUMN))
@@ -63,10 +86,11 @@ class LineImporterChildData:
         return name
 
     def import_line_birth_year(self) -> int:
-        birth_year: Optional[int] = FieldsFormatters.clean_integer(
-            self.__sheet.cell_value(rowx=self.__row_index, colx=self.BIRTH_YEAR_COLUMN))
-        if birth_year is None:
-            raise LinesImporterError(LinesImporterErrorType.BIRTH_YEAR_NOT_FOUND)
+        try:
+            birth_year: Optional[int] = FieldsFormatters.clean_integer(
+                self.__sheet.cell_value(rowx=self.__row_index, colx=self.BIRTH_YEAR_COLUMN))
+        except ValueError:
+            raise LinesImporterError(LinesImporterErrorType.BIRTH_YEAR_NOT_INTEGER)
         return birth_year
 
     def import_line_surnames(self) -> str:

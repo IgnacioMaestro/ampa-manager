@@ -82,3 +82,40 @@ class TestLineImporterChildData(TestLineImporterAsserts):
         self.assertEqual(2, len(errors.exception.errors))
         self.assertIn(LinesImporterErrorType.DAYS_ATTENDED_NOT_INTEGER, errors.exception.errors)
         self.assertIn(LinesImporterErrorType.NAME_NOT_FOUND, errors.exception.errors)
+
+    def test_import_lines_error_no_year_int(self):
+        # Arrange
+        file_handler: IO
+        with open('./assets/errors/child/custody_one_line_no_year_int.xls', 'rb') as file_handler:
+            sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
+            # Act
+            with self.assertRaises(LinesImporterTotalErrors) as errors:
+                LineImporterChildData(sheet, 2).import_line()
+        # Assert
+        self.assertEqual(1, len(errors.exception.errors))
+        self.assertEqual(errors.exception.errors.pop(), LinesImporterErrorType.BIRTH_YEAR_NOT_INTEGER)
+
+    def test_import_lines_error_no_name_and_no_surnames(self):
+        # Arrange
+        file_handler: IO
+        with open('./assets/errors/child/custody_one_line_no_name_and_no_surnames.xls', 'rb') as file_handler:
+            sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
+            # Act
+            with self.assertRaises(LinesImporterTotalErrors) as errors:
+                LineImporterChildData(sheet, 2).import_line()
+        # Assert
+        self.assertEqual(2, len(errors.exception.errors))
+        self.assertIn(LinesImporterErrorType.NAME_NOT_FOUND, errors.exception.errors)
+        self.assertIn(LinesImporterErrorType.SURNAMES_NOT_FOUND, errors.exception.errors)
+
+    def test_import_lines_error_no_correct_level(self):
+        # Arrange
+        file_handler: IO
+        with open('./assets/errors/child/custody_one_line_no_correct_level.xls', 'rb') as file_handler:
+            sheet: Sheet = LinesImporter().obtain_sheet(file_handler.read())
+            # Act
+            with self.assertRaises(LinesImporterTotalErrors) as errors:
+                LineImporterChildData(sheet, 2).import_line()
+        # Assert
+        self.assertEqual(1, len(errors.exception.errors))
+        self.assertEqual(errors.exception.errors.pop(), LinesImporterErrorType.LEVEL_NOT_CORRECT)
