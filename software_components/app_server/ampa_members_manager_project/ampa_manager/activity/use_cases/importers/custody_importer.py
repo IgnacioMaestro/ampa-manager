@@ -64,8 +64,8 @@ class CustodyImporter:
 
         importer.counters_before = cls.count_objects()
 
-        for row in importer.get_rows():
-            result = cls.process_row(row, custody_edition)
+        for excel_row in importer.get_rows():
+            result = cls.process_row(excel_row, custody_edition)
             importer.add_result(result)
 
         importer.counters_after = cls.count_objects()
@@ -87,20 +87,20 @@ class CustodyImporter:
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow, custody_edition: CustodyEdition) -> ImportRowResult:
-        result = ImportRowResult(row)
+    def process_row(cls, excel_row: ExcelRow, custody_edition: CustodyEdition) -> ImportRowResult:
+        result = ImportRowResult(excel_row)
 
-        if row.error:
-            result.error = row.error
+        if excel_row.error:
+            result.error = excel_row.error
             return result
 
         try:
             family_result = FamilyImporter.import_family(
-                row.get(cls.KEY_CHILD_SURNAMES),
-                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                excel_row.get(cls.KEY_CHILD_SURNAMES),
+                excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
                 None,
                 False,
-                row.get(cls.KEY_CHILD_NAME))
+                excel_row.get(cls.KEY_CHILD_NAME))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
@@ -108,9 +108,9 @@ class CustodyImporter:
 
             child_result = ChildImporter.import_child(
                 family,
-                row.get(cls.KEY_CHILD_NAME),
-                row.get(cls.KEY_CHILD_LEVEL),
-                row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
+                excel_row.get(cls.KEY_CHILD_NAME),
+                excel_row.get(cls.KEY_CHILD_LEVEL),
+                excel_row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
             result.add_partial_result(child_result)
             if not child_result.success:
                 return result
@@ -118,10 +118,10 @@ class CustodyImporter:
 
             parent_result = ParentImporter.import_parent(
                 family,
-                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
-                row.get(cls.KEY_PARENT_PHONE_NUMBER),
+                excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                excel_row.get(cls.KEY_PARENT_PHONE_NUMBER),
                 None,
-                row.get(cls.KEY_PARENT_EMAIL),
+                excel_row.get(cls.KEY_PARENT_EMAIL),
                 optional=True)
             result.add_partial_result(parent_result)
             if not parent_result.success:
@@ -130,7 +130,7 @@ class CustodyImporter:
 
             if parent:
                 bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
-                    parent, row.get(
+                    parent, excel_row.get(
                         cls.KEY_BANK_ACCOUNT_IBAN))
                 result.add_partial_result(bank_account_result)
                 result.add_partial_result(holder_result)
@@ -153,7 +153,7 @@ class CustodyImporter:
 
             registration_result = CustodyRegistrationImporter.import_registration(
                 custody_edition, holder, child,
-                row.get(cls.KEY_ASSISTED_DAYS))
+                excel_row.get(cls.KEY_ASSISTED_DAYS))
             result.add_partial_result(registration_result)
 
         except Exception as e:

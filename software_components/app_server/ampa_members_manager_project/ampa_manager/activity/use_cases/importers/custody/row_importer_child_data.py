@@ -76,13 +76,13 @@ class RowImporterChildData:
             return None
         level: Optional[LevelConstants] = LevelConstants.obtain_level_from_str(raw_level)
         if not level:
-            raise RowsImporterError(RowsImporterErrorType.LEVEL_NOT_CORRECT)
+            raise RowsImporterError(RowsImporterErrorType.CHILD_LEVEL_NOT_CORRECT)
         return level
 
     def import_row_name(self) -> str:
         name: str = FieldsFormatters.clean_string(self.__sheet.cell_value(rowx=self.__row_index, colx=self.NAME_COLUMN))
         if not name:
-            raise RowsImporterError(RowsImporterErrorType.NAME_NOT_FOUND)
+            raise RowsImporterError(RowsImporterErrorType.CHILD_NAME_NOT_FOUND)
         return name
 
     def import_row_birth_year(self) -> int:
@@ -90,14 +90,14 @@ class RowImporterChildData:
             birth_year: Optional[int] = FieldsFormatters.clean_integer(
                 self.__sheet.cell_value(rowx=self.__row_index, colx=self.BIRTH_YEAR_COLUMN))
         except ValueError:
-            raise RowsImporterError(RowsImporterErrorType.BIRTH_YEAR_NOT_INTEGER)
+            raise RowsImporterError(RowsImporterErrorType.CHILD_BIRTH_YEAR_NOT_INTEGER)
         return birth_year
 
     def import_row_surnames(self) -> str:
         surnames: str = FieldsFormatters.clean_string(
             self.__sheet.cell_value(rowx=self.__row_index, colx=self.SURNAMES_COLUMN))
         if not surnames:
-            raise RowsImporterError(RowsImporterErrorType.SURNAMES_NOT_FOUND)
+            raise RowsImporterError(RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND)
         return surnames
 
     def import_row_days_attended(self) -> int:

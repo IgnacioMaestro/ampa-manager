@@ -32,7 +32,7 @@ class TestRowImporterChildData(TestRowImporterAsserts):
                 RowImporterChildData(sheet, 2).import_row()
         # Assert
         self.assertEqual(1, len(errors.exception.errors))
-        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.NAME_NOT_FOUND)
+        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.CHILD_NAME_NOT_FOUND)
 
     def test_import_row_error_no_surnames(self):
         # Arrange
@@ -44,7 +44,7 @@ class TestRowImporterChildData(TestRowImporterAsserts):
                 RowImporterChildData(sheet, 2).import_row()
         # Assert
         self.assertEqual(1, len(errors.exception.errors))
-        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.SURNAMES_NOT_FOUND)
+        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND)
 
     def test_import_row_error_no_days(self):
         # Arrange
@@ -81,7 +81,7 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         # Assert
         self.assertEqual(2, len(errors.exception.errors))
         self.assertIn(RowsImporterErrorType.DAYS_ATTENDED_NOT_INTEGER, errors.exception.errors)
-        self.assertIn(RowsImporterErrorType.NAME_NOT_FOUND, errors.exception.errors)
+        self.assertIn(RowsImporterErrorType.CHILD_NAME_NOT_FOUND, errors.exception.errors)
 
     def test_import_row_error_no_year_int(self):
         # Arrange
@@ -93,7 +93,7 @@ class TestRowImporterChildData(TestRowImporterAsserts):
                 RowImporterChildData(sheet, 2).import_row()
         # Assert
         self.assertEqual(1, len(errors.exception.errors))
-        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.BIRTH_YEAR_NOT_INTEGER)
+        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.CHILD_BIRTH_YEAR_NOT_INTEGER)
 
     def test_import_row_error_no_name_and_no_surnames(self):
         # Arrange
@@ -105,8 +105,8 @@ class TestRowImporterChildData(TestRowImporterAsserts):
                 RowImporterChildData(sheet, 2).import_row()
         # Assert
         self.assertEqual(2, len(errors.exception.errors))
-        self.assertIn(RowsImporterErrorType.NAME_NOT_FOUND, errors.exception.errors)
-        self.assertIn(RowsImporterErrorType.SURNAMES_NOT_FOUND, errors.exception.errors)
+        self.assertIn(RowsImporterErrorType.CHILD_NAME_NOT_FOUND, errors.exception.errors)
+        self.assertIn(RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND, errors.exception.errors)
 
     def test_import_row_error_no_correct_level(self):
         # Arrange
@@ -118,4 +118,4 @@ class TestRowImporterChildData(TestRowImporterAsserts):
                 RowImporterChildData(sheet, 2).import_row()
         # Assert
         self.assertEqual(1, len(errors.exception.errors))
-        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.LEVEL_NOT_CORRECT)
+        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.CHILD_LEVEL_NOT_CORRECT)
