@@ -1,0 +1,66 @@
+@startuml
+abstract class Importation {
+    dateTime : dateTime
+    file : File
+}
+class CustodyImportation {
+    custodyEdition: CustodyEdition
+}
+class CustodyImportationRow {
+    row: int
+}
+class CustodyChildImportData {
+    days_attended: int
+}
+class HolderImportData {
+    iban: str
+}
+class ChildWithSurnamesImportData {
+    surnames: str
+}
+class ChildImportData {
+    name: str
+    birth_year: Optional[int]
+    level: Optional[LevelConstants]
+}
+class ParentImportData {
+    holder_name_and_surnames: str
+    phone_number: str
+    email: str
+}
+abstract class CustodyImportationAction
+abstract class CustodyImportationActionFamily
+abstract class CustodyImportationActionChild
+abstract class CustodyImportationActionHolder
+class UseFamily
+class CreateFamily
+class UseChild
+class CreateChild
+class UseHolder
+class CreateHolder
+class CreateCustodyRegistration
+
+Importation <|-- CustodyImportation: ""
+
+CustodyImportation *-- "0..N" CustodyImportationRow: ""
+
+CustodyImportationRow -- CustodyChildImportData: ""
+CustodyImportationRow -- "0..1" HolderImportData: ""
+CustodyImportationRow *-- "0..N" CustodyImportationAction: ""
+
+CustodyChildImportData -- ChildWithSurnamesImportData: ""
+ChildWithSurnamesImportData -- ChildImportData: ""
+
+HolderImportData -- ParentImportData: ""
+
+CustodyImportationAction <|-- CustodyImportationActionFamily: ""
+CustodyImportationAction <|-- CreateCustodyRegistration: ""
+CustodyImportationAction <|-- CustodyImportationActionChild: ""
+CustodyImportationAction <|-- CustodyImportationActionHolder: ""
+CustodyImportationActionFamily <|-- UseFamily: ""
+CustodyImportationActionFamily <|-- CreateFamily: ""
+CustodyImportationActionChild <|-- UseChild: ""
+CustodyImportationActionChild <|-- CreateChild: ""
+CustodyImportationActionHolder <|-- UseHolder: ""
+CustodyImportationActionHolder <|-- CreateHolder: ""
+@enduml
