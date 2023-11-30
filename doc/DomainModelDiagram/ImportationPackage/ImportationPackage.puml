@@ -1,9 +1,12 @@
 @startuml
 abstract class Importation {
     dateTime : dateTime
-    file : File
+    filename : str
 }
 class CustodyImportation {
+    custodyEdition: CustodyEdition
+}
+class MembersImportation {
     custodyEdition: CustodyEdition
 }
 class CustodyImportationRow {
@@ -33,14 +36,17 @@ abstract class CustodyImportationActionFamily
 abstract class CustodyImportationActionChild
 abstract class CustodyImportationActionHolder
 class UseFamily
+class UpdateFamily
 class CreateFamily
 class UseChild
 class CreateChild
+class UpdateChild
 class UseHolder
 class CreateHolder
 class CreateCustodyRegistration
 
 Importation <|-- CustodyImportation: ""
+Importation <|-- MembersImportation: ""
 
 CustodyImportation *-- "0..N" CustodyImportationRow: ""
 
@@ -59,8 +65,10 @@ CustodyImportationAction <|-- CustodyImportationActionChild: ""
 CustodyImportationAction <|-- CustodyImportationActionHolder: ""
 CustodyImportationActionFamily <|-- UseFamily: ""
 CustodyImportationActionFamily <|-- CreateFamily: ""
+CustodyImportationActionFamily <|-- UpdateFamily: ""
 CustodyImportationActionChild <|-- UseChild: ""
 CustodyImportationActionChild <|-- CreateChild: ""
+CustodyImportationActionChild <|-- UpdateChild: ""
 CustodyImportationActionHolder <|-- UseHolder: ""
 CustodyImportationActionHolder <|-- CreateHolder: ""
 @enduml
