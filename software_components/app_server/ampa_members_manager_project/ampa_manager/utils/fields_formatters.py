@@ -59,7 +59,7 @@ class FieldsFormatters:
     @staticmethod
     def clean_iban(value: str) -> Optional[str]:
         if value:
-            iban = StringUtils.remove_all_spaces(str(value))
+            iban = StringUtils.remove_new_lines(StringUtils.remove_tabs(StringUtils.remove_all_spaces(str(value))))
             try:
                 validator = IBANValidator()
                 validator(iban)
