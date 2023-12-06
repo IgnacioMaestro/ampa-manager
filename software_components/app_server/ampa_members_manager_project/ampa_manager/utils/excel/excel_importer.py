@@ -74,7 +74,10 @@ class ExcelImporter:
         return row
 
     def get_cell_value(self, row_index, col_index):
-        return self.sheet.cell_value(rowx=row_index, colx=col_index)
+        try:
+            return self.sheet.cell_value(rowx=row_index, colx=col_index)
+        except IndexError:
+            return None
 
     def add_result(self, result: ImportRowResult):
         self.results.append(result)

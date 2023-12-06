@@ -89,11 +89,23 @@ class StringUtils:
         return None
 
     @staticmethod
+    def remove_new_lines(value: str) -> Optional[str]:
+        if value is not None:
+            return value.replace('\n', '').replace('\r', '')
+        return None
+
+    @staticmethod
+    def remove_tabs(value: str) -> Optional[str]:
+        if value is not None:
+            return value.replace('\t', '')
+        return None
+
+    @staticmethod
     def remove_special_chars(value: str) -> Optional[str]:
         if value is not None:
             special_chars = [
                 '!', '¡', '¿', '?', '"', '\'', '.', ',', ':', ';', '-', '_', '#', '~', '@', '|', ',', '}', '[', ']',
-                '(', ')', '/', '\\', '&', '%', '$', '·', '='
+                '(', ')', '/', '\\', '&', '%', '$', '·', '=', '\n', '\r', '\t'
             ]
             return value.translate({ord(x): '' for x in special_chars})
         return None
