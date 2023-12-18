@@ -2,12 +2,11 @@ from typing import Optional
 from unittest import TestCase
 
 from ampa_manager.academic_course.models.level_constants import LevelConstants
-from ampa_manager.activity.use_cases.importers.custody.custody_child_import_data import CustodyChildImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.child_import_data import ChildImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.child_with_surnames_import_data import \
-    ChildWithSurnamesImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.holder_import_data import HolderImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.parent_import_data import ParentImportData
+from ..excel_extracted_types.child_import_data import ChildImportData
+from ..excel_extracted_types.child_with_surnames_import_data import ChildWithSurnamesImportData
+from ..excel_extracted_types.holder_import_data import HolderImportData
+from ..excel_extracted_types.parent_import_data import ParentImportData
+from ..rows_importer.custody_child_import_data import CustodyChildImportData
 
 
 class TestRowImporterAsserts(TestCase):

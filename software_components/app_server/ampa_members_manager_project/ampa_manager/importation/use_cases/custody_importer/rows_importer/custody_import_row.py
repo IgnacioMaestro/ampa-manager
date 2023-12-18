@@ -1,7 +1,7 @@
 from typing import Optional
 
 from .custody_child_import_data import CustodyChildImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.holder_import_data import HolderImportData
+from ampa_manager.importation.use_cases.custody_importer.excel_extracted_types.holder_import_data import HolderImportData
 
 
 class CustodyImportRow:

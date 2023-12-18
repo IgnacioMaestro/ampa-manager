@@ -39,3 +39,8 @@ class LevelConstants:
             return LevelConstants.ID_LH6
         else:
             return None
+
+    @classmethod
+    def obtain_choices(cls):
+        return [(clave, valor) for clave, valor in cls.__dict__.items() if
+                not clave.startswith('__') and not isinstance(valor, classmethod)]

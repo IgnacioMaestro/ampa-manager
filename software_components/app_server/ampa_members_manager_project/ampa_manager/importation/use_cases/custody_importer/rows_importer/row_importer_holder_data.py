@@ -4,8 +4,8 @@ from xlrd.sheet import Sheet
 
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from .rows_importer_error import RowsImporterErrorType, RowsImporterError, RowsImporterErrors
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.holder_import_data import HolderImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.parent_import_data import ParentImportData
+from ampa_manager.importation.use_cases.custody_importer.excel_extracted_types.holder_import_data import HolderImportData
+from ..excel_extracted_types.parent_import_data import ParentImportData
 
 
 class RowImporterHolderData:

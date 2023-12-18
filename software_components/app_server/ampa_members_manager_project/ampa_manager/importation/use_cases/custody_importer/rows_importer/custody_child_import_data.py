@@ -1,5 +1,4 @@
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.child_with_surnames_import_data import \
-    ChildWithSurnamesImportData
+from ..excel_extracted_types.child_with_surnames_import_data import ChildWithSurnamesImportData
 
 
 class CustodyChildImportData:

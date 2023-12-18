@@ -9,15 +9,20 @@ class RowsImporter:
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
+    def __init__(self, file_content: bytes):
+        self.__file_content = file_content
+
+    def import_rows(self) -> list[CustodyImportRow]:
+        sheet: Sheet = self.obtain_sheet()
+        return self.import_rows_from_sheet(sheet)
+
     @classmethod
-    def import_rows(cls, file_content: bytes) -> list[CustodyImportRow]:
-        sheet: Sheet = RowsImporter.obtain_sheet(file_content)
+    def import_rows_from_sheet(cls, sheet) -> list[CustodyImportRow]:
         rows: list[CustodyImportRow] = []
         for row_index in range(cls.FIRST_ROW_INDEX, sheet.nrows):
             custody_import_row: CustodyImportRow = RowImporter(sheet, row_index).import_row()
             rows.append(custody_import_row)
         return rows
 
-    @classmethod
-    def obtain_sheet(cls, file_content):
-        return xlrd.open_workbook(file_contents=file_content).sheet_by_index(cls.SHEET_NUMBER)
+    def obtain_sheet(self) -> Sheet:
+        return xlrd.open_workbook(file_contents=self.__file_content).sheet_by_index(self.SHEET_NUMBER)

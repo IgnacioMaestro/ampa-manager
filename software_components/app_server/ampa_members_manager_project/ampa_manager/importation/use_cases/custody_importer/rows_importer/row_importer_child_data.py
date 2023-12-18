@@ -3,13 +3,12 @@ from typing import Optional
 from xlrd.sheet import Sheet
 
 from ampa_manager.academic_course.models.level_constants import LevelConstants
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.child_import_data import ChildImportData
-from ampa_manager.activity.use_cases.importers.excel_extracted_types.child_with_surnames_import_data import \
-    ChildWithSurnamesImportData
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from .custody_child_import_data import CustodyChildImportData
 from .rows_importer_error import RowsImporterError, RowsImporterErrorType, RowsImporterErrors, \
     RowsImporterTotalErrors
+from ..excel_extracted_types.child_import_data import ChildImportData
+from ..excel_extracted_types.child_with_surnames_import_data import ChildWithSurnamesImportData
 
 
 class RowImporterChildData:
