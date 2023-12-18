@@ -1,9 +1,10 @@
 from pathlib import Path
-from typing import IO
+from typing import IO, Optional
 
 from .custody_import_row import CustodyImportRow
+from .errors_in_row import ErrorsInRow
 from .rows_importer import RowsImporter
-from .rows_importer_error import RowsImporterErrors, RowsImporterErrorType
+from .rows_importer_error import RowsImporterErrorType
 from .test_rows_importer_asserts import TestRowImporterAsserts
 
 
@@ -13,39 +14,49 @@ class TestRowsImporter(TestRowImporterAsserts):
     def test_import_rows_correct_complete(self):
         # Arrange
         file_path = self.LOCAL_PATH / './assets/correct/custody_one_line_correct_complete.xls'
+        imported_lines: Optional[list[CustodyImportRow]]
+        error_lines: Optional[list[ErrorsInRow]]
         file_handler: IO
         with open(file_path, 'rb') as file_handler:
             # Act
-            imported_lines: list[CustodyImportRow] = RowsImporter(file_handler.read()).import_rows()
+            imported_lines, error_lines = RowsImporter(file_handler.read()).import_rows()
 
         # Assert
+        self.assertIsNone(error_lines)
         self.assert_correct_import_child_data(imported_lines)
         self.assert_holder(imported_lines[0].holder_import_data)
 
     def test_import_rows_correct_without_holder_data(self):
         # Arrange
         file_path = self.LOCAL_PATH / './assets/correct/custody_one_line_correct_without_holder_data.xls'
+        imported_lines: Optional[list[CustodyImportRow]]
+        error_lines: Optional[list[ErrorsInRow]]
         file_handler: IO
         with open(file_path, 'rb') as file_handler:
             # Act
-            imported_lines: list[CustodyImportRow] = RowsImporter(file_handler.read()).import_rows()
+            imported_lines, error_lines = RowsImporter(file_handler.read()).import_rows()
 
         # Assert
+        self.assertIsNone(error_lines)
         self.assert_correct_import_child_data(imported_lines)
         self.assertIsNone(imported_lines[0].holder_import_data)
 
     def test_import_rows_error_no_email(self):
         # Arrange
         file_path = self.LOCAL_PATH / './assets/errors/holder/custody_one_line_no_email.xls'
+        imported_lines: Optional[list[CustodyImportRow]]
+        error_lines: Optional[list[ErrorsInRow]]
         file_handler: IO
         with open(file_path, 'rb') as file_handler:
             # Act
-            with self.assertRaises(RowsImporterErrors) as errors:
-                RowsImporter(file_handler.read()).import_rows()
+            imported_lines, error_lines = RowsImporter(file_handler.read()).import_rows()
 
         # Assert
-        self.assertEqual(1, len(errors.exception.errors))
-        self.assertEqual(errors.exception.errors.pop(), RowsImporterErrorType.HOLDER_EMAIL_NOT_FOUND)
+        self.assertIsNone(imported_lines)
+        self.assertEqual(1, len(error_lines))
+        parse_error = error_lines.pop()
+        self.assertEqual(parse_error.get_row_number(), 2)
+        self.assertEqual(parse_error.get_errors(), [RowsImporterErrorType.HOLDER_EMAIL_NOT_FOUND])
 
     def assert_correct_import_child_data(self, imported_lines):
         self.assertEqual(1, len(imported_lines))

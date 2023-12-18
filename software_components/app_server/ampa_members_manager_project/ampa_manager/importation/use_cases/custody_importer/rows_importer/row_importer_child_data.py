@@ -5,8 +5,7 @@ from xlrd.sheet import Sheet
 from ampa_manager.academic_course.models.level_constants import LevelConstants
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from .custody_child_import_data import CustodyChildImportData
-from .rows_importer_error import RowsImporterError, RowsImporterErrorType, RowsImporterErrors, \
-    RowsImporterTotalErrors
+from .rows_importer_error import RowsImporterError, RowsImporterErrorType, RowsImporterErrors
 from ..excel_extracted_types.child_import_data import ChildImportData
 from ..excel_extracted_types.child_with_surnames_import_data import ChildWithSurnamesImportData
 
@@ -22,7 +21,7 @@ class RowImporterChildData:
         self.__sheet = sheet
         self.__row_index = row_index
 
-    def import_row(self) -> CustodyChildImportData:
+    def import_row(self) -> tuple[Optional[CustodyChildImportData], Optional[list[RowsImporterErrorType]]]:
         errors: list[RowsImporterErrorType] = []
         child_with_surnames_import_data: Optional[ChildWithSurnamesImportData] = None
         days_attended: Optional[int] = None
@@ -36,9 +35,9 @@ class RowImporterChildData:
             days_attended = self.import_row_days_attended()
         except RowsImporterError as error:
             errors.append(error.error)
-        if errors:
-            raise RowsImporterTotalErrors(errors)
-        return CustodyChildImportData(child_with_surnames_import_data, days_attended)
+        if len(errors) > 0:
+            return None, errors
+        return CustodyChildImportData(child_with_surnames_import_data, days_attended), None
 
     def import_row_child_with_surnames_import_data(self) -> ChildWithSurnamesImportData:
         errors: list[RowsImporterErrorType] = []

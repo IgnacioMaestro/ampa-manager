@@ -6,7 +6,7 @@ from xlrd.sheet import Sheet
 from .custody_child_import_data import CustodyChildImportData
 from .row_importer_child_data import RowImporterChildData
 from .rows_importer import RowsImporter
-from .rows_importer_error import RowsImporterTotalErrors, RowsImporterErrorType
+from .rows_importer_error import RowsImporterErrorType
 from .test_rows_importer_asserts import TestRowImporterAsserts
 
 
@@ -20,9 +20,12 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        custody_child_import_data: CustodyChildImportData = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
+        self.assertIsNone(errors)
         self.assert_child(custody_child_import_data)
 
     def test_import_row_error_no_name(self):
@@ -31,11 +34,13 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
-        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_NAME_NOT_FOUND], errors.exception.errors)
+        self.assertIsNone(custody_child_import_data)
+        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_NAME_NOT_FOUND], errors)
 
     def test_import_row_error_no_surnames(self):
         # Arrange
@@ -43,11 +48,13 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
-        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND], errors.exception.errors)
+        self.assertIsNone(custody_child_import_data)
+        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND], errors)
 
     def test_import_row_error_no_days(self):
         # Arrange
@@ -55,11 +62,13 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
-        self.assert_errors_to_check_in_errors([RowsImporterErrorType.DAYS_ATTENDED_NOT_FOUND], errors.exception.errors)
+        self.assertIsNone(custody_child_import_data)
+        self.assert_errors_to_check_in_errors([RowsImporterErrorType.DAYS_ATTENDED_NOT_FOUND], errors)
 
     def test_import_row_error_no_days_int(self):
         # Arrange
@@ -67,13 +76,14 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
-
+        self.assertIsNone(custody_child_import_data)
         self.assert_errors_to_check_in_errors(
-            [RowsImporterErrorType.DAYS_ATTENDED_NOT_INTEGER], errors.exception.errors)
+            [RowsImporterErrorType.DAYS_ATTENDED_NOT_INTEGER], errors)
 
     def test_import_row_error_no_days_int_and_no_name(self):
         # Arrange
@@ -81,13 +91,15 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
+        self.assertIsNone(custody_child_import_data)
         self.assert_errors_to_check_in_errors(
             [RowsImporterErrorType.DAYS_ATTENDED_NOT_INTEGER, RowsImporterErrorType.CHILD_NAME_NOT_FOUND],
-            errors.exception.errors)
+            errors)
 
     def test_import_row_error_no_year_int(self):
         # Arrange
@@ -95,12 +107,14 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
+        self.assertIsNone(custody_child_import_data)
         self.assert_errors_to_check_in_errors(
-            [RowsImporterErrorType.CHILD_BIRTH_YEAR_NOT_INTEGER], errors.exception.errors)
+            [RowsImporterErrorType.CHILD_BIRTH_YEAR_NOT_INTEGER], errors)
 
     def test_import_row_error_no_name_and_no_surnames(self):
         # Arrange
@@ -108,13 +122,15 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
+        self.assertIsNone(custody_child_import_data)
         self.assert_errors_to_check_in_errors(
             [RowsImporterErrorType.CHILD_NAME_NOT_FOUND, RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND],
-            errors.exception.errors)
+            errors)
 
     def test_import_row_error_no_correct_level(self):
         # Arrange
@@ -122,11 +138,13 @@ class TestRowImporterChildData(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        with self.assertRaises(RowsImporterTotalErrors) as errors:
-            RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
+        custody_child_import_data: CustodyChildImportData
+        errors: list[RowsImporterErrorType]
+        custody_child_import_data, errors = RowImporterChildData(sheet, self.ROW_TO_IMPORT).import_row()
 
         # Assert
-        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_LEVEL_NOT_CORRECT], errors.exception.errors)
+        self.assertIsNone(custody_child_import_data)
+        self.assert_errors_to_check_in_errors([RowsImporterErrorType.CHILD_LEVEL_NOT_CORRECT], errors)
 
     @classmethod
     def obtain_sheet(cls, file_path):
