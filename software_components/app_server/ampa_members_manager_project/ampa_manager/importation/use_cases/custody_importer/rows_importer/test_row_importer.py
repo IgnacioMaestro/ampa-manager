@@ -19,15 +19,15 @@ class TestRowImporter(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        custody_import_line: Optional[CustodyImportRow]
+        custody_import_row: Optional[CustodyImportRow]
         errors: Optional[list[RowsImporterErrorType]]
-        custody_import_line, errors = RowImporter(sheet, 2).import_row()
+        custody_import_row, errors = RowImporter(sheet, 2).import_row()
 
         # Assert
         self.assertIsNone(errors)
-        self.assertEqual(custody_import_line.row, 3)
-        self.assert_child(custody_import_line.custody_child_import_data)
-        self.assert_holder(custody_import_line.holder_import_data)
+        self.assertEqual(custody_import_row.row, 3)
+        self.assert_child(custody_import_row.custody_child_import_data)
+        self.assert_holder(custody_import_row.holder_import_data)
 
     def test_import_row_correct_without_holder_data(self):
         # Arrange
@@ -35,13 +35,15 @@ class TestRowImporter(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        custody_import_line, errors = RowImporter(sheet, 2).import_row()
+        custody_import_row: Optional[CustodyImportRow]
+        errors: Optional[list[RowsImporterErrorType]]
+        custody_import_row, errors = RowImporter(sheet, 2).import_row()
 
         # Assert
         self.assertIsNone(errors)
-        self.assertEqual(custody_import_line.row, 3)
-        self.assert_child(custody_import_line.custody_child_import_data)
-        self.assertIsNone(custody_import_line.holder_import_data)
+        self.assertEqual(custody_import_row.row, 3)
+        self.assert_child(custody_import_row.custody_child_import_data)
+        self.assertIsNone(custody_import_row.holder_import_data)
 
     def test_import_row_error_no_email(self):
         # Arrange
@@ -49,12 +51,12 @@ class TestRowImporter(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        imported_lines: Optional[list[CustodyImportRow]]
+        custody_import_row: Optional[CustodyImportRow]
         errors: Optional[list[RowsImporterErrorType]]
-        custody_import_line, errors = RowImporter(sheet, 2).import_row()
+        custody_import_row, errors = RowImporter(sheet, 2).import_row()
 
         # Assert
-        self.assertIsNone(custody_import_line)
+        self.assertIsNone(custody_import_row)
         self.assertEqual(errors, [RowsImporterErrorType.HOLDER_EMAIL_NOT_FOUND])
 
     def test_import_row_error_no_iban_no_name(self):
@@ -63,12 +65,12 @@ class TestRowImporter(TestRowImporterAsserts):
         sheet = self.obtain_sheet(file_path)
 
         # Act
-        imported_lines: Optional[list[CustodyImportRow]]
+        custody_import_row: Optional[CustodyImportRow]
         errors: Optional[list[RowsImporterErrorType]]
-        custody_import_line, errors = RowImporter(sheet, 2).import_row()
+        custody_import_row, errors = RowImporter(sheet, 2).import_row()
 
         # Assert
-        self.assertIsNone(custody_import_line)
+        self.assertIsNone(custody_import_row)
         self.assertEqual(len(errors), 2)
         self.assertIn(RowsImporterErrorType.HOLDER_IBAN_NOT_FOUND, errors)
         self.assertIn(RowsImporterErrorType.CHILD_NAME_NOT_FOUND, errors)
