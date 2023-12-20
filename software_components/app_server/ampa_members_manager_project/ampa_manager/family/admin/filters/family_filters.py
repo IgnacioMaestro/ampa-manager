@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 
 
@@ -12,6 +12,7 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
             ('yes', _('Yes')),
             ('no', _('No')),
             ('last_year', _('Last year')),
+            ('renew', _('Renew')),
         )
 
     def queryset(self, request, queryset):
@@ -22,6 +23,9 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
                 return queryset.no_members()
             elif self.value() == 'last_year':
                 return queryset.members_last_year()
+            elif self.value() == 'renew':
+                messages.success(request, _('Showing families that were members last year, that have any child in the school this year and that have not decline membership'))
+                return queryset.members_last_year().no_declined_membership().has_any_children()
         else:
             return queryset
 
