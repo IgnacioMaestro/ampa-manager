@@ -31,18 +31,34 @@ class ParentImportData {
     phone_number: str
     email: str
 }
-abstract class CustodyImportationAction
-abstract class CustodyImportationActionFamily
-abstract class CustodyImportationActionChild
-abstract class CustodyImportationActionHolder
+abstract class CustodyImportationActionGroup
+abstract class CustodyImportationActionFamily {
+    family: Family
+}
+abstract class CustodyImportationActionChild {
+    child: Child
+}
+abstract class CustodyImportationActionHolder {
+    holder: Holder
+}
 class UseFamily
-class UpdateFamily
-class CreateFamily
+class UpdateFamily {
+    data_to_change: ...
+}
+class CreateFamily {
+    data_to_create: ...
+}
 class UseChild
-class CreateChild
-class UpdateChild
+class UpdateChild {
+    data_to_change: ...
+}
+class CreateChild {
+    data_to_create: ...
+}
 class UseHolder
-class CreateHolder
+class CreateHolder {
+    data_to_create: ...
+}
 class CreateCustodyRegistration
 
 Importation <|-- CustodyImportation: ""
@@ -52,17 +68,17 @@ CustodyImportation *-- "0..N" CustodyImportationRow: ""
 
 CustodyImportationRow -- CustodyChildImportData: ""
 CustodyImportationRow -- "0..1" HolderImportData: ""
-CustodyImportationRow *-- "0..N" CustodyImportationAction: ""
+CustodyImportationRow *-- CustodyImportationActionGroup: ""
 
 CustodyChildImportData -- ChildWithSurnamesImportData: ""
 ChildWithSurnamesImportData -- ChildImportData: ""
 
 HolderImportData -- ParentImportData: ""
 
-CustodyImportationAction <|-- CustodyImportationActionFamily: ""
-CustodyImportationAction <|-- CreateCustodyRegistration: ""
-CustodyImportationAction <|-- CustodyImportationActionChild: ""
-CustodyImportationAction <|-- CustodyImportationActionHolder: ""
+CustodyImportationActionGroup -- CustodyImportationActionFamily: ""
+CustodyImportationActionGroup -- CreateCustodyRegistration: ""
+CustodyImportationActionGroup -- CustodyImportationActionChild: ""
+CustodyImportationActionGroup -- CustodyImportationActionHolder: ""
 CustodyImportationActionFamily <|-- UseFamily: ""
 CustodyImportationActionFamily <|-- CreateFamily: ""
 CustodyImportationActionFamily <|-- UpdateFamily: ""
