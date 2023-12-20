@@ -86,7 +86,7 @@ class FamilyInline(ReadOnlyTabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
-                    'has_default_holder', 'created_formatted']
+                    'has_default_holder', 'created_formatted', 'id']
     fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'camps_receipts', 'custody_receipts',
               'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified', 'camps_receipts', 'custody_receipts', 'after_school_receipts']
