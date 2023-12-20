@@ -7,17 +7,6 @@ from ampa_manager.academic_course.models.level_constants import LevelConstants
 
 
 class Level:
-    ID_HH2 = LevelConstants.ID_HH2
-    ID_HH3 = LevelConstants.ID_HH3
-    ID_HH4 = LevelConstants.ID_HH4
-    ID_HH5 = LevelConstants.ID_HH5
-    ID_LH1 = LevelConstants.ID_LH1
-    ID_LH2 = LevelConstants.ID_LH2
-    ID_LH3 = LevelConstants.ID_LH3
-    ID_LH4 = LevelConstants.ID_LH4
-    ID_LH5 = LevelConstants.ID_LH5
-    ID_LH6 = LevelConstants.ID_LH6
-
     AGE_HH2 = 2
     AGE_HH3 = 3
     AGE_HH4 = 4
@@ -41,55 +30,58 @@ class Level:
     NAME_LH6 = _('LH6')
 
     LEVEL_IDS_BY_AGE = {
-        AGE_HH2: ID_HH2,
-        AGE_HH3: ID_HH3,
-        AGE_HH4: ID_HH4,
-        AGE_HH5: ID_HH5,
-        AGE_LH1: ID_LH1,
-        AGE_LH2: ID_LH2,
-        AGE_LH3: ID_LH3,
-        AGE_LH4: ID_LH4,
-        AGE_LH5: ID_LH5,
-        AGE_LH6: ID_LH6,
+        AGE_HH2: LevelConstants.ID_HH2,
+        AGE_HH3: LevelConstants.ID_HH3,
+        AGE_HH4: LevelConstants.ID_HH4,
+        AGE_HH5: LevelConstants.ID_HH5,
+        AGE_LH1: LevelConstants.ID_LH1,
+        AGE_LH2: LevelConstants.ID_LH2,
+        AGE_LH3: LevelConstants.ID_LH3,
+        AGE_LH4: LevelConstants.ID_LH4,
+        AGE_LH5: LevelConstants.ID_LH5,
+        AGE_LH6: LevelConstants.ID_LH6,
     }
 
     LEVELS_NAMES = {
-        ID_HH2: NAME_HH2,
-        ID_HH3: NAME_HH3,
-        ID_HH4: NAME_HH4,
-        ID_HH5: NAME_HH5,
-        ID_LH1: NAME_LH1,
-        ID_LH2: NAME_LH2,
-        ID_LH3: NAME_LH3,
-        ID_LH4: NAME_LH4,
-        ID_LH5: NAME_LH5,
-        ID_LH6: NAME_LH6,
+        LevelConstants.ID_HH2: NAME_HH2,
+        LevelConstants.ID_HH3: NAME_HH3,
+        LevelConstants.ID_HH4: NAME_HH4,
+        LevelConstants.ID_HH5: NAME_HH5,
+        LevelConstants.ID_LH1: NAME_LH1,
+        LevelConstants.ID_LH2: NAME_LH2,
+        LevelConstants.ID_LH3: NAME_LH3,
+        LevelConstants.ID_LH4: NAME_LH4,
+        LevelConstants.ID_LH5: NAME_LH5,
+        LevelConstants.ID_LH6: NAME_LH6,
     }
 
     LEVEL_AGES = {
-        ID_HH2: AGE_HH2,
-        ID_HH3: AGE_HH3,
-        ID_HH4: AGE_HH4,
-        ID_HH5: AGE_HH5,
-        ID_LH1: AGE_LH1,
-        ID_LH2: AGE_LH2,
-        ID_LH3: AGE_LH3,
-        ID_LH4: AGE_LH4,
-        ID_LH5: AGE_LH5,
-        ID_LH6: AGE_LH6,
+        LevelConstants.ID_HH2: AGE_HH2,
+        LevelConstants.ID_HH3: AGE_HH3,
+        LevelConstants.ID_HH4: AGE_HH4,
+        LevelConstants.ID_HH5: AGE_HH5,
+        LevelConstants.ID_LH1: AGE_LH1,
+        LevelConstants.ID_LH2: AGE_LH2,
+        LevelConstants.ID_LH3: AGE_LH3,
+        LevelConstants.ID_LH4: AGE_LH4,
+        LevelConstants.ID_LH5: AGE_LH5,
+        LevelConstants.ID_LH6: AGE_LH6,
     }
 
     LEVELS_IDS = [
-        ID_HH2, ID_HH3, ID_HH4, ID_HH5,
-        ID_LH1, ID_LH2, ID_LH3, ID_LH4, ID_LH5, ID_LH6,
+        LevelConstants.ID_HH2, LevelConstants.ID_HH3, LevelConstants.ID_HH4, LevelConstants.ID_HH5,
+        LevelConstants.ID_LH1, LevelConstants.ID_LH2, LevelConstants.ID_LH3, LevelConstants.ID_LH4,
+        LevelConstants.ID_LH5,
+        LevelConstants.ID_LH6,
     ]
 
     CYCLE_LEVELS_PRE_SCHOOL = [
-        ID_HH2, ID_HH3, ID_HH4, ID_HH5
+        LevelConstants.ID_HH2, LevelConstants.ID_HH3, LevelConstants.ID_HH4, LevelConstants.ID_HH5
     ]
 
     CYCLE_LEVELS_PRIMARY = [
-        ID_LH1, ID_LH2, ID_LH3, ID_LH4, ID_LH5, ID_LH6
+        LevelConstants.ID_LH1, LevelConstants.ID_LH2, LevelConstants.ID_LH3, LevelConstants.ID_LH4,
+        LevelConstants.ID_LH5, LevelConstants.ID_LH6
     ]
 
     ID_CYCLE_PRE_SCHOOL = 'PRE'

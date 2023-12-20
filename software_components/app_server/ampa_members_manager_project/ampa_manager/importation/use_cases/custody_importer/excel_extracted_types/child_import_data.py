@@ -4,7 +4,7 @@ from ampa_manager.academic_course.models.level_constants import LevelConstants
 
 
 class ChildImportData:
-    def __init__(self, name: str, birth_year: Optional[int] = None, level: Optional[LevelConstants] = None):
+    def __init__(self, name: str, birth_year: Optional[int] = None, level: Optional[str] = None):
         self.__name: str = name
         self.__birth_year: Optional[int] = birth_year
         self.__level: Optional[LevelConstants] = level
@@ -18,5 +18,5 @@ class ChildImportData:
         return self.__birth_year
 
     @property
-    def level(self) -> Optional[LevelConstants]:
+    def level(self) -> Optional[str]:
         return self.__level

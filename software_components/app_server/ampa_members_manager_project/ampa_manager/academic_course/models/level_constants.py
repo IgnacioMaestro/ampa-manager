@@ -16,7 +16,7 @@ class LevelConstants:
     ID_LH6 = 'LH6'
 
     @classmethod
-    def obtain_level_from_str(cls, level: str) -> Optional[LevelConstants]:
+    def obtain_level_from_str(cls, level: str) -> Optional[str]:
         if level == 'HH2':
             return LevelConstants.ID_HH2
         elif level == 'HH3':
@@ -40,7 +40,4 @@ class LevelConstants:
         else:
             return None
 
-    @classmethod
-    def obtain_choices(cls):
-        return [(clave, valor) for clave, valor in cls.__dict__.items() if
-                not clave.startswith('__') and not isinstance(valor, classmethod)]
+

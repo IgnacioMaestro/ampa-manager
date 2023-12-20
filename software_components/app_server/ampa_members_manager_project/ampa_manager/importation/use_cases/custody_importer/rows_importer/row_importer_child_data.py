@@ -60,19 +60,19 @@ class RowImporterChildData:
         try:
             name: str = self.import_row_name()
             birth_year: int = self.import_row_birth_year()
-            level: Optional[LevelConstants] = self.import_row_level()
+            level: Optional[str] = self.import_row_level()
             return ChildImportData(name, birth_year, level)
         except RowsImporterError as e:
             errors.append(e.error)
         if errors:
             raise RowsImporterErrors(errors)
 
-    def import_row_level(self) -> Optional[LevelConstants]:
+    def import_row_level(self) -> Optional[str]:
         raw_level: str = FieldsFormatters.clean_string(
             self.__sheet.cell_value(rowx=self.__row_index, colx=self.LEVEL_COLUMN))
         if not raw_level:
             return None
-        level: Optional[LevelConstants] = LevelConstants.obtain_level_from_str(raw_level)
+        level: Optional[str] = LevelConstants.obtain_level_from_str(raw_level)
         if not level:
             raise RowsImporterError(RowsImporterErrorType.CHILD_LEVEL_NOT_CORRECT)
         return level

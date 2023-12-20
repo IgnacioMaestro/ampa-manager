@@ -26,9 +26,7 @@ class CustodyImporter:
     def __create_custody_importation(self, imported_rows: list[CustodyImportRow]) -> CustodyImportation:
         custody_importation: CustodyImportation = CustodyImportation.objects.create(
             custody_edition=self.__custody_edition, filename=self.__file_name)
-        # row: CustodyImportRow
-        # for row in imported_rows:
-        #     custody_importation_row: CustodyImportationRow = CustodyImportationRow.objects.create(
-        #         row=row.row, custody_importation=custody_importation)
-
+        row: CustodyImportRow
+        for row in imported_rows:
+            CustodyImportationRow.create_from_custody_import_row(row, custody_importation)
         return custody_importation
