@@ -9,10 +9,10 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('yes', _('Yes')),
-            ('no', _('No')),
-            ('last_year', _('Last year')),
-            ('renew', _('Renew')),
+            ('yes', _('Current year members')),
+            ('no', _('Current year NO members')),
+            ('last_year', _('Last year members')),
+            ('renew', _('Renew (Last year + Children + Renew)')),
         )
 
     def queryset(self, request, queryset):

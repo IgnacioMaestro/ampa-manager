@@ -26,6 +26,9 @@ class MembershipReceipt(models.Model):
         verbose_name_plural = _('Membership receipts')
         db_table = 'membership_receipt'
 
+    def __str__(self) -> str:
+        return f'{self.remittance} {self.family}'
+
     def generate_receipt(self) -> Receipt:
         holder: Optional[Holder] = self.family.default_holder
         if holder is None:
