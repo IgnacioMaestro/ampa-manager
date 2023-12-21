@@ -32,6 +32,7 @@ class ParentImportData {
     email: str
 }
 abstract class CustodyImportationActionGroup
+abstract class CustodyImportationAction
 abstract class CustodyImportationActionFamily {
     family: Family
 }
@@ -75,10 +76,14 @@ ChildWithSurnamesImportData -- ChildImportData: ""
 
 HolderImportData -- ParentImportData: ""
 
-CustodyImportationActionGroup -- CustodyImportationActionFamily: ""
 CustodyImportationActionGroup -- CreateCustodyRegistration: ""
+CustodyImportationActionGroup -- CustodyImportationActionFamily: ""
 CustodyImportationActionGroup -- CustodyImportationActionChild: ""
 CustodyImportationActionGroup -- CustodyImportationActionHolder: ""
+CustodyImportationAction <|-- CreateCustodyRegistration: ""
+CustodyImportationAction <|-- CustodyImportationActionFamily: ""
+CustodyImportationAction <|-- CustodyImportationActionChild: ""
+CustodyImportationAction <|-- CustodyImportationActionHolder: ""
 CustodyImportationActionFamily <|-- UseFamily: ""
 CustodyImportationActionFamily <|-- CreateFamily: ""
 CustodyImportationActionFamily <|-- UpdateFamily: ""
