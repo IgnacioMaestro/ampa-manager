@@ -164,7 +164,9 @@ class CustodyEditionAdmin(admin.ModelAdmin):
         emails = []
         for custody_edition in custody_editions.all():
             for custody_registration in custody_edition.registrations.all():
-                emails.extend(custody_registration.child.family.get_parents_emails())
+                for email in custody_registration.child.family.get_parents_emails():
+                    if email not in emails:
+                        emails.extend(email)
 
         emails_csv = ",".join(emails)
         headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
