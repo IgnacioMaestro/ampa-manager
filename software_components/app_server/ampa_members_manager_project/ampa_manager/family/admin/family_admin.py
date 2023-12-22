@@ -142,7 +142,7 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_emails(self, request, families: QuerySet[Family]):
         emails = Family.get_families_parents_emails(families)
         emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
 
     @admin.action(description=gettext_lazy("Send email to the parents of selected families"))

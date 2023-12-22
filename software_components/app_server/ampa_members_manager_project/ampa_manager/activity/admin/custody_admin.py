@@ -166,10 +166,10 @@ class CustodyEditionAdmin(admin.ModelAdmin):
             for custody_registration in custody_edition.registrations.all():
                 for email in custody_registration.child.family.get_parents_emails():
                     if email not in emails:
-                        emails.extend(email)
+                        emails.append(email)
 
         emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
 
     actions = [create_custody_remittance, calculate_prices, export_emails]
