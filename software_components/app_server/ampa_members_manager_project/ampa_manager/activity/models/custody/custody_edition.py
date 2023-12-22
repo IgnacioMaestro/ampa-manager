@@ -40,15 +40,15 @@ class CustodyEdition(PricePerLevel):
     
     @property
     def no_members_registrations_count(self):
-        return self.custodyregistration_set.no_members().count()
+        return self.registrations.no_members().count()
 
     @property
     def members_registrations_count(self):
-        return self.custodyregistration_set.members().count()
+        return self.registrations.members().count()
 
     @property
     def registrations_count(self):
-        return self.custodyregistration_set.count()
+        return self.registrations.count()
 
     @property
     def charged(self):
@@ -61,9 +61,9 @@ class CustodyEdition(PricePerLevel):
         assisted_days = 0
 
         if members:
-            registrations = self.custodyregistration_set.members()
+            registrations = self.registrations.members()
         else:
-            registrations = self.custodyregistration_set.no_members()
+            registrations = self.registrations.no_members()
 
         for registration in registrations:
 
