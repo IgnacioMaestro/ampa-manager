@@ -33,8 +33,10 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count', 'sepa_id']
+    fields = ['name', 'course', 'sepa_id', 'receipts_count', 'receipts_total', 'created_at']
+    readonly_fields = ['created_at', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
-    inlines = [MembershipReceiptInline]
+    # inlines = [MembershipReceiptInline]
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Total'))
