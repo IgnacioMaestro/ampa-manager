@@ -33,7 +33,7 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'course', 'receipts_total', 'receipts_count', 'sepa_id', 'payment_date']
-    fields = ['name', 'course', 'sepa_id', 'payment_date', 'receipts_count', 'receipts_total', 'created_at']
+    fields = ['name', 'course', 'sepa_id', 'payment_date', 'concept', 'receipts_count', 'receipts_total', 'created_at']
     readonly_fields = ['created_at', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
     # inlines = [MembershipReceiptInline]

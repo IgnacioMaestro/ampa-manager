@@ -2,8 +2,8 @@
 title AMPA. Mantener abierto para usar la aplicacion
 
 :: DEFINIR RUTAS
-set "REPO_PATH=C:\Users\danil\OneDrive\Documents\ampa-manager"
-set "PYTHON_PATH=%REPO_PATH%\software_components\app_server\ampa_members_manager_project\venv\Scripts\python"
+set "REPO_PATH=C:\ampa-manager"
+set "PYTHON_PATH=C:\Users\abend\AppData\Local\Programs\Python\Python311\python"
 set "DJANGO_MANAGE_PATH=%REPO_PATH%\software_components\app_server\ampa_members_manager_project\manage.py"
 set "DB_PATH=%REPO_PATH%\software_components\app_server\ampa_members_manager_project\database\"
 set "DB_FILE_WITHOUT_EXT=db"
