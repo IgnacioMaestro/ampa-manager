@@ -50,7 +50,7 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 
 class CustodyRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
-    fields = ['name', 'sepa_id', 'receipts_count', 'receipts_total', 'created_at']
+    fields = ['name', 'sepa_id', 'payment_date', 'concept', 'receipts_count', 'receipts_total', 'created_at']
     readonly_fields = ['receipts_total', 'receipts_count', 'created_at']
     ordering = ['-created_at']
     list_per_page = 25
