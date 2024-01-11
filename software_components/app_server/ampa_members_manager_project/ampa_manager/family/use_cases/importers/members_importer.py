@@ -15,6 +15,7 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.fields_formatters_django import FieldsFormattersDjango
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -115,25 +116,25 @@ class MembersImporter:
         [1, FieldsFormatters.clean_name, KEY_PARENT1_NAME_AND_SURNAMES, LABEL_PARENT1_NAME_AND_SURNAMES],
         [2, FieldsFormatters.clean_phone, KEY_PARENT1_PHONE_NUMBER, LABEL_PARENT1_PHONE_NUMBER],
         [3, FieldsFormatters.clean_email, KEY_PARENT1_EMAIL, LABEL_PARENT1_EMAIL],
-        [4, FieldsFormatters.clean_iban, KEY_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
+        [4, FieldsFormattersDjango.clean_iban, KEY_PARENT1_BANK_ACCOUNT_IBAN, LABEL_PARENT1_BANK_ACCOUNT_IBAN],
         [5, FieldsFormatters.clean_name, KEY_PARENT2_NAME_AND_SURNAMES, LABEL_PARENT2_NAME_AND_SURNAMES],
         [6, FieldsFormatters.clean_phone, KEY_PARENT2_PHONE_NUMBER, LABEL_PARENT2_PHONE_NUMBER],
         [7, FieldsFormatters.clean_email, KEY_PARENT2_EMAIL, LABEL_PARENT2_EMAIL],
         [8, FieldsFormatters.clean_name, KEY_CHILD1_NAME, LABEL_CHILD1_NAME],
         [9, FieldsFormatters.clean_integer, KEY_CHILD1_YEAR_OF_BIRTH, LABEL_CHILD1_YEAR_OF_BIRTH],
-        [10, FieldsFormatters.clean_level, KEY_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
+        [10, FieldsFormattersDjango.clean_level, KEY_CHILD1_LEVEL, LABEL_CHILD1_LEVEL],
         [11, FieldsFormatters.clean_name, KEY_CHILD2_NAME, LABEL_CHILD2_NAME],
         [12, FieldsFormatters.clean_integer, KEY_CHILD2_YEAR_OF_BIRTH, LABEL_CHILD2_YEAR_OF_BIRTH],
-        [13, FieldsFormatters.clean_level, KEY_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
+        [13, FieldsFormattersDjango.clean_level, KEY_CHILD2_LEVEL, LABEL_CHILD2_LEVEL],
         [14, FieldsFormatters.clean_name, KEY_CHILD3_NAME, LABEL_CHILD3_NAME],
         [15, FieldsFormatters.clean_integer, KEY_CHILD3_YEAR_OF_BIRTH, LABEL_CHILD3_YEAR_OF_BIRTH],
-        [16, FieldsFormatters.clean_level, KEY_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
+        [16, FieldsFormattersDjango.clean_level, KEY_CHILD3_LEVEL, LABEL_CHILD3_LEVEL],
         [17, FieldsFormatters.clean_name, KEY_CHILD4_NAME, LABEL_CHILD4_NAME],
         [18, FieldsFormatters.clean_integer, KEY_CHILD4_YEAR_OF_BIRTH, LABEL_CHILD4_YEAR_OF_BIRTH],
-        [19, FieldsFormatters.clean_level, KEY_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
+        [19, FieldsFormattersDjango.clean_level, KEY_CHILD4_LEVEL, LABEL_CHILD4_LEVEL],
         [20, FieldsFormatters.clean_name, KEY_CHILD5_NAME, LABEL_CHILD5_NAME],
         [21, FieldsFormatters.clean_integer, KEY_CHILD5_YEAR_OF_BIRTH, LABEL_CHILD5_YEAR_OF_BIRTH],
-        [22, FieldsFormatters.clean_level, KEY_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
+        [22, FieldsFormattersDjango.clean_level, KEY_CHILD5_LEVEL, LABEL_CHILD5_LEVEL],
     ]
 
     @classmethod

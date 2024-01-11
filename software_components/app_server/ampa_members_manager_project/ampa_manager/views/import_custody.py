@@ -1,3 +1,4 @@
+from django.core.files.uploadedfile import UploadedFile
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
@@ -18,7 +19,8 @@ class ImportCustody(View):
         if form.is_valid():
             edition_id = request.POST.get('custody_edition')
             custody_edition = CustodyEdition.objects.get(id=edition_id)
-            file_content = request.FILES['file'].read()
+            uploaded_file: UploadedFile = request.FILES['file']
+            file_content = uploaded_file.read()
             import_info: ImportInfo = CustodyImporter.import_custody(file_content, custody_edition)
             context = cls.__create_context_with_import_info(form, import_info)
         else:

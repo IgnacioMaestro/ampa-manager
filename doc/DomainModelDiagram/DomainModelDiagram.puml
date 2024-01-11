@@ -3,6 +3,7 @@ package AcademicCourse
 package Family
 package Activity
 package Charge
+package Importation
 
 Charge --> Family
 Activity --> Family
@@ -10,4 +11,7 @@ Activity --> AcademicCourse
 Family --> AcademicCourse
 Charge --> Activity
 Charge --> AcademicCourse
+Importation --> Activity
+Importation --> Family
+Importation --> AcademicCourse
 @enduml

@@ -8,6 +8,7 @@ from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.fields_formatters_django import FieldsFormattersDjango
 
 
 class Command(BaseCommand):
@@ -70,7 +71,7 @@ class AuthorizationImporter:
         try:
             parent_full_name = FieldsFormatters.clean_name(
                 self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
-            iban = FieldsFormatters.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
+            iban = FieldsFormattersDjango.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
             number = FieldsFormatters.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
             date_value = self.sheet.cell_value(rowx=row_index, colx=Command.DATE_INDEX)
