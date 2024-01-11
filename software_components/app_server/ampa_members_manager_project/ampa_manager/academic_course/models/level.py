@@ -86,10 +86,12 @@ class Level:
 
     ID_CYCLE_PRE_SCHOOL = 'PRE'
     ID_CYCLE_PRIMARY = 'PRI'
+    ID_CYCLE_ALL = 'ALL'
 
     CYCLES = [
         (ID_CYCLE_PRE_SCHOOL, _('Pre-school')),
         (ID_CYCLE_PRIMARY, _('Primary education')),
+        (ID_CYCLE_ALL, _('All cycles')),
     ]
 
     @staticmethod

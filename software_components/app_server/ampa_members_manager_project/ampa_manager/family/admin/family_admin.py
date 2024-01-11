@@ -86,7 +86,7 @@ class FamilyInline(ReadOnlyTabularInline):
 
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
-                    'has_default_holder', 'created_formatted']
+                    'has_default_holder', 'created_formatted', 'id']
     fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'camps_receipts', 'custody_receipts',
               'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
     readonly_fields = ['created', 'modified', 'camps_receipts', 'custody_receipts', 'after_school_receipts']
@@ -142,7 +142,7 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_emails(self, request, families: QuerySet[Family]):
         emails = Family.get_families_parents_emails(families)
         emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="emails.csv"'}
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
 
     @admin.action(description=gettext_lazy("Send email to the parents of selected families"))

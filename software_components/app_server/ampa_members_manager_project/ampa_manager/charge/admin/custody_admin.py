@@ -20,6 +20,7 @@ from ..use_cases.custody.remittance_generator_from_custody_remittance import Rem
 
 class CustodyReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'custody_registration', 'state', 'amount', 'id']
+    fields = ['remittance', 'custody_registration', 'state', 'amount', 'id']
     ordering = ['state']
     search_fields = ['custody_registration__child__family']
     list_filter = ['state', CustodyReceiptFilter]
@@ -49,8 +50,9 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 
 class CustodyRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
+    fields = ['name', 'sepa_id', 'payment_date', 'concept', 'receipts_count', 'receipts_total', 'created_at']
+    readonly_fields = ['receipts_total', 'receipts_count', 'created_at']
     ordering = ['-created_at']
-    # inlines = [CustodyReceiptInline]
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Total'))
