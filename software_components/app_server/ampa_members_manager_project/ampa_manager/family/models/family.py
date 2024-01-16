@@ -174,13 +174,16 @@ class Family(TimeStampedModel):
         return ', '.join([c.name for c in self.child_set.all()])
 
     def get_similar_names_families(self):
-        similar = []
+        similar_families = []
+        similar_ids = []
         for family in Family.objects.exclude(id=self.id).order_by('surnames'):
             for normalized_surname_word in StringUtils.normalize(self.surnames).split(' '):
                 if normalized_surname_word not in StringUtils.SURNAMES_IGNORE_WORDS:
                     if normalized_surname_word in StringUtils.normalize(family.surnames):
-                        similar.append(family)
-        return similar
+                        if family.id not in similar_ids:
+                            similar_families.append(family)
+                            similar_ids.append(family.id)
+        return similar_families
 
     def get_parents_emails(self) -> List[str]:
         emails = []

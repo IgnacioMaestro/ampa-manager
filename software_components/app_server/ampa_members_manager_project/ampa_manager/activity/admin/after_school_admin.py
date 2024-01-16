@@ -49,7 +49,7 @@ class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
 
 class AfterSchoolEditionAdmin(admin.ModelAdmin):
     inlines = [AfterSchoolRegistrationInline]
-    list_display = ['academic_course', 'after_school', 'price_for_member', 'price_for_no_member', 'after_schools_count']
+    list_display = ['academic_course', 'after_school', 'period', 'timetable', 'price_for_member', 'price_for_no_member', 'after_schools_count']
     ordering = ['-academic_course', 'after_school']
     list_filter = ['academic_course__initial_year', 'after_school__name']
     search_fields = ['after_school__name']

@@ -13,6 +13,7 @@ class AfterSchoolEditionImporter:
                                                      academic_course=academic_course)
         if editions.count() == 1:
             return editions[0]
+
         return None
 
     @staticmethod
