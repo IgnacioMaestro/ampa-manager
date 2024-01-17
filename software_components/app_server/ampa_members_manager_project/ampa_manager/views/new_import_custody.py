@@ -4,9 +4,10 @@ from django.urls import reverse
 from django.views import View
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
-from ampa_manager.activity.use_cases.importers.custody_importer import CustodyImporter
 from ampa_manager.forms import ImportCustodyForm
+from ampa_manager.importation.use_cases.custody_importer.custody_importer import CustodyImporter
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
+from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -21,7 +22,9 @@ class NewImportCustody(View):
             custody_edition = CustodyEdition.objects.get(id=edition_id)
             uploaded_file: UploadedFile = request.FILES['file']
             file_content = uploaded_file.read()
-            import_info: ImportInfo = CustodyImporter.import_custody(file_content, custody_edition)
+            file_name = uploaded_file.name
+            CustodyImporter(file_name, file_content, custody_edition).import_custody()
+            import_info = ImportInfo(0, 0, TitledList('example'), TitledList('example'))
             context = cls.__create_context_with_import_info(form, import_info)
         else:
             context = cls.__create_context_with_processed_form(form)
