@@ -13,7 +13,6 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.use_cases.custody.custody_remittance_creator.custody_remittance_creator import \
     CustodyRemittanceCreator
-from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -42,6 +41,10 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
     def is_member(self, registration):
         return _('Yes') if Membership.is_member_child(registration.child) else _('No')
 
+    @admin.display(description=gettext_lazy('custody_edition_id'))
+    def custody_edition_id(self, registration):
+        return registration.custody_edition.id
+
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):
     model = CustodyRegistration
@@ -62,7 +65,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
     list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
                     'max_days_for_charge', 'cost', 'members_registrations_count', 'no_members_registrations_count',
-                    'registrations_count', 'remittance']
+                    'registrations_count', 'remittance', 'id']
     fieldsets = (
         (None, {
             'fields': ('academic_course', 'cycle', 'period')

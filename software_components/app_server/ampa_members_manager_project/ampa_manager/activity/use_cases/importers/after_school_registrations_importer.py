@@ -62,9 +62,9 @@ class AfterSchoolsRegistrationsImporter:
         [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
         [7, FieldsFormattersDjango.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
         [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [9, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [10, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [11, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
     ]
 
     @classmethod
@@ -149,14 +149,13 @@ class AfterSchoolsRegistrationsImporter:
                 return result
             after_school = after_school_result.imported_object
 
-            edition_result = AfterSchoolEditionImporter.find_edition_for_active_course(
+            after_school_edition = AfterSchoolEditionImporter.find_edition_for_active_course(
                 after_school,
                 row.get(cls.KEY_EDITION_PERIOD),
                 row.get(cls.KEY_EDITION_TIMETABLE))
-            result.add_partial_result(edition_result)
-            if not edition_result.success:
+            if after_school_edition is None:
+                result.error = 'After-school edition not found'
                 return result
-            after_school_edition = edition_result.imported_object
 
             registration_result = AfterSchoolRegistrationImporter.import_registration(
                 after_school_edition, holder, child)
