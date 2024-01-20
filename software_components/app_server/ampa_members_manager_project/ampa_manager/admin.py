@@ -44,6 +44,10 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
+from ampa_manager.importation.admin.custody_importation_admin import CustodyImportationAdmin
+from ampa_manager.importation.admin.custody_importation_row_admin import CustodyImportationRowAdmin
+from ampa_manager.importation.models.custody_importation import CustodyImportation
+from ampa_manager.importation.models.custody_importation_row import CustodyImportationRow
 
 admin.site.site_header = _('PTA Administration')
 admin.site.site_title = _('PTA Administration')
@@ -82,3 +86,6 @@ admin.site.register(CustodyReceipt, CustodyReceiptAdmin)
 admin.site.register(CustodyRemittance, CustodyRemittanceAdmin)
 admin.site.register(CampsReceipt, CampsReceiptAdmin)
 admin.site.register(CampsRemittance, CampsRemittanceAdmin)
+
+admin.site.register(CustodyImportation, CustodyImportationAdmin)
+admin.site.register(CustodyImportationRow, CustodyImportationRowAdmin)

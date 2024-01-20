@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from os.path import join
 from pathlib import Path
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager_project.secret_key_manager import SecretKeyManager
@@ -171,9 +172,13 @@ ADMIN_REORDER = (
          'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
          'ampa_manager.CampsReceipt', 'ampa_manager.CampsRemittance',
          'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
+    {'app': 'ampa_manager', 'label': _('Importation'),
+     'models': (
+         'ampa_manager.Importation', 'ampa_manager.CustodyImportation',
+         'ampa_manager.CustodyImportationRow')},
     # Keep original label and models
     'auth',
-)
+    )
 
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'ES'
