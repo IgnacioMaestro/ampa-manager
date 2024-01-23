@@ -22,7 +22,7 @@ from ..use_cases.after_school.remittance_generator_from_after_school_remittance 
 class AfterSchoolReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'after_school_registration', 'state', 'amount', 'id']
     ordering = ['state']
-    search_fields = ['after_school_registration__child__family']
+    search_fields = ['after_school_registration__child__family__surnames']
     list_filter = ['state', AfterSchoolReceiptFilter]
     list_per_page = 25
 
