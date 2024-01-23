@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.db.models import QuerySet
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext_lazy
 from django import forms
 
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
 from ampa_manager.family.models.holder.holder import Holder
@@ -83,7 +85,21 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     def after_schools_count(self, edition):
         return AfterSchoolRegistration.objects.of_edition(edition).count()
 
-    actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left]
+    @admin.action(description=gettext_lazy("Export family emails to CSV"))
+    def export_emails(self, request, editions: QuerySet[AfterSchoolEdition]):
+        emails = []
+        for edition in editions.all():
+            for registration in edition.registrations.all():
+                for email in registration.child.family.get_parents_emails():
+                    if email not in emails:
+                        emails.append(email)
+
+        emails_csv = ",".join(emails)
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
+        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+
+    actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left,
+               export_emails]
 
 
 class AfterSchoolEditionInline(admin.TabularInline):

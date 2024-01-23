@@ -14,7 +14,8 @@ from ampa_manager.utils.utils import Utils
 
 class AfterSchoolRegistration(models.Model):
     after_school_edition = models.ForeignKey(
-        to=AfterSchoolEdition, on_delete=models.CASCADE, verbose_name=_("After-school edition"))
+        to=AfterSchoolEdition, on_delete=models.CASCADE, verbose_name=_("After-school edition"),
+        related_name='registrations')
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
     holder = models.ForeignKey(to=Holder, on_delete=models.CASCADE, verbose_name=_("Holder"))
 
