@@ -65,3 +65,6 @@ class FamilyQuerySet(QuerySet):
 
     def of_parent(self, parent):
         return self.filter(parents=parent)
+
+    def renew_membership(self):
+        return self.members_last_year().no_declined_membership().has_any_children()

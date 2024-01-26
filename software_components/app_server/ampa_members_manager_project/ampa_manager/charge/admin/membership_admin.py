@@ -9,10 +9,12 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
     ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
 from ampa_manager.charge.admin.csv_response_creator import CSVResponseCreator
+from ampa_manager.charge.admin.filters.receipt_filters import FamilyMembershipReceiptFilter
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.remittance import Remittance
+from ampa_manager.charge.remittance_utils import RemittanceUtils
 from ampa_manager.charge.sepa.sepa_response_creator import SEPAResponseCreator
 from ampa_manager.charge.state import State
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
@@ -20,6 +22,7 @@ from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_u
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.utils import Utils
 
 
 class MembershipReceiptInline(ReadOnlyTabularInline):
@@ -33,10 +36,31 @@ class MembershipReceiptInline(ReadOnlyTabularInline):
 
 class MembershipRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
+    fields = ['name', 'concept', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_link']
+    readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
-    inlines = [MembershipReceiptInline]
     list_per_page = 25
     search_fields = ['name', 'concept']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['sepa_id'].initial = RemittanceUtils.get_next_sepa_id()
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.sepa_id:
+            obj.sepa_id = RemittanceUtils.get_next_sepa_id()
+        super().save_model(request, obj, form, change)
+
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_link(self, remittance):
+        receipts_count = MembershipReceipt.objects.of_remittance(remittance).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'remittance={remittance.id}'
+        return Utils.get_model_link(model_name=MembershipReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
@@ -93,7 +117,7 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'family', 'state']
     ordering = ['state']
     search_fields = ['family__surnames', 'family__id']
-    list_filter = ['state']
+    list_filter = ['state', FamilyMembershipReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))

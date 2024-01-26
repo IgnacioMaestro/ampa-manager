@@ -39,8 +39,8 @@ class AcademicCourseAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=message)
 
         academic_course: AcademicCourse = academic_courses.first()
-        families = Family.objects.renew_membership()
-        remittance = MembershipRemittanceCreator(families, academic_course).create()
+        families_to_renew = Family.objects.renew_membership()
+        remittance = MembershipRemittanceCreator(families_to_renew, academic_course).create()
         if remittance:
             message = mark_safe(
                 gettext_lazy(
