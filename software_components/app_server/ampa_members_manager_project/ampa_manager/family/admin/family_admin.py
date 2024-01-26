@@ -80,6 +80,7 @@ class ChildInline(ReadOnlyTabularInline):
         previous_courses = CampsRegistration.objects.of_child(child).of_previous_courses().count()
         return f'{active_course} / {previous_courses}'
 
+
 class FamilyInline(ReadOnlyTabularInline):
     model = Family.parents.through
 
@@ -93,7 +94,8 @@ class FamilyAdmin(admin.ModelAdmin):
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
-    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email']
+    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
+                     'custody_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]

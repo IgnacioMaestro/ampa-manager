@@ -58,9 +58,9 @@ class CustodyRegistrationInline(ReadOnlyTabularInline):
 
 class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
-    list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
-                    'max_days_for_charge', 'cost', 'members_registrations_count', 'no_members_registrations_count',
-                    'registrations_count', 'remittance']
+    list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member', 'cost', 'charged',
+                    'members_registrations_count', 'no_members_registrations_count', 'registrations_count',
+                    'has_remittance']
     fieldsets = (
         (None, {
             'fields': ('academic_course', 'cycle', 'period')
@@ -86,7 +86,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     list_filter = [CustodyEditionAcademicCourse, 'academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
     list_per_page = 25
 
-    @admin.display(description=gettext_lazy('Total charged'))
+    @admin.display(description=gettext_lazy('Charged'))
     def charged(self, edition):
         return edition.charged
 
@@ -127,6 +127,11 @@ class CustodyEditionAdmin(admin.ModelAdmin):
             return '-'
         else:
             return _('Multiple remmitances')
+
+    @admin.display(description=gettext_lazy('Remittance'), boolean=True)
+    def has_remittance(self, edition):
+        remittances = CustodyRemittance.objects.filter(custody_editions=edition)
+        return remittances.exists()
 
     @admin.action(description=_("Create custody remittance"))
     def create_custody_remittance(self, request, custody_editions: QuerySet[CustodyEdition]):
