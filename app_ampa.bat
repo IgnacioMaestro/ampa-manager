@@ -2,6 +2,8 @@
 setlocal
 title AMPA. Mantener abierto para usar la aplicacion
 
+chcp 65001 > nul
+
 :: DEFINIR RUTAS
 set "REPO_PATH=C:\ampa-manager"
 set "PYTHON_PATH=C:\Users\abend\AppData\Local\Programs\Python\Python311\python"
