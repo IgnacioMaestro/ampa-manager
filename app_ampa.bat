@@ -17,6 +17,7 @@ set "DB_BACKUPS_PATH=%DB_FOLDER_PATH%%DB_BACKUPS_FOLDER_NAME%\"
 
 echo Eliminando archivos de base de datos con tamaño 0
 for %%I in ("%DB_FOLDER_PATH%\*.%DB_FILE_EXT%") do (
+    echo Analizando archivo: %%I
     if %%~zI equ 0 (
         echo Eliminando archivo: %%I
         del "%%I"
