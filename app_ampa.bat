@@ -21,6 +21,7 @@ for %%I in ("%DB_FOLDER_PATH%\*.%DB_FILE_EXT%") do (
     )
 )
 
+echo ------------------------------------------------------------
 echo Renombrando archivos de base de datos con tamaño mayor que 0
 for %%I in ("%DB_FOLDER_PATH%\*.%DB_FILE_EXT%") do (
     if not %%~zI equ 0 (
@@ -29,6 +30,7 @@ for %%I in ("%DB_FOLDER_PATH%\*.%DB_FILE_EXT%") do (
     )
 )
 
+echo ------------------------------------------------------------
 echo Creando copia de la base de datos
 if not exist "%DB_BACKUPS_PATH%" mkdir "%DB_BACKUPS_PATH%"
 for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "datetime=%%a"
@@ -37,12 +39,15 @@ set FILE_SOURCE=%DB_FOLDER_PATH%%DB_FILE%
 set FILE_TARGET=%DB_BACKUPS_PATH%%DB_FILE_WITHOUT_EXT%_%DATE_TIME%%DB_FILE_EXT%
 copy "%FILE_SOURCE%" "%FILE_TARGET%"
 
+echo ------------------------------------------------------------
 echo Accediendo a la carpeta de la aplicacion
 cd %REPO_PATH%
 
+echo ------------------------------------------------------------
 echo Actualizando aplicacion
 git pull
 
+echo ------------------------------------------------------------
 echo Iniciando aplicacion (NO CIERRES ESTA VENTANA)
 %PYTHON_PATH% %DJANGO_MANAGE_PATH% runserver 
 
