@@ -2,6 +2,7 @@
 setlocal
 title AMPA. Mantener abierto para usar la aplicacion
 
+:: ACTIVA UTF-8
 chcp 65001 > nul
 
 :: DEFINIR RUTAS
