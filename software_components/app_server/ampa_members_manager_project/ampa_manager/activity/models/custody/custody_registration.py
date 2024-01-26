@@ -12,7 +12,8 @@ from ampa_manager.utils.utils import Utils
 
 
 class CustodyRegistration(models.Model):
-    custody_edition = models.ForeignKey(to=CustodyEdition, on_delete=models.CASCADE, verbose_name=_("Custody edition"))
+    custody_edition = models.ForeignKey(to=CustodyEdition, on_delete=models.CASCADE, verbose_name=_("Custody edition"),
+                                        related_name='registrations')
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
     holder = models.ForeignKey(to=Holder, on_delete=models.CASCADE, verbose_name=_("Holder"))
     assisted_days = models.PositiveIntegerField()

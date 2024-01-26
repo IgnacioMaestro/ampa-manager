@@ -6,6 +6,7 @@ from ampa_manager.views.import_after_schools_registrations import ImportAfterSch
 from ampa_manager.views.import_camps import ImportCamps
 from ampa_manager.views.import_custody import ImportCustody
 from ampa_manager.views.import_members import ImportMembers
+from ampa_manager.views.new_import_custody import NewImportCustody
 from ampa_manager.views.validate_data import validate_data
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path('afterschools-activities/import/', ImportAfterSchoolsActivities.as_view(),
          name='import_after_schools_activities'),
     path('custody/import/', ImportCustody.as_view(), name='import_custody'),
+    path('custody/new-import/', NewImportCustody.as_view(), name='new_import_custody'),
     path('camps/import/', ImportCamps.as_view(), name='import_camps'),
     path('validations/', validate_data, name='validate_data'),
 ]

@@ -32,7 +32,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
     list_filter = ['custody_edition__academic_course__initial_year', 'custody_edition__period',
                    'custody_edition__cycle', RegistrationFilter, ChildLevelListFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
-                     'holder__parent__name_and_surnames']
+                     'holder__parent__name_and_surnames', 'child__id']
     list_per_page = 25
     # form = CustodyRegistrationAdminForm
 
@@ -58,9 +58,9 @@ class CustodyRegistrationInline(ReadOnlyTabularInline):
 
 class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
-    list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member', 'cost', 'charged',
-                    'members_registrations_count', 'no_members_registrations_count', 'registrations_count',
-                    'has_remittance']
+    list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
+                    'max_days_for_charge', 'cost', 'charged', 'members_registrations_count',
+                    'no_members_registrations_count', 'registrations_count', 'has_remittance', 'id']
     fieldsets = (
         (None, {
             'fields': ('academic_course', 'cycle', 'period')
@@ -83,7 +83,8 @@ class CustodyEditionAdmin(admin.ModelAdmin):
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
                        'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
     ordering = ['-academic_course', 'cycle', 'period', '-id']
-    list_filter = [CustodyEditionAcademicCourse, 'academic_course__initial_year', CustodyEditionHasRemittanceFilter, 'period', 'cycle']
+    list_filter = [CustodyEditionAcademicCourse, 'academic_course__initial_year', CustodyEditionHasRemittanceFilter,
+                   'period', 'cycle']
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Charged'))
@@ -162,4 +163,17 @@ class CustodyEditionAdmin(admin.ModelAdmin):
 
         return self.message_user(request=request, message=message)
 
-    actions = [create_custody_remittance, calculate_prices]
+    @admin.action(description=gettext_lazy("Export family emails to CSV"))
+    def export_emails(self, request, custody_editions: QuerySet[CustodyEdition]):
+        emails = []
+        for custody_edition in custody_editions.all():
+            for custody_registration in custody_edition.registrations.all():
+                for email in custody_registration.child.family.get_parents_emails():
+                    if email not in emails:
+                        emails.append(email)
+
+        emails_csv = ",".join(emails)
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
+        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+
+    actions = [create_custody_remittance, calculate_prices, export_emails]

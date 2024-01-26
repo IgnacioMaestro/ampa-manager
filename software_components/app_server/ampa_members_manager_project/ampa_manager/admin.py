@@ -19,6 +19,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.admin.after_school_admin import AfterSchoolReceiptAdmin, AfterSchoolRemittanceAdmin
 from ampa_manager.charge.admin.camps_admin import CampsReceiptAdmin, CampsRemittanceAdmin
 from ampa_manager.charge.admin.custody_admin import CustodyReceiptAdmin, CustodyRemittanceAdmin
+from ampa_manager.charge.admin.fee_admin import FeeAdmin
 from ampa_manager.charge.admin.membership_admin import MembershipRemittanceAdmin, MembershipReceiptAdmin
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
@@ -74,7 +75,7 @@ admin.site.register(Membership, MembershipAdmin)
 
 admin.site.register(MembershipRemittance, MembershipRemittanceAdmin)
 admin.site.register(MembershipReceipt, MembershipReceiptAdmin)
-admin.site.register(Fee)
+admin.site.register(Fee, FeeAdmin)
 admin.site.register(AfterSchoolReceipt, AfterSchoolReceiptAdmin)
 admin.site.register(AfterSchoolRemittance, AfterSchoolRemittanceAdmin)
 admin.site.register(CustodyReceipt, CustodyReceiptAdmin)

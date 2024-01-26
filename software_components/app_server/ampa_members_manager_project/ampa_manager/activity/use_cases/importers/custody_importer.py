@@ -17,6 +17,7 @@ from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.fields_formatters_django import FieldsFormattersDjango
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -48,11 +49,11 @@ class CustodyImporter:
         [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
         [1, FieldsFormatters.clean_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
         [2, FieldsFormatters.clean_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
-        [3, FieldsFormatters.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [3, FieldsFormattersDjango.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
         [4, FieldsFormatters.clean_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
         [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
         [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
-        [7, FieldsFormatters.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
+        [7, FieldsFormattersDjango.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
         [8, FieldsFormatters.clean_integer, KEY_ASSISTED_DAYS, LABEL_ASSISTED_DAYS],
     ]
 
@@ -63,13 +64,14 @@ class CustodyImporter:
 
         importer.counters_before = cls.count_objects()
 
-        for row in importer.get_rows():
-            result = cls.process_row(row, custody_edition)
+        for excel_row in importer.get_rows():
+            result = cls.process_row(excel_row, custody_edition)
             importer.add_result(result)
 
         importer.counters_after = cls.count_objects()
 
-        import_info = ImportInfo(importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
+        import_info = ImportInfo(
+            importer.total_rows, importer.successfully_imported_rows, importer.get_summary(), importer.get_results())
         return import_info
 
     @classmethod
@@ -85,20 +87,20 @@ class CustodyImporter:
         }
 
     @classmethod
-    def process_row(cls, row: ExcelRow, custody_edition: CustodyEdition) -> ImportRowResult:
-        result = ImportRowResult(row)
+    def process_row(cls, excel_row: ExcelRow, custody_edition: CustodyEdition) -> ImportRowResult:
+        result = ImportRowResult(excel_row)
 
-        if row.error:
-            result.error = row.error
+        if excel_row.error:
+            result.error = excel_row.error
             return result
 
         try:
             family_result = FamilyImporter.import_family(
-                row.get(cls.KEY_CHILD_SURNAMES),
-                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                excel_row.get(cls.KEY_CHILD_SURNAMES),
+                excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
                 None,
                 False,
-                row.get(cls.KEY_CHILD_NAME))
+                excel_row.get(cls.KEY_CHILD_NAME))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
@@ -106,9 +108,9 @@ class CustodyImporter:
 
             child_result = ChildImporter.import_child(
                 family,
-                row.get(cls.KEY_CHILD_NAME),
-                row.get(cls.KEY_CHILD_LEVEL),
-                row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
+                excel_row.get(cls.KEY_CHILD_NAME),
+                excel_row.get(cls.KEY_CHILD_LEVEL),
+                excel_row.get(cls.KEY_CHILD_YEAR_OF_BIRTH))
             result.add_partial_result(child_result)
             if not child_result.success:
                 return result
@@ -116,10 +118,10 @@ class CustodyImporter:
 
             parent_result = ParentImporter.import_parent(
                 family,
-                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
-                row.get(cls.KEY_PARENT_PHONE_NUMBER),
+                excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                excel_row.get(cls.KEY_PARENT_PHONE_NUMBER),
                 None,
-                row.get(cls.KEY_PARENT_EMAIL),
+                excel_row.get(cls.KEY_PARENT_EMAIL),
                 optional=True)
             result.add_partial_result(parent_result)
             if not parent_result.success:
@@ -128,7 +130,7 @@ class CustodyImporter:
 
             if parent:
                 bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
-                    parent, row.get(
+                    parent, excel_row.get(
                         cls.KEY_BANK_ACCOUNT_IBAN))
                 result.add_partial_result(bank_account_result)
                 result.add_partial_result(holder_result)
@@ -151,7 +153,7 @@ class CustodyImporter:
 
             registration_result = CustodyRegistrationImporter.import_registration(
                 custody_edition, holder, child,
-                row.get(cls.KEY_ASSISTED_DAYS))
+                excel_row.get(cls.KEY_ASSISTED_DAYS))
             result.add_partial_result(registration_result)
 
         except Exception as e:
@@ -161,10 +163,9 @@ class CustodyImporter:
 
     @classmethod
     def ensure_family_holders(cls, family, holder):
-        if holder:
-            if not family.default_holder or not family.custody_holder:
-                if not family.default_holder:
-                    family.default_holder = holder
-                if not family.custody_holder:
-                    family.custody_holder = holder
-                family.save()
+        if holder and (not family.default_holder or not family.custody_holder):
+            if not family.default_holder:
+                family.default_holder = holder
+            if not family.custody_holder:
+                family.custody_holder = holder
+            family.save()

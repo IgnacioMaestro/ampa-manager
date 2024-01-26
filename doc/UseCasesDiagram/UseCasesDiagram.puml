@@ -30,6 +30,13 @@ package Activity {
     }
 }
 package Charge {
+    Admin --> Charge
 }
-Admin --> Charge
+package Importation {
+    Admin --> (Import Custody)
+    Admin --> (See CustodyImportation)
+    Admin --> (See CustodyImportationRows and actions)
+    Admin --> (Modify CustodyImportationRow actions)
+    Admin --> (Confirm CustodyImportationRow actions)
+}
 @enduml

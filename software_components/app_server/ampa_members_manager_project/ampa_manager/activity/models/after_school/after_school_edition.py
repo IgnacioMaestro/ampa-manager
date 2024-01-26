@@ -28,15 +28,15 @@ class AfterSchoolEdition(PricePerLevel):
 
     @property
     def no_members_registrations_count(self):
-        return self.afterschoolregistration_set.no_members().count()
+        return self.registrations.no_members().count()
 
     @property
     def members_registrations_count(self):
-        return self.afterschoolregistration_set.members().count()
+        return self.registrations.members().count()
 
     @property
     def registrations_count(self):
-        return self.afterschoolregistration_set.count()
+        return self.registrations.count()
 
     @staticmethod
     def find(after_school: AfterSchool, period: str, timetable: str, levels: str):

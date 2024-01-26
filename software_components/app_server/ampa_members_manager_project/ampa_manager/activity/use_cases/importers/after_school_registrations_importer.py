@@ -18,6 +18,7 @@ from ampa_manager.utils.excel.excel_importer import ExcelImporter
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
+from ampa_manager.utils.fields_formatters_django import FieldsFormattersDjango
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -55,15 +56,15 @@ class AfterSchoolsRegistrationsImporter:
         [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
         [1, FieldsFormatters.clean_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
         [2, FieldsFormatters.clean_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
-        [3, FieldsFormatters.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [3, FieldsFormattersDjango.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
         [4, FieldsFormatters.clean_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
         [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
         [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
-        [7, FieldsFormatters.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
+        [7, FieldsFormattersDjango.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
         [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [8, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [9, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [10, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [11, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
     ]
 
     @classmethod
@@ -148,14 +149,13 @@ class AfterSchoolsRegistrationsImporter:
                 return result
             after_school = after_school_result.imported_object
 
-            edition_result = AfterSchoolEditionImporter.find_edition_for_active_course(
+            after_school_edition = AfterSchoolEditionImporter.find_edition_for_active_course(
                 after_school,
                 row.get(cls.KEY_EDITION_PERIOD),
                 row.get(cls.KEY_EDITION_TIMETABLE))
-            result.add_partial_result(edition_result)
-            if not edition_result.success:
+            if after_school_edition is None:
+                result.error = 'After-school edition not found'
                 return result
-            after_school_edition = edition_result.imported_object
 
             registration_result = AfterSchoolRegistrationImporter.import_registration(
                 after_school_edition, holder, child)

@@ -57,7 +57,6 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     inlines = [AfterSchoolReceiptInline]
     list_per_page = 25
-    search_fields = ['name', 'concept']
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):

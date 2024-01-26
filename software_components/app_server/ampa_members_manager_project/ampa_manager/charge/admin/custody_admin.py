@@ -13,7 +13,6 @@ from .filters.receipt_filters import CustodyReceiptFilter
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
-from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.custody.remittance_generator_from_custody_remittance import RemittanceGeneratorFromCustodyRemittance
@@ -21,6 +20,7 @@ from ..use_cases.custody.remittance_generator_from_custody_remittance import Rem
 
 class CustodyReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'custody_registration', 'state', 'amount', 'id']
+    fields = ['remittance', 'custody_registration', 'state', 'amount', 'id']
     ordering = ['state']
     search_fields = ['custody_registration__child__family__surnames',
                      'custody_registration__child__family__id',
@@ -54,6 +54,7 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 
 class CustodyRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
+    fields = ['name', 'sepa_id', 'payment_date', 'concept', 'receipts_count', 'receipts_total', 'created_at']
     ordering = ['-created_at']
     list_per_page = 25
     search_fields = ['name', 'concept']
