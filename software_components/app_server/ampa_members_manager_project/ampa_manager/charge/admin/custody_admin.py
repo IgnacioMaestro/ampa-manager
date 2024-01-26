@@ -22,7 +22,11 @@ from ..use_cases.custody.remittance_generator_from_custody_remittance import Rem
 class CustodyReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'custody_registration', 'state', 'amount', 'id']
     ordering = ['state']
-    search_fields = ['custody_registration__child__family']
+    search_fields = ['custody_registration__child__family__surnames',
+                     'custody_registration__child__family__id',
+                     'custody_registration__child__name',
+                     'custody_registration__holder__bank_account__iban',
+                     'custody_registration__parent__name_and_surnames']
     list_filter = ['state', CustodyReceiptFilter]
     list_per_page = 25
 

@@ -20,7 +20,9 @@ from ..use_cases.camps.remittance_generator_from_camps_remittance import Remitta
 class CampsReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'camps_registration', 'child', 'state', 'amount', 'id']
     ordering = ['state']
-    search_fields = ['camps_registration__child__family__surnames', 'camps_registration__child__name',
+    search_fields = ['camps_registration__child__family__surnames',
+                     'camps_registration__child__family__id',
+                     'camps_registration__child__name',
                      'camps_registration__holder__bank_account__iban',
                      'camps_registration__holder__parent__name_and_surnames']
     list_filter = ['state', CampsReceiptFilter]

@@ -92,7 +92,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 class MembershipReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'family', 'state']
     ordering = ['state']
-    search_fields = ['family__surnames']
+    search_fields = ['family__surnames', 'family__id']
     list_filter = ['state']
     list_per_page = 25
 

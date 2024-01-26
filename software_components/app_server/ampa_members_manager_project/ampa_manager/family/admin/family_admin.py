@@ -18,6 +18,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
+from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
@@ -88,9 +89,10 @@ class FamilyInline(ReadOnlyTabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
                     'has_default_holder', 'created_formatted']
-    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'camps_receipts', 'custody_receipts',
-              'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
-    readonly_fields = ['created', 'modified', 'camps_receipts', 'custody_receipts', 'after_school_receipts']
+    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'membership_receipts', 'camps_receipts',
+              'custody_receipts', 'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    readonly_fields = ['created', 'modified', 'membership_receipts', 'camps_receipts', 'custody_receipts',
+                       'after_school_receipts']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
@@ -252,6 +254,16 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('Created'))
     def created_formatted(self, family):
         return family.created.strftime('%d/%m/%y, %H:%M')
+
+    @admin.display(description=gettext_lazy('Membership receipts'))
+    def membership_receipts(self, family):
+        receipts_count = MembershipReceipt.objects.of_family(family).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=MembershipReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.display(description=gettext_lazy('Camps receipts'))
     def camps_receipts(self, family):

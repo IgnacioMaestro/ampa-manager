@@ -6,3 +6,6 @@ class MembershipReceiptQuerySet(QuerySet):
 
     def of_remittance(self, remittance):
         return self.filter(remittance=remittance)
+
+    def of_family(self, family):
+        return self.filter(family=family)
