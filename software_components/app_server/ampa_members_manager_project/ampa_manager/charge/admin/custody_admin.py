@@ -13,6 +13,7 @@ from .filters.receipt_filters import CustodyReceiptFilter
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
+from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.custody.remittance_generator_from_custody_remittance import RemittanceGeneratorFromCustodyRemittance
@@ -48,10 +49,20 @@ class CustodyReceiptInline(ReadOnlyTabularInline):
 
 
 class CustodyRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
+    list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
-    # inlines = [CustodyReceiptInline]
     list_per_page = 25
+    search_fields = ['name', 'concept']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['sepa_id'].initial = RemittanceUtils.get_next_sepa_id()
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.sepa_id:
+            obj.sepa_id = RemittanceUtils.get_next_sepa_id()
+        super().save_model(request, obj, form, change)
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):

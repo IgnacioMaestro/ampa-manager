@@ -53,10 +53,10 @@ class CampsReceiptInline(ReadOnlyTabularInline):
 
 
 class CampsRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
+    list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
     ordering = ['-created_at']
-    # inlines = [CampsReceiptInline]
     list_per_page = 25
+    search_fields = ['name', 'concept']
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
