@@ -1,8 +1,13 @@
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
+from django.db.models import QuerySet
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _, gettext_lazy
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
+    MembershipRemittanceCreator
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
@@ -26,6 +31,26 @@ class AcademicCourseAdmin(admin.ModelAdmin):
     @admin.display(description=_('Members'))
     def members_count(self, academic_course):
         return academic_course.membership_set.count()
+
+    @admin.action(description=gettext_lazy("Generate remesa de socios"))
+    def generate_remittance(self, request, academic_courses: QuerySet[AcademicCourse]):
+        if academic_courses.count() > 1:
+            message = gettext_lazy("Select the courses one by one")
+            return self.message_user(request=request, message=message)
+
+        academic_course: AcademicCourse = academic_courses.first()
+        families = Family.objects.renew_membership()
+        remittance = MembershipRemittanceCreator(families, academic_course).create()
+        if remittance:
+            message = mark_safe(
+                gettext_lazy(
+                    "Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + gettext_lazy(
+                    "View details") + "</a>)")
+        else:
+            message = gettext_lazy("No families to include in Membership Remittance")
+        return self.message_user(request=request, message=message)
+
+    actions = [generate_remittance]
 
 
 class ActiveCourseAdmin(admin.ModelAdmin):
