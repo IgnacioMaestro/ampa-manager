@@ -25,11 +25,11 @@ for %%I in ("%DB_FOLDER_PATH%\*%DB_FILE_EXT%") do (
 )
 
 echo ------------------------------------------------------------
-echo Renombrando archivos de base de datos con tamaño mayor que 0
+echo Renombrando archivos %DB_FILE_EXT% con tamaño mayor que 0 a %DB_FILE%
 for %%I in ("%DB_FOLDER_PATH%\*%DB_FILE_EXT%") do (
     if not %%~zI equ 0 (
-        echo Renombrando archivo: %%I > "%DB_FILE_WITHOUT_EXT%%%DB_FILE_EXT%"
-        ren "%%I" "%DB_FILE_WITHOUT_EXT%%%DB_FILE_EXT%"
+        echo Renombrando archivo: %%I > "%DB_FILE%"
+        ren "%%I" "%DB_FILE%"
     )
 )
 
