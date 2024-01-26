@@ -102,19 +102,6 @@ class FamilyAdmin(admin.ModelAdmin):
     inlines = [ChildInline, MembershipInline]
     list_per_page = 25
 
-    @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))
-    def generate_remittance(self, request, families: QuerySet[Family]):
-        academic_course: AcademicCourse = ActiveCourse.load()
-        remittance = MembershipRemittanceCreator(families, academic_course).create()
-        if remittance:
-            message = mark_safe(
-                gettext_lazy(
-                    "Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + gettext_lazy(
-                    "View details") + "</a>)")
-        else:
-            message = gettext_lazy("No families to include in Membership Remittance")
-        return self.message_user(request=request, message=message)
-
     @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
     def complete_custody_holder_with_last_registration(self, request, families: QuerySet[Family]):
         updated = 0
@@ -296,5 +283,5 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, send_email_to_parents, make_members, export_families_xls,
+    actions = [export_emails, send_email_to_parents, make_members, export_families_xls,
                complete_custody_holder_with_last_registration, complete_custody_holder_with_default_holder]
