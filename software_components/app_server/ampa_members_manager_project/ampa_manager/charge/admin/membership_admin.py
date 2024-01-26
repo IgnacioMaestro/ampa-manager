@@ -42,11 +42,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def receipts_total(self, remittance):
         number_of_receipts = MembershipReceipt.objects.of_remittance(remittance).count()
         fee = Fee.objects.filter(academic_course=remittance.course).first()
+        total = 0
         if fee:
             total = number_of_receipts * fee.amount
             locale.setlocale(locale.LC_ALL, 'es_ES')
-            return locale.format_string('%d €', total, grouping=True)
-        return '0 €'
+        return locale.format_string('%.2f €', total, grouping=True)
 
     @admin.display(description=gettext_lazy('Receipts'))
     def receipts_count(self, remittance):

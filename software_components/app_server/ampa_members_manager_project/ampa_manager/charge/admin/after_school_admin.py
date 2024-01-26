@@ -57,12 +57,9 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
-        receipts = AfterSchoolReceipt.objects.filter(remittance=remittance)
-        total = 0.0
-        for receipt in receipts:
-            total += receipt.amount
+        total = AfterSchoolReceipt.get_total_by_remittance(remittance)
         locale.setlocale(locale.LC_ALL, 'es_ES')
-        return locale.format_string('%d €', total, grouping=True)
+        return locale.format_string('%.2f €', total, grouping=True)
 
     @admin.display(description=gettext_lazy('Receipts'))
     def receipts_count(self, remittance):

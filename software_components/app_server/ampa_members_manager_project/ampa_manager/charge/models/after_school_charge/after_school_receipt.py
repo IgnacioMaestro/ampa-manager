@@ -7,6 +7,7 @@ from ampa_manager.family.models.holder.holder import Holder
 from .after_school_receipt_queryset import AfterSchoolReceiptQuerySet
 from .after_school_remittance import AfterSchoolRemittance
 from ...receipt import Receipt, AuthorizationReceipt
+from ...remittance import Remittance
 from ...state import State
 
 
@@ -35,3 +36,10 @@ class AfterSchoolReceipt(models.Model):
         return Receipt(
             amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
             bic=holder.bank_account.swift_bic, authorization=authorization)
+
+    @classmethod
+    def get_total_by_remittance(cls, remittance: AfterSchoolRemittance) -> float:
+        total = 0.0
+        for receipt in AfterSchoolReceipt.objects.filter(remittance=remittance):
+            total += receipt.amount
+        return total
