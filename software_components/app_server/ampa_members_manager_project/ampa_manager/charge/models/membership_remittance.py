@@ -1,14 +1,17 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.charge.models.membership_remittance_queryset import MembershipRemittanceQuerySet
 from ampa_manager.charge.models.nameable_with_date import NameableWithDate
 
 
 class MembershipRemittance(NameableWithDate, models.Model):
     course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("AcademicCourse"))
+
+    objects = Manager.from_queryset(MembershipRemittanceQuerySet)()
 
     class Meta:
         verbose_name = _('Membership remittance')

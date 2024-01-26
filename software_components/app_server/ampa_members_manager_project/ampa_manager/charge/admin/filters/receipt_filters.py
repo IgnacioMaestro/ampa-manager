@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 
-class CampsReceiptFilter(admin.SimpleListFilter):
+class FamilyCampsReceiptFilter(admin.SimpleListFilter):
     title = _('Family')
 
     parameter_name = 'family'
@@ -18,7 +18,8 @@ class CampsReceiptFilter(admin.SimpleListFilter):
         else:
             return queryset
 
-class CustodyReceiptFilter(admin.SimpleListFilter):
+
+class FamilyCustodyReceiptFilter(admin.SimpleListFilter):
     title = _('Family')
 
     parameter_name = 'family'
@@ -34,7 +35,25 @@ class CustodyReceiptFilter(admin.SimpleListFilter):
         else:
             return queryset
 
-class AfterSchoolReceiptFilter(admin.SimpleListFilter):
+
+class FamilyAfterSchoolReceiptFilter(admin.SimpleListFilter):
+    title = _('Family')
+
+    parameter_name = 'family'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('all', _('All')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() and self.value() != 'all':
+            return queryset.of_family(self.value())
+        else:
+            return queryset
+
+
+class FamilyMembershipReceiptFilter(admin.SimpleListFilter):
     title = _('Family')
 
     parameter_name = 'family'

@@ -36,3 +36,10 @@ class CampsReceipt(models.Model):
         return Receipt(
             amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
             bic=holder.bank_account.swift_bic, authorization=authorization)
+
+    @classmethod
+    def get_total_by_remittance(cls, remittance: CampsRemittance) -> float:
+        total = 0.0
+        for receipt in CampsReceipt.objects.filter(remittance=remittance):
+            total += receipt.amount
+        return total

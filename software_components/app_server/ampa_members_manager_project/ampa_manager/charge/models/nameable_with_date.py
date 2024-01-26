@@ -4,7 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 class NameableWithDate(models.Model):
     name = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Name"))
-    sepa_id = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Sepa_id"))
+    sepa_id = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Sepa_id"),
+                               help_text=_("Leave empty to auto-generate"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
     payment_date = models.DateField(auto_now_add=False, null=True, blank=True, verbose_name=_("Payment date"))
     concept = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("Concept"))

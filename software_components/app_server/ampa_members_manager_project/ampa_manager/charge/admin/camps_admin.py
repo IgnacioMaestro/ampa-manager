@@ -1,29 +1,33 @@
 import locale
 
-from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .filters.receipt_filters import CampsReceiptFilter
+from .filters.receipt_filters import FamilyCampsReceiptFilter
 from ..models.camps.camps_receipt import CampsReceipt
 from ..models.camps.camps_remittance import CampsRemittance
 from ..remittance import Remittance
+from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.camps.remittance_generator_from_camps_remittance import RemittanceGeneratorFromCampsRemittance
+from ...utils.utils import Utils
 
 
 class CampsReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'camps_registration', 'child', 'state', 'amount', 'id']
     ordering = ['state']
-    search_fields = ['camps_registration__child__family__surnames', 'camps_registration__child__name',
+    search_fields = ['camps_registration__child__family__surnames',
+                     'camps_registration__child__family__id',
+                     'camps_registration__child__name',
                      'camps_registration__holder__bank_account__iban',
                      'camps_registration__holder__parent__name_and_surnames']
-    list_filter = ['state', CampsReceiptFilter]
+    list_filter = ['state', FamilyCampsReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))
@@ -53,19 +57,38 @@ class CampsReceiptInline(ReadOnlyTabularInline):
 
 
 class CampsRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_at', 'receipts_total', 'receipts_count', 'sepa_id']
+    list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
+    fields = ['name', 'concept', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_link']
+    readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
-    # inlines = [CampsReceiptInline]
     list_per_page = 25
+    search_fields = ['name', 'concept']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['sepa_id'].initial = RemittanceUtils.get_next_sepa_id()
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.sepa_id:
+            obj.sepa_id = RemittanceUtils.get_next_sepa_id()
+        super().save_model(request, obj, form, change)
+
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_link(self, remittance):
+        receipts_count = CampsReceipt.objects.of_remittance(remittance).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'remittance={remittance.id}'
+        return Utils.get_model_link(model_name=CampsReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
-        receipts = CampsReceipt.objects.filter(remittance=remittance)
-        total = 0.0
-        for receipt in receipts:
-            total += receipt.amount
+        total = CampsReceipt.get_total_by_remittance(remittance)
         locale.setlocale(locale.LC_ALL, 'es_ES')
-        return locale.format_string('%d €', total, grouping=True)
+        return locale.format_string('%.2f €', total, grouping=True)
 
     @admin.display(description=gettext_lazy('Receipts'))
     def receipts_count(self, remittance):

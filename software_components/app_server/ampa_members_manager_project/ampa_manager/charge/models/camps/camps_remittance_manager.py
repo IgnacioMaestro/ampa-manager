@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from django.db import transaction
 from django.db.models import Manager, QuerySet
+from django.utils import timezone
 
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.charge.no_camps_edition_error import NoCampsEditionError
@@ -21,3 +22,6 @@ class CampsRemittanceManager(Manager):
             camps_remittance: CampsRemittance = self.create()
             camps_remittance.camps_editions.set(camps_editions)
             return camps_remittance
+
+    def paid_on_current_year(self) -> QuerySet:
+        return self.filter(payment_date__year=timezone.now().year)

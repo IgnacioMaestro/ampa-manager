@@ -35,3 +35,10 @@ class CustodyReceipt(models.Model):
         return Receipt(
             amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
             bic=holder.bank_account.swift_bic, authorization=authorization)
+
+    @classmethod
+    def get_total_by_remittance(cls, remittance: CustodyRemittance) -> float:
+        total = 0.0
+        for receipt in CustodyReceipt.objects.filter(remittance=remittance):
+            total += receipt.amount
+        return total

@@ -18,6 +18,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
+from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
@@ -87,30 +88,19 @@ class FamilyInline(ReadOnlyTabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
                     'has_default_holder', 'created_formatted', 'id']
-    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'camps_receipts', 'custody_receipts',
-              'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
-    readonly_fields = ['created', 'modified', 'camps_receipts', 'custody_receipts', 'after_school_receipts']
+    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'membership_receipts', 'camps_receipts',
+              'custody_receipts', 'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    readonly_fields = ['created', 'modified', 'membership_receipts', 'camps_receipts', 'custody_receipts',
+                       'after_school_receipts']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
-    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email']
+    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
+                     'custody_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
     list_per_page = 25
-
-    @admin.action(description=gettext_lazy("Generate MembershipRemittance for current year"))
-    def generate_remittance(self, request, families: QuerySet[Family]):
-        academic_course: AcademicCourse = ActiveCourse.load()
-        remittance = MembershipRemittanceCreator(families, academic_course).create()
-        if remittance:
-            message = mark_safe(
-                gettext_lazy(
-                    "Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + gettext_lazy(
-                    "View details") + "</a>)")
-        else:
-            message = gettext_lazy("No families to include in Membership Remittance")
-        return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
     def complete_custody_holder_with_last_registration(self, request, families: QuerySet[Family]):
@@ -251,6 +241,16 @@ class FamilyAdmin(admin.ModelAdmin):
     def created_formatted(self, family):
         return family.created.strftime('%d/%m/%y, %H:%M')
 
+    @admin.display(description=gettext_lazy('Membership receipts'))
+    def membership_receipts(self, family):
+        receipts_count = MembershipReceipt.objects.of_family(family).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=MembershipReceipt.__name__.lower(), link_text=link_text, filters=filters)
+
     @admin.display(description=gettext_lazy('Camps receipts'))
     def camps_receipts(self, family):
         receipts_count = CampsReceipt.objects.of_family(family).count()
@@ -283,5 +283,5 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [generate_remittance, export_emails, send_email_to_parents, make_members, export_families_xls,
+    actions = [export_emails, send_email_to_parents, make_members, export_families_xls,
                complete_custody_holder_with_last_registration, complete_custody_holder_with_default_holder]
