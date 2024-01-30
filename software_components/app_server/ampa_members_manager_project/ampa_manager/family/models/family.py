@@ -43,6 +43,7 @@ class Family(TimeStampedModel):
         related_name='camps_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
+    email = models.EmailField(null=True, blank=True, verbose_name=_("Email"))
 
     objects = Manager.from_queryset(FamilyQuerySet)()
 
