@@ -171,6 +171,9 @@ ADMIN_REORDER = (
          'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
          'ampa_manager.CampsReceipt', 'ampa_manager.CampsRemittance',
          'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
+    {'app': 'ampa_manager', 'label': _('Settings'),
+     'models': (
+         'ampa_manager.DynamicSetting',)},
     # Keep original label and models
     'auth',
 )
@@ -179,5 +182,4 @@ PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'ES'
 PHONENUMBER_DEFAULT_FORMAT = 'NATIONAL'
 
-CUSTODY_NON_MEMBERS_PRICE_SURCHARGE = 1.27
 FROM_EMAIL = 'ampa@abendanogurasoak.com'

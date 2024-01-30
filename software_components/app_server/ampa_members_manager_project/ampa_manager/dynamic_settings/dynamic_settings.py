@@ -1,5 +1,7 @@
+import decimal
+
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from localflavor.generic.models import IBANField
 
 from ampa_manager.dynamic_settings.singleton import Singleton
@@ -17,3 +19,10 @@ class DynamicSetting(Singleton):
     custody_max_days_to_charge_percent = models.IntegerField(verbose_name=_("Max days to charge"),
                                                              help_text=_('Maximum number of days in a month (as a '
                                                                          'percentage) to charge to each user'))
+
+    class Meta:
+        verbose_name = _('Setting')
+        verbose_name_plural = _('Settings')
+
+    def __str__(self):
+        return gettext('Settings')
