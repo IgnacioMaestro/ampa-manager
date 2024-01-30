@@ -34,7 +34,7 @@ class Child(TimeStampedModel):
         return f'{self.name} {str(self.family)}'
 
     def __str__(self) -> str:
-        return self.full_name + ' (' + str(self.level) + ')'
+        return f'{self.full_name} ({self.level})'
 
     @property
     def level(self):

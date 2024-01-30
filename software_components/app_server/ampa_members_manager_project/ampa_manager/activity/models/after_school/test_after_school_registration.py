@@ -27,6 +27,7 @@ class TestAfterSchoolRegistration(TestCase):
             baker.make('AfterSchoolRegistration', after_school_edition=after_school_edition, child=child)
 
     def test_str(self):
+        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
         after_school_registration: AfterSchoolRegistration = baker.make('AfterSchoolRegistration')
 
         # Act

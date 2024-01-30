@@ -9,10 +9,10 @@ class Command(BaseCommand):
     help = 'Set default bank account for families with only 1 bank account'
 
     def handle(self, *args, **options):
-        for family in Family.objects.without_default_holder():
+        for family in Family.objects.without_membership_holder():
             holders: QuerySet[Holder] = Holder.objects.of_family(family)
             if (holders.count()) == 1:
-                family.default_holder = holders.first()
+                family.membership_holder = holders.first()
                 family.save()
             else:
                 print(f'Family {family}: not set. Accounts: {holders.count()}')

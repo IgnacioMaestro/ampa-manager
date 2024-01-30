@@ -24,11 +24,11 @@ class FamilyQuerySet(QuerySet):
                 distinct_families_ids.append(child.family.id)
         return distinct_families_ids
 
-    def with_default_holder(self):
-        return self.exclude(default_holder__isnull=True)
+    def with_membership_holder(self):
+        return self.exclude(membership_holder__isnull=True)
 
-    def without_default_holder(self):
-        return self.filter(default_holder__isnull=True)
+    def without_membership_holder(self):
+        return self.filter(membership_holder__isnull=True)
 
     def with_custody_holder(self):
         return self.exclude(custody_holder__isnull=True)

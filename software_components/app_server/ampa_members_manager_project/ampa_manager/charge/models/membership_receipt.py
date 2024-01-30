@@ -30,7 +30,7 @@ class MembershipReceipt(models.Model):
         return f'{self.remittance} {self.family}'
 
     def generate_receipt(self) -> Receipt:
-        holder: Optional[Holder] = self.family.default_holder
+        holder: Optional[Holder] = self.family.membership_holder
         if holder is None:
             raise NoHolderException
         try:

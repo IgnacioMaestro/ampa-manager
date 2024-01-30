@@ -54,7 +54,7 @@ class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
 class DefaultHolder(admin.SimpleListFilter):
     title = _('Default holder')
 
-    parameter_name = 'default_holder'
+    parameter_name = 'membership_holder'
 
     def lookups(self, request, model_admin):
         return (
@@ -65,9 +65,9 @@ class DefaultHolder(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value():
             if self.value() == 'with':
-                return queryset.with_default_holder()
+                return queryset.with_membership_holder()
             elif self.value() == 'without':
-                return queryset.without_default_holder()
+                return queryset.without_membership_holder()
         else:
             return queryset
 

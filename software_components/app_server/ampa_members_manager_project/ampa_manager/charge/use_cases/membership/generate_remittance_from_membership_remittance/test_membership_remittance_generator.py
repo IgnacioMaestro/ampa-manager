@@ -30,7 +30,7 @@ class TestMembershipRemittanceGenerator(TestCase):
         membership_remittance: MembershipRemittance = baker.make('MembershipRemittance')
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        family: Family = baker.make('Family', default_holder=holder)
+        family: Family = baker.make('Family', membership_holder=holder)
         membership_receipt: MembershipReceipt = baker.make(
             'MembershipReceipt', family=family, remittance=membership_remittance)
         baker.make('Fee', academic_course=membership_remittance.course, amount=self.FEE)
@@ -41,15 +41,15 @@ class TestMembershipRemittanceGenerator(TestCase):
         self.assertEqual(len(remittance.receipts), 1)
         receipt: Receipt = remittance.receipts[0]
         self.assertEqual(receipt.amount, self.FEE)
-        self.assertEqual(receipt.bank_account_owner, membership_receipt.family.default_holder.parent.full_name)
-        self.assertEqual(receipt.iban, membership_receipt.family.default_holder.bank_account.iban)
+        self.assertEqual(receipt.bank_account_owner, membership_receipt.family.membership_holder.parent.full_name)
+        self.assertEqual(receipt.iban, membership_receipt.family.membership_holder.bank_account.iban)
 
     def test_generate_remittance_two_membership_receipts(self):
         receipt_count: Final[int] = 2
         membership_remittance: MembershipRemittance = baker.make('MembershipRemittance')
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        family: Family = baker.make('Family', default_holder=holder)
+        family: Family = baker.make('Family', membership_holder=holder)
         baker.make('MembershipReceipt', family=family, remittance=membership_remittance, _quantity=receipt_count)
         baker.make('Fee', academic_course=membership_remittance.course, amount=self.FEE)
 
