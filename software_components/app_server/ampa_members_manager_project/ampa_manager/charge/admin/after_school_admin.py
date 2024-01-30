@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
@@ -22,7 +23,7 @@ from ...utils.utils import Utils
 
 
 class AfterSchoolReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'after_school_registration', 'state', 'amount', 'id']
+    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'id']
     ordering = ['state']
     search_fields = ['after_school_registration__child__family__surnames',
                      'after_school_registration__child__family__id',
@@ -31,6 +32,20 @@ class AfterSchoolReceiptAdmin(admin.ModelAdmin):
                      'after_school_registration__parent__name_and_surnames']
     list_filter = ['state', FamilyAfterSchoolReceiptFilter]
     list_per_page = 25
+
+    @admin.display(description=_('Child'))
+    def child(self, camps_receipt):
+        return camps_receipt.after_school_registration.child.name
+
+    @admin.display(description=gettext_lazy('Holder'))
+    def holder(self, receipt):
+        return receipt.after_school_registration.holder
+
+    @admin.display(description=gettext_lazy('Total'))
+    def rounded_amount(self, receipt):
+        if receipt.amount:
+            return round(receipt.amount, 2)
+        return None
 
     @admin.action(description=gettext_lazy("Set as sent"))
     def set_as_sent(self, request, queryset: QuerySet[AfterSchoolReceipt]):
