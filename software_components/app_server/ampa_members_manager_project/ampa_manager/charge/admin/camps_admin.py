@@ -20,7 +20,7 @@ from ...utils.utils import Utils
 
 
 class CampsReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'camps_registration', 'child', 'state', 'amount', 'id']
+    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'id']
     ordering = ['state']
     search_fields = ['camps_registration__child__family__surnames',
                      'camps_registration__child__family__id',
@@ -47,6 +47,20 @@ class CampsReceiptAdmin(admin.ModelAdmin):
     @admin.display(description=_('Child'))
     def child(self, camps_receipt):
         return camps_receipt.camps_registration.child.name
+
+    @admin.display(description=gettext_lazy('Holder'))
+    def holder(self, receipt):
+        return receipt.camps_registration.holder
+
+    @admin.display(description=gettext_lazy('Total'))
+    def rounded_amount(self, receipt):
+        if receipt.amount:
+            return round(receipt.amount, 2)
+        return None
+
+    @admin.display(description=_('Child'))
+    def family(self, camps_receipt):
+        return camps_receipt.camps_registration.child.family.surnames
 
     actions = [set_as_sent, set_as_paid]
 

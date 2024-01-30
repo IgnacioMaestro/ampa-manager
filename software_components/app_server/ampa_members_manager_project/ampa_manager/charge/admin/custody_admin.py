@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
@@ -21,9 +22,10 @@ from ...utils.utils import Utils
 
 
 class CustodyReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'custody_registration', 'state', 'amount', 'id']
+    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'id']
     fields = ['remittance', 'custody_registration', 'state', 'amount', 'id']
     ordering = ['state']
+    readonly_fields = ['id']
     search_fields = ['custody_registration__child__family__surnames',
                      'custody_registration__child__family__id',
                      'custody_registration__child__name',
@@ -31,6 +33,20 @@ class CustodyReceiptAdmin(admin.ModelAdmin):
                      'custody_registration__parent__name_and_surnames']
     list_filter = ['state', FamilyCustodyReceiptFilter]
     list_per_page = 25
+
+    @admin.display(description=_('Child'))
+    def child(self, camps_receipt):
+        return camps_receipt.custody_registration.child.name
+
+    @admin.display(description=gettext_lazy('Holder'))
+    def holder(self, receipt):
+        return receipt.custody_registration.holder
+
+    @admin.display(description=gettext_lazy('Total'))
+    def rounded_amount(self, receipt):
+        if receipt.amount:
+            return round(receipt.amount, 2)
+        return None
 
     @admin.action(description=gettext_lazy("Set as sent"))
     def set_as_sent(self, request, queryset: QuerySet[CustodyReceipt]):
