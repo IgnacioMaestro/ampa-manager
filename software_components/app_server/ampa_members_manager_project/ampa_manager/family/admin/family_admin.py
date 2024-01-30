@@ -35,10 +35,10 @@ class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance:
-            self.fields['default_holder'].queryset = Holder.objects.of_family(self.instance)
+            self.fields['membership_holder'].queryset = Holder.objects.of_family(self.instance)
             self.fields['custody_holder'].queryset = Holder.objects.of_family(self.instance)
         else:
-            self.fields['default_holder'].queryset = Holder.objects.none()
+            self.fields['membership_holder'].queryset = Holder.objects.none()
             self.fields['custody_holder'].queryset = Holder.objects.none()
 
 
@@ -81,22 +81,34 @@ class ChildInline(ReadOnlyTabularInline):
         previous_courses = CampsRegistration.objects.of_child(child).of_previous_courses().count()
         return f'{active_course} / {previous_courses}'
 
+
 class FamilyInline(ReadOnlyTabularInline):
     model = Family.parents.through
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
-                    'has_default_holder', 'created_formatted', 'id']
-    fields = ['surnames', 'parents', 'default_holder', 'custody_holder', 'membership_receipts', 'camps_receipts',
-              'custody_receipts', 'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    list_display = ['surnames', 'email', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
+                    'has_membership_holder', 'created_formatted', 'id']
+    fieldsets = (
+        (_('General'), {
+            'fields': ['surnames', 'email', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
+        }),
+        (_('Holders'), {
+            'fields': ['membership_holder', 'custody_holder', 'camps_holder', 'after_school_holder'],
+        }),
+        (_('Receipts'), {
+            'fields': ['membership_receipts', 'camps_receipts', 'custody_receipts', 'after_school_receipts'],
+        }),
+    )
+
     readonly_fields = ['created', 'modified', 'membership_receipts', 'camps_receipts', 'custody_receipts',
                        'after_school_receipts']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
-    search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
-                     'custody_holder__bank_account__iban']
+    search_fields = ['surnames', 'email', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
+                     'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
+                     'camps_holder__bank_account__iban', 'after_school_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
@@ -116,12 +128,12 @@ class FamilyAdmin(admin.ModelAdmin):
         message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
         return self.message_user(request=request, message=message)
 
-    @admin.action(description=gettext_lazy("Complete empty custody holders with default_holder"))
-    def complete_custody_holder_with_default_holder(self, request, families: QuerySet[Family]):
+    @admin.action(description=gettext_lazy("Complete empty custody holders with membership_holder"))
+    def complete_custody_holder_with_membership_holder(self, request, families: QuerySet[Family]):
         updated = 0
         for family in families:
-            if not family.custody_holder and family.default_holder:
-                family.custody_holder = family.default_holder
+            if not family.custody_holder and family.membership_holder:
+                family.custody_holder = family.membership_holder
                 family.save()
                 updated += 1
 
@@ -234,8 +246,8 @@ class FamilyAdmin(admin.ModelAdmin):
         return gettext_lazy('Yes') if Membership.is_member_family(family) else gettext_lazy('No')
 
     @admin.display(description=gettext_lazy('Default holder'))
-    def has_default_holder(self, family):
-        return gettext_lazy('Yes') if family.default_holder is not None else gettext_lazy('No')
+    def has_membership_holder(self, family):
+        return gettext_lazy('Yes') if family.membership_holder is not None else gettext_lazy('No')
 
     @admin.display(description=gettext_lazy('Created'))
     def created_formatted(self, family):
@@ -284,4 +296,4 @@ class FamilyAdmin(admin.ModelAdmin):
     created_formatted.admin_order_field = 'created'
 
     actions = [export_emails, send_email_to_parents, make_members, export_families_xls,
-               complete_custody_holder_with_last_registration, complete_custody_holder_with_default_holder]
+               complete_custody_holder_with_last_registration, complete_custody_holder_with_membership_holder]

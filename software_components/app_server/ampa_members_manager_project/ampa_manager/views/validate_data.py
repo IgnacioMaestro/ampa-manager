@@ -22,7 +22,7 @@ def validate_data(request):
             get_families_with_same_children_names(),
             get_families_with_same_surnames(),
             get_families_with_zero_or_more_than_2_parents(),
-            get_families_without_default_holder(),
+            get_families_without_membership_holder(),
             get_families_with_other_family_holder(),
             get_families_with_only_1_parent(),
             get_parents_with_same_email_and_different_family(),
@@ -68,26 +68,26 @@ def get_families_with_only_1_parent() -> TitledList:
     return TitledList(_('Families with 1 only father') + f' ({len(families)})', sublists=families)
 
 
-def get_families_without_default_holder() -> TitledList:
+def get_families_without_membership_holder() -> TitledList:
     start = timezone.now()
     families = []
-    for family in Family.objects.without_default_holder():
+    for family in Family.objects.without_membership_holder():
         holders = TitledList(family.get_html_link())
         for holder in Holder.objects.of_family(family):
             holders.append_element(holder.get_html_link())
         families.append(holders)
 
-    print(f'get_families_without_default_holder {timezone.now() - start}')
+    print(f'get_families_without_membership_holder {timezone.now() - start}')
     return TitledList(_('Families without default holder') + f' ({len(families)})', sublists=families)
 
 
 def get_families_with_other_family_holder() -> TitledList:
     start = timezone.now()
     families = []
-    for family in Family.objects.exclude(default_holder=None):
-        if not holder_and_family_match(family.default_holder, family):
+    for family in Family.objects.exclude(membership_holder=None):
+        if not holder_and_family_match(family.membership_holder, family):
             family_holder = TitledList(family.get_html_link())
-            family_holder.append_element(family.default_holder.get_html_link())
+            family_holder.append_element(family.membership_holder.get_html_link())
             families.append(family_holder)
 
     print(f'get_families_with_other_family_holder {timezone.now() - start}')

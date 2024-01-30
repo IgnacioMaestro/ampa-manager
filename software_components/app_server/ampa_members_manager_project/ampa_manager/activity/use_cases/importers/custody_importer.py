@@ -163,9 +163,9 @@ class CustodyImporter:
 
     @classmethod
     def ensure_family_holders(cls, family, holder):
-        if holder and (not family.default_holder or not family.custody_holder):
-            if not family.default_holder:
-                family.default_holder = holder
+        if holder and (not family.membership_holder or not family.custody_holder):
+            if not family.membership_holder:
+                family.membership_holder = holder
             if not family.custody_holder:
                 family.custody_holder = holder
             family.save()

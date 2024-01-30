@@ -10,8 +10,9 @@ from ...academic_course.models.level_constants import LevelConstants
 
 class TestChild(TestCase):
     def test_str(self):
+        ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
         child: Child = baker.make('Child')
-        self.assertEqual(str(child), "{} {}".format(child.name, str(child.family)))
+        self.assertEqual(str(child), "{} ({})".format(child.full_name, str(child.level)))
 
     def test_year_lower_minimal(self):
         with self.assertRaises(ValidationError):

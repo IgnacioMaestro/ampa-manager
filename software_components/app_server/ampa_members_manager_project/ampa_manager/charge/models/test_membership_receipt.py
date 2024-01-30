@@ -24,7 +24,7 @@ class TestMembershipReceipt(TestCase):
     def test_generate_receipt_no_fee_for_course(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
         holder: Holder = baker.make('Holder', bank_account=bank_account)
-        family: Family = baker.make('Family', default_holder=holder)
+        family: Family = baker.make('Family', membership_holder=holder)
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt', family=family)
         with self.assertRaises(NoFeeForCourseException):
             membership_receipt.generate_receipt()
@@ -32,7 +32,7 @@ class TestMembershipReceipt(TestCase):
     def test_generate_receipt_with_default_bank_account_and_authorization(self):
         baker.make('BankBicCode', bank_code='2095')
         holder: Holder = baker.make('Holder')
-        family: Family = baker.make('Family', default_holder=holder)
+        family: Family = baker.make('Family', membership_holder=holder)
         membership_receipt: MembershipReceipt = baker.make('MembershipReceipt', family=family)
         baker.make('Fee', academic_course=membership_receipt.remittance.course, amount=self.FEE)
 
