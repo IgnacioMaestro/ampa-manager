@@ -10,6 +10,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.activity.models.custody.custody_edition_queryset import CustodyEditionQuerySet
 from ampa_manager.activity.models.price_per_level import PricePerLevel
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 
 
 class CustodyEdition(PricePerLevel):
@@ -19,10 +20,10 @@ class CustodyEdition(PricePerLevel):
     cycle = models.CharField(max_length=3, null=False, blank=False, choices=Level.CYCLES,
                              default=Level.ID_CYCLE_PRIMARY, verbose_name=_("Cycle"))
     cost = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name=_("Cost"),
-                               help_text=_('Prices can be automatically calculated with the action "Calculate prices" '
-                                           'based on this cost and assisted days. '
-                                           'No members have a surcharge of %(surcharge)s ') %
-                                         {'surcharge': f'{int((settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE-1)*100)}%'})
+                               help_text=_(
+                                   'Prices can be automatically calculated with the action "Calculate prices" based on '
+                                   'this cost and assisted days. No members have a surcharge of %(surcharge)s ') %
+                                         {'surcharge': f'{DynamicSetting.load().custody_members_discount_percent}%'})
 
     objects = Manager.from_queryset(CustodyEditionQuerySet)()
 
@@ -36,7 +37,8 @@ class CustodyEdition(PricePerLevel):
         ]
 
     def __str__(self) -> str:
-        return f'{self.academic_course}, {self.period}, {self.get_cycle_display()}, {self.registrations_count} {_("registrations")}'
+        return (f'{self.academic_course}, {self.period}, {self.get_cycle_display()}, {self.registrations_count} '
+                f'{_("registrations")}')
     
     @property
     def no_members_registrations_count(self):
@@ -78,7 +80,7 @@ class CustodyEdition(PricePerLevel):
     def calculate_prices(self):
         members_assisted_days = self.get_assisted_days(members=True, topped=True)
         non_members_assisted_days = self.get_assisted_days(members=False, topped=True)
-        non_members_surcharge = decimal.Decimal(settings.CUSTODY_NON_MEMBERS_PRICE_SURCHARGE)
+        non_members_surcharge = decimal.Decimal((DynamicSetting.load().custody_members_discount_percent + 100) / 100)
 
         assisted_days = decimal.Decimal((non_members_assisted_days * non_members_surcharge) + members_assisted_days)
         if self.cost and assisted_days:

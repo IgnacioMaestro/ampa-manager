@@ -14,14 +14,15 @@ from ..sepa.xml_pain_008_001_02 import Document, CustomerDirectDebitInitiationV0
     GenericPersonIdentification1, PersonIdentificationSchemeName1Choice, DirectDebitTransactionInformation9, \
     PaymentIdentification1, ActiveOrHistoricCurrencyAndAmount, DirectDebitTransaction6, MandateRelatedInformation6, \
     GenericFinancialIdentification1, RemittanceInformation5, GroupHeader39
+from ...dynamic_settings.dynamic_settings import DynamicSetting
 
 
 class DocumentCreator:
-    PARTY_IDENTIFICATION = "AMPA IKASTOLA ABENDANO"
-    GENERIC_ORGANISATION_IDENTIFICATION_ID = "ES28000G01025451"
+    PARTY_IDENTIFICATION = DynamicSetting.load().remittances_party_id
+    GENERIC_ORGANISATION_IDENTIFICATION_ID = DynamicSetting.load().remittances_generic_org_id
     COUNTRY = 'ES'
-    IBAN_ACCOUNT = "ES2430350061920611157807"
-    BIC = "CLPEES2MXXX"
+    IBAN_ACCOUNT = DynamicSetting.load().remittances_iban
+    BIC = DynamicSetting.load().remittances_bic
     CORE = 'CORE'
     EURO = 'EUR'
     SEPA = 'SEPA'

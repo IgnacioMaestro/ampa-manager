@@ -30,6 +30,8 @@ from ampa_manager.charge.models.custody.custody_remittance import CustodyRemitta
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_manager.dynamic_settings.admin.dynamic_setting_admin import DynamicSettingAdmin
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 from ampa_manager.family.admin.bank_account_admin import BankAccountAdmin
 from ampa_manager.family.admin.bank_bic_code_admin import BankBicCodeAdmin
 from ampa_manager.family.admin.child_admin import ChildAdmin
@@ -82,3 +84,6 @@ admin.site.register(CustodyReceipt, CustodyReceiptAdmin)
 admin.site.register(CustodyRemittance, CustodyRemittanceAdmin)
 admin.site.register(CampsReceipt, CampsReceiptAdmin)
 admin.site.register(CampsRemittance, CampsRemittanceAdmin)
+
+
+admin.site.register(DynamicSetting, DynamicSettingAdmin)
