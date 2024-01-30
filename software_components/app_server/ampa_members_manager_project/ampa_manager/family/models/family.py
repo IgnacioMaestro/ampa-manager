@@ -24,13 +24,23 @@ class Family(TimeStampedModel):
             'It prevents the family from becoming a member. For example, if they no longer have children at school but you do not want to delete the record.'))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     membership_holder = models.ForeignKey(
-        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Default holder"),
-        help_text=_("Save the family to see its bank accounts"))
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Membership holder"),
+        help_text=_("Save the family to see its bank accounts") + '. ' + _("This account will be used if no other is specified"))
     custody_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True,
         verbose_name=_("Custody holder"),
         help_text=_("Save the family to see its bank accounts"),
         related_name='custody_holder')
+    after_school_holder = models.ForeignKey(
+        to=Holder, on_delete=SET_NULL, null=True, blank=True,
+        verbose_name=_("After-school holder"),
+        help_text=_("Save the family to see its bank accounts"),
+        related_name='after_school_holder')
+    camps_holder = models.ForeignKey(
+        to=Holder, on_delete=SET_NULL, null=True, blank=True,
+        verbose_name=_("Camps holder"),
+        help_text=_("Save the family to see its bank accounts"),
+        related_name='camps_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
 

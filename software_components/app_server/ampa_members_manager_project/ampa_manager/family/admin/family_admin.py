@@ -88,15 +88,26 @@ class FamilyInline(ReadOnlyTabularInline):
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['surnames', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
                     'has_membership_holder', 'created_formatted', 'id']
-    fields = ['surnames', 'parents', 'membership_holder', 'custody_holder', 'membership_receipts', 'camps_receipts',
-              'custody_receipts', 'after_school_receipts', 'decline_membership', 'is_defaulter', 'created', 'modified']
+    fieldsets = (
+        (_('General'), {
+            'fields': ['surnames', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
+        }),
+        (_('Holders'), {
+            'fields': ['membership_holder', 'custody_holder', 'camps_holder', 'after_school_holder'],
+        }),
+        (_('Receipts'), {
+            'fields': ['membership_receipts', 'camps_receipts', 'custody_receipts', 'after_school_receipts'],
+        }),
+    )
+
     readonly_fields = ['created', 'modified', 'membership_receipts', 'camps_receipts', 'custody_receipts',
                        'after_school_receipts']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
     search_fields = ['surnames', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
-                     'custody_holder__bank_account__iban']
+                     'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
+                     'camps_holder__bank_account__iban', 'after_school_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
