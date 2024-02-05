@@ -20,6 +20,9 @@ class CustodyImportationRow(CustodyChildImportData, HolderImportData):
             models.UniqueConstraint(fields=["importation", "row"], name="unique_importation_row")
         ]
 
+    def __str__(self):
+        return self.name + ' - ' + self.surnames
+
     @classmethod
     def create_from_custody_import_row(cls, custody_import_row: CustodyImportRow, importation: CustodyImportation):
         return cls.objects.create(

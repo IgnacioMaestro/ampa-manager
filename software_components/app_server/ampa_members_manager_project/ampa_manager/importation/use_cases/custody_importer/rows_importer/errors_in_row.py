@@ -9,6 +9,6 @@ class ErrorsInRow:
     def get_row_number(self):
         return self.__row_number
 
-    def get_errors(self):
+    def get_errors(self) -> list[RowsImporterErrorType]:
         return self.__errors
 
