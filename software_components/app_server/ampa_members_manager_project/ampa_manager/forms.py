@@ -34,6 +34,10 @@ class CheckMembersForm(forms.Form):
     file = forms.FileField()
 
 
+class ImportFamilyEmailForm(forms.Form):
+    file = forms.FileField()
+
+
 class CheckFamilyEmailForm(forms.Form):
     emails = forms.CharField(widget=forms.Textarea(
         attrs={

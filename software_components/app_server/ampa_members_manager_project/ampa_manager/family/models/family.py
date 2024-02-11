@@ -205,6 +205,10 @@ class Family(TimeStampedModel):
                 emails.append(parent.email)
         return emails
 
+    def update_email(self, email: str):
+        self.email = email
+        self.save()
+
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
         emails = []

@@ -18,7 +18,7 @@ urlpatterns = [
          name='import_after_schools_registrations'),
     path('afterschools-activities/import/', ImportAfterSchoolsActivities.as_view(),
          name='import_after_schools_activities'),
-    path('family-email/import/', ImportFamilyEmail.as_view(), name='import_family_email.html'),
+    path('family-email/import/', ImportFamilyEmail.as_view(), name='import_family_email'),
     path('family-email/check/', CheckFamilyEmail.as_view(), name='check_family_email'),
     path('custody/import/', ImportCustody.as_view(), name='import_custody'),
     path('custody/new-import/', NewImportCustody.as_view(), name='new_import_custody'),
