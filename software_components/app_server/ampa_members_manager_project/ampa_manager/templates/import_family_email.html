@@ -1,0 +1,63 @@
+{% extends 'admin/base_site.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Import family emails' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {% trans 'Import family emails' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Import family email' %}</h1>
+
+    <h2>{% trans 'Upload file' %}</h2>
+    <form action="{{ form_action }}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% trans 'Import file' %}">
+    </form>
+
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 35%;">
+
+                    <h2>{% trans 'Instructions' %}</h2>
+                    <ul>
+                        <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
+                        <li>{% trans 'The file extension must be XLS (not XLSX)' %}.</li>
+                        <li>{% trans 'Only the first sheet of the excel will be imported' %}.</li>
+                        <li>{% trans 'The rows imported will be from row 2 onwards (one header row is expected)' %}.</li>
+                        <li>{% trans 'The columns must be in the following order' %}:
+                            <ul>
+                            {% for column in excel_columns %}
+                                <li>{% trans 'Column' %} {{ column.0 }}:  {{ column.1 }}</li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+            </td>
+            <td style="width: 65%;">
+                <h2>{% trans 'Results' %}</h2>
+                {% if import_summary %}
+                    {% if success %}
+                    <img src="{% static 'images/success.png' %}" width="48px">
+                    {% else %}
+                    <img src="{% static 'images/warning.png' %}" width="48px">
+                    {% endif %}
+
+                    <p>{{ import_summary|titled_list_to_ul }}</p>
+
+                    <p>{{ import_results|titled_list_to_ul }}</p>
+                {% else %}
+                    <p>{% trans 'Choose an excel file and click "Import file" to see here the results of the import' %}.</p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
