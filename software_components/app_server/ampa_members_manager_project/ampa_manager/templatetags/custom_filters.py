@@ -1,9 +1,16 @@
+from typing import List
+
 from django import template
 from django.utils.safestring import mark_safe
 
 from ampa_manager.utils.excel.titled_list import TitledList
 
 register = template.Library()
+
+
+@register.filter
+def list_to_csv(values: List):
+    return ','.join(values)
 
 
 @register.filter

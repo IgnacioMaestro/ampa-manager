@@ -21,11 +21,13 @@ class Family(TimeStampedModel):
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
     decline_membership = models.BooleanField(
         default=False, verbose_name=_("Decline membership"), help_text=_(
-            'It prevents the family from becoming a member. For example, if they no longer have children at school but you do not want to delete the record.'))
+            'It prevents the family from becoming a member. For example, if they no longer have children at school but '
+            'you do not want to delete the record.'))
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     membership_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Membership holder"),
-        help_text=_("Save the family to see its bank accounts") + '. ' + _("This account will be used if no other is specified"))
+        help_text=_("Save the family to see its bank accounts") + '. ' +
+        _("This account will be used if no other is specified"))
     custody_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True,
         verbose_name=_("Custody holder"),

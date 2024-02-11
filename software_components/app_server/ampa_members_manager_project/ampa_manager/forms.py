@@ -32,3 +32,11 @@ class ImportCampsForm(forms.Form):
 
 class CheckMembersForm(forms.Form):
     file = forms.FileField()
+
+
+class CheckFamilyEmailForm(forms.Form):
+    emails = forms.CharField(widget=forms.Textarea(
+        attrs={
+        'placeholder': _('Write emails separated by comma or each one in one line'),
+        'style': 'width: 700px; height: 200px;'
+    }), label='Correos electrónicos')
