@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-30 16:50+0100\n"
+"POT-Creation-Date: 2024-02-12 07:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "No families to include in Membership Remittance"
 msgstr ""
 
 #: .\academic_course\admin.py:66 .\academic_course\admin.py:86
-#: .\family\models\family.py:52
+#: .\family\models\family.py:54
 msgid "Families"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 
 #: .\academic_course\admin.py:94 .\family\admin\child_admin.py:34
 #: .\family\admin\child_admin.py:56 .\family\admin\family_admin.py:224
-#: .\family\admin\family_admin.py:232 .\family\models\family.py:25
+#: .\family\admin\family_admin.py:232 .\family\models\family.py:26
 #: .\family\models\parent.py:26
 msgid "Parents"
 msgstr ""
@@ -299,8 +299,10 @@ msgid "No members"
 msgstr ""
 
 #: .\activity\admin\camps_admin.py:85 .\activity\admin\custody_admin.py:118
-#: .\charge\admin\after_school_admin.py:84 .\charge\admin\camps_admin.py:87
-#: .\charge\admin\custody_admin.py:85 .\charge\admin\membership_admin.py:65
+#: .\charge\admin\after_school_admin.py:44
+#: .\charge\admin\after_school_admin.py:99 .\charge\admin\camps_admin.py:55
+#: .\charge\admin\camps_admin.py:101 .\charge\admin\custody_admin.py:45
+#: .\charge\admin\custody_admin.py:101 .\charge\admin\membership_admin.py:65
 #: .\utils\excel\excel_importer.py:115
 msgid "Total"
 msgstr ""
@@ -418,16 +420,18 @@ msgstr ""
 #: .\activity\models\after_school\after_school_registration.py:19
 #: .\activity\models\camps\camps_registration.py:17
 #: .\activity\models\custody\custody_registration.py:17
-#: .\charge\admin\camps_admin.py:47 .\family\models\child.py:25
-#: .\views\validate_data.py:124
+#: .\charge\admin\after_school_admin.py:36 .\charge\admin\camps_admin.py:47
+#: .\charge\admin\camps_admin.py:61 .\charge\admin\custody_admin.py:37
+#: .\family\models\child.py:25 .\views\validate_data.py:124
 msgid "Child"
 msgstr ""
 
 #: .\activity\models\after_school\after_school_registration.py:20
 #: .\activity\models\camps\camps_registration.py:18
 #: .\activity\models\custody\custody_registration.py:18
-#: .\family\models\holder\holder.py:25 .\family\models\holder\holder.py:40
-#: .\views\validate_data.py:125
+#: .\charge\admin\after_school_admin.py:40 .\charge\admin\camps_admin.py:51
+#: .\charge\admin\custody_admin.py:41 .\family\models\holder\holder.py:25
+#: .\family\models\holder\holder.py:40 .\views\validate_data.py:125
 msgid "Holder"
 msgstr ""
 
@@ -648,57 +652,57 @@ msgstr ""
 msgid "PTA Administration"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:35 .\charge\admin\camps_admin.py:33
-#: .\charge\admin\custody_admin.py:35 .\charge\admin\membership_admin.py:123
+#: .\charge\admin\after_school_admin.py:50 .\charge\admin\camps_admin.py:33
+#: .\charge\admin\custody_admin.py:51 .\charge\admin\membership_admin.py:123
 msgid "Set as sent"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:42 .\charge\admin\camps_admin.py:40
-#: .\charge\admin\custody_admin.py:42 .\charge\admin\membership_admin.py:130
+#: .\charge\admin\after_school_admin.py:57 .\charge\admin\camps_admin.py:40
+#: .\charge\admin\custody_admin.py:58 .\charge\admin\membership_admin.py:130
 msgid "Set as paid"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:74
-#: .\charge\admin\after_school_admin.py:90 .\charge\admin\camps_admin.py:77
-#: .\charge\admin\camps_admin.py:93 .\charge\admin\custody_admin.py:75
-#: .\charge\admin\custody_admin.py:91 .\charge\admin\membership_admin.py:55
+#: .\charge\admin\after_school_admin.py:89
+#: .\charge\admin\after_school_admin.py:105 .\charge\admin\camps_admin.py:91
+#: .\charge\admin\camps_admin.py:107 .\charge\admin\custody_admin.py:91
+#: .\charge\admin\custody_admin.py:107 .\charge\admin\membership_admin.py:55
 #: .\charge\admin\membership_admin.py:75 .\family\admin\family_admin.py:99
 msgid "Receipts"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:78 .\charge\admin\camps_admin.py:81
-#: .\charge\admin\custody_admin.py:79 .\charge\admin\membership_admin.py:59
+#: .\charge\admin\after_school_admin.py:93 .\charge\admin\camps_admin.py:95
+#: .\charge\admin\custody_admin.py:95 .\charge\admin\membership_admin.py:59
 #: .\family\admin\family_admin.py:260 .\family\admin\family_admin.py:270
 #: .\family\admin\family_admin.py:280 .\family\admin\family_admin.py:290
 #, python-format
 msgid "%(num_receipts)s receipt"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:80 .\charge\admin\camps_admin.py:83
-#: .\charge\admin\custody_admin.py:81 .\charge\admin\membership_admin.py:61
+#: .\charge\admin\after_school_admin.py:95 .\charge\admin\camps_admin.py:97
+#: .\charge\admin\custody_admin.py:97 .\charge\admin\membership_admin.py:61
 #: .\family\admin\family_admin.py:262 .\family\admin\family_admin.py:272
 #: .\family\admin\family_admin.py:282 .\family\admin\family_admin.py:292
 #, python-format
 msgid "%(num_receipts)s receipts"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:94
+#: .\charge\admin\after_school_admin.py:109
 msgid "Export after-school remittance to CSV"
 msgstr ""
 
-#: .\charge\admin\after_school_admin.py:102
+#: .\charge\admin\after_school_admin.py:117
 msgid "Export after-school remittance to SEPA file"
 msgstr ""
 
-#: .\charge\admin\camps_admin.py:97
+#: .\charge\admin\camps_admin.py:111
 msgid "Export camps remittance to SEPA file"
 msgstr ""
 
-#: .\charge\admin\custody_admin.py:95
+#: .\charge\admin\custody_admin.py:111
 msgid "Export custody remittance to CSV"
 msgstr ""
 
-#: .\charge\admin\custody_admin.py:103
+#: .\charge\admin\custody_admin.py:119
 msgid "Export custody remittance to SEPA file"
 msgstr ""
 
@@ -707,7 +711,7 @@ msgstr ""
 #: .\charge\admin\filters\receipt_filters.py:40
 #: .\charge\admin\filters\receipt_filters.py:57
 #: .\charge\models\membership_receipt.py:20 .\family\admin\parent_admin.py:27
-#: .\family\models\child.py:20 .\family\models\family.py:51
+#: .\family\models\child.py:20 .\family\models\family.py:53
 #: .\family\models\membership.py:13
 #: .\family\use_cases\importers\members_importer.py:90
 #: .\views\validate_data.py:123
@@ -1117,7 +1121,7 @@ msgstr ""
 msgid "Not completed"
 msgstr ""
 
-#: .\family\admin\filters\family_filters.py:76 .\family\models\family.py:31
+#: .\family\admin\filters\family_filters.py:76 .\family\models\family.py:33
 msgid "Custody holder"
 msgstr ""
 
@@ -1245,43 +1249,43 @@ msgid ""
 "longer have children at school but you do not want to delete the record."
 msgstr ""
 
-#: .\family\models\family.py:27
+#: .\family\models\family.py:28
 msgid "Membership holder"
 msgstr ""
 
-#: .\family\models\family.py:28 .\family\models\family.py:32
-#: .\family\models\family.py:37 .\family\models\family.py:42
+#: .\family\models\family.py:29 .\family\models\family.py:34
+#: .\family\models\family.py:39 .\family\models\family.py:44
 msgid "Save the family to see its bank accounts"
 msgstr ""
 
-#: .\family\models\family.py:28
+#: .\family\models\family.py:30
 msgid "This account will be used if no other is specified"
 msgstr ""
 
-#: .\family\models\family.py:36
+#: .\family\models\family.py:38
 msgid "After-school holder"
 msgstr ""
 
-#: .\family\models\family.py:41
+#: .\family\models\family.py:43
 msgid "Camps holder"
 msgstr ""
 
-#: .\family\models\family.py:45
+#: .\family\models\family.py:47
 msgid "Defaulter"
 msgstr ""
 
-#: .\family\models\family.py:45
+#: .\family\models\family.py:47
 msgid "Informative field only"
 msgstr ""
 
-#: .\family\models\family.py:46 .\family\models\parent.py:20
+#: .\family\models\family.py:48 .\family\models\parent.py:20
 #: .\family\use_cases\importers\members_importer.py:93
 #: .\family\use_cases\importers\members_importer.py:97
 #: .\importation\models\parent_import_data.py:9
 msgid "Email"
 msgstr ""
 
-#: .\family\models\family.py:58 .\family\models\test_family.py:23
+#: .\family\models\family.py:60 .\family\models\test_family.py:23
 msgid "Sin hijos"
 msgstr ""
 
@@ -1333,6 +1337,18 @@ msgstr ""
 
 #: .\family\models\state.py:8
 msgid "Signed"
+msgstr ""
+
+#: .\family\use_cases\importers\family_email_importer.py:21
+msgid "Family email"
+msgstr ""
+
+#: .\family\use_cases\importers\family_email_importer.py:22
+msgid "Family first surname"
+msgstr ""
+
+#: .\family\use_cases\importers\family_email_importer.py:23
+msgid "Family second surname"
 msgstr ""
 
 #: .\family\use_cases\importers\members_importer.py:91
@@ -1399,6 +1415,10 @@ msgstr ""
 
 #: .\forms.py:29
 msgid "Camp edition to import to"
+msgstr ""
+
+#: .\forms.py:44
+msgid "Write emails separated by comma or each one in one line"
 msgstr ""
 
 #: .\importation\models\child_import_data.py:12
@@ -1503,18 +1523,44 @@ msgstr ""
 msgid "Parent import data"
 msgstr ""
 
-#: .\templates\check_members.html:5 .\templates\check_members.html:10
-#: .\templates\check_members.html:15 .\templates\check_members.html:21
-msgid "Check members"
+#: .\templates\check_family_email.html:28
+#: .\templates\check_family_email.html:33
+#: .\templates\check_family_email.html:38
+msgid "Check family emails"
 msgstr ""
 
-#: .\templates\check_members.html:9
+#: .\templates\check_family_email.html:32 .\templates\check_members.html:9
 #: .\templates\import_after_schools_activities.html:10
 #: .\templates\import_after_schools_registrations.html:10
 #: .\templates\import_camps.html:10 .\templates\import_custody.html:10
-#: .\templates\import_members.html:10 .\templates\importer.html:9
-#: .\templates\validate_families_data.html:28
+#: .\templates\import_family_email.html:10 .\templates\import_members.html:10
+#: .\templates\importer.html:9 .\templates\validate_families_data.html:28
 msgid "Home"
+msgstr ""
+
+#: .\templates\check_family_email.html:40
+msgid "Write or paste here the family emails you want to check"
+msgstr ""
+
+#: .\templates\check_family_email.html:44
+msgid "Check if these emails belong to a family"
+msgstr ""
+
+#: .\templates\check_family_email.html:49
+msgid "Emails not registered"
+msgstr ""
+
+#: .\templates\check_family_email.html:57
+msgid "Copy not registered emails to clipboard"
+msgstr ""
+
+#: .\templates\check_family_email.html:61
+msgid "Emails registered"
+msgstr ""
+
+#: .\templates\check_members.html:5 .\templates\check_members.html:10
+#: .\templates\check_members.html:15 .\templates\check_members.html:21
+msgid "Check members"
 msgstr ""
 
 #: .\templates\check_members.html:17
@@ -1526,7 +1572,8 @@ msgstr ""
 #: .\templates\import_after_schools_activities.html:29
 #: .\templates\import_after_schools_registrations.html:29
 #: .\templates\import_camps.html:29 .\templates\import_custody.html:28
-#: .\templates\import_members.html:28 .\templates\importer.html:28
+#: .\templates\import_family_email.html:29 .\templates\import_members.html:28
+#: .\templates\importer.html:28
 msgid "Instructions"
 msgstr ""
 
@@ -1551,7 +1598,8 @@ msgstr ""
 #: .\templates\import_after_schools_activities.html:39
 #: .\templates\import_after_schools_registrations.html:39
 #: .\templates\import_camps.html:39 .\templates\import_custody.html:38
-#: .\templates\import_members.html:38 .\templates\importer.html:38
+#: .\templates\import_family_email.html:38 .\templates\import_members.html:38
+#: .\templates\importer.html:38
 msgid "Column"
 msgstr ""
 
@@ -1588,35 +1636,40 @@ msgstr ""
 #: .\templates\import_after_schools_activities.html:18
 #: .\templates\import_after_schools_registrations.html:18
 #: .\templates\import_camps.html:18 .\templates\import_custody.html:18
-#: .\templates\import_members.html:18 .\templates\importer.html:17
+#: .\templates\import_family_email.html:18 .\templates\import_members.html:18
+#: .\templates\importer.html:17
 msgid "Upload file"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:22
 #: .\templates\import_after_schools_registrations.html:22
 #: .\templates\import_camps.html:22 .\templates\import_custody.html:22
-#: .\templates\import_members.html:22 .\templates\importer.html:21
+#: .\templates\import_family_email.html:22 .\templates\import_members.html:22
+#: .\templates\importer.html:21
 msgid "Import file"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:31
 #: .\templates\import_after_schools_registrations.html:31
 #: .\templates\import_camps.html:31 .\templates\import_custody.html:30
-#: .\templates\import_members.html:30 .\templates\importer.html:30
+#: .\templates\import_family_email.html:31 .\templates\import_members.html:30
+#: .\templates\importer.html:30
 msgid "Click here to download an excel template"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:32
 #: .\templates\import_after_schools_registrations.html:32
 #: .\templates\import_camps.html:32 .\templates\import_custody.html:31
-#: .\templates\import_members.html:31 .\templates\importer.html:31
+#: .\templates\import_family_email.html:32 .\templates\import_members.html:31
+#: .\templates\importer.html:31
 msgid "The file extension must be XLS (not XLSX)"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:33
 #: .\templates\import_after_schools_registrations.html:33
 #: .\templates\import_camps.html:33 .\templates\import_custody.html:32
-#: .\templates\import_members.html:32 .\templates\importer.html:32
+#: .\templates\import_family_email.html:33 .\templates\import_members.html:32
+#: .\templates\importer.html:32
 msgid "Only the first sheet of the excel will be imported"
 msgstr ""
 
@@ -1638,21 +1691,24 @@ msgstr ""
 #: .\templates\import_after_schools_activities.html:36
 #: .\templates\import_after_schools_registrations.html:36
 #: .\templates\import_camps.html:36 .\templates\import_custody.html:35
-#: .\templates\import_members.html:35 .\templates\importer.html:35
+#: .\templates\import_family_email.html:35 .\templates\import_members.html:35
+#: .\templates\importer.html:35
 msgid "The columns must be in the following order"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:46
 #: .\templates\import_after_schools_registrations.html:46
 #: .\templates\import_camps.html:46 .\templates\import_custody.html:45
-#: .\templates\import_members.html:45 .\templates\importer.html:45
+#: .\templates\import_family_email.html:45 .\templates\import_members.html:45
+#: .\templates\importer.html:45
 msgid "Results"
 msgstr ""
 
 #: .\templates\import_after_schools_activities.html:58
 #: .\templates\import_after_schools_registrations.html:58
 #: .\templates\import_camps.html:58 .\templates\import_custody.html:57
-#: .\templates\import_members.html:57 .\templates\importer.html:50
+#: .\templates\import_family_email.html:57 .\templates\import_members.html:57
+#: .\templates\importer.html:50
 msgid ""
 "Choose an excel file and click \"Import file\" to see here the results of "
 "the import"
@@ -1672,6 +1728,20 @@ msgstr ""
 #: .\templates\import_custody.html:6 .\templates\import_custody.html:11
 #: .\templates\import_custody.html:16
 msgid "Import custody"
+msgstr ""
+
+#: .\templates\import_family_email.html:6
+#: .\templates\import_family_email.html:11
+msgid "Import family emails"
+msgstr ""
+
+#: .\templates\import_family_email.html:16
+msgid "Import family email"
+msgstr ""
+
+#: .\templates\import_family_email.html:34
+msgid ""
+"The rows imported will be from row 2 onwards (one header row is expected)"
 msgstr ""
 
 #: .\templates\import_members.html:6 .\templates\import_members.html:11
