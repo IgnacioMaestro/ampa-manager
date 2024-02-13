@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-13 13:38+0100\n"
+"POT-Creation-Date: 2024-02-13 13:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -485,6 +485,7 @@ msgid "After-school registration"
 msgstr "Inscripción en extraescolar"
 
 #: .\activity\models\after_school\after_school_registration.py:26
+#: .\family\admin\family_admin.py:298
 msgid "After-school registrations"
 msgstr "Inscripciones en extraescolares"
 
@@ -531,7 +532,7 @@ msgid "Camps registration"
 msgstr "Inscripción en campamentos"
 
 #: .\activity\models\camps\camps_registration.py:24
-#: .\charge\models\camps\camps_receipt.py:18
+#: .\charge\models\camps\camps_receipt.py:18 .\family\admin\family_admin.py:294
 msgid "Camps registrations"
 msgstr "Inscripciones en campamentos"
 
@@ -569,8 +570,7 @@ msgstr "Inscripciones en custodia"
 
 #: .\activity\models\custody\custody_registration.py:25
 #: .\charge\models\custody\custody_receipt.py:17
-#: .\family\admin\family_admin.py:290 .\family\admin\family_admin.py:294
-#: .\family\admin\family_admin.py:298
+#: .\family\admin\family_admin.py:290
 msgid "Custody registrations"
 msgstr "Inscripciones en custodia"
 

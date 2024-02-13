@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
     ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
 from ampa_manager.charge.admin.csv_response_creator import CSVResponseCreator
-from ampa_manager.charge.admin.filters.receipt_filters import FamilyMembershipReceiptFilter
+from ampa_manager.charge.admin.filters.receipt_filters import FamilyReceiptFilter
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
@@ -117,7 +117,7 @@ class MembershipReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'family', 'state']
     ordering = ['state']
     search_fields = ['family__surnames', 'family__id']
-    list_filter = ['state', FamilyMembershipReceiptFilter]
+    list_filter = ['state', FamilyReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))
