@@ -291,11 +291,11 @@ class FamilyAdmin(admin.ModelAdmin):
     def custody_registrations(self, family):
         return self.get_registrations_link(family, CustodyRegistration)
 
-    @admin.display(description=gettext_lazy('Custody registrations'))
+    @admin.display(description=gettext_lazy('Camps registrations'))
     def camps_registrations(self, family):
         return self.get_registrations_link(family, CampsRegistration)
 
-    @admin.display(description=gettext_lazy('Custody registrations'))
+    @admin.display(description=gettext_lazy('After-school registrations'))
     def after_school_registrations(self, family):
         return self.get_registrations_link(family, AfterSchoolRegistration)
 

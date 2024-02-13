@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .filters.receipt_filters import FamilyCampsReceiptFilter
+from .filters.receipt_filters import FamilyReceiptFilter
 from ..models.camps.camps_receipt import CampsReceipt
 from ..models.camps.camps_remittance import CampsRemittance
 from ..remittance import Remittance
@@ -27,7 +27,7 @@ class CampsReceiptAdmin(admin.ModelAdmin):
                      'camps_registration__child__name',
                      'camps_registration__holder__bank_account__iban',
                      'camps_registration__holder__parent__name_and_surnames']
-    list_filter = ['state', FamilyCampsReceiptFilter]
+    list_filter = ['state', FamilyReceiptFilter]
     list_per_page = 25
 
     @admin.action(description=gettext_lazy("Set as sent"))
