@@ -23,8 +23,7 @@ class FieldsFormattersDjango:
     @staticmethod
     def clean_level(value: str) -> Optional[str]:
         if value:
-            level = StringUtils.uppercase(
-                StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
+            level = StringUtils.uppercase(StringUtils.remove_all_spaces((str(value))))
             if Level.is_valid(level):
                 return level
             else:
