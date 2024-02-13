@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 07:36+0100\n"
+"POT-Creation-Date: 2024-02-13 13:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,23 +26,23 @@ msgstr "Resumen"
 msgid "Is active"
 msgstr "Está activo"
 
-#: .\academic_course\admin.py:29 .\activity\admin\camps_admin.py:40
-#: .\activity\admin\custody_admin.py:41 .\family\admin\child_admin.py:28
-#: .\family\admin\family_admin.py:246 .\family\admin\family_admin.py:250
-#: .\family\admin\parent_admin.py:25
+#: .\academic_course\admin.py:29 .\activity\admin\after_school_admin.py:56
+#: .\activity\admin\camps_admin.py:42 .\activity\admin\custody_admin.py:43
+#: .\family\admin\child_admin.py:28 .\family\admin\family_admin.py:250
+#: .\family\admin\family_admin.py:254 .\family\admin\parent_admin.py:25
 msgid "Yes"
 msgstr "Sí"
 
-#: .\academic_course\admin.py:29 .\activity\admin\camps_admin.py:40
-#: .\activity\admin\custody_admin.py:41 .\family\admin\child_admin.py:28
-#: .\family\admin\family_admin.py:246 .\family\admin\family_admin.py:250
-#: .\family\admin\parent_admin.py:25
+#: .\academic_course\admin.py:29 .\activity\admin\after_school_admin.py:56
+#: .\activity\admin\camps_admin.py:42 .\activity\admin\custody_admin.py:43
+#: .\family\admin\child_admin.py:28 .\family\admin\family_admin.py:250
+#: .\family\admin\family_admin.py:254 .\family\admin\parent_admin.py:25
 msgid "No"
 msgstr "No"
 
 #: .\academic_course\admin.py:31 .\academic_course\admin.py:82
-#: .\activity\admin\camps_admin.py:81 .\activity\admin\custody_admin.py:94
-#: .\activity\admin\custody_admin.py:114
+#: .\activity\admin\camps_admin.py:83 .\activity\admin\custody_admin.py:112
+#: .\activity\admin\custody_admin.py:132
 #: .\activity\admin\registration_filters.py:14
 msgid "Members"
 msgstr "Socios"
@@ -59,10 +59,10 @@ msgstr "Selecciona los cursos de uno en uno"
 msgid "Membership remittance created"
 msgstr "Remesa de socios creada"
 
-#: .\academic_course\admin.py:48 .\activity\admin\after_school_admin.py:65
-#: .\activity\admin\after_school_admin.py:73
-#: .\activity\admin\after_school_admin.py:81
-#: .\activity\admin\camps_admin.py:104 .\activity\admin\custody_admin.py:142
+#: .\academic_course\admin.py:48 .\activity\admin\after_school_admin.py:87
+#: .\activity\admin\after_school_admin.py:95
+#: .\activity\admin\after_school_admin.py:103
+#: .\activity\admin\camps_admin.py:106 .\activity\admin\custody_admin.py:160
 #: .\charge\admin\membership_admin.py:103
 msgid "View details"
 msgstr "Ver detalles"
@@ -93,8 +93,8 @@ msgid "Families with children in school"
 msgstr "Familias con hijos en la ikastola"
 
 #: .\academic_course\admin.py:94 .\family\admin\child_admin.py:34
-#: .\family\admin\child_admin.py:56 .\family\admin\family_admin.py:224
-#: .\family\admin\family_admin.py:232 .\family\models\family.py:26
+#: .\family\admin\child_admin.py:56 .\family\admin\family_admin.py:228
+#: .\family\admin\family_admin.py:236 .\family\models\family.py:26
 #: .\family\models\parent.py:26
 msgid "Parents"
 msgstr "Padres"
@@ -174,7 +174,7 @@ msgid "Academic courses"
 msgstr "Cursos académicos"
 
 #: .\academic_course\models\active_course.py:11
-#: .\activity\admin\registration_filters.py:28
+#: .\activity\admin\registration_filters.py:29
 #: .\charge\admin\membership_admin.py:32 .\charge\models\fee\fee.py:9
 #: .\family\admin\child_admin.py:30 .\family\admin\family_admin.py:62
 #: .\family\admin\filters\child_filters.py:38
@@ -235,70 +235,108 @@ msgstr "Primaria"
 msgid "All cycles"
 msgstr "Todos los ciclos"
 
-#: .\activity\admin\after_school_admin.py:47 .\activity\admin\camps_admin.py:53
-#: .\activity\admin\custody_admin.py:54 .\family\admin\family_admin.py:58
-msgid "Id"
-msgstr "Id"
+#: .\activity\admin\after_school_admin.py:42
+#: .\activity\models\after_school\after_school_edition.py:18
+#: .\activity\models\after_school\after_school_registration.py:17
+msgid "After-school edition"
+msgstr "Edición de extraescolar"
 
-#: .\activity\admin\after_school_admin.py:60
-msgid "Create after school remittance"
-msgstr "Crear remesa de extraescolares"
+#: .\activity\admin\after_school_admin.py:46
+#: .\activity\admin\custody_admin.py:49
+#: .\activity\models\after_school\after_school_registration.py:19
+#: .\activity\models\camps\camps_registration.py:17
+#: .\activity\models\custody\custody_registration.py:17
+#: .\charge\admin\after_school_admin.py:36 .\charge\admin\camps_admin.py:47
+#: .\charge\admin\camps_admin.py:61 .\charge\admin\custody_admin.py:37
+#: .\family\models\child.py:25 .\views\validate_data.py:124
+msgid "Child"
+msgstr "Hijo"
 
-#: .\activity\admin\after_school_admin.py:65
-#: .\activity\admin\after_school_admin.py:73
-#: .\activity\admin\after_school_admin.py:81
-#: .\activity\admin\camps_admin.py:104 .\activity\admin\custody_admin.py:142
-msgid "Activity remittance created"
-msgstr "Remesa de actividad creada"
+#: .\activity\admin\after_school_admin.py:50
+#: .\activity\admin\custody_admin.py:53
+#: .\activity\admin\registration_filters.py:55
+#: .\charge\admin\filters\receipt_filters.py:6
+#: .\charge\admin\filters\receipt_filters.py:23
+#: .\charge\admin\filters\receipt_filters.py:40
+#: .\charge\admin\filters\receipt_filters.py:57
+#: .\charge\models\membership_receipt.py:20 .\family\admin\parent_admin.py:27
+#: .\family\models\child.py:20 .\family\models\family.py:53
+#: .\family\models\membership.py:13
+#: .\family\use_cases\importers\members_importer.py:90
+#: .\views\validate_data.py:123
+msgid "Family"
+msgstr "Familia"
 
-#: .\activity\admin\after_school_admin.py:68
-msgid "Create after school remittance with half"
-msgstr "Crear remesa de extraescolares con la mitad del importe"
-
-#: .\activity\admin\after_school_admin.py:76
-msgid "Create after school remittance with left"
-msgstr "Crear remesa de extraescolares con el importe restante"
-
-#: .\activity\admin\after_school_admin.py:84 .\activity\admin\camps_admin.py:66
-#: .\activity\admin\custody_admin.py:71
-msgid "Registrations"
-msgstr "Inscripciones"
-
-#: .\activity\admin\after_school_admin.py:88
-#: .\activity\admin\custody_admin.py:166
-msgid "Export family emails to CSV"
-msgstr "Exportar correos de la familia a CSV"
-
-#: .\activity\admin\after_school_admin.py:120
-msgid "Editions"
-msgstr "Ediciones"
-
-#: .\activity\admin\camps_admin.py:38 .\activity\admin\camps_admin.py:49
-#: .\activity\admin\custody_admin.py:39 .\activity\admin\custody_admin.py:50
-#: .\family\admin\child_admin.py:26 .\family\admin\family_admin.py:244
+#: .\activity\admin\after_school_admin.py:54 .\activity\admin\camps_admin.py:40
+#: .\activity\admin\camps_admin.py:51 .\activity\admin\custody_admin.py:68
+#: .\family\admin\child_admin.py:26 .\family\admin\family_admin.py:248
 #: .\family\admin\parent_admin.py:23
 msgid "Is member"
 msgstr "Es socio"
 
-#: .\activity\admin\camps_admin.py:65 .\activity\admin\custody_admin.py:68
+#: .\activity\admin\after_school_admin.py:58
+#: .\activity\admin\custody_admin.py:57
+msgid "Price"
+msgstr "Precio"
+
+#: .\activity\admin\after_school_admin.py:69 .\activity\admin\camps_admin.py:55
+#: .\activity\admin\custody_admin.py:72 .\family\admin\family_admin.py:58
+msgid "Id"
+msgstr "Id"
+
+#: .\activity\admin\after_school_admin.py:82
+msgid "Create after school remittance"
+msgstr "Crear remesa de extraescolares"
+
+#: .\activity\admin\after_school_admin.py:87
+#: .\activity\admin\after_school_admin.py:95
+#: .\activity\admin\after_school_admin.py:103
+#: .\activity\admin\camps_admin.py:106 .\activity\admin\custody_admin.py:160
+msgid "Activity remittance created"
+msgstr "Remesa de actividad creada"
+
+#: .\activity\admin\after_school_admin.py:90
+msgid "Create after school remittance with half"
+msgstr "Crear remesa de extraescolares con la mitad del importe"
+
+#: .\activity\admin\after_school_admin.py:98
+msgid "Create after school remittance with left"
+msgstr "Crear remesa de extraescolares con el importe restante"
+
+#: .\activity\admin\after_school_admin.py:106
+#: .\activity\admin\camps_admin.py:68 .\activity\admin\custody_admin.py:89
+#: .\family\admin\family_admin.py:99
+msgid "Registrations"
+msgstr "Inscripciones"
+
+#: .\activity\admin\after_school_admin.py:110
+#: .\activity\admin\custody_admin.py:184
+msgid "Export family emails to CSV"
+msgstr "Exportar correos de la familia a CSV"
+
+#: .\activity\admin\after_school_admin.py:142
+msgid "Editions"
+msgstr "Ediciones"
+
+#: .\activity\admin\camps_admin.py:67 .\activity\admin\custody_admin.py:86
 msgid "Prices"
 msgstr "Precios"
 
-#: .\activity\admin\camps_admin.py:69 .\activity\admin\camps_admin.py:89
+#: .\activity\admin\camps_admin.py:71 .\activity\admin\camps_admin.py:91
 #: .\activity\admin\camps_edition_filters.py:8
-#: .\activity\admin\custody_admin.py:78 .\activity\admin\custody_admin.py:122
-#: .\activity\admin\custody_admin.py:132
+#: .\activity\admin\custody_admin.py:96 .\activity\admin\custody_admin.py:140
+#: .\activity\admin\custody_admin.py:150
 #: .\activity\admin\custody_edition_filters.py:8
 msgid "Remittance"
 msgstr "Remesa"
 
-#: .\activity\admin\camps_admin.py:77 .\activity\admin\custody_admin.py:102
-#: .\activity\admin\custody_admin.py:110
+#: .\activity\admin\camps_admin.py:79 .\activity\admin\custody_admin.py:120
+#: .\activity\admin\custody_admin.py:128
 #: .\activity\admin\registration_filters.py:15
 msgid "No members"
 msgstr "No socios"
 
-#: .\activity\admin\camps_admin.py:85 .\activity\admin\custody_admin.py:118
+#: .\activity\admin\camps_admin.py:87 .\activity\admin\custody_admin.py:136
 #: .\charge\admin\after_school_admin.py:44
 #: .\charge\admin\after_school_admin.py:99 .\charge\admin\camps_admin.py:55
 #: .\charge\admin\camps_admin.py:101 .\charge\admin\custody_admin.py:45
@@ -307,11 +345,11 @@ msgstr "No socios"
 msgid "Total"
 msgstr "Total"
 
-#: .\activity\admin\camps_admin.py:97
+#: .\activity\admin\camps_admin.py:99
 msgid "Multiple remittances"
 msgstr "Varias remesas"
 
-#: .\activity\admin\camps_admin.py:99
+#: .\activity\admin\camps_admin.py:101
 msgid "Create camps remittance"
 msgstr "Crear remesa de campamentos"
 
@@ -325,46 +363,57 @@ msgstr "Con remesa"
 msgid "No remittance"
 msgstr "Sin remesa"
 
-#: .\activity\admin\custody_admin.py:74
+#: .\activity\admin\custody_admin.py:41
+msgid "Member"
+msgstr "Socio"
+
+#: .\activity\admin\custody_admin.py:45
+#: .\activity\models\custody\custody_edition.py:31
+#: .\activity\models\custody\custody_registration.py:15
+msgid "Custody edition"
+msgstr "Edición de custodia"
+
+#: .\activity\admin\custody_admin.py:92
+#: .\activity\models\custody\custody_registration.py:19
 msgid "Assisted days"
 msgstr "Días asistidos"
 
-#: .\activity\admin\custody_admin.py:90
+#: .\activity\admin\custody_admin.py:108
 msgid "Charged"
 msgstr "Cobrado"
 
-#: .\activity\admin\custody_admin.py:98
+#: .\activity\admin\custody_admin.py:116
 msgid "Members (topped by \"Max days for charge\")"
 msgstr "Socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\activity\admin\custody_admin.py:106
+#: .\activity\admin\custody_admin.py:124
 msgid "No members (topped by \"Max days for charge\")"
 msgstr "No socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\activity\admin\custody_admin.py:130
+#: .\activity\admin\custody_admin.py:148
 msgid "Multiple remmitances"
 msgstr "Varias remesas"
 
-#: .\activity\admin\custody_admin.py:137
+#: .\activity\admin\custody_admin.py:155
 msgid "Create custody remittance"
 msgstr "Crear remesa de custodia"
 
-#: .\activity\admin\custody_admin.py:145
+#: .\activity\admin\custody_admin.py:163
 msgid "Calculate prices"
 msgstr "Calcular precios"
 
-#: .\activity\admin\custody_admin.py:157
+#: .\activity\admin\custody_admin.py:175
 #, python-format
 msgid "%(calculated)s editions' prices calculated"
 msgstr "Precios de %(calculated)s ediciones calculador"
 
-#: .\activity\admin\custody_admin.py:161
+#: .\activity\admin\custody_admin.py:179
 #, python-format
 msgid "Unable to calculate %(not_calculated)s editions' prices"
 msgstr ""
 "No ha sido posible calcular los precios de %(not_calculated)s ediciones"
 
-#: .\activity\admin\custody_admin.py:162
+#: .\activity\admin\custody_admin.py:180
 msgid "Prices calculated based on edition cost and number of registrations"
 msgstr ""
 "Precios calculados en base al coste de la edición y el nº de inscripciones"
@@ -382,6 +431,14 @@ msgstr "Anterior"
 #: .\family\models\membership.py:20
 msgid "Membership"
 msgstr "Socios"
+
+#: .\activity\admin\registration_filters.py:61
+#: .\charge\admin\filters\receipt_filters.py:12
+#: .\charge\admin\filters\receipt_filters.py:29
+#: .\charge\admin\filters\receipt_filters.py:46
+#: .\charge\admin\filters\receipt_filters.py:63
+msgid "All"
+msgstr "Todos"
 
 #: .\activity\models\after_school\after_school.py:8
 msgid "AfterSchool activity name"
@@ -410,23 +467,9 @@ msgstr "Período"
 msgid "Timetable"
 msgstr "Horario"
 
-#: .\activity\models\after_school\after_school_edition.py:18
-#: .\activity\models\after_school\after_school_registration.py:17
-msgid "After-school edition"
-msgstr "Edición de extraescolar"
-
 #: .\activity\models\after_school\after_school_edition.py:19
 msgid "After-school editions"
 msgstr "Ediciones de extraescolares"
-
-#: .\activity\models\after_school\after_school_registration.py:19
-#: .\activity\models\camps\camps_registration.py:17
-#: .\activity\models\custody\custody_registration.py:17
-#: .\charge\admin\after_school_admin.py:36 .\charge\admin\camps_admin.py:47
-#: .\charge\admin\camps_admin.py:61 .\charge\admin\custody_admin.py:37
-#: .\family\models\child.py:25 .\views\validate_data.py:124
-msgid "Child"
-msgstr "Hijo"
 
 #: .\activity\models\after_school\after_school_registration.py:20
 #: .\activity\models\camps\camps_registration.py:18
@@ -516,11 +559,6 @@ msgstr ""
 "precios\" a partir de este coste y los días asistidos. Los no socios tienen "
 "un recargo del %(surcharge)s "
 
-#: .\activity\models\custody\custody_edition.py:31
-#: .\activity\models\custody\custody_registration.py:15
-msgid "Custody edition"
-msgstr "Edición de custodia"
-
 #: .\activity\models\custody\custody_edition.py:32
 msgid "Custody editions"
 msgstr "Ediciones de custodia"
@@ -531,6 +569,8 @@ msgstr "Inscripciones en custodia"
 
 #: .\activity\models\custody\custody_registration.py:25
 #: .\charge\models\custody\custody_receipt.py:17
+#: .\family\admin\family_admin.py:290 .\family\admin\family_admin.py:294
+#: .\family\admin\family_admin.py:298
 msgid "Custody registrations"
 msgstr "Inscripciones en custodia"
 
@@ -673,22 +713,22 @@ msgstr "Marcar como pagado"
 #: .\charge\admin\after_school_admin.py:105 .\charge\admin\camps_admin.py:91
 #: .\charge\admin\camps_admin.py:107 .\charge\admin\custody_admin.py:91
 #: .\charge\admin\custody_admin.py:107 .\charge\admin\membership_admin.py:55
-#: .\charge\admin\membership_admin.py:75 .\family\admin\family_admin.py:99
+#: .\charge\admin\membership_admin.py:75 .\family\admin\family_admin.py:102
 msgid "Receipts"
 msgstr "Recibos"
 
 #: .\charge\admin\after_school_admin.py:93 .\charge\admin\camps_admin.py:95
 #: .\charge\admin\custody_admin.py:95 .\charge\admin\membership_admin.py:59
-#: .\family\admin\family_admin.py:260 .\family\admin\family_admin.py:270
-#: .\family\admin\family_admin.py:280 .\family\admin\family_admin.py:290
+#: .\family\admin\family_admin.py:264 .\family\admin\family_admin.py:274
+#: .\family\admin\family_admin.py:284 .\family\admin\family_admin.py:317
 #, python-format
 msgid "%(num_receipts)s receipt"
 msgstr "%(num_receipts)s recibos"
 
 #: .\charge\admin\after_school_admin.py:95 .\charge\admin\camps_admin.py:97
 #: .\charge\admin\custody_admin.py:97 .\charge\admin\membership_admin.py:61
-#: .\family\admin\family_admin.py:262 .\family\admin\family_admin.py:272
-#: .\family\admin\family_admin.py:282 .\family\admin\family_admin.py:292
+#: .\family\admin\family_admin.py:266 .\family\admin\family_admin.py:276
+#: .\family\admin\family_admin.py:286 .\family\admin\family_admin.py:319
 #, python-format
 msgid "%(num_receipts)s receipts"
 msgstr "%(num_receipts)s recibos"
@@ -712,25 +752,6 @@ msgstr "Exportar la remesa de custodia a CSV"
 #: .\charge\admin\custody_admin.py:119
 msgid "Export custody remittance to SEPA file"
 msgstr "Exportar la remesa de custodia a fichero SEPA"
-
-#: .\charge\admin\filters\receipt_filters.py:6
-#: .\charge\admin\filters\receipt_filters.py:23
-#: .\charge\admin\filters\receipt_filters.py:40
-#: .\charge\admin\filters\receipt_filters.py:57
-#: .\charge\models\membership_receipt.py:20 .\family\admin\parent_admin.py:27
-#: .\family\models\child.py:20 .\family\models\family.py:53
-#: .\family\models\membership.py:13
-#: .\family\use_cases\importers\members_importer.py:90
-#: .\views\validate_data.py:123
-msgid "Family"
-msgstr "Familia"
-
-#: .\charge\admin\filters\receipt_filters.py:12
-#: .\charge\admin\filters\receipt_filters.py:29
-#: .\charge\admin\filters\receipt_filters.py:46
-#: .\charge\admin\filters\receipt_filters.py:63
-msgid "All"
-msgstr "Todos"
 
 #: .\charge\admin\membership_admin.py:79
 msgid "Export Membership Remittance to CSV"
@@ -770,7 +791,7 @@ msgid "After-school receipt"
 msgstr "Recibo de extraescolar"
 
 #: .\charge\models\after_school_charge\after_school_receipt.py:26
-#: .\family\admin\family_admin.py:286
+#: .\family\admin\family_admin.py:313
 msgid "After-school receipts"
 msgstr "Recibos de extraescolares"
 
@@ -795,7 +816,7 @@ msgstr "Remesa de campamentos"
 msgid "Camps receipt"
 msgstr "Recibo de campamentos"
 
-#: .\charge\models\camps\camps_receipt.py:26 .\family\admin\family_admin.py:266
+#: .\charge\models\camps\camps_receipt.py:26 .\family\admin\family_admin.py:270
 msgid "Camps receipts"
 msgstr "Recibos de campamentos"
 
@@ -817,7 +838,7 @@ msgid "Custody receipt"
 msgstr "Recibo de custodia"
 
 #: .\charge\models\custody\custody_receipt.py:25
-#: .\family\admin\family_admin.py:276
+#: .\family\admin\family_admin.py:280
 msgid "Custody receipts"
 msgstr "Recibos de custodia"
 
@@ -849,7 +870,7 @@ msgstr "Remesa de socios"
 msgid "Membership receipt"
 msgstr "Recibo de socio"
 
-#: .\charge\models\membership_receipt.py:26 .\family\admin\family_admin.py:256
+#: .\charge\models\membership_receipt.py:26 .\family\admin\family_admin.py:260
 msgid "Membership receipts"
 msgstr "Recibos de socios"
 
@@ -896,7 +917,7 @@ msgstr "Fecha de pago"
 msgid "Concept"
 msgstr "Concepto"
 
-#: .\charge\state.py:6 .\family\admin\family_admin.py:252
+#: .\charge\state.py:6 .\family\admin\family_admin.py:256
 msgid "Created"
 msgstr "Creado"
 
@@ -1013,42 +1034,42 @@ msgstr "Campamentos"
 msgid "General"
 msgstr "General"
 
-#: .\family\admin\family_admin.py:117
+#: .\family\admin\family_admin.py:121
 msgid "Complete empty custody holders with last registration"
 msgstr ""
 "Completar titulares de custodia vacíos con los de la última inscripción"
 
-#: .\family\admin\family_admin.py:128 .\family\admin\family_admin.py:140
+#: .\family\admin\family_admin.py:132 .\family\admin\family_admin.py:144
 #, python-format
 msgid "%(update_families)s families updated"
 msgstr "%(update_families)s familias actualizadas"
 
-#: .\family\admin\family_admin.py:131
+#: .\family\admin\family_admin.py:135
 msgid "Complete empty custody holders with membership_holder"
 msgstr "Completar titulares de custodia vacíos con el titular de la cuota"
 
-#: .\family\admin\family_admin.py:143
+#: .\family\admin\family_admin.py:147
 msgid "Export emails to CSV"
 msgstr "Exportar correos a CSV"
 
-#: .\family\admin\family_admin.py:150
+#: .\family\admin\family_admin.py:154
 msgid "Send email to the parents of selected families"
 msgstr "Enviar un correo a los padres de las familias seleccionadas"
 
-#: .\family\admin\family_admin.py:156
+#: .\family\admin\family_admin.py:160
 msgid "Click here to send an email to the parents"
 msgstr "Haz clic aquí para enviar un correo a los padres"
 
-#: .\family\admin\family_admin.py:160
+#: .\family\admin\family_admin.py:164
 msgid "Export families to XLS"
 msgstr "Exportar familias a XLS"
 
-#: .\family\admin\family_admin.py:198
+#: .\family\admin\family_admin.py:202
 msgid "Make families member"
 msgstr "Convertir las familias en socias"
 
 # python-format
-#: .\family\admin\family_admin.py:213
+#: .\family\admin\family_admin.py:217
 #, python-format
 msgid ""
 "%(new_members)s families became members. %(already_members)s families "
@@ -1057,27 +1078,37 @@ msgstr ""
 "%(new_members)s familias convertidas en socias. %(already_members)s familias "
 "ya eran socias. %(declined)s familias no quieren seguir siendo socias"
 
-#: .\family\admin\family_admin.py:217
+#: .\family\admin\family_admin.py:221
 msgid "Decline Membership"
 msgstr "No quiere ser socio"
 
-#: .\family\admin\family_admin.py:221
+#: .\family\admin\family_admin.py:225
 msgid "Decline Membership established"
 msgstr "'No quiere ser socio' activado"
 
-#: .\family\admin\family_admin.py:228 .\family\admin\family_admin.py:236
+#: .\family\admin\family_admin.py:232 .\family\admin\family_admin.py:240
 #: .\family\models\child.py:26
 msgid "Children"
 msgstr "Hijos"
 
-#: .\family\admin\family_admin.py:240
+#: .\family\admin\family_admin.py:244
 msgid "In school"
 msgstr "En la ikastola"
 
-#: .\family\admin\family_admin.py:248
+#: .\family\admin\family_admin.py:252
 #: .\family\admin\filters\family_filters.py:55
 msgid "Default holder"
 msgstr "Titular por defecto"
+
+#: .\family\admin\family_admin.py:305
+#, python-format
+msgid "%(registrations)s registration"
+msgstr "%(registrations)s inscripción"
+
+#: .\family\admin\family_admin.py:307
+#, python-format
+msgid "%(registrations)s registrations"
+msgstr "%(registrations)s inscripciones"
 
 #: .\family\admin\filters\bank_account_filters.py:6
 #: .\family\models\bank_account\bank_account.py:13
@@ -1764,8 +1795,7 @@ msgstr "Importar correos de familia"
 #: .\templates\import_family_email.html:34
 msgid ""
 "The rows imported will be from row 2 onwards (one header row is expected)"
-msgstr ""
-"Se importa de la fila 2 en adelante (se cuenta con 1 fila de cabecera)"
+msgstr "Se importa de la fila 2 en adelante (se cuenta con 1 fila de cabecera)"
 
 #: .\templates\import_members.html:6 .\templates\import_members.html:11
 #: .\templates\import_members.html:16

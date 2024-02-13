@@ -5,6 +5,7 @@ from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.family.models.child import Child
+from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 
 
@@ -15,6 +16,9 @@ class AfterSchoolRegistrationQuerySet(QuerySet):
 
     def of_child(self, child: Child):
         return self.filter(child=child)
+
+    def of_family(self, family: Family):
+        return self.filter(child__family=family)
 
     def of_active_course(self):
         active_course: AcademicCourse = ActiveCourse.load()

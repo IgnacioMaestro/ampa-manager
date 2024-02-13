@@ -5,6 +5,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
 from ampa_manager.family.models.child import Child
+from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 
@@ -16,6 +17,9 @@ class CampsRegistrationQuerySet(QuerySet):
 
     def of_child(self, child: Child):
         return self.filter(child=child)
+
+    def of_family(self, family: Family):
+        return self.filter(child__family=family)
 
     def of_active_course(self):
         active_course: AcademicCourse = ActiveCourse.load()

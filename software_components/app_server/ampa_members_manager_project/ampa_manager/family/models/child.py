@@ -36,6 +36,9 @@ class Child(TimeStampedModel):
     def __str__(self) -> str:
         return f'{self.full_name} ({self.level})'
 
+    def str_short(self):
+        return f'{self.name} ({self.level})'
+
     @property
     def level(self):
         return Level.get_level_by_age(self.school_age)

@@ -26,6 +26,9 @@ class AfterSchoolEdition(PricePerLevel):
     def __str__(self) -> str:
         return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}, {self.registrations_count} {_("registrations")}'
 
+    def str_short(self) -> str:
+        return f'{self.academic_course}, {self.after_school}, {self.period}, {self.timetable}'
+
     @property
     def no_members_registrations_count(self):
         return self.registrations.no_members().count()

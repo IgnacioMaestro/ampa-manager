@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.activity.admin.custody_edition_filters import CustodyEditionHasRemittanceFilter, \
     CustodyEditionAcademicCourse
-from ampa_manager.activity.admin.registration_filters import RegistrationFilter, ChildLevelListFilter
+from ampa_manager.activity.admin.registration_filters import RegistrationFilter, ChildLevelListFilter, \
+    FamilyRegistrationFilter
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
@@ -27,18 +28,35 @@ class CustodyRegistrationAdminForm(forms.ModelForm):
 
 
 class CustodyRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['custody_edition', 'child', 'holder', 'assisted_days', 'is_member']
+    list_display = ['custody_edition_short', 'family_surnames', 'child_name', 'holder', 'assisted_days', 'is_member',
+                    'price']
     ordering = ['custody_edition']
     list_filter = ['custody_edition__academic_course__initial_year', 'custody_edition__period',
-                   'custody_edition__cycle', RegistrationFilter, ChildLevelListFilter]
+                   'custody_edition__cycle', RegistrationFilter, ChildLevelListFilter, FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
-                     'holder__parent__name_and_surnames', 'child__id']
+                     'holder__parent__name_and_surnames', 'child__id', 'child__family__id']
     list_per_page = 25
     # form = CustodyRegistrationAdminForm
 
-    @admin.display(description=gettext_lazy('Is member'))
+    @admin.display(description=gettext_lazy('Member'))
     def is_member(self, registration):
         return _('Yes') if Membership.is_member_child(registration.child) else _('No')
+
+    @admin.display(description=gettext_lazy('Custody edition'))
+    def custody_edition_short(self, registration):
+        return registration.custody_edition.str_short()
+
+    @admin.display(description=gettext_lazy('Child'))
+    def child_name(self, registration):
+        return registration.child.str_short()
+
+    @admin.display(description=gettext_lazy('Family'))
+    def family_surnames(self, registration):
+        return registration.child.family.surnames
+
+    @admin.display(description=gettext_lazy('Price'))
+    def price(self, registration):
+        return registration.calculate_price()
 
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):

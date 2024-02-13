@@ -96,13 +96,17 @@ class FamilyAdmin(admin.ModelAdmin):
         (_('Holders'), {
             'fields': ['membership_holder', 'custody_holder', 'camps_holder', 'after_school_holder'],
         }),
+        (_('Registrations'), {
+            'fields': ['camps_registrations', 'custody_registrations', 'after_school_registrations'],
+        }),
         (_('Receipts'), {
             'fields': ['membership_receipts', 'camps_receipts', 'custody_receipts', 'after_school_receipts'],
         }),
     )
 
     readonly_fields = ['created', 'modified', 'membership_receipts', 'camps_receipts', 'custody_receipts',
-                       'after_school_receipts']
+                       'after_school_receipts', 'camps_registrations', 'custody_registrations',
+                       'after_school_registrations']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
@@ -282,6 +286,29 @@ class FamilyAdmin(admin.ModelAdmin):
             link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
         filters = f'family={family.id}'
         return Utils.get_model_link(model_name=CustodyReceipt.__name__.lower(), link_text=link_text, filters=filters)
+
+    @admin.display(description=gettext_lazy('Custody registrations'))
+    def custody_registrations(self, family):
+        return self.get_registrations_link(family, CustodyRegistration)
+
+    @admin.display(description=gettext_lazy('Custody registrations'))
+    def camps_registrations(self, family):
+        return self.get_registrations_link(family, CampsRegistration)
+
+    @admin.display(description=gettext_lazy('Custody registrations'))
+    def after_school_registrations(self, family):
+        return self.get_registrations_link(family, AfterSchoolRegistration)
+
+    def get_registrations_link(self, family, registration_model):
+        registrations_count = registration_model.objects.of_family(family).count()
+        if registrations_count == 1:
+            link_text = (gettext_lazy('%(registrations)s registration') % {'registrations': registrations_count})
+        else:
+            link_text = (gettext_lazy('%(registrations)s registrations') % {'registrations': registrations_count})
+
+        filters = f'family={family.id}'
+        return Utils.get_model_link(model_name=registration_model.__name__.lower(), link_text=link_text,
+                                    filters=filters)
 
     @admin.display(description=gettext_lazy('After-school receipts'))
     def after_school_receipts(self, family):

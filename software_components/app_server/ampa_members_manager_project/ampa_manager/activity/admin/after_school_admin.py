@@ -5,12 +5,14 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 from django import forms
 
+from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
 from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 
 
@@ -24,18 +26,38 @@ class AfterSchoolRegistrationAdminForm(forms.ModelForm):
 
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['after_school_edition', 'child', 'holder']
+    list_display = ['after_school_edition_short', 'family_surnames', 'child_name', 'holder', 'is_member', 'price']
     ordering = ['after_school_edition__after_school__name', 'after_school_edition']
     list_filter = ['after_school_edition__academic_course__initial_year',
                    'after_school_edition__period',
                    'after_school_edition__timetable',
                    'after_school_edition__levels',
-                   'after_school_edition__after_school__name']
+                   'after_school_edition__after_school__name', FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
                      'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25
     form = AfterSchoolRegistrationAdminForm
+
+    @admin.display(description=gettext_lazy('After-school edition'))
+    def after_school_edition_short(self, registration):
+        return registration.after_school_edition.str_short()
+
+    @admin.display(description=gettext_lazy('Child'))
+    def child_name(self, registration):
+        return registration.child.str_short()
+
+    @admin.display(description=gettext_lazy('Family'))
+    def family_surnames(self, registration):
+        return registration.child.family.surnames
+
+    @admin.display(description=gettext_lazy('Is member'))
+    def is_member(self, registration):
+        return _('Yes') if Membership.is_member_child(registration.child) else _('No')
+
+    @admin.display(description=gettext_lazy('Price'))
+    def price(self, registration):
+        return registration.calculate_price()
 
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
