@@ -37,9 +37,13 @@ class FamilyAdminForm(forms.ModelForm):
         if self.instance:
             self.fields['membership_holder'].queryset = Holder.objects.of_family(self.instance)
             self.fields['custody_holder'].queryset = Holder.objects.of_family(self.instance)
+            self.fields['after_school_holder'].queryset = Holder.objects.of_family(self.instance)
+            self.fields['camps_holder'].queryset = Holder.objects.of_family(self.instance)
         else:
             self.fields['membership_holder'].queryset = Holder.objects.none()
             self.fields['custody_holder'].queryset = Holder.objects.none()
+            self.fields['after_school_holder'].queryset = Holder.objects.none()
+            self.fields['camps_holder'].queryset = Holder.objects.none()
 
 
 class MembershipInline(ReadOnlyTabularInline):
