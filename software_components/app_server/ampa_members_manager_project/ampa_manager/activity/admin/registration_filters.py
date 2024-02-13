@@ -24,6 +24,7 @@ class RegistrationFilter(admin.SimpleListFilter):
         else:
             return queryset
 
+
 class ChildLevelListFilter(admin.SimpleListFilter):
     title = _('Course')
 
@@ -46,5 +47,22 @@ class ChildLevelListFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value():
             return queryset.child_of_age(int(self.value()))
+        else:
+            return queryset
+
+
+class FamilyRegistrationFilter(admin.SimpleListFilter):
+    title = _('Family')
+
+    parameter_name = 'family'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('all', _('All')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() and self.value() != 'all':
+            return queryset.of_family(self.value())
         else:
             return queryset

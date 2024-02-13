@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.activity.admin.camps_edition_filters import CampsEditionHasRemittanceFilter
 
-from ampa_manager.activity.admin.registration_filters import ChildLevelListFilter, RegistrationFilter
+from ampa_manager.activity.admin.registration_filters import ChildLevelListFilter, RegistrationFilter, \
+    FamilyRegistrationFilter
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
@@ -29,7 +30,8 @@ class CampsRegistrationAdminForm(forms.ModelForm):
 class CampsRegistrationAdmin(admin.ModelAdmin):
     list_display = ['camps_edition', 'child', 'holder', 'is_member']
     ordering = ['camps_edition']
-    list_filter = ['camps_edition__academic_course__initial_year', RegistrationFilter, ChildLevelListFilter]
+    list_filter = ['camps_edition__academic_course__initial_year', RegistrationFilter, ChildLevelListFilter,
+                   FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
     list_per_page = 25

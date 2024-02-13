@@ -16,7 +16,7 @@ class CustodyRegistration(models.Model):
                                         related_name='registrations')
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
     holder = models.ForeignKey(to=Holder, on_delete=models.CASCADE, verbose_name=_("Holder"))
-    assisted_days = models.PositiveIntegerField()
+    assisted_days = models.PositiveIntegerField(verbose_name=_("Assisted days"))
 
     objects = Manager.from_queryset(CustodyRegistrationQuerySet)()
 
@@ -38,9 +38,11 @@ class CustodyRegistration(models.Model):
     def calculate_price(self) -> float:
         assisted_days_for_charge: int = min([self.assisted_days, self.custody_edition.max_days_for_charge])
         if self.is_member:
-            return float(assisted_days_for_charge) * float(self.custody_edition.price_for_member)
+            price = float(assisted_days_for_charge) * float(self.custody_edition.price_for_member)
         else:
-            return float(assisted_days_for_charge) * float(self.custody_edition.price_for_no_member)
+            price = float(assisted_days_for_charge) * float(self.custody_edition.price_for_no_member)
+
+        return round(price, 2)
 
     @property
     def is_member(self):

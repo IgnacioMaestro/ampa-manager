@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 07:36+0100\n"
+"POT-Creation-Date: 2024-02-13 13:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,23 +26,23 @@ msgstr ""
 msgid "Is active"
 msgstr ""
 
-#: .\academic_course\admin.py:29 .\activity\admin\camps_admin.py:40
-#: .\activity\admin\custody_admin.py:41 .\family\admin\child_admin.py:28
-#: .\family\admin\family_admin.py:246 .\family\admin\family_admin.py:250
-#: .\family\admin\parent_admin.py:25
+#: .\academic_course\admin.py:29 .\activity\admin\after_school_admin.py:56
+#: .\activity\admin\camps_admin.py:42 .\activity\admin\custody_admin.py:43
+#: .\family\admin\child_admin.py:28 .\family\admin\family_admin.py:250
+#: .\family\admin\family_admin.py:254 .\family\admin\parent_admin.py:25
 msgid "Yes"
 msgstr ""
 
-#: .\academic_course\admin.py:29 .\activity\admin\camps_admin.py:40
-#: .\activity\admin\custody_admin.py:41 .\family\admin\child_admin.py:28
-#: .\family\admin\family_admin.py:246 .\family\admin\family_admin.py:250
-#: .\family\admin\parent_admin.py:25
+#: .\academic_course\admin.py:29 .\activity\admin\after_school_admin.py:56
+#: .\activity\admin\camps_admin.py:42 .\activity\admin\custody_admin.py:43
+#: .\family\admin\child_admin.py:28 .\family\admin\family_admin.py:250
+#: .\family\admin\family_admin.py:254 .\family\admin\parent_admin.py:25
 msgid "No"
 msgstr ""
 
 #: .\academic_course\admin.py:31 .\academic_course\admin.py:82
-#: .\activity\admin\camps_admin.py:81 .\activity\admin\custody_admin.py:94
-#: .\activity\admin\custody_admin.py:114
+#: .\activity\admin\camps_admin.py:83 .\activity\admin\custody_admin.py:112
+#: .\activity\admin\custody_admin.py:132
 #: .\activity\admin\registration_filters.py:14
 msgid "Members"
 msgstr ""
@@ -59,10 +59,10 @@ msgstr ""
 msgid "Membership remittance created"
 msgstr ""
 
-#: .\academic_course\admin.py:48 .\activity\admin\after_school_admin.py:65
-#: .\activity\admin\after_school_admin.py:73
-#: .\activity\admin\after_school_admin.py:81
-#: .\activity\admin\camps_admin.py:104 .\activity\admin\custody_admin.py:142
+#: .\academic_course\admin.py:48 .\activity\admin\after_school_admin.py:87
+#: .\activity\admin\after_school_admin.py:95
+#: .\activity\admin\after_school_admin.py:103
+#: .\activity\admin\camps_admin.py:106 .\activity\admin\custody_admin.py:160
 #: .\charge\admin\membership_admin.py:103
 msgid "View details"
 msgstr ""
@@ -93,8 +93,8 @@ msgid "Families with children in school"
 msgstr ""
 
 #: .\academic_course\admin.py:94 .\family\admin\child_admin.py:34
-#: .\family\admin\child_admin.py:56 .\family\admin\family_admin.py:224
-#: .\family\admin\family_admin.py:232 .\family\models\family.py:26
+#: .\family\admin\child_admin.py:56 .\family\admin\family_admin.py:228
+#: .\family\admin\family_admin.py:236 .\family\models\family.py:26
 #: .\family\models\parent.py:26
 msgid "Parents"
 msgstr ""
@@ -174,7 +174,7 @@ msgid "Academic courses"
 msgstr ""
 
 #: .\academic_course\models\active_course.py:11
-#: .\activity\admin\registration_filters.py:28
+#: .\activity\admin\registration_filters.py:29
 #: .\charge\admin\membership_admin.py:32 .\charge\models\fee\fee.py:9
 #: .\family\admin\child_admin.py:30 .\family\admin\family_admin.py:62
 #: .\family\admin\filters\child_filters.py:38
@@ -235,70 +235,108 @@ msgstr ""
 msgid "All cycles"
 msgstr ""
 
-#: .\activity\admin\after_school_admin.py:47 .\activity\admin\camps_admin.py:53
-#: .\activity\admin\custody_admin.py:54 .\family\admin\family_admin.py:58
-msgid "Id"
+#: .\activity\admin\after_school_admin.py:42
+#: .\activity\models\after_school\after_school_edition.py:18
+#: .\activity\models\after_school\after_school_registration.py:17
+msgid "After-school edition"
 msgstr ""
 
-#: .\activity\admin\after_school_admin.py:60
-msgid "Create after school remittance"
+#: .\activity\admin\after_school_admin.py:46
+#: .\activity\admin\custody_admin.py:49
+#: .\activity\models\after_school\after_school_registration.py:19
+#: .\activity\models\camps\camps_registration.py:17
+#: .\activity\models\custody\custody_registration.py:17
+#: .\charge\admin\after_school_admin.py:36 .\charge\admin\camps_admin.py:47
+#: .\charge\admin\camps_admin.py:61 .\charge\admin\custody_admin.py:37
+#: .\family\models\child.py:25 .\views\validate_data.py:124
+msgid "Child"
 msgstr ""
 
-#: .\activity\admin\after_school_admin.py:65
-#: .\activity\admin\after_school_admin.py:73
-#: .\activity\admin\after_school_admin.py:81
-#: .\activity\admin\camps_admin.py:104 .\activity\admin\custody_admin.py:142
-msgid "Activity remittance created"
+#: .\activity\admin\after_school_admin.py:50
+#: .\activity\admin\custody_admin.py:53
+#: .\activity\admin\registration_filters.py:55
+#: .\charge\admin\filters\receipt_filters.py:6
+#: .\charge\admin\filters\receipt_filters.py:23
+#: .\charge\admin\filters\receipt_filters.py:40
+#: .\charge\admin\filters\receipt_filters.py:57
+#: .\charge\models\membership_receipt.py:20 .\family\admin\parent_admin.py:27
+#: .\family\models\child.py:20 .\family\models\family.py:53
+#: .\family\models\membership.py:13
+#: .\family\use_cases\importers\members_importer.py:90
+#: .\views\validate_data.py:123
+msgid "Family"
 msgstr ""
 
-#: .\activity\admin\after_school_admin.py:68
-msgid "Create after school remittance with half"
-msgstr ""
-
-#: .\activity\admin\after_school_admin.py:76
-msgid "Create after school remittance with left"
-msgstr ""
-
-#: .\activity\admin\after_school_admin.py:84 .\activity\admin\camps_admin.py:66
-#: .\activity\admin\custody_admin.py:71
-msgid "Registrations"
-msgstr ""
-
-#: .\activity\admin\after_school_admin.py:88
-#: .\activity\admin\custody_admin.py:166
-msgid "Export family emails to CSV"
-msgstr ""
-
-#: .\activity\admin\after_school_admin.py:120
-msgid "Editions"
-msgstr ""
-
-#: .\activity\admin\camps_admin.py:38 .\activity\admin\camps_admin.py:49
-#: .\activity\admin\custody_admin.py:39 .\activity\admin\custody_admin.py:50
-#: .\family\admin\child_admin.py:26 .\family\admin\family_admin.py:244
+#: .\activity\admin\after_school_admin.py:54 .\activity\admin\camps_admin.py:40
+#: .\activity\admin\camps_admin.py:51 .\activity\admin\custody_admin.py:68
+#: .\family\admin\child_admin.py:26 .\family\admin\family_admin.py:248
 #: .\family\admin\parent_admin.py:23
 msgid "Is member"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:65 .\activity\admin\custody_admin.py:68
+#: .\activity\admin\after_school_admin.py:58
+#: .\activity\admin\custody_admin.py:57
+msgid "Price"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:69 .\activity\admin\camps_admin.py:55
+#: .\activity\admin\custody_admin.py:72 .\family\admin\family_admin.py:58
+msgid "Id"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:82
+msgid "Create after school remittance"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:87
+#: .\activity\admin\after_school_admin.py:95
+#: .\activity\admin\after_school_admin.py:103
+#: .\activity\admin\camps_admin.py:106 .\activity\admin\custody_admin.py:160
+msgid "Activity remittance created"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:90
+msgid "Create after school remittance with half"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:98
+msgid "Create after school remittance with left"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:106
+#: .\activity\admin\camps_admin.py:68 .\activity\admin\custody_admin.py:89
+#: .\family\admin\family_admin.py:99
+msgid "Registrations"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:110
+#: .\activity\admin\custody_admin.py:184
+msgid "Export family emails to CSV"
+msgstr ""
+
+#: .\activity\admin\after_school_admin.py:142
+msgid "Editions"
+msgstr ""
+
+#: .\activity\admin\camps_admin.py:67 .\activity\admin\custody_admin.py:86
 msgid "Prices"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:69 .\activity\admin\camps_admin.py:89
+#: .\activity\admin\camps_admin.py:71 .\activity\admin\camps_admin.py:91
 #: .\activity\admin\camps_edition_filters.py:8
-#: .\activity\admin\custody_admin.py:78 .\activity\admin\custody_admin.py:122
-#: .\activity\admin\custody_admin.py:132
+#: .\activity\admin\custody_admin.py:96 .\activity\admin\custody_admin.py:140
+#: .\activity\admin\custody_admin.py:150
 #: .\activity\admin\custody_edition_filters.py:8
 msgid "Remittance"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:77 .\activity\admin\custody_admin.py:102
-#: .\activity\admin\custody_admin.py:110
+#: .\activity\admin\camps_admin.py:79 .\activity\admin\custody_admin.py:120
+#: .\activity\admin\custody_admin.py:128
 #: .\activity\admin\registration_filters.py:15
 msgid "No members"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:85 .\activity\admin\custody_admin.py:118
+#: .\activity\admin\camps_admin.py:87 .\activity\admin\custody_admin.py:136
 #: .\charge\admin\after_school_admin.py:44
 #: .\charge\admin\after_school_admin.py:99 .\charge\admin\camps_admin.py:55
 #: .\charge\admin\camps_admin.py:101 .\charge\admin\custody_admin.py:45
@@ -307,11 +345,11 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:97
+#: .\activity\admin\camps_admin.py:99
 msgid "Multiple remittances"
 msgstr ""
 
-#: .\activity\admin\camps_admin.py:99
+#: .\activity\admin\camps_admin.py:101
 msgid "Create camps remittance"
 msgstr ""
 
@@ -325,45 +363,56 @@ msgstr ""
 msgid "No remittance"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:74
+#: .\activity\admin\custody_admin.py:41
+msgid "Member"
+msgstr ""
+
+#: .\activity\admin\custody_admin.py:45
+#: .\activity\models\custody\custody_edition.py:31
+#: .\activity\models\custody\custody_registration.py:15
+msgid "Custody edition"
+msgstr ""
+
+#: .\activity\admin\custody_admin.py:92
+#: .\activity\models\custody\custody_registration.py:19
 msgid "Assisted days"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:90
+#: .\activity\admin\custody_admin.py:108
 msgid "Charged"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:98
+#: .\activity\admin\custody_admin.py:116
 msgid "Members (topped by \"Max days for charge\")"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:106
+#: .\activity\admin\custody_admin.py:124
 msgid "No members (topped by \"Max days for charge\")"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:130
+#: .\activity\admin\custody_admin.py:148
 msgid "Multiple remmitances"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:137
+#: .\activity\admin\custody_admin.py:155
 msgid "Create custody remittance"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:145
+#: .\activity\admin\custody_admin.py:163
 msgid "Calculate prices"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:157
+#: .\activity\admin\custody_admin.py:175
 #, python-format
 msgid "%(calculated)s editions' prices calculated"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:161
+#: .\activity\admin\custody_admin.py:179
 #, python-format
 msgid "Unable to calculate %(not_calculated)s editions' prices"
 msgstr ""
 
-#: .\activity\admin\custody_admin.py:162
+#: .\activity\admin\custody_admin.py:180
 msgid "Prices calculated based on edition cost and number of registrations"
 msgstr ""
 
@@ -379,6 +428,14 @@ msgstr ""
 #: .\family\admin\filters\family_filters.py:6 .\family\models\membership.py:19
 #: .\family\models\membership.py:20
 msgid "Membership"
+msgstr ""
+
+#: .\activity\admin\registration_filters.py:61
+#: .\charge\admin\filters\receipt_filters.py:12
+#: .\charge\admin\filters\receipt_filters.py:29
+#: .\charge\admin\filters\receipt_filters.py:46
+#: .\charge\admin\filters\receipt_filters.py:63
+msgid "All"
 msgstr ""
 
 #: .\activity\models\after_school\after_school.py:8
@@ -408,22 +465,8 @@ msgstr ""
 msgid "Timetable"
 msgstr ""
 
-#: .\activity\models\after_school\after_school_edition.py:18
-#: .\activity\models\after_school\after_school_registration.py:17
-msgid "After-school edition"
-msgstr ""
-
 #: .\activity\models\after_school\after_school_edition.py:19
 msgid "After-school editions"
-msgstr ""
-
-#: .\activity\models\after_school\after_school_registration.py:19
-#: .\activity\models\camps\camps_registration.py:17
-#: .\activity\models\custody\custody_registration.py:17
-#: .\charge\admin\after_school_admin.py:36 .\charge\admin\camps_admin.py:47
-#: .\charge\admin\camps_admin.py:61 .\charge\admin\custody_admin.py:37
-#: .\family\models\child.py:25 .\views\validate_data.py:124
-msgid "Child"
 msgstr ""
 
 #: .\activity\models\after_school\after_school_registration.py:20
@@ -509,11 +552,6 @@ msgid ""
 "%(surcharge)s "
 msgstr ""
 
-#: .\activity\models\custody\custody_edition.py:31
-#: .\activity\models\custody\custody_registration.py:15
-msgid "Custody edition"
-msgstr ""
-
 #: .\activity\models\custody\custody_edition.py:32
 msgid "Custody editions"
 msgstr ""
@@ -524,6 +562,8 @@ msgstr ""
 
 #: .\activity\models\custody\custody_registration.py:25
 #: .\charge\models\custody\custody_receipt.py:17
+#: .\family\admin\family_admin.py:290 .\family\admin\family_admin.py:294
+#: .\family\admin\family_admin.py:298
 msgid "Custody registrations"
 msgstr ""
 
@@ -666,22 +706,22 @@ msgstr ""
 #: .\charge\admin\after_school_admin.py:105 .\charge\admin\camps_admin.py:91
 #: .\charge\admin\camps_admin.py:107 .\charge\admin\custody_admin.py:91
 #: .\charge\admin\custody_admin.py:107 .\charge\admin\membership_admin.py:55
-#: .\charge\admin\membership_admin.py:75 .\family\admin\family_admin.py:99
+#: .\charge\admin\membership_admin.py:75 .\family\admin\family_admin.py:102
 msgid "Receipts"
 msgstr ""
 
 #: .\charge\admin\after_school_admin.py:93 .\charge\admin\camps_admin.py:95
 #: .\charge\admin\custody_admin.py:95 .\charge\admin\membership_admin.py:59
-#: .\family\admin\family_admin.py:260 .\family\admin\family_admin.py:270
-#: .\family\admin\family_admin.py:280 .\family\admin\family_admin.py:290
+#: .\family\admin\family_admin.py:264 .\family\admin\family_admin.py:274
+#: .\family\admin\family_admin.py:284 .\family\admin\family_admin.py:317
 #, python-format
 msgid "%(num_receipts)s receipt"
 msgstr ""
 
 #: .\charge\admin\after_school_admin.py:95 .\charge\admin\camps_admin.py:97
 #: .\charge\admin\custody_admin.py:97 .\charge\admin\membership_admin.py:61
-#: .\family\admin\family_admin.py:262 .\family\admin\family_admin.py:272
-#: .\family\admin\family_admin.py:282 .\family\admin\family_admin.py:292
+#: .\family\admin\family_admin.py:266 .\family\admin\family_admin.py:276
+#: .\family\admin\family_admin.py:286 .\family\admin\family_admin.py:319
 #, python-format
 msgid "%(num_receipts)s receipts"
 msgstr ""
@@ -704,25 +744,6 @@ msgstr ""
 
 #: .\charge\admin\custody_admin.py:119
 msgid "Export custody remittance to SEPA file"
-msgstr ""
-
-#: .\charge\admin\filters\receipt_filters.py:6
-#: .\charge\admin\filters\receipt_filters.py:23
-#: .\charge\admin\filters\receipt_filters.py:40
-#: .\charge\admin\filters\receipt_filters.py:57
-#: .\charge\models\membership_receipt.py:20 .\family\admin\parent_admin.py:27
-#: .\family\models\child.py:20 .\family\models\family.py:53
-#: .\family\models\membership.py:13
-#: .\family\use_cases\importers\members_importer.py:90
-#: .\views\validate_data.py:123
-msgid "Family"
-msgstr ""
-
-#: .\charge\admin\filters\receipt_filters.py:12
-#: .\charge\admin\filters\receipt_filters.py:29
-#: .\charge\admin\filters\receipt_filters.py:46
-#: .\charge\admin\filters\receipt_filters.py:63
-msgid "All"
 msgstr ""
 
 #: .\charge\admin\membership_admin.py:79
@@ -763,7 +784,7 @@ msgid "After-school receipt"
 msgstr ""
 
 #: .\charge\models\after_school_charge\after_school_receipt.py:26
-#: .\family\admin\family_admin.py:286
+#: .\family\admin\family_admin.py:313
 msgid "After-school receipts"
 msgstr ""
 
@@ -788,7 +809,7 @@ msgstr ""
 msgid "Camps receipt"
 msgstr ""
 
-#: .\charge\models\camps\camps_receipt.py:26 .\family\admin\family_admin.py:266
+#: .\charge\models\camps\camps_receipt.py:26 .\family\admin\family_admin.py:270
 msgid "Camps receipts"
 msgstr ""
 
@@ -810,7 +831,7 @@ msgid "Custody receipt"
 msgstr ""
 
 #: .\charge\models\custody\custody_receipt.py:25
-#: .\family\admin\family_admin.py:276
+#: .\family\admin\family_admin.py:280
 msgid "Custody receipts"
 msgstr ""
 
@@ -842,7 +863,7 @@ msgstr ""
 msgid "Membership receipt"
 msgstr ""
 
-#: .\charge\models\membership_receipt.py:26 .\family\admin\family_admin.py:256
+#: .\charge\models\membership_receipt.py:26 .\family\admin\family_admin.py:260
 msgid "Membership receipts"
 msgstr ""
 
@@ -889,7 +910,7 @@ msgstr ""
 msgid "Concept"
 msgstr ""
 
-#: .\charge\state.py:6 .\family\admin\family_admin.py:252
+#: .\charge\state.py:6 .\family\admin\family_admin.py:256
 msgid "Created"
 msgstr ""
 
@@ -1006,66 +1027,76 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: .\family\admin\family_admin.py:117
+#: .\family\admin\family_admin.py:121
 msgid "Complete empty custody holders with last registration"
 msgstr ""
 
-#: .\family\admin\family_admin.py:128 .\family\admin\family_admin.py:140
+#: .\family\admin\family_admin.py:132 .\family\admin\family_admin.py:144
 #, python-format
 msgid "%(update_families)s families updated"
 msgstr ""
 
-#: .\family\admin\family_admin.py:131
+#: .\family\admin\family_admin.py:135
 msgid "Complete empty custody holders with membership_holder"
 msgstr ""
 
-#: .\family\admin\family_admin.py:143
+#: .\family\admin\family_admin.py:147
 msgid "Export emails to CSV"
 msgstr ""
 
-#: .\family\admin\family_admin.py:150
+#: .\family\admin\family_admin.py:154
 msgid "Send email to the parents of selected families"
 msgstr ""
 
-#: .\family\admin\family_admin.py:156
+#: .\family\admin\family_admin.py:160
 msgid "Click here to send an email to the parents"
 msgstr ""
 
-#: .\family\admin\family_admin.py:160
+#: .\family\admin\family_admin.py:164
 msgid "Export families to XLS"
 msgstr ""
 
-#: .\family\admin\family_admin.py:198
+#: .\family\admin\family_admin.py:202
 msgid "Make families member"
 msgstr ""
 
-#: .\family\admin\family_admin.py:213
+#: .\family\admin\family_admin.py:217
 #, python-format
 msgid ""
 "%(new_members)s families became members. %(already_members)s families "
 "already were members. %(declined)s families declined to be members anymore"
 msgstr ""
 
-#: .\family\admin\family_admin.py:217
+#: .\family\admin\family_admin.py:221
 msgid "Decline Membership"
 msgstr ""
 
-#: .\family\admin\family_admin.py:221
+#: .\family\admin\family_admin.py:225
 msgid "Decline Membership established"
 msgstr ""
 
-#: .\family\admin\family_admin.py:228 .\family\admin\family_admin.py:236
+#: .\family\admin\family_admin.py:232 .\family\admin\family_admin.py:240
 #: .\family\models\child.py:26
 msgid "Children"
 msgstr ""
 
-#: .\family\admin\family_admin.py:240
+#: .\family\admin\family_admin.py:244
 msgid "In school"
 msgstr ""
 
-#: .\family\admin\family_admin.py:248
+#: .\family\admin\family_admin.py:252
 #: .\family\admin\filters\family_filters.py:55
 msgid "Default holder"
+msgstr ""
+
+#: .\family\admin\family_admin.py:305
+#, python-format
+msgid "%(registrations)s registration"
+msgstr ""
+
+#: .\family\admin\family_admin.py:307
+#, python-format
+msgid "%(registrations)s registrations"
 msgstr ""
 
 #: .\family\admin\filters\bank_account_filters.py:6
