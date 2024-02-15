@@ -22,11 +22,12 @@ from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
-    DefaultHolder, CustodyHolder, FamilyParentCountFilter
+    MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.family.use_cases.auto_complete_holders import AutoCompleteHolders
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.utils import Utils
 
@@ -97,7 +98,7 @@ class FamilyAdmin(admin.ModelAdmin):
         (_('General'), {
             'fields': ['surnames', 'email', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
         }),
-        (_('Holders'), {
+        (_('Payment details'), {
             'fields': ['membership_holder', 'custody_holder', 'camps_holder', 'after_school_holder'],
         }),
         (_('Registrations'), {
@@ -113,7 +114,8 @@ class FamilyAdmin(admin.ModelAdmin):
                        'after_school_registrations']
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
-                   'decline_membership', FamilyParentCountFilter, DefaultHolder, CustodyHolder]
+                   'decline_membership', FamilyParentCountFilter, MembershipHolder, CustodyHolder, CampsHolder,
+                   AfterSchoolHolder, AnyHolder]
     search_fields = ['surnames', 'email', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
                      'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
                      'camps_holder__bank_account__iban', 'after_school_holder__bank_account__iban']
@@ -122,31 +124,35 @@ class FamilyAdmin(admin.ModelAdmin):
     inlines = [ChildInline, MembershipInline]
     list_per_page = 25
 
-    @admin.action(description=gettext_lazy("Complete empty custody holders with last registration"))
-    def complete_custody_holder_with_last_registration(self, request, families: QuerySet[Family]):
-        updated = 0
+    @admin.action(description=gettext_lazy("Complete missing holders"))
+    def complete_holders(self, request, families: QuerySet[Family]):
+        custody_holders_before = families.exclude(camps_holder=None).count()
+        after_school_holders_before = families.exclude(camps_holder=None).count()
+        camps_holders_before = families.exclude(camps_holder=None).count()
+        membership_holders_before = families.exclude(membership_holder=None).count()
+
         for family in families:
-            if not family.custody_holder:
-                last_registration = CustodyRegistration.objects.filter(child__family=family).order_by('-id').last()
-                if last_registration and last_registration.holder:
-                    family.custody_holder = last_registration.holder
-                    family.save()
-                    updated += 1
+            AutoCompleteHolders.complete_holders(family)
 
-        message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
-        return self.message_user(request=request, message=message)
+        custody_holders_after = families.exclude(camps_holder=None).count()
+        after_school_holders_after = families.exclude(camps_holder=None).count()
+        camps_holders_after = families.exclude(camps_holder=None).count()
+        membership_holders_after = families.exclude(membership_holder=None).count()
 
-    @admin.action(description=gettext_lazy("Complete empty custody holders with membership_holder"))
-    def complete_custody_holder_with_membership_holder(self, request, families: QuerySet[Family]):
-        updated = 0
-        for family in families:
-            if not family.custody_holder and family.membership_holder:
-                family.custody_holder = family.membership_holder
-                family.save()
-                updated += 1
-
-        message = gettext_lazy('%(update_families)s families updated') % {'update_families': updated}
-        return self.message_user(request=request, message=message)
+        message = gettext_lazy(
+            'Membership holders: %(membership_holders_before)s -> %(membership_holders_after)s <br/>'
+            'Custody holders: %(custody_holders_before)s -> %(custody_holders_after)s <br/>'
+            'After-schools holders: %(after_school_holders_before)s -> %(after_school_holders_after)s <br/>'
+            'Camps holders: %(camps_holders_before)s -> %(camps_holders_after)s') % {
+                      'custody_holders_before': custody_holders_before,
+                      'after_school_holders_before': after_school_holders_before,
+                      'camps_holders_before': camps_holders_before,
+                      'membership_holders_before': membership_holders_before,
+                      'custody_holders_after': custody_holders_after,
+                      'after_school_holders_after': after_school_holders_after,
+                      'camps_holders_after': camps_holders_after,
+                      'membership_holders_after': membership_holders_after}
+        self.message_user(request=request, message=mark_safe(message))
 
     @admin.action(description=gettext_lazy("Export emails to CSV"))
     def export_emails(self, request, families: QuerySet[Family]):
@@ -220,6 +226,27 @@ class FamilyAdmin(admin.ModelAdmin):
         message = gettext_lazy(
             '%(new_members)s families became members. %(already_members)s families already were members. %(declined)s families declined to be members anymore') % {
                       'new_members': new_members, 'already_members': already_members, 'declined': declined}
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=gettext_lazy("Remove from members"))
+    def undo_members(self, request, families: QuerySet[Family]):
+        removed_members = 0
+        non_members = 0
+        active_course = ActiveCourse.load()
+
+        for family in families:
+
+            try:
+                membership = Membership.objects.get(family=family, academic_course=active_course)
+                membership.delete()
+                removed_members += 1
+            except Membership.DoesNotExist:
+                non_members += 1
+
+        message = gettext_lazy(
+            '%(removed_members)s families removed from members. '
+            '%(non_members)s of the selected families were not members') % {
+                      'removed_members': removed_members, 'non_members': non_members}
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Decline Membership"))
@@ -326,5 +353,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [export_emails, send_email_to_parents, make_members, export_families_xls,
-               complete_custody_holder_with_last_registration, complete_custody_holder_with_membership_holder]
+    actions = [export_emails, make_members, undo_members, export_families_xls, complete_holders]

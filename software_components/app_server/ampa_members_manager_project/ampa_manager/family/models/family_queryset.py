@@ -36,6 +36,26 @@ class FamilyQuerySet(QuerySet):
     def without_custody_holder(self):
         return self.filter(custody_holder__isnull=True)
 
+    def with_camps_holder(self):
+        return self.exclude(camps_holder__isnull=True)
+
+    def without_camps_holder(self):
+        return self.filter(camps_holder__isnull=True)
+
+    def with_after_school_holder(self):
+        return self.exclude(after_school_holder__isnull=True)
+
+    def without_after_school_holder(self):
+        return self.filter(after_school_holder__isnull=True)
+
+    def any_holder_missing(self):
+        return self.filter(Q(membership_holder__isnull=True) | Q(custody_holder__isnull=True) |
+                           Q(camps_holder__isnull=True) | Q(after_school_holder__isnull=True))
+
+    def all_holders_completed(self):
+        return self.filter(membership_holder__isnull=False, custody_holder__isnull=False,
+                           camps_holder__isnull=False, after_school_holder__isnull=False)
+
     def members(self):
         return self.filter(membership__academic_course=ActiveCourse.load())
 
