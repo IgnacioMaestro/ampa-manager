@@ -51,8 +51,8 @@ class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
             return queryset
 
 
-class DefaultHolder(admin.SimpleListFilter):
-    title = _('Default holder')
+class MembershipHolder(admin.SimpleListFilter):
+    title = _('Membership holder')
 
     parameter_name = 'membership_holder'
 
@@ -89,6 +89,69 @@ class CustodyHolder(admin.SimpleListFilter):
                 return queryset.with_custody_holder()
             elif self.value() == 'without':
                 return queryset.without_custody_holder()
+        else:
+            return queryset
+
+
+class CampsHolder(admin.SimpleListFilter):
+    title = _('Camps holder')
+
+    parameter_name = 'camps_holder'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('with', _('Completed')),
+            ('without', _('Not completed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'with':
+                return queryset.with_camps_holder()
+            elif self.value() == 'without':
+                return queryset.without_camps_holder()
+        else:
+            return queryset
+
+
+class AfterSchoolHolder(admin.SimpleListFilter):
+    title = _('After-school holder')
+
+    parameter_name = 'after_school_holder'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('with', _('Completed')),
+            ('without', _('Not completed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'with':
+                return queryset.with_after_school_holder()
+            elif self.value() == 'without':
+                return queryset.without_after_school_holder()
+        else:
+            return queryset
+
+
+class AnyHolder(admin.SimpleListFilter):
+    title = _('Any holder')
+
+    parameter_name = 'any_holder'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('missing', _('Any missing')),
+            ('completed', _('All completed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'missing':
+                return queryset.any_holder_missing()
+            elif self.value() == 'completed':
+                return queryset.all_holders_completed()
         else:
             return queryset
 
