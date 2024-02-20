@@ -2,6 +2,174 @@
 {% load static %}
 
 {% block extrahead %}
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'ampa.ico' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'ampa.ico' %}"/>
     {{ block.super }}
+{% endblock %}
+
+{% block nav-sidebar %}
+    <div id="custom-sidebar" style="min-width: 150px;">
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/" class="section">Familia</a>
+                </caption>
+
+                <tbody>
+                <tr class="model-family">
+
+                    <th scope="row"><a href="/admin/ampa_manager/family/">Familias</a></th>
+                </tr>
+
+                <tr class="model-parent">
+
+                    <th scope="row"><a href="/admin/ampa_manager/parent/">Padres</a></th>
+                </tr>
+
+                <tr class="model-child">
+                    <th scope="row"><a href="/admin/ampa_manager/child/">Hijos</a></th>
+                </tr>
+
+                <tr class="model-bankaccount">
+                    <th scope="row"><a href="/admin/ampa_manager/bankaccount/">Cuentas bancarias</a></th>
+                </tr>
+
+                <tr class="model-holder">
+                    <th scope="row"><a href="/admin/ampa_manager/holder/">Titulares</a></th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/" class="section">Extraescolares</a>
+                </caption>
+
+                <tbody>
+                <tr class="model-afterschool">
+                    <th scope="row"><a href="/admin/ampa_manager/afterschool/">Actividades</a></th>
+                </tr>
+
+                <tr class="model-afterschooledition">
+                    <th scope="row"><a href="/admin/ampa_manager/afterschooledition/">Ediciones</a></th>
+                </tr>
+
+                <tr class="model-afterschoolregistration">
+                    <th scope="row"><a href="/admin/ampa_manager/afterschoolregistration/">Inscripciones</a></th>
+                </tr>
+
+                <tr class="model-afterschoolreceipt">
+                    <th scope="row"><a href="/admin/ampa_manager/afterschoolreceipt/">Recibos</a>
+                    </th>
+                </tr>
+
+                <tr class="model-afterschoolremittance">
+                    <th scope="row"><a href="/admin/ampa_manager/afterschoolremittance/">Remesas</a></th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/" class="section">Custodia</a>
+                </caption>
+
+                <tbody>
+                <tr class="model-custodyedition">
+                    <th scope="row"><a href="/admin/ampa_manager/custodyedition/">Ediciones</a></th>
+                </tr>
+
+                <tr class="model-custodyregistration">
+                    <th scope="row"><a href="/admin/ampa_manager/custodyregistration/">Inscripciones</a>
+                    </th>
+                </tr>
+
+                <tr class="model-custodyreceipt">
+                    <th scope="row"><a href="/admin/ampa_manager/custodyreceipt/">Recibos</a></th>
+                </tr>
+
+                <tr class="model-custodyremittance">
+                    <th scope="row"><a href="/admin/ampa_manager/custodyremittance/">Remesas</a></th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/" class="section">Campamentos</a>
+                </caption>
+
+                <tbody>
+                <tr class="model-campsedition">
+                    <th scope="row"><a href="/admin/ampa_manager/campsedition/">Ediciones</a></th>
+                </tr>
+
+                <tr class="model-campsregistration">
+                    <th scope="row"><a href="/admin/ampa_manager/campsregistration/">Inscripciones</a></th>
+                </tr>
+
+                <tr class="model-campsreceipt">
+                    <th scope="row"><a href="/admin/ampa_manager/campsreceipt/">Recibos</a></th>
+                </tr>
+
+                <tr class="model-campsremittance">
+                    <th scope="row"><a href="/admin/ampa_manager/campsremittance/">Remesas</a></th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/" class="section">Socios</a>
+                </caption>
+
+                <tbody>
+                <tr class="model-academiccourse">
+                    <th scope="row"><a href="/admin/ampa_manager/academiccourse/">Cursos académicos</a></th>
+                </tr>
+
+                <tr class="model-activecourse">
+                    <th scope="row"><a href="/admin/ampa_manager/activecourse/">Curso activo</a></th>
+                </tr>
+
+                <tr class="model-membership">
+                    <th scope="row"><a href="/admin/ampa_manager/membership/">Socios</a></th>
+                </tr>
+
+                <tr class="model-fee">
+                    <th scope="row"><a href="/admin/ampa_manager/fee/">Cuotas</a></th>
+                </tr>
+
+                <tr class="model-membershipreceipt">
+                    <th scope="row"><a href="/admin/ampa_manager/membershipreceipt/">Recibos</a></th>
+                </tr>
+
+                <tr class="model-membershipremittance">
+                    <th scope="row"><a href="/admin/ampa_manager/membershipremittance/">Remesas</a></th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="app-ampa_manager module current-app">
+            <table style="width:100%;">
+                <caption>
+                    <a href="/admin/ampa_manager/dynamicsetting/" class="section">Configuración</a>
+                </caption>
+            </table>
+        </div>
+
+    </div>
 {% endblock %}

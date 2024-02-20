@@ -147,34 +147,48 @@ MEDIA_URL = ''
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ADMIN_REORDER = (
-    {'app': 'ampa_manager', 'label': _('Academic course'),
-     'models': ('ampa_manager.AcademicCourse', 'ampa_manager.ActiveCourse')},
     {'app': 'ampa_manager', 'label': _('Family'),
      'models': (
-         'ampa_manager.Family', 'ampa_manager.Parent', 'ampa_manager.Child',
-         'ampa_manager.Membership', 'ampa_manager.BankAccount', 'ampa_manager.Holder',
-         'ampa_manager.BankBicCode')},
+         'ampa_manager.Family',
+         'ampa_manager.Parent',
+         'ampa_manager.Child',
+         'ampa_manager.BankAccount',
+         'ampa_manager.Holder',
+     )},
     {'app': 'ampa_manager', 'label': _('After-school'),
      'models': (
-         'ampa_manager.AfterSchool', 'ampa_manager.AfterSchoolEdition',
-         'ampa_manager.AfterSchoolRegistration')},
+         'ampa_manager.AfterSchool',
+         'ampa_manager.AfterSchoolEdition',
+         'ampa_manager.AfterSchoolRegistration',
+         'ampa_manager.AfterSchoolReceipt',
+         'ampa_manager.AfterSchoolRemittance',
+     )},
     {'app': 'ampa_manager', 'label': _('Custody'),
      'models': (
-         'ampa_manager.CustodyEdition', 'ampa_manager.CustodyRegistration')},
+         'ampa_manager.CustodyEdition',
+         'ampa_manager.CustodyRegistration',
+         'ampa_manager.CustodyReceipt',
+         'ampa_manager.CustodyRemittance',
+     )},
     {'app': 'ampa_manager', 'label': _('Camps'),
      'models': (
-         'ampa_manager.CampsEdition', 'ampa_manager.CampsRegistration')},
-    {'app': 'ampa_manager', 'label': _('Charge'),
+         'ampa_manager.CampsEdition',
+         'ampa_manager.CampsRegistration',
+         'ampa_manager.CampsReceipt',
+         'ampa_manager.CampsRemittance',
+     )},
+    {'app': 'ampa_manager', 'label': _('Members'),
      'models': (
+         'ampa_manager.AcademicCourse',
+         'ampa_manager.ActiveCourse',
+         'ampa_manager.Membership',
          'ampa_manager.Fee',
-         'ampa_manager.MembershipReceipt', 'ampa_manager.MembershipRemittance',
-         'ampa_manager.AfterSchoolReceipt', 'ampa_manager.AfterSchoolRemittance',
-         'ampa_manager.CampsReceipt', 'ampa_manager.CampsRemittance',
-         'ampa_manager.CustodyReceipt', 'ampa_manager.CustodyRemittance',)},
+         'ampa_manager.MembershipReceipt',
+         'ampa_manager.MembershipRemittance',
+     )},
     {'app': 'ampa_manager', 'label': _('Settings'),
      'models': (
          'ampa_manager.DynamicSetting',)},
-    # Keep original label and models
     'auth',
 )
 
