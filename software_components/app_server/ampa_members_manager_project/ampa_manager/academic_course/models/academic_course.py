@@ -13,4 +13,6 @@ class AcademicCourse(models.Model):
         db_table = 'academic_course'
 
     def __str__(self) -> str:
-        return f'{str(self.initial_year)}-{str(self.initial_year + 1)}'
+        initial_year = str(self.initial_year)[-2:]
+        final_year = str(self.initial_year + 1)[-2:]
+        return f'{initial_year}-{final_year}'

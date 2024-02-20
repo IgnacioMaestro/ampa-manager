@@ -34,6 +34,7 @@ class CampsRegistrationAdmin(admin.ModelAdmin):
                    FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
+    autocomplete_fields = ['holder', 'child']
     list_per_page = 25
     form = CampsRegistrationAdminForm
 
