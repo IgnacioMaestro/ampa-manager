@@ -1,33 +1,34 @@
+from django import forms
 from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
-from django import forms
 
 from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter
+from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.utils import Utils
 
 
 class AfterSchoolRegistrationAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance:
+        if self.instance and hasattr(self.instance, 'child'):
             self.fields['holder'].queryset = Holder.objects.of_family(self.instance.child.family)
         else:
             self.fields['holder'].queryset = Holder.objects.none()
 
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['after_school_edition_short', 'family_surnames', 'child_name', 'holder', 'is_member', 'price']
-    ordering = ['after_school_edition__after_school__name', 'after_school_edition']
+    list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member', 'price']
+    ordering = ['-after_school_edition__academic_course__initial_year', 'after_school_edition__after_school__name']
     list_filter = ['after_school_edition__academic_course__initial_year',
                    'after_school_edition__period',
                    'after_school_edition__timetable',
@@ -36,12 +37,21 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     search_fields = ['child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
                      'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
+    autocomplete_fields = ['after_school_edition', 'holder', 'child']
     list_per_page = 25
-    form = AfterSchoolRegistrationAdminForm
+    # form = AfterSchoolRegistrationAdminForm
 
-    @admin.display(description=gettext_lazy('After-school edition'))
-    def after_school_edition_short(self, registration):
-        return registration.after_school_edition.str_short()
+    @admin.display(description=gettext_lazy('Course'))
+    def course(self, registration):
+        return str(registration.after_school_edition.academic_course)
+
+    @admin.display(description=gettext_lazy('Activity'))
+    def after_school(self, registration):
+        return registration.after_school_edition.after_school
+
+    @admin.display(description=gettext_lazy('Timetable'))
+    def timetable(self, registration):
+        return registration.after_school_edition.timetable
 
     @admin.display(description=gettext_lazy('Child'))
     def child_name(self, registration):
@@ -73,7 +83,20 @@ class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
 
 class AfterSchoolEditionAdmin(admin.ModelAdmin):
     inlines = [AfterSchoolRegistrationInline]
-    list_display = ['academic_course', 'after_school', 'period', 'timetable', 'price_for_member', 'price_for_no_member', 'after_schools_count']
+    list_display = ['academic_course', 'after_school', 'period', 'timetable', 'price_for_member', 'price_for_no_member',
+                    'after_schools_count']
+    autocomplete_fields = ['after_school']
+    fieldsets = (
+        (None, {
+            'fields': ('academic_course', 'after_school')
+        }),
+        (_('Timetable'), {
+            'fields': ('period', 'timetable', 'levels'),
+        }),
+        (_('Price'), {
+            'fields': ('price_for_member', 'price_for_no_member'),
+        }),
+    )
     ordering = ['-academic_course', 'after_school']
     list_filter = ['academic_course__initial_year', 'after_school__name']
     search_fields = ['after_school__name']
@@ -124,11 +147,24 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
                export_emails]
 
 
-class AfterSchoolEditionInline(admin.TabularInline):
+class AfterSchoolEditionInline(ReadOnlyTabularInline):
     model = AfterSchoolEdition
-    list_display = ['after_school', 'price_for_member', 'price_for_no_member', 'academic_course']
+    fields = ['academic_course', 'after_school', 'timetable', 'period', 'levels', 'price_for_member',
+              'price_for_no_member', 'registrations_link', 'edit_link']
+    readonly_fields = ['edit_link', 'registrations_link']
     ordering = ['-academic_course', 'after_school']
     extra = 0
+
+    @admin.display(description=_('Registrations'))
+    def registrations_link(self, after_school_edition) -> str:
+        registrations_count = AfterSchoolRegistration.objects.of_edition(after_school_edition).count()
+        return Utils.get_model_link(model_name=AfterSchoolRegistration.__name__.lower(),
+                                    link_text=str(registrations_count),
+                                    filters=f'after_school_edition__id={after_school_edition.id}')
+
+    @admin.display(description=_('Edit'))
+    def edit_link(self, after_school_edition) -> str:
+        return Utils.get_model_instance_link(AfterSchoolEdition.__name__.lower(), after_school_edition.id, _('Edit'))
 
 
 class AfterSchoolAdmin(admin.ModelAdmin):
@@ -142,3 +178,39 @@ class AfterSchoolAdmin(admin.ModelAdmin):
     @admin.display(description=_('Editions'))
     def after_school_edition_count(self, after_school):
         return after_school.afterschooledition_set.count()
+
+    @admin.action(description=gettext_lazy("Merge activities (Move all editions to first selected)"))
+    def merge_after_schools(self, request, after_school_activities: QuerySet[AfterSchool]):
+        if after_school_activities.count() > 1:
+            messages = []
+            after_school_to_keep = after_school_activities.first()
+            merged_name = after_school_to_keep.name
+
+            messages.append(gettext_lazy('After-school kept') + f': {after_school_to_keep} ({after_school_to_keep.id})')
+            for after_school in after_school_activities.all():
+                if after_school.id != after_school_to_keep.id:
+                    for edition in after_school.afterschooledition_set.all():
+                        messages.append(
+                            gettext_lazy('Edition changed') + f': {edition} ({edition.id}). ' +
+                            gettext_lazy('After-school') + f': {edition.after_school.id} -> {after_school_to_keep.id}')
+                        edition.after_school = after_school_to_keep
+                        edition.save()
+
+                    merged_name += f' | {after_school.name}'
+
+                    messages.append(gettext_lazy('After-school deleted') + f': {after_school} ({after_school.id})')
+                    after_school.delete()
+
+            if after_school_to_keep.name != merged_name:
+                messages.append(gettext_lazy('After-school renamed') +
+                                f': {after_school_to_keep.name} '
+                                f'({after_school_to_keep.id}) -> {merged_name}')
+                after_school_to_keep.name = merged_name
+                after_school_to_keep.save()
+
+            message = mark_safe('<br/>'.join(messages))
+        else:
+            message = gettext_lazy('No merge done. You have to select more than one after-school')
+        self.message_user(request=request, message=message)
+
+    actions = ['merge_after_schools']

@@ -34,8 +34,9 @@ class AfterSchoolRegistration(models.Model):
         return f'{self.after_school_edition}, {self.child}'
 
     def clean(self):
-        if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
-            raise ValidationError(_('The selected bank account does not belong to the child\'s family'))
+        if hasattr(self, 'holder'):
+            if not self.holder.parent.family_set.filter(id=self.child.family.id).exists():
+                raise ValidationError(_('The selected bank account does not belong to the child\'s family'))
 
     def calculate_price(self) -> float:
         if Membership.is_member_child(self.child):
