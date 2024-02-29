@@ -1,6 +1,6 @@
 import decimal
+import math
 
-from django.conf import settings
 from django.db import models
 from django.db.models import CASCADE
 from django.db.models import Manager
@@ -15,7 +15,8 @@ from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 
 class CustodyEdition(PricePerLevel):
     period = models.CharField(max_length=300, verbose_name=_("Period"))
-    max_days_for_charge = models.PositiveIntegerField(verbose_name=_("Max days for charge"))
+    days_with_service = models.PositiveIntegerField(verbose_name=_("Days with service"), default=30,
+                                                    help_text=_('Days in which there was custody this edition'))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
     cycle = models.CharField(max_length=3, null=False, blank=False, choices=Level.CYCLES,
                              default=Level.ID_CYCLE_PRIMARY, verbose_name=_("Cycle"))
@@ -60,6 +61,10 @@ class CustodyEdition(PricePerLevel):
         charged_no_members = self.price_for_no_member * self.get_assisted_days(members=False, topped=True)
         charged = charged_members + charged_no_members
         return charged
+
+    @property
+    def max_days_for_charge(self) -> int:
+        return math.ceil(self.days_with_service * (DynamicSetting.load().custody_max_days_to_charge_percent / 100.0))
 
     def get_assisted_days(self, members=False, topped=False):
         assisted_days = 0
