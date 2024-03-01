@@ -156,6 +156,27 @@ class AnyHolder(admin.SimpleListFilter):
             return queryset
 
 
+class FamilyEmail(admin.SimpleListFilter):
+    title = _('Email')
+
+    parameter_name = 'email'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('missing', _('Missing')),
+            ('completed', _('All completed')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'missing':
+                return queryset.without_email()
+            elif self.value() == 'completed':
+                return queryset.with_email()
+        else:
+            return queryset
+
+
 class FamilyParentCountFilter(admin.SimpleListFilter):
     title = _('Numer of parents')
 

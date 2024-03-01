@@ -19,6 +19,7 @@ from ...utils.utils import Utils
 
 class Family(TimeStampedModel):
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
+    normalized_surnames = models.CharField(max_length=500, verbose_name=_("Normalized surnames"), blank=True)
     decline_membership = models.BooleanField(
         default=False, verbose_name=_("Decline membership"), help_text=_(
             'It prevents the family from becoming a member. For example, if they no longer have children at school but '
@@ -59,6 +60,13 @@ class Family(TimeStampedModel):
         if not children_names or children_names == '':
             children_names = _('No children')
         return f'{self.surnames}: {self.parents_names} ({children_names}) {self.id}'
+
+    def save(self, *args, **kwargs):
+        self.normalize_fields()
+        super(Family, self).save(*args, **kwargs)
+
+    def normalize_fields(self):
+        self.normalized_surnames = StringUtils.normalize(str(self.surnames))
 
     @property
     def children_names(self) -> str:

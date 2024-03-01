@@ -33,7 +33,7 @@ class FamilyImporter:
             elif error:
                 result.set_error(error)
             elif family_surnames:
-                family = Family.objects.create(surnames=family_surnames)
+                family = Family.objects.create(surnames=family_surnames, email=email)
                 result.set_created(family)
 
             if set_as_member and family and not Membership.is_member_family(family):
