@@ -99,7 +99,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     )
     ordering = ['-academic_course', 'after_school']
     list_filter = ['academic_course__initial_year', 'after_school__name']
-    search_fields = ['after_school__name']
+    search_fields = ['after_school__name', 'timetable']
     list_per_page = 25
 
     @admin.action(description=_("Create after school remittance"))

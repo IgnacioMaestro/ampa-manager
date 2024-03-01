@@ -77,14 +77,15 @@ class CustodyRegistrationInline(ReadOnlyTabularInline):
 class CustodyEditionAdmin(admin.ModelAdmin):
     inlines = [CustodyRegistrationInline]
     list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
-                    'max_days_for_charge', 'cost', 'charged', 'members_registrations_count',
+                    'max_days_for_charge', 'days_with_service', 'cost', 'charged', 'members_registrations_count',
                     'no_members_registrations_count', 'registrations_count', 'has_remittance', 'id']
     fieldsets = (
         (None, {
             'fields': ('academic_course', 'cycle', 'period')
         }),
         (_('Prices'), {
-            'fields': ('cost', 'max_days_for_charge', 'price_for_member', 'price_for_no_member', 'charged'),
+            'fields': ('cost', 'days_with_service', 'max_days_for_charge', 'price_for_member', 'price_for_no_member',
+                       'charged'),
         }),
         (_('Registrations'), {
             'fields': ('members_registrations_count', 'no_members_registrations_count', 'registrations_count'),
@@ -99,7 +100,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     )
     readonly_fields = ['remittance', 'members_registrations_count', 'no_members_registrations_count',
                        'registrations_count', 'members_assisted_days', 'topped_members_assisted_days',
-                       'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged']
+                       'no_members_assisted_days', 'topped_no_members_assisted_days', 'charged', 'max_days_for_charge']
     ordering = ['-academic_course', 'cycle', 'period', '-id']
     list_filter = [CustodyEditionAcademicCourse, 'academic_course__initial_year', CustodyEditionHasRemittanceFilter,
                    'period', 'cycle']
