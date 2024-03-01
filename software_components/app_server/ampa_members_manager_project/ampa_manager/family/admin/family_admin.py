@@ -22,7 +22,7 @@ from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
-    MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder
+    MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder, FamilyEmail
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -92,7 +92,7 @@ class FamilyInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
+    list_display = ['surnames', 'email', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
                     'has_membership_holder', 'created_formatted', 'id']
     fieldsets = (
         (_('General'), {
@@ -115,9 +115,9 @@ class FamilyAdmin(admin.ModelAdmin):
     ordering = ['surnames']
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, MembershipHolder, CustodyHolder, CampsHolder,
-                   AfterSchoolHolder, AnyHolder]
-    search_fields = ['surnames', 'email', 'parents__name_and_surnames', 'id', 'child__name', 'parents__email',
-                     'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
+                   AfterSchoolHolder, AnyHolder, FamilyEmail]
+    search_fields = ['surnames', 'normalized_surnames', 'email', 'parents__name_and_surnames', 'id', 'child__name',
+                     'parents__email', 'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
                      'camps_holder__bank_account__iban', 'after_school_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']

@@ -14,6 +14,7 @@ from ampa_manager.utils.utils import Utils
 
 class Child(TimeStampedModel):
     name = models.CharField(max_length=500, verbose_name=_("Name"))
+    normalized_name = models.CharField(max_length=500, verbose_name=_("Normalized name"), blank=True)
     year_of_birth = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(3000)], verbose_name=_("Year of birth"))
     repetition = models.IntegerField(default=0, verbose_name=_("Repetition"))
@@ -29,12 +30,19 @@ class Child(TimeStampedModel):
         constraints = [
             models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'), ]
 
+    def __str__(self) -> str:
+        return f'{self.full_name} ({self.level})'
+
+    def save(self, *args, **kwargs):
+        self.normalize_fields()
+        super(Child, self).save(*args, **kwargs)
+
+    def normalize_fields(self):
+        self.normalized_name = StringUtils.normalize(str(self.name))
+
     @property
     def full_name(self) -> str:
         return f'{self.name} {str(self.family)}'
-
-    def __str__(self) -> str:
-        return f'{self.full_name} ({self.level})'
 
     def str_short(self):
         return f'{self.name} ({self.level})'

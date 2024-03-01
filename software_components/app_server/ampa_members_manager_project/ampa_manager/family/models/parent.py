@@ -15,6 +15,8 @@ from ampa_manager.utils.utils import Utils
 
 class Parent(TimeStampedModel):
     name_and_surnames = models.CharField(max_length=500, verbose_name=_("Name and surnames"), unique=True)
+    normalized_name_and_surnames = models.CharField(max_length=500, verbose_name=_("Normalized name and surnames"),
+                                                    blank=True)
     phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Phone number"))
     additional_phone_number = PhoneNumberField(null=True, blank=True, verbose_name=_("Other phone"))
     email = models.EmailField(null=True, blank=True, verbose_name=_("Email"))
@@ -28,6 +30,13 @@ class Parent(TimeStampedModel):
 
     def __str__(self) -> str:
         return f'{self.full_name} ({self.id})'
+
+    def save(self, *args, **kwargs):
+        self.normalize_fields()
+        super(Parent, self).save(*args, **kwargs)
+
+    def normalize_fields(self):
+        self.normalized_name_and_surnames = StringUtils.normalize(str(self.name_and_surnames))
 
     @property
     def full_name(self) -> str:

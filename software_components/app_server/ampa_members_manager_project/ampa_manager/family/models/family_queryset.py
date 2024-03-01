@@ -88,3 +88,9 @@ class FamilyQuerySet(QuerySet):
 
     def renew_membership(self):
         return self.members_last_year().no_declined_membership().has_any_children()
+
+    def with_email(self):
+        return self.exclude(Q(email__isnull=True) | Q(email=''))
+
+    def without_email(self):
+        return self.filter(Q(email__isnull=True) | Q(email=''))
