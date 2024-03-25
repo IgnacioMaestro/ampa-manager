@@ -20,7 +20,7 @@ class TestFamily(TestCase):
         family: Family = baker.make('Family')
         self.assertEqual(
             str(family),
-            str(family.surnames) + ": " + family.parents_names + " (" + _('Sin hijos') + ") " + str(family.id))
+            str(family.surnames) + ": " + family.parents_names + " (" + _('No children') + ") " + str(family.id))
 
     def test_str_with_children(self):
         family: Family = baker.make('Family')
