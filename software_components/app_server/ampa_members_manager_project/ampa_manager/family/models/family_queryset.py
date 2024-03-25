@@ -94,3 +94,6 @@ class FamilyQuerySet(QuerySet):
 
     def without_email(self):
         return self.filter(Q(email__isnull=True) | Q(email=''))
+
+    def with_this_email(self, email):
+        return self.filter(Q(email=email) | Q(secondary_email=email)).distinct('id')
