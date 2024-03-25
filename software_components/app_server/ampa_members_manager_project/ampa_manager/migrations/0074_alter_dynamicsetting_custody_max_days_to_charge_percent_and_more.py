@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ampa_manager', '0072_child_normalized_name_family_normalized_surnames_and_more'),
+        ('ampa_manager', '0073_family_secondary_email'),
     ]
 
     operations = [
