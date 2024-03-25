@@ -1,4 +1,4 @@
-from unittest import TestCase
+from django.test import TestCase
 
 from django.core.exceptions import ValidationError
 
@@ -8,7 +8,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 class TestAcademicCourse(TestCase):
     def test_str(self):
         academic_course = AcademicCourse(initial_year=2022)
-        self.assertEqual(str(academic_course), "2022-2023")
+        self.assertEqual(str(academic_course), "22-23")
 
     def test_year_lower_minimal(self):
         with self.assertRaises(ValidationError):

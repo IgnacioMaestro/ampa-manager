@@ -4,6 +4,7 @@ from model_bakery import baker
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.tests.generator_adder import iban_generator
 from .custody_remittance_creator import CustodyRemittanceCreator
@@ -20,6 +21,7 @@ class TestCustodyRemittanceCreator(TestCase):
             CustodyRemittanceCreator(CustodyEdition.objects.none()).create()
 
     def test_create_custody_edition_with_custody_registration(self):
+        DynamicSetting().save()
         ActiveCourse.objects.create(course=baker.make('AcademicCourse'))
         holder: Holder = baker.make('Holder')
         custody_registration: CustodyRegistration = baker.make('CustodyRegistration', holder=holder)

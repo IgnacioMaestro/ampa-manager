@@ -3,6 +3,8 @@ package Family {
   class Family {
     surnames : String
     decline_membership : Boolean
+    email: String
+    secondary_email: String
   }
   class Parent {
     name_and_surnames : String
