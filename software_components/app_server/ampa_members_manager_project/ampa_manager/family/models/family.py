@@ -47,6 +47,7 @@ class Family(TimeStampedModel):
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
     email = models.EmailField(null=True, blank=True, verbose_name=_("Email"))
+    secondary_email = models.EmailField(null=True, blank=True, verbose_name=_("Secondary email"))
 
     objects = Manager.from_queryset(FamilyQuerySet)()
 
@@ -112,11 +113,17 @@ class Family(TimeStampedModel):
         return self.find_parent(parent_name_and_surnames) is not None
 
     @staticmethod
-    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None, child_name: Optional[str] = None):
+    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None, child_name: Optional[str] = None,
+             email: Optional[str] = None):
         family = None
         error = None
 
-        families = Family.filter_by_surnames(surnames, strict=True)
+        families = None
+        if email:
+            families = Family.objects.with_this_email(email)
+
+        if families is None or families.count() == 0:
+            families = Family.objects.with_these_surnames(surnames)
 
         if len(families) == 1:
             family = families[0]
@@ -214,8 +221,14 @@ class Family(TimeStampedModel):
         return emails
 
     def update_email(self, email: str):
-        self.email = email
+        if not self.email:
+            self.email = email
+        else:
+            self.secondary_email = email
         self.save()
+
+    def email_matches(self, email: str) -> bool:
+        return email in [self.email, self.secondary_email]
 
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:

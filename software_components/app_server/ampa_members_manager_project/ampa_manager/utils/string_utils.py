@@ -79,6 +79,8 @@ class StringUtils:
                 new_value = new_value.replace(character, 'd')
             for character in ['gu']:
                 new_value = new_value.replace(character, 'g')
+            for character in ['k']:
+                new_value = new_value.replace(character, 'c')
             return new_value
         return None
 

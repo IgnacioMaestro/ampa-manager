@@ -164,7 +164,7 @@ class FamilyEmail(admin.SimpleListFilter):
     def lookups(self, request, model_admin):
         return (
             ('missing', _('Missing')),
-            ('completed', _('All completed')),
+            ('completed', _('Completed')),
         )
 
     def queryset(self, request, queryset):

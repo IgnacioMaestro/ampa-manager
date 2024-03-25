@@ -25,6 +25,7 @@ class CustodyImporter:
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
+    KEY_FAMILY_EMAIL = 'family_email'
     KEY_PARENT_NAME_AND_SURNAMES = 'parent_name_and_surnames'
     KEY_PARENT_PHONE_NUMBER = 'parent_phone_number'
     KEY_PARENT_EMAIL = 'parent_email'
@@ -35,6 +36,7 @@ class CustodyImporter:
     KEY_CHILD_YEAR_OF_BIRTH = 'child_year_of_birth'
     KEY_ASSISTED_DAYS = 'assisted_days'
 
+    LABEL_FAMILY_EMAIL = _('Family email')
     LABEL_PARENT_NAME_AND_SURNAMES = _('Parent name and surnames')
     LABEL_PARENT_PHONE_NUMBER = _('Parent phone number')
     LABEL_PARENT_EMAIL = _('Parent email')
@@ -46,15 +48,16 @@ class CustodyImporter:
     LABEL_ASSISTED_DAYS = _('Assisted days in the selected edition')
 
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
-        [1, FieldsFormatters.clean_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
-        [2, FieldsFormatters.clean_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
-        [3, FieldsFormattersDjango.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
-        [4, FieldsFormatters.clean_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
-        [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
-        [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
-        [7, FieldsFormattersDjango.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
-        [8, FieldsFormatters.clean_integer, KEY_ASSISTED_DAYS, LABEL_ASSISTED_DAYS],
+        [0, FieldsFormatters.clean_email, KEY_FAMILY_EMAIL, LABEL_FAMILY_EMAIL],
+        [1, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
+        [2, FieldsFormatters.clean_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
+        [3, FieldsFormatters.clean_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
+        [4, FieldsFormattersDjango.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [5, FieldsFormatters.clean_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
+        [6, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
+        [7, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
+        [8, FieldsFormattersDjango.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
+        [9, FieldsFormatters.clean_integer, KEY_ASSISTED_DAYS, LABEL_ASSISTED_DAYS],
     ]
 
     @classmethod
@@ -96,11 +99,10 @@ class CustodyImporter:
 
         try:
             family_result = FamilyImporter.import_family(
-                excel_row.get(cls.KEY_CHILD_SURNAMES),
-                excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
-                None,
-                False,
-                excel_row.get(cls.KEY_CHILD_NAME))
+                family_surnames=excel_row.get(cls.KEY_CHILD_SURNAMES),
+                parent1_name_and_surnames=excel_row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                child_name=excel_row.get(cls.KEY_CHILD_NAME),
+                email=excel_row.get(cls.KEY_FAMILY_EMAIL))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result

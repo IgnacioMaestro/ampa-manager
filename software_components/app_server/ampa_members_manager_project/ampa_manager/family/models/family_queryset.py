@@ -6,6 +6,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
+from ampa_manager.utils.string_utils import StringUtils
 
 
 class FamilyQuerySet(QuerySet):
@@ -94,3 +95,9 @@ class FamilyQuerySet(QuerySet):
 
     def without_email(self):
         return self.filter(Q(email__isnull=True) | Q(email=''))
+
+    def with_this_email(self, email):
+        return self.filter(Q(email=email) | Q(secondary_email=email))
+
+    def with_these_surnames(self, surnames):
+        return self.filter(normalized_surnames=StringUtils.normalize(str(surnames)))

@@ -21,10 +21,10 @@ class FamilyImporter:
             if parent2_name_and_surnames:
                 parents_name_and_surnames.append(parent2_name_and_surnames)
 
-            family, error = Family.find(family_surnames, parents_name_and_surnames, child_name)
+            family, error = Family.find(family_surnames, parents_name_and_surnames, child_name, email=email)
 
             if family:
-                if email and family.email != email:
+                if email and not family.email_matches(email):
                     fields_changes = FieldsChanges([family.email], [email], [])
                     family.update_email(email)
                     result.set_updated(family, fields_changes)

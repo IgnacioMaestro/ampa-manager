@@ -92,11 +92,11 @@ class FamilyInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
+    list_display = ['surnames', 'email', 'secondary_email', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
                     'has_membership_holder', 'created_formatted', 'id']
     fieldsets = (
         (_('General'), {
-            'fields': ['surnames', 'email', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
+            'fields': ['surnames', 'email', 'secondary_email', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
         }),
         (_('Payment details'), {
             'fields': ['membership_holder', 'custody_holder', 'camps_holder', 'after_school_holder'],
@@ -116,9 +116,10 @@ class FamilyAdmin(admin.ModelAdmin):
     list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
                    'decline_membership', FamilyParentCountFilter, MembershipHolder, CustodyHolder, CampsHolder,
                    AfterSchoolHolder, AnyHolder, FamilyEmail]
-    search_fields = ['surnames', 'normalized_surnames', 'email', 'parents__name_and_surnames', 'id', 'child__name',
-                     'parents__email', 'membership_holder__bank_account__iban', 'custody_holder__bank_account__iban',
-                     'camps_holder__bank_account__iban', 'after_school_holder__bank_account__iban']
+    search_fields = ['surnames', 'normalized_surnames', 'email', 'secondary_email', 'parents__name_and_surnames', 'id',
+                     'child__name', 'parents__email', 'membership_holder__bank_account__iban',
+                     'custody_holder__bank_account__iban', 'camps_holder__bank_account__iban',
+                     'after_school_holder__bank_account__iban']
     form = FamilyAdminForm
     filter_horizontal = ['parents']
     inlines = [ChildInline, MembershipInline]
