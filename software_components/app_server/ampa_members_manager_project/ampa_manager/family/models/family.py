@@ -118,10 +118,12 @@ class Family(TimeStampedModel):
         family = None
         error = None
 
+        families = None
         if email:
             families = Family.objects.with_this_email(email)
-        else:
-            families = Family.filter_by_surnames(surnames, strict=True)
+
+        if families is None or families.count() == 0:
+            families = Family.objects.with_these_surnames(surnames)
 
         if len(families) == 1:
             family = families[0]
@@ -219,7 +221,7 @@ class Family(TimeStampedModel):
         return emails
 
     def update_email(self, email: str):
-        if not email:
+        if not self.email:
             self.email = email
         else:
             self.secondary_email = email

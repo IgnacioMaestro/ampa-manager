@@ -92,7 +92,7 @@ class FamilyInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
+    list_display = ['surnames', 'email', 'secondary_email', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
                     'has_membership_holder', 'created_formatted', 'id']
     fieldsets = (
         (_('General'), {
