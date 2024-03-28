@@ -135,7 +135,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         emails = []
         for edition in editions.all():
             for registration in edition.registrations.all():
-                for email in registration.child.family.get_parents_emails():
+                for email in registration.child.family.get_emails():
                     if email not in emails:
                         emails.append(email)
 

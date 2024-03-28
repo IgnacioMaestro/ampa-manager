@@ -213,11 +213,17 @@ class Family(TimeStampedModel):
                             similar_ids.append(family.id)
         return similar_families
 
-    def get_parents_emails(self) -> List[str]:
+    def get_emails(self, parents_emails=True, family_emails=True) -> List[str]:
         emails = []
-        for parent in self.parents.all():
-            if parent.email and parent.email not in emails:
-                emails.append(parent.email)
+        if parents_emails:
+            for parent in self.parents.all():
+                if parent.email and parent.email not in emails:
+                    emails.append(parent.email)
+        if family_emails:
+            if self.email and self.email not in emails:
+                emails.append(self.email)
+            if self.secondary_email and self.secondary_email not in emails:
+                emails.append(self.secondary_email)
         return emails
 
     def update_email(self, email: str):
@@ -234,7 +240,7 @@ class Family(TimeStampedModel):
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
         emails = []
         for family in families:
-            emails.extend(family.get_parents_emails())
+            emails.extend(family.get_emails())
         return emails
 
     @staticmethod

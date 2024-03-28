@@ -38,10 +38,9 @@ class CheckFamilyEmail(View):
         emails_not_registered = []
 
         for email in emails_to_check:
-            try:
-                family = Family.objects.get(email=email)
-                emails_registered.append([email, family.surnames])
-            except Family.DoesNotExist:
+            families = Family.objects.with_this_email(email)
+            if families.count() > 0:
+                emails_registered.append([email, families.first().surnames])
+            else:
                 emails_not_registered.append(email)
-
         return emails_registered, emails_not_registered
