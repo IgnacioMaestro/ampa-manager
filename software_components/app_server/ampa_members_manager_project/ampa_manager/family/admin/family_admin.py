@@ -5,13 +5,11 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 from openpyxl import Workbook
 
-from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
-from django.utils.translation import gettext_lazy as _
-
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
@@ -19,8 +17,6 @@ from ampa_manager.charge.models.after_school_charge.after_school_receipt import 
 from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
-from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
-    MembershipRemittanceCreator
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
     MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder, FamilyEmail
 from ampa_manager.family.models.child import Child

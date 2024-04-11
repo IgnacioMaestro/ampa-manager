@@ -34,3 +34,9 @@ class ChildQuerySet(QuerySet):
 
     def with_family(self, family):
         return self.filter(family=family)
+
+    def members(self):
+        return self.filter(family__membership__academic_course=ActiveCourse.load())
+
+    def no_members(self):
+        return self.exclude(family__membership__academic_course=ActiveCourse.load())

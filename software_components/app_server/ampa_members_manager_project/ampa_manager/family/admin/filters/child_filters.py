@@ -58,3 +58,24 @@ class ChildLevelListFilter(admin.SimpleListFilter):
             return queryset.of_age(int(self.value()))
         else:
             return queryset
+
+
+class ChildIsMemberFilter(admin.SimpleListFilter):
+    title = _('Membership')
+
+    parameter_name = 'member'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Current year members')),
+            ('no', _('Current year NO members')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'yes':
+                return queryset.members()
+            elif self.value() == 'no':
+                return queryset.no_members()
+        else:
+            return queryset
