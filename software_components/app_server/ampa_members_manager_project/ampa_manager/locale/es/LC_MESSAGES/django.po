@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-22 15:55+0100\n"
+"POT-Creation-Date: 2024-04-24 15:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,10 +30,10 @@ msgstr "Está activo"
 #: .\ampa_manager\academic_course\admin.py:29
 #: .\ampa_manager\activity\admin\after_school_admin.py:66
 #: .\ampa_manager\activity\admin\camps_admin.py:43
-#: .\ampa_manager\activity\admin\custody_admin.py:43
-#: .\ampa_manager\family\admin\child_admin.py:29
-#: .\ampa_manager\family\admin\family_admin.py:281
-#: .\ampa_manager\family\admin\family_admin.py:285
+#: .\ampa_manager\activity\admin\custody_admin.py:44
+#: .\ampa_manager\family\admin\child_admin.py:34
+#: .\ampa_manager\family\admin\family_admin.py:278
+#: .\ampa_manager\family\admin\family_admin.py:282
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "Yes"
 msgstr "Sí"
@@ -41,10 +41,10 @@ msgstr "Sí"
 #: .\ampa_manager\academic_course\admin.py:29
 #: .\ampa_manager\activity\admin\after_school_admin.py:66
 #: .\ampa_manager\activity\admin\camps_admin.py:43
-#: .\ampa_manager\activity\admin\custody_admin.py:43
-#: .\ampa_manager\family\admin\child_admin.py:29
-#: .\ampa_manager\family\admin\family_admin.py:281
-#: .\ampa_manager\family\admin\family_admin.py:285
+#: .\ampa_manager\activity\admin\custody_admin.py:44
+#: .\ampa_manager\family\admin\child_admin.py:34
+#: .\ampa_manager\family\admin\family_admin.py:278
+#: .\ampa_manager\family\admin\family_admin.py:282
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "No"
 msgstr "No"
@@ -52,8 +52,8 @@ msgstr "No"
 #: .\ampa_manager\academic_course\admin.py:31
 #: .\ampa_manager\academic_course\admin.py:82
 #: .\ampa_manager\activity\admin\camps_admin.py:84
-#: .\ampa_manager\activity\admin\custody_admin.py:113
-#: .\ampa_manager\activity\admin\custody_admin.py:133
+#: .\ampa_manager\activity\admin\custody_admin.py:114
+#: .\ampa_manager\activity\admin\custody_admin.py:134
 #: .\ampa_manager\activity\admin\registration_filters.py:14
 #: .\ampa_manager_project\settings.py:180
 msgid "Members"
@@ -77,7 +77,7 @@ msgstr "Remesa de socios creada"
 #: .\ampa_manager\activity\admin\after_school_admin.py:118
 #: .\ampa_manager\activity\admin\after_school_admin.py:126
 #: .\ampa_manager\activity\admin\camps_admin.py:107
-#: .\ampa_manager\activity\admin\custody_admin.py:161
+#: .\ampa_manager\activity\admin\custody_admin.py:162
 #: .\ampa_manager\charge\admin\membership_admin.py:103
 msgid "View details"
 msgstr "Ver detalles"
@@ -89,7 +89,7 @@ msgstr "No hay familias que incluir en la remesa de socios"
 
 #: .\ampa_manager\academic_course\admin.py:66
 #: .\ampa_manager\academic_course\admin.py:86
-#: .\ampa_manager\family\models\family.py:55
+#: .\ampa_manager\family\models\family.py:56
 msgid "Families"
 msgstr "Familias"
 
@@ -112,10 +112,10 @@ msgid "Families with children in school"
 msgstr "Familias con hijos en la ikastola"
 
 #: .\ampa_manager\academic_course\admin.py:94
-#: .\ampa_manager\family\admin\child_admin.py:35
-#: .\ampa_manager\family\admin\child_admin.py:57
-#: .\ampa_manager\family\admin\family_admin.py:259
-#: .\ampa_manager\family\admin\family_admin.py:267
+#: .\ampa_manager\family\admin\child_admin.py:40
+#: .\ampa_manager\family\admin\child_admin.py:62
+#: .\ampa_manager\family\admin\family_admin.py:256
+#: .\ampa_manager\family\admin\family_admin.py:264
 #: .\ampa_manager\family\models\family.py:27
 #: .\ampa_manager\family\models\parent.py:28
 msgid "Parents"
@@ -203,8 +203,8 @@ msgstr "Cursos académicos"
 #: .\ampa_manager\activity\admin\registration_filters.py:29
 #: .\ampa_manager\charge\admin\membership_admin.py:32
 #: .\ampa_manager\charge\models\fee\fee.py:9
-#: .\ampa_manager\family\admin\child_admin.py:31
-#: .\ampa_manager\family\admin\family_admin.py:67
+#: .\ampa_manager\family\admin\child_admin.py:36
+#: .\ampa_manager\family\admin\family_admin.py:63
 #: .\ampa_manager\family\admin\filters\child_filters.py:38
 msgid "Course"
 msgstr "Curso"
@@ -274,7 +274,7 @@ msgid "Timetable"
 msgstr "Horario"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:56
-#: .\ampa_manager\activity\admin\custody_admin.py:49
+#: .\ampa_manager\activity\admin\custody_admin.py:50
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
 #: .\ampa_manager\activity\models\camps\camps_registration.py:17
 #: .\ampa_manager\activity\models\custody\custody_registration.py:17
@@ -288,13 +288,13 @@ msgid "Child"
 msgstr "Hijo"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:60
-#: .\ampa_manager\activity\admin\custody_admin.py:53
+#: .\ampa_manager\activity\admin\custody_admin.py:54
 #: .\ampa_manager\activity\admin\registration_filters.py:55
 #: .\ampa_manager\charge\admin\filters\receipt_filters.py:6
 #: .\ampa_manager\charge\models\membership_receipt.py:20
 #: .\ampa_manager\family\admin\parent_admin.py:28
 #: .\ampa_manager\family\models\child.py:21
-#: .\ampa_manager\family\models\family.py:54
+#: .\ampa_manager\family\models\family.py:55
 #: .\ampa_manager\family\models\membership.py:13
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:90
 #: .\ampa_manager\views\validate_data.py:123
@@ -305,23 +305,23 @@ msgstr "Familia"
 #: .\ampa_manager\activity\admin\after_school_admin.py:64
 #: .\ampa_manager\activity\admin\camps_admin.py:41
 #: .\ampa_manager\activity\admin\camps_admin.py:52
-#: .\ampa_manager\activity\admin\custody_admin.py:68
-#: .\ampa_manager\family\admin\child_admin.py:27
-#: .\ampa_manager\family\admin\family_admin.py:279
+#: .\ampa_manager\activity\admin\custody_admin.py:69
+#: .\ampa_manager\family\admin\child_admin.py:32
+#: .\ampa_manager\family\admin\family_admin.py:276
 #: .\ampa_manager\family\admin\parent_admin.py:24
 msgid "Is member"
 msgstr "Es socio"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:68
 #: .\ampa_manager\activity\admin\after_school_admin.py:96
-#: .\ampa_manager\activity\admin\custody_admin.py:57
+#: .\ampa_manager\activity\admin\custody_admin.py:58
 msgid "Price"
 msgstr "Precio"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:79
 #: .\ampa_manager\activity\admin\camps_admin.py:56
-#: .\ampa_manager\activity\admin\custody_admin.py:72
-#: .\ampa_manager\family\admin\family_admin.py:63
+#: .\ampa_manager\activity\admin\custody_admin.py:73
+#: .\ampa_manager\family\admin\family_admin.py:59
 msgid "Id"
 msgstr "Id"
 
@@ -333,7 +333,7 @@ msgstr "Crear remesa de extraescolares"
 #: .\ampa_manager\activity\admin\after_school_admin.py:118
 #: .\ampa_manager\activity\admin\after_school_admin.py:126
 #: .\ampa_manager\activity\admin\camps_admin.py:107
-#: .\ampa_manager\activity\admin\custody_admin.py:161
+#: .\ampa_manager\activity\admin\custody_admin.py:162
 msgid "Activity remittance created"
 msgstr "Remesa de actividad creada"
 
@@ -348,13 +348,13 @@ msgstr "Crear remesa de extraescolares con el importe restante"
 #: .\ampa_manager\activity\admin\after_school_admin.py:129
 #: .\ampa_manager\activity\admin\after_school_admin.py:158
 #: .\ampa_manager\activity\admin\camps_admin.py:69
-#: .\ampa_manager\activity\admin\custody_admin.py:90
-#: .\ampa_manager\family\admin\family_admin.py:104
+#: .\ampa_manager\activity\admin\custody_admin.py:91
+#: .\ampa_manager\family\admin\family_admin.py:100
 msgid "Registrations"
 msgstr "Inscripciones"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:133
-#: .\ampa_manager\activity\admin\custody_admin.py:185
+#: .\ampa_manager\activity\admin\custody_admin.py:186
 msgid "Export family emails to CSV"
 msgstr "Exportar correos de la familia a CSV"
 
@@ -399,29 +399,29 @@ msgid "No merge done. You have to select more than one after-school"
 msgstr "No se ha unido nada. Tienes que seleccionar mas de una extraescolar"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:68
-#: .\ampa_manager\activity\admin\custody_admin.py:86
+#: .\ampa_manager\activity\admin\custody_admin.py:87
 msgid "Prices"
 msgstr "Precios"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:72
 #: .\ampa_manager\activity\admin\camps_admin.py:92
 #: .\ampa_manager\activity\admin\camps_edition_filters.py:8
-#: .\ampa_manager\activity\admin\custody_admin.py:97
-#: .\ampa_manager\activity\admin\custody_admin.py:141
-#: .\ampa_manager\activity\admin\custody_admin.py:151
+#: .\ampa_manager\activity\admin\custody_admin.py:98
+#: .\ampa_manager\activity\admin\custody_admin.py:142
+#: .\ampa_manager\activity\admin\custody_admin.py:152
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
 msgid "Remittance"
 msgstr "Remesa"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:80
-#: .\ampa_manager\activity\admin\custody_admin.py:121
-#: .\ampa_manager\activity\admin\custody_admin.py:129
+#: .\ampa_manager\activity\admin\custody_admin.py:122
+#: .\ampa_manager\activity\admin\custody_admin.py:130
 #: .\ampa_manager\activity\admin\registration_filters.py:15
 msgid "No members"
 msgstr "No socios"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:88
-#: .\ampa_manager\activity\admin\custody_admin.py:137
+#: .\ampa_manager\activity\admin\custody_admin.py:138
 #: .\ampa_manager\charge\admin\after_school_admin.py:44
 #: .\ampa_manager\charge\admin\after_school_admin.py:99
 #: .\ampa_manager\charge\admin\camps_admin.py:55
@@ -451,57 +451,57 @@ msgstr "Con remesa"
 msgid "No remittance"
 msgstr "Sin remesa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:41
+#: .\ampa_manager\activity\admin\custody_admin.py:42
 msgid "Member"
 msgstr "Socio"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:45
+#: .\ampa_manager\activity\admin\custody_admin.py:46
 #: .\ampa_manager\activity\models\custody\custody_edition.py:32
 #: .\ampa_manager\activity\models\custody\custody_registration.py:15
 msgid "Custody edition"
 msgstr "Edición de custodia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:93
+#: .\ampa_manager\activity\admin\custody_admin.py:94
 #: .\ampa_manager\activity\models\custody\custody_registration.py:19
 msgid "Assisted days"
 msgstr "Días asistidos"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:109
+#: .\ampa_manager\activity\admin\custody_admin.py:110
 msgid "Charged"
 msgstr "Cobrado"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:117
+#: .\ampa_manager\activity\admin\custody_admin.py:118
 msgid "Members (topped by \"Max days for charge\")"
 msgstr "Socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:125
+#: .\ampa_manager\activity\admin\custody_admin.py:126
 msgid "No members (topped by \"Max days for charge\")"
 msgstr "No socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:149
+#: .\ampa_manager\activity\admin\custody_admin.py:150
 msgid "Multiple remmitances"
 msgstr "Varias remesas"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:156
+#: .\ampa_manager\activity\admin\custody_admin.py:157
 msgid "Create custody remittance"
 msgstr "Crear remesa de custodia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:164
+#: .\ampa_manager\activity\admin\custody_admin.py:165
 msgid "Calculate prices"
 msgstr "Calcular precios"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:176
+#: .\ampa_manager\activity\admin\custody_admin.py:177
 #, python-format
 msgid "%(calculated)s editions' prices calculated"
 msgstr "Precios de %(calculated)s ediciones calculador"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:180
+#: .\ampa_manager\activity\admin\custody_admin.py:181
 #, python-format
 msgid "Unable to calculate %(not_calculated)s editions' prices"
 msgstr ""
 "No ha sido posible calcular los precios de %(not_calculated)s ediciones"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:181
+#: .\ampa_manager\activity\admin\custody_admin.py:182
 msgid "Prices calculated based on edition cost and number of registrations"
 msgstr ""
 "Precios calculados en base al coste de la edición y el nº de inscripciones"
@@ -515,6 +515,7 @@ msgid "Previous"
 msgstr "Anterior"
 
 #: .\ampa_manager\activity\admin\registration_filters.py:8
+#: .\ampa_manager\family\admin\filters\child_filters.py:64
 #: .\ampa_manager\family\admin\filters\family_filters.py:6
 #: .\ampa_manager\family\models\membership.py:19
 #: .\ampa_manager\family\models\membership.py:20
@@ -535,7 +536,7 @@ msgid "Funding"
 msgstr "Financiación"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:13
-#: .\ampa_manager\family\admin\family_admin.py:71
+#: .\ampa_manager\family\admin\family_admin.py:67
 #: .\ampa_manager\family\admin\holder_admin.py:60
 msgid "After-schools"
 msgstr "Extraescolares"
@@ -571,7 +572,7 @@ msgid "After-school registration"
 msgstr "Inscripción en extraescolar"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:26
-#: .\ampa_manager\family\admin\family_admin.py:329
+#: .\ampa_manager\family\admin\family_admin.py:326
 msgid "After-school registrations"
 msgstr "Inscripciones en extraescolares"
 
@@ -619,7 +620,7 @@ msgstr "Inscripción en campamentos"
 
 #: .\ampa_manager\activity\models\camps\camps_registration.py:24
 #: .\ampa_manager\charge\models\camps\camps_receipt.py:18
-#: .\ampa_manager\family\admin\family_admin.py:325
+#: .\ampa_manager\family\admin\family_admin.py:322
 msgid "Camps registrations"
 msgstr "Inscripciones en campamentos"
 
@@ -661,7 +662,7 @@ msgstr "Inscripciones en custodia"
 
 #: .\ampa_manager\activity\models\custody\custody_registration.py:25
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:17
-#: .\ampa_manager\family\admin\family_admin.py:321
+#: .\ampa_manager\family\admin\family_admin.py:318
 msgid "Custody registrations"
 msgstr "Inscripciones en custodia"
 
@@ -817,7 +818,7 @@ msgstr "Marcar como pagado"
 #: .\ampa_manager\charge\admin\custody_admin.py:107
 #: .\ampa_manager\charge\admin\membership_admin.py:55
 #: .\ampa_manager\charge\admin\membership_admin.py:75
-#: .\ampa_manager\family\admin\family_admin.py:107
+#: .\ampa_manager\family\admin\family_admin.py:103
 msgid "Receipts"
 msgstr "Recibos"
 
@@ -825,10 +826,10 @@ msgstr "Recibos"
 #: .\ampa_manager\charge\admin\camps_admin.py:95
 #: .\ampa_manager\charge\admin\custody_admin.py:95
 #: .\ampa_manager\charge\admin\membership_admin.py:59
-#: .\ampa_manager\family\admin\family_admin.py:295
-#: .\ampa_manager\family\admin\family_admin.py:305
-#: .\ampa_manager\family\admin\family_admin.py:315
-#: .\ampa_manager\family\admin\family_admin.py:348
+#: .\ampa_manager\family\admin\family_admin.py:292
+#: .\ampa_manager\family\admin\family_admin.py:302
+#: .\ampa_manager\family\admin\family_admin.py:312
+#: .\ampa_manager\family\admin\family_admin.py:345
 #, python-format
 msgid "%(num_receipts)s receipt"
 msgstr "%(num_receipts)s recibos"
@@ -837,10 +838,10 @@ msgstr "%(num_receipts)s recibos"
 #: .\ampa_manager\charge\admin\camps_admin.py:97
 #: .\ampa_manager\charge\admin\custody_admin.py:97
 #: .\ampa_manager\charge\admin\membership_admin.py:61
-#: .\ampa_manager\family\admin\family_admin.py:297
-#: .\ampa_manager\family\admin\family_admin.py:307
-#: .\ampa_manager\family\admin\family_admin.py:317
-#: .\ampa_manager\family\admin\family_admin.py:350
+#: .\ampa_manager\family\admin\family_admin.py:294
+#: .\ampa_manager\family\admin\family_admin.py:304
+#: .\ampa_manager\family\admin\family_admin.py:314
+#: .\ampa_manager\family\admin\family_admin.py:347
 #, python-format
 msgid "%(num_receipts)s receipts"
 msgstr "%(num_receipts)s recibos"
@@ -904,7 +905,7 @@ msgid "After-school receipt"
 msgstr "Recibo de extraescolar"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:344
+#: .\ampa_manager\family\admin\family_admin.py:341
 msgid "After-school receipts"
 msgstr "Recibos de extraescolares"
 
@@ -930,7 +931,7 @@ msgid "Camps receipt"
 msgstr "Recibo de campamentos"
 
 #: .\ampa_manager\charge\models\camps\camps_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:301
+#: .\ampa_manager\family\admin\family_admin.py:298
 msgid "Camps receipts"
 msgstr "Recibos de campamentos"
 
@@ -952,7 +953,7 @@ msgid "Custody receipt"
 msgstr "Recibo de custodia"
 
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:25
-#: .\ampa_manager\family\admin\family_admin.py:311
+#: .\ampa_manager\family\admin\family_admin.py:308
 msgid "Custody receipts"
 msgstr "Recibos de custodia"
 
@@ -985,7 +986,7 @@ msgid "Membership receipt"
 msgstr "Recibo de socio"
 
 #: .\ampa_manager\charge\models\membership_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:291
+#: .\ampa_manager\family\admin\family_admin.py:288
 msgid "Membership receipts"
 msgstr "Recibos de socios"
 
@@ -1034,7 +1035,7 @@ msgid "Concept"
 msgstr "Concepto"
 
 #: .\ampa_manager\charge\state.py:6
-#: .\ampa_manager\family\admin\family_admin.py:287
+#: .\ampa_manager\family\admin\family_admin.py:284
 msgid "Created"
 msgstr "Creado"
 
@@ -1051,34 +1052,34 @@ msgid "Remittances"
 msgstr "Remesas"
 
 #: .\ampa_manager\dynamic_settings\admin\dynamic_setting_admin.py:11
-#: .\ampa_manager\family\admin\family_admin.py:77
+#: .\ampa_manager\family\admin\family_admin.py:73
 #: .\ampa_manager_project\settings.py:166
 msgid "Custody"
 msgstr "Custodia"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:11
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:9
 msgid "Party identification"
 msgstr "Party identification"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:12
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:10
 msgid "Generic organisation identification"
 msgstr "Generic organisation identification"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:13
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:11
 msgid "BIC"
 msgstr "BIC"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:14
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:12
 #: .\ampa_manager\family\models\bank_account\bank_account.py:14
 #: .\ampa_manager\importation\models\holder_import_data.py:8
 msgid "IBAN"
 msgstr "IBAN"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:16
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:15
 msgid "Members discount"
 msgstr "Descuento de socios"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:17
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:16
 msgid "Percentage discounted to members in the price of the custody"
 msgstr "Porcentaje descontado a los socios en el precio de la custodia"
 
@@ -1124,48 +1125,52 @@ msgstr "Todos los IBANes validados son correctos"
 msgid "%(number)s IBANs are invalid: %(ibans)s"
 msgstr "%(number)s IBANes son incorrectos: %(ibans)s"
 
-#: .\ampa_manager\family\admin\child_admin.py:39
+#: .\ampa_manager\family\admin\child_admin.py:44
 msgid "After-sch."
 msgstr "Extraesc."
 
-#: .\ampa_manager\family\admin\child_admin.py:45
+#: .\ampa_manager\family\admin\child_admin.py:50
 msgid "Cust."
 msgstr "Cust."
 
-#: .\ampa_manager\family\admin\child_admin.py:51
+#: .\ampa_manager\family\admin\child_admin.py:56
 msgid "Cmps."
 msgstr "Camp."
 
-#: .\ampa_manager\family\admin\family_admin.py:71
-#: .\ampa_manager\family\admin\family_admin.py:77
-#: .\ampa_manager\family\admin\family_admin.py:83
+#: .\ampa_manager\family\admin\child_admin.py:66
+msgid "Export children to XLS"
+msgstr "Exportar hijos a XLS"
+
+#: .\ampa_manager\family\admin\family_admin.py:67
+#: .\ampa_manager\family\admin\family_admin.py:73
+#: .\ampa_manager\family\admin\family_admin.py:79
 msgid "This year"
 msgstr "Este pasado"
 
-#: .\ampa_manager\family\admin\family_admin.py:71
-#: .\ampa_manager\family\admin\family_admin.py:77
-#: .\ampa_manager\family\admin\family_admin.py:83
+#: .\ampa_manager\family\admin\family_admin.py:67
+#: .\ampa_manager\family\admin\family_admin.py:73
+#: .\ampa_manager\family\admin\family_admin.py:79
 msgid "Previously"
 msgstr "Anteriormente"
 
-#: .\ampa_manager\family\admin\family_admin.py:83
+#: .\ampa_manager\family\admin\family_admin.py:79
 #: .\ampa_manager_project\settings.py:173
 msgid "Camps"
 msgstr "Campamentos"
 
-#: .\ampa_manager\family\admin\family_admin.py:98
+#: .\ampa_manager\family\admin\family_admin.py:94
 msgid "General"
 msgstr "General"
 
-#: .\ampa_manager\family\admin\family_admin.py:101
+#: .\ampa_manager\family\admin\family_admin.py:97
 msgid "Payment details"
 msgstr "Información pago"
 
-#: .\ampa_manager\family\admin\family_admin.py:127
+#: .\ampa_manager\family\admin\family_admin.py:124
 msgid "Complete missing holders"
 msgstr "Completar titular vacíos"
 
-#: .\ampa_manager\family\admin\family_admin.py:143
+#: .\ampa_manager\family\admin\family_admin.py:140
 #, python-format
 msgid ""
 "Membership holders: %(membership_holders_before)s -> "
@@ -1173,34 +1178,36 @@ msgid ""
 "%(custody_holders_before)s -> %(custody_holders_after)s <br/>After-schools "
 "holders: %(after_school_holders_before)s -> %(after_school_holders_after)s "
 "<br/>Camps holders: %(camps_holders_before)s -> %(camps_holders_after)s"
-msgstr "Titulares de socios: %(membership_holders_before)s -> "
+msgstr ""
+"Titulares de socios: %(membership_holders_before)s -> "
 "%(membership_holders_after)s <br/>Titulares de custodia: "
-"%(custody_holders_before)s -> %(custody_holders_after)s <br/>Titulares de extraescolares"
-": %(after_school_holders_before)s -> %(after_school_holders_after)s "
-"<br/>Titulares de campamentos: %(camps_holders_before)s -> %(camps_holders_after)s"
+"%(custody_holders_before)s -> %(custody_holders_after)s <br/>Titulares de "
+"extraescolares: %(after_school_holders_before)s -> "
+"%(after_school_holders_after)s <br/>Titulares de campamentos: "
+"%(camps_holders_before)s -> %(camps_holders_after)s"
 
-#: .\ampa_manager\family\admin\family_admin.py:157
+#: .\ampa_manager\family\admin\family_admin.py:154
 msgid "Export emails to CSV"
 msgstr "Exportar correos a CSV"
 
-#: .\ampa_manager\family\admin\family_admin.py:164
+#: .\ampa_manager\family\admin\family_admin.py:161
 msgid "Send email to the parents of selected families"
 msgstr "Enviar un correo a los padres de las familias seleccionadas"
 
-#: .\ampa_manager\family\admin\family_admin.py:170
+#: .\ampa_manager\family\admin\family_admin.py:167
 msgid "Click here to send an email to the parents"
 msgstr "Haz clic aquí para enviar un correo a los padres"
 
-#: .\ampa_manager\family\admin\family_admin.py:174
+#: .\ampa_manager\family\admin\family_admin.py:171
 msgid "Export families to XLS"
 msgstr "Exportar familias a XLS"
 
-#: .\ampa_manager\family\admin\family_admin.py:212
+#: .\ampa_manager\family\admin\family_admin.py:209
 msgid "Make families member"
 msgstr "Convertir las familias en socias"
 
 # python-format
-#: .\ampa_manager\family\admin\family_admin.py:227
+#: .\ampa_manager\family\admin\family_admin.py:224
 #, python-format
 msgid ""
 "%(new_members)s families became members. %(already_members)s families "
@@ -1209,46 +1216,48 @@ msgstr ""
 "%(new_members)s familias convertidas en socias. %(already_members)s familias "
 "ya eran socias. %(declined)s familias no quieren seguir siendo socias"
 
-#: .\ampa_manager\family\admin\family_admin.py:231
+#: .\ampa_manager\family\admin\family_admin.py:228
 msgid "Remove from members"
 msgstr "Quitar de socios"
 
 # python-format
-#: .\ampa_manager\family\admin\family_admin.py:247
+#: .\ampa_manager\family\admin\family_admin.py:244
+#, python-format
 msgid ""
 "%(removed_members)s families removed from members. %(non_members)s of the "
 "selected families were not members"
 msgstr ""
-"%(removed_members)s familias quitadas de socias. %(non_members)s de las familias seleccionadas no eran socias"
+"%(removed_members)s familias quitadas de socias. %(non_members)s de las "
+"familias seleccionadas no eran socias"
 
-#: .\ampa_manager\family\admin\family_admin.py:252
+#: .\ampa_manager\family\admin\family_admin.py:249
 msgid "Decline Membership"
 msgstr "No quiere ser socio"
 
-#: .\ampa_manager\family\admin\family_admin.py:256
+#: .\ampa_manager\family\admin\family_admin.py:253
 msgid "Decline Membership established"
 msgstr "'No quiere ser socio' activado"
 
-#: .\ampa_manager\family\admin\family_admin.py:263
-#: .\ampa_manager\family\admin\family_admin.py:271
+#: .\ampa_manager\family\admin\family_admin.py:260
+#: .\ampa_manager\family\admin\family_admin.py:268
 #: .\ampa_manager\family\models\child.py:27
 msgid "Children"
 msgstr "Hijos"
 
-#: .\ampa_manager\family\admin\family_admin.py:275
+#: .\ampa_manager\family\admin\family_admin.py:272
 msgid "In school"
 msgstr "En la ikastola"
 
-#: .\ampa_manager\family\admin\family_admin.py:283
+#: .\ampa_manager\family\admin\family_admin.py:280
 msgid "Default holder"
 msgstr "Titular por defecto"
 
-#: .\ampa_manager\family\admin\family_admin.py:336
+#: .\ampa_manager\family\admin\family_admin.py:333
 #, python-format
 msgid "%(registrations)s registration"
 msgstr "%(registrations)s inscripción"
 
-#: .\ampa_manager\family\admin\family_admin.py:338
+#: .\ampa_manager\family\admin\family_admin.py:335
 #, python-format
 msgid "%(registrations)s registrations"
 msgstr "%(registrations)s inscripciones"
@@ -1266,10 +1275,12 @@ msgstr "Con SWIFT/BIC"
 msgid "Without SWIFT/BIC"
 msgstr "Sin SWIFT/BIC"
 
+#: .\ampa_manager\family\admin\filters\child_filters.py:70
 #: .\ampa_manager\family\admin\filters\family_filters.py:12
 msgid "Current year members"
 msgstr "Socios este año"
 
+#: .\ampa_manager\family\admin\filters\child_filters.py:71
 #: .\ampa_manager\family\admin\filters\family_filters.py:13
 msgid "Current year NO members"
 msgstr "NO socios este año"
@@ -1307,6 +1318,7 @@ msgstr "Titular de la cuota de socio"
 #: .\ampa_manager\family\admin\filters\family_filters.py:82
 #: .\ampa_manager\family\admin\filters\family_filters.py:103
 #: .\ampa_manager\family\admin\filters\family_filters.py:124
+#: .\ampa_manager\family\admin\filters\family_filters.py:167
 msgid "Completed"
 msgstr "Completado"
 
@@ -1341,7 +1353,6 @@ msgid "Any missing"
 msgstr "Alguno pendiente"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:146
-#: .\ampa_manager\family\admin\filters\family_filters.py:167
 msgid "All completed"
 msgstr "Todo completado"
 
@@ -1515,7 +1526,12 @@ msgstr "Moroso"
 msgid "Informative field only"
 msgstr "Campo sólo informativo"
 
-#: .\ampa_manager\family\models\family.py:61
+#: .\ampa_manager\family\models\family.py:50
+msgid "Secondary email"
+msgstr "Correo secundario"
+
+#: .\ampa_manager\family\models\family.py:62
+#: .\ampa_manager\family\models\test_family.py:23
 msgid "No children"
 msgstr "Sin hijos"
 
@@ -1573,10 +1589,6 @@ msgstr "No enviado"
 #: .\ampa_manager\family\models\state.py:8
 msgid "Signed"
 msgstr "Firmado"
-
-#: .\ampa_manager\family\models\test_family.py:23
-msgid "Sin hijos"
-msgstr "Sin hijos"
 
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:22
 msgid "Family first surname"
@@ -1648,11 +1660,15 @@ msgstr "Año de nacimiento (ej. 2015)"
 msgid "Custody edition to import to"
 msgstr "Edición de custodia a la que importar"
 
-#: .\ampa_manager\forms.py:29
+#: .\ampa_manager\forms.py:25
+msgid "SIMULATION: Only list the changes without making any"
+msgstr "SIMULACIÓN: Solo listar los cambios sin hacer ninguno"
+
+#: .\ampa_manager\forms.py:31
 msgid "Camp edition to import to"
 msgstr "Edición de campamentos a la que importar"
 
-#: .\ampa_manager\forms.py:44
+#: .\ampa_manager\forms.py:46
 msgid "Write emails separated by comma or each one in one line"
 msgstr "Escribe correos separados por coma o cada uno en una línea"
 
@@ -1813,7 +1829,7 @@ msgstr "Sube un fichero excel con las familias a consultar si son socias"
 #: .\ampa_manager\templates\import_after_schools_activities.html:29
 #: .\ampa_manager\templates\import_after_schools_registrations.html:29
 #: .\ampa_manager\templates\import_camps.html:29
-#: .\ampa_manager\templates\import_custody.html:28
+#: .\ampa_manager\templates\import_custody.html:30
 #: .\ampa_manager\templates\import_family_email.html:29
 #: .\ampa_manager\templates\import_members.html:28
 #: .\ampa_manager\templates\importer.html:28
@@ -1843,7 +1859,7 @@ msgstr "La primera fila es la cabecera"
 #: .\ampa_manager\templates\import_after_schools_activities.html:39
 #: .\ampa_manager\templates\import_after_schools_registrations.html:39
 #: .\ampa_manager\templates\import_camps.html:39
-#: .\ampa_manager\templates\import_custody.html:39
+#: .\ampa_manager\templates\import_custody.html:41
 #: .\ampa_manager\templates\import_family_email.html:38
 #: .\ampa_manager\templates\import_members.html:38
 #: .\ampa_manager\templates\importer.html:38
@@ -1860,7 +1876,7 @@ msgstr "Obligatorio"
 
 #: .\ampa_manager\templates\check_members.html:33
 #: .\ampa_manager\templates\check_members.html:34
-#: .\ampa_manager\templates\import_custody.html:30
+#: .\ampa_manager\templates\import_custody.html:32
 msgid "Optional"
 msgstr "Opcional"
 
@@ -1896,7 +1912,7 @@ msgstr "Subir fichero"
 #: .\ampa_manager\templates\import_after_schools_activities.html:22
 #: .\ampa_manager\templates\import_after_schools_registrations.html:22
 #: .\ampa_manager\templates\import_camps.html:22
-#: .\ampa_manager\templates\import_custody.html:22
+#: .\ampa_manager\templates\import_custody.html:24
 #: .\ampa_manager\templates\import_family_email.html:22
 #: .\ampa_manager\templates\import_members.html:22
 #: .\ampa_manager\templates\importer.html:21
@@ -1906,7 +1922,7 @@ msgstr "Importar fichero"
 #: .\ampa_manager\templates\import_after_schools_activities.html:31
 #: .\ampa_manager\templates\import_after_schools_registrations.html:31
 #: .\ampa_manager\templates\import_camps.html:31
-#: .\ampa_manager\templates\import_custody.html:31
+#: .\ampa_manager\templates\import_custody.html:33
 #: .\ampa_manager\templates\import_family_email.html:31
 #: .\ampa_manager\templates\import_members.html:30
 #: .\ampa_manager\templates\importer.html:30
@@ -1916,7 +1932,7 @@ msgstr "Haz clic aquí para descargar una plantilla excel"
 #: .\ampa_manager\templates\import_after_schools_activities.html:32
 #: .\ampa_manager\templates\import_after_schools_registrations.html:32
 #: .\ampa_manager\templates\import_camps.html:32
-#: .\ampa_manager\templates\import_custody.html:32
+#: .\ampa_manager\templates\import_custody.html:34
 #: .\ampa_manager\templates\import_family_email.html:32
 #: .\ampa_manager\templates\import_members.html:31
 #: .\ampa_manager\templates\importer.html:31
@@ -1926,7 +1942,7 @@ msgstr "La extensión del fichero debe ser XLS (no XLSX)"
 #: .\ampa_manager\templates\import_after_schools_activities.html:33
 #: .\ampa_manager\templates\import_after_schools_registrations.html:33
 #: .\ampa_manager\templates\import_camps.html:33
-#: .\ampa_manager\templates\import_custody.html:33
+#: .\ampa_manager\templates\import_custody.html:35
 #: .\ampa_manager\templates\import_family_email.html:33
 #: .\ampa_manager\templates\import_members.html:32
 #: .\ampa_manager\templates\importer.html:32
@@ -1936,7 +1952,7 @@ msgstr "Sólo se importa la primera hoja del excel"
 #: .\ampa_manager\templates\import_after_schools_activities.html:34
 #: .\ampa_manager\templates\import_after_schools_registrations.html:34
 #: .\ampa_manager\templates\import_camps.html:34
-#: .\ampa_manager\templates\import_custody.html:34
+#: .\ampa_manager\templates\import_custody.html:36
 #: .\ampa_manager\templates\import_members.html:33
 #: .\ampa_manager\templates\importer.html:33
 msgid ""
@@ -1947,7 +1963,7 @@ msgstr ""
 #: .\ampa_manager\templates\import_after_schools_activities.html:35
 #: .\ampa_manager\templates\import_after_schools_registrations.html:35
 #: .\ampa_manager\templates\import_camps.html:35
-#: .\ampa_manager\templates\import_custody.html:35
+#: .\ampa_manager\templates\import_custody.html:37
 #: .\ampa_manager\templates\import_members.html:34
 #: .\ampa_manager\templates\importer.html:34
 msgid "If there is no data for any column leave it empty"
@@ -1956,7 +1972,7 @@ msgstr "Si no hay datos para alguna columna déjala en blanco"
 #: .\ampa_manager\templates\import_after_schools_activities.html:36
 #: .\ampa_manager\templates\import_after_schools_registrations.html:36
 #: .\ampa_manager\templates\import_camps.html:36
-#: .\ampa_manager\templates\import_custody.html:36
+#: .\ampa_manager\templates\import_custody.html:38
 #: .\ampa_manager\templates\import_family_email.html:35
 #: .\ampa_manager\templates\import_members.html:35
 #: .\ampa_manager\templates\importer.html:35
@@ -1966,7 +1982,7 @@ msgstr "Las columnas deben aparecer en el siguiente orden"
 #: .\ampa_manager\templates\import_after_schools_activities.html:46
 #: .\ampa_manager\templates\import_after_schools_registrations.html:46
 #: .\ampa_manager\templates\import_camps.html:46
-#: .\ampa_manager\templates\import_custody.html:46
+#: .\ampa_manager\templates\import_custody.html:48
 #: .\ampa_manager\templates\import_family_email.html:45
 #: .\ampa_manager\templates\import_members.html:45
 #: .\ampa_manager\templates\importer.html:45
@@ -1976,7 +1992,7 @@ msgstr "Resultados"
 #: .\ampa_manager\templates\import_after_schools_activities.html:58
 #: .\ampa_manager\templates\import_after_schools_registrations.html:58
 #: .\ampa_manager\templates\import_camps.html:58
-#: .\ampa_manager\templates\import_custody.html:58
+#: .\ampa_manager\templates\import_custody.html:68
 #: .\ampa_manager\templates\import_family_email.html:57
 #: .\ampa_manager\templates\import_members.html:57
 #: .\ampa_manager\templates\importer.html:50
@@ -2005,9 +2021,23 @@ msgstr "Importar inscripciones de campamentos"
 msgid "Import custody"
 msgstr "Importar custodia"
 
-#: .\ampa_manager\templates\import_custody.html:30
+#: .\ampa_manager\templates\import_custody.html:32
 msgid "Create a new custody edition"
 msgstr "Crear una nueva edición de custodia"
+
+#: .\ampa_manager\templates\import_custody.html:50
+msgid "Warning: This has been a simulation of the import"
+msgstr "Aviso: Esto ha sido una simulación de la importación"
+
+#: .\ampa_manager\templates\import_custody.html:52
+msgid "No change has been made"
+msgstr "No se ha hecho ningún cambio"
+
+#: .\ampa_manager\templates\import_custody.html:53
+msgid ""
+"If the results are ok, import the file again disabling the \"SIMULATION\" "
+"option"
+msgstr "Si los resultados son correctos, importa de nuevo el fichero desmarcando la opción \"SIMULACIÓN\""
 
 #: .\ampa_manager\templates\import_family_email.html:6
 #: .\ampa_manager\templates\import_family_email.html:11
@@ -2126,3 +2156,6 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:124
 msgid "Basque"
 msgstr "Euskera"
+
+#~ msgid "Sin hijos"
+#~ msgstr "Sin hijos"

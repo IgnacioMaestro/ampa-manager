@@ -18,14 +18,16 @@
     <h2>{% trans 'Upload file' %}</h2>
     <form action="{{ form_action }}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
+
     {{ form.as_p }}
+
     <input type="submit" value="{% trans 'Import file' %}">
     </form>
 
     <table style="width: 100%;">
         <tr>
             <td style="width: 35%;">
-                    <h2>{% trans 'Instructions' %}</h2>
+                    <h1>{% trans 'Instructions' %}</h1>
                     <ul>
                         <li><a href="/admin/ampa_manager/custodyedition/add/" target="_new">{% trans 'Optional' %}: {% trans 'Create a new custody edition' %}</a></li>
                         <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
@@ -43,7 +45,15 @@
                     </ul>
             </td>
             <td style="width: 65%;">
-                <h2>{% trans 'Results' %}</h2>
+                <h1>{% trans 'Results' %}</h1>
+                {% if simulation %}
+                    <h2 style="background-color: yellow;">{% trans 'Warning: This has been a simulation of the import' %}</h2>
+                    <ul>
+                        <li style="background-color: yellow;">{% trans 'No change has been made' %}</li>
+                        <li style="background-color: yellow;">{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
+                    </ul>
+                {% endif %}
+
                 {% if import_summary %}
                     {% if success %}
                     <img src="{% static 'images/success.png' %}" width="48px">
