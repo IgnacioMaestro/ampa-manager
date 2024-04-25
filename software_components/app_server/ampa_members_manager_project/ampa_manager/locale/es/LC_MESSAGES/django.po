@@ -2074,7 +2074,7 @@ msgstr "Validar datos de familias"
 
 #: .\ampa_manager\utils\excel\excel_importer.py:116
 msgid "Rows imported successfully"
-msgstr "Files importadas correctamente"
+msgstr "Filas importadas correctamente"
 
 #: .\ampa_manager\utils\excel\excel_importer.py:117
 msgid "Rows not imported"

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.core.files.uploadedfile import UploadedFile
 from django.db import transaction
 from django.shortcuts import render
@@ -28,19 +30,25 @@ class ImportCustody(View):
             file_content = uploaded_file.read()
             simulation = request.POST.get('simulation')
 
-            try:
-                with transaction.atomic():
-                    import_info: ImportInfo = CustodyImporter.import_custody(file_content, custody_edition)
-
-                    if simulation:
-                        raise SimulationException()
-            except SimulationException:
-                print('Simulation mode: changes rolled back')
-
+            import_info: ImportInfo = cls.import_custody(file_content, custody_edition, simulation)
             context = cls.__create_context_with_import_info(form, import_info, simulation)
         else:
             context = cls.__create_context_with_processed_form(form)
         return render(request, cls.TEMPLATE, context)
+
+    @classmethod
+    def import_custody(cls, file_content, custody_edition: CustodyEdition, simulation: bool) -> Optional[ImportInfo]:
+        import_info: Optional[ImportInfo] = None
+        try:
+            with transaction.atomic():
+                import_info: ImportInfo = CustodyImporter.import_custody(file_content, custody_edition)
+
+                if simulation:
+                    raise SimulationException()
+        except SimulationException:
+            print('Simulation mode: changes rolled back')
+
+        return import_info
 
     @classmethod
     def get(cls, request):
