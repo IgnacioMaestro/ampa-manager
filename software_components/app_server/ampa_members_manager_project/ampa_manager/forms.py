@@ -22,6 +22,8 @@ class ImportCustodyForm(forms.Form):
         queryset=CustodyEdition.objects.order_by('-id'),
         label=_('Custody edition to import to'))
     file = forms.FileField()
+    simulation = forms.BooleanField(required=False, label=_('SIMULATION: Only list the changes without making any'),
+                                    initial=True)
 
 
 class ImportCampsForm(forms.Form):
