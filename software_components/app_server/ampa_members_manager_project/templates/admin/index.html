@@ -1,6 +1,68 @@
 {% extends "admin/index.html" %}
 {% load static %}
 
+{% block content %}
+<div id="content-main">
+    <div class="app-ampa_manager module">
+      <table width="100%">
+        <caption>FAMILIA</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/family">Familias</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/parent">Padres</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/child">Hijos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/bankaccount">Cuentas bancarias</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/holder">Titulares</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/family-email/import/">Importar correos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/family-email/check/">Comprobar correos</a></th></tr>
+        <tr><th>&nbsp;</th></tr>
+      </table>
+      <table width="100%">
+        <caption>CUSTODIA</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyedition">Ediciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyregistration">Inscripciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyreceipt">Recibos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyremittance">Remesas</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/custody/import/">Importar</a></th></tr>
+        <tr><th>&nbsp;</th></tr>
+      </table>
+      <table width="100%">
+        <caption>EXTRAESCOLARES</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/afterschool">Actividades</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/afterschooledition">Ediciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/afterschoolregistration">Inscripciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/afterschoolreceipt">Recibos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/afterschoolremittance">Remesas</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/afterschools-activities/import/">Importar actividades</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/afterschools-registrations/import/">Importar inscripciones</a></th></tr>
+        <tr><th>&nbsp;</th></tr>
+      </table>
+      <table width="100%">
+        <caption>CAMPAMENTOS DE SEPTIEMBRE</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/campsedition">Ediciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/campsregistration">Inscripciones</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/campsreceipt">Recibos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/campsremittance">Remesas</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/camps/import/">Importar</a></th></tr>
+        <tr><th>&nbsp;</th></tr>
+      </table>
+      <table width="100%">
+        <caption>SOCIOS</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/academiccourse">Cursos academicos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/activecourse">Curso activo</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/membership">Socios</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/fee">Cuotas</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/membershipreceipt">Recibos</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/membershipremittance">Remesas</a></th></tr>
+        <tr><th>&nbsp;</th></tr>
+      </table>
+      <table width="100%">
+        <caption>CONFIGURACIÓN</caption>
+        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/dynamicsetting">Parámetros</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/admin/auth/user">Usuarios</a></th></tr>
+      </table>
+    </div>
+</div>
+{% endblock %}
+
 {% block sidebar %}
     <div id="content-related">
         <div class="module" id="recent-actions-module">
