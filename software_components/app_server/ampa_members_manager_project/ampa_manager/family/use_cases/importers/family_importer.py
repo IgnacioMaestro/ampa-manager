@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
@@ -9,17 +9,14 @@ from ampa_manager.utils.excel.import_model_result import ImportModelResult
 class FamilyImporter:
 
     @staticmethod
-    def import_family(family_surnames: str, parent1_name_and_surnames: Optional[str] = None,
+    def import_family(family_surnames: Optional[str] = None, parent1_name_and_surnames: Optional[str] = None,
                       parent2_name_and_surnames: Optional[str] = None, set_as_member=False,
                       child_name: Optional[str] = None, email: Optional[str] = None) -> ImportModelResult:
         result = ImportModelResult(Family.__name__, [family_surnames])
 
-        if family_surnames:
-            parents_name_and_surnames = []
-            if parent1_name_and_surnames:
-                parents_name_and_surnames.append(parent1_name_and_surnames)
-            if parent2_name_and_surnames:
-                parents_name_and_surnames.append(parent2_name_and_surnames)
+        if family_surnames or email:
+            parents_name_and_surnames = FamilyImporter.append_parents_names_if_not_null(parent1_name_and_surnames,
+                                                                                        parent2_name_and_surnames)
 
             family, error = Family.find(family_surnames, parents_name_and_surnames, child_name, email=email)
 
@@ -40,6 +37,15 @@ class FamilyImporter:
                 Membership.make_member_for_active_course(family)
 
         else:
-            result.set_error('Missing surnames')
+            result.set_error('Missing surnames and email')
 
         return result
+
+    @staticmethod
+    def append_parents_names_if_not_null(parent1_name_and_surnames, parent2_name_and_surnames) -> List[str]:
+        parents_name_and_surnames = []
+        if parent1_name_and_surnames:
+            parents_name_and_surnames.append(parent1_name_and_surnames)
+        if parent2_name_and_surnames:
+            parents_name_and_surnames.append(parent2_name_and_surnames)
+        return parents_name_and_surnames
