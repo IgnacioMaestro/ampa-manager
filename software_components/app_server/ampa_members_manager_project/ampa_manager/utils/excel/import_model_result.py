@@ -3,7 +3,6 @@ from typing import Optional, List
 from django.db.models import Model
 
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.processing_state import ProcessingState
 
 
@@ -44,7 +43,7 @@ class ImportModelResult:
             description += f'. {error}'
 
         if len(self.warnings) > 0:
-            warnings = ', '.join(self.warnings)
+            warnings = ', '.join(str(w) for w in self.warnings)
             description += f'. Warnings: {warnings}'
 
         return description

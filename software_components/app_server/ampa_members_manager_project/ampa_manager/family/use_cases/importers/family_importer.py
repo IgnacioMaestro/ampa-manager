@@ -1,5 +1,7 @@
 from typing import Optional, List
 
+from django.utils.translation import gettext_lazy as _
+
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
@@ -35,6 +37,9 @@ class FamilyImporter:
 
             if set_as_member and family and not Membership.is_member_family(family):
                 Membership.make_member_for_active_course(family)
+
+            if not family:
+                result.set_error(_('Unable to find the family'))
 
         else:
             result.set_error('Missing surnames and email')

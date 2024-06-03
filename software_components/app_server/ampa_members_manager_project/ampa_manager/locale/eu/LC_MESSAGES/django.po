@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-24 15:16+0200\n"
+"POT-Creation-Date: 2024-06-03 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -781,7 +781,11 @@ msgstr ""
 msgid "Missing parent and no default custody holder"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:39
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:25
+msgid "Registration duplicated"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:40
 msgid "0 assisted days"
 msgstr ""
 
@@ -1565,12 +1569,21 @@ msgstr ""
 msgid "Signed"
 msgstr ""
 
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:36
+#, python-format
+msgid "Missing year of birth calculated from level %(level)s"
+msgstr ""
+
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:22
 msgid "Family first surname"
 msgstr ""
 
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:23
 msgid "Family second surname"
+msgstr ""
+
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:42
+msgid "Unable to find the family"
 msgstr ""
 
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:91
