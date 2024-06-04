@@ -22,6 +22,7 @@ class CustodyRegistrationImporter:
 
         registration = CustodyRegistrationImporter.find(custody_edition, child)
         if registration:
+            result.add_warning(_('Registration duplicated'))
             if registration.holder != holder or registration.assisted_days != assisted_days:
                 fields_before = [registration.holder, registration.assisted_days]
                 registration.holder = holder

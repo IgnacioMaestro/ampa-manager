@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-24 15:16+0200\n"
+"POT-Creation-Date: 2024-06-03 11:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -788,7 +788,11 @@ msgstr "Días asistidos en la edición seleccionada"
 msgid "Missing parent and no default custody holder"
 msgstr "Padre no completado y no hay titular de custodia por defecto"
 
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:39
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:25
+msgid "Registration duplicated"
+msgstr "Inscripción duplicada"
+
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:40
 msgid "0 assisted days"
 msgstr "0 días asistidos"
 
@@ -1590,6 +1594,11 @@ msgstr "No enviado"
 msgid "Signed"
 msgstr "Firmado"
 
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:36
+#, python-format
+msgid "Missing year of birth calculated from level %(level)s"
+msgstr "El año nacimiento se ha calculado a partir del nivel %(level)s"
+
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:22
 msgid "Family first surname"
 msgstr "1er apellido de la familia"
@@ -1597,6 +1606,10 @@ msgstr "1er apellido de la familia"
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:23
 msgid "Family second surname"
 msgstr "2º apellido de la familia"
+
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:42
+msgid "Unable to find the family"
+msgstr "No se encuentra la familia"
 
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:91
 #: .\ampa_manager\family\use_cases\importers\members_importer.py:92
@@ -2037,7 +2050,9 @@ msgstr "No se ha hecho ningún cambio"
 msgid ""
 "If the results are ok, import the file again disabling the \"SIMULATION\" "
 "option"
-msgstr "Si los resultados son correctos, importa de nuevo el fichero desmarcando la opción \"SIMULACIÓN\""
+msgstr ""
+"Si los resultados son correctos, importa de nuevo el fichero desmarcando la "
+"opción \"SIMULACIÓN\""
 
 #: .\ampa_manager\templates\import_family_email.html:6
 #: .\ampa_manager\templates\import_family_email.html:11

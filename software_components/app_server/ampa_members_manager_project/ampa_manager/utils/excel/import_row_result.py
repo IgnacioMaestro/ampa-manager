@@ -46,7 +46,7 @@ class ImportRowResult:
             if len(result.warnings) > 0:
                 warnings.extend(result.warnings)
 
-        return ', '.join(warnings)
+        return ', '.join(str(w) for w in warnings)
 
     def __str__(self):
         summary = 'OK' if self.success else f'ERROR: {self.errors}'

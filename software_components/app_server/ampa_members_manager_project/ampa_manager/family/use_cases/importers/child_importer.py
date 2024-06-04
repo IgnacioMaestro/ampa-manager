@@ -1,3 +1,5 @@
+from django.utils.translation import gettext_lazy as _
+
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child import Child
@@ -31,7 +33,8 @@ class ChildImporter:
                 if level and not year_of_birth:
                     current_course = ActiveCourse.load()
                     year_of_birth = current_course.initial_year - Level.get_age_by_level(level)
-                    result.add_warning(f'Missing year of birth calculated from level: {level} -> {year_of_birth}')
+                    result.add_warning(_("Missing year of birth calculated from level %(level)s")
+                                       % {'level': year_of_birth})
                 if not level and year_of_birth:
                     current_course = ActiveCourse.load()
                     age = current_course.initial_year - year_of_birth
