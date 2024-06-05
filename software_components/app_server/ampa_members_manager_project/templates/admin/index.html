@@ -8,6 +8,11 @@
         font-family: Lato, Open Sans, Arial, sans-serif;
         font-size: 25px;
     }
+    .vertical-align-middle {
+        display: flex;
+        align-items: center; /* Alinea los elementos hijos verticalmente en el centro */
+        justify-content: flex-start; /* Alinea los elementos hijos horizontalmente al inicio */
+    }
 </style>
 
 {% endblock %}
@@ -17,14 +22,24 @@
     <div class="app-ampa_manager module">
       <table width="100%">
         <caption><span class="package-title">FAMILIAS</span></caption>
-        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/family"><img src="{% static 'images/family.png' %}" width="24px"> Familias</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/parent"><img src="{% static 'images/parent.png' %}" width="24px"> Padres</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/child"><img src="{% static 'images/child.png' %}" width="24px"> Hijos</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/bankaccount"><img src="{% static 'images/credit-card.png' %}" width="24px"> Cuentas bancarias</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/holder"><img src="{% static 'images/accounting.png' %}" width="24px"> Titulares</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/ampa/family-email/import/"><img src="{% static 'images/import.png' %}" width="24px"> Importar correos</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/ampa/family-email/check/"><img src="{% static 'images/eye.png' %}" width="24px"> Comprobar correos</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/ampa/validations/"><img src="{% static 'images/checklist.png' %}" width="24px"> Validar datos</a></th></tr>
+        <tr onclick="window.location='/admin/ampa_manager/family/?children_in_school=yes';">
+            <td class="vertical-align-middle"><img src="{% static 'images/family.png' %}" width="24px"></td>
+            <td class="vertical-align-middle">Familias</td>
+        </tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/admin/ampa_manager/parent" class="vertical-align-middle"><img src="{% static 'images/parent.png' %}" width="24px"> Padres</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/admin/ampa_manager/child" class="vertical-align-middle"><img src="{% static 'images/child.png' %}" width="24px"> Hijos</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/admin/ampa_manager/bankaccount" class="vertical-align-middle"><img src="{% static 'images/credit-card.png' %}" width="24px"> Cuentas bancarias</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/admin/ampa_manager/holder" class="vertical-align-middle"><img src="{% static 'images/accounting.png' %}" width="24px"> Titulares</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/ampa/family-email/import/" class="vertical-align-middle"><img src="{% static 'images/import.png' %}" width="24px"> Importar correos</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/ampa/family-email/check/" class="vertical-align-middle"><img src="{% static 'images/eye.png' %}" width="24px"> Comprobar correos</a></th></tr>
+        <tr class="model-family"><th scope="row">
+            <a href="/ampa/validations/" class="vertical-align-middle"><img src="{% static 'images/checklist.png' %}" width="24px"> Validar datos</a></th></tr>
         <tr><th>&nbsp;</th></tr>
       </table>
       <table width="100%">
@@ -33,7 +48,7 @@
         <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyregistration"><img src="{% static 'images/active-user.png' %}" width="24px"> Inscripciones</a></th></tr>
         <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyreceipt"><img src="{% static 'images/receipt.png' %}" width="24px"> Recibos</a></th></tr>
         <tr class="model-family"><th scope="row"><a href="/admin/ampa_manager/custodyremittance"><img src="{% static 'images/bank.png' %}" width="24px"> Remesas</a></th></tr>
-        <tr class="model-family"><th scope="row"><a href="/ampa/custody/import/"><img src="{% static 'images/import.png' %}" width="24px"> Importar</a></th></tr>
+        <tr class="model-family"><th scope="row"><a href="/ampa/custody/import/"><img src="{% static 'images/import.png' %}" width="24px"> Importar inscripciones</a></th></tr>
         <tr><th>&nbsp;</th></tr>
       </table>
       <table width="100%">
