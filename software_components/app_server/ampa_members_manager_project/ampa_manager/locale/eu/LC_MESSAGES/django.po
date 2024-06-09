@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 11:51+0200\n"
+"POT-Creation-Date: 2024-06-09 10:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,7 @@ msgstr ""
 #: .\ampa_manager\activity\admin\camps_admin.py:84
 #: .\ampa_manager\activity\admin\custody_admin.py:114
 #: .\ampa_manager\activity\admin\custody_admin.py:134
+#: .\ampa_manager\activity\admin\custody_admin.py:174
 #: .\ampa_manager\activity\admin\registration_filters.py:14
 #: .\ampa_manager_project\settings.py:180
 msgid "Members"
@@ -189,7 +190,7 @@ msgstr ""
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:29
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:15
 #: .\ampa_manager\activity\models\camps\camps_edition.py:10
-#: .\ampa_manager\activity\models\custody\custody_edition.py:20
+#: .\ampa_manager\activity\models\custody\custody_edition.py:22
 #: .\ampa_manager\family\models\membership.py:14
 msgid "Academic course"
 msgstr ""
@@ -354,7 +355,7 @@ msgid "Registrations"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:133
-#: .\ampa_manager\activity\admin\custody_admin.py:186
+#: .\ampa_manager\activity\admin\custody_admin.py:178
 msgid "Export family emails to CSV"
 msgstr ""
 
@@ -456,7 +457,7 @@ msgid "Member"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:46
-#: .\ampa_manager\activity\models\custody\custody_edition.py:32
+#: .\ampa_manager\activity\models\custody\custody_edition.py:34
 #: .\ampa_manager\activity\models\custody\custody_registration.py:15
 msgid "Custody edition"
 msgstr ""
@@ -487,21 +488,21 @@ msgid "Create custody remittance"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:165
-msgid "Calculate prices"
+msgid "Calculate prices based on cost and registrations"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:177
-#, python-format
-msgid "%(calculated)s editions' prices calculated"
+#: .\ampa_manager\activity\admin\custody_admin.py:168
+msgid ""
+"Any of the required fields to calculate the price is missing (cost, days "
+"with service, registrations)"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:181
-#, python-format
-msgid "Unable to calculate %(not_calculated)s editions' prices"
+#: .\ampa_manager\activity\admin\custody_admin.py:173
+msgid "Editions' prices calculated"
 msgstr ""
 
-#: .\ampa_manager\activity\admin\custody_admin.py:182
-msgid "Prices calculated based on edition cost and number of registrations"
+#: .\ampa_manager\activity\admin\custody_admin.py:175
+msgid "Non members"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:35
@@ -540,7 +541,7 @@ msgid "After-schools"
 msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:13
-#: .\ampa_manager\activity\models\custody\custody_edition.py:17
+#: .\ampa_manager\activity\models\custody\custody_edition.py:19
 msgid "Period"
 msgstr ""
 
@@ -620,24 +621,24 @@ msgstr ""
 msgid "Camps registrations"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:18
+#: .\ampa_manager\activity\models\custody\custody_edition.py:20
 msgid "Days with service"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:19
+#: .\ampa_manager\activity\models\custody\custody_edition.py:21
 msgid "Days in which there was custody this edition"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:22
+#: .\ampa_manager\activity\models\custody\custody_edition.py:24
 #: .\ampa_manager\family\admin\filters\child_filters.py:10
 msgid "Cycle"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:23
+#: .\ampa_manager\activity\models\custody\custody_edition.py:25
 msgid "Cost"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:25
+#: .\ampa_manager\activity\models\custody\custody_edition.py:27
 #, python-format
 msgid ""
 "Prices can be automatically calculated with the action \"Calculate prices\" "
@@ -645,7 +646,7 @@ msgid ""
 "%(surcharge)s "
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:33
+#: .\ampa_manager\activity\models\custody\custody_edition.py:35
 msgid "Custody editions"
 msgstr ""
 
