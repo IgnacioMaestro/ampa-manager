@@ -162,25 +162,17 @@ class CustodyEditionAdmin(admin.ModelAdmin):
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
     
-    @admin.action(description=_("Calculate prices"))
-    def calculate_prices(self, request, custody_editions: QuerySet[CustodyEdition]):
-        calculated = 0
-        not_calculated = 0
-        for edition in custody_editions:
-            if edition.calculate_prices():
-                calculated += 1
-            else:
-                not_calculated += 1
+    @admin.action(description=_("Calculate prices based on cost and registrations"))
+    def calculate_prices(self, request, editions: QuerySet[CustodyEdition]):
+        if not CustodyEdition.are_ready_to_calculate_prices(editions):
+            message = _("Any of the required fields to calculate the price is missing (cost, days with service, registrations)")
+            return self.message_user(request=request, message=message)
 
-        message = ''
-        if calculated:
-            message = _("%(calculated)s editions' prices calculated") % {'calculated': calculated}
-        if not_calculated:
-            if message:
-                message += '. '
-            message += _("Unable to calculate %(not_calculated)s editions' prices") % {'not_calculated': not_calculated}
-        message += '. ' + _("Prices calculated based on edition cost and number of registrations")
-
+        CustodyEdition.calculate_prices_from_multiple_editions(editions)
+        edition = editions.first()
+        message = _("Editions' prices calculated")
+        message += '. ' + _('Members') + f': {round(edition.price_for_member, 2)}€'
+        message += '. ' + _('Non members') + f': {round(edition.price_for_no_member, 2)}€'
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export family emails to CSV"))
