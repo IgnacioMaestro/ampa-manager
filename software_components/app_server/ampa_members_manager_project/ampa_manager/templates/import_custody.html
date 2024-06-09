@@ -47,11 +47,14 @@
             <td style="width: 65%;">
                 <h1>{% trans 'Results' %}</h1>
                 {% if simulation %}
-                    <h2 style="background-color: yellow;">{% trans 'Warning: This has been a simulation of the import' %}</h2>
-                    <ul>
-                        <li style="background-color: yellow;">{% trans 'No change has been made' %}</li>
-                        <li style="background-color: yellow;">{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
-                    </ul>
+                    <div style="background-color: yellow; padding: 15px;">
+                        <h2>{% trans 'Warning: This has been a simulation of the import' %}</h2>
+                        <ul>
+                            <li>{% trans 'No change has been made' %}</li>
+                            <li>{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
+                        </ul>
+                    </div>
+                    <br/>
                 {% endif %}
 
                 {% if import_summary %}

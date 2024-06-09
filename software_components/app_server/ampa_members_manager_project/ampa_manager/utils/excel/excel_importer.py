@@ -1,8 +1,10 @@
 from typing import List
 
-import xlrd
+import pandas as pd
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from pandas import DataFrame, Series
+
 from ampa_manager.utils.excel.excel_row import ExcelRow
 from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.excel.titled_list import TitledList
@@ -10,81 +12,64 @@ from ampa_manager.utils.excel.titled_list import TitledList
 
 class ExcelImporter:
 
-    def __init__(self, sheet_number: int, first_row_index: int, columns_to_import, file_path: str = None, file_content=None):
+    def __init__(self, sheet_number: int, first_row_index: int, columns_to_import, file_content):
         self.sheet_number = sheet_number
         self.first_row_index = first_row_index
         self.columns_to_import = columns_to_import
-        self.file_path = file_path
         self.file_content = file_content
+        self.data: DataFrame = pd.read_excel(file_content, sheet_name=0, header=None)
         self.results: List[ImportRowResult] = []
         self.counters_before = {}
         self.counters_after = {}
 
-        self.book, self.sheet = self.open_excel()
-
-    def open_excel(self):
-        if self.file_path:
-            print(f'Loading excel file from path "{self.file_path}"')
-            book = xlrd.open_workbook(filename=self.file_path)
-        elif self.file_content:
-            print('Loading excel file from contents')
-            book = xlrd.open_workbook(file_contents=self.file_content)
-        else:
-            print('Unable to load excel file')
-            return None, None
-
-        sheet = book.sheet_by_index(self.sheet_number)
-        print(f'Loading excel sheet "{sheet.name}"')
-
-        return book, sheet
-
-    def get_row_range(self, columns_indexes, row_index, formatter):
-        values = []
-        for column_index in columns_indexes:
-            try:
-                value = self.sheet.cell_value(rowx=row_index, colx=column_index)
-                value = formatter(value)
-            except IndexError:
-                value = None
-            values.append(value)
-        return values
-
     def get_rows(self) -> List[ExcelRow]:
         rows = []
-        print(f'Importing rows {self.first_row_index + 1} - {self.sheet.nrows}')
-        for row_index in range(self.first_row_index, self.sheet.nrows):
-            rows.append(self.get_row(row_index))
+
+        print(self.data.head())
+        for row_index, row_series in self.data.iterrows():
+            print(f'index {row_index}: {row_series[0]}')
+
+        for row_index, row_series in self.data.iterrows():
+            if row_index < self.first_row_index:
+                continue
+            row = self.get_row(int(row_index), row_series)
+            if not self.is_empty(row):
+                rows.append(row)
         return rows
 
-    def get_row(self, row_index: int) -> ExcelRow:
-        row = ExcelRow(row_index)
+    def is_empty(self, row: ExcelRow) -> bool:
+        for value in row.values.values():
+            if value not in [None, '', '0', 0]:
+                return False
+        return True
+
+    def get_row(self, row_index: int, row: Series) -> ExcelRow:
+        excel_row = ExcelRow(row_index)
 
         for column_settings in self.columns_to_import:
             col_index = column_settings[0]
             formatter = column_settings[1]
             key = column_settings[2]
-            value = self.get_cell_value(row_index, col_index)
+
+            value = row[col_index]
+            if pd.isna(value):
+                value = None
+
             try:
-                row.values[key] = formatter(value)
+                excel_row.values[key] = formatter(value)
             except ValidationError as e:
-                row.values[key] = None
-                row.error = f'Error formatting column: {key} = {value}: {str(e)}'
+                excel_row.values[key] = None
+                excel_row.error = f'Error formatting column: {key} = {value}: {str(e)}'
                 break
 
-        return row
-
-    def get_cell_value(self, row_index, col_index):
-        try:
-            return self.sheet.cell_value(rowx=row_index, colx=col_index)
-        except IndexError:
-            return None
+        return excel_row
 
     def add_result(self, result: ImportRowResult):
         self.results.append(result)
 
     @property
     def total_rows(self) -> int:
-        return self.sheet.nrows - self.first_row_index
+        return len(self.data) - self.first_row_index
 
     @property
     def successfully_imported_rows(self) -> int:
