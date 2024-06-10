@@ -10,24 +10,26 @@ from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.excel.titled_list import TitledList
 
 
+class RowData:
+
+    def __init__(self, index: int, columns_values: dict):
+        self.index: int = index
+        self.values: dict = columns_values
+
+
 class ExcelImporter:
 
-    def __init__(self, sheet_number: int, first_row_index: int, columns_to_import, file_content):
-        self.sheet_number = sheet_number
-        self.first_row_index = first_row_index
-        self.columns_to_import = columns_to_import
-        self.file_content = file_content
-        self.data: DataFrame = pd.read_excel(file_content, sheet_name=0, header=None)
-        self.results: List[ImportRowResult] = []
-        self.counters_before = {}
-        self.counters_after = {}
+    def __init__(self, file_content, sheet_name=0):
+        self.data: DataFrame = pd.read_excel(file_content, sheet_name=sheet_name, header=None)
+
+    def import_rows(self) -> list[RowData]:
+        rows = []
+        for row_index, row_series in self.data.iterrows():
+            rows.append(RowData(row_index, row_series.to_dict()))
+        return rows
 
     def get_rows(self) -> List[ExcelRow]:
         rows = []
-
-        print(self.data.head())
-        for row_index, row_series in self.data.iterrows():
-            print(f'index {row_index}: {row_series[0]}')
 
         for row_index, row_series in self.data.iterrows():
             if row_index < self.first_row_index:

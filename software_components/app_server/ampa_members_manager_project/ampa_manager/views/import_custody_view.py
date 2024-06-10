@@ -17,7 +17,7 @@ class SimulationException(Exception):
     pass
 
 
-class ImportCustody(View):
+class ImportCustodyView(View):
     TEMPLATE = 'import_custody.html'
 
     @classmethod
