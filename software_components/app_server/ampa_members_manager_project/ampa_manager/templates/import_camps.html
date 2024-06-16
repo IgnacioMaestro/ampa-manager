@@ -44,6 +44,14 @@
             </td>
             <td style="width: 65%;">
                 <h2>{% trans 'Results' %}</h2>
+                {% if simulation %}
+                    <h2 style="background-color: yellow;">{% trans 'Warning: This has been a simulation of the import' %}</h2>
+                    <ul>
+                        <li style="background-color: yellow;">{% trans 'No change has been made' %}</li>
+                        <li style="background-color: yellow;">{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
+                    </ul>
+                {% endif %}
+
                 {% if import_summary %}
                     {% if success %}
                     <img src="{% static 'images/success.png' %}" width="48px">
