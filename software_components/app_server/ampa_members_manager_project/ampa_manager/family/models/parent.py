@@ -62,11 +62,11 @@ class Parent(TimeStampedModel):
         return False
 
     def is_modified(self, phone_number, additional_phone_number, email):
-        return self.phone_number != phone_number \
-               or self.additional_phone_number != additional_phone_number \
-               or self.email != email
+        return ((phone_number and self.phone_number != phone_number) or
+                (additional_phone_number and self.additional_phone_number != additional_phone_number) or
+                (email and not self.is_family_email(email) and self.email != email))
 
-    def update(self, phone_number, additional_phone_number, email, allow_reset=True) -> FieldsChanges:
+    def update(self, phone_number, additional_phone_number, email, allow_reset=False) -> FieldsChanges:
         fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
         not_reset_fields = []
         updated = False
@@ -83,7 +83,7 @@ class Parent(TimeStampedModel):
         elif self.additional_phone_number:
             not_reset_fields.append(self.additional_phone_number)
 
-        if email is not None or allow_reset:
+        if email is not None and not self.is_family_email(email) or allow_reset:
             self.email = email
             updated = True
         elif self.email:
@@ -95,6 +95,12 @@ class Parent(TimeStampedModel):
         fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
 
         return FieldsChanges(fields_before, fields_after, not_reset_fields)
+
+    def is_family_email(self, email: str):
+        for family in self.family_set.all():
+            if email in [family.email, family.secondary_email]:
+                return True
+        return False
 
     def get_html_link(self) -> str:
         return Utils.get_model_instance_link(Parent.__name__.lower(), self.id, str(self))

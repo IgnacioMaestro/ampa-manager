@@ -95,8 +95,10 @@ class CampsImporter:
 
         try:
             family_result = FamilyImporter.import_family(
-                row.get(cls.KEY_CHILD_SURNAMES),
-                row.get(cls.KEY_PARENT_NAME_AND_SURNAMES))
+                family_surnames=row.get(cls.KEY_CHILD_SURNAMES),
+                parent1_name_and_surnames=row.get(cls.KEY_PARENT_NAME_AND_SURNAMES),
+                child_name=row.get(cls.KEY_CHILD_NAME),
+                email=row.get(cls.KEY_FAMILY_EMAIL))
             result.add_partial_result(family_result)
             if not family_result.success:
                 return result
