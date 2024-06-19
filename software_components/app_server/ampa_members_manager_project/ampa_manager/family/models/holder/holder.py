@@ -25,7 +25,7 @@ class Holder(models.Model):
     parent = models.ForeignKey(to=Parent, on_delete=CASCADE, verbose_name=_("Holder"))
     bank_account = models.ForeignKey(to=BankAccount, on_delete=CASCADE, verbose_name=_("Bank Account"))
     authorization_order = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(999)], verbose_name=_("Order"))
+        validators=[MinValueValidator(1), MaxValueValidator(1999)], verbose_name=_("Order"))
     authorization_year = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(3000)], default=datetime.date.today().year,
         verbose_name=_("Year"))

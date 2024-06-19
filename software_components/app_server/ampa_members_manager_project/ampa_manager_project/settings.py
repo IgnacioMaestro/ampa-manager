@@ -154,6 +154,7 @@ ADMIN_REORDER = (
          'ampa_manager.Child',
          'ampa_manager.BankAccount',
          'ampa_manager.Holder',
+         'ampa_manager.BankBicCode',
      )},
     {'app': 'ampa_manager', 'label': _('After-school'),
      'models': (
