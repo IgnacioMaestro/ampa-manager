@@ -1,3 +1,7 @@
+from typing import Optional
+
+from django.core.files.uploadedfile import UploadedFile
+from django.db import transaction
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
@@ -6,6 +10,7 @@ from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.use_cases.importers.camps_importer import CampsImporter
 from ampa_manager.forms import ImportCampsForm
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
+from ampa_manager.views.import_custody import SimulationException
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -19,12 +24,29 @@ class ImportCamps(View):
         if form.is_valid():
             edition_id = request.POST.get('camps_edition')
             camps_edition = CampsEdition.objects.get(id=edition_id)
-            file_content = request.FILES['file'].read()
-            import_info: ImportInfo = CampsImporter.import_camps_registrations(file_content, camps_edition)
-            context = cls.__create_context_with_import_info(form, import_info)
+            uploaded_file: UploadedFile = request.FILES['file']
+            file_content = uploaded_file.read()
+            simulation = request.POST.get('simulation')
+
+            import_info: ImportInfo = cls.import_camps_registrations(file_content, camps_edition, simulation)
+            context = cls.__create_context_with_import_info(form, import_info, simulation)
         else:
             context = cls.__create_context_with_processed_form(form)
         return render(request, cls.TEMPLATE, context)
+
+    @classmethod
+    def import_camps_registrations(cls, file_content, camps_edition: CampsEdition, simulation: bool) -> Optional[ImportInfo]:
+        import_info: Optional[ImportInfo] = None
+        try:
+            with transaction.atomic():
+                import_info: ImportInfo = CampsImporter.import_camps_registrations(file_content, camps_edition)
+
+                if simulation:
+                    raise SimulationException()
+        except SimulationException:
+            print('Simulation mode: changes rolled back')
+
+        return import_info
 
     @classmethod
     def get(cls, request):
@@ -32,10 +54,12 @@ class ImportCamps(View):
         return render(request, cls.TEMPLATE, context)
 
     @classmethod
-    def __create_context_with_import_info(cls, form: ImportCampsForm, import_info: ImportInfo) -> dict:
+    def __create_context_with_import_info(cls, form: ImportCampsForm, import_info: ImportInfo,
+                                          simulation: bool) -> dict:
         context = {
             'form': form,
             'success': import_info.success(),
+            'simulation': simulation,
             'import_results': import_info.results,
             'import_summary': import_info.summary,
         }

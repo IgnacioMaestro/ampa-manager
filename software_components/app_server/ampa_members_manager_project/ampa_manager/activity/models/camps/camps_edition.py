@@ -27,12 +27,12 @@ class CampsEdition(models.Model):
 
     @property
     def no_members_registrations_count(self):
-        return self.campsregistration_set.no_members().count()
+        return self.registrations.no_members().count()
 
     @property
     def members_registrations_count(self):
-        return self.campsregistration_set.members().count()
+        return self.registrations.members().count()
 
     @property
     def registrations_count(self):
-        return self.campsregistration_set.count()
+        return self.registrations.count()

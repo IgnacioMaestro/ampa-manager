@@ -69,7 +69,7 @@ class Child(TimeStampedModel):
     def is_modified(self, year_of_birth, repetition):
         return self.year_of_birth != year_of_birth or self.repetition != repetition
 
-    def update(self, year_of_birth, repetition, allow_reset=True) -> FieldsChanges:
+    def update(self, year_of_birth, repetition, allow_reset=False) -> FieldsChanges:
         fields_before = [self.name, self.year_of_birth, self.level, self.repetition]
         not_reset_fields = []
 
