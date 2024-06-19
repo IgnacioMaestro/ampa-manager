@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 from django import forms
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
@@ -107,4 +108,17 @@ class CampsEditionAdmin(admin.ModelAdmin):
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
 
-    actions = [create_camps_remittance]
+    @admin.action(description=gettext_lazy("Export family emails to CSV"))
+    def export_emails(self, request, custody_editions: QuerySet[CampsEdition]):
+        emails = []
+        for custody_edition in custody_editions.all():
+            for custody_registration in custody_edition.registrations.all():
+                for email in custody_registration.child.family.get_emails():
+                    if email not in emails:
+                        emails.append(email)
+
+        emails_csv = ",".join(emails)
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
+        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+
+    actions = [create_camps_remittance, export_emails]

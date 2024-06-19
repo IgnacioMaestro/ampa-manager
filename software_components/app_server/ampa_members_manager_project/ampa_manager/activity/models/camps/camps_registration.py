@@ -13,7 +13,8 @@ from .camps_registration_queryset import CampsRegistrationQuerySet
 
 
 class CampsRegistration(models.Model):
-    camps_edition = models.ForeignKey(to=CampsEdition, on_delete=models.CASCADE, verbose_name=_("Camps edition"))
+    camps_edition = models.ForeignKey(to=CampsEdition, on_delete=models.CASCADE, verbose_name=_("Camps edition"),
+                                      related_name='registrations')
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
     holder = models.ForeignKey(to=Holder, on_delete=models.CASCADE, verbose_name=_("Holder"))
 
