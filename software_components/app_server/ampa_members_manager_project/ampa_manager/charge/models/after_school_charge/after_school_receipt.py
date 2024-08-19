@@ -7,7 +7,6 @@ from ampa_manager.family.models.holder.holder import Holder
 from .after_school_receipt_queryset import AfterSchoolReceiptQuerySet
 from .after_school_remittance import AfterSchoolRemittance
 from ...receipt import Receipt, AuthorizationReceipt
-from ...remittance import Remittance
 from ...state import State
 
 

@@ -1,6 +1,7 @@
 import locale
+from typing import Optional
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -80,7 +81,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
-        remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=queryset.first()).generate()
+        remittance: Optional[Remittance]
+        remittance_error: Optional[str]
+        remittance, remittance_error = MembershipRemittanceGenerator(membership_remittance=queryset.first()).generate()
+        if remittance is None:
+            return self.message_user(request=request, message=remittance_error, level=messages.ERROR)
         return MembershipRemittanceAdmin.create_csv_response_from_remittance(remittance)
 
     @admin.action(description=gettext_lazy("Export Membership remittance to SEPA file"))
@@ -90,7 +95,11 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         membership_remittance = queryset.first()
         if not membership_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
-        remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=membership_remittance).generate()
+        remittance: Optional[Remittance]
+        remittance_error: Optional[str]
+        remittance, remittance_error = MembershipRemittanceGenerator(membership_remittance=membership_remittance).generate()
+        if remittance is None:
+            return self.message_user(request=request, message=remittance_error, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
     @admin.action(description=gettext_lazy("Create Membership Remittance with families not included yet"))
