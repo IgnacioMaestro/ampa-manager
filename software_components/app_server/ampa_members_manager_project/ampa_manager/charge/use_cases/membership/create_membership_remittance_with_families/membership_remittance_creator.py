@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Optional
 
 from django.db.models import QuerySet
@@ -8,20 +9,29 @@ from ampa_manager.charge.models.membership_remittance import MembershipRemittanc
 from ampa_manager.family.models.family import Family
 
 
+class MembershipRemittanceCreatorError(Enum):
+    NO_FAMILIES = 0
+    BIC_ERROR = 1
+
+
 class MembershipRemittanceCreator:
     def __init__(self, families: QuerySet[Family], course: AcademicCourse):
         self.__families = families
         self.__course = course
 
-    def create(self) -> Optional[MembershipRemittance]:
+    def create(self) -> tuple[Optional[MembershipRemittance], Optional[MembershipRemittanceCreatorError]]:
         membership_remittance: MembershipRemittance = MembershipRemittance(course=self.__course)
         membership_receipts: List[MembershipReceipt] = []
+        family: Family
         for family in self.__families.iterator():
+            if not family.membership_holder or not family.membership_holder.bank_account or not family.membership_holder.bank_account.swift_bic:
+                return None, MembershipRemittanceCreatorError.BIC_ERROR
             if not family.decline_membership:
-                membership_receipt: MembershipReceipt = MembershipReceipt(remittance=membership_remittance, family=family)
+                membership_receipt: MembershipReceipt = MembershipReceipt(
+                    remittance=membership_remittance, family=family)
                 membership_receipts.append(membership_receipt)
         if not membership_receipts:
-            return None
+            return None, MembershipRemittanceCreatorError.NO_FAMILIES
         membership_remittance.save()
         MembershipReceipt.objects.bulk_create(membership_receipts)
-        return membership_remittance
+        return membership_remittance, None

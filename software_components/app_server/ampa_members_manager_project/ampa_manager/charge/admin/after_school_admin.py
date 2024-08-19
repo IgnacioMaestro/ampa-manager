@@ -2,14 +2,12 @@ import locale
 
 from django.contrib import admin
 from django.db.models import QuerySet
-from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .csv_response_creator import CSVResponseCreator
 from .filters.receipt_filters import FamilyReceiptFilter
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
@@ -106,14 +104,6 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def receipts_count(self, remittance):
         return AfterSchoolReceipt.objects.filter(remittance=remittance).count()
 
-    @admin.action(description=gettext_lazy("Export after-school remittance to CSV"))
-    def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
-        if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
-        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
-            after_school_remittance=queryset.first()).generate()
-        return AfterSchoolRemittanceAdmin.create_csv_response_from_remittance(remittance)
-
     @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
@@ -125,8 +115,4 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             after_school_remittance=after_school_remittance).generate()
         return SEPAResponseCreator().create_sepa_response(remittance)
 
-    @staticmethod
-    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return CSVResponseCreator(remittance=remittance).create()
-
-    actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]
+    actions = [download_membership_remittance_sepa_file]
