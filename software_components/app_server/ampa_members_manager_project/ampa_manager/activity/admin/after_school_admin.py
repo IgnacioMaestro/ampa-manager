@@ -14,8 +14,7 @@ from ampa_manager.activity.models.after_school.after_school_registration import 
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
-from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator_error import \
-    AfterSchoolRemittanceCreatorError
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -112,9 +111,9 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_full()
-        if error == AfterSchoolRemittanceCreatorError.BIC_ERROR:
+        if error == RemittanceCreatorError.BIC_ERROR:
             message = Utils.create_bic_error_message()
             return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()
@@ -125,9 +124,9 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create after school remittance with half"))
     def create_after_school_remittance_half(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_half()
-        if error == AfterSchoolRemittanceCreatorError.BIC_ERROR:
+        if error == RemittanceCreatorError.BIC_ERROR:
             message = Utils.create_bic_error_message()
             return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()
@@ -138,9 +137,9 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     @admin.action(description=_("Create after school remittance with left"))
     def create_after_school_remittance_left(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_left()
-        if error == AfterSchoolRemittanceCreatorError.BIC_ERROR:
+        if error == RemittanceCreatorError.BIC_ERROR:
             message = Utils.create_bic_error_message()
             return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()

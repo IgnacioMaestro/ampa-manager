@@ -12,8 +12,7 @@ from ampa_manager.charge.models.after_school_charge.after_school_remittance impo
 from ampa_manager.charge.no_after_school_edition_error import NoAfterSchoolEditionError
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
-from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator_error import \
-    AfterSchoolRemittanceCreatorError
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.holder.holder import Holder
 
@@ -35,11 +34,11 @@ class TestAfterSchoolRemittanceCreator(TestCase):
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
 
         # Assert
-        self.assertEqual(error, AfterSchoolRemittanceCreatorError.BIC_ERROR)
+        self.assertEqual(error, RemittanceCreatorError.BIC_ERROR)
         self.assertIsNone(after_school_remittance)
 
     def test_create_half_after_school_edition_with_after_school_registration(self):
@@ -51,7 +50,7 @@ class TestAfterSchoolRemittanceCreator(TestCase):
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
 
         # Assert
@@ -71,7 +70,7 @@ class TestAfterSchoolRemittanceCreator(TestCase):
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
 
         # Assert

@@ -1,4 +1,6 @@
-from django.contrib import admin
+from typing import Optional
+
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django import forms
 from django.http import HttpResponse
@@ -14,9 +16,11 @@ from ampa_manager.activity.models.camps.camps_registration import CampsRegistrat
 from ampa_manager.charge.models.camps.camps_remittance import CampsRemittance
 from ampa_manager.charge.use_cases.camps.camps_remittance_creator.camps_remittance_creator import \
     CampsRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.utils import Utils
 
 
 class CampsRegistrationAdminForm(forms.ModelForm):
@@ -102,7 +106,12 @@ class CampsEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create camps remittance"))
     def create_camps_remittance(self, request, camps_editions: QuerySet[CampsEdition]):
-        camps_remittance = CampsRemittanceCreator(camps_editions).create()
+        camps_remittance: Optional[CampsRemittance]
+        error: Optional[RemittanceCreatorError]
+        camps_remittance, error = CampsRemittanceCreator(camps_editions).create()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         url = camps_remittance.get_admin_url()
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")

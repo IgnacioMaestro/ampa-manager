@@ -9,8 +9,8 @@ from ampa_manager.charge.remittance import Remittance
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.models import AfterSchoolRemittance
 from ampa_manager.tests.generator_adder import bic_generator, phonenumbers_generator, iban_generator
-from .after_school_remittance_creator_error import AfterSchoolRemittanceCreatorError
 from .remittance_generator_from_after_school_remittance import RemittanceGeneratorFromAfterSchoolRemittance
+from ..remittance_creator_error import RemittanceCreatorError
 from ...models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 
 baker.generators.add('localflavor.generic.models.BICField', bic_generator)
@@ -25,7 +25,7 @@ class TestRemittanceGeneratorFromAfterSchoolRemittance(TestCase):
 
         # Act
         remittance: Optional[Remittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         remittance, error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
 
@@ -43,12 +43,12 @@ class TestRemittanceGeneratorFromAfterSchoolRemittance(TestCase):
 
         # Act
         remittance: Optional[Remittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         remittance, error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
 
         # Assert
-        self.assertEqual(error, AfterSchoolRemittanceCreatorError.BIC_ERROR)
+        self.assertEqual(error, RemittanceCreatorError.BIC_ERROR)
         self.assertEqual(remittance, None)
 
     def test_generate_after_school_remittance_one_receipt(self):
@@ -60,7 +60,7 @@ class TestRemittanceGeneratorFromAfterSchoolRemittance(TestCase):
 
         # Act
         remittance: Optional[Remittance]
-        error: Optional[AfterSchoolRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         remittance, error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
 

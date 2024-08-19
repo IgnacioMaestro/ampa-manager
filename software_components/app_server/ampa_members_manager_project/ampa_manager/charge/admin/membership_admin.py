@@ -18,8 +18,7 @@ from ampa_manager.charge.sepa.sepa_response_creator import SEPAResponseCreator
 from ampa_manager.charge.state import State
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
-from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
-    MembershipRemittanceCreatorError
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -95,13 +94,13 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Create Membership Remittance with families not included yet"))
     def create_remittance(self, request, _: QuerySet[MembershipRemittance]):
         membership_remittance: Optional[MembershipRemittance]
-        remittance_error: Optional[MembershipRemittanceCreatorError]
+        remittance_error: Optional[RemittanceCreatorError]
         membership_remittance, remittance_error = MembershipRemittanceCreatorOfActiveCourse.create()
         if not membership_remittance:
-            if remittance_error == MembershipRemittanceCreatorError.NO_FAMILIES:
+            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
                 message = gettext_lazy("No families to include in Membership Remittance")
             else:
-                if remittance_error == MembershipRemittanceCreatorError.BIC_ERROR:
+                if remittance_error == RemittanceCreatorError.BIC_ERROR:
                     message = Utils.create_bic_error_message()
                 else:
                     message = gettext_lazy("Membership Remittance error")

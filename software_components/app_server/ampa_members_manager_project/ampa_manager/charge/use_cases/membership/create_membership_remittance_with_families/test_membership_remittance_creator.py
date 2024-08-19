@@ -7,7 +7,8 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
-    MembershipRemittanceCreator, MembershipRemittanceCreatorError
+    MembershipRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -25,26 +26,26 @@ class TestRemittanceCreator(TestCase):
 
     def test_create_with_no_family(self):
         membership_remittance: Optional[MembershipRemittance]
-        error: Optional[MembershipRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreator(
             families=Family.objects.none(), course=self.course).create()
 
         self.assertIsNone(membership_remittance)
         self.assertEqual(0, MembershipRemittance.objects.count())
         self.assertEqual(0, MembershipReceipt.objects.count())
-        self.assertEqual(error, MembershipRemittanceCreatorError.NO_FAMILIES)
+        self.assertEqual(error, RemittanceCreatorError.NO_FAMILIES)
 
     def test_create_with_family_with_bic_error(self):
         baker.make(Family)
         membership_remittance: Optional[MembershipRemittance]
-        error: Optional[MembershipRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreator(
             families=Family.objects.all(), course=self.course).create()
 
         self.assertIsNone(membership_remittance)
         self.assertEqual(0, MembershipRemittance.objects.count())
         self.assertEqual(0, MembershipReceipt.objects.count())
-        self.assertEqual(error, MembershipRemittanceCreatorError.BIC_ERROR)
+        self.assertEqual(error, RemittanceCreatorError.BIC_ERROR)
 
     def test_create_with_a_family(self):
         # Arrange
@@ -52,7 +53,7 @@ class TestRemittanceCreator(TestCase):
 
         # Act
         membership_remittance: Optional[MembershipRemittance]
-        error: Optional[MembershipRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreator(
             families=Family.objects.all(), course=self.course).create()
 
@@ -67,21 +68,21 @@ class TestRemittanceCreator(TestCase):
         baker.make(Family, membership_holder=self.holder, decline_membership=True)
 
         membership_remittance: Optional[MembershipRemittance]
-        error: Optional[MembershipRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreator(
             families=Family.objects.all(), course=self.course).create()
 
         self.assertIsNone(membership_remittance)
         self.assertEqual(0, MembershipRemittance.objects.count())
         self.assertEqual(0, MembershipReceipt.objects.count())
-        self.assertEqual(error, MembershipRemittanceCreatorError.NO_FAMILIES)
+        self.assertEqual(error, RemittanceCreatorError.NO_FAMILIES)
 
     def test_create_with_two_family(self):
         quantity: Final[int] = 2
         baker.make(Family, membership_holder=self.holder, _quantity=quantity)
 
         membership_remittance: Optional[MembershipRemittance]
-        error: Optional[MembershipRemittanceCreatorError]
+        error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreator(
             families=Family.objects.all(), course=self.course).create()
 

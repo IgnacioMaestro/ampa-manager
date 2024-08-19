@@ -10,7 +10,8 @@ from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
-    MembershipRemittanceCreator, MembershipRemittanceCreatorError
+    MembershipRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
@@ -45,13 +46,13 @@ class AcademicCourseAdmin(admin.ModelAdmin):
         academic_course: AcademicCourse = academic_courses.first()
         families_to_renew = Family.objects.renew_membership()
         remittance: Optional[MembershipRemittance]
-        remittance_error: Optional[MembershipRemittanceCreatorError]
+        remittance_error: Optional[RemittanceCreatorError]
         remittance, remittance_error = MembershipRemittanceCreator(families_to_renew, academic_course).create()
         if not remittance:
-            if remittance_error == MembershipRemittanceCreatorError.NO_FAMILIES:
+            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
                 message = gettext_lazy("No families to include in Membership Remittance")
             else:
-                if remittance_error == MembershipRemittanceCreatorError.BIC_ERROR:
+                if remittance_error == RemittanceCreatorError.BIC_ERROR:
                     message = Utils.create_bic_error_message()
                 else:
                     message = gettext_lazy("Membership Remittance error")

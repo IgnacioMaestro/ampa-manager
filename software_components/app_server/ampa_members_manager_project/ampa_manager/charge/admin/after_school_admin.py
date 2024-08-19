@@ -16,9 +16,9 @@ from ..remittance import Remittance
 from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
-from ..use_cases.after_school.after_school_remittance_creator_error import AfterSchoolRemittanceCreatorError
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
+from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...utils.utils import Utils
 
 
@@ -115,10 +115,10 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         if not after_school_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
         remittance: Optional[Remittance]
-        remittance_error: Optional[AfterSchoolRemittanceCreatorError]
+        remittance_error: Optional[RemittanceCreatorError]
         remittance, remittance_error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
-        if remittance_error == AfterSchoolRemittanceCreatorError.BIC_ERROR:
+        if remittance_error == RemittanceCreatorError.BIC_ERROR:
             message = Utils.create_bic_error_message()
             return self.message_user(request=request, message=message, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
