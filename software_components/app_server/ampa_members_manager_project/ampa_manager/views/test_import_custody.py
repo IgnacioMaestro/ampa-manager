@@ -20,6 +20,13 @@ class ImportCustodyViewTest(TestCase):
     URL = reverse('import_custody')
     TEMPLATE = 'import_custody.html'
     FORM_ACTION = '/ampa/custody/import/'
+    academic_course: AcademicCourse
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.academic_course = baker.make(AcademicCourse)
+        ActiveCourse.objects.create(course=cls.academic_course)
+
 
     @mock.patch('ampa_manager.activity.use_cases.importers.custody_importer.CustodyImporter.import_custody')
     def test_import_custody_post_valid_form(self, mock_import_custody: MagicMock):
@@ -27,9 +34,7 @@ class ImportCustodyViewTest(TestCase):
         titled_list_summary = TitledList('summary')
         titled_list_results = TitledList('results')
         mock_import_custody.return_value = ImportInfo(1, 1, titled_list_summary, titled_list_results)
-        academic_course = baker.make(AcademicCourse)
-        ActiveCourse.objects.create(course=academic_course)
-        custody_edition: CustodyEdition = baker.make(CustodyEdition, academic_course=academic_course)
+        custody_edition: CustodyEdition = baker.make(CustodyEdition, academic_course=self.academic_course)
         example_file = SimpleUploadedFile('example.xls', b'file_content', content_type='text/plain')
         form_data_correct = {'custody_edition': custody_edition.id, 'file': example_file}
 
