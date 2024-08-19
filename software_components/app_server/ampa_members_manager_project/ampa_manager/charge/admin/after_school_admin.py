@@ -1,6 +1,7 @@
 import locale
+from typing import Optional
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +16,7 @@ from ..remittance import Remittance
 from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
+from ..use_cases.after_school.after_school_remittance_creator_error import AfterSchoolRemittanceCreatorError
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
 from ...utils.utils import Utils
@@ -92,7 +94,8 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         else:
             link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
         filters = f'remittance={remittance.id}'
-        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
+        return Utils.get_model_link(
+            model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
@@ -111,8 +114,13 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         after_school_remittance = queryset.first()
         if not after_school_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
-        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
+        remittance: Optional[Remittance]
+        remittance_error: Optional[AfterSchoolRemittanceCreatorError]
+        remittance, remittance_error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
+        if remittance_error == AfterSchoolRemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
     actions = [download_membership_remittance_sepa_file]

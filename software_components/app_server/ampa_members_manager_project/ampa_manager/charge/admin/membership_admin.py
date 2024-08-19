@@ -3,7 +3,6 @@ from typing import Optional
 
 from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
@@ -23,7 +22,6 @@ from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_
     MembershipRemittanceCreatorError
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
-from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.utils import Utils
 
@@ -104,10 +102,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
                 message = gettext_lazy("No families to include in Membership Remittance")
             else:
                 if remittance_error == MembershipRemittanceCreatorError.BIC_ERROR:
-                    link = Utils.get_model_link(
-                        model_name=BankAccount.__name__.lower(),
-                        link_text=gettext_lazy("Review the Bank Accounts without BIC"), filters='bic=without')
-                    message = mark_safe(gettext_lazy("BIC error") + " " + link)
+                    message = Utils.create_bic_error_message()
                 else:
                     message = gettext_lazy("Membership Remittance error")
             return self.message_user(request=request, message=message, level=messages.ERROR)
