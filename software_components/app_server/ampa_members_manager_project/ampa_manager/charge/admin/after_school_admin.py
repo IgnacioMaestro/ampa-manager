@@ -1,15 +1,14 @@
 import locale
+from typing import Optional
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpResponse
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, ERROR_REMITTANCE_NOT_FILLED, \
     ERROR_ONLY_ONE_REMITTANCE
-from .csv_response_creator import CSVResponseCreator
 from .filters.receipt_filters import FamilyReceiptFilter
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
@@ -19,6 +18,7 @@ from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
+from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...utils.utils import Utils
 
 
@@ -94,7 +94,8 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         else:
             link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
         filters = f'remittance={remittance.id}'
-        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
+        return Utils.get_model_link(
+            model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.display(description=gettext_lazy('Total'))
     def receipts_total(self, remittance):
@@ -106,14 +107,6 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def receipts_count(self, remittance):
         return AfterSchoolReceipt.objects.filter(remittance=remittance).count()
 
-    @admin.action(description=gettext_lazy("Export after-school remittance to CSV"))
-    def download_membership_remittance_csv(self, request, queryset: QuerySet[AfterSchoolRemittance]):
-        if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
-        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
-            after_school_remittance=queryset.first()).generate()
-        return AfterSchoolRemittanceAdmin.create_csv_response_from_remittance(remittance)
-
     @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
@@ -121,12 +114,13 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         after_school_remittance = queryset.first()
         if not after_school_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
-        remittance: Remittance = RemittanceGeneratorFromAfterSchoolRemittance(
+        remittance: Optional[Remittance]
+        remittance_error: Optional[RemittanceCreatorError]
+        remittance, remittance_error = RemittanceGeneratorFromAfterSchoolRemittance(
             after_school_remittance=after_school_remittance).generate()
+        if remittance_error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
-    @staticmethod
-    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return CSVResponseCreator(remittance=remittance).create()
-
-    actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file]
+    actions = [download_membership_remittance_sepa_file]

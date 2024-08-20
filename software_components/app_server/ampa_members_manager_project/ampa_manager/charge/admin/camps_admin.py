@@ -1,6 +1,7 @@
 import locale
+from typing import Optional
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext_lazy as _
@@ -16,6 +17,7 @@ from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..state import State
 from ..use_cases.camps.remittance_generator_from_camps_remittance import RemittanceGeneratorFromCampsRemittance
+from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...utils.utils import Utils
 
 
@@ -115,8 +117,12 @@ class CampsRemittanceAdmin(admin.ModelAdmin):
         camps_remittance = queryset.first()
         if not camps_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
-        remittance: Remittance = RemittanceGeneratorFromCampsRemittance(
-            camps_remittance=camps_remittance).generate()
+        remittance: Optional[Remittance]
+        error: Optional[RemittanceCreatorError]
+        remittance, error = RemittanceGeneratorFromCampsRemittance(camps_remittance=camps_remittance).generate()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
     actions = [download_membership_remittance_sepa_file]

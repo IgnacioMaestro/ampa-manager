@@ -1,5 +1,7 @@
+from typing import Optional
+
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -9,8 +11,10 @@ from ampa_manager.activity.admin.registration_filters import FamilyRegistrationF
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -27,7 +31,8 @@ class AfterSchoolRegistrationAdminForm(forms.ModelForm):
 
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member', 'price']
+    list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member',
+                    'price']
     ordering = ['-after_school_edition__academic_course__initial_year', 'after_school_edition__after_school__name']
     list_filter = ['after_school_edition__academic_course__initial_year',
                    'after_school_edition__period',
@@ -39,6 +44,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
                      'holder__parent__name_and_surnames']
     autocomplete_fields = ['after_school_edition', 'holder', 'child']
     list_per_page = 25
+
     # form = AfterSchoolRegistrationAdminForm
 
     @admin.display(description=gettext_lazy('Course'))
@@ -104,7 +110,12 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_full()
+        after_school_remittance: Optional[AfterSchoolRemittance]
+        error: Optional[RemittanceCreatorError]
+        after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_full()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
@@ -112,7 +123,12 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create after school remittance with half"))
     def create_after_school_remittance_half(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_half()
+        after_school_remittance: Optional[AfterSchoolRemittance]
+        error: Optional[RemittanceCreatorError]
+        after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_half()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
@@ -120,7 +136,12 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create after school remittance with left"))
     def create_after_school_remittance_left(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
-        after_school_remittance = AfterSchoolRemittanceCreator(after_school_editions).create_left()
+        after_school_remittance: Optional[AfterSchoolRemittance]
+        error: Optional[RemittanceCreatorError]
+        after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_left()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         url = after_school_remittance.get_admin_url()
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
@@ -158,9 +179,10 @@ class AfterSchoolEditionInline(ReadOnlyTabularInline):
     @admin.display(description=_('Registrations'))
     def registrations_link(self, after_school_edition) -> str:
         registrations_count = AfterSchoolRegistration.objects.of_edition(after_school_edition).count()
-        return Utils.get_model_link(model_name=AfterSchoolRegistration.__name__.lower(),
-                                    link_text=str(registrations_count),
-                                    filters=f'after_school_edition__id={after_school_edition.id}')
+        return Utils.get_model_link(
+            model_name=AfterSchoolRegistration.__name__.lower(),
+            link_text=str(registrations_count),
+            filters=f'after_school_edition__id={after_school_edition.id}')
 
     @admin.display(description=_('Edit'))
     def edit_link(self, after_school_edition) -> str:
@@ -202,9 +224,10 @@ class AfterSchoolAdmin(admin.ModelAdmin):
                     after_school.delete()
 
             if after_school_to_keep.name != merged_name:
-                messages.append(gettext_lazy('After-school renamed') +
-                                f': {after_school_to_keep.name} '
-                                f'({after_school_to_keep.id}) -> {merged_name}')
+                messages.append(
+                    gettext_lazy('After-school renamed') +
+                    f': {after_school_to_keep.name} '
+                    f'({after_school_to_keep.id}) -> {merged_name}')
                 after_school_to_keep.name = merged_name
                 after_school_to_keep.save()
 

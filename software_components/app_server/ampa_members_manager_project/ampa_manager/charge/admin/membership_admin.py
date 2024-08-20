@@ -1,14 +1,13 @@
 import locale
+from typing import Optional
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
     ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from ampa_manager.charge.admin.csv_response_creator import CSVResponseCreator
 from ampa_manager.charge.admin.filters.receipt_filters import FamilyReceiptFilter
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
@@ -19,6 +18,7 @@ from ampa_manager.charge.sepa.sepa_response_creator import SEPAResponseCreator
 from ampa_manager.charge.state import State
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
@@ -76,13 +76,6 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def receipts_count(self, remittance):
         return MembershipReceipt.objects.of_remittance(remittance).count()
 
-    @admin.action(description=gettext_lazy("Export Membership Remittance to CSV"))
-    def download_membership_remittance_csv(self, request, queryset: QuerySet[MembershipRemittance]):
-        if queryset.count() > 1:
-            return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
-        remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=queryset.first()).generate()
-        return MembershipRemittanceAdmin.create_csv_response_from_remittance(remittance)
-
     @admin.action(description=gettext_lazy("Export Membership remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[MembershipRemittance]):
         if queryset.count() > 1:
@@ -90,27 +83,36 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
         membership_remittance = queryset.first()
         if not membership_remittance.is_filled():
             return self.message_user(request=request, message=gettext_lazy(ERROR_REMITTANCE_NOT_FILLED))
-        remittance: Remittance = MembershipRemittanceGenerator(membership_remittance=membership_remittance).generate()
+        remittance: Optional[Remittance]
+        remittance_error: Optional[str]
+        remittance, remittance_error = MembershipRemittanceGenerator(
+            membership_remittance=membership_remittance).generate()
+        if remittance is None:
+            return self.message_user(request=request, message=remittance_error, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
     @admin.action(description=gettext_lazy("Create Membership Remittance with families not included yet"))
     def create_remittance(self, request, _: QuerySet[MembershipRemittance]):
-        membership_remittance: MembershipRemittance = MembershipRemittanceCreatorOfActiveCourse.create()
-        if membership_remittance:
+        membership_remittance: Optional[MembershipRemittance]
+        remittance_error: Optional[RemittanceCreatorError]
+        membership_remittance, remittance_error = MembershipRemittanceCreatorOfActiveCourse.create()
+        if not membership_remittance:
+            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
+                message = gettext_lazy("No families to include in Membership Remittance")
+            else:
+                if remittance_error == RemittanceCreatorError.BIC_ERROR:
+                    message = Utils.create_bic_error_message()
+                else:
+                    message = gettext_lazy("Membership Remittance error")
+            return self.message_user(request=request, message=message, level=messages.ERROR)
+        else:
             message = mark_safe(
                 gettext_lazy(
                     "Membership remittance created") + " (<a href=\"" + membership_remittance.get_admin_url() + "\">" + gettext_lazy(
                     "View details") + "</a>)")
             return self.message_user(request=request, message=message)
-        else:
-            message = gettext_lazy("No families to include in Membership Remittance")
-            return self.message_user(request=request, message=message)
 
-    @staticmethod
-    def create_csv_response_from_remittance(remittance: Remittance) -> HttpResponse:
-        return CSVResponseCreator(remittance=remittance).create()
-
-    actions = [download_membership_remittance_csv, download_membership_remittance_sepa_file, create_remittance]
+    actions = [download_membership_remittance_sepa_file, create_remittance]
 
 
 class MembershipReceiptAdmin(admin.ModelAdmin):

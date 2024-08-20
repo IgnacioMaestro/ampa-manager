@@ -9,6 +9,7 @@ from ampa_manager.family.models.holder.holder import Holder
 from .camps_receipt_queryset import CampsReceiptQuerySet
 
 from .camps_remittance import CampsRemittance
+from ..receipt_exceptions import NoSwiftBicException
 
 
 class CampsReceipt(models.Model):
@@ -33,6 +34,8 @@ class CampsReceipt(models.Model):
         holder: Holder = self.camps_registration.holder
         authorization: AuthorizationReceipt = AuthorizationReceipt(
             number=holder.authorization_full_number, date=holder.authorization_sign_date)
+        if not holder.bank_account.swift_bic:
+            raise NoSwiftBicException
         return Receipt(
             amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
             bic=holder.bank_account.swift_bic, authorization=authorization)

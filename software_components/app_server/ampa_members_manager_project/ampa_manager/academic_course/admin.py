@@ -1,4 +1,6 @@
-from django.contrib import admin
+from typing import Optional
+
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
@@ -6,13 +8,16 @@ from django.utils.translation import gettext_lazy as _, gettext_lazy
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
     MembershipRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.statistics.models import Statistic
+from ampa_manager.utils.utils import Utils
 
 
 class AcademicCourseAdmin(admin.ModelAdmin):
@@ -40,18 +45,26 @@ class AcademicCourseAdmin(admin.ModelAdmin):
 
         academic_course: AcademicCourse = academic_courses.first()
         families_to_renew = Family.objects.renew_membership()
-        remittance = MembershipRemittanceCreator(families_to_renew, academic_course).create()
-        if remittance:
+        remittance: Optional[MembershipRemittance]
+        remittance_error: Optional[RemittanceCreatorError]
+        remittance, remittance_error = MembershipRemittanceCreator(families_to_renew, academic_course).create()
+        if not remittance:
+            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
+                message = gettext_lazy("No families to include in Membership Remittance")
+            else:
+                if remittance_error == RemittanceCreatorError.BIC_ERROR:
+                    message = Utils.create_bic_error_message()
+                else:
+                    message = gettext_lazy("Membership Remittance error")
+            return self.message_user(request=request, message=message, level=messages.ERROR)
+        else:
             message = mark_safe(
                 gettext_lazy(
                     "Membership remittance created") + " (<a href=\"" + remittance.get_admin_url() + "\">" + gettext_lazy(
                     "View details") + "</a>)")
-        else:
-            message = gettext_lazy("No families to include in Membership Remittance")
-        return self.message_user(request=request, message=message)
+            return self.message_user(request=request, message=message)
 
     actions = [generate_remittance]
-
 
 class ActiveCourseAdmin(admin.ModelAdmin):
     list_display = ['course', 'members_count', 'families_in_school_count', 'parents_count', 'children_in_school_count']

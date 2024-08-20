@@ -22,16 +22,22 @@ class ImportCustodyForm(forms.Form):
         queryset=CustodyEdition.objects.of_current_academic_course().order_by('-id'),
         label=_('Custody edition to import to'))
     file = forms.FileField()
-    simulation = forms.BooleanField(required=False, label=_('SIMULATION: Only list the changes without making any'),
-                                    initial=True)
+    simulation = forms.BooleanField(
+        required=False, label=_('SIMULATION: Only list the changes without making any'),
+        initial=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['custody_edition'].queryset = CustodyEdition.objects.of_current_academic_course().order_by('-id')
 
 
 class ImportCampsForm(forms.Form):
     camps_edition = forms.ModelChoiceField(
         queryset=CampsEdition.objects.order_by('-id'), label=_('Camp edition to import to'))
     file = forms.FileField()
-    simulation = forms.BooleanField(required=False, label=_('SIMULATION: Only list the changes without making any'),
-                                    initial=True)
+    simulation = forms.BooleanField(
+        required=False, label=_('SIMULATION: Only list the changes without making any'),
+        initial=True)
 
 
 class CheckMembersForm(forms.Form):
@@ -43,8 +49,9 @@ class ImportFamilyEmailForm(forms.Form):
 
 
 class CheckFamilyEmailForm(forms.Form):
-    emails = forms.CharField(widget=forms.Textarea(
-        attrs={
-            'placeholder': _('Write emails separated by comma or each one in one line'),
-            'style': 'width: 700px; height: 200px;'
-        }), label='Correos electrónicos')
+    emails = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': _('Write emails separated by comma or each one in one line'),
+                'style': 'width: 700px; height: 200px;'
+            }), label='Correos electrónicos')

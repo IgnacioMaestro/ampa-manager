@@ -1,5 +1,7 @@
+from typing import Optional
+
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -14,9 +16,11 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.use_cases.custody.custody_remittance_creator.custody_remittance_creator import \
     CustodyRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.utils import Utils
 
 
 class CustodyRegistrationAdminForm(forms.ModelForm):
@@ -156,7 +160,12 @@ class CustodyEditionAdmin(admin.ModelAdmin):
 
     @admin.action(description=_("Create custody remittance"))
     def create_custody_remittance(self, request, custody_editions: QuerySet[CustodyEdition]):
-        custody_remittance = CustodyRemittanceCreator(custody_editions).create()
+        custody_remittance: Optional[CustodyRemittance]
+        error: Optional[RemittanceCreatorError]
+        custody_remittance, error = CustodyRemittanceCreator(custody_editions).create()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
         url = custody_remittance.get_admin_url()
         message = mark_safe(
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")

@@ -25,7 +25,7 @@ class ImportCustody(View):
         form = ImportCustodyForm(request.POST, request.FILES)
         if form.is_valid():
             edition_id = request.POST.get('custody_edition')
-            custody_edition = CustodyEdition.objects.get(id=edition_id)
+            custody_edition = CustodyEdition.objects.of_current_academic_course().get(id=edition_id)
             uploaded_file: UploadedFile = request.FILES['file']
             file_content = uploaded_file.read()
             simulation = request.POST.get('simulation')

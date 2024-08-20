@@ -9,7 +9,7 @@ from ampa_manager.family.models.holder.holder import Holder
 from .fee.fee import Fee
 from .membership_receipt_queryset import MembershipReceiptQuerySet
 from .membership_remittance import MembershipRemittance
-from .receipt_exceptions import NoFeeForCourseException, NoHolderException
+from .receipt_exceptions import NoFeeForCourseException, NoHolderException, NoSwiftBicException
 from ..receipt import Receipt, AuthorizationReceipt
 from ..state import State
 
@@ -39,7 +39,9 @@ class MembershipReceipt(models.Model):
             raise NoFeeForCourseException
         bank_account_owner = holder.parent.full_name
         iban: str = holder.bank_account.iban
-        bic: str = holder.bank_account.swift_bic
+        bic: Optional[str] = holder.bank_account.swift_bic
+        if bic is None:
+            raise NoSwiftBicException
         authorization: AuthorizationReceipt = MembershipReceipt.generate_authorization_receipt_from_holder(holder)
         return Receipt(
             amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, bic=bic, authorization=authorization)
