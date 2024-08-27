@@ -16,7 +16,7 @@
     <h1>{% trans 'Import custody' %}</h1>
 
     <h2>{% trans 'Upload file' %}</h2>
-    <form action="{{ form_action }}" enctype="multipart/form-data" method="post">
+    <form action="{{ url 'import_custody' }}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
 
     {{ form.as_p }}

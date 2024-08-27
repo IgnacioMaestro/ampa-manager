@@ -1,9 +1,7 @@
 from typing import Optional
 
-from django.core.files.uploadedfile import UploadedFile
 from django.db import transaction
 from django.shortcuts import render
-from django.urls import reverse
 from django.views import View
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
@@ -19,29 +17,37 @@ class SimulationException(Exception):
 
 class ImportCustody(View):
     TEMPLATE = 'import_custody.html'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xls'
 
     @classmethod
     def post(cls, request):
+        context = {}
         form = ImportCustodyForm(request.POST, request.FILES)
-        if form.is_valid():
-            edition_id = request.POST.get('custody_edition')
-            custody_edition = CustodyEdition.objects.of_current_academic_course().get(id=edition_id)
-            uploaded_file: UploadedFile = request.FILES['file']
-            file_content = uploaded_file.read()
-            simulation = request.POST.get('simulation')
 
-            import_info: ImportInfo = cls.import_custody(file_content, custody_edition, simulation)
-            context = cls.__create_context_with_import_info(form, import_info, simulation)
-        else:
-            context = cls.__create_context_with_processed_form(form)
+        if form.is_valid():
+            import_info: ImportInfo = cls.import_custody(
+                file_content=request.FILES['file'].read(),
+                edition_id=request.POST.get('custody_edition'),
+                simulation=request.POST.get('simulation')
+            )
+
+            context['success'] = import_info.success()
+            context['import_results'] = import_info.results
+            context['import_summary'] = import_info.summary
+            context['simulation'] = request.POST.get('simulation')
+
+        context['form'] = form
+        context['excel_columns'] = get_excel_columns(CustodyImporter.COLUMNS_TO_IMPORT)
+        context['excel_template_file_name'] = cls.EXCEL_TEMPLATE
         return render(request, cls.TEMPLATE, context)
 
     @classmethod
-    def import_custody(cls, file_content, custody_edition: CustodyEdition, simulation: bool) -> Optional[ImportInfo]:
+    def import_custody(cls, file_content, edition_id: int, simulation: bool) -> Optional[ImportInfo]:
         import_info: Optional[ImportInfo] = None
         try:
             with transaction.atomic():
-                import_info: ImportInfo = CustodyImporter.import_custody(file_content, custody_edition)
+                edition = CustodyEdition.objects.of_current_academic_course().get(id=edition_id)
+                import_info: ImportInfo = CustodyImporter.import_custody(file_content, edition)
 
                 if simulation:
                     raise SimulationException()
@@ -49,42 +55,3 @@ class ImportCustody(View):
             print('Simulation mode: changes rolled back')
 
         return import_info
-
-    @classmethod
-    def get(cls, request):
-        context = cls.__create_context_with_empty_form()
-        return render(request, cls.TEMPLATE, context)
-
-    @classmethod
-    def __create_context_with_import_info(cls, form: ImportCustodyForm, import_info: ImportInfo, simulation: bool) -> dict:
-        context = {
-            'form': form,
-            'success': import_info.success(),
-            'simulation': simulation,
-            'import_results': import_info.results,
-            'import_summary': import_info.summary,
-        }
-        context.update(cls.__create_context_fix_part())
-        return context
-
-    @classmethod
-    def __create_context_with_processed_form(cls, form) -> dict:
-        return cls.__create_context_with_form(form)
-
-    @classmethod
-    def __create_context_with_empty_form(cls) -> dict:
-        return cls.__create_context_with_form(ImportCustodyForm())
-
-    @classmethod
-    def __create_context_with_form(cls, form) -> dict:
-        context = {'form': form}
-        context.update(cls.__create_context_fix_part())
-        return context
-
-    @classmethod
-    def __create_context_fix_part(cls) -> dict:
-        return {
-            'excel_columns': get_excel_columns(CustodyImporter.COLUMNS_TO_IMPORT),
-            'form_action': reverse('import_custody'),
-            'excel_template_file_name': 'templates/plantilla_importar_ludoteca.xls'
-        }
