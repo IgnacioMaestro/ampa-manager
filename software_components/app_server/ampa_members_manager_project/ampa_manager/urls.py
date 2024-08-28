@@ -21,7 +21,6 @@ urlpatterns = [
     path('family-email/import/', ImportFamilyEmail.as_view(), name='import_family_email'),
     path('family-email/check/', CheckFamilyEmail.as_view(), name='check_family_email'),
     path('custody/import/', ImportCustody.as_view(), name='import_custody'),
-    path('custody/new-import/', NewImportCustody.as_view(), name='new_import_custody'),
     path('camps/import/', ImportCamps.as_view(), name='import_camps'),
     path('validations/', validate_data, name='validate_data'),
 ]

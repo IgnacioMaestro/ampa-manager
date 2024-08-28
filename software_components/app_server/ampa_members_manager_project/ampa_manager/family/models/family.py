@@ -236,6 +236,22 @@ class Family(TimeStampedModel):
     def email_matches(self, email: str) -> bool:
         return email in [self.email, self.secondary_email]
 
+    def get_default_holder(self):
+        if self.membership_holder:
+            return self.membership_holder
+        if self.custody_holder:
+            return self.custody_holder
+        if self.camps_holder:
+            return self.camps_holder
+        if self.after_school_holder:
+            return self.after_school_holder
+
+        family_holders = Holder.objects.of_family(self).order_by('-id')
+        if family_holders.exists():
+            return family_holders.first()
+
+        return None
+
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
         emails = []

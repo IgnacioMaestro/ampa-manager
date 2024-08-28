@@ -7,7 +7,6 @@ from ampa_manager.utils.surnames import SURNAMES
 
 
 class StringUtils:
-
     SURNAMES_IGNORE_WORDS = ['de']
 
     @staticmethod
@@ -27,11 +26,11 @@ class StringUtils:
     def normalize(value: str) -> Optional[str]:
         if value:
             return StringUtils.remove_strip_spaces(
-                    StringUtils.remove_duplicated_spaces(
-                     StringUtils.remove_basque_characters(
-                      StringUtils.lowercase(
-                       StringUtils.remove_special_chars(
-                        StringUtils.remove_accents(value))))))
+                StringUtils.remove_duplicated_spaces(
+                    StringUtils.remove_basque_characters(
+                        StringUtils.lowercase(
+                            StringUtils.remove_special_chars(
+                                StringUtils.remove_accents(value))))))
         return None
 
     @staticmethod
@@ -126,8 +125,8 @@ class StringUtils:
     def parse_bool(value: str) -> bool:
         if value:
             return StringUtils.remove_accents(
-                    StringUtils.lowercase(
-                     StringUtils.remove_strip_spaces(value))) in ["si", "bai", "yes", "1", "true"]
+                StringUtils.lowercase(
+                    StringUtils.remove_strip_spaces(value))) in ["si", "bai", "yes", "1", "true"]
         else:
             return False
 
