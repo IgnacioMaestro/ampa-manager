@@ -18,32 +18,27 @@ from ...utils.utils import Utils
 
 
 class Family(TimeStampedModel):
+    HOLDER_HELP_TEXT = _("Save the family to see its bank accounts")
+    DECLINE_MEMBERSHIP_HELP_TEXT = _(
+        "It prevents the family from becoming a member. For example, if they no longer "
+        "have children at school but you do not want to delete the record.")
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
     normalized_surnames = models.CharField(max_length=500, verbose_name=_("Normalized surnames"), blank=True)
     decline_membership = models.BooleanField(
-        default=False, verbose_name=_("Decline membership"), help_text=_(
-            'It prevents the family from becoming a member. For example, if they no longer have children at school but '
-            'you do not want to delete the record.'))
+        default=False, verbose_name=_("Decline membership"), help_text=DECLINE_MEMBERSHIP_HELP_TEXT)
     parents = models.ManyToManyField(to=Parent, verbose_name=_("Parents"))
     membership_holder = models.ForeignKey(
         to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Membership holder"),
-        help_text=_("Save the family to see its bank accounts") + '. ' +
-        _("This account will be used if no other is specified"))
+        help_text=HOLDER_HELP_TEXT + '. ' + _("This account will be used if no other is specified"))
     custody_holder = models.ForeignKey(
-        to=Holder, on_delete=SET_NULL, null=True, blank=True,
-        verbose_name=_("Custody holder"),
-        help_text=_("Save the family to see its bank accounts"),
-        related_name='custody_holder')
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Custody holder"),
+        help_text=HOLDER_HELP_TEXT, related_name='custody_holder')
     after_school_holder = models.ForeignKey(
-        to=Holder, on_delete=SET_NULL, null=True, blank=True,
-        verbose_name=_("After-school holder"),
-        help_text=_("Save the family to see its bank accounts"),
-        related_name='after_school_holder')
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("After-school holder"),
+        help_text=HOLDER_HELP_TEXT, related_name='after_school_holder')
     camps_holder = models.ForeignKey(
-        to=Holder, on_delete=SET_NULL, null=True, blank=True,
-        verbose_name=_("Camps holder"),
-        help_text=_("Save the family to see its bank accounts"),
-        related_name='camps_holder')
+        to=Holder, on_delete=SET_NULL, null=True, blank=True, verbose_name=_("Camps holder"),
+        help_text=HOLDER_HELP_TEXT, related_name='camps_holder')
     is_defaulter = models.BooleanField(
         default=False, verbose_name=_("Defaulter"), help_text=_('Informative field only'))
     email = models.EmailField(null=True, blank=True, verbose_name=_("Email"))
@@ -92,9 +87,6 @@ class Family(TimeStampedModel):
     @classmethod
     def all_families(cls) -> QuerySet[Family]:
         return Family.objects.all()
-
-    def clean_surnames(self):
-        return FieldsFormatters.clean_name(self.cleaned_data['surnames'])
 
     def to_decline_membership(self):
         self.decline_membership = True

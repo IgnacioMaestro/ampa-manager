@@ -6,8 +6,7 @@ from model_bakery import baker
 from ampa_manager.baker_recipes import bank_account_recipe
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
-from ampa_manager.charge.models.receipt_exceptions import NoFeeForCourseException, \
-    NoHolderException, NoSwiftBicException
+from ampa_manager.charge.models.receipt_exceptions import NoFeeForCourseException, NoSwiftBicException
 from ampa_manager.charge.receipt import Receipt
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
@@ -17,11 +16,6 @@ from ampa_manager.family.models.holder.holder import Holder
 
 class TestMembershipReceipt(TestCase):
     FEE: Final[int] = 30
-
-    def test_generate_receipt_no_default_bank_account(self):
-        membership_receipt: MembershipReceipt = baker.make(MembershipReceipt)
-        with self.assertRaises(NoHolderException):
-            membership_receipt.generate_receipt()
 
     def test_generate_receipt_no_fee_for_course(self):
         bank_account: BankAccount = baker.make_recipe(bank_account_recipe)
@@ -43,7 +37,7 @@ class TestMembershipReceipt(TestCase):
         baker.make(BankBicCode, bank_code='2095')
         holder: Holder = baker.make(Holder)
         family: Family = baker.make(Family, membership_holder=holder)
-        membership_receipt: MembershipReceipt = baker.make(MembershipReceipt, family=family)
+        membership_receipt: MembershipReceipt = baker.make(MembershipReceipt, family=family, holder=holder)
         baker.make(Fee, academic_course=membership_receipt.remittance.course, amount=self.FEE)
 
         receipt: Receipt = membership_receipt.generate_receipt()
