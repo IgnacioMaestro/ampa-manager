@@ -18,6 +18,7 @@ class MembershipReceipt(models.Model):
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+    holder = models.ForeignKey(to=Holder, on_delete=CASCADE, verbose_name=_("Holder"))
 
     objects = Manager.from_queryset(MembershipReceiptQuerySet)()
 
