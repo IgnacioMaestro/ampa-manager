@@ -23,7 +23,7 @@ class MembershipRemittanceCreator:
                 return None, RemittanceCreatorError.BIC_ERROR
             if not family.decline_membership:
                 membership_receipt: MembershipReceipt = MembershipReceipt(
-                    remittance=membership_remittance, family=family)
+                    remittance=membership_remittance, family=family, holder=family.membership_holder)
                 membership_receipts.append(membership_receipt)
         if not membership_receipts:
             return None, RemittanceCreatorError.NO_FAMILIES

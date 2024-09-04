@@ -1,7 +1,7 @@
 from typing import List, Optional, Final
 
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
-from ampa_manager.charge.models.receipt_exceptions import NoHolderException, NoFeeForCourseException, \
+from ampa_manager.charge.models.receipt_exceptions import NoFeeForCourseException, \
     NoSwiftBicException
 from ampa_manager.charge.receipt import Receipt
 from ampa_manager.charge.remittance import Remittance
@@ -31,9 +31,6 @@ class MembershipRemittanceGenerator:
             try:
                 receipt: Receipt = membership_receipt.generate_receipt()
                 receipts.append(receipt)
-            except NoHolderException:
-                is_error = True
-                break
             except NoFeeForCourseException:
                 is_error = True
                 break
