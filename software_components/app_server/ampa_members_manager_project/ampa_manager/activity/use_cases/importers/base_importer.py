@@ -18,12 +18,12 @@ from ampa_manager.utils.string_utils import StringUtils
 
 class BaseImporter:
     KEY_FAMILY_EMAIL = 'family_email'
+    KEY_FAMILY_SURNAMES = 'family_surnames'
     KEY_PARENT_NAME_AND_SURNAMES = 'parent_name_and_surnames'
     KEY_PARENT_PHONE_NUMBER = 'parent_phone_number'
     KEY_PARENT_EMAIL = 'parent_email'
     KEY_BANK_ACCOUNT_IBAN = 'bank_account_iban'
     KEY_CHILD_NAME = 'child_name'
-    KEY_CHILD_SURNAMES = 'child_surnames'
     KEY_CHILD_LEVEL = 'child_level'
     KEY_CHILD_YEAR_OF_BIRTH = 'child_year_of_birth'
     KEY_ASSISTED_DAYS = 'assisted_days'
@@ -40,16 +40,16 @@ class BaseImporter:
 
     @classmethod
     def import_family(cls, row: Row) -> Family:
-        family_surnames = row.get_value(cls.KEY_CHILD_SURNAMES)
-        parent1_name_and_surnames = row.get_value(cls.KEY_PARENT_NAME_AND_SURNAMES)
+        family_surnames = row.get_value(cls.KEY_FAMILY_SURNAMES)
+        family_email = row.get_value(cls.KEY_FAMILY_EMAIL)
+        parent_name_and_surnames = row.get_value(cls.KEY_PARENT_NAME_AND_SURNAMES)
         child_name = row.get_value(cls.KEY_CHILD_NAME)
-        email = row.get_value(cls.KEY_FAMILY_EMAIL)
 
         imported_model: ImportModelResult = FamilyImporter.import_family(
             family_surnames=family_surnames,
-            parent1_name_and_surnames=parent1_name_and_surnames,
+            parent1_name_and_surnames=parent_name_and_surnames,
             child_name=child_name,
-            email=email)
+            family_email=family_email)
         row.add_imported_model(imported_model)
 
         return imported_model.imported_object

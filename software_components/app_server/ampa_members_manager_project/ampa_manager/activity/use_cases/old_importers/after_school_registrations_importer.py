@@ -52,18 +52,18 @@ class AfterSchoolsRegistrationsImporter:
     LABEL_EDITION_LEVELS = _('After school edition levels')
 
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
-        [1, FieldsFormatters.clean_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
-        [2, FieldsFormatters.clean_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
-        [3, FieldsFormatters.clean_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
-        [4, FieldsFormatters.clean_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
-        [5, FieldsFormatters.clean_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
-        [6, FieldsFormatters.clean_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
-        [7, FieldsFormatters.clean_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
-        [8, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [9, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [10, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [11, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [0, FieldsFormatters.format_name, KEY_PARENT_NAME_AND_SURNAMES, LABEL_PARENT_NAME_AND_SURNAMES],
+        [1, FieldsFormatters.format_phone, KEY_PARENT_PHONE_NUMBER, LABEL_PARENT_PHONE_NUMBER],
+        [2, FieldsFormatters.format_email, KEY_PARENT_EMAIL, LABEL_PARENT_EMAIL],
+        [3, FieldsFormatters.format_iban, KEY_BANK_ACCOUNT_IBAN, LABEL_BANK_ACCOUNT_IBAN],
+        [4, FieldsFormatters.format_name, KEY_CHILD_NAME, LABEL_CHILD_NAME],
+        [5, FieldsFormatters.format_name, KEY_CHILD_SURNAMES, LABEL_CHILD_SURNAMES],
+        [6, FieldsFormatters.format_integer, KEY_CHILD_YEAR_OF_BIRTH, LABEL_CHILD_YEAR_OF_BIRTH],
+        [7, FieldsFormatters.format_level, KEY_CHILD_LEVEL, LABEL_CHILD_LEVEL],
+        [8, FieldsFormatters.format_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
+        [9, FieldsFormatters.format_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [10, FieldsFormatters.format_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [11, FieldsFormatters.format_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
     ]
 
     @classmethod

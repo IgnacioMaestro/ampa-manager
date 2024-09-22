@@ -23,9 +23,9 @@ class FamilyEmailImporter:
     LABEL_FAMILY_SECOND_SURNAME = _('Family second surname')
 
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_string, KEY_FAMILY_EMAIL, LABEL_FAMILY_EMAIL],
-        [1, FieldsFormatters.clean_string, KEY_FAMILY_FIRST_SURNAME, LABEL_FAMILY_FIRST_SURNAME],
-        [2, FieldsFormatters.clean_string, KEY_FAMILY_SECOND_SURNAME, LABEL_FAMILY_SECOND_SURNAME],
+        [0, FieldsFormatters.format_string, KEY_FAMILY_EMAIL, LABEL_FAMILY_EMAIL],
+        [1, FieldsFormatters.format_string, KEY_FAMILY_FIRST_SURNAME, LABEL_FAMILY_FIRST_SURNAME],
+        [2, FieldsFormatters.format_string, KEY_FAMILY_SECOND_SURNAME, LABEL_FAMILY_SECOND_SURNAME],
     ]
 
     @classmethod
@@ -62,7 +62,7 @@ class FamilyEmailImporter:
             family_surnames = f'{row.get(cls.KEY_FAMILY_FIRST_SURNAME)} {row.get(cls.KEY_FAMILY_SECOND_SURNAME)}'
             email = row.get(cls.KEY_FAMILY_EMAIL)
             family_result: ImportModelResult = FamilyImporter.import_family(family_surnames=family_surnames,
-                                                                            email=email)
+                                                                            family_email=email)
             result.add_partial_result(family_result)
 
         except Exception as e:

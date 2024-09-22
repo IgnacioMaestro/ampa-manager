@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.price_per_level import PricePerLevel
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 
 
 class AfterSchoolEdition(PricePerLevel):

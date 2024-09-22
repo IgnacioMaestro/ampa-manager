@@ -1,6 +1,6 @@
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 

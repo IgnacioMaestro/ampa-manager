@@ -6,7 +6,7 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
@@ -63,32 +63,6 @@ class Child(TimeStampedModel):
     def school_age(self):
         return self.age - self.repetition
 
-    def clean_name(self):
-        return FieldsFormatters.clean_name(self.cleaned_data['name'])
-
-    def is_modified(self, year_of_birth, repetition):
-        return self.year_of_birth != year_of_birth or self.repetition != repetition
-
-    def update(self, year_of_birth, repetition, allow_reset=False) -> FieldsChanges:
-        fields_before = [self.name, self.year_of_birth, self.level, self.repetition]
-        not_reset_fields = []
-
-        if year_of_birth is not None or allow_reset:
-            self.year_of_birth = year_of_birth
-        elif self.year_of_birth:
-            not_reset_fields.append(self.year_of_birth)
-
-        if repetition is not None or allow_reset:
-            self.repetition = repetition
-        elif self.repetition:
-            not_reset_fields.append(self.repetition)
-
-        self.save()
-
-        fields_after = [self.name, self.year_of_birth, self.level, self.repetition]
-
-        return FieldsChanges(fields_before, fields_after, not_reset_fields)
-
     def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
         link_text = str(self.id) if id_as_link_text else str(self)
         return Utils.get_model_instance_link(Child.__name__.lower(), self.id, link_text, new_tab)
@@ -109,7 +83,7 @@ class Child(TimeStampedModel):
     @staticmethod
     def fix_names():
         for child in Child.objects.all():
-            fixed_name = FieldsFormatters.clean_name(child.name)
+            fixed_name = FieldsFormatters.format_name(child.name)
             if fixed_name != child.name:
                 print(f'Child name fixed: "{child.name}" -> "{fixed_name}"')
                 child.name = fixed_name

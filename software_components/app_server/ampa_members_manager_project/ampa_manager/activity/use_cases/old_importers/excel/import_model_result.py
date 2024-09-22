@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from django.db.models import Model
 
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.processing_state import ProcessingState
 
 

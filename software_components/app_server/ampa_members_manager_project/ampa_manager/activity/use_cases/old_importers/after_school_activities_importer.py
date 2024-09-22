@@ -36,12 +36,12 @@ class AfterSchoolsActivitiesImporter:
     LABEL_EDITION_PRICE_FOR_NO_MEMBERS = _('Price for no members')
 
     COLUMNS_TO_IMPORT = [
-        [0, FieldsFormatters.clean_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
-        [1, FieldsFormatters.clean_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
-        [2, FieldsFormatters.clean_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
-        [3, FieldsFormatters.clean_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
-        [4, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
-        [5, FieldsFormatters.clean_integer, KEY_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
+        [0, FieldsFormatters.format_string, KEY_AFTER_SCHOOL_NAME, LABEL_AFTER_SCHOOL_NAME],
+        [1, FieldsFormatters.format_string, KEY_EDITION_PERIOD, LABEL_EDITION_PERIOD],
+        [2, FieldsFormatters.format_string, KEY_EDITION_TIMETABLE, LABEL_EDITION_TIMETABLE],
+        [3, FieldsFormatters.format_string, KEY_EDITION_LEVELS, LABEL_EDITION_LEVELS],
+        [4, FieldsFormatters.format_integer, KEY_EDITION_PRICE_FOR_MEMBERS, LABEL_EDITION_PRICE_FOR_MEMBERS],
+        [5, FieldsFormatters.format_integer, KEY_EDITION_PRICE_FOR_NO_MEMBERS, LABEL_EDITION_PRICE_FOR_NO_MEMBERS],
     ]
 
     @classmethod

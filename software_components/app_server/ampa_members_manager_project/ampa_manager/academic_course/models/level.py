@@ -95,8 +95,8 @@ class Level:
     ]
 
     @staticmethod
-    def get_level_by_age(age: int) -> str:
-        return Level.LEVEL_IDS_BY_AGE.get(age)
+    def get_level_by_age(age: int) -> Optional[str]:
+        return Level.LEVEL_IDS_BY_AGE.get(age, None)
 
     @staticmethod
     def get_cycle_by_level(level_id: str) -> Optional[str]:
@@ -107,8 +107,8 @@ class Level:
         return None
 
     @staticmethod
-    def get_age_by_level(level_id: str) -> int:
-        return Level.LEVEL_AGES.get(level_id)
+    def get_age_by_level(level_id: str) -> Optional[int]:
+        return Level.LEVEL_AGES.get(level_id, None)
 
     @staticmethod
     def get_level_name(level_id: str) -> int:

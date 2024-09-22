@@ -24,7 +24,7 @@ class ImportCustody(View):
         form = ImportCustodyForm(request.POST, request.FILES)
 
         if form.is_valid():
-            result: Optional[ImportResult] = cls.import_custody(
+            result: ImportResult = cls.import_custody(
                 excel_content=request.FILES['file'].read(),
                 edition_id=request.POST.get('custody_edition'),
                 simulation=request.POST.get('simulation')

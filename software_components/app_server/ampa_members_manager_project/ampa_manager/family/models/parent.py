@@ -7,7 +7,7 @@ from django_extensions.db.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
+from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
@@ -50,7 +50,7 @@ class Parent(TimeStampedModel):
         return self.family_set.filter(surnames=family.surnames).exists()
     
     def clean_name_and_surnames(self):
-        return FieldsFormatters.clean_name(self.cleaned_data['name_and_surnames'])
+        return FieldsFormatters.format_name(self.cleaned_data['name_and_surnames'])
 
     def matches_name_and_surnames(self, name_and_surnames, strict=False):
         if name_and_surnames and self.name_and_surnames:
@@ -108,7 +108,7 @@ class Parent(TimeStampedModel):
     @staticmethod
     def fix_name_and_surnames():
         for parent in Parent.objects.all():
-            fixed_name_and_surnames = FieldsFormatters.clean_name(parent.name_and_surnames)
+            fixed_name_and_surnames = FieldsFormatters.format_name(parent.name_and_surnames)
             if fixed_name_and_surnames != parent.name_and_surnames:
                 print(f'Parent name and surnames fixed: "{parent.name_and_surnames}" -> "{fixed_name_and_surnames}"')
                 parent.name_and_surnames = fixed_name_and_surnames

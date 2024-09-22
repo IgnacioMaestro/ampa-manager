@@ -68,7 +68,7 @@ class RowImporterChildData:
             raise RowsImporterErrors(errors)
 
     def import_row_level(self) -> Optional[str]:
-        raw_level: str = FieldsFormatters.clean_string(
+        raw_level: str = FieldsFormatters.format_string(
             self.__sheet.cell_value(rowx=self.__row_index, colx=self.LEVEL_COLUMN))
         if not raw_level:
             return None
@@ -78,21 +78,21 @@ class RowImporterChildData:
         return level
 
     def import_row_name(self) -> str:
-        name: str = FieldsFormatters.clean_string(self.__sheet.cell_value(rowx=self.__row_index, colx=self.NAME_COLUMN))
+        name: str = FieldsFormatters.format_string(self.__sheet.cell_value(rowx=self.__row_index, colx=self.NAME_COLUMN))
         if not name:
             raise RowsImporterError(RowsImporterErrorType.CHILD_NAME_NOT_FOUND)
         return name
 
     def import_row_birth_year(self) -> int:
         try:
-            birth_year: Optional[int] = FieldsFormatters.clean_integer(
+            birth_year: Optional[int] = FieldsFormatters.format_integer(
                 self.__sheet.cell_value(rowx=self.__row_index, colx=self.BIRTH_YEAR_COLUMN))
         except ValueError:
             raise RowsImporterError(RowsImporterErrorType.CHILD_BIRTH_YEAR_NOT_INTEGER)
         return birth_year
 
     def import_row_surnames(self) -> str:
-        surnames: str = FieldsFormatters.clean_string(
+        surnames: str = FieldsFormatters.format_string(
             self.__sheet.cell_value(rowx=self.__row_index, colx=self.SURNAMES_COLUMN))
         if not surnames:
             raise RowsImporterError(RowsImporterErrorType.CHILD_SURNAMES_NOT_FOUND)
@@ -103,7 +103,7 @@ class RowImporterChildData:
         if raw_days_attended is None or raw_days_attended == '':
             raise RowsImporterError(RowsImporterErrorType.DAYS_ATTENDED_NOT_FOUND)
         try:
-            days_attended: Optional[int] = FieldsFormatters.clean_integer(raw_days_attended)
+            days_attended: Optional[int] = FieldsFormatters.format_integer(raw_days_attended)
         except ValueError:
             raise RowsImporterError(RowsImporterErrorType.DAYS_ATTENDED_NOT_INTEGER)
         return days_attended

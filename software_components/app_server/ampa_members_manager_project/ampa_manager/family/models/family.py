@@ -94,7 +94,7 @@ class Family(TimeStampedModel):
         return Family.objects.all()
 
     def clean_surnames(self):
-        return FieldsFormatters.clean_name(self.cleaned_data['surnames'])
+        return FieldsFormatters.format_name(self.cleaned_data['surnames'])
 
     def to_decline_membership(self):
         self.decline_membership = True
@@ -171,19 +171,11 @@ class Family(TimeStampedModel):
         return None
 
     def find_child(self, name: str, exclude_id: Optional[int] = None) -> Optional[Child]:
-        if name:
-            family_children = Child.objects.with_family(self)
-            for child in family_children:
-                if exclude_id and child.id == exclude_id:
-                    continue
-                if child.matches_name(name, strict=True):
-                    return child
-            for child in family_children:
-                if exclude_id and child.id == exclude_id:
-                    continue
-                if child.matches_name(name, strict=False):
-                    return child
-        return None
+        for child in Child.objects.with_family(self):
+            if exclude_id and child.id == exclude_id:
+                continue
+            if child.matches_name(name, strict=False):
+                return child
 
     def get_html_link(self, print_parents=False, print_children=False, print_id=False) -> str:
         link_text = str(self)
@@ -280,7 +272,7 @@ class Family(TimeStampedModel):
     @staticmethod
     def fix_surnames():
         for family in Family.objects.all():
-            fixed_surnames = FieldsFormatters.clean_name(family.surnames)
+            fixed_surnames = FieldsFormatters.format_name(family.surnames)
             if fixed_surnames != family.surnames:
                 print(f'Family surnames fixed: "{family.surnames}" -> "{fixed_surnames}"')
                 family.surnames = fixed_surnames

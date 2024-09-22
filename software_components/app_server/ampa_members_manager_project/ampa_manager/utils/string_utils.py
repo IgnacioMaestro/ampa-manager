@@ -30,7 +30,7 @@ class StringUtils:
                     StringUtils.remove_basque_characters(
                         StringUtils.lowercase(
                             StringUtils.remove_special_chars(
-                                StringUtils.remove_accents(value))))))
+                                StringUtils.remove_accents(str(value)))))))
         return None
 
     @staticmethod

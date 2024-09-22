@@ -68,10 +68,10 @@ class AuthorizationImporter:
         date_value = None
 
         try:
-            parent_full_name = FieldsFormatters.clean_name(
+            parent_full_name = FieldsFormatters.format_name(
                 self.sheet.cell_value(rowx=row_index, colx=Command.PARENT_FULL_NAME_INDEX))
-            iban = FieldsFormatters.clean_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
-            number = FieldsFormatters.clean_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
+            iban = FieldsFormatters.format_iban(self.sheet.cell_value(rowx=row_index, colx=Command.IBAN_INDEX))
+            number = FieldsFormatters.format_string(self.sheet.cell_value(rowx=row_index, colx=Command.NUMBER_INDEX))
 
             date_value = self.sheet.cell_value(rowx=row_index, colx=Command.DATE_INDEX)
             if date_value not in [None, '']:
