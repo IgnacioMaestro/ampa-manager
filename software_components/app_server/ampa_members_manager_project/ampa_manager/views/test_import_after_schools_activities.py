@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 
-from ampa_manager.activity.use_cases.importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
+from ampa_manager.activity.use_cases.old_importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
 from ampa_manager.forms import ImportAfterSchoolsActivitiesForm
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.utils.excel.titled_list import TitledList
@@ -18,7 +18,7 @@ class ImportAfterSchoolsActivitiesViewTest(TestCase):
     FORM_ACTION = '/ampa/afterschools-activities/import/'
 
     @mock.patch(
-        'ampa_manager.activity.use_cases.importers.after_school_activities_importer.AfterSchoolsActivitiesImporter.import_activities')
+        'ampa_manager.activity.use_cases.old_importers.after_school_activities_importer.AfterSchoolsActivitiesImporter.import_activities')
     def test_import_after_schools_activities_post_valid_form(self, mock_import_after_school: MagicMock):
         # Arrange
 

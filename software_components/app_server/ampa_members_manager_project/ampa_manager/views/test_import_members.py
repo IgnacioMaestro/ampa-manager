@@ -17,7 +17,7 @@ class ImportMembersViewTest(TestCase):
     TEMPLATE = 'import_members.html'
     FORM_ACTION = '/ampa/members/import/'
 
-    @mock.patch('ampa_manager.family.use_cases.importers.members_importer.MembersImporter.import_members')
+    @mock.patch('ampa_manager.family.use_cases.old_importers.members_importer.MembersImporter.import_members')
     def test_import_members_post_valid_form(self, mock_import_members: MagicMock):
         # Arrange
 

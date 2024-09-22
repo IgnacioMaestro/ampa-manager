@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
-from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
+from ampa_manager.activity.use_cases.old_importers.after_school_edition_importer import AfterSchoolEditionImporter
+from ampa_manager.activity.use_cases.old_importers.after_school_importer import AfterSchoolImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family

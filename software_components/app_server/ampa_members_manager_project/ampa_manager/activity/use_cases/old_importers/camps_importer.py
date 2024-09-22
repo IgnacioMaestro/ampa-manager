@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
-from ampa_manager.activity.use_cases.importers.camps_registration_importer import CampsRegistrationImporter
+from ampa_manager.activity.use_cases.old_importers.camps_registration_importer import CampsRegistrationImporter
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family

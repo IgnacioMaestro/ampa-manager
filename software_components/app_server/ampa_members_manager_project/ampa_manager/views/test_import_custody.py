@@ -28,7 +28,7 @@ class ImportCustodyViewTest(TestCase):
         ActiveCourse.objects.create(course=cls.academic_course)
 
 
-    @mock.patch('ampa_manager.activity.use_cases.importers.custody_importer.CustodyImporter.import_custody')
+    @mock.patch('ampa_manager.activity.use_cases.old_importers.custody_importer.CustodyImporter.import_custody')
     def test_import_custody_post_valid_form(self, mock_import_custody: MagicMock):
         # Arrange
         titled_list_summary = TitledList('summary')

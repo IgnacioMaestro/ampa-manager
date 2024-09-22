@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views import View
 
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
-from ampa_manager.activity.use_cases.importers.camps_importer import CampsImporter
+from ampa_manager.activity.use_cases.old_importers.camps_importer import CampsImporter
 from ampa_manager.forms import ImportCampsForm
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.views.import_custody import SimulationException

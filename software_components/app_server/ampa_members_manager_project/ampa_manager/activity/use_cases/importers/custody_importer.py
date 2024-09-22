@@ -3,8 +3,11 @@ from typing import Optional
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
-from ampa_manager.activity.use_cases.importers.custody_registration_importer import CustodyRegistrationImporter
-from ampa_manager.activity.use_cases.importers.excel_manager import ExcelManager, Row, BaseImporter, ImportSummary
+from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
+from ampa_manager.activity.use_cases.importers.import_result import ImportResult
+from ampa_manager.activity.use_cases.importers.row import Row
+from ampa_manager.activity.use_cases.old_importers.custody_registration_importer import CustodyRegistrationImporter
+from ampa_manager.activity.use_cases.importers.excel_data_extractor import ExcelDataExtractor
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -21,13 +24,15 @@ class CustodyImporter(BaseImporter):
 
     COLUMNS_TO_IMPORT = [
         [0, FieldsFormatters.clean_email, BaseImporter.KEY_FAMILY_EMAIL, BaseImporter.LABEL_FAMILY_EMAIL],
-        [1, FieldsFormatters.clean_name, BaseImporter.KEY_PARENT_NAME_AND_SURNAMES, BaseImporter.LABEL_PARENT_NAME_AND_SURNAMES],
+        [1, FieldsFormatters.clean_name, BaseImporter.KEY_PARENT_NAME_AND_SURNAMES,
+         BaseImporter.LABEL_PARENT_NAME_AND_SURNAMES],
         [2, FieldsFormatters.clean_phone, BaseImporter.KEY_PARENT_PHONE_NUMBER, BaseImporter.LABEL_PARENT_PHONE_NUMBER],
         [3, FieldsFormatters.clean_email, BaseImporter.KEY_PARENT_EMAIL, BaseImporter.LABEL_PARENT_EMAIL],
         [4, FieldsFormatters.clean_iban, BaseImporter.KEY_BANK_ACCOUNT_IBAN, BaseImporter.LABEL_BANK_ACCOUNT_IBAN],
         [5, FieldsFormatters.clean_name, BaseImporter.KEY_CHILD_NAME, BaseImporter.LABEL_CHILD_NAME],
         [6, FieldsFormatters.clean_name, BaseImporter.KEY_CHILD_SURNAMES, BaseImporter.LABEL_CHILD_SURNAMES],
-        [7, FieldsFormatters.clean_integer, BaseImporter.KEY_CHILD_YEAR_OF_BIRTH, BaseImporter.LABEL_CHILD_YEAR_OF_BIRTH],
+        [7, FieldsFormatters.clean_integer, BaseImporter.KEY_CHILD_YEAR_OF_BIRTH,
+         BaseImporter.LABEL_CHILD_YEAR_OF_BIRTH],
         [8, FieldsFormatters.clean_level, BaseImporter.KEY_CHILD_LEVEL, BaseImporter.LABEL_CHILD_LEVEL],
         [9, FieldsFormatters.clean_integer, BaseImporter.KEY_ASSISTED_DAYS, LABEL_ASSISTED_DAYS],
     ]
@@ -37,13 +42,13 @@ class CustodyImporter(BaseImporter):
         self.custody_edition = custody_edition
         self.rows = self.import_custody()
 
-    def import_custody(self) -> ImportSummary:
-        manager = ExcelManager(self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT)
+    def import_custody(self) -> ImportResult:
+        rows = ExcelDataExtractor(self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
 
-        for row in manager.rows:
+        for row in rows:
             self.import_row(row)
 
-        return ImportSummary(manager.rows)
+        return ImportResult(manager.rows)
 
     def import_row(self, row: Row):
         if row.any_error:

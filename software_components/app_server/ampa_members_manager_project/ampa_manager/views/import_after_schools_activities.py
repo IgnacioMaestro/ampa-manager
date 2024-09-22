@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
-from ampa_manager.activity.use_cases.importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
+from ampa_manager.activity.use_cases.old_importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
 from ampa_manager.forms import ImportAfterSchoolsActivitiesForm
 from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.views.import_info import ImportInfo
