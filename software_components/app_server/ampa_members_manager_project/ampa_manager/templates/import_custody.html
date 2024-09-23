@@ -17,7 +17,7 @@
 
     <div id="upload_form">
         <h2>{% trans 'Upload file' %}</h2>
-        <form action="{{ url 'import_custody' }}" enctype="multipart/form-data" method="post">
+        <form action="{% url 'import_custody' %}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="{% trans 'Import file' %}">
@@ -47,7 +47,7 @@
         <h2>{% trans 'Results' %}</h2>
 
         {% if simulation %}
-            <div id="simulation" style="background-color: yellow;">
+            <div id="simulation" style="background-color: #66FF66; padding: 10px">
                 <h2>{% trans 'Warning: This has been a simulation of the import' %}</h2>
                 <ul>
                     <li>{% trans 'No change has been made' %}</li>
@@ -56,18 +56,19 @@
             </div>
         {% endif %}
 
-        {% if results %}
+        {% if result %}
             <div id="results_summary">
                 <h3>{% trans 'Resumen' %}</h3>
                 <ul>
-                    <li>Filas importadas: 100</li>
-                    <li>Filas con error: 0</li>
-                    <li>Familias creadas: 2</li>
+                    <li>Estado: REVISAR</li>
+                    <li>Filas importadas correctamente: 100</li>
+                    <li>Filas no importadas: 0</li>
+                    <li>Filas importadas que habría que revisar: 2</li>
                 </ul>
             </div>
             <div id="results_by_row">
                 <h3>{% trans 'Resultados por fila' %}</h3>
-                <table>
+                <table style="width: max-content">
                     <thead>
                         <tr>
                             <th>Fila</th>
@@ -77,28 +78,18 @@
                         </tr>
                     </thead>
                     <tbody>
+    {% for row in result.rows %}
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <ul>
-                                    <li>Familia: Lopez Hualde, lopez.hualde@abendanoikastola.com</li>
-                                    <li>Padre: Pedro Lopez Gonzalez, pedrolopez@gmail.com, 647743503</li>
-                                    <li>Cuenta bancaria: ES20 6532 4558 2154 6532 2652</li>
-                                    <li>Hijo: Ibai</li>
-                                    <li>Asistencia: 15 días</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>Familia: </li>
-                                    <li>Padre: </li>
-                                    <li>Cuenta bancaria: </li>
-                                    <li>Hijo: </li>
-                                    <li>Asistencia: </li>
-                                </ul>
-                            </td>
-                            <td>IMPORTADO</td>
+                            <td>{{ row.row_index }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
+    {% empty %}
+                        <tr>
+                            <td colspan="4">{% trans 'No hay resultados' %}</td>
+                        </tr>
+    {% endfor %}
                     </tbody>
                 </table>
         </div>

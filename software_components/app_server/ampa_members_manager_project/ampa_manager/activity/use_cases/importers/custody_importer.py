@@ -46,8 +46,8 @@ class CustodyImporter(BaseImporter):
         self.rows = self.import_custody()
 
     def import_custody(self) -> ImportExcelResult:
-        rows: list[Row] = ExcelDataExtractor(self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX,
-                                             self.COLUMNS_TO_IMPORT).extract()
+        rows: list[Row] = ExcelDataExtractor(
+            self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
 
         for row in rows:
             self.import_row(row)
@@ -71,16 +71,17 @@ class CustodyImporter(BaseImporter):
             if row.any_error:
                 return
 
-            holder: Optional[Holder] = None
             if parent:
-                holder = self.import_bank_account_and_holder(row, parent)
+                holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent)
+                if holder:
+                    family.update_custody_holder(holder)
 
             FamilyHoldersConsolidator(family).consolidate()
             if not family.custody_holder:
                 row.set_error('Missing bank account')
                 return
 
-            self.import_custody_registration(row, self.custody_edition, holder, child)
+            self.import_custody_registration(row, self.custody_edition, family.custody_holder, child)
 
         except Exception as e:
             row.error = str(e)

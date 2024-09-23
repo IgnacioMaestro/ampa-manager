@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from localflavor.generic.validators import IBANValidator
 
 from ampa_manager.academic_course.models.level import Level
@@ -33,7 +34,7 @@ class FieldsFormatters:
             if FieldsFormatters.is_a_valid_email(value):
                 return value
             else:
-                raise ValidationError(f'Not a valid email')
+                raise ValidationError(_('Wrong email') + f' ({value})')
         return None
 
     @staticmethod
@@ -77,7 +78,7 @@ class FieldsFormatters:
                 validator(iban)
                 return iban
             except ValidationError:
-                raise ValidationError('Wrong IBAN')
+                raise ValidationError(_('Wrong IBAN') + f' ({value})')
         return None
 
     @staticmethod
@@ -87,7 +88,7 @@ class FieldsFormatters:
             if Level.is_valid(level):
                 return level
             else:
-                raise ValidationError('Wrong level')
+                raise ValidationError(_('Wrong level') + f' ({value})')
         return None
 
     @staticmethod

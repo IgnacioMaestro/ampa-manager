@@ -112,53 +112,6 @@ class Family(TimeStampedModel):
     def has_parent(self, parent_name_and_surnames):
         return self.find_parent(parent_name_and_surnames) is not None
 
-    @staticmethod
-    def find(surnames: str, parents_name_and_surnames: Optional[List[str]] = None, child_name: Optional[str] = None,
-             email: Optional[str] = None):
-        family = None
-        error = None
-
-        families = None
-        if email:
-            families = Family.objects.with_this_email(email)
-
-        if families is None or families.count() == 0:
-            families = Family.objects.with_these_surnames(surnames)
-
-        if len(families) == 1:
-            family = families[0]
-        elif len(families) > 1:
-            family = Family.get_family_filtered_by_parent(families, parents_name_and_surnames)
-            if family is None:
-                family = Family.get_family_filtered_by_child(families, child_name)
-                if family is None:
-                    if parents_name_and_surnames:
-                        parents = ', '.join(parents_name_and_surnames)
-                    else:
-                        parents = '-'
-
-                    child = child_name if child_name else '-'
-                    error = f'Multiple families with surnames "{surnames}". ' \
-                            f'Parents: {parents}. ' \
-                            f'Child: {child}'
-        elif len(parents_name_and_surnames) > 0:
-            for parent_name_and_surnames in parents_name_and_surnames:
-                parent = Parent.find(parent_name_and_surnames)
-                if parent:
-                    for parent_family in Family.objects.of_parent(parent):
-                        if parent_family.matches_surnames(surnames, strict=False):
-                            family = parent_family
-
-        return family, error
-
-    @staticmethod
-    def filter_by_surnames(surnames, strict=True) -> List[Family]:
-        families = []
-        for family in Family.objects.all():
-            if family.matches_surnames(surnames, strict):
-                families.append(family)
-        return families
-
     def find_parent(self, name_and_surnames: str) -> Optional[Parent]:
         if name_and_surnames:
             family_parents = self.parents.all()
@@ -243,6 +196,11 @@ class Family(TimeStampedModel):
             return family_holders.first()
 
         return None
+
+    def update_custody_holder(self, holder: Holder):
+        if self.custody_holder != holder:
+            self.custody_holder = holder
+            self.save()
 
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:

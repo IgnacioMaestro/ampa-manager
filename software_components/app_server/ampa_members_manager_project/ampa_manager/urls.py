@@ -8,7 +8,6 @@ from ampa_manager.views.import_camps import ImportCamps
 from ampa_manager.views.import_custody import ImportCustody
 from ampa_manager.views.import_family_email import ImportFamilyEmail
 from ampa_manager.views.import_members import ImportMembers
-from ampa_manager.views.new_import_custody import NewImportCustody
 from ampa_manager.views.validate_data import validate_data
 
 urlpatterns = [

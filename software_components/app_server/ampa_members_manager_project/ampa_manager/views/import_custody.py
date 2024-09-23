@@ -19,6 +19,14 @@ class ImportCustody(View):
     EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xls'
 
     @classmethod
+    def get(cls, request):
+        context = {}
+        context['form'] = ImportCustodyForm()
+        context['excel_columns'] = CustodyImporter.get_excel_columns(CustodyImporter.COLUMNS_TO_IMPORT)
+        context['excel_template_file_name'] = cls.EXCEL_TEMPLATE
+        return render(request, cls.HTML_TEMPLATE, context)
+
+    @classmethod
     def post(cls, request):
         context = {}
         form = ImportCustodyForm(request.POST, request.FILES)
