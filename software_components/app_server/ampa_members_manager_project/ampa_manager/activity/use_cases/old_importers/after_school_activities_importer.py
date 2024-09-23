@@ -5,14 +5,14 @@ from ampa_manager.activity.models.after_school.after_school_edition import After
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.use_cases.old_importers.after_school_edition_importer import AfterSchoolEditionImporter
 from ampa_manager.activity.use_cases.old_importers.after_school_importer import AfterSchoolImporter
+from ampa_manager.activity.use_cases.old_importers.excel.excel_importer import ExcelImporter
+from ampa_manager.activity.use_cases.old_importers.excel.excel_row import ExcelRow
+from ampa_manager.activity.use_cases.old_importers.excel.import_row_result import ImportRowResult
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.utils.excel.excel_importer import ExcelImporter
-from ampa_manager.utils.excel.excel_row import ExcelRow
-from ampa_manager.utils.excel.import_row_result import ImportRowResult
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.views.import_info import ImportInfo
 

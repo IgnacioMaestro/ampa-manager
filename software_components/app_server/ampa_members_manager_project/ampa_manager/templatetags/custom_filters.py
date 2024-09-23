@@ -3,7 +3,7 @@ from typing import List
 from django import template
 from django.utils.safestring import mark_safe
 
-from ampa_manager.utils.excel.titled_list import TitledList
+from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 
 register = template.Library()
 

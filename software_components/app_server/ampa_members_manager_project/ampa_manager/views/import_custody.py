@@ -6,7 +6,7 @@ from django.views import View
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.use_cases.importers.custody_importer import CustodyImporter
-from ampa_manager.activity.use_cases.importers.import_result import ImportResult
+from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.forms import ImportCustodyForm
 
 
@@ -24,7 +24,7 @@ class ImportCustody(View):
         form = ImportCustodyForm(request.POST, request.FILES)
 
         if form.is_valid():
-            result: ImportResult = cls.import_custody(
+            result: ImportExcelResult = cls.import_custody(
                 excel_content=request.FILES['file'].read(),
                 edition_id=request.POST.get('custody_edition'),
                 simulation=request.POST.get('simulation')
@@ -42,7 +42,7 @@ class ImportCustody(View):
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def import_custody(cls, excel_content, edition_id: int, simulation: bool) -> Optional[ImportResult]:
+    def import_custody(cls, excel_content, edition_id: int, simulation: bool) -> Optional[ImportExcelResult]:
         result = None
         try:
             with transaction.atomic():

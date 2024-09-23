@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
-from ampa_manager.activity.use_cases.old_importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
+from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
+from ampa_manager.activity.use_cases.old_importers.after_school_activities_importer import \
+    AfterSchoolsActivitiesImporter
 from ampa_manager.forms import ImportAfterSchoolsActivitiesForm
-from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -55,7 +56,7 @@ class ImportAfterSchoolsActivities(View):
     @classmethod
     def __create_context_fix_part(cls) -> dict:
         return {
-            'excel_columns': get_excel_columns(AfterSchoolsActivitiesImporter.COLUMNS_TO_IMPORT),
+            'excel_columns': BaseImporter.get_excel_columns(AfterSchoolsActivitiesImporter.COLUMNS_TO_IMPORT),
             'form_action': reverse('import_after_schools_activities'),
             'excel_template_file_name': 'templates/plantilla_importar_actividades_extraescolares.xls'
         }

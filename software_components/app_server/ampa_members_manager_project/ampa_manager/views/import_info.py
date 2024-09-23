@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ampa_manager.utils.excel.titled_list import TitledList
+from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 
 
 @dataclass

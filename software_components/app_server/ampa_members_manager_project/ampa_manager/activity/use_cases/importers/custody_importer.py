@@ -4,7 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
-from ampa_manager.activity.use_cases.importers.import_result import ImportResult
+from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.activity.use_cases.importers.excel_data_extractor import ExcelDataExtractor
@@ -12,7 +13,6 @@ from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 from ampa_manager.family.use_cases.importers.family_holders_consolidator import FamilyHoldersConsolidator
 from ampa_manager.utils.fields_formatters import FieldsFormatters
@@ -45,14 +45,14 @@ class CustodyImporter(BaseImporter):
         self.custody_edition = custody_edition
         self.rows = self.import_custody()
 
-    def import_custody(self) -> ImportResult:
+    def import_custody(self) -> ImportExcelResult:
         rows: list[Row] = ExcelDataExtractor(self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX,
                                              self.COLUMNS_TO_IMPORT).extract()
 
         for row in rows:
             self.import_row(row)
 
-        return ImportResult(rows)
+        return ImportExcelResult(rows)
 
     def import_row(self, row: Row):
         if row.any_error:
@@ -89,7 +89,7 @@ class CustodyImporter(BaseImporter):
         assisted_days = row.get_value(self.KEY_ASSISTED_DAYS)
 
         result: ImportModelResult = CustodyRegistrationImporter(
-            custody_edition=edition,
+            edition=edition,
             holder=holder,
             child=child,
             assisted_days=assisted_days).import_registration()

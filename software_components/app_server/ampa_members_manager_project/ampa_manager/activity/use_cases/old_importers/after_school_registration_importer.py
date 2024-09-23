@@ -1,8 +1,8 @@
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.use_cases.old_importers.excel.import_model_result import ImportModelResult
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class AfterSchoolRegistrationImporter:

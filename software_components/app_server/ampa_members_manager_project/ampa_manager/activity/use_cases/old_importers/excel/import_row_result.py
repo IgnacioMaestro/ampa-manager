@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import List, Dict
 
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.old_importers.excel.excel_row import ExcelRow
+from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 from ampa_manager.family.models.family import Family
-from ampa_manager.utils.excel.excel_row import ExcelRow
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.processing_state import ProcessingState
 from ampa_manager.utils.logger import Logger
 

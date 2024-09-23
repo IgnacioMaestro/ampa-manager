@@ -7,11 +7,11 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.utils.excel.titled_list import TitledList
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
 

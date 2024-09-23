@@ -3,9 +3,10 @@ from typing import List
 import xlrd
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from ampa_manager.utils.excel.excel_row import ExcelRow
-from ampa_manager.utils.excel.import_row_result import ImportRowResult
-from ampa_manager.utils.excel.titled_list import TitledList
+
+from ampa_manager.activity.use_cases.old_importers.excel.excel_row import ExcelRow
+from ampa_manager.activity.use_cases.old_importers.excel.import_row_result import ImportRowResult
+from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 
 
 class ExcelImporter:

@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.family.use_cases.importers.family_email_importer import FamilyEmailImporter
 from ampa_manager.forms import ImportFamilyEmailForm
-from ampa_manager.utils.excel.importers_utils import get_excel_columns
 from ampa_manager.views.import_info import ImportInfo
 
 
@@ -55,7 +55,7 @@ class ImportFamilyEmail(View):
     @classmethod
     def __create_context_fix_part(cls) -> dict:
         return {
-            'excel_columns': get_excel_columns(FamilyEmailImporter.COLUMNS_TO_IMPORT),
+            'excel_columns': BaseImporter.get_excel_columns(FamilyEmailImporter.COLUMNS_TO_IMPORT),
             'form_action': reverse('import_family_email'),
             'excel_template_file_name': 'templates/plantilla_importar_correos_de_familias.xls'
         }
