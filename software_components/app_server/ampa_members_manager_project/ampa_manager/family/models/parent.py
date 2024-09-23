@@ -61,41 +61,6 @@ class Parent(TimeStampedModel):
                 return True
         return False
 
-    def is_modified(self, phone_number, additional_phone_number, email):
-        return ((phone_number and self.phone_number != phone_number) or
-                (additional_phone_number and self.additional_phone_number != additional_phone_number) or
-                (email and not self.is_family_email(email) and self.email != email))
-
-    def update(self, phone_number, additional_phone_number, email, allow_reset=False) -> FieldsChanges:
-        fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-        not_reset_fields = []
-        updated = False
-
-        if phone_number is not None or allow_reset:
-            self.phone_number = phone_number
-            updated = True
-        elif self.phone_number:
-            not_reset_fields.append(self.phone_number)
-
-        if additional_phone_number is not None or allow_reset:
-            self.additional_phone_number = additional_phone_number
-            updated = True
-        elif self.additional_phone_number:
-            not_reset_fields.append(self.additional_phone_number)
-
-        if email is not None and not self.is_family_email(email) or allow_reset:
-            self.email = email
-            updated = True
-        elif self.email:
-            not_reset_fields.append(self.email)
-
-        if updated:
-            self.save()
-
-        fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-
-        return FieldsChanges(fields_before, fields_after, not_reset_fields)
-
     def is_family_email(self, email: str):
         for family in self.family_set.all():
             if email in [family.email, family.secondary_email]:

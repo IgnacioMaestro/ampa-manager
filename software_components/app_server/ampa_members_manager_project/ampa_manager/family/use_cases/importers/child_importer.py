@@ -43,22 +43,19 @@ class ChildImporter:
         self.result.set_created(child)
 
     def manage_found_child(self):
-        if self.level and self.year_of_birth:
-            if self.child_is_modified():
-                values_before = [self.child.year_of_birth, self.child.repetition]
+        if self.level and self.year_of_birth and self.child_is_modified():
+            values_before = [self.child.year_of_birth, self.child.repetition]
 
-                if self.year_of_birth is not None:
-                    self.child.year_of_birth = self.year_of_birth
+            if self.year_of_birth is not None:
+                self.child.year_of_birth = self.year_of_birth
 
-                if self.repetition is not None:
-                    self.child.repetition = self.repetition
+            if self.repetition is not None:
+                self.child.repetition = self.repetition
 
-                self.child.save()
+            self.child.save()
 
-                values_after = [self.child.year_of_birth, self.child.repetition]
-                self.result.set_updated(self.child, values_before, values_after)
-            else:
-                self.result.set_not_modified(self.child)
+            values_after = [self.child.year_of_birth, self.child.repetition]
+            self.result.set_updated(self.child, values_before, values_after)
         else:
             self.result.set_not_modified(self.child)
 

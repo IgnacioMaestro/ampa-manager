@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
@@ -12,7 +13,6 @@ from ampa_manager.family.use_cases.importers.bank_account_importer import BankAc
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
 from ampa_manager.family.use_cases.importers.family_importer import FamilyImporter
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 from ampa_manager.utils.string_utils import StringUtils
 
 
@@ -42,17 +42,13 @@ class BaseImporter:
     def import_family(cls, row: Row) -> Family:
         family_surnames = row.get_value(cls.KEY_FAMILY_SURNAMES)
         family_email = row.get_value(cls.KEY_FAMILY_EMAIL)
-        parent_name_and_surnames = row.get_value(cls.KEY_PARENT_NAME_AND_SURNAMES)
-        child_name = row.get_value(cls.KEY_CHILD_NAME)
 
         imported_model: ImportModelResult = FamilyImporter.import_family(
             family_surnames=family_surnames,
-            parent1_name_and_surnames=parent_name_and_surnames,
-            child_name=child_name,
             family_email=family_email)
         row.add_imported_model(imported_model)
 
-        return imported_model.imported_object
+        return imported_model.instance
 
     @classmethod
     def import_child(cls, row: Row, family: Family) -> Child:
@@ -68,7 +64,7 @@ class BaseImporter:
 
         row.add_imported_model(imported_model)
 
-        return imported_model.imported_object
+        return imported_model.instance
 
     @classmethod
     def import_parent(cls, row: Row, family: Family) -> Parent:
@@ -86,7 +82,7 @@ class BaseImporter:
 
         row.add_imported_model(imported_model)
 
-        return imported_model.imported_object
+        return imported_model.instance
 
     @classmethod
     def import_bank_account_and_holder(cls, row: Row, parent: Parent) -> Holder:

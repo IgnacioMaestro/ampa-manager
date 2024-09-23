@@ -31,6 +31,7 @@ class ImportModelResult:
 
     def set_error(self, error_message: str):
         self.state = self.ERROR
+        self.instance = None
         self.error_message = error_message
 
     def set_created(self, instance):
