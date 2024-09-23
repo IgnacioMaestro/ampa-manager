@@ -13,6 +13,8 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.utils.excel.import_model_result import ImportModelResult
+
+from ampa_manager.family.use_cases.importers.family_holders_consolidator import FamilyHoldersConsolidator
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 
 
@@ -73,7 +75,7 @@ class CustodyImporter(BaseImporter):
             if parent:
                 holder = self.import_bank_account_and_holder(row, parent)
 
-            self.consolidate_family_holders(family)
+            FamilyHoldersConsolidator(family).consolidate()
             if not family.custody_holder:
                 row.set_error('Missing bank account')
                 return
@@ -83,13 +85,15 @@ class CustodyImporter(BaseImporter):
         except Exception as e:
             row.error = str(e)
 
-    def import_custody_registration(self, row: Row, custody_edition, holder: Holder, child: Child):
+    def import_custody_registration(self, row: Row, edition: CustodyEdition, holder: Holder, child: Child):
         assisted_days = row.get_value(self.KEY_ASSISTED_DAYS)
 
-        imported_model: ImportModelResult = CustodyRegistrationImporter.import_registration(
-            custody_edition=custody_edition,
+        result: ImportModelResult = CustodyRegistrationImporter(
+            custody_edition=edition,
             holder=holder,
             child=child,
-            assisted_days=assisted_days)
+            assisted_days=assisted_days).import_registration()
 
-        row.add_imported_model(imported_model)
+        row.add_imported_model_result(result)
+
+        return result.instance

@@ -9,6 +9,7 @@ class ImportModelResult:
     CREATED = 2
     UPDATED = 3
     ERROR = 4
+    OMITTED = 5
 
     def __init__(self, class_name: str):
         self.class_name = class_name
@@ -37,6 +38,13 @@ class ImportModelResult:
     def set_created(self, instance):
         self.instance = instance
         self.state = self.CREATED
+
+    def set_omitted(self, instance=None, warning=None):
+        self.instance = instance
+        self.state = self.OMITTED
+
+        if warning:
+            self.add_warning(warning)
 
     def add_warning(self, warning):
         self.warnings.append(warning)

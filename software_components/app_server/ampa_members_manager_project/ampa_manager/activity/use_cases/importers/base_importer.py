@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
@@ -12,6 +14,7 @@ from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.bank_account_importer import BankAccountImporter
 from ampa_manager.family.use_cases.importers.child_importer import ChildImporter
 from ampa_manager.family.use_cases.importers.family_importer import FamilyImporter
+from ampa_manager.family.use_cases.importers.holder_importer import HolderImporter
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -39,102 +42,68 @@ class BaseImporter:
     LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')
 
     @classmethod
-    def import_family(cls, row: Row) -> Family:
+    def import_family(cls, row: Row) -> Optional[Family]:
         family_surnames = row.get_value(cls.KEY_FAMILY_SURNAMES)
         family_email = row.get_value(cls.KEY_FAMILY_EMAIL)
 
-        imported_model: ImportModelResult = FamilyImporter.import_family(
+        result: ImportModelResult = FamilyImporter(
             family_surnames=family_surnames,
-            family_email=family_email)
-        row.add_imported_model(imported_model)
+            family_email=family_email).import_family()
+        row.add_imported_model_result(result)
 
-        return imported_model.instance
+        return result.instance
 
     @classmethod
-    def import_child(cls, row: Row, family: Family) -> Child:
+    def import_child(cls, row: Row, family: Family) -> Optional[Child]:
         name = row.get_value(cls.KEY_CHILD_NAME)
         level = row.get_value(cls.KEY_CHILD_LEVEL)
         year_of_birth = row.get_value(cls.KEY_CHILD_YEAR_OF_BIRTH)
 
-        imported_model: ImportModelResult = ChildImporter(
+        result: ImportModelResult = ChildImporter(
             family=family,
             name=name,
             level=level,
             year_of_birth=year_of_birth).import_child()
 
-        row.add_imported_model(imported_model)
+        row.add_imported_model_result(result)
 
-        return imported_model.instance
+        return result.instance
 
     @classmethod
-    def import_parent(cls, row: Row, family: Family) -> Parent:
+    def import_parent(cls, row: Row, family: Family) -> Optional[Parent]:
         name_and_surnames = row.get_value(cls.KEY_PARENT_NAME_AND_SURNAMES)
         phone_number = row.get_value(cls.KEY_PARENT_PHONE_NUMBER)
         email = row.get_value(cls.KEY_PARENT_EMAIL)
 
-        imported_model: ImportModelResult = ParentImporter(
+        result: ImportModelResult = ParentImporter(
             family=family,
             name_and_surnames=name_and_surnames,
             phone_number=phone_number,
             additional_phone_number=None,
-            email=email,
-            optional=True).import_parent()
+            email=email).import_parent()
 
-        row.add_imported_model(imported_model)
+        row.add_imported_model_result(result)
 
-        return imported_model.instance
+        return result.instance
 
     @classmethod
-    def import_bank_account_and_holder(cls, row: Row, parent: Parent) -> Holder:
+    def import_bank_account_and_holder(cls, row: Row, parent: Parent) -> Optional[Holder]:
         iban = row.get_value(cls.KEY_BANK_ACCOUNT_IBAN)
 
-        bank_account_result, holder_result = BankAccountImporter.import_bank_account_and_holder(
+        account_result: ImportModelResult = BankAccountImporter(
             parent=parent,
-            iban=iban)
-        row.add_imported_model(bank_account_result)
-        row.add_imported_model(holder_result)
+            iban=iban).import_bank_account()
+        row.add_imported_model_result(account_result.instance)
 
-        return holder_result.imported_object
+        if not account_result.instance:
+            return None
 
-    @classmethod
-    def consolidate_family_holders(cls, family: Family):
-        if not family.custody_holder:
-            family.custody_holder = cls.get_last_custody_registration_holder(family)
-        if not family.after_school_holder:
-            family.after_school_holder = cls.get_last_after_school_registration_holder(family)
-        if not family.camps_holder:
-            family.camps_holder = cls.get_last_camps_registration_holder(family)
+        holder_result: ImportModelResult = HolderImporter(
+            parent=parent,
+            bank_account=account_result.instance).import_holder()
+        row.add_imported_model_result(holder_result.instance)
 
-        if not family.membership_holder:
-            family.membership_holder = family.get_default_holder()
-
-        if not family.custody_holder:
-            family.custody_holder = family.membership_holder
-        if not family.after_school_holder:
-            family.after_school_holder = family.membership_holder
-        if not family.camps_holder:
-            family.camps_holder = family.membership_holder
-
-    @classmethod
-    def get_last_custody_registration_holder(cls, family: Family):
-        registrations = CustodyRegistration.objects.of_family(family).order_by('-id')
-        if registrations.exists():
-            return registrations.last().holder
-        return None
-
-    @classmethod
-    def get_last_after_school_registration_holder(cls, family: Family):
-        registrations = AfterSchoolRegistration.objects.of_family(family).order_by('-id')
-        if registrations.exists():
-            return registrations.last().holder
-        return None
-
-    @classmethod
-    def get_last_camps_registration_holder(cls, family: Family):
-        registrations = CampsRegistration.objects.of_family(family).order_by('-id')
-        if registrations.exists():
-            return registrations.last().holder
-        return None
+        return holder_result.instance
 
     @classmethod
     def get_excel_columns(cls, columns_to_import):

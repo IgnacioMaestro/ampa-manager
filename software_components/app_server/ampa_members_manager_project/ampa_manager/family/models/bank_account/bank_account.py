@@ -49,3 +49,10 @@ class BankAccount(TimeStampedModel):
         except ValidationError:
             return False
         return True
+
+    @staticmethod
+    def find(iban):
+        try:
+            return BankAccount.objects.get(iban=iban)
+        except BankAccount.DoesNotExist:
+            return None

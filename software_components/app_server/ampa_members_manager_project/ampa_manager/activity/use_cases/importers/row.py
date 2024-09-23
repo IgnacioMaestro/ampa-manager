@@ -1,14 +1,14 @@
 from typing import Optional
 
 from ampa_manager.activity.use_cases.importers.column import Column
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 
 
 class Row:
     def __init__(self, row_index: int):
         self.row_index: int = row_index
         self.columns: dict[str, Column] = {}
-        self.imported_models: list[ImportModelResult] = []
+        self.imported_models_results: list[ImportModelResult] = []
         self.error: Optional[str] = None
 
     def set_error(self, error: str):
@@ -17,8 +17,8 @@ class Row:
     def add_value(self, key: str, column: Column):
         self.columns[key] = column
 
-    def add_imported_model(self, imported_model: ImportModelResult):
-        self.imported_models.append(imported_model)
+    def add_imported_model_result(self, result: ImportModelResult):
+        self.imported_models_results.append(result)
 
     def get_value(self, key: str):
         return self.columns[key].formatted_value
