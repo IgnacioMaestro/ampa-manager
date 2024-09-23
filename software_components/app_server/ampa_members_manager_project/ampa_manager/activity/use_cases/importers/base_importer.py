@@ -60,11 +60,11 @@ class BaseImporter:
         level = row.get_value(cls.KEY_CHILD_LEVEL)
         year_of_birth = row.get_value(cls.KEY_CHILD_YEAR_OF_BIRTH)
 
-        imported_model: ImportModelResult = ChildImporter.import_child(
+        imported_model: ImportModelResult = ChildImporter(
             family=family,
             name=name,
             level=level,
-            year_of_birth=year_of_birth)
+            year_of_birth=year_of_birth).import_child()
 
         row.add_imported_model(imported_model)
 
@@ -76,13 +76,13 @@ class BaseImporter:
         phone_number = row.get_value(cls.KEY_PARENT_PHONE_NUMBER)
         email = row.get_value(cls.KEY_PARENT_EMAIL)
 
-        imported_model: ImportModelResult = ParentImporter.import_parent(
+        imported_model: ImportModelResult = ParentImporter(
             family=family,
             name_and_surnames=name_and_surnames,
             phone_number=phone_number,
             additional_phone_number=None,
             email=email,
-            optional=True)
+            optional=True).import_parent()
 
         row.add_imported_model(imported_model)
 

@@ -67,13 +67,13 @@ class ChildImporter:
 
     def validate_fields(self) -> Optional[str]:
         if not self.family:
-            return 'Missing family'
+            return _('Missing family')
 
         if not self.name or not isinstance(self.name, str):
-            return _('Missing/Wrong name') + ' ({self.name})'
+            return _('Missing/Wrong name') + f' ({self.name})'
 
         if self.level is not None and not Level.is_valid(self.level):
-            return _('Wrong level') + ' ({self.level})'
+            return _('Wrong level') + f' ({self.level})'
 
         if self.year_of_birth is not None and not isinstance(self.year_of_birth, int):
             return _('Wrong year of birth') + f': ({self.year_of_birth})'

@@ -7,10 +7,18 @@ from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 class ParentImporter:
 
-    @staticmethod
-    def import_parent(family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
-                      email: str, optional=False) -> ImportModelResult:
-        result = ImportModelResult(Parent.__name__, [name_and_surnames, phone_number, additional_phone_number, email])
+    def __init__(self, family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
+                 email: str):
+        self.result = ImportModelResult(Parent.__name__)
+        self.family = family
+        self.name_and_surnames = name_and_surnames
+        self.phone_number = phone_number
+        self.additional_phone_number = additional_phone_number
+        self.email = email
+        self.parent = None
+
+    def import_parent(self) -> ImportModelResult:
+        error_message = self.validate_fields()
 
         if name_and_surnames or phone_number or additional_phone_number or email:
             fields_ok, error = ParentImporter.validate_fields(family,
@@ -44,16 +52,17 @@ class ParentImporter:
 
         return result
 
-    @staticmethod
-    def validate_fields(family, name_and_surnames, phone_number, additional_phone_number, email):
-        if not family:
-            return False, f'Missing family'
-        if not name_and_surnames or type(name_and_surnames) != str:
-            return False, f'Missing/Wrong name and surnames: {name_and_surnames} ({type(name_and_surnames)})'
-        if phone_number and type(phone_number) != str:
-            return False, f'Missing/Wrong phone number: {phone_number} ({type(phone_number)})'
-        if additional_phone_number and type(additional_phone_number) != str:
-            return False, f'Missing/Wrong additional phone number: {additional_phone_number} ({type(additional_phone_number)})'
-        if email and type(email) != str:
-            return False, f'Missing/Wrong email: {email} ({type(email)})'
+    def validate_fields(self) -> Optional[str]:
+        if not self.family:
+            return _('Missing family')
+
+        if not self.name_and_surnames or not isinstance(self.name_and_surnames, str):
+            return _('Missing/Wrong name and surnames') + f' ({self.name_and_surnames})'
+
+        if self.phone_number and type(self.phone_number) != str:
+            return False, f'Missing/Wrong phone number: {self.phone_number} ({type(self.phone_number)})'
+        if self.additional_phone_number and type(self.additional_phone_number) != str:
+            return False, f'Missing/Wrong additional phone number: {self.additional_phone_number} ({type(self.additional_phone_number)})'
+        if self.email and type(self.email) != str:
+            return False, f'Missing/Wrong email: {self.email} ({type(self.email)})'
         return True, None
