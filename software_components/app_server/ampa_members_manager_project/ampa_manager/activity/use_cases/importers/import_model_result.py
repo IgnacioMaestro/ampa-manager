@@ -14,7 +14,7 @@ class ImportModelResult:
     def __init__(self, class_name: str):
         self.class_name = class_name
         self.instance: Optional[Model] = None
-        self.state: int = self.NOT_PROCESSED
+        self.state: str = self.NOT_PROCESSED
         self.values_before: list = []
         self.values_after: list = []
         self.error_message: Optional[str] = None
