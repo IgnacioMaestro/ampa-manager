@@ -39,12 +39,14 @@ class Row:
         errors = []
         if self.error:
             errors.append(self.error)
-        for column_value in self.columns.values():
+        for column_key, column_value in self.columns.items():
             if column_value.error:
-                errors.append(column_value.error)
+                error = f'{column_key}: {column_value.error}'
+                errors.append(error)
         for imported_model_result in self.imported_models_results:
             if imported_model_result.error_message:
-                errors.append(imported_model_result.error_message)
+                error = f'{imported_model_result.model_verbose_name}: {imported_model_result.error_message}'
+                errors.append(error)
         return errors
 
     def get_warnings(self) -> [str]:

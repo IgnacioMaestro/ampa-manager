@@ -285,7 +285,7 @@ class MembersImporter:
 
     @staticmethod
     def import_membership(family, result: ImportRowResult):
-        membership_result = ImportModelResult(Membership.__name__, [])
+        membership_result = ImportModelResult(Membership, [])
 
         if Membership.is_member_family(family):
             membership_result.set_not_modified(Membership.get_membership(family))

@@ -7,7 +7,7 @@ from ampa_manager.family.models.family import Family
 class FamilyImporter:
 
     def __init__(self, family_email: str, family_surnames: str):
-        self.result = ImportModelResult(Family.__name__)
+        self.result = ImportModelResult(Family)
         self.family_email = family_email
         self.family_surnames = family_surnames
         self.family = None

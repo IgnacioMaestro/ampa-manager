@@ -8,7 +8,7 @@ from ampa_manager.family.models.parent import Parent
 class BankAccountImporter:
 
     def __init__(self, parent: Parent, iban: str):
-        self.result = ImportModelResult(BankAccount.__name__)
+        self.result = ImportModelResult(BankAccount)
         self.parent = parent
         self.iban = iban
         self.bank_account = None

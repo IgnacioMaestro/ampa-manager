@@ -11,7 +11,7 @@ from ampa_manager.family.models.child import Child
 class ChildImporter:
 
     def __init__(self, family, name: str, level: str, year_of_birth: int):
-        self.result = ImportModelResult(Child.__name__)
+        self.result = ImportModelResult(Child)
         self.family = family
         self.name = name
         self.level = level

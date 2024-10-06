@@ -11,8 +11,8 @@ class ImportModelResult:
     ERROR = 'ERROR'
     OMITTED = 'OMITTED'
 
-    def __init__(self, class_name: str):
-        self.class_name = class_name
+    def __init__(self, model: Model):
+        self.model = model
         self.instance: Optional[Model] = None
         self.state: str = self.NOT_PROCESSED
         self.values_before: list = []
@@ -56,3 +56,7 @@ class ImportModelResult:
     @property
     def error(self):
         return self.state in [self.ERROR]
+
+    @property
+    def model_verbose_name(self):
+        return self.model._meta.verbose_name

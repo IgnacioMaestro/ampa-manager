@@ -17,7 +17,7 @@ class CampsRegistrationImporter:
 
     @staticmethod
     def import_registration(camps_edition: CampsEdition, holder: Holder, child: Child) -> ImportModelResult:
-        result = ImportModelResult(CampsRegistration.__name__, [camps_edition, holder, child])
+        result = ImportModelResult(CampsRegistration, [camps_edition, holder, child])
 
         registration = CampsRegistrationImporter.find(camps_edition, child)
         if registration:

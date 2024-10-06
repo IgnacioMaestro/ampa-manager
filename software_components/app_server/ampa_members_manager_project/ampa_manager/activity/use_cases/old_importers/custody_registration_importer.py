@@ -12,7 +12,7 @@ from ampa_manager.family.models.holder.holder import Holder
 class CustodyRegistrationImporter:
 
     def __init__(self, edition: CustodyEdition, holder: Holder, child: Child, assisted_days: int):
-        self.result = ImportModelResult(CustodyRegistration.__name__)
+        self.result = ImportModelResult(CustodyRegistration)
         self.edition = edition
         self.holder = holder
         self.child = child

@@ -17,7 +17,7 @@ class AfterSchoolImporter:
 
     @staticmethod
     def import_after_school(name, create_if_not_exists) -> ImportModelResult:
-        result = ImportModelResult(AfterSchool.__name__, [name])
+        result = ImportModelResult(AfterSchool, [name])
 
         after_school = AfterSchoolImporter.find(name)
         if after_school:

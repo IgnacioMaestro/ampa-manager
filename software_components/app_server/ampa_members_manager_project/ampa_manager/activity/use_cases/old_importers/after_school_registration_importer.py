@@ -16,7 +16,7 @@ class AfterSchoolRegistrationImporter:
 
     @staticmethod
     def import_registration(after_school_edition: AfterSchoolRegistration, holder: Holder, child: Child) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolRegistration.__name__, [after_school_edition, holder, child])
+        result = ImportModelResult(AfterSchoolRegistration, [after_school_edition, holder, child])
 
         registration = AfterSchoolRegistrationImporter.find(after_school_edition, child)
         if registration:

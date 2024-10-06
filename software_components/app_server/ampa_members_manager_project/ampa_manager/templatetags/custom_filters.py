@@ -97,5 +97,5 @@ def row_columns_formatted_values_to_html(row: Row):
 def row_imported_models_to_html(row: Row):
     items = []
     for result in row.imported_models_results:
-        items.append(f'{result.class_name}: {result.state}<br/>')
+        items.append(f'{result.model_verbose_name}: {result.state}<br/>')
     return to_custom_list(items, '-')

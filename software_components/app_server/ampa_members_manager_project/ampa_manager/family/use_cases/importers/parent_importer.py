@@ -10,7 +10,7 @@ class ParentImporter:
 
     def __init__(self, family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
                  email: str):
-        self.result = ImportModelResult(Parent.__name__)
+        self.result = ImportModelResult(Parent)
         self.family = family
         self.name_and_surnames = name_and_surnames
         self.phone_number = phone_number

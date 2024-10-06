@@ -17,7 +17,7 @@ class CustodyEditionImporter:
 
     @staticmethod
     def import_custody_edition(academic_course: AcademicCourse, period: str, cycle: str) -> ImportModelResult:
-        result = ImportModelResult(CustodyEdition.__name__, [academic_course, period, cycle])
+        result = ImportModelResult(CustodyEdition, [academic_course, period, cycle])
 
         custody_edition = CustodyEditionImporter.find(academic_course, period, cycle)
         if custody_edition:

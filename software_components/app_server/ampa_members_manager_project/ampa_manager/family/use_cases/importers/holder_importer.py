@@ -9,7 +9,7 @@ from ampa_manager.family.models.parent import Parent
 class HolderImporter:
 
     def __init__(self, parent: Parent, bank_account: BankAccount):
-        self.result = ImportModelResult(Holder.__name__)
+        self.result = ImportModelResult(Holder)
         self.parent = parent
         self.bank_account = bank_account
         self.holder = None
