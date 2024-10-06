@@ -3,6 +3,8 @@ from typing import List
 from django import template
 from django.utils.safestring import mark_safe
 
+from ampa_manager.activity.use_cases.importers.column import Column
+from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 
 register = template.Library()
@@ -52,3 +54,48 @@ def generate_html_list_from_title_list(titled_list: TitledList, level=1, numbere
     html += f'</{list_tag}>'
 
     return mark_safe(html)
+
+
+@register.filter
+def to_unordered_list(items: list[str]):
+    if not isinstance(items, list):
+        return ''
+
+    list_items = ''.join(f'<li>{item}</li>' for item in items)
+    return mark_safe(f'<ul>{list_items}</ul>')
+
+
+@register.filter
+def to_custom_list(items: list[str], symbol: str):
+    if not isinstance(items, list):
+        return ''
+
+    custom_list = ''
+    for item in items:
+        custom_list = f'{symbol} {item}<br/>'
+
+    return mark_safe(custom_list)
+
+
+@register.filter
+def row_columns_raw_values_to_html(row: Row):
+    items = []
+    for column_key, column in row.columns.items():
+        items.append(f'{column_key}: {column.raw_value}<br/>')
+    return to_custom_list(items, '-')
+
+
+@register.filter
+def row_columns_formatted_values_to_html(row: Row):
+    items = []
+    for column_key, column in row.columns.items():
+        items.append(f'{column_key}: {column.formatted_value}<br/>')
+    return to_custom_list(items, '-')
+
+
+@register.filter
+def row_imported_models_to_html(row: Row):
+    items = []
+    for result in row.imported_models_results:
+        items.append(f'{result.class_name}: {result.state}<br/>')
+    return to_custom_list(items, '-')

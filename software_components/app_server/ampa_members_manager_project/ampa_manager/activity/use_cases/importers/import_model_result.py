@@ -4,12 +4,12 @@ from django.db.models import Model
 
 
 class ImportModelResult:
-    NOT_PROCESSED = 0
-    NOT_MODIFIED = 1
-    CREATED = 2
-    UPDATED = 3
-    ERROR = 4
-    OMITTED = 5
+    NOT_PROCESSED = 'NOT_PROCESSED'
+    NOT_MODIFIED = 'NOT_MODIFIED'
+    CREATED = 'CREATED'
+    UPDATED = 'UPDATED'
+    ERROR = 'ERROR'
+    OMITTED = 'OMITTED'
 
     def __init__(self, class_name: str):
         self.class_name = class_name

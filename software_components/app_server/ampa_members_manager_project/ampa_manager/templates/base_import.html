@@ -1,8 +1,46 @@
 {% extends 'admin/base_site.html' %}
+{% load custom_filters %}
 {% load i18n %}
 {% load static %}
 
 {% block title %}{{ importer_title }}{% endblock %}
+
+{% block extrahead %}
+
+    <style>
+        .main-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 2px dotted #79AEC8;
+            padding: 10px;
+        }
+        #rows_detected {
+            background-color: cadetblue;
+            padding: 5px
+        }
+        #rows_imported_ok {
+            background-color: green;
+            padding: 5px
+        }
+        #rows_imported_warning {
+            background-color: greenyellow;
+            padding: 5px
+        }
+        #rows_not_imported {
+            background-color: red;
+            padding: 5px;
+            color: white
+        }
+        #simulation {
+            background-color: #FDFA72;
+            padding: 10px
+        }
+        h2 {
+            font-size: 30px;
+        }
+    </style>
+
+{% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
@@ -15,8 +53,8 @@
     <h1>{{ importer_title }}</h1>
 
     {% block upload_form %}
-    <div id="upload_form">
-        <h2>{% trans 'Upload file' %}</h2>
+    <div id="upload_form" class="main-container">
+        <h2>{% trans 'Select file to import' %}</h2>
         <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -29,14 +67,14 @@
     {% endblock %}
 
     {% block results %}
-    <div id="results">
+    <div id="results" class="main-container">
         <h2>{% trans 'Results' %}</h2>
 
         {% if simulation %}
-            <div id="simulation" style="background-color: #66FF66; padding: 10px">
-                <h2>{% trans 'Warning: This has been a simulation of the import' %}</h2>
+            <div id="simulation">
+                <h3>{% trans 'Warning: This has been a simulation of the import' %}</h3>
                 <ul>
-                    <li>{% trans 'No change has been made' %}</li>
+                    <li>{% trans 'Nothing has been imported' %}</li>
                     <li>{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
                 </ul>
             </div>
@@ -44,36 +82,47 @@
 
         {% if result %}
             <div id="results_summary">
-                <h3>{% trans 'Resumen' %}</h3>
+                <h3>{% trans 'Summary' %}</h3>
                 <ul>
-                    <li>Estado: REVISAR</li>
-                    <li>Filas importadas correctamente: 100</li>
-                    <li>Filas no importadas: 0</li>
-                    <li>Filas importadas que habría que revisar: 2</li>
+                    <li>{% trans 'State' %}: {{ state }}</li>
+                    <li>{% trans 'Rows detected in the excel' %}: <span id="rows_detected">{{ result.rows_summary.detected }}</span></li>
+                    <li>{% trans 'Rows imported ok' %}: <span id="rows_imported_ok">{{ result.rows_summary.ok }}</span></li>
+                    <li>{% trans 'Rows imported with warnings' %}: <span id="rows_imported_warning">{{ result.rows_summary.warning }}</span></li>
+                    <li>{% trans 'Rows not imported' %}: <span id="rows_not_imported">{{ result.rows_summary.error }}</span></li>
                 </ul>
             </div>
             <div id="results_by_row">
-                <h3>{% trans 'Resultados por fila' %}</h3>
-                <table style="width: max-content">
+                <h3>{% trans 'Results by row' %}</h3>
+                <table style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Fila</th>
-                            <th>Datos excel</th>
-                            <th>Detalles</th>
-                            <th>Resultado</th>
+                            <th style="width: 4%; text-align: center">{% trans 'Row' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Excel' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Formatted' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Imported' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Details' %}</th>
+                            <th style="width: 6%; text-align: center">{% trans 'Result' %}</th>
                         </tr>
                     </thead>
                     <tbody>
     {% for row in result.rows %}
                         <tr>
-                            <td>{{ row.row_index }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td style="text-align: center">{{ row.row_index }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_columns_raw_values_to_html }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_columns_formatted_values_to_html }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_imported_models_to_html }}</td>
+                            <td style="text-align: left">
+                                <span title="{% trans 'Errors' %}" style="color: red">{{ row.get_errors | to_custom_list:"-" }}</span>
+                                <span title="{% trans 'Warnings' %}" style="color: orange">{{ row.get_warnings | to_custom_list:"-" }}</span>
+                            </td>
+                            <td style="text-align: center"></td>
                         </tr>
     {% empty %}
                         <tr>
-                            <td colspan="4">{% trans 'No hay resultados' %}</td>
+                            <td colspan="4">{% trans 'There are no results' %}</td>
                         </tr>
     {% endfor %}
                     </tbody>

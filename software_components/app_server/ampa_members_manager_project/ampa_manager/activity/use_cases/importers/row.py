@@ -27,7 +27,29 @@ class Row:
     def any_error(self) -> bool:
         if self.error:
             return True
-        for value in self.columns.values():
-            if value.error:
+        for column_value in self.columns.values():
+            if column_value.error:
+                return True
+        for imported_model_result in self.imported_models_results:
+            if imported_model_result.error:
                 return True
         return False
+
+    def get_errors(self) -> [str]:
+        errors = []
+        if self.error:
+            errors.append(self.error)
+        for column_value in self.columns.values():
+            if column_value.error:
+                errors.append(column_value.error)
+        for imported_model_result in self.imported_models_results:
+            if imported_model_result.error_message:
+                errors.append(imported_model_result.error_message)
+        return errors
+
+    def get_warnings(self) -> [str]:
+        warnings = []
+        for imported_model_result in self.imported_models_results:
+            if len(imported_model_result.warnings) > 0:
+                warnings.extend(imported_model_result.warnings)
+        return warnings

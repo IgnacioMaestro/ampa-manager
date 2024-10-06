@@ -93,7 +93,7 @@ class BaseImporter:
         account_result: ImportModelResult = BankAccountImporter(
             parent=parent,
             iban=iban).import_bank_account()
-        row.add_imported_model_result(account_result.instance)
+        row.add_imported_model_result(account_result)
 
         if not account_result.instance:
             return None
@@ -101,7 +101,7 @@ class BaseImporter:
         holder_result: ImportModelResult = HolderImporter(
             parent=parent,
             bank_account=account_result.instance).import_holder()
-        row.add_imported_model_result(holder_result.instance)
+        row.add_imported_model_result(holder_result)
 
         return holder_result.instance
 

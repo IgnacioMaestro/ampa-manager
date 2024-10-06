@@ -52,8 +52,14 @@ class ImportCustody(View):
             )
 
             context['result'] = {
-                'success': result.success,
-                'rows': result.rows
+                'rows': result.rows,
+                'state': result.state,
+                'rows_summary': {
+                    'detected': result.rows_detected,
+                    'ok': result.rows_ok,
+                    'warning': result.rows_warning,
+                    'error': result.rows_error
+                },
             }
 
         context['simulation'] = request.POST.get('simulation')
