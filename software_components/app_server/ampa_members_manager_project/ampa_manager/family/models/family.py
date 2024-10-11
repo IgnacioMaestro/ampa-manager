@@ -229,10 +229,10 @@ class Family(TimeStampedModel):
         return email in [self.email, self.secondary_email]
 
     @staticmethod
-    def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
+    def get_families_parents_emails(families: QuerySet[Family], parents_emails=True, family_emails=True) -> List[str]:
         emails = []
         for family in families:
-            emails.extend(family.get_emails())
+            emails.extend(family.get_emails(parents_emails, family_emails))
         return emails
 
     @staticmethod

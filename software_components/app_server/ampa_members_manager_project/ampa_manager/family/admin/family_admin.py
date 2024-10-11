@@ -151,9 +151,16 @@ class FamilyAdmin(admin.ModelAdmin):
                       'membership_holders_after': membership_holders_after}
         self.message_user(request=request, message=mark_safe(message))
 
-    @admin.action(description=gettext_lazy("Export emails to CSV"))
-    def export_emails(self, request, families: QuerySet[Family]):
+    @admin.action(description=gettext_lazy("Export family and parents emails to CSV"))
+    def export_all_emails(self, request, families: QuerySet[Family]):
         emails = Family.get_families_parents_emails(families)
+        emails_csv = ",".join(emails)
+        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
+        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+
+    @admin.action(description=gettext_lazy("Export only family emails to CSV"))
+    def export_family_emails(self, request, families: QuerySet[Family]):
+        emails = Family.get_families_parents_emails(families, parents_emails=False, family_emails=True)
         emails_csv = ",".join(emails)
         headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
         return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
@@ -350,4 +357,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [export_emails, make_members, undo_members, export_families_xls, complete_holders]
+    actions = [export_all_emails, export_family_emails, make_members, undo_members, export_families_xls, complete_holders]
