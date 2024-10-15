@@ -1,6 +1,7 @@
 from typing import Optional
 
 from django.db.models import Model
+from django.utils.translation import gettext_lazy as _
 
 
 class ImportModelResult:
@@ -10,6 +11,15 @@ class ImportModelResult:
     UPDATED = 'UPDATED'
     ERROR = 'ERROR'
     OMITTED = 'OMITTED'
+
+    STATES_LABELS = {
+        NOT_PROCESSED: _('Not processed'),
+        NOT_MODIFIED: _('Not modified'),
+        CREATED: _('Created'),
+        UPDATED: _('Updated'),
+        ERROR: _('Error'),
+        OMITTED: _('Omitted'),
+    }
 
     def __init__(self, model: Model):
         self.model = model
@@ -50,13 +60,21 @@ class ImportModelResult:
         self.warnings.append(warning)
 
     @property
-    def success(self):
+    def success(self) -> bool:
         return self.state not in [self.ERROR]
 
     @property
-    def error(self):
+    def error(self) -> bool:
         return self.state in [self.ERROR]
+
+    @property
+    def warning(self) -> bool:
+        return len(self.warnings) > 0
 
     @property
     def model_verbose_name(self):
         return self.model._meta.verbose_name
+
+    @property
+    def state_label(self):
+        return self.STATES_LABELS.get(self.state, self.state)

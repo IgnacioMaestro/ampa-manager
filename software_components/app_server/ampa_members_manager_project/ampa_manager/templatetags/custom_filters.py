@@ -3,7 +3,7 @@ from typing import List
 from django import template
 from django.utils.safestring import mark_safe
 
-from ampa_manager.activity.use_cases.importers.column import Column
+from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 
@@ -72,24 +72,33 @@ def to_custom_list(items: list[str], symbol: str):
 
     custom_list = ''
     for item in items:
-        custom_list = f'{symbol} {item}<br/>'
+        custom_list += f'{symbol} {item}<br/>'
 
     return mark_safe(custom_list)
 
 
 @register.filter
-def row_columns_raw_values_to_html(row: Row):
+def row_columns_raw_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
     items = []
     for column_key, column in row.columns.items():
-        items.append(f'{column_key}: {column.raw_value}<br/>')
+        raw_value = column.raw_value if column.raw_value else '-'
+        label = f'<span class="list_item_label">{ExcelColumn.get_column_short_label(excel_columns, column_key)}:</span>'
+        value = f'<span class="list_item_value"> {raw_value}</span>'
+        items.append(f'{label}{value}')
     return to_custom_list(items, '-')
 
 
 @register.filter
-def row_columns_formatted_values_to_html(row: Row):
+def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
     items = []
     for column_key, column in row.columns.items():
-        items.append(f'{column_key}: {column.formatted_value}<br/>')
+        formatted_value = column.formatted_value if column.formatted_value else '-'
+        label = f'<span class="list_item_label">{ExcelColumn.get_column_short_label(excel_columns, column_key)}:</span>'
+        if column.modified:
+            value = f'<span class="list_item_value_highlight"> {formatted_value}</span>'
+        else:
+            value = f'<span class="list_item_value"> {formatted_value}</span>'
+        items.append(f'{label}{value}')
     return to_custom_list(items, '-')
 
 
@@ -97,5 +106,28 @@ def row_columns_formatted_values_to_html(row: Row):
 def row_imported_models_to_html(row: Row):
     items = []
     for result in row.imported_models_results:
-        items.append(f'{result.model_verbose_name}: {result.state}<br/>')
+        if result.error:
+            status_style = 'list_item_status_error'
+        elif result.warning:
+            status_style = 'list_item_status_warning'
+        else:
+            status_style = 'list_item_status_success'
+
+        instance = str(result.instance) if result.instance else '-'
+        label = f'<span class="list_item_label">{result.model_verbose_name}:</span>'
+        value = f'<span class="list_item_value"> {instance}</span>'
+        value += f' (<span class="{status_style}">{result.state_label}</span>)'
+        items.append(f'{label}{value}')
     return to_custom_list(items, '-')
+
+
+@register.filter
+def row_state_to_html(row: Row):
+    if row.state == Row.STATE_ERROR:
+        status_style = 'row_state_error'
+    elif row.state == Row.STATE_WARNING:
+        status_style = 'row_state_warning'
+    else:
+        status_style = 'row_state_success'
+
+    return mark_safe(f'<span class="{status_style}">{row.state_label}</span>')

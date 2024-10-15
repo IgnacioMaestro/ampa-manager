@@ -1,15 +1,30 @@
 from typing import Optional
 
+from django.utils.translation import gettext_lazy as _
+
 from ampa_manager.activity.use_cases.importers.column import Column
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 
 
 class Row:
+    STATE_OK = 'ok'
+    STATE_WARNING = 'warning'
+    STATE_ERROR = 'error'
+
+    STATES_LABELS = {
+        STATE_OK: _('Ok'),
+        STATE_WARNING: _('Warning'),
+        STATE_ERROR: _('Error')
+    }
+
     def __init__(self, row_index: int):
         self.row_index: int = row_index
         self.columns: dict[str, Column] = {}
         self.imported_models_results: list[ImportModelResult] = []
         self.error: Optional[str] = None
+
+    def __str__(self) -> str:
+        return f'Index {self.row_index}, {len(self.columns)} columns, {len(self.imported_models_results)} models'
 
     def set_error(self, error: str):
         self.error = error
@@ -34,6 +49,25 @@ class Row:
             if imported_model_result.error:
                 return True
         return False
+
+    @property
+    def any_warning(self) -> bool:
+        for imported_model_result in self.imported_models_results:
+            if len(imported_model_result.warnings) > 0:
+                return True
+        return False
+
+    @property
+    def state(self) -> str:
+        if self.any_error:
+            return self.STATE_ERROR
+        if self.any_warning:
+            return self.STATE_WARNING
+        return self.STATE_OK
+
+    @property
+    def state_label(self) -> str:
+        return self.STATES_LABELS.get(self.state, self.state)
 
     def get_errors(self) -> [str]:
         errors = []

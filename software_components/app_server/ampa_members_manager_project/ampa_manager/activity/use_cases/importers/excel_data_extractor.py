@@ -21,11 +21,9 @@ class ExcelDataExtractor:
         for row_index in range(self.first_row_index, self.sheet.nrows):
             row = Row(row_index)
 
-            for column_settings in self.columns_to_extract:
-                col_index = column_settings[0]
-                formatter = column_settings[1]
-                key = column_settings[2]
-                row.add_value(key, self.get_column(row_index, col_index, formatter))
+            for excel_column in self.columns_to_extract:
+                row.add_value(
+                    excel_column.key, self.get_column(row_index, excel_column.index, excel_column.formatter))
 
             rows.append(row)
         return rows

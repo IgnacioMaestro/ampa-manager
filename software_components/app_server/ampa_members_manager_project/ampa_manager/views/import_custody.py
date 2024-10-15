@@ -31,7 +31,7 @@ class ImportCustody(View):
             'form': form,
             'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
-            'excel_columns': CustodyImporter.get_excel_columns(CustodyImporter.COLUMNS_TO_IMPORT),
+            'excel_columns': CustodyImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE
         }
 

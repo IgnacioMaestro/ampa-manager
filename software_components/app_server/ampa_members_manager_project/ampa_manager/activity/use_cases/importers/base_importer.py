@@ -41,6 +41,16 @@ class BaseImporter:
     LABEL_CHILD_LEVEL = _('Child level (ex. HH4, LH3)')
     LABEL_CHILD_YEAR_OF_BIRTH = _('Child year of birth (ex. 2015)')
 
+    SHORT_LABEL_FAMILY_EMAIL = _('Family email')
+    SHORT_LABEL_PARENT_NAME_AND_SURNAMES = _('Parent name')
+    SHORT_LABEL_PARENT_PHONE_NUMBER = _('Parent phone')
+    SHORT_LABEL_PARENT_EMAIL = _('Parent email')
+    SHORT_LABEL_BANK_ACCOUNT_IBAN = _('IBAN')
+    SHORT_LABEL_CHILD_NAME = _('Child name')
+    SHORT_LABEL_CHILD_SURNAMES = _('Child surnames')
+    SHORT_LABEL_CHILD_LEVEL = _('Child level')
+    SHORT_LABEL_CHILD_YEAR_OF_BIRTH = _('Child year')
+
     @classmethod
     def import_family(cls, row: Row) -> Optional[Family]:
         family_surnames = row.get_value(cls.KEY_FAMILY_SURNAMES)
@@ -104,13 +114,3 @@ class BaseImporter:
         row.add_imported_model_result(holder_result)
 
         return holder_result.instance
-
-    @classmethod
-    def get_excel_columns(cls, columns_to_import):
-        columns = []
-        for column in columns_to_import:
-            index = column[0]
-            letter = StringUtils.get_excel_column_letter(index).upper()
-            label = column[3]
-            columns.append([letter, label])
-        return columns

@@ -14,6 +14,54 @@
             border: 2px dotted #79AEC8;
             padding: 10px;
         }
+        .list_item_label {
+            color: #BBBBBB;
+            font-size: 0.65rem;
+        }
+        .list_item_value {
+            color: black;
+            font-size: 0.8125rem;
+        }
+        .list_item_value_highlight {
+            color: black;
+            background-color: lightgoldenrodyellow;
+            font-size: 0.8125rem;
+            font-weight: bold;
+        }
+        .list_item_status_error {
+            background-color: red;
+            padding: 2px;
+            color: white
+        }
+        .list_item_status_warning {
+            background-color: greenyellow;
+            padding: 2px;
+        }
+        .list_item_status_success {
+            padding: 2px;
+            color: black
+        }
+        .row_state_error {
+            text-transform: uppercase;
+            padding: 6px;
+            color: white;
+            background-color: red;
+            font-weight: bold;
+        }
+        .row_state_warning {
+            text-transform: uppercase;
+            padding: 6px;
+            color: black;
+            background-color: greenyellow;
+            font-weight: bold;
+        }
+        .row_state_success {
+            text-transform: uppercase;
+            padding: 6px;
+            color: black;
+            background-color: green;
+            font-weight: bold;
+        }
         #rows_detected {
             background-color: cadetblue;
             padding: 5px
@@ -99,8 +147,7 @@
                             <th style="width: 4%; text-align: center">{% trans 'Row' %}</th>
                             <th style="width: 22.5%; text-align: left">{% trans 'Excel' %}</th>
                             <th style="width: 22.5%; text-align: left">{% trans 'Formatted' %}</th>
-                            <th style="width: 22.5%; text-align: left">{% trans 'Imported' %}</th>
-                            <th style="width: 22.5%; text-align: left">{% trans 'Details' %}</th>
+                            <th style="width: 45%; text-align: left">{% trans 'Imported' %}</th>
                             <th style="width: 6%; text-align: center">{% trans 'Result' %}</th>
                         </tr>
                     </thead>
@@ -109,16 +156,16 @@
                         <tr>
                             <td style="text-align: center">{{ row.row_index }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
-                                {{ row | row_columns_raw_values_to_html }}</td>
+                                {{ row | row_columns_raw_values_to_html:excel_columns }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
-                                {{ row | row_columns_formatted_values_to_html }}</td>
+                                {{ row | row_columns_formatted_values_to_html:excel_columns }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
-                                {{ row | row_imported_models_to_html }}</td>
-                            <td style="text-align: left">
+                                {{ row | row_imported_models_to_html }}
+                                <br/>
                                 <span title="{% trans 'Errors' %}" style="color: red">{{ row.get_errors | to_custom_list:"-" }}</span>
                                 <span title="{% trans 'Warnings' %}" style="color: orange">{{ row.get_warnings | to_custom_list:"-" }}</span>
                             </td>
-                            <td style="text-align: center"></td>
+                            <td style="text-align: center">{{ row | row_state_to_html }}</td>
                         </tr>
     {% empty %}
                         <tr>
