@@ -56,9 +56,9 @@ class ImportCustody(View):
                 'state': result.state,
                 'rows_summary': {
                     'detected': result.rows_detected,
-                    'ok': result.rows_ok,
-                    'warning': result.rows_warning,
-                    'error': result.rows_error
+                    'imported_ok': result.rows_imported_ok,
+                    'imported_warning': result.rows_imported_warning,
+                    'not_imported': result.rows_not_imported
                 },
             }
 

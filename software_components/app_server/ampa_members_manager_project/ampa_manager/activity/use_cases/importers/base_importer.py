@@ -80,7 +80,7 @@ class BaseImporter:
         return result.instance
 
     @classmethod
-    def import_parent(cls, row: Row, family: Family) -> Optional[Parent]:
+    def import_parent(cls, row: Row, family: Family, compulsory: bool) -> Optional[Parent]:
         name_and_surnames = row.get_value(cls.KEY_PARENT_NAME_AND_SURNAMES)
         phone_number = row.get_value(cls.KEY_PARENT_PHONE_NUMBER)
         email = row.get_value(cls.KEY_PARENT_EMAIL)
@@ -90,7 +90,8 @@ class BaseImporter:
             name_and_surnames=name_and_surnames,
             phone_number=phone_number,
             additional_phone_number=None,
-            email=email).import_parent()
+            email=email,
+            compulsory=compulsory).import_parent()
 
         row.add_imported_model_result(result)
 

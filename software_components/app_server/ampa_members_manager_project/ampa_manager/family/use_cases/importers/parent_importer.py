@@ -9,16 +9,21 @@ from ampa_manager.family.models.parent import Parent
 class ParentImporter:
 
     def __init__(self, family, name_and_surnames: str, phone_number: str, additional_phone_number: Optional[str],
-                 email: str):
+                 email: str, compulsory: bool):
         self.result = ImportModelResult(Parent)
         self.family = family
         self.name_and_surnames = name_and_surnames
         self.phone_number = phone_number
         self.additional_phone_number = additional_phone_number
         self.email = email
+        self.compulsory = compulsory
         self.parent = None
 
     def import_parent(self) -> ImportModelResult:
+        if not self.compulsory and self.all_parent_fields_are_empty():
+            self.result.set_omitted()
+            return self.result
+
         error_message = self.validate_fields()
 
         if error_message is None:
@@ -31,6 +36,9 @@ class ParentImporter:
             self.result.set_error(error_message)
 
         return self.result
+
+    def all_parent_fields_are_empty(self):
+        return not self.name_and_surnames and not self.phone_number and not self.additional_phone_number and not self.email
 
     def manage_not_found_parent(self):
         parent = Parent.objects.create(name_and_surnames=self.name_and_surnames,
@@ -79,5 +87,6 @@ class ParentImporter:
 
     def parent_is_modified(self):
         return ((self.phone_number and self.phone_number != self.parent.phone_number) or
-                (self.additional_phone_number and self.additional_phone_number != self.parent.additional_phone_number) or
+                (
+                        self.additional_phone_number and self.additional_phone_number != self.parent.additional_phone_number) or
                 (self.email and not self.email != self.parent.email))

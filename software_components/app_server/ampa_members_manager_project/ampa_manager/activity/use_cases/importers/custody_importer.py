@@ -85,7 +85,7 @@ class CustodyImporter(BaseImporter):
             if not child:
                 return
 
-            parent: Parent = self.import_parent(row, family)
+            parent: Parent = self.import_parent(row, family, False)
             if row.any_error:
                 return
 

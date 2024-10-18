@@ -29,6 +29,7 @@ class ImportModelResult:
         self.values_after: list = []
         self.error_message: Optional[str] = None
         self.warnings: list = []
+        self.minor_warnings: list = []
 
     def set_not_modified(self, instance):
         self.instance = instance
@@ -56,8 +57,11 @@ class ImportModelResult:
         if warning:
             self.add_warning(warning)
 
-    def add_warning(self, warning):
-        self.warnings.append(warning)
+    def add_warning(self, warning, minor: bool = False):
+        if minor:
+            self.minor_warnings.append(warning)
+        else:
+            self.warnings.append(warning)
 
     @property
     def success(self) -> bool:
@@ -78,3 +82,9 @@ class ImportModelResult:
     @property
     def state_label(self):
         return self.STATES_LABELS.get(self.state, self.state)
+
+    @property
+    def instance_url(self):
+        if self.instance:
+            return self.instance.get_absolute_url()
+        return None

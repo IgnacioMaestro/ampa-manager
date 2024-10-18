@@ -11,8 +11,9 @@
         .main-container {
             margin-top: 20px;
             margin-bottom: 20px;
-            border: 2px dotted #79AEC8;
-            padding: 10px;
+            border: 3px dotted #79AEC8;
+            border-radius: 15px;
+            padding: 10px 15px;
         }
         .list_item_label {
             color: #BBBBBB;
@@ -28,18 +29,45 @@
             font-size: 0.8125rem;
             font-weight: bold;
         }
-        .list_item_status_error {
-            background-color: red;
-            padding: 2px;
+        .imported_model_status_not_processed {
+            background-color: greenyellow;
+            padding: 2px 2px;
+            color: darkslategrey;
+        }
+        .imported_model_status_not_modified {
+            background-color: lightgray;
+            padding: 2px 2px;
+            color: darkslategrey;
+        }
+        .imported_model_status_created {
+            background-color: blueviolet;
+            padding: 2px 2px;
             color: white
         }
-        .list_item_status_warning {
-            background-color: greenyellow;
-            padding: 2px;
+        .imported_model_status_updated {
+            background-color: orange;
+            padding: 2px 2px;
+            color: black;
         }
-        .list_item_status_success {
-            padding: 2px;
-            color: black
+        .imported_model_status_error {
+            background-color: red;
+            padding: 2px 2px;
+            color: lightgray;
+        }
+        .imported_model_status_omitted {
+            background-color: lightgray;
+            padding: 2px 2px;
+            color: darkslategrey;
+        }
+        .imported_model_error {
+            background-color: red;
+            padding: 1px;
+            color: lightgray;
+        }
+        .imported_model_warning {
+            background-color: greenyellow;
+            padding: 1px;
+            color: black;
         }
         .row_state_error {
             text-transform: uppercase;
@@ -81,10 +109,14 @@
         }
         #simulation {
             background-color: #FDFA72;
-            padding: 10px
+            padding: 15px;
+            border-radius: 15px;
+        }
+        h1 {
+            font-size: 35px;
         }
         h2 {
-            font-size: 30px;
+            font-size: 25px;
         }
     </style>
 
@@ -128,15 +160,15 @@
             </div>
         {% endif %}
 
-        {% if result %}
+    {% if result %}
             <div id="results_summary">
                 <h3>{% trans 'Summary' %}</h3>
                 <ul>
-                    <li>{% trans 'State' %}: {{ state }}</li>
+                    <li>{% trans 'State' %}: {{ result.state }}</li>
                     <li>{% trans 'Rows detected in the excel' %}: <span id="rows_detected">{{ result.rows_summary.detected }}</span></li>
-                    <li>{% trans 'Rows imported ok' %}: <span id="rows_imported_ok">{{ result.rows_summary.ok }}</span></li>
-                    <li>{% trans 'Rows imported with warnings' %}: <span id="rows_imported_warning">{{ result.rows_summary.warning }}</span></li>
-                    <li>{% trans 'Rows not imported' %}: <span id="rows_not_imported">{{ result.rows_summary.error }}</span></li>
+                    <li>{% trans 'Rows imported ok' %}: <span id="rows_imported_ok">{{ result.rows_summary.imported_ok }}</span></li>
+                    <li>{% trans 'Rows imported with warnings' %}: <span id="rows_imported_warning">{{ result.rows_summary.imported_warning }}</span></li>
+                    <li>{% trans 'Rows not imported' %}: <span id="rows_not_imported">{{ result.rows_summary.not_imported }}</span></li>
                 </ul>
             </div>
             <div id="results_by_row">
@@ -152,7 +184,7 @@
                         </tr>
                     </thead>
                     <tbody>
-    {% for row in result.rows %}
+        {% for row in result.rows %}
                         <tr>
                             <td style="text-align: center">{{ row.row_index }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
@@ -161,17 +193,14 @@
                                 {{ row | row_columns_formatted_values_to_html:excel_columns }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
                                 {{ row | row_imported_models_to_html }}
-                                <br/>
-                                <span title="{% trans 'Errors' %}" style="color: red">{{ row.get_errors | to_custom_list:"-" }}</span>
-                                <span title="{% trans 'Warnings' %}" style="color: orange">{{ row.get_warnings | to_custom_list:"-" }}</span>
                             </td>
                             <td style="text-align: center">{{ row | row_state_to_html }}</td>
                         </tr>
-    {% empty %}
+        {% empty %}
                         <tr>
                             <td colspan="4">{% trans 'There are no results' %}</td>
                         </tr>
-    {% endfor %}
+        {% endfor %}
                     </tbody>
                 </table>
         </div>

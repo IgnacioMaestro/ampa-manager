@@ -2,10 +2,16 @@ from typing import List
 
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
+from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
+from ampa_manager.family.models.child import Child
 
 register = template.Library()
 
@@ -85,7 +91,7 @@ def row_columns_raw_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
         label = f'<span class="list_item_label">{ExcelColumn.get_column_short_label(excel_columns, column_key)}:</span>'
         value = f'<span class="list_item_value"> {raw_value}</span>'
         items.append(f'{label}{value}')
-    return to_custom_list(items, '-')
+    return to_custom_list(items, '·')
 
 
 @register.filter
@@ -99,26 +105,41 @@ def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColu
         else:
             value = f'<span class="list_item_value"> {formatted_value}</span>'
         items.append(f'{label}{value}')
-    return to_custom_list(items, '-')
+    return to_custom_list(items, '·')
+
+
+def get_instance_details(result: ImportModelResult) -> str:
+    if result.instance:
+        if result.model == CustodyRegistration:
+            return f'{result.instance.holder}, {result.instance.assisted_days} ' + _('assisted days')
+        elif result.model == CampsRegistration:
+            return f'{result.instance.holder}'
+        elif result.model == AfterSchoolRegistration:
+            return f'{result.instance.holder}'
+        elif result.model == Child:
+            return f'{result.instance.name} {str(result.instance.family.surnames)}, {result.instance.level}'
+        else:
+            return str(result.instance)
+    else:
+        return '-'
 
 
 @register.filter
 def row_imported_models_to_html(row: Row):
     items = []
     for result in row.imported_models_results:
-        if result.error:
-            status_style = 'list_item_status_error'
-        elif result.warning:
-            status_style = 'list_item_status_warning'
-        else:
-            status_style = 'list_item_status_success'
-
-        instance = str(result.instance) if result.instance else '-'
         label = f'<span class="list_item_label">{result.model_verbose_name}:</span>'
-        value = f'<span class="list_item_value"> {instance}</span>'
-        value += f' (<span class="{status_style}">{result.state_label}</span>)'
+        value = f'<span class="list_item_value"> {get_instance_details(result)}</span>'
+        value += f' <span class="imported_model_status_{result.state.lower()}">{result.state_label}</span>'
+        if result.error_message:
+            value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_error">({result.error_message})</span>'
+        for warning_message in result.warnings:
+            value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_warning">({warning_message})</span>'
+        if result.state != ImportModelResult.NOT_MODIFIED:
+            for warning_message in result.minor_warnings:
+                value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_warning">({warning_message})</span>'
         items.append(f'{label}{value}')
-    return to_custom_list(items, '-')
+    return to_custom_list(items, '·')
 
 
 @register.filter

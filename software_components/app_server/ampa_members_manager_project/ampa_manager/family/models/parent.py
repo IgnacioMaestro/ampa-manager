@@ -7,7 +7,6 @@ from django_extensions.db.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
-from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
@@ -29,7 +28,7 @@ class Parent(TimeStampedModel):
         db_table = 'parent'
 
     def __str__(self) -> str:
-        return f'{self.full_name} ({self.id})'
+        return f'{self.full_name}'
 
     def save(self, *args, **kwargs):
         self.normalize_fields()

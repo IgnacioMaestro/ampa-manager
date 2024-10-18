@@ -60,7 +60,7 @@ class Family(TimeStampedModel):
         children_names = self.children_names
         if not children_names or children_names == '':
             children_names = _('No children')
-        return f'{self.surnames}: {self.parents_names} ({children_names}) {self.id}'
+        return f'{self.surnames}: {self.parents_names} ({children_names})'
 
     def save(self, *args, **kwargs):
         self.normalize_fields()

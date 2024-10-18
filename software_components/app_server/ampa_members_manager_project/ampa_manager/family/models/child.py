@@ -31,7 +31,7 @@ class Child(TimeStampedModel):
             models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'), ]
 
     def __str__(self) -> str:
-        return f'{self.full_name} ({self.level})'
+        return f'{self.name} {str(self.family)} ({self.level})'
 
     def save(self, *args, **kwargs):
         self.normalize_fields()

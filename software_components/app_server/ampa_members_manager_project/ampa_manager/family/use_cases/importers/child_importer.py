@@ -11,7 +11,7 @@ from ampa_manager.family.models.child import Child
 class ChildImporter:
 
     def __init__(self, family, name: str, level: str, year_of_birth: int):
-        self.result = ImportModelResult(Child)
+        self.result: ImportModelResult = ImportModelResult(Child)
         self.family = family
         self.name = name
         self.level = level
@@ -80,7 +80,7 @@ class ChildImporter:
             self.year_of_birth = current_course.initial_year - Level.get_age_by_level(self.level)
 
             if self.year_of_birth:
-                self.result.add_warning(_('Year of birth calculated') + f' ({self.level} -> {self.year_of_birth})')
+                self.result.add_warning(_('Year of birth calculated') + f' ({self.level} -> {self.year_of_birth})', minor=True)
             else:
                 return _('Unable to calculate year of birth')
 
@@ -90,7 +90,7 @@ class ChildImporter:
             self.level = Level.get_level_by_age(age)
 
             if self.level:
-                self.result.add_warning(_('Level calculated') + f' ({self.year_of_birth} -> {self.level})')
+                self.result.add_warning(_('Level calculated') + f' ({self.year_of_birth} -> {self.level})', minor=True)
             else:
                 return _('Unable to calculate level')
 
