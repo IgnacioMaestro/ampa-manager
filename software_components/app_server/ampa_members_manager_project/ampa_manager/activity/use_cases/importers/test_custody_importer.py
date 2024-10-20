@@ -20,4 +20,4 @@ class TestCustodyImporter(TestCase):
         excel_content = open(self.EXCEL_FILE_PATH, 'rb').read()
 
         # Act
-        result = CustodyImporter(excel_content, edition).import_custody()
+        result = CustodyImporter(excel_content, edition).run()

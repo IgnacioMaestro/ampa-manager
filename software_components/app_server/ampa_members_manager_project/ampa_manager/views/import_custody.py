@@ -55,8 +55,8 @@ class ImportCustody(View):
                 'rows': result.rows,
                 'state': result.state,
                 'rows_summary': {
-                    'with_data': result.rows_detected,
-                    'without_data': result.rows_omitted,
+                    'with_data': result.rows_with_data,
+                    'without_data': result.rows_without_data,
                     'imported_ok': result.rows_imported_ok,
                     'imported_warning': result.rows_imported_warning,
                     'not_imported': result.rows_not_imported,
@@ -72,7 +72,7 @@ class ImportCustody(View):
         try:
             with transaction.atomic():
                 edition = CustodyEdition.objects.get(id=edition_id)
-                result = CustodyImporter(excel_content, edition).import_custody()
+                result = CustodyImporter(excel_content, edition).run()
 
                 if simulation:
                     raise SimulationException()

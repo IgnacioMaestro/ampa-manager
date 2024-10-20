@@ -29,6 +29,22 @@
             font-size: 0.8125rem;
             font-weight: bold;
         }
+        .formatted_column_value_error {
+            color: white;
+            background-color: red;
+            font-size: 0.8125rem;
+            font-weight: bold;
+        }
+        .formatted_column_value_warning {
+            color: black;
+            background-color: lightgoldenrodyellow;
+            font-size: 0.8125rem;
+            font-weight: bold;
+        }
+        .formatted_column_value {
+            color: black;
+            font-size: 0.8125rem;
+        }
         .imported_model_status_not_processed {
             background-color: greenyellow;
             padding: 2px 2px;
@@ -69,6 +85,11 @@
             padding: 1px;
             color: black;
         }
+        .imported_model_changed_field {
+            background-color: greenyellow;
+            padding: 1px;
+            color: black;
+        }
         .row_state_error {
             text-transform: uppercase;
             padding: 6px;
@@ -101,22 +122,32 @@
             background-color: cadetblue;
             padding: 5px
         }
+        #all_rows {
+            background-color: darkslategrey;
+            color: white;
+            padding: 15px
+        }
         #rows_imported_ok {
             background-color: green;
-            padding: 5px
+            color: white;
+            padding: 15px
+        }
+        #rows_count {
+            font-weight: bold;
+            font-size: 30px;
         }
         #rows_imported_warning {
             background-color: greenyellow;
-            padding: 5px
+            padding: 15px
         }
         #rows_not_imported {
             background-color: red;
-            padding: 5px;
+            padding: 15px;
             color: white
         }
         #rows_omitted {
             background-color: lightgray;
-            padding: 5px
+            padding: 15px
         }
         #simulation {
             background-color: #FDFA72;
@@ -142,6 +173,20 @@
             font-size: 20px;
         }
     </style>
+
+    <script>
+      function showRowsByClass(className) {
+        var allRows = document.querySelectorAll('table tr');
+
+        allRows.forEach(function(row) {
+          if (row.classList.contains(className)) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+    </script>
 
 {% endblock %}
 
@@ -185,26 +230,14 @@
         {% endif %}
 
     {% if result %}
-            <div id="results_summary">
-                <h3>{% trans 'Summary' %}</h3>
-                <br/>
-                <ul>
-                    <li>{% trans 'State' %}: {{ result.state | import_state_to_html }}</li>
-                    <li>{% trans 'Rows detected' %}:
-                        <span id="rows_detected">{{ result.rows_summary.with_data }} {% trans 'with data' %}</span>,
-                        <span id="rows_omitted">{{ result.rows_summary.without_data }} {% trans 'without data' %}</span>
-                    </li>
-                    <li>{% trans 'Rows imported' %}:
-                        <span id="rows_imported_ok">{{ result.rows_summary.imported_ok }} {% trans 'success' %}</span>,
-                        <span id="rows_imported_warning">{{ result.rows_summary.imported_warning }} {% trans 'with warnings' %}</span>
-                    </li>
-                    <li>{% trans 'Rows NOT imported' %}:
-                        <span id="rows_not_imported">{{ result.rows_summary.not_imported }}</span>
-                    </li>
-                </ul>
-            </div>
             <div id="results_by_row">
                 <h3>{% trans 'Results by row' %}</h3>
+                <a href="javascript:showRowsByClass('all')"><span id="all_rows">{% trans 'Show all rows' %}</span></a> &nbsp;
+                <a href="javascript:showRowsByClass('ok')"><span id="rows_imported_ok">{% trans 'Imported Ok' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_ok }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('warning')"><span id="rows_imported_warning">{% trans 'Imported warning' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_warning }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('error')"><span id="rows_not_imported">{% trans 'Not imported' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.not_imported }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('omitted')"><span id="rows_omitted">{% trans 'Omitted' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.without_data }}</span></span></a> &nbsp;
+                <br/><br/>
                 <table style="width: 100%;">
                     <thead>
                         <tr>
@@ -217,7 +250,7 @@
                     </thead>
                     <tbody>
         {% for row in result.rows %}
-                        <tr>
+                        <tr class="all {{ row.state }}">
                             <td style="text-align: center">{{ row.row_number }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
                                 {{ row | row_columns_raw_values_to_html:excel_columns }}</td>

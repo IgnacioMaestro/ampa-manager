@@ -88,23 +88,29 @@ def row_columns_raw_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
     items = []
     for column_key, column in row.columns.items():
         raw_value = column.raw_value if column.raw_value else '-'
-        label = f'<span class="list_item_label">{ExcelColumn.get_column_short_label(excel_columns, column_key)}:</span>'
-        value = f'<span class="list_item_value"> {raw_value}</span>'
-        items.append(f'{label}{value}')
+        label = generate_span('list_item_label', ExcelColumn.get_column_short_label(excel_columns, column_key))
+        value = generate_span('list_item_value', raw_value)
+        items.append(f'{label} {value}')
     return to_custom_list(items, '·')
 
 
 @register.filter
 def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
     items = []
+    new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
+
     for column_key, column in row.columns.items():
         formatted_value = column.formatted_value if column.formatted_value else '-'
-        label = f'<span class="list_item_label">{ExcelColumn.get_column_short_label(excel_columns, column_key)}:</span>'
-        if column.modified:
-            value = f'<span class="list_item_value_highlight"> {formatted_value}</span>'
+        label = generate_span('list_item_label', ExcelColumn.get_column_short_label(excel_columns, column_key))
+
+        if column.error:
+            value = generate_span('formatted_column_value_error', formatted_value)
+            value += new_line_tab_hyphen + generate_span('formatted_column_value_error', column.error)
+        elif column.modified:
+            value = generate_span('formatted_column_value_warning', formatted_value)
         else:
-            value = f'<span class="list_item_value"> {formatted_value}</span>'
-        items.append(f'{label}{value}')
+            value = generate_span('formatted_column_value', formatted_value)
+        items.append(f'{label} {value}')
     return to_custom_list(items, '·')
 
 
@@ -127,19 +133,42 @@ def get_instance_details(result: ImportModelResult) -> str:
 @register.filter
 def row_imported_models_to_html(row: Row):
     items = []
+    new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
+
     for result in row.imported_models_results:
-        label = f'<span class="list_item_label">{result.model_verbose_name}:</span>'
-        value = f'<span class="list_item_value"> {get_instance_details(result)}</span>'
-        value += f' <span class="imported_model_status_{result.state.lower()}">{result.state_label}</span>'
+        result_details = ''
+        result_details += generate_span('list_item_label', result.model_verbose_name)
+        result_details += ' ' + generate_span('list_item_value', get_instance_details(result))
+        result_details += ' ' + generate_span(f'imported_model_status_{result.state.lower()}', result.state_label)
+
+        # CHANGED FIELDS
+        if result.state == ImportModelResult.UPDATED:
+            for i in range(len(result.values_before)):
+                value_before = result.values_before[i]
+                value_after = result.values_after[i]
+                if value_before != value_after:
+                    result_details += new_line_tab_hyphen + generate_span('imported_model_changed_field', f'{value_before} -> {value_after}')
+
+        # ERROR
         if result.error_message:
-            value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_error">({result.error_message})</span>'
+            result_details += new_line_tab_hyphen + generate_span('imported_model_error', result.error_message)
+
+        # WARNINGS
         for warning_message in result.warnings:
-            value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_warning">({warning_message})</span>'
+            result_details += new_line_tab_hyphen + generate_span('imported_model_warning', warning_message)
+
+        # MINOR WARNINGS
         if result.state != ImportModelResult.NOT_MODIFIED:
             for warning_message in result.minor_warnings:
-                value += f'<br/>&nbsp;&nbsp; - <span class="imported_model_warning">({warning_message})</span>'
-        items.append(f'{label}{value}')
+                result_details += new_line_tab_hyphen + generate_span('imported_model_warning', warning_message)
+
+        items.append(result_details)
+
     return to_custom_list(items, '·')
+
+
+def generate_span(class_name: str, content: str) -> str:
+    return f'<span class="{class_name}">{content}</span>'
 
 
 @register.filter
@@ -153,7 +182,7 @@ def row_state_to_html(row: Row):
     else:
         status_style = 'row_state_ok'
 
-    return mark_safe(f'<span class="{status_style}">{row.state_label}</span>')
+    return mark_safe(generate_span(status_style, row.state_label))
 
 
 @register.filter
@@ -165,4 +194,4 @@ def import_state_to_html(state: str):
     else:
         status_style = 'row_state_ok'
 
-    return mark_safe(f'<span class="{status_style}">{state.upper()}</span>')
+    return mark_safe(generate_span(status_style, state.upper()))

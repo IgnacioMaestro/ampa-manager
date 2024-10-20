@@ -58,21 +58,20 @@ class CustodyImporter(BaseImporter):
                     LABEL_ASSISTED_DAYS, SHORT_LABEL_ASSISTED_DAYS),
     ]
 
-    def __init__(self, excel_content, custody_edition: CustodyEdition):
-        self.excel_content = excel_content
-        self.custody_edition = custody_edition
-        self.rows = self.import_custody()
+    def __init__(self, excel_content: bytes, custody_edition: CustodyEdition):
+        self.excel_content: bytes = excel_content
+        self.custody_edition: CustodyEdition = custody_edition
 
-    def import_custody(self) -> ImportExcelResult:
+    def run(self) -> ImportExcelResult:
         rows: list[Row] = ExcelDataExtractor(
             self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
 
         for row in rows:
-            self.import_row(row)
+            self.process_row(row)
 
         return ImportExcelResult(rows)
 
-    def import_row(self, row: Row):
+    def process_row(self, row: Row):
         if row.any_error or row.is_empty:
             return
 

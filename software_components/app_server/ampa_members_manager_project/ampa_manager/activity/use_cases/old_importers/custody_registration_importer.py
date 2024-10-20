@@ -66,7 +66,7 @@ class CustodyRegistrationImporter:
         if not self.child:
             return _('Missing child')
 
-        if self.assisted_days is None or not isinstance(self.assisted_days, int):
+        if self.assisted_days is None or not isinstance(self.assisted_days, int) or self.assisted_days <= 0:
             return _('Wrong assisted days') + f': ({self.assisted_days})'
 
         return None
