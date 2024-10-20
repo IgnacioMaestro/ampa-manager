@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 19:46+0200\n"
+"POT-Creation-Date: 2024-10-20 13:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:28
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:111
-#: .\ampa_manager\templates\base_import.html:165
+#: .\ampa_manager\templates\base_import.html:189
 msgid "Summary"
 msgstr "Resumen"
 
@@ -814,19 +814,20 @@ msgid "Updated"
 msgstr "Actualizado"
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:20
-#: .\ampa_manager\activity\use_cases\importers\row.py:17
+#: .\ampa_manager\activity\use_cases\importers\row.py:18
 msgid "Error"
 msgstr "Error"
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:21
+#: .\ampa_manager\activity\use_cases\importers\row.py:19
 msgid "Omitted"
 msgstr "Omitido"
 
-#: .\ampa_manager\activity\use_cases\importers\row.py:15
+#: .\ampa_manager\activity\use_cases\importers\row.py:16
 msgid "Ok"
 msgstr "Ok"
 
-#: .\ampa_manager\activity\use_cases\importers\row.py:16
+#: .\ampa_manager\activity\use_cases\importers\row.py:17
 msgid "Warning"
 msgstr "Aviso"
 
@@ -887,7 +888,6 @@ msgid "Rows imported successfully"
 msgstr "Filas importadas correctamente"
 
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:118
-#: .\ampa_manager\templates\base_import.html:171
 msgid "Rows not imported"
 msgstr "Filas no importadas"
 
@@ -897,7 +897,7 @@ msgstr "Errores"
 
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:123
 #: .\ampa_manager\importation\models\custody_importation_row.py:13
-#: .\ampa_manager\templates\base_import.html:179
+#: .\ampa_manager\templates\base_import.html:211
 msgid "Row"
 msgstr "Fila"
 
@@ -1003,7 +1003,7 @@ msgstr "Total (€)"
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:16
 #: .\ampa_manager\charge\models\membership_receipt.py:18
 #: .\ampa_manager\family\models\holder\holder.py:32
-#: .\ampa_manager\templates\base_import.html:167
+#: .\ampa_manager\templates\base_import.html:192
 msgid "State"
 msgstr "Estado"
 
@@ -1963,7 +1963,7 @@ msgstr "Importaciones"
 msgid "Parent import data"
 msgstr "Datos del padre a importar"
 
-#: .\ampa_manager\templates\base_import.html:127
+#: .\ampa_manager\templates\base_import.html:150
 #: .\ampa_manager\templates\check_family_email.html:32
 #: .\ampa_manager\templates\check_members.html:9
 #: .\ampa_manager\templates\import_after_schools_activities.html:10
@@ -1976,11 +1976,11 @@ msgstr "Datos del padre a importar"
 msgid "Home"
 msgstr "Inicio"
 
-#: .\ampa_manager\templates\base_import.html:137
+#: .\ampa_manager\templates\base_import.html:160
 msgid "Select file to import"
 msgstr "Selecciona el fichero a importar"
 
-#: .\ampa_manager\templates\base_import.html:141
+#: .\ampa_manager\templates\base_import.html:164
 #: .\ampa_manager\templates\import_after_schools_activities.html:22
 #: .\ampa_manager\templates\import_after_schools_registrations.html:22
 #: .\ampa_manager\templates\import_camps.html:22
@@ -1990,7 +1990,7 @@ msgstr "Selecciona el fichero a importar"
 msgid "Import file"
 msgstr "Importar fichero"
 
-#: .\ampa_manager\templates\base_import.html:151
+#: .\ampa_manager\templates\base_import.html:174
 #: .\ampa_manager\templates\import_after_schools_activities.html:46
 #: .\ampa_manager\templates\import_after_schools_registrations.html:46
 #: .\ampa_manager\templates\import_camps.html:46
@@ -2000,16 +2000,15 @@ msgstr "Importar fichero"
 msgid "Results"
 msgstr "Resultados"
 
-#: .\ampa_manager\templates\base_import.html:155
-#: .\ampa_manager\templates\import_camps.html:48
-msgid "Warning: This has been a simulation of the import"
-msgstr "Aviso: Esto ha sido una simulación de la importación"
+#: .\ampa_manager\templates\base_import.html:178
+msgid "Warning: This has been a test of the import"
+msgstr "Aviso: Esto ha sido una prueba de la importación"
 
-#: .\ampa_manager\templates\base_import.html:157
+#: .\ampa_manager\templates\base_import.html:180
 msgid "Nothing has been imported"
 msgstr "No se ha importado nada"
 
-#: .\ampa_manager\templates\base_import.html:158
+#: .\ampa_manager\templates\base_import.html:181
 #: .\ampa_manager\templates\import_camps.html:51
 msgid ""
 "If the results are ok, import the file again disabling the \"SIMULATION\" "
@@ -2018,39 +2017,55 @@ msgstr ""
 "Si los resultados son correctos, importa de nuevo el fichero desmarcando la "
 "opción \"SIMULACIÓN\""
 
-#: .\ampa_manager\templates\base_import.html:168
-msgid "Rows detected in the excel"
-msgstr "Filas detectadas en el fichero Excel"
+#: .\ampa_manager\templates\base_import.html:193
+msgid "Rows detected"
+msgstr "Filas detectadas"
 
-#: .\ampa_manager\templates\base_import.html:169
-msgid "Rows imported ok"
-msgstr "Filas importadas correctamente"
+#: .\ampa_manager\templates\base_import.html:194
+msgid "with data"
+msgstr "con datos"
 
-#: .\ampa_manager\templates\base_import.html:170
-msgid "Rows imported with warnings"
-msgstr "Filas importadas con avisos"
+#: .\ampa_manager\templates\base_import.html:195
+msgid "without data"
+msgstr "sin datos"
 
-#: .\ampa_manager\templates\base_import.html:175
+#: .\ampa_manager\templates\base_import.html:197
+msgid "Rows imported"
+msgstr "Filas importadas"
+
+#: .\ampa_manager\templates\base_import.html:198
+msgid "success"
+msgstr "correctas"
+
+#: .\ampa_manager\templates\base_import.html:199
+msgid "with warnings"
+msgstr "con avisos"
+
+#: .\ampa_manager\templates\base_import.html:201
+msgid "Rows NOT imported"
+msgstr "Filas NO importadas"
+
+#: .\ampa_manager\templates\base_import.html:207
 msgid "Results by row"
 msgstr "Resultados por fila"
 
-#: .\ampa_manager\templates\base_import.html:180
+#: .\ampa_manager\templates\base_import.html:212
 msgid "Excel"
 msgstr "Excel"
 
-#: .\ampa_manager\templates\base_import.html:181
+#: .\ampa_manager\templates\base_import.html:213
 msgid "Formatted"
 msgstr "Formateado"
 
-#: .\ampa_manager\templates\base_import.html:182
+#: .\ampa_manager\templates\base_import.html:214
 msgid "Imported"
 msgstr "Importado"
 
-#: .\ampa_manager\templates\base_import.html:183
+#: .\ampa_manager\templates\base_import.html:215
 msgid "Result"
 msgstr "Resultado"
 
-#: .\ampa_manager\templates\base_import.html:201
+#: .\ampa_manager\templates\base_import.html:233
 msgid "There are no results"
 msgstr "No hay resultados"
 
@@ -2260,6 +2275,10 @@ msgstr "Importar inscripciones de extraescolares"
 msgid "Import camps registrations"
 msgstr "Importar inscripciones de campamentos"
 
+#: .\ampa_manager\templates\import_camps.html:48
+msgid "Warning: This has been a simulation of the import"
+msgstr "Aviso: Esto ha sido una simulación de la importación"
+
 #: .\ampa_manager\templates\import_camps.html:50
 msgid "No change has been made"
 msgstr "No se ha hecho ningún cambio"
@@ -2380,6 +2399,9 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:124
 msgid "Basque"
 msgstr "Euskera"
+
+#~ msgid "Rows imported with warnings"
+#~ msgstr "Filas importadas con avisos"
 
 #~ msgid "Missing parent and no default custody holder"
 #~ msgstr "Padre no completado y no hay titular de custodia por defecto"

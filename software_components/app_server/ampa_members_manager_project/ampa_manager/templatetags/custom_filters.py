@@ -148,7 +148,21 @@ def row_state_to_html(row: Row):
         status_style = 'row_state_error'
     elif row.state == Row.STATE_WARNING:
         status_style = 'row_state_warning'
+    elif row.state == Row.STATE_OMITTED:
+        status_style = 'row_state_omitted'
     else:
-        status_style = 'row_state_success'
+        status_style = 'row_state_ok'
 
     return mark_safe(f'<span class="{status_style}">{row.state_label}</span>')
+
+
+@register.filter
+def import_state_to_html(state: str):
+    if state == Row.STATE_ERROR:
+        status_style = 'row_state_error'
+    elif state == Row.STATE_WARNING:
+        status_style = 'row_state_warning'
+    else:
+        status_style = 'row_state_ok'
+
+    return mark_safe(f'<span class="{status_style}">{state.upper()}</span>')

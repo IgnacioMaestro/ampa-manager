@@ -83,7 +83,14 @@
             background-color: greenyellow;
             font-weight: bold;
         }
-        .row_state_success {
+        .row_state_omitted {
+            text-transform: uppercase;
+            padding: 6px;
+            color: black;
+            background-color: lightgrey;
+            font-weight: bold;
+        }
+        .row_state_ok {
             text-transform: uppercase;
             padding: 6px;
             color: black;
@@ -107,16 +114,32 @@
             padding: 5px;
             color: white
         }
+        #rows_omitted {
+            background-color: lightgray;
+            padding: 5px
+        }
         #simulation {
             background-color: #FDFA72;
             padding: 15px;
             border-radius: 15px;
+        }
+        #results_summary {
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px dotted #79AEC8;
         }
         h1 {
             font-size: 35px;
         }
         h2 {
             font-size: 25px;
+        }
+        h3 {
+            font-size: 20px;
+        }
+        #results_summary li {
+            margin-bottom: 20px;
+            font-size: 20px;
         }
     </style>
 
@@ -152,23 +175,32 @@
 
         {% if simulation %}
             <div id="simulation">
-                <h3>{% trans 'Warning: This has been a simulation of the import' %}</h3>
+                <h3>{% trans 'Warning: This has been a test of the import' %}</h3>
                 <ul>
                     <li>{% trans 'Nothing has been imported' %}</li>
                     <li>{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
                 </ul>
             </div>
+            <br/>
         {% endif %}
 
     {% if result %}
             <div id="results_summary">
                 <h3>{% trans 'Summary' %}</h3>
+                <br/>
                 <ul>
-                    <li>{% trans 'State' %}: {{ result.state }}</li>
-                    <li>{% trans 'Rows detected in the excel' %}: <span id="rows_detected">{{ result.rows_summary.detected }}</span></li>
-                    <li>{% trans 'Rows imported ok' %}: <span id="rows_imported_ok">{{ result.rows_summary.imported_ok }}</span></li>
-                    <li>{% trans 'Rows imported with warnings' %}: <span id="rows_imported_warning">{{ result.rows_summary.imported_warning }}</span></li>
-                    <li>{% trans 'Rows not imported' %}: <span id="rows_not_imported">{{ result.rows_summary.not_imported }}</span></li>
+                    <li>{% trans 'State' %}: {{ result.state | import_state_to_html }}</li>
+                    <li>{% trans 'Rows detected' %}:
+                        <span id="rows_detected">{{ result.rows_summary.with_data }} {% trans 'with data' %}</span>,
+                        <span id="rows_omitted">{{ result.rows_summary.without_data }} {% trans 'without data' %}</span>
+                    </li>
+                    <li>{% trans 'Rows imported' %}:
+                        <span id="rows_imported_ok">{{ result.rows_summary.imported_ok }} {% trans 'success' %}</span>,
+                        <span id="rows_imported_warning">{{ result.rows_summary.imported_warning }} {% trans 'with warnings' %}</span>
+                    </li>
+                    <li>{% trans 'Rows NOT imported' %}:
+                        <span id="rows_not_imported">{{ result.rows_summary.not_imported }}</span>
+                    </li>
                 </ul>
             </div>
             <div id="results_by_row">
@@ -186,7 +218,7 @@
                     <tbody>
         {% for row in result.rows %}
                         <tr>
-                            <td style="text-align: center">{{ row.row_index }}</td>
+                            <td style="text-align: center">{{ row.row_number }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
                                 {{ row | row_columns_raw_values_to_html:excel_columns }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">

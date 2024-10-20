@@ -17,3 +17,7 @@ class Column:
         return self.raw_value and not StringUtils.strings_are_equal(
             self.raw_value, self.formatted_value, ignore_case=True, ignore_spaces=True, ignore_zero_decimals=True,
             ignore_spain_phone_prefix=True)
+
+    @property
+    def is_empty(self):
+        return self.raw_value is None or self.raw_value == ''

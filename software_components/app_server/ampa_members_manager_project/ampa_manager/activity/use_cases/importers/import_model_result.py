@@ -31,6 +31,9 @@ class ImportModelResult:
         self.warnings: list = []
         self.minor_warnings: list = []
 
+    def __str__(self) -> str:
+        return f'{self.model._meta.verbose_name}: {self.state}'
+
     def set_not_modified(self, instance):
         self.instance = instance
         self.state = self.NOT_MODIFIED

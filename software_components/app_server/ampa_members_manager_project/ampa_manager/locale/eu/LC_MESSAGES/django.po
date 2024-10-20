@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 19:46+0200\n"
+"POT-Creation-Date: 2024-10-20 13:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: .\ampa_manager\academic_course\admin.py:28
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:111
-#: .\ampa_manager\templates\base_import.html:165
+#: .\ampa_manager\templates\base_import.html:189
 msgid "Summary"
 msgstr ""
 
@@ -807,19 +807,20 @@ msgid "Updated"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:20
-#: .\ampa_manager\activity\use_cases\importers\row.py:17
+#: .\ampa_manager\activity\use_cases\importers\row.py:18
 msgid "Error"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:21
+#: .\ampa_manager\activity\use_cases\importers\row.py:19
 msgid "Omitted"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\row.py:15
+#: .\ampa_manager\activity\use_cases\importers\row.py:16
 msgid "Ok"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\row.py:16
+#: .\ampa_manager\activity\use_cases\importers\row.py:17
 msgid "Warning"
 msgstr ""
 
@@ -880,7 +881,6 @@ msgid "Rows imported successfully"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:118
-#: .\ampa_manager\templates\base_import.html:171
 msgid "Rows not imported"
 msgstr ""
 
@@ -890,7 +890,7 @@ msgstr ""
 
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:123
 #: .\ampa_manager\importation\models\custody_importation_row.py:13
-#: .\ampa_manager\templates\base_import.html:179
+#: .\ampa_manager\templates\base_import.html:211
 msgid "Row"
 msgstr ""
 
@@ -996,7 +996,7 @@ msgstr ""
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:16
 #: .\ampa_manager\charge\models\membership_receipt.py:18
 #: .\ampa_manager\family\models\holder\holder.py:32
-#: .\ampa_manager\templates\base_import.html:167
+#: .\ampa_manager\templates\base_import.html:192
 msgid "State"
 msgstr ""
 
@@ -1938,7 +1938,7 @@ msgstr ""
 msgid "Parent import data"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:127
+#: .\ampa_manager\templates\base_import.html:150
 #: .\ampa_manager\templates\check_family_email.html:32
 #: .\ampa_manager\templates\check_members.html:9
 #: .\ampa_manager\templates\import_after_schools_activities.html:10
@@ -1951,11 +1951,11 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:137
+#: .\ampa_manager\templates\base_import.html:160
 msgid "Select file to import"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:141
+#: .\ampa_manager\templates\base_import.html:164
 #: .\ampa_manager\templates\import_after_schools_activities.html:22
 #: .\ampa_manager\templates\import_after_schools_registrations.html:22
 #: .\ampa_manager\templates\import_camps.html:22
@@ -1965,7 +1965,7 @@ msgstr ""
 msgid "Import file"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:151
+#: .\ampa_manager\templates\base_import.html:174
 #: .\ampa_manager\templates\import_after_schools_activities.html:46
 #: .\ampa_manager\templates\import_after_schools_registrations.html:46
 #: .\ampa_manager\templates\import_camps.html:46
@@ -1975,55 +1975,70 @@ msgstr ""
 msgid "Results"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:155
-#: .\ampa_manager\templates\import_camps.html:48
-msgid "Warning: This has been a simulation of the import"
+#: .\ampa_manager\templates\base_import.html:178
+msgid "Warning: This has been a test of the import"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:157
+#: .\ampa_manager\templates\base_import.html:180
 msgid "Nothing has been imported"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:158
+#: .\ampa_manager\templates\base_import.html:181
 #: .\ampa_manager\templates\import_camps.html:51
 msgid ""
 "If the results are ok, import the file again disabling the \"SIMULATION\" "
 "option"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:168
-msgid "Rows detected in the excel"
+#: .\ampa_manager\templates\base_import.html:193
+msgid "Rows detected"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:169
-msgid "Rows imported ok"
+#: .\ampa_manager\templates\base_import.html:194
+msgid "with data"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:170
-msgid "Rows imported with warnings"
+#: .\ampa_manager\templates\base_import.html:195
+msgid "without data"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:175
-msgid "Results by row"
+#: .\ampa_manager\templates\base_import.html:197
+msgid "Rows imported"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:180
-msgid "Excel"
+#: .\ampa_manager\templates\base_import.html:198
+msgid "success"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:181
-msgid "Formatted"
-msgstr ""
-
-#: .\ampa_manager\templates\base_import.html:182
-msgid "Imported"
-msgstr ""
-
-#: .\ampa_manager\templates\base_import.html:183
-msgid "Result"
+#: .\ampa_manager\templates\base_import.html:199
+msgid "with warnings"
 msgstr ""
 
 #: .\ampa_manager\templates\base_import.html:201
+msgid "Rows NOT imported"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:207
+msgid "Results by row"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:212
+msgid "Excel"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:213
+msgid "Formatted"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:214
+msgid "Imported"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:215
+msgid "Result"
+msgstr ""
+
+#: .\ampa_manager\templates\base_import.html:233
 msgid "There are no results"
 msgstr ""
 
@@ -2226,6 +2241,10 @@ msgstr ""
 #: .\ampa_manager\templates\import_camps.html:11
 #: .\ampa_manager\templates\import_camps.html:16
 msgid "Import camps registrations"
+msgstr ""
+
+#: .\ampa_manager\templates\import_camps.html:48
+msgid "Warning: This has been a simulation of the import"
 msgstr ""
 
 #: .\ampa_manager\templates\import_camps.html:50

@@ -73,7 +73,7 @@ class CustodyImporter(BaseImporter):
         return ImportExcelResult(rows)
 
     def import_row(self, row: Row):
-        if row.any_error:
+        if row.any_error or row.is_empty:
             return
 
         try:

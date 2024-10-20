@@ -10,11 +10,13 @@ class Row:
     STATE_OK = 'ok'
     STATE_WARNING = 'warning'
     STATE_ERROR = 'error'
+    STATE_OMITTED = 'omitted'
 
     STATES_LABELS = {
         STATE_OK: _('Ok'),
         STATE_WARNING: _('Warning'),
-        STATE_ERROR: _('Error')
+        STATE_ERROR: _('Error'),
+        STATE_OMITTED: _('Omitted'),
     }
 
     def __init__(self, row_index: int):
@@ -25,6 +27,17 @@ class Row:
 
     def __str__(self) -> str:
         return f'Index {self.row_index}, {len(self.columns)} columns, {len(self.imported_models_results)} models'
+
+    @property
+    def row_number(self) -> int:
+        return self.row_index + 1
+
+    @property
+    def is_empty(self):
+        for column in self.columns.values():
+            if not column.is_empty:
+                return False
+        return True
 
     def set_error(self, error: str):
         self.error = error
@@ -63,6 +76,8 @@ class Row:
             return self.STATE_ERROR
         if self.any_warning:
             return self.STATE_WARNING
+        if self.is_empty:
+            return self.STATE_OMITTED
         return self.STATE_OK
 
     @property
