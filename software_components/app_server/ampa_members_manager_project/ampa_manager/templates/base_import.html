@@ -231,13 +231,12 @@
 
     {% if result %}
             <div id="results_by_row">
-                <h3>{% trans 'Results by row' %}</h3>
                 <a href="javascript:showRowsByClass('all')"><span id="all_rows">{% trans 'Show all rows' %}</span></a> &nbsp;
                 <a href="javascript:showRowsByClass('ok')"><span id="rows_imported_ok">{% trans 'Imported Ok' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_ok }}</span></span></a> &nbsp;
                 <a href="javascript:showRowsByClass('warning')"><span id="rows_imported_warning">{% trans 'Imported warning' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_warning }}</span></span></a> &nbsp;
                 <a href="javascript:showRowsByClass('error')"><span id="rows_not_imported">{% trans 'Not imported' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.not_imported }}</span></span></a> &nbsp;
                 <a href="javascript:showRowsByClass('omitted')"><span id="rows_omitted">{% trans 'Omitted' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.without_data }}</span></span></a> &nbsp;
-                <br/><br/>
+                <br/><br/><br/>
                 <table style="width: 100%;">
                     <thead>
                         <tr>

@@ -12,6 +12,7 @@ from ampa_manager.activity.use_cases.importers.import_model_result import Import
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 from ampa_manager.family.models.child import Child
+from ampa_manager.utils.utils import Utils
 
 register = template.Library()
 
@@ -162,6 +163,9 @@ def row_imported_models_to_html(row: Row):
             for warning_message in result.minor_warnings:
                 result_details += new_line_tab_hyphen + generate_span('imported_model_warning', warning_message)
 
+        if result.instance:
+            result_details = Utils.get_model_instance_link(result.model.__name__.lower(), result.instance.id, result_details)
+
         items.append(result_details)
 
     return to_custom_list(items, '·')
@@ -169,7 +173,6 @@ def row_imported_models_to_html(row: Row):
 
 def generate_span(class_name: str, content: str) -> str:
     return f'<span class="{class_name}">{content}</span>'
-
 
 @register.filter
 def row_state_to_html(row: Row):

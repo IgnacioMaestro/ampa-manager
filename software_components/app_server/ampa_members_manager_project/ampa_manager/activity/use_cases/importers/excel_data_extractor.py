@@ -37,6 +37,9 @@ class ExcelDataExtractor:
             raw_value = self.sheet.cell_value(rowx=row_index, colx=col_index)
             formatted_value = formatter(raw_value)
         except Exception as e:
-            error = str(e)
+            if hasattr(e, 'message'):
+                error = e.message
+            else:
+                error = str(e)
 
         return Column(raw_value, formatted_value, error)
