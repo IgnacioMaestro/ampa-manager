@@ -223,7 +223,7 @@
                 <h3>{% trans 'Warning: This has been a test of the import' %}</h3>
                 <ul>
                     <li>{% trans 'Nothing has been imported' %}</li>
-                    <li>{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
+                    <li>{% trans 'If the results are ok, import the file again disabling the "TEST THE IMPORT" option' %}</li>
                 </ul>
             </div>
             <br/>
@@ -239,29 +239,29 @@
                 <br/><br/><br/>
                 <table style="width: 100%;">
                     <thead>
-                        <tr>
+                        <tr class="all ok warning error omitted">
                             <th style="width: 4%; text-align: center">{% trans 'Row' %}</th>
+                            <th style="width: 6%; text-align: center">{% trans 'Result' %}</th>
+                            <th style="width: 45%; text-align: left">{% trans 'Imported' %}</th>
                             <th style="width: 22.5%; text-align: left">{% trans 'Excel' %}</th>
                             <th style="width: 22.5%; text-align: left">{% trans 'Formatted' %}</th>
-                            <th style="width: 45%; text-align: left">{% trans 'Imported' %}</th>
-                            <th style="width: 6%; text-align: center">{% trans 'Result' %}</th>
                         </tr>
                     </thead>
                     <tbody>
         {% for row in result.rows %}
                         <tr class="all {{ row.state }}">
                             <td style="text-align: center">{{ row.row_number }}</td>
+                            <td style="text-align: center">{{ row | row_state_to_html }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_imported_models_to_html }}
+                            </td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
                                 {{ row | row_columns_raw_values_to_html:excel_columns }}</td>
                             <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
                                 {{ row | row_columns_formatted_values_to_html:excel_columns }}</td>
-                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
-                                {{ row | row_imported_models_to_html }}
-                            </td>
-                            <td style="text-align: center">{{ row | row_state_to_html }}</td>
                         </tr>
         {% empty %}
-                        <tr>
+                        <tr class="all">
                             <td colspan="4">{% trans 'There are no results' %}</td>
                         </tr>
         {% endfor %}

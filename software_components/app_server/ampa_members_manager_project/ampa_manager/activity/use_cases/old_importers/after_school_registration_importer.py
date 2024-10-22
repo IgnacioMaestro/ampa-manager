@@ -1,8 +1,6 @@
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.use_cases.old_importers.excel.import_model_result import ImportModelResult
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
-from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 
 
 class AfterSchoolRegistrationImporter:
@@ -15,7 +13,7 @@ class AfterSchoolRegistrationImporter:
             return None
 
     @staticmethod
-    def import_registration(after_school_edition: AfterSchoolRegistration, holder: Holder, child: Child) -> ImportModelResult:
+    def import_registration(after_school_edition: AfterSchoolRegistration, holder: Holder, child: Child):
         result = ImportModelResult(AfterSchoolRegistration, [after_school_edition, holder, child])
 
         registration = AfterSchoolRegistrationImporter.find(after_school_edition, child)

@@ -33,7 +33,7 @@ class CustodyRegistration(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.custody_edition}, {self.child}'
+        return f'{self.custody_edition}, {self.child}, {self.assisted_days}, {_("days")}, {self.holder.bank_account}'
 
     def clean(self):
         if self.holder and not self.holder.parent.family_set.filter(id=self.child.family.id).exists():

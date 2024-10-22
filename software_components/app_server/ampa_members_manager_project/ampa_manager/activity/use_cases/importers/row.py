@@ -39,6 +39,15 @@ class Row:
                 return False
         return True
 
+    def add_warnings(self, warnings: list[str], model):
+        for warning in warnings:
+            self.add_warning_to_imported_model(warning, model)
+
+    def add_warning_to_imported_model(self, warning: str, model):
+        for result in self.imported_models_results:
+            if result.model == model:
+                result.add_warning(warning)
+
     def set_error(self, error: str):
         self.error = error
 

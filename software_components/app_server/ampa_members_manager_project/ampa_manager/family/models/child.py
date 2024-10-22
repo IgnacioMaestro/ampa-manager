@@ -6,7 +6,6 @@ from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.family.models.child_queryset import ChildQuerySet
-from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
@@ -23,15 +22,15 @@ class Child(TimeStampedModel):
     objects = Manager.from_queryset(ChildQuerySet)()
 
     class Meta:
-        verbose_name = _('Child')
-        verbose_name_plural = _('Children')
+        verbose_name = _('Student')
+        verbose_name_plural = _('Students')
         ordering = ['name', 'family__surnames']
         db_table = 'child'
         constraints = [
             models.UniqueConstraint(fields=['name', 'family'], name='unique_child_name_in_a_family'), ]
 
     def __str__(self) -> str:
-        return f'{self.name} {str(self.family)} ({self.level})'
+        return f'{self.name} {self.family.surnames} ({self.level})'
 
     def save(self, *args, **kwargs):
         self.normalize_fields()

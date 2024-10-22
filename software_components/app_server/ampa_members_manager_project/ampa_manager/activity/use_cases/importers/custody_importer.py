@@ -94,6 +94,7 @@ class CustodyImporter(BaseImporter):
                     family.update_custody_holder(holder)
 
             FamilyHoldersConsolidator(family).consolidate()
+
             if not family.custody_holder:
                 row.set_error('Missing bank account')
                 return

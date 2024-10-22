@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
-from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 
@@ -43,13 +43,20 @@ class CustodyRegistrationImporter:
 
     def manage_found_registration(self):
         if self.registration_is_modified():
-            fields_before = [self.registration.holder, self.registration.assisted_days]
-            self.registration.holder = self.holder
-            self.registration.assisted_days = self.assisted_days
-            fields_after = [self.registration.holder, self.registration.assisted_days]
+            modified_fields = []
+
+            if self.registration.holder != self.holder:
+                modified_fields.append(ModifiedField(_('Holder'), self.registration.holder, self.holder))
+                self.registration.holder = self.holder
+
+            if self.registration.assisted_days != self.assisted_days:
+                modified_fields.append(
+                    ModifiedField(_('Assisted days'), self.registration.assisted_days, self.assisted_days))
+                self.registration.assisted_days = self.assisted_days
+
             self.registration.save()
 
-            self.result.set_updated(self.registration, fields_before, fields_after)
+            self.result.set_updated(self.registration, modified_fields)
         else:
             self.result.set_not_modified(self.registration)
 
@@ -67,6 +74,7 @@ class CustodyRegistrationImporter:
             return _('Missing child')
 
         if self.assisted_days is None or not isinstance(self.assisted_days, int) or self.assisted_days <= 0:
-            return _('Wrong assisted days') + f': ({self.assisted_days})'
+            assisted_days = self.assisted_days if self.assisted_days else '-'
+            return _('Wrong assisted days') + f': ({assisted_days})'
 
         return None

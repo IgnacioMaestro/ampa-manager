@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.parent import Parent
 
 
@@ -50,20 +50,21 @@ class ParentImporter:
 
     def manage_found_parent(self):
         if self.parent_is_modified():
-            values_before = [self.parent.phone_number, self.parent.additional_phone_number, self.parent.email]
+            modified_fields = []
 
-            if self.phone_number is not None:
+            if self.phone_number is not None and self.phone_number != self.parent.phone_number:
+                modified_fields.append(ModifiedField(_('Phone number'), self.parent.phone_number, self.phone_number))
                 self.parent.phone_number = self.phone_number
 
-            if self.additional_phone_number is not None:
+            if self.additional_phone_number is not None and self.additional_phone_number != self.parent.additional_phone_number:
+                modified_fields.append(ModifiedField(_('Additional phone number'), self.parent.additional_phone_number, self.additional_phone_number))
                 self.parent.additional_phone_number = self.additional_phone_number
 
-            if self.email is not None:
+            if self.email is not None and self.email != self.parent.email:
+                modified_fields.append(ModifiedField(_('Email'), self.parent.email, self.email))
                 self.parent.email = self.email
 
-            values_after = [self.parent.phone_number, self.parent.additional_phone_number, self.parent.email]
-
-            self.result.set_updated(self.parent, values_before, values_after)
+            self.result.set_updated(self.parent, modified_fields)
         else:
             self.result.set_not_modified(self.parent)
 
@@ -86,7 +87,6 @@ class ParentImporter:
         return None
 
     def parent_is_modified(self):
-        return ((self.phone_number and self.phone_number != self.parent.phone_number) or
-                (
-                        self.additional_phone_number and self.additional_phone_number != self.parent.additional_phone_number) or
-                (self.email and not self.email != self.parent.email))
+        return ((self.phone_number is not None and self.phone_number != self.parent.phone_number) or
+                (self.additional_phone_number is not None and self.additional_phone_number != self.parent.additional_phone_number) or
+                (self.email is not None and not self.email != self.parent.email))

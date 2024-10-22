@@ -23,8 +23,8 @@ class Parent(TimeStampedModel):
     objects = Manager.from_queryset(ParentQuerySet)()
 
     class Meta:
-        verbose_name = _('Parent')
-        verbose_name_plural = _("Parents")
+        verbose_name = _('Parent/Mother')
+        verbose_name_plural = _("Parents/Mothers")
         db_table = 'parent'
 
     def __str__(self) -> str:

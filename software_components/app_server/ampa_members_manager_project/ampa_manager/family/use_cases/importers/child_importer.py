@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
-from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.child import Child
 
 
@@ -44,18 +44,19 @@ class ChildImporter:
 
     def manage_found_child(self):
         if self.level and self.year_of_birth and self.child_is_modified():
-            values_before = [self.child.year_of_birth, self.child.repetition]
+            modified_fields = []
 
-            if self.year_of_birth is not None:
+            if self.year_of_birth is not None and self.year_of_birth != self.child.year_of_birth:
+                modified_fields.append(ModifiedField(_('Year of birth'), self.child.year_of_birth, self.year_of_birth))
                 self.child.year_of_birth = self.year_of_birth
 
-            if self.repetition is not None:
+            if self.repetition is not None and self.repetition != self.child.repetition:
+                modified_fields.append(ModifiedField(_('Repetition'), self.child.repetition, self.repetition))
                 self.child.repetition = self.repetition
 
             self.child.save()
 
-            values_after = [self.child.year_of_birth, self.child.repetition]
-            self.result.set_updated(self.child, values_before, values_after)
+            self.result.set_updated(self.child, modified_fields)
         else:
             self.result.set_not_modified(self.child)
 

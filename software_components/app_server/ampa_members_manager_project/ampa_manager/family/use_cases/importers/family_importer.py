@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.family import Family
 
 
@@ -37,9 +37,8 @@ class FamilyImporter:
 
     def manage_found_family(self):
         if self.family_surnames and self.family_surnames != self.family.surnames:
-            values_before = [self.family.surnames]
+            modified_fields = [ModifiedField(_('Surnames'), self.family.surnames, self.family_surnames)]
             self.family.surnames = self.family_surnames
-            values_after = [self.family.surnames]
-            self.result.set_updated(self.family, values_before, values_after)
+            self.result.set_updated(self.family, modified_fields)
         else:
             self.result.set_not_modified(self.family)

@@ -1,7 +1,5 @@
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.activity.use_cases.old_importers.excel.import_model_result import ImportModelResult
 
 
 class AfterSchoolEditionImporter:
@@ -25,7 +23,7 @@ class AfterSchoolEditionImporter:
                                                  price_for_no_member=price_for_no_member)
 
     @staticmethod
-    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members) -> ImportModelResult:
+    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members):
         result = ImportModelResult(AfterSchoolEdition, [period, timetable, levels, price_for_members,
                                                                  price_for_no_members])
 

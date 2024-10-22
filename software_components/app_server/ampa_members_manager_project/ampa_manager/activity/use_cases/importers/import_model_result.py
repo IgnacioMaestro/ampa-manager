@@ -4,6 +4,13 @@ from django.db.models import Model
 from django.utils.translation import gettext_lazy as _
 
 
+class ModifiedField:
+    def __init__(self, field_name: str, value_before, value_after):
+        self.field_name = field_name
+        self.value_before = value_before
+        self.value_after = value_after
+
+
 class ImportModelResult:
     NOT_PROCESSED = 'NOT_PROCESSED'
     NOT_MODIFIED = 'NOT_MODIFIED'
@@ -25,8 +32,7 @@ class ImportModelResult:
         self.model = model
         self.instance: Optional[Model] = None
         self.state: str = self.NOT_PROCESSED
-        self.values_before: list = []
-        self.values_after: list = []
+        self.modified_fields: list[ModifiedField] = []
         self.error_message: Optional[str] = None
         self.warnings: list = []
         self.minor_warnings: list = []
@@ -38,11 +44,10 @@ class ImportModelResult:
         self.instance = instance
         self.state = self.NOT_MODIFIED
 
-    def set_updated(self, instance, values_before: list, values_after: list):
+    def set_updated(self, instance, modified_fields: list[ModifiedField]):
         self.instance = instance
         self.state = self.UPDATED
-        self.values_before = values_before
-        self.values_after = values_after
+        self.modified_fields = modified_fields
 
     def set_error(self, error_message: str):
         self.state = self.ERROR

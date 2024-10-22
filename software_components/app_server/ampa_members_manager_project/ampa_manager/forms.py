@@ -23,7 +23,7 @@ class ImportCustodyForm(forms.Form):
         label=_('Custody edition to import to'))
     file = forms.FileField()
     simulation = forms.BooleanField(
-        required=False, label=_('SIMULATION: Only list the changes without making any'),
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
         initial=True)
 
     def __init__(self, *args, **kwargs):

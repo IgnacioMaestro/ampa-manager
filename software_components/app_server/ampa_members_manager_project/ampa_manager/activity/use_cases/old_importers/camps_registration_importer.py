@@ -1,9 +1,7 @@
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
-from ampa_manager.activity.use_cases.old_importers.excel.import_model_result import ImportModelResult
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
-from ampa_manager.activity.use_cases.importers.fields_changes import FieldsChanges
 
 
 class CampsRegistrationImporter:
@@ -16,7 +14,7 @@ class CampsRegistrationImporter:
             return None
 
     @staticmethod
-    def import_registration(camps_edition: CampsEdition, holder: Holder, child: Child) -> ImportModelResult:
+    def import_registration(camps_edition: CampsEdition, holder: Holder, child: Child):
         result = ImportModelResult(CampsRegistration, [camps_edition, holder, child])
 
         registration = CampsRegistrationImporter.find(camps_edition, child)

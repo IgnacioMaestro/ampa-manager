@@ -12,9 +12,14 @@ from ampa_manager.activity.use_cases.importers.import_model_result import Import
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
 from ampa_manager.family.models.child import Child
+from ampa_manager.family.models.family import Family
 from ampa_manager.utils.utils import Utils
 
 register = template.Library()
+
+html_new_line = '<br/>'
+new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
+html_space = '&nbsp;'
 
 
 @register.filter
@@ -98,7 +103,6 @@ def row_columns_raw_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
 @register.filter
 def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColumn]):
     items = []
-    new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
 
     for column_key, column in row.columns.items():
         formatted_value = column.formatted_value if column.formatted_value else '-'
@@ -118,37 +122,40 @@ def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColu
 def get_instance_details(result: ImportModelResult) -> str:
     if result.instance:
         if result.model == CustodyRegistration:
-            return f'{result.instance.holder}, {result.instance.assisted_days} ' + _('assisted days')
+            return (f'{new_line_tab_hyphen}{result.instance.assisted_days} {_("assisted days")}'
+                    f'{new_line_tab_hyphen}{result.instance.holder.bank_account} ({result.instance.holder.parent})')
         elif result.model == CampsRegistration:
             return f'{result.instance.holder}'
         elif result.model == AfterSchoolRegistration:
             return f'{result.instance.holder}'
         elif result.model == Child:
             return f'{result.instance.name} {str(result.instance.family.surnames)}, {result.instance.level}'
+        elif result.model == Family:
+            return f'{result.instance.surnames}'
         else:
             return str(result.instance)
     else:
-        return '-'
+        return ''
 
 
 @register.filter
 def row_imported_models_to_html(row: Row):
     items = []
-    new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
 
     for result in row.imported_models_results:
         result_details = ''
         result_details += generate_span('list_item_label', result.model_verbose_name)
         result_details += ' ' + generate_span('list_item_value', get_instance_details(result))
-        result_details += ' ' + generate_span(f'imported_model_status_{result.state.lower()}', result.state_label)
+        if result.state not in [ImportModelResult.OMITTED, ImportModelResult.NOT_MODIFIED]:
+            result_details += ' ' + generate_span(f'imported_model_status_{result.state.lower()}', result.state_label)
 
         # CHANGED FIELDS
         if result.state == ImportModelResult.UPDATED:
-            for i in range(len(result.values_before)):
-                value_before = result.values_before[i]
-                value_after = result.values_after[i]
-                if value_before != value_after:
-                    result_details += new_line_tab_hyphen + generate_span('imported_model_changed_field', f'{value_before} -> {value_after}')
+            for modified_field in result.modified_fields:
+                result_details += (new_line_tab_hyphen +
+                                   generate_span('list_item_label',
+                                                 f'{modified_field.field_name}') + ' ' +
+                                   generate_span('imported_model_changed_field', f'{modified_field.value_before} -> {modified_field.value_after}'))
 
         # ERROR
         if result.error_message:
@@ -174,6 +181,7 @@ def row_imported_models_to_html(row: Row):
 def generate_span(class_name: str, content: str) -> str:
     return f'<span class="{class_name}">{content}</span>'
 
+
 @register.filter
 def row_state_to_html(row: Row):
     if row.state == Row.STATE_ERROR:
@@ -185,7 +193,14 @@ def row_state_to_html(row: Row):
     else:
         status_style = 'row_state_ok'
 
-    return mark_safe(generate_span(status_style, row.state_label))
+    return mark_safe(generate_span(status_style, complete_with_spaces(row.state_label, 14)))
+
+
+def complete_with_spaces(string: str, length: int) -> str:
+    spaces = length - len(string)
+    if spaces > 0:
+        return html_space * int(spaces / 2) + string + html_space * int(spaces / 2)
+    return string
 
 
 @register.filter
