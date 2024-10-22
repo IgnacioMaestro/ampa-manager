@@ -15,21 +15,32 @@ from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.family_holders_consolidator import FamilyHoldersConsolidator
 
 
-class CustodyImporter(BaseImporter):
+class MembersImporter(BaseImporter):
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
     COLUMNS_TO_IMPORT = [
         ExcelColumn(0, BaseImporter.family_email),
+        ExcelColumn(1, BaseImporter.family_surnames),
         ExcelColumn(1, BaseImporter.parent_1_name_and_surnames),
         ExcelColumn(2, BaseImporter.parent_1_phone_number),
         ExcelColumn(3, BaseImporter.parent_1_email),
         ExcelColumn(4, BaseImporter.bank_account_iban),
+        ExcelColumn(1, BaseImporter.parent_2_name_and_surnames),
+        ExcelColumn(2, BaseImporter.parent_2_phone_number),
+        ExcelColumn(3, BaseImporter.parent_2_email),
         ExcelColumn(5, BaseImporter.child_1_name),
-        ExcelColumn(6, BaseImporter.family_surnames),
         ExcelColumn(7, BaseImporter.child_1_year_of_birth),
         ExcelColumn(8, BaseImporter.child_1_level),
-        ExcelColumn(9, BaseImporter.assisted_days),
+        ExcelColumn(5, BaseImporter.child_2_name),
+        ExcelColumn(7, BaseImporter.child_2_year_of_birth),
+        ExcelColumn(8, BaseImporter.child_2_level),
+        ExcelColumn(5, BaseImporter.child_3_name),
+        ExcelColumn(7, BaseImporter.child_3_year_of_birth),
+        ExcelColumn(8, BaseImporter.child_3_level),
+        ExcelColumn(5, BaseImporter.child_4_name),
+        ExcelColumn(7, BaseImporter.child_4_year_of_birth),
+        ExcelColumn(8, BaseImporter.child_4_level),
     ]
 
     def __init__(self, excel_content: bytes, custody_edition: CustodyEdition):

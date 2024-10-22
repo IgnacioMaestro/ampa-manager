@@ -1,24 +1,27 @@
-import xlrd
+import math
+
+import pandas as pd
+from io import BytesIO
 
 from ampa_manager.activity.use_cases.importers.column import Column
 from ampa_manager.activity.use_cases.importers.row import Row
 
 
-class ExcelDataExtractor:
+class ExcelDataExtractorPandas:
     def __init__(self, excel_content, sheet_number: int, first_row_index: int, columns_to_extract: list):
         self.excel_content = excel_content
         self.sheet_number = sheet_number
         self.first_row_index = first_row_index
         self.columns_to_extract = columns_to_extract
-        self.book = xlrd.open_workbook(file_contents=self.excel_content)
-        self.sheet = self.book.sheet_by_index(self.sheet_number)
 
-        if self.first_row_index > self.sheet.nrows:
+        self.df = pd.read_excel(BytesIO(self.excel_content), sheet_name=self.sheet_number)
+
+        if self.first_row_index > len(self.df):
             raise Exception('Invalid first row index')
 
     def extract(self) -> list[Row]:
         rows = []
-        for row_index in range(self.first_row_index, self.sheet.nrows):
+        for row_index in range(self.first_row_index, len(self.df)):
             row = Row(row_index)
 
             for excel_column in self.columns_to_extract:
@@ -34,8 +37,12 @@ class ExcelDataExtractor:
         error = None
 
         try:
-            raw_value = self.sheet.cell_value(rowx=row_index, colx=col_index)
-            formatted_value = formatter(raw_value)
+            raw_value = self.df.iat[row_index, col_index]
+
+            if isinstance(raw_value, float) and math.isnan(raw_value):
+                raw_value = None
+
+            formatted_value = formatter(raw_value) if raw_value is not None else None
         except Exception as e:
             if hasattr(e, 'message'):
                 error = e.message

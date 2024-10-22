@@ -18,7 +18,7 @@ from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.views.import_info import ImportInfo
 
 
-class MembersImporter:
+class MembersImporterOld:
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
