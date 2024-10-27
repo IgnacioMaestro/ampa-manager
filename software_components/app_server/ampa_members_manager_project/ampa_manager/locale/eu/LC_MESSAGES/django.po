@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-22 17:35+0200\n"
+"POT-Creation-Date: 2024-10-27 16:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -283,7 +283,7 @@ msgstr ""
 #: .\ampa_manager\activity\admin\custody_admin.py:54
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
 #: .\ampa_manager\activity\models\camps\camps_registration.py:18
-#: .\ampa_manager\activity\models\custody\custody_registration.py:21
+#: .\ampa_manager\activity\models\custody\custody_registration.py:23
 #: .\ampa_manager\charge\admin\after_school_admin.py:36
 #: .\ampa_manager\charge\admin\camps_admin.py:49
 #: .\ampa_manager\charge\admin\camps_admin.py:63
@@ -301,7 +301,7 @@ msgstr ""
 #: .\ampa_manager\family\models\child.py:20
 #: .\ampa_manager\family\models\family.py:55
 #: .\ampa_manager\family\models\membership.py:13
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:89
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:89
 #: .\ampa_manager\views\validate_data.py:123
 #: .\ampa_manager_project\settings.py:150
 msgid "Family"
@@ -463,12 +463,12 @@ msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:50
 #: .\ampa_manager\activity\models\custody\custody_edition.py:34
-#: .\ampa_manager\activity\models\custody\custody_registration.py:19
+#: .\ampa_manager\activity\models\custody\custody_registration.py:21
 msgid "Custody edition"
 msgstr ""
 
 #: .\ampa_manager\activity\admin\custody_admin.py:98
-#: .\ampa_manager\activity\models\custody\custody_registration.py:23
+#: .\ampa_manager\activity\models\custody\custody_registration.py:25
 #: .\ampa_manager\activity\use_cases\old_importers\custody_registration_importer.py:54
 msgid "Assisted days"
 msgstr ""
@@ -562,7 +562,7 @@ msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:20
 #: .\ampa_manager\activity\models\camps\camps_registration.py:19
-#: .\ampa_manager\activity\models\custody\custody_registration.py:22
+#: .\ampa_manager\activity\models\custody\custody_registration.py:24
 #: .\ampa_manager\activity\use_cases\old_importers\custody_registration_importer.py:49
 #: .\ampa_manager\charge\admin\after_school_admin.py:40
 #: .\ampa_manager\charge\admin\camps_admin.py:53
@@ -584,7 +584,7 @@ msgstr ""
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:39
 #: .\ampa_manager\activity\models\camps\camps_registration.py:37
-#: .\ampa_manager\activity\models\custody\custody_registration.py:40
+#: .\ampa_manager\activity\models\custody\custody_registration.py:42
 msgid "The selected bank account does not belong to the child's family"
 msgstr ""
 
@@ -657,11 +657,15 @@ msgstr ""
 msgid "Custody editions"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:28
+#: .\ampa_manager\activity\models\custody\custody_registration.py:19
+msgid "assisted days"
+msgstr ""
+
+#: .\ampa_manager\activity\models\custody\custody_registration.py:30
 msgid "Custody registration"
 msgstr ""
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:29
+#: .\ampa_manager\activity\models\custody\custody_registration.py:31
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:18
 #: .\ampa_manager\family\admin\family_admin.py:318
 msgid "Custody registrations"
@@ -695,96 +699,130 @@ msgstr ""
 msgid "Per month"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:34
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:44
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:55
 #: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:37
 #: .\ampa_manager\family\use_cases\importers\family_email_importer.py:20
 msgid "Family email"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:35
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:57
+#: .\ampa_manager\templates\check_members.html:32
+msgid "Family surnames"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:59
+msgid "Parent 1 name and surnames"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:59
 #: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:41
 #: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:38
 #: .\ampa_manager\templates\check_members.html:33
 msgid "Parent name and surnames"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:36
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:62
+msgid "Parent 1 phone number"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:62
 #: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:42
 #: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:39
 msgid "Parent phone number"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:37
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:47
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:64
+msgid "Parent 1 email"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:64
 #: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:43
 #: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:40
 msgid "Parent email"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:38
-#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:44
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:41
-msgid "Parent bank account IBAN"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:66
+msgid "Parent 2 name and surnames"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:39
-#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:45
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:42
-msgid "Child name (without surnames)"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:69
+msgid "Parent 2 phone number"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:40
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:50
-#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:46
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:43
-msgid "Child surnames"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:71
+msgid "Parent 2 email"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:41
-#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:48
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:45
-msgid "Child level (ex. HH4, LH3)"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:73
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:93
+msgid "Bank account IBAN"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:42
-#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:47
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:44
-msgid "Child year of birth (ex. 2015)"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:75
+msgid "Child 1 name"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:45
-msgid "Parent name"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:46
-msgid "Parent phone"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:48
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:12
-#: .\ampa_manager\family\models\bank_account\bank_account.py:14
-#: .\ampa_manager\importation\models\holder_import_data.py:8
-msgid "IBAN"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:49
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:75
 msgid "Child name"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:51
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:77
+msgid "Child 1 level"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:77
 msgid "Child level"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:52
-msgid "Child year"
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:79
+msgid "Child 1 year of birth"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:26
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:79
+msgid "Child year of birth"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:82
+msgid "Child 2 name"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:84
+msgid "Child 2 level"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:86
+msgid "Child 2 year of birth"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:89
+msgid "Child 3 name"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:91
+msgid "Child 3 level"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:93
+msgid "Child 3 year of birth"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:96
+msgid "Child 4 name"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:98
+msgid "Child 4 level"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:100
+msgid "Child 4 year of birth"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:103
 msgid "Assisted days in the selected edition"
 msgstr ""
 
-#: .\ampa_manager\activity\use_cases\importers\custody_importer.py:27
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:103
 msgid "Assistance"
 msgstr ""
 
@@ -803,7 +841,7 @@ msgid "Created"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:26
-msgid "Updated"
+msgid "Modified"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:27
@@ -813,7 +851,7 @@ msgstr ""
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:28
 #: .\ampa_manager\activity\use_cases\importers\row.py:19
-#: .\ampa_manager\templates\base_import.html:238
+#: .\ampa_manager\templates\base_import.html:261
 msgid "Omitted"
 msgstr ""
 
@@ -839,6 +877,31 @@ msgstr ""
 
 #: .\ampa_manager\activity\use_cases\old_importers\after_school_activities_importer.py:34
 msgid "Edition levels (ex. Primary)"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:44
+#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:41
+msgid "Parent bank account IBAN"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:45
+#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:42
+msgid "Child name (without surnames)"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:46
+#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:43
+msgid "Child surnames"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:47
+#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:44
+msgid "Child year of birth (ex. 2015)"
+msgstr ""
+
+#: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:48
+#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:45
+msgid "Child level (ex. HH4, LH3)"
 msgstr ""
 
 #: .\ampa_manager\activity\use_cases\old_importers\after_school_registrations_importer.py:49
@@ -891,7 +954,7 @@ msgstr ""
 
 #: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:123
 #: .\ampa_manager\importation\models\custody_importation_row.py:13
-#: .\ampa_manager\templates\base_import.html:243
+#: .\ampa_manager\templates\base_import.html:266
 msgid "Row"
 msgstr ""
 
@@ -1172,6 +1235,12 @@ msgstr ""
 msgid "BIC"
 msgstr ""
 
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:12
+#: .\ampa_manager\family\models\bank_account\bank_account.py:14
+#: .\ampa_manager\importation\models\holder_import_data.py:8
+msgid "IBAN"
+msgstr ""
+
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:15
 msgid "Members discount"
 msgstr ""
@@ -1441,8 +1510,8 @@ msgstr ""
 #: .\ampa_manager\family\admin\filters\family_filters.py:160
 #: .\ampa_manager\family\models\family.py:49
 #: .\ampa_manager\family\models\parent.py:21
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:92
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:96
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:92
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:96
 #: .\ampa_manager\family\use_cases\importers\parent_importer.py:64
 #: .\ampa_manager\importation\models\parent_import_data.py:9
 msgid "Email"
@@ -1575,7 +1644,7 @@ msgstr ""
 
 #: .\ampa_manager\family\models\family.py:21
 #: .\ampa_manager\family\use_cases\importers\family_importer.py:40
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:89
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:89
 #: .\ampa_manager\importation\models\child_with_surnames_import_data.py:8
 msgid "Surnames"
 msgstr ""
@@ -1643,8 +1712,8 @@ msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
 
 #: .\ampa_manager\family\models\parent.py:16
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:90
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:94
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:90
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:94
 #: .\ampa_manager\importation\models\parent_import_data.py:7
 msgid "Name and surnames"
 msgstr ""
@@ -1654,8 +1723,8 @@ msgid "Normalized name and surnames"
 msgstr ""
 
 #: .\ampa_manager\family\models\parent.py:19
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:91
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:95
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:91
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:95
 #: .\ampa_manager\family\use_cases\importers\parent_importer.py:56
 #: .\ampa_manager\importation\models\parent_import_data.py:8
 msgid "Phone number"
@@ -1804,61 +1873,57 @@ msgstr ""
 msgid "Missing parent"
 msgstr ""
 
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:90
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:91
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:92
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:93
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:94
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:95
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:96
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:90
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:91
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:92
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:93
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:94
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:95
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:96
 #, python-format
 msgid "Parent %(number)s"
 msgstr ""
 
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:93
-msgid "Bank account IBAN"
-msgstr ""
-
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:97
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:98
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:99
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:100
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:101
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:102
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:103
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:104
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:105
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:106
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:107
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:108
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:109
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:110
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:111
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:97
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:98
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:99
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:100
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:101
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:102
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:103
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:104
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:105
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:106
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:107
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:108
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:109
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:110
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:111
 #, python-format
 msgid "Child %(number)s"
 msgstr ""
 
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:97
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:100
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:103
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:106
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:109
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:97
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:100
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:103
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:106
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:109
 msgid "Name (without surnames)"
 msgstr ""
 
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:98
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:101
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:104
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:107
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:110
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:98
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:101
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:104
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:107
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:110
 msgid "Level (ex. HH4, LH3)"
 msgstr ""
 
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:99
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:102
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:105
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:108
-#: .\ampa_manager\family\use_cases\importers\members_importer.py:111
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:99
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:102
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:105
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:108
+#: .\ampa_manager\family\use_cases\importers\old_members_importer.py:111
 msgid "Year of birth (ex. 2015)"
 msgstr ""
 
@@ -1999,7 +2064,7 @@ msgstr ""
 msgid "Parent import data"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:195
+#: .\ampa_manager\templates\base_import.html:218
 #: .\ampa_manager\templates\check_family_email.html:32
 #: .\ampa_manager\templates\check_members.html:9
 #: .\ampa_manager\templates\import_after_schools_activities.html:10
@@ -2012,11 +2077,11 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:205
+#: .\ampa_manager\templates\base_import.html:228
 msgid "Select file to import"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:209
+#: .\ampa_manager\templates\base_import.html:232
 #: .\ampa_manager\templates\import_after_schools_activities.html:22
 #: .\ampa_manager\templates\import_after_schools_registrations.html:22
 #: .\ampa_manager\templates\import_camps.html:22
@@ -2026,7 +2091,7 @@ msgstr ""
 msgid "Import file"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:219
+#: .\ampa_manager\templates\base_import.html:242
 #: .\ampa_manager\templates\import_after_schools_activities.html:46
 #: .\ampa_manager\templates\import_after_schools_registrations.html:46
 #: .\ampa_manager\templates\import_camps.html:46
@@ -2036,53 +2101,53 @@ msgstr ""
 msgid "Results"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:223
+#: .\ampa_manager\templates\base_import.html:246
 msgid "Warning: This has been a test of the import"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:225
+#: .\ampa_manager\templates\base_import.html:248
 msgid "Nothing has been imported"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:226
+#: .\ampa_manager\templates\base_import.html:249
 msgid ""
 "If the results are ok, import the file again disabling the \"TEST THE IMPORT"
 "\" option"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:234
+#: .\ampa_manager\templates\base_import.html:257
 msgid "Show all rows"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:235
+#: .\ampa_manager\templates\base_import.html:258
 msgid "Imported Ok"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:236
+#: .\ampa_manager\templates\base_import.html:259
 msgid "Imported warning"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:237
+#: .\ampa_manager\templates\base_import.html:260
 msgid "Not imported"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:244
+#: .\ampa_manager\templates\base_import.html:267
 msgid "Result"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:245
+#: .\ampa_manager\templates\base_import.html:268
 msgid "Imported"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:246
+#: .\ampa_manager\templates\base_import.html:269
 msgid "Excel"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:247
+#: .\ampa_manager\templates\base_import.html:270
 msgid "Formatted"
 msgstr ""
 
-#: .\ampa_manager\templates\base_import.html:265
+#: .\ampa_manager\templates\base_import.html:288
 msgid "There are no results"
 msgstr ""
 
@@ -2165,16 +2230,11 @@ msgid "Column"
 msgstr ""
 
 #: .\ampa_manager\templates\check_members.html:32
-msgid "Family surnames"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:32
 msgid "Compulsory"
 msgstr ""
 
 #: .\ampa_manager\templates\check_members.html:33
 #: .\ampa_manager\templates\check_members.html:34
-#: .\ampa_manager\templates\import_custody.html:10
 msgid "Optional"
 msgstr ""
 
@@ -2302,7 +2362,11 @@ msgid ""
 msgstr ""
 
 #: .\ampa_manager\templates\import_custody.html:10
-msgid "Create a new custody edition"
+msgid "If the required custody edition does not exist "
+msgstr ""
+
+#: .\ampa_manager\templates\import_custody.html:10
+msgid "you can create it here"
 msgstr ""
 
 #: .\ampa_manager\templates\import_family_email.html:6
@@ -2322,6 +2386,7 @@ msgstr ""
 #: .\ampa_manager\templates\import_members.html:6
 #: .\ampa_manager\templates\import_members.html:11
 #: .\ampa_manager\templates\import_members.html:16
+#: .\ampa_manager\views\import_members.py:19
 msgid "Import members"
 msgstr ""
 

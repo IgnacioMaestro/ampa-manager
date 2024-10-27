@@ -23,7 +23,7 @@ class ImportModelResult:
         NOT_PROCESSED: _('Not processed'),
         NOT_MODIFIED: _('Not modified'),
         CREATED: _('Created'),
-        UPDATED: _('Updated'),
+        UPDATED: _('Modified'),
         ERROR: _('Error'),
         OMITTED: _('Omitted'),
     }

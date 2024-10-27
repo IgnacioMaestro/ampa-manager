@@ -89,4 +89,4 @@ class ParentImporter:
     def parent_is_modified(self):
         return ((self.phone_number is not None and self.phone_number != self.parent.phone_number) or
                 (self.additional_phone_number is not None and self.additional_phone_number != self.parent.additional_phone_number) or
-                (self.email is not None and not self.email != self.parent.email))
+                (self.email is not None and self.email != self.parent.email))

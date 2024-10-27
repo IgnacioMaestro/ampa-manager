@@ -33,17 +33,8 @@ class CustodyImporter(BaseImporter):
     ]
 
     def __init__(self, excel_content: bytes, custody_edition: CustodyEdition):
-        self.excel_content: bytes = excel_content
         self.custody_edition: CustodyEdition = custody_edition
-
-    def run(self) -> ImportExcelResult:
-        rows: list[Row] = ExcelDataExtractorPandas(
-            self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
-
-        for row in rows:
-            self.process_row(row)
-
-        return ImportExcelResult(rows)
+        super().__init__(excel_content)
 
     def process_row(self, row: Row):
         if row.any_error or row.is_empty:

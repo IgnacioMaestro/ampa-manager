@@ -3,6 +3,7 @@ from typing import List
 from django import template
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext
 
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
@@ -19,6 +20,7 @@ register = template.Library()
 
 html_new_line = '<br/>'
 new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
+new_line_tab = '<br/>&nbsp;&nbsp;'
 html_space = '&nbsp;'
 
 
@@ -110,7 +112,7 @@ def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColu
 
         if column.error:
             value = generate_span('formatted_column_value_error', formatted_value)
-            value += new_line_tab_hyphen + generate_span('formatted_column_value_error', column.error)
+            value += new_line_tab + generate_span('formatted_column_value_error', column.error)
         elif column.modified:
             value = generate_span('formatted_column_value_warning', formatted_value)
         else:
@@ -122,7 +124,7 @@ def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColu
 def get_instance_details(result: ImportModelResult) -> str:
     if result.instance:
         if result.model == CustodyRegistration:
-            return (f'{new_line_tab_hyphen}{result.instance.assisted_days} {_("assisted days")}'
+            return (f'{new_line_tab_hyphen}{result.instance.assisted_days} {CustodyRegistration.ASSISTED_DAYS}'
                     f'{new_line_tab_hyphen}{result.instance.holder.bank_account} ({result.instance.holder.parent})')
         elif result.model == CampsRegistration:
             return f'{result.instance.holder}'
@@ -146,7 +148,7 @@ def row_imported_models_to_html(row: Row):
         result_details = ''
         result_details += generate_span('list_item_label', result.model_verbose_name)
         result_details += ' ' + generate_span('list_item_value', get_instance_details(result))
-        if result.state not in [ImportModelResult.OMITTED, ImportModelResult.NOT_MODIFIED]:
+        if result.state not in [ImportModelResult.OMITTED, ImportModelResult.NOT_MODIFIED, ImportModelResult.ERROR]:
             result_details += ' ' + generate_span(f'imported_model_status_{result.state.lower()}', result.state_label)
 
         # CHANGED FIELDS
@@ -159,16 +161,16 @@ def row_imported_models_to_html(row: Row):
 
         # ERROR
         if result.error_message:
-            result_details += new_line_tab_hyphen + generate_span('imported_model_error', result.error_message)
+            result_details += new_line_tab + generate_span('imported_model_error', result.error_message)
 
         # WARNINGS
         for warning_message in result.warnings:
-            result_details += new_line_tab_hyphen + generate_span('imported_model_warning', warning_message)
+            result_details += new_line_tab + generate_span('imported_model_warning', warning_message)
 
         # MINOR WARNINGS
         if result.state != ImportModelResult.NOT_MODIFIED:
             for warning_message in result.minor_warnings:
-                result_details += new_line_tab_hyphen + generate_span('imported_model_warning', warning_message)
+                result_details += new_line_tab + generate_span('imported_model_warning', warning_message)
 
         if result.instance:
             result_details = Utils.get_model_instance_link(result.model.__name__.lower(), result.instance.id, result_details)

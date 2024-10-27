@@ -6,6 +6,8 @@ from ampa_manager.activity.models.after_school.after_school_registration import 
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.excel_column_definition import ExcelColumnDefinition
+from ampa_manager.activity.use_cases.importers.excel_data_extractor_pandas import ExcelDataExtractorPandas
+from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.family.models.child import Child
@@ -22,6 +24,10 @@ from ampa_manager.utils.string_utils import StringUtils
 
 
 class BaseImporter:
+    SHEET_NUMBER = 0
+    FIRST_ROW_INDEX = 2
+    COLUMNS_TO_IMPORT = []
+
     KEY_FAMILY_EMAIL = 'family_email'
     KEY_FAMILY_SURNAMES = 'family_surnames'
     KEY_PARENT_1_NAME_AND_SURNAMES = 'parent_1_name_and_surnames'
@@ -50,12 +56,12 @@ class BaseImporter:
     family_surnames = ExcelColumnDefinition(
         KEY_FAMILY_SURNAMES, _('Family surnames'), _('Family surnames'), FieldsFormatters.format_name)
     parent_1_name_and_surnames = ExcelColumnDefinition(
-        KEY_PARENT_1_NAME_AND_SURNAMES, _('Parent 1 name and surnames'), _('Parent 1 name and surnames'),
+        KEY_PARENT_1_NAME_AND_SURNAMES, _('Parent 1 name and surnames'), _('Parent name and surnames'),
         FieldsFormatters.format_name)
     parent_1_phone_number = ExcelColumnDefinition(
-        KEY_PARENT_1_PHONE_NUMBER, _('Parent 1 phone number'), _('Parent 1 phone number'), FieldsFormatters.format_phone)
+        KEY_PARENT_1_PHONE_NUMBER, _('Parent 1 phone number'), _('Parent phone number'), FieldsFormatters.format_phone)
     parent_1_email = ExcelColumnDefinition(
-        KEY_PARENT_1_EMAIL, _('Parent 1 email'), _('Parent 1 email'), FieldsFormatters.format_email)
+        KEY_PARENT_1_EMAIL, _('Parent 1 email'), _('Parent email'), FieldsFormatters.format_email)
     parent_2_name_and_surnames = ExcelColumnDefinition(
         KEY_PARENT_2_NAME_AND_SURNAMES, _('Parent 2 name and surnames'), _('Parent 2 name and surnames'),
         FieldsFormatters.format_name)
@@ -66,11 +72,11 @@ class BaseImporter:
     bank_account_iban = ExcelColumnDefinition(
         KEY_BANK_ACCOUNT_IBAN, _('Bank account IBAN'), _('Bank account IBAN'), FieldsFormatters.format_iban)
     child_1_name = ExcelColumnDefinition(
-        KEY_CHILD_1_NAME, _('Child 1 name'), _('Child 1 name'), FieldsFormatters.format_name)
+        KEY_CHILD_1_NAME, _('Child 1 name'), _('Child name'), FieldsFormatters.format_name)
     child_1_level = ExcelColumnDefinition(
-        KEY_CHILD_1_LEVEL, _('Child 1 level'), _('Child 1 level'), FieldsFormatters.format_level)
+        KEY_CHILD_1_LEVEL, _('Child 1 level'), _('Child level'), FieldsFormatters.format_level)
     child_1_year_of_birth = ExcelColumnDefinition(
-        KEY_CHILD_1_YEAR_OF_BIRTH, _('Child 1 year of birth'), _('Child 1 year of birth'),
+        KEY_CHILD_1_YEAR_OF_BIRTH, _('Child 1 year of birth'), _('Child year of birth'),
         FieldsFormatters.format_integer)
     child_2_name = ExcelColumnDefinition(
         KEY_CHILD_2_NAME, _('Child 2 name'), _('Child 2 name'), FieldsFormatters.format_name)
@@ -96,6 +102,21 @@ class BaseImporter:
     assisted_days = ExcelColumnDefinition(
         'assisted_days', _('Assisted days in the selected edition'), _('Assistance'),
         FieldsFormatters.format_integer)
+
+    def __init__(self, excel_content: bytes):
+        self.excel_content: bytes = excel_content
+
+    def run(self) -> ImportExcelResult:
+        rows: list[Row] = ExcelDataExtractorPandas(
+            self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
+
+        for row in rows:
+            self.process_row(row)
+
+        return ImportExcelResult(rows)
+
+    def process_row(self, row: Row):
+        raise NotImplementedError
 
     @classmethod
     def import_family(cls, row: Row) -> Optional[Family]:
