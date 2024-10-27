@@ -1,18 +1,16 @@
 from typing import Optional
 
-from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
-from ampa_manager.activity.use_cases.importers.excel_data_extractor_pandas import ExcelDataExtractorPandas
-from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
-from ampa_manager.activity.use_cases.old_importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.family_holders_consolidator import FamilyHoldersConsolidator
+from ampa_manager.family.use_cases.importers.membership_importer import MembershipImporter
 
 
 class MembersImporter(BaseImporter):
@@ -43,19 +41,6 @@ class MembersImporter(BaseImporter):
         ExcelColumn(8, BaseImporter.child_4_level),
     ]
 
-    def __init__(self, excel_content: bytes, custody_edition: CustodyEdition):
-        self.excel_content: bytes = excel_content
-        self.custody_edition: CustodyEdition = custody_edition
-
-    def run(self) -> ImportExcelResult:
-        rows: list[Row] = ExcelDataExtractorPandas(
-            self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
-
-        for row in rows:
-            self.process_row(row)
-
-        return ImportExcelResult(rows)
-
     def process_row(self, row: Row):
         if row.any_error or row.is_empty:
             return
@@ -65,39 +50,48 @@ class MembersImporter(BaseImporter):
             if not family:
                 return
 
-            child: Child = self.import_child(row, family)
-            if not child:
+            child1: Child = self.import_child(row, family, compulsory=True, child_number=1)
+            if not child1:
                 return
 
-            parent: Parent = self.import_parent(row, family, False)
+            self.import_child(row, family, compulsory=False, child_number=2)
             if row.any_error:
                 return
 
-            if parent:
-                holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent)
+            self.import_child(row, family, compulsory=False, child_number=3)
+            if row.any_error:
+                return
+
+            self.import_child(row, family, compulsory=False, child_number=4)
+            if row.any_error:
+                return
+
+            parent1: Parent = self.import_parent(row, family, compulsory=True, parent_number=1)
+            if row.any_error:
+                return
+
+            if parent1:
+                holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent1)
                 if holder:
-                    family.update_custody_holder(holder)
+                    family.update_membership_holder(holder)
+
+            self.import_parent(row, family, compulsory=False, parent_number=2)
+            if row.any_error:
+                return
 
             FamilyHoldersConsolidator(family).consolidate()
 
-            if not family.custody_holder:
+            if not family.membership_holder:
                 row.set_error('Missing bank account')
                 return
 
-            self.import_custody_registration(row, self.custody_edition, family.custody_holder, child)
+            self.import_membership(row, family)
 
         except Exception as e:
             row.error = str(e)
 
-    def import_custody_registration(self, row: Row, edition: CustodyEdition, holder: Holder, child: Child):
-        assisted_days = row.get_value(self.KEY_ASSISTED_DAYS)
-
-        result: ImportModelResult = CustodyRegistrationImporter(
-            edition=edition,
-            holder=holder,
-            child=child,
-            assisted_days=assisted_days).import_registration()
-
+    @classmethod
+    def import_membership(cls, row: Row, family: Family) -> Membership:
+        result: ImportModelResult = MembershipImporter(family=family).import_membership()
         row.add_imported_model_result(result)
-
         return result.instance

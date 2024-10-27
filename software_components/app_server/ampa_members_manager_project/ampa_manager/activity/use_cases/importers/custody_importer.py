@@ -1,13 +1,12 @@
 from typing import Optional
 
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
+from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
+from ampa_manager.activity.use_cases.importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
-from ampa_manager.activity.use_cases.importers.excel_data_extractor_pandas import ExcelDataExtractorPandas
-from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
-from ampa_manager.activity.use_cases.old_importers.custody_registration_importer import CustodyRegistrationImporter
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -45,11 +44,11 @@ class CustodyImporter(BaseImporter):
             if not family:
                 return
 
-            child: Child = self.import_child(row, family)
+            child: Child = self.import_child(row, family, compulsory=True)
             if not child:
                 return
 
-            parent: Parent = self.import_parent(row, family, False)
+            parent: Parent = self.import_parent(row, family, compulsory=False)
             if row.any_error:
                 return
 
@@ -69,7 +68,8 @@ class CustodyImporter(BaseImporter):
         except Exception as e:
             row.error = str(e)
 
-    def import_custody_registration(self, row: Row, edition: CustodyEdition, holder: Holder, child: Child):
+    def import_custody_registration(self, row: Row, edition: CustodyEdition, holder: Holder,
+                                    child: Child) -> CustodyRegistration:
         assisted_days = row.get_value(self.KEY_ASSISTED_DAYS)
 
         result: ImportModelResult = CustodyRegistrationImporter(

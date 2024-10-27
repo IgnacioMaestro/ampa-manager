@@ -186,6 +186,11 @@ class Family(TimeStampedModel):
             self.custody_holder = holder
             self.save()
 
+    def update_membership_holder(self, holder: Holder):
+        if self.membership_holder != holder:
+            self.membership_holder = holder
+            self.save()
+
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
         emails = []

@@ -28,7 +28,7 @@ class ImportModelResult:
         OMITTED: _('Omitted'),
     }
 
-    def __init__(self, model: Model):
+    def __init__(self, model):
         self.model = model
         self.instance: Optional[Model] = None
         self.state: str = self.NOT_PROCESSED

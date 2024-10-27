@@ -131,26 +131,45 @@ class BaseImporter:
         return result.instance
 
     @classmethod
-    def import_child(cls, row: Row, family: Family) -> Optional[Child]:
-        name = row.get_value(cls.KEY_CHILD_1_NAME)
-        level = row.get_value(cls.KEY_CHILD_1_LEVEL)
-        year_of_birth = row.get_value(cls.KEY_CHILD_1_YEAR_OF_BIRTH)
+    def import_child(cls, row: Row, family: Family, compulsory: bool, child_number: int = 1) -> Optional[Child]:
+        if child_number == 1:
+            name = row.get_value(cls.KEY_CHILD_1_NAME)
+            level = row.get_value(cls.KEY_CHILD_1_LEVEL)
+            year_of_birth = row.get_value(cls.KEY_CHILD_1_YEAR_OF_BIRTH)
+        elif child_number == 2:
+            name = row.get_value(cls.KEY_CHILD_2_NAME)
+            level = row.get_value(cls.KEY_CHILD_2_LEVEL)
+            year_of_birth = row.get_value(cls.KEY_CHILD_2_YEAR_OF_BIRTH)
+        elif child_number == 3:
+            name = row.get_value(cls.KEY_CHILD_3_NAME)
+            level = row.get_value(cls.KEY_CHILD_3_LEVEL)
+            year_of_birth = row.get_value(cls.KEY_CHILD_3_YEAR_OF_BIRTH)
+        else:
+            name = row.get_value(cls.KEY_CHILD_4_NAME)
+            level = row.get_value(cls.KEY_CHILD_4_LEVEL)
+            year_of_birth = row.get_value(cls.KEY_CHILD_4_YEAR_OF_BIRTH)
 
         result: ImportModelResult = ChildImporter(
             family=family,
             name=name,
             level=level,
-            year_of_birth=year_of_birth).import_child()
+            year_of_birth=year_of_birth,
+            compulsory=compulsory).import_child()
 
         row.add_imported_model_result(result)
 
         return result.instance
 
     @classmethod
-    def import_parent(cls, row: Row, family: Family, compulsory: bool) -> Optional[Parent]:
-        name_and_surnames = row.get_value(cls.KEY_PARENT_1_NAME_AND_SURNAMES)
-        phone_number = row.get_value(cls.KEY_PARENT_1_PHONE_NUMBER)
-        email = row.get_value(cls.KEY_PARENT_1_EMAIL)
+    def import_parent(cls, row: Row, family: Family, compulsory: bool, parent_number: int = 1) -> Optional[Parent]:
+        if parent_number == 1:
+            name_and_surnames = row.get_value(cls.KEY_PARENT_1_NAME_AND_SURNAMES)
+            phone_number = row.get_value(cls.KEY_PARENT_1_PHONE_NUMBER)
+            email = row.get_value(cls.KEY_PARENT_1_EMAIL)
+        else:
+            name_and_surnames = row.get_value(cls.KEY_PARENT_2_NAME_AND_SURNAMES)
+            phone_number = row.get_value(cls.KEY_PARENT_2_PHONE_NUMBER)
+            email = row.get_value(cls.KEY_PARENT_2_EMAIL)
 
         result: ImportModelResult = ParentImporter(
             family=family,

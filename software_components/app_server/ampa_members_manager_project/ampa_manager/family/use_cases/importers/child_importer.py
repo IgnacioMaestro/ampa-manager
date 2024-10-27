@@ -10,16 +10,21 @@ from ampa_manager.family.models.child import Child
 
 class ChildImporter:
 
-    def __init__(self, family, name: str, level: str, year_of_birth: int):
+    def __init__(self, family, name: str, level: str, year_of_birth: int, compulsory: bool):
         self.result: ImportModelResult = ImportModelResult(Child)
         self.family = family
         self.name = name
         self.level = level
         self.year_of_birth = year_of_birth
         self.repetition = None
+        self.compulsory = compulsory
         self.child = None
 
     def import_child(self) -> ImportModelResult:
+        if not self.compulsory and self.all_child_fields_are_empty():
+            self.result.set_omitted()
+            return self.result
+
         error_message = self.validate_fields()
         if error_message is None:
 
@@ -36,6 +41,9 @@ class ChildImporter:
             self.result.set_error(error_message)
 
         return self.result
+
+    def all_child_fields_are_empty(self):
+        return not self.name and not self.level and not self.year_of_birth
 
     def manage_not_found_child(self):
         child = Child.objects.create(name=self.name, year_of_birth=self.year_of_birth, repetition=self.repetition,
@@ -61,7 +69,8 @@ class ChildImporter:
             self.result.set_not_modified(self.child)
 
     def child_is_modified(self):
-        return self.year_of_birth != self.child.year_of_birth or self.repetition != self.child.repetition
+        return ((self.year_of_birth is not None and self.year_of_birth != self.child.year_of_birth) or
+                (self.repetition is not None and self.repetition != self.child.repetition))
 
     def validate_fields(self) -> Optional[str]:
         if not self.family:

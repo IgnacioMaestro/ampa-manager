@@ -7,6 +7,9 @@ from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 
 class ImportMembersForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportAfterSchoolsRegistrationsForm(forms.Form):
