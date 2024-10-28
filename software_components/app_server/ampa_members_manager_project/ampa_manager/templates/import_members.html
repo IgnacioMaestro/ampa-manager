@@ -15,7 +15,7 @@
             <li>{% trans 'The columns must be in the following order' %}:
                 <ul>
                 {% for column in excel_columns %}
-                    <li>{% trans 'Column' %} {{ column.letter }}:  {{ column.label }}</li>
+                    <li><span class="{{ column.style }}">{% trans 'Column' %} {{ column.letter }}:  {{ column.label }}</span></li>
                 {% endfor %}
                 </ul>
             </li>

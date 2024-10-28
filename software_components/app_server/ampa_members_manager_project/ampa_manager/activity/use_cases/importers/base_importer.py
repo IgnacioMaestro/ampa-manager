@@ -28,6 +28,15 @@ class BaseImporter:
     FIRST_ROW_INDEX = 2
     COLUMNS_TO_IMPORT = []
 
+    STYLE_FAMILY = 'style_family'
+    STYLE_PARENT1 = 'style_parent1'
+    STYLE_PARENT2 = 'style_parent2'
+    STYLE_CHILD1 = 'style_child1'
+    STYLE_CHILD2 = 'style_child2'
+    STYLE_CHILD3 = 'style_child3'
+    STYLE_CHILD4 = 'style_child4'
+    STYLE_OTHERS = 'style_others'
+
     KEY_FAMILY_EMAIL = 'family_email'
     KEY_FAMILY_SURNAMES = 'family_surnames'
     KEY_PARENT_1_NAME_AND_SURNAMES = 'parent_1_name_and_surnames'
@@ -52,56 +61,62 @@ class BaseImporter:
     KEY_ASSISTED_DAYS = 'assisted_days'
 
     family_email = ExcelColumnDefinition(
-        KEY_FAMILY_EMAIL, _('Family email'), _('Family email'), FieldsFormatters.format_email)
+        KEY_FAMILY_EMAIL, _('Family: email'), _('Family: email'), FieldsFormatters.format_email, STYLE_FAMILY)
     family_surnames = ExcelColumnDefinition(
-        KEY_FAMILY_SURNAMES, _('Family surnames'), _('Family surnames'), FieldsFormatters.format_name)
+        KEY_FAMILY_SURNAMES, _('Family: surnames'), _('Family: surnames'), FieldsFormatters.format_name, STYLE_FAMILY)
     parent_1_name_and_surnames = ExcelColumnDefinition(
-        KEY_PARENT_1_NAME_AND_SURNAMES, _('Parent 1 name and surnames'), _('Parent name and surnames'),
-        FieldsFormatters.format_name)
+        KEY_PARENT_1_NAME_AND_SURNAMES, _('Parent/Mother 1: name and surnames'), _('Parent/Mother: name and surnames'),
+        FieldsFormatters.format_name, STYLE_PARENT1)
     parent_1_phone_number = ExcelColumnDefinition(
-        KEY_PARENT_1_PHONE_NUMBER, _('Parent 1 phone number'), _('Parent phone number'), FieldsFormatters.format_phone)
+        KEY_PARENT_1_PHONE_NUMBER, _('Parent/Mother 1: phone number'), _('Parent/Mother: phone number'),
+        FieldsFormatters.format_phone, STYLE_PARENT1)
     parent_1_email = ExcelColumnDefinition(
-        KEY_PARENT_1_EMAIL, _('Parent 1 email'), _('Parent email'), FieldsFormatters.format_email)
-    parent_2_name_and_surnames = ExcelColumnDefinition(
-        KEY_PARENT_2_NAME_AND_SURNAMES, _('Parent 2 name and surnames'), _('Parent 2 name and surnames'),
-        FieldsFormatters.format_name)
-    parent_2_phone_number = ExcelColumnDefinition(
-        KEY_PARENT_2_PHONE_NUMBER, _('Parent 2 phone number'), _('Parent 2 phone number'), FieldsFormatters.format_phone)
-    parent_2_email = ExcelColumnDefinition(
-        KEY_PARENT_2_EMAIL, _('Parent 2 email'), _('Parent 2 email'), FieldsFormatters.format_email)
+        KEY_PARENT_1_EMAIL, _('Parent/Mother 1: email'), _('Parent/Mother: email'), FieldsFormatters.format_email,
+        STYLE_PARENT1)
     bank_account_iban = ExcelColumnDefinition(
-        KEY_BANK_ACCOUNT_IBAN, _('Bank account IBAN'), _('Bank account IBAN'), FieldsFormatters.format_iban)
+        KEY_BANK_ACCOUNT_IBAN, _('Parent/Mother 1: bank account IBAN'), _('Parent/Mother 1: bank account IBAN'),
+        FieldsFormatters.format_iban, STYLE_PARENT1)
+    parent_2_name_and_surnames = ExcelColumnDefinition(
+        KEY_PARENT_2_NAME_AND_SURNAMES, _('Parent/Mother 2: name and surnames'),
+        _('Parent/Mother 2: name and surnames'),
+        FieldsFormatters.format_name, STYLE_PARENT2)
+    parent_2_phone_number = ExcelColumnDefinition(
+        KEY_PARENT_2_PHONE_NUMBER, _('Parent/Mother 2: phone number'), _('Parent/Mother 2: phone number'),
+        FieldsFormatters.format_phone, STYLE_PARENT2)
+    parent_2_email = ExcelColumnDefinition(
+        KEY_PARENT_2_EMAIL, _('Parent/Mother 2: email'), _('Parent/Mother 2: email'), FieldsFormatters.format_email,
+        STYLE_PARENT2)
     child_1_name = ExcelColumnDefinition(
-        KEY_CHILD_1_NAME, _('Child 1 name'), _('Child name'), FieldsFormatters.format_name)
+        KEY_CHILD_1_NAME, _('Child 1: name without surnames'), _('Child: name'), FieldsFormatters.format_name, STYLE_CHILD1)
     child_1_level = ExcelColumnDefinition(
-        KEY_CHILD_1_LEVEL, _('Child 1 level'), _('Child level'), FieldsFormatters.format_level)
+        KEY_CHILD_1_LEVEL, _('Child 1: level'), _('Child: level'), FieldsFormatters.format_level, STYLE_CHILD1)
     child_1_year_of_birth = ExcelColumnDefinition(
-        KEY_CHILD_1_YEAR_OF_BIRTH, _('Child 1 year of birth'), _('Child year of birth'),
-        FieldsFormatters.format_integer)
+        KEY_CHILD_1_YEAR_OF_BIRTH, _('Child 1: year of birth'), _('Child: year of birth'),
+        FieldsFormatters.format_integer, STYLE_CHILD1)
     child_2_name = ExcelColumnDefinition(
-        KEY_CHILD_2_NAME, _('Child 2 name'), _('Child 2 name'), FieldsFormatters.format_name)
+        KEY_CHILD_2_NAME, _('Child 2: name without surnames'), _('Child 2: name'), FieldsFormatters.format_name, STYLE_CHILD2)
     child_2_level = ExcelColumnDefinition(
-        KEY_CHILD_2_LEVEL, _('Child 2 level'), _('Child 2 level'), FieldsFormatters.format_level)
+        KEY_CHILD_2_LEVEL, _('Child 2: level'), _('Child 2: level'), FieldsFormatters.format_level, STYLE_CHILD2)
     child_2_year_of_birth = ExcelColumnDefinition(
-        KEY_CHILD_2_YEAR_OF_BIRTH, _('Child 2 year of birth'), _('Child 2 year of birth'),
-        FieldsFormatters.format_integer)
+        KEY_CHILD_2_YEAR_OF_BIRTH, _('Child 2: year of birth'), _('Child 2: year of birth'),
+        FieldsFormatters.format_integer, STYLE_CHILD2)
     child_3_name = ExcelColumnDefinition(
-        KEY_CHILD_3_NAME, _('Child 3 name'), _('Child 3 name'), FieldsFormatters.format_name)
+        KEY_CHILD_3_NAME, _('Child 3: name without surnames'), _('Child 3: name'), FieldsFormatters.format_name, STYLE_CHILD3)
     child_3_level = ExcelColumnDefinition(
-        KEY_CHILD_3_LEVEL, _('Child 3 level'), _('Child 3 level'), FieldsFormatters.format_level)
+        KEY_CHILD_3_LEVEL, _('Child 3: level'), _('Child 3: level'), FieldsFormatters.format_level, STYLE_CHILD3)
     child_3_year_of_birth = ExcelColumnDefinition(
-        KEY_CHILD_3_YEAR_OF_BIRTH, _('Child 3 year of birth'), _('Child 3 year of birth'),
-        FieldsFormatters.format_integer)
+        KEY_CHILD_3_YEAR_OF_BIRTH, _('Child 3: year of birth'), _('Child 3: year of birth'),
+        FieldsFormatters.format_integer, STYLE_CHILD3)
     child_4_name = ExcelColumnDefinition(
-        KEY_CHILD_4_NAME, _('Child 4 name'), _('Child 4 name'), FieldsFormatters.format_name)
+        KEY_CHILD_4_NAME, _('Child 4: name without surnames'), _('Child 4: name'), FieldsFormatters.format_name, STYLE_CHILD4)
     child_4_level = ExcelColumnDefinition(
-        KEY_CHILD_4_LEVEL, _('Child 4 level'), _('Child 4 level'), FieldsFormatters.format_level)
+        KEY_CHILD_4_LEVEL, _('Child 4: level'), _('Child 4: level'), FieldsFormatters.format_level, STYLE_CHILD4)
     child_4_year_of_birth = ExcelColumnDefinition(
-        KEY_CHILD_4_YEAR_OF_BIRTH, _('Child 4 year of birth'), _('Child 4 year of birth'),
-        FieldsFormatters.format_integer)
+        KEY_CHILD_4_YEAR_OF_BIRTH, _('Child 4: year of birth'), _('Child 4: year of birth'),
+        FieldsFormatters.format_integer, STYLE_CHILD4)
     assisted_days = ExcelColumnDefinition(
         'assisted_days', _('Assisted days in the selected edition'), _('Assistance'),
-        FieldsFormatters.format_integer)
+        FieldsFormatters.format_integer, STYLE_OTHERS)
 
     def __init__(self, excel_content: bytes):
         self.excel_content: bytes = excel_content

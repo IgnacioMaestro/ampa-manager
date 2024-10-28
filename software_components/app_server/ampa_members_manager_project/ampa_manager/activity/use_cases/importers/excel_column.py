@@ -10,6 +10,7 @@ class ExcelColumn:
         self.key = column_definition.key
         self.label = column_definition.label
         self.short_label = column_definition.short_label
+        self.style = column_definition.style
         self.letter = StringUtils.get_excel_column_letter(index).upper()
 
     @classmethod
