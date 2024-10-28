@@ -6,15 +6,16 @@ from ampa_manager.family.models.membership import Membership
 class MembershipImporter:
 
     def __init__(self, family: Family):
-        self.result = ImportModelResult(Family)
+        self.result: ImportModelResult = ImportModelResult(Membership)
         self.family = family
+        self.membership = None
 
     def import_membership(self) -> ImportModelResult:
         if Membership.objects.of_family(self.family).exists():
-            membership = Membership.objects.of_family(self.family).first()
-            self.result.set_not_modified(membership)
+            self.membership = Membership.objects.of_family(self.family).first()
+            self.result.set_not_modified(self.membership)
         else:
-            membership = Membership.make_member_for_active_course(self.family)
-            self.result.set_created(membership)
+            self.membership = Membership.make_member_for_active_course(self.family)
+            self.result.set_created(self.membership)
 
-        return membership
+        return self.result

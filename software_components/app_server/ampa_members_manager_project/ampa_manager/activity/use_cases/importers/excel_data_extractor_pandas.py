@@ -43,6 +43,9 @@ class ExcelDataExtractorPandas:
                 raw_value = None
 
             formatted_value = formatter(raw_value) if raw_value is not None else None
+        except IndexError:
+            raw_value = None
+            formatted_value = None
         except Exception as e:
             if hasattr(e, 'message'):
                 error = e.message

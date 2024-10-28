@@ -88,7 +88,11 @@ class FieldsFormatters:
             if Level.is_valid(level):
                 return level
             else:
-                raise ValidationError(_('Wrong level') + f' ({value})')
+                guessed_level = Level.guess_level(level)
+                if guessed_level is not None:
+                    return guessed_level
+                else:
+                    raise ValidationError(_('Wrong level') + f' ({value})')
         return None
 
     @staticmethod
