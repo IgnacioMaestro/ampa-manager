@@ -20,20 +20,23 @@ class ParentImporter:
         self.parent = None
 
     def import_parent(self) -> ImportModelResult:
-        if not self.compulsory and self.all_parent_fields_are_empty():
-            self.result.set_omitted()
-            return self.result
+        try:
+            if not self.compulsory and self.all_parent_fields_are_empty():
+                self.result.set_omitted()
+                return self.result
 
-        error_message = self.validate_fields()
+            error_message = self.validate_fields()
 
-        if error_message is None:
-            self.parent = self.family.find_parent(self.name_and_surnames)
-            if self.parent:
-                self.manage_found_parent()
+            if error_message is None:
+                self.parent = self.family.find_parent(self.name_and_surnames)
+                if self.parent:
+                    self.manage_found_parent()
+                else:
+                    self.manage_not_found_parent()
             else:
-                self.manage_not_found_parent()
-        else:
-            self.result.set_error(error_message)
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
 
         return self.result
 

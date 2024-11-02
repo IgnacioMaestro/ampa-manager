@@ -14,10 +14,16 @@ class ImportMembersForm(forms.Form):
 
 class ImportAfterSchoolsRegistrationsForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportAfterSchoolsActivitiesForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportCustodyForm(forms.Form):
@@ -44,10 +50,6 @@ class ImportCampsForm(forms.Form):
 
 
 class CheckMembersForm(forms.Form):
-    file = forms.FileField()
-
-
-class ImportFamilyEmailForm(forms.Form):
     file = forms.FileField()
 
 

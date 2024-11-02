@@ -124,19 +124,19 @@ class BaseImporter:
         FieldsFormatters.format_integer, STYLE_OTHERS)
     activity_name = ExcelColumnDefinition(
         KEY_ACTIVITY_NAME, _('Activity name'), _('Activity'),
-        FieldsFormatters.format_integer, STYLE_OTHERS)
+        FieldsFormatters.format_string, STYLE_OTHERS)
     activity_period = ExcelColumnDefinition(
         KEY_ACTIVITY_PERIOD, _('Activity period (ostirala-viernes)'), _('Period'),
-        FieldsFormatters.format_integer, STYLE_OTHERS)
+        FieldsFormatters.format_string, STYLE_OTHERS)
     activity_timetable = ExcelColumnDefinition(
         KEY_ACTIVITY_TIMETABLE, _('Activity timetable (17:00-18:00)'), _('Timetable'),
-        FieldsFormatters.format_integer, STYLE_OTHERS)
+        FieldsFormatters.format_string, STYLE_OTHERS)
     activity_price_members = ExcelColumnDefinition(
         KEY_ACTIVITY_PRICE_MEMBERS, _('Activity price for members'), _('Price members'),
-        FieldsFormatters.format_integer, STYLE_OTHERS)
+        FieldsFormatters.format_float, STYLE_OTHERS)
     activity_price_non_members = ExcelColumnDefinition(
         KEY_ACTIVITY_PRICE_NON_MEMBERS, _('Activity price for non members'), _('Price non members'),
-        FieldsFormatters.format_integer, STYLE_OTHERS)
+        FieldsFormatters.format_float, STYLE_OTHERS)
 
     def __init__(self, excel_content: bytes):
         self.excel_content: bytes = excel_content

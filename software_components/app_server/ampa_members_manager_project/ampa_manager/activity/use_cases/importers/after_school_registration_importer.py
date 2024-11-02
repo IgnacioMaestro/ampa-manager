@@ -19,16 +19,19 @@ class AfterSchoolRegistrationImporter:
         self.registration = None
 
     def import_registration(self) -> ImportModelResult:
-        error_message = self.validate_fields()
+        try:
+            error_message = self.validate_fields()
 
-        if error_message is None:
-            self.registration = self.find_registration()
-            if self.registration:
-                self.manage_found_registration()
+            if error_message is None:
+                self.registration = self.find_registration()
+                if self.registration:
+                    self.manage_found_registration()
+                else:
+                    self.manage_not_found_registration()
             else:
-                self.manage_not_found_registration()
-        else:
-            self.result.set_error(error_message)
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
 
         return self.result
 

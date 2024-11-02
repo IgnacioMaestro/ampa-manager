@@ -22,16 +22,19 @@ class AfterSchoolEditionImporter:
         self.edition = None
 
     def import_edition(self) -> ImportModelResult:
-        error_message = self.validate_fields()
+        try:
+            error_message = self.validate_fields()
 
-        if error_message is None:
-            self.edition = self.find_after_school_edition()
-            if self.after_school:
-                self.manage_found_edition()
+            if error_message is None:
+                self.edition = self.find_after_school_edition()
+                if self.edition:
+                    self.manage_found_edition()
+                else:
+                    self.manage_not_found_edition()
             else:
-                self.manage_not_found_edition()
-        else:
-            self.result.set_error(error_message)
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
 
         return self.result
 
@@ -43,7 +46,8 @@ class AfterSchoolEditionImporter:
     def manage_not_found_edition(self):
         edition = AfterSchoolEdition.objects.create(
             after_school=self.after_school, academic_course=self.academic_course, period=self.period,
-            timetable=self.timetable)
+            timetable=self.timetable, price_for_member=self.price_for_member,
+            price_for_no_member=self.price_for_no_member)
         self.result.set_created(edition)
 
     def manage_found_edition(self):
@@ -77,10 +81,10 @@ class AfterSchoolEditionImporter:
         if not self.timetable:
             return _('Missing timetable')
 
-        if not self.price_for_member or (isinstance(self.price_for_member, float)):
+        if not self.price_for_member or not isinstance(self.price_for_member, float):
             return _('Missing/Wrong price for members') + f' ({self.price_for_member})'
 
-        if not self.price_for_no_member or (isinstance(self.price_for_no_member, float)):
+        if not self.price_for_no_member or not isinstance(self.price_for_no_member, float):
             return _('Missing/Wrong price for non members') + f' ({self.price_for_no_member})'
 
         return None

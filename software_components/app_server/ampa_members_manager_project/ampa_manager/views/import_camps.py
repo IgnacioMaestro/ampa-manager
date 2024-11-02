@@ -10,7 +10,7 @@ from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.activity.use_cases.old_importers.camps_importer import CampsImporter
 from ampa_manager.forms import ImportCampsForm
-from ampa_manager.views.import_custody import SimulationException
+from ampa_manager.views.import_custody_view import SimulationException
 from ampa_manager.views.import_info import ImportInfo
 
 

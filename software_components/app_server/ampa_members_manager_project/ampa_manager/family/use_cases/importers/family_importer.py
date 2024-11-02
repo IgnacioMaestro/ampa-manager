@@ -13,14 +13,17 @@ class FamilyImporter:
         self.family = None
 
     def import_family(self) -> ImportModelResult:
-        if self.family_email:
-            self.family = Family.objects.with_this_email(self.family_email).first()
-            if self.family:
-                self.manage_found_family()
+        try:
+            if self.family_email:
+                self.family = Family.objects.with_this_email(self.family_email).first()
+                if self.family:
+                    self.manage_found_family()
+                else:
+                    self.manage_not_found_family()
             else:
-                self.manage_not_found_family()
-        else:
-            self.result.set_error(_('Unable to find, missing email'))
+                self.result.set_error(_('Unable to find, missing email'))
+        except Exception as e:
+            self.result.set_error(str(e))
 
         return self.result
 

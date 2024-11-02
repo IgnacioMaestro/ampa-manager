@@ -21,24 +21,27 @@ class ChildImporter:
         self.child = None
 
     def import_child(self) -> ImportModelResult:
-        if not self.compulsory and self.all_child_fields_are_empty():
-            self.result.set_omitted()
-            return self.result
+        try:
+            if not self.compulsory and self.all_child_fields_are_empty():
+                self.result.set_omitted()
+                return self.result
 
-        error_message = self.validate_fields()
-        if error_message is None:
+            error_message = self.validate_fields()
+            if error_message is None:
 
-            self.child = self.family.find_child(self.name)
-            if self.child:
-                self.manage_found_child()
-            elif self.level or self.year_of_birth:
-                self.manage_not_found_child()
-            elif not self.level:
-                self.result.set_error(_('Missing level'))
-            elif not self.year_of_birth:
-                self.result.set_error(_('Missing year of birth'))
-        else:
-            self.result.set_error(error_message)
+                self.child = self.family.find_child(self.name)
+                if self.child:
+                    self.manage_found_child()
+                elif self.level or self.year_of_birth:
+                    self.manage_not_found_child()
+                elif not self.level:
+                    self.result.set_error(_('Missing level'))
+                elif not self.year_of_birth:
+                    self.result.set_error(_('Missing year of birth'))
+            else:
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
 
         return self.result
 

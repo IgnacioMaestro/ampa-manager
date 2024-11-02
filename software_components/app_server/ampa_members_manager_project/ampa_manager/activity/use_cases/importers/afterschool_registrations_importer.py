@@ -103,8 +103,8 @@ class AfterSchoolsRegistrationsImporter(BaseImporter):
         return result.instance
 
     @classmethod
-    def import_after_school_registration(cls, row: Row, edition: AfterSchoolEdition, holder: Holder,
-                                         child: Child) -> AfterSchoolRegistration:
+    def import_after_school_registration(
+            cls, row: Row, edition: AfterSchoolEdition, holder: Holder, child: Child) -> AfterSchoolRegistration:
 
         result: ImportModelResult = AfterSchoolRegistrationImporter(edition, holder, child).import_registration()
         row.add_imported_model_result(result)
