@@ -14,7 +14,7 @@ from ampa_manager.views.import_custody import SimulationException
 
 class ImportMembers(View):
     HTML_TEMPLATE = 'import_members.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xls'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xlsx'
     IMPORTER_TITLE = _('Import members')
     VIEW_NAME = 'import_members'
 
