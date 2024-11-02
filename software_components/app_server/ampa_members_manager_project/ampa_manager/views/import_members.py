@@ -6,17 +6,15 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
-from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.forms import ImportMembersForm
 from ampa_manager.views.import_custody import SimulationException
-from ampa_manager.views.import_info import ImportInfo
 
 
 class ImportMembers(View):
     HTML_TEMPLATE = 'import_members.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xls'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xls'
     IMPORTER_TITLE = _('Import members')
     VIEW_NAME = 'import_members'
 
@@ -52,6 +50,7 @@ class ImportMembers(View):
                 'rows': result.rows,
                 'state': result.state,
                 'rows_summary': {
+                    'total': result.rows_total,
                     'with_data': result.rows_with_data,
                     'without_data': result.rows_without_data,
                     'imported_ok': result.rows_imported_ok,

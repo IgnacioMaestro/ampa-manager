@@ -55,6 +55,7 @@ class ImportCustody(View):
                 'rows': result.rows,
                 'state': result.state,
                 'rows_summary': {
+                    'total': result.rows_total,
                     'with_data': result.rows_with_data,
                     'without_data': result.rows_without_data,
                     'imported_ok': result.rows_imported_ok,

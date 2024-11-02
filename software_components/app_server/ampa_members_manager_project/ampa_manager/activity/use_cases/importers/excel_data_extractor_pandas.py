@@ -14,7 +14,7 @@ class ExcelDataExtractorPandas:
         self.first_row_index = first_row_index
         self.columns_to_extract = columns_to_extract
 
-        self.df = pd.read_excel(BytesIO(self.excel_content), sheet_name=self.sheet_number)
+        self.df = pd.read_excel(BytesIO(self.excel_content), sheet_name=self.sheet_number, header=None)
 
         if self.first_row_index > len(self.df):
             raise Exception('Invalid first row index')

@@ -6,6 +6,7 @@ class ImportExcelResult:
     def __init__(self, rows: list[Row]):
         self.rows: list[Row] = rows
         self.state = None
+        self.rows_total = 0
         self.rows_with_data = 0
         self.rows_without_data = 0
         self.rows_imported_ok = 0
@@ -18,6 +19,7 @@ class ImportExcelResult:
         self.calculate_import_state()
 
     def calculate_rows_by_status(self):
+        self.rows_total = 0
         self.rows_with_data = 0
         self.rows_without_data = 0
         self.rows_imported_ok = 0
@@ -25,6 +27,8 @@ class ImportExcelResult:
         self.rows_not_imported = 0
 
         for row in self.rows:
+            self.rows_total += 1
+
             if row.is_empty:
                 self.rows_without_data += 1
             else:
