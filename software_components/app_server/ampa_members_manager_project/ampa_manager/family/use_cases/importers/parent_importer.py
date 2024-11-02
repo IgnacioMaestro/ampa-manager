@@ -41,12 +41,11 @@ class ParentImporter:
         return not self.name_and_surnames and not self.phone_number and not self.additional_phone_number and not self.email
 
     def manage_not_found_parent(self):
-        parent = Parent.objects.create(name_and_surnames=self.name_and_surnames,
-                                       phone_number=self.phone_number,
-                                       additional_phone_number=self.additional_phone_number,
-                                       email=self.email)
-        self.result.set_created(parent)
-        self.family.parents.add(parent)
+        self.parent = Parent.objects.create(
+            name_and_surnames=self.name_and_surnames, phone_number=self.phone_number,
+            additional_phone_number=self.additional_phone_number, email=self.email)
+        self.result.set_created(self.parent)
+        self.family.parents.add(self.parent)
 
     def manage_found_parent(self):
         if self.parent_is_modified():

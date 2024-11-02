@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
+from ampa_manager.activity.use_cases.importers.afterschool_registrations_importer import \
+    AfterSchoolsRegistrationsImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.forms import ImportMembersForm, ImportAfterSchoolsRegistrationsForm
@@ -14,9 +16,9 @@ from ampa_manager.views.import_custody import SimulationException
 
 class ImportAfterSchoolRegistrations(View):
     HTML_TEMPLATE = 'import_afterschool_registrations.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_inscripciones_extraescolares.xls'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_inscripciones_extraescolares.xlsx'
     IMPORTER_TITLE = _('Import afterschool registrations')
-    VIEW_NAME = 'import_afterschool_registrations'
+    VIEW_NAME = 'import_after_schools_registrations'
 
     @classmethod
     def get_context(cls, form: Optional[ImportAfterSchoolsRegistrationsForm] = None) -> dict:
@@ -27,7 +29,7 @@ class ImportAfterSchoolRegistrations(View):
             'form': form,
             'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
-            'excel_columns': MembersImporter.COLUMNS_TO_IMPORT,
+            'excel_columns': AfterSchoolsRegistrationsImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE
         }
 
