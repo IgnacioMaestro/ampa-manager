@@ -95,36 +95,6 @@ class Family(TimeStampedModel):
         self.decline_membership = True
         self.save()
 
-    def matches_surnames(self, surnames, strict=False):
-        if surnames and self.surnames:
-            if strict:
-                if StringUtils.compare_ignoring_everything(self.surnames, surnames):
-                    return True
-            elif StringUtils.contains_any_word(self.surnames, surnames):
-                return True
-        return False
-
-    def has_parent(self, parent_name_and_surnames):
-        return self.find_parent(parent_name_and_surnames) is not None
-
-    def find_parent(self, name_and_surnames: str) -> Optional[Parent]:
-        if name_and_surnames:
-            family_parents = self.parents.all()
-            for parent in family_parents:
-                if parent.matches_name_and_surnames(name_and_surnames, strict=True):
-                    return parent
-            for parent in family_parents:
-                if parent.matches_name_and_surnames(name_and_surnames, strict=False):
-                    return parent
-        return None
-
-    def find_child(self, name: str, exclude_id: Optional[int] = None) -> Optional[Child]:
-        for child in Child.objects.with_family(self):
-            if exclude_id and child.id == exclude_id:
-                continue
-            if child.matches_name(name, strict=False):
-                return child
-
     def get_html_link(self, print_parents=False, print_children=False, print_id=False) -> str:
         link_text = str(self)
         if print_id:
@@ -204,15 +174,6 @@ class Family(TimeStampedModel):
         return emails
 
     @staticmethod
-    def get_family_filtered_by_parent(families: List[Family], parents_name_and_surnames: List[str]) -> Optional[Family]:
-        if parents_name_and_surnames:
-            for family in families:
-                for parent_name_and_surnames in parents_name_and_surnames:
-                    if family.has_parent(parent_name_and_surnames):
-                        return family
-        return None
-
-    @staticmethod
     def get_family_filtered_by_child(families: List[Family], child_name: str) -> Optional[Family]:
         if child_name:
             for family in families:
@@ -229,19 +190,6 @@ class Family(TimeStampedModel):
                 print(f'Family surnames fixed: "{family.surnames}" -> "{fixed_surnames}"')
                 family.surnames = fixed_surnames
                 family.save(update_fields=['surnames'])
-
-    @staticmethod
-    def remove_duplicated_children():
-        for family in Family.objects.all():
-            for child in Child.objects.with_family(family):
-                duplicated = family.find_child(child.name, child.id)
-                if duplicated:
-                    print(f'\nDuplicated child: Family "{family.surnames}"')
-                    print(
-                        f'- Kept: #{child.id}, {child.name}, {child.year_of_birth}, {child.repetition}, {child.family.id}')
-                    print(
-                        f'- Removed: #{duplicated.id}, {duplicated.name}, {duplicated.year_of_birth}, {duplicated.repetition}, {duplicated.family.id}')
-                    duplicated.delete()
 
     @staticmethod
     def get_duplicated_families():

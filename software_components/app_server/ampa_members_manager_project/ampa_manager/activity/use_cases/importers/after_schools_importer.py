@@ -5,8 +5,8 @@ from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.use_cases.importers.after_school_activity_importer import AfterSchoolActivityImporter
 from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
-from ampa_manager.activity.use_cases.importers.after_school_importer import AfterSchoolImporter
 from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
@@ -19,7 +19,7 @@ from ampa_manager.family.models.parent import Parent
 from ampa_manager.family.use_cases.importers.family_holders_consolidator import FamilyHoldersConsolidator
 
 
-class AfterSchoolsRegistrationsImporter(BaseImporter):
+class AfterSchoolsImporter(BaseImporter):
     SHEET_NUMBER = 0
     FIRST_ROW_INDEX = 2
 
@@ -67,7 +67,7 @@ class AfterSchoolsRegistrationsImporter(BaseImporter):
                 row.set_error('Missing bank account')
                 return
 
-            after_school: AfterSchool = self.import_after_school(row)
+            after_school: AfterSchool = self.import_after_school_activity(row)
             if not after_school:
                 return
 
@@ -81,9 +81,9 @@ class AfterSchoolsRegistrationsImporter(BaseImporter):
             row.error = str(e)
 
     @classmethod
-    def import_after_school(cls, row: Row) -> Optional[AfterSchool]:
+    def import_after_school_activity(cls, row: Row) -> Optional[AfterSchool]:
         name = row.get_value(cls.KEY_ACTIVITY_NAME)
-        result: ImportModelResult = AfterSchoolImporter(name).import_after_school()
+        result: ImportModelResult = AfterSchoolActivityImporter(name).import_activity()
         row.add_imported_model_result(result)
         return result.instance
 

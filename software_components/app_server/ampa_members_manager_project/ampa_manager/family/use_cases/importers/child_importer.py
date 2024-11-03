@@ -29,7 +29,7 @@ class ChildImporter:
             error_message = self.validate_fields()
             if error_message is None:
 
-                self.child = self.family.find_child(self.name)
+                self.child = self.find_child()
                 if self.child:
                     self.manage_found_child()
                 elif self.level or self.year_of_birth:
@@ -44,6 +44,13 @@ class ChildImporter:
             self.result.set_error(str(e))
 
         return self.result
+
+    def find_child(self, exclude_id: Optional[int] = None) -> Optional[Child]:
+        for child in Child.objects.with_family(self.family):
+            if exclude_id and child.id == exclude_id:
+                continue
+            if child.matches_name(self.name, strict=False):
+                return child
 
     def all_child_fields_are_empty(self):
         return not self.name and not self.level and not self.year_of_birth

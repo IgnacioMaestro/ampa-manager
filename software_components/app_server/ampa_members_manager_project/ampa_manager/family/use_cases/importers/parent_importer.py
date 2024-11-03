@@ -28,7 +28,7 @@ class ParentImporter:
             error_message = self.validate_fields()
 
             if error_message is None:
-                self.parent = self.family.find_parent(self.name_and_surnames)
+                self.parent = self.find_parent()
                 if self.parent:
                     self.manage_found_parent()
                 else:
@@ -39,6 +39,16 @@ class ParentImporter:
             self.result.set_error(str(e))
 
         return self.result
+
+    def find_parent(self) -> Optional[Parent]:
+        family_parents = self.family.parents.all()
+        for parent in family_parents:
+            if parent.matches_name_and_surnames(self.name_and_surnames, strict=True):
+                return parent
+        for parent in family_parents:
+            if parent.matches_name_and_surnames(self.name_and_surnames, strict=False):
+                return parent
+        return None
 
     def all_parent_fields_are_empty(self):
         return not self.name_and_surnames and not self.phone_number and not self.additional_phone_number and not self.email

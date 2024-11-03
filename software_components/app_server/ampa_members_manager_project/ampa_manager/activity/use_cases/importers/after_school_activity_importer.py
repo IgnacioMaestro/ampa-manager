@@ -7,14 +7,14 @@ from ampa_manager.activity.models.funding import Funding
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 
 
-class AfterSchoolImporter:
+class AfterSchoolActivityImporter:
 
     def __init__(self, name: str):
         self.result = ImportModelResult(AfterSchool)
         self.name = name
         self.after_school = None
 
-    def import_after_school(self) -> ImportModelResult:
+    def import_activity(self) -> ImportModelResult:
         try:
             error_message = self.validate_fields()
 

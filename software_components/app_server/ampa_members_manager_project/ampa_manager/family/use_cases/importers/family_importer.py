@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
@@ -15,7 +17,7 @@ class FamilyImporter:
     def import_family(self) -> ImportModelResult:
         try:
             if self.family_email:
-                self.family = Family.objects.with_this_email(self.family_email).first()
+                self.family = self.find_family()
                 if self.family:
                     self.manage_found_family()
                 else:
@@ -26,6 +28,9 @@ class FamilyImporter:
             self.result.set_error(str(e))
 
         return self.result
+
+    def find_family(self) -> Optional[Family]:
+        return Family.objects.with_this_email(self.family_email).first()
 
     def manage_not_found_family(self):
         if self.family_surnames:
