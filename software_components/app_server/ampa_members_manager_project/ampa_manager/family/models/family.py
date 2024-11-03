@@ -191,6 +191,16 @@ class Family(TimeStampedModel):
             self.membership_holder = holder
             self.save()
 
+    def update_camps_holder(self, holder: Holder):
+        if self.camps_holder != holder:
+            self.camps_holder = holder
+            self.save()
+
+    def update_after_school_holder(self, holder: Holder):
+        if self.after_school_holder != holder:
+            self.after_school_holder = holder
+            self.save()
+
     @staticmethod
     def get_families_parents_emails(families: QuerySet[Family]) -> List[str]:
         emails = []

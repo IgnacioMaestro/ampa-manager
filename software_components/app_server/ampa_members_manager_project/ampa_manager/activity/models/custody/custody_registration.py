@@ -57,10 +57,3 @@ class CustodyRegistration(models.Model):
     def get_html_link(self, id_as_link_text=False, new_tab=True) -> str:
         link_text = str(self.id) if id_as_link_text else str(self)
         return Utils.get_model_instance_link(CustodyRegistration.__name__.lower(), self.id, link_text, new_tab)
-
-    @staticmethod
-    def find(custody_edition, child) -> Optional[CustodyRegistration]:
-        try:
-            return CustodyRegistration.objects.get(custody_edition=custody_edition, child=child)
-        except CustodyRegistration.DoesNotExist:
-            return None

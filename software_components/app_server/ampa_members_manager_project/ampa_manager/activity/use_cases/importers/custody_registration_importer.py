@@ -22,7 +22,7 @@ class CustodyRegistrationImporter:
     def import_registration(self) -> ImportModelResult:
         error_message = self.validate_fields()
         if error_message is None:
-            self.registration = CustodyRegistration.find(self.edition, self.child)
+            self.registration = self.find_registration()
             if self.registration:
                 self.manage_found_registration()
             else:
@@ -31,6 +31,12 @@ class CustodyRegistrationImporter:
             self.result.set_error(error_message)
 
         return self.result
+
+    def find_registration(self) -> Optional[CustodyRegistration]:
+        try:
+            return CustodyRegistration.objects.get(custody_edition=self.edition, child=self.child)
+        except CustodyRegistration.DoesNotExist:
+            return None
 
     def manage_not_found_registration(self):
         if self.assisted_days > 0:

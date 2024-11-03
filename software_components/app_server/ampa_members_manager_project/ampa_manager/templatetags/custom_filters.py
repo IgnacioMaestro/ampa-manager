@@ -9,7 +9,7 @@ from ampa_manager.activity.models.custody.custody_registration import CustodyReg
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
-from ampa_manager.activity.use_cases.old_importers.excel.titled_list import TitledList
+from ampa_manager.activity.use_cases.importers.titled_list import TitledList
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.utils.utils import Utils
