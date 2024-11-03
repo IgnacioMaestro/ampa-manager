@@ -13,6 +13,7 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
             ('no', _('Current year NO members')),
             ('last_year', _('Last year members')),
             ('renew', _('Renew (Last year + Children + Renew)')),
+            ('no_renew', _('Out of school (Last year + No children)')),
         )
 
     def queryset(self, request, queryset):
@@ -26,6 +27,9 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
             elif self.value() == 'renew':
                 messages.success(request, _('Showing families that were members last year, that have any child in the school this year and that have not decline membership'))
                 return queryset.members_last_year().no_declined_membership().has_any_children()
+            elif self.value() == 'no_renew':
+                messages.success(request, _('Showing families that were members last year, but they haven\'t any child in the school'))
+                return queryset.members_last_year().has_no_children()
         else:
             return queryset
 

@@ -1,10 +1,18 @@
 @startuml
+package AcademicCourse {
+  class AcademicCourse {
+    initial_year: Integer
+  }
+}
+
 package Family {
   class Family {
     surnames : String
+    normalized_surnames : String
     decline_membership : Boolean
     email: String
     secondary_email: String
+    is_defaulter : Boolean
   }
   class Parent {
     name_and_surnames : String
@@ -40,18 +48,16 @@ package Family {
   class Membership
   Parent --o Holder: ""
   Holder o-- BankAccount
-  Family o-- Holder
+  Family o-- Holder : "membership_holder"
+  Family o-- Holder : "custody_holder"
+  Family o-- Holder : "after_school_holder"
+  Family o-- Holder : "camps_holder"
 
 
   Family "1..N" o-- "1..N" Parent
   Family *-- "N" Child
   Family *-- "N" Membership: ""
-  Membership o-- AcademicCourse
+  Membership o-- AcademicCourse.AcademicCourse
 }
 
-package AcademicCourse {
-  class AcademicCourse {
-    initial_year: Integer
-  }
-}
 @enduml

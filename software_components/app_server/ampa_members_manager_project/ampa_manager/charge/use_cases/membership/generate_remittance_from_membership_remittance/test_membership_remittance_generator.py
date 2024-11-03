@@ -53,7 +53,7 @@ class TestMembershipRemittanceGenerator(TestCase):
         holder: Holder = baker.make(Holder, bank_account=bank_account)
         family: Family = baker.make(Family, membership_holder=holder)
         membership_receipt: MembershipReceipt = baker.make(
-            MembershipReceipt, family=family, remittance=membership_remittance)
+            MembershipReceipt, family=family, remittance=membership_remittance, holder=holder)
         baker.make(Fee, academic_course=membership_remittance.course, amount=self.FEE)
 
         remittance: Optional[Remittance]

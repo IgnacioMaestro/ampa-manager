@@ -9,7 +9,7 @@ from ampa_manager.family.models.holder.holder import Holder
 from .fee.fee import Fee
 from .membership_receipt_queryset import MembershipReceiptQuerySet
 from .membership_remittance import MembershipRemittance
-from .receipt_exceptions import NoFeeForCourseException, NoHolderException, NoSwiftBicException
+from .receipt_exceptions import NoFeeForCourseException, NoSwiftBicException
 from ..receipt import Receipt, AuthorizationReceipt
 from ..state import State
 
@@ -18,6 +18,7 @@ class MembershipReceipt(models.Model):
     state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
+    holder = models.ForeignKey(to=Holder, on_delete=CASCADE, verbose_name=_("Holder"))
 
     objects = Manager.from_queryset(MembershipReceiptQuerySet)()
 
@@ -30,19 +31,16 @@ class MembershipReceipt(models.Model):
         return f'{self.remittance} {self.family}'
 
     def generate_receipt(self) -> Receipt:
-        holder: Optional[Holder] = self.family.membership_holder
-        if holder is None:
-            raise NoHolderException
         try:
             fee: Fee = Fee.objects.get(academic_course=self.remittance.course)
         except Fee.DoesNotExist:
             raise NoFeeForCourseException
-        bank_account_owner = holder.parent.full_name
-        iban: str = holder.bank_account.iban
-        bic: Optional[str] = holder.bank_account.swift_bic
+        bank_account_owner = self.holder.parent.full_name
+        iban: str = self.holder.bank_account.iban
+        bic: Optional[str] = self.holder.bank_account.swift_bic
         if bic is None:
             raise NoSwiftBicException
-        authorization: AuthorizationReceipt = MembershipReceipt.generate_authorization_receipt_from_holder(holder)
+        authorization: AuthorizationReceipt = MembershipReceipt.generate_authorization_receipt_from_holder(self.holder)
         return Receipt(
             amount=fee.amount, bank_account_owner=bank_account_owner, iban=iban, bic=bic, authorization=authorization)
 
