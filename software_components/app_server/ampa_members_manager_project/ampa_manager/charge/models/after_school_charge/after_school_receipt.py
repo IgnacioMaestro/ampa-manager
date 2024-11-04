@@ -8,12 +8,10 @@ from .after_school_receipt_queryset import AfterSchoolReceiptQuerySet
 from .after_school_remittance import AfterSchoolRemittance
 from ..receipt_exceptions import NoSwiftBicException
 from ...receipt import Receipt, AuthorizationReceipt
-from ...state import State
 
 
 class AfterSchoolReceipt(models.Model):
     amount = models.FloatField(verbose_name=_("Total (€)"))
-    state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     after_school_registration = models.ForeignKey(
         to=AfterSchoolRegistration, on_delete=CASCADE, verbose_name=_("After School registrations"))
     remittance = models.ForeignKey(
@@ -27,7 +25,7 @@ class AfterSchoolReceipt(models.Model):
         db_table = 'after_school_receipt'
 
     def __str__(self):
-        return f'{self.after_school_registration}, {self.get_state_display()}, {self.amount}'
+        return f'{self.after_school_registration}, {self.amount}'
 
     def generate_receipt(self) -> Receipt:
         holder: Holder = self.after_school_registration.holder
