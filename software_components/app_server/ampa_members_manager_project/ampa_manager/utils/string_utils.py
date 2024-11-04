@@ -7,7 +7,6 @@ from ampa_manager.utils.surnames import SURNAMES
 
 
 class StringUtils:
-
     SURNAMES_IGNORE_WORDS = ['de']
 
     @staticmethod
@@ -27,11 +26,11 @@ class StringUtils:
     def normalize(value: str) -> Optional[str]:
         if value:
             return StringUtils.remove_strip_spaces(
-                    StringUtils.remove_duplicated_spaces(
-                     StringUtils.remove_basque_characters(
-                      StringUtils.lowercase(
-                       StringUtils.remove_special_chars(
-                        StringUtils.remove_accents(value))))))
+                StringUtils.remove_duplicated_spaces(
+                    StringUtils.remove_basque_characters(
+                        StringUtils.lowercase(
+                            StringUtils.remove_special_chars(
+                                StringUtils.remove_accents(str(value)))))))
         return None
 
     @staticmethod
@@ -126,8 +125,8 @@ class StringUtils:
     def parse_bool(value: str) -> bool:
         if value:
             return StringUtils.remove_accents(
-                    StringUtils.lowercase(
-                     StringUtils.remove_strip_spaces(value))) in ["si", "bai", "yes", "1", "true"]
+                StringUtils.lowercase(
+                    StringUtils.remove_strip_spaces(value))) in ["si", "bai", "yes", "1", "true"]
         else:
             return False
 
@@ -191,3 +190,34 @@ class StringUtils:
             40: 'AO',
         }
         return letters.get(column_index, '-')
+
+    @staticmethod
+    def remove_zero_decimals(value: str) -> Optional[str]:
+        if value:
+            return value.replace('.0', '')
+        return None
+
+    @staticmethod
+    def remove_spain_phone_prefix(value: str) -> Optional[str]:
+        if value:
+            return value.lstrip('+34')
+        return None
+
+    @staticmethod
+    def strings_are_equal(string1: str, string2: str, ignore_case: bool = False, ignore_spaces: bool = False,
+                          ignore_zero_decimals: bool = False, ignore_spain_phone_prefix: bool = False) -> bool:
+        value1 = str(string1)
+        value2 = str(string2)
+        if ignore_case:
+            value1 = StringUtils.lowercase(value1)
+            value2 = StringUtils.lowercase(value2)
+        if ignore_spaces:
+            value1 = StringUtils.remove_all_spaces(value1)
+            value2 = StringUtils.remove_all_spaces(value2)
+        if ignore_zero_decimals:
+            value1 = StringUtils.remove_zero_decimals(value1)
+            value2 = StringUtils.remove_zero_decimals(value2)
+        if ignore_spain_phone_prefix:
+            value1 = StringUtils.remove_spain_phone_prefix(value1)
+            value2 = StringUtils.remove_spain_phone_prefix(value2)
+        return value1 == value2

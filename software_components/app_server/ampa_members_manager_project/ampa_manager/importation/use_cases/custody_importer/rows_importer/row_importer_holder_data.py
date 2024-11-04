@@ -70,7 +70,7 @@ class RowImporterHolderData:
         return holder_name_and_surnames
 
     def __obtain_cleaned_holder_name_and_surnames(self) -> Optional[str]:
-        return FieldsFormatters.clean_string(self.__obtain_holder_name_and_surnames())
+        return FieldsFormatters.format_string(self.__obtain_holder_name_and_surnames())
 
     def __obtain_holder_name_and_surnames(self):
         return self.__sheet.cell_value(rowx=self.__row_index, colx=self.HOLDER_NAME_AND_SURNAMES_COLUMN)
@@ -82,7 +82,7 @@ class RowImporterHolderData:
         return phone_number
 
     def __obtain_cleaned_phone_number(self) -> Optional[str]:
-        return FieldsFormatters.clean_phone(self.__obtain_phone_number())
+        return FieldsFormatters.format_phone(self.__obtain_phone_number())
 
     def __obtain_phone_number(self):
         return self.__sheet.cell_value(rowx=self.__row_index, colx=self.PHONE_NUMBER_COLUMN)
@@ -94,7 +94,7 @@ class RowImporterHolderData:
         return email
 
     def __obtain_cleaned_email(self) -> Optional[str]:
-        return FieldsFormatters.clean_string(self.__obtain_email())
+        return FieldsFormatters.format_string(self.__obtain_email())
 
     def __obtain_email(self):
         return self.__sheet.cell_value(rowx=self.__row_index, colx=self.EMAIL_COLUMN)
@@ -106,7 +106,7 @@ class RowImporterHolderData:
         return iban
 
     def __obtain_cleaned_iban(self) -> Optional[str]:
-        return FieldsFormatters.clean_string(self.__obtain_iban())
+        return FieldsFormatters.format_string(self.__obtain_iban())
 
     def __obtain_iban(self):
         return self.__sheet.cell_value(rowx=self.__row_index, colx=self.IBAN_COLUMN)

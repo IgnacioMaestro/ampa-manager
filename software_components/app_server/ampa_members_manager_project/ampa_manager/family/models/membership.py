@@ -35,8 +35,9 @@ class Membership(models.Model):
 
     @classmethod
     def make_member_for_active_course(cls, family: Family):
-        member = Membership(family=family, academic_course=ActiveCourse.load())
-        member.save()
+        membership = Membership(family=family, academic_course=ActiveCourse.load())
+        membership.save()
+        return membership
 
     @classmethod
     def get_membership(cls, family: Family):

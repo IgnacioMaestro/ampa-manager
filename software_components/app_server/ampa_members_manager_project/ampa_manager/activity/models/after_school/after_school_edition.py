@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.price_per_level import PricePerLevel
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 
 
 class AfterSchoolEdition(PricePerLevel):
@@ -56,41 +55,3 @@ class AfterSchoolEdition(PricePerLevel):
                or self.levels != levels \
                or self.price_for_member != price_for_member \
                or self.price_for_no_member != price_for_no_member
-
-    def update(self, after_school, period, timetable, levels, price_for_member, price_for_no_member) -> FieldsChanges:
-        fields_before = [self.after_school, self.period, self.timetable, self.levels, self.price_for_member,
-                         self.price_for_no_member]
-        not_reset_fields = []
-        updated = False
-
-        if after_school and after_school != self.after_school:
-            self.after_school = after_school
-            updated = True
-
-        if period != self.period:
-            self.period = period
-            updated = True
-
-        if timetable != self.timetable:
-            self.timetable = timetable
-            updated = True
-
-        if levels != self.levels:
-            self.levels = levels
-            updated = True
-
-        if price_for_member != self.price_for_member:
-            self.price_for_member = price_for_member
-            updated = True
-
-        if price_for_no_member != self.price_for_no_member:
-            self.price_for_no_member = price_for_no_member
-            updated = True
-
-        if updated:
-            self.save()
-
-        fields_after = [self.after_school, self.period, self.timetable, self.levels, self.price_for_member,
-                        self.price_for_no_member]
-
-        return FieldsChanges(fields_before, fields_after, not_reset_fields)

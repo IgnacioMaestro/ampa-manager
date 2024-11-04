@@ -1,59 +1,29 @@
+from django.utils.translation import gettext_lazy as _
+
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
-from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.parent import Parent
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class BankAccountImporter:
 
-    @staticmethod
-    def find(iban):
-        try:
-            return BankAccount.objects.get(iban=iban)
-        except BankAccount.DoesNotExist:
-            return None
+    def __init__(self, parent: Parent, iban: str):
+        self.result = ImportModelResult(BankAccount)
+        self.parent = parent
+        self.iban = iban
+        self.bank_account = None
 
-    @staticmethod
-    def import_bank_account_and_holder(parent, iban) -> (ImportModelResult, ImportModelResult):
-        bank_account_result = BankAccountImporter.import_bank_account(iban)
-        bank_account = bank_account_result.imported_object
-
-        holder_result = BankAccountImporter.import_holder(parent, bank_account)
-        return bank_account_result, holder_result
-
-    @staticmethod
-    def import_bank_account(iban) -> ImportModelResult:
-        result = ImportModelResult(BankAccount.__name__, [iban])
-
-        if iban:
-            bank_account = BankAccountImporter.find(iban)
-            if bank_account:
-                result.set_not_modified(bank_account)
-            elif BankAccount.iban_is_valid(iban):
-                bank_account = BankAccount.objects.create(iban=iban)
-                result.set_created(bank_account)
+    def import_bank_account(self) -> ImportModelResult:
+        if self.iban:
+            self.bank_account = BankAccount.find(self.iban)
+            if self.bank_account:
+                self.result.set_not_modified(self.bank_account)
+            elif BankAccount.iban_is_valid(self.iban):
+                self.bank_account = BankAccount.objects.create(iban=self.iban)
+                self.result.set_created(self.bank_account)
             else:
-                result.set_error('IBAN not valid')
+                self.result.set_error(_('IBAN not valid'))
         else:
-            result.set_error('Missing IBAN')
+            self.result.set_error(_('Missing IBAN'))
 
-        return result
-
-    @staticmethod
-    def import_holder(parent: Parent, bank_account: BankAccount) -> ImportModelResult:
-        result = ImportModelResult(Holder.__name__, [parent, bank_account])
-
-        if parent:
-            if bank_account:
-                holder = Holder.find(parent, bank_account)
-                if holder:
-                    result.set_not_modified(holder)
-                else:
-                    holder = Holder.objects.create_for_active_course(parent=parent, bank_account=bank_account)
-                    result.set_created(holder)
-            else:
-                result.set_error('Missing bank account')
-        else:
-            result.set_error('Missing owner')
-
-        return result
+        return self.result

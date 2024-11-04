@@ -1,47 +1,94 @@
-from ampa_manager.academic_course.models.active_course import ActiveCourse
+from typing import Optional
+
+from django.utils.translation import gettext_lazy as _
+
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 
 
 class AfterSchoolEditionImporter:
 
-    @staticmethod
-    def find_edition_for_active_course(after_school, period, timetable):
-        academic_course = ActiveCourse.load()
-        editions = AfterSchoolEdition.objects.filter(period=period, timetable=timetable, after_school=after_school,
-                                                     academic_course=academic_course)
-        if editions.count() == 1:
-            return editions[0]
+    def __init__(self, after_school: AfterSchool, academic_course: AcademicCourse, period: str, timetable: str,
+                 price_for_member: float, price_for_no_member: float):
+        self.result = ImportModelResult(AfterSchoolEdition)
+        self.after_school = after_school
+        self.academic_course = academic_course
+        self.period = period
+        self.timetable = timetable
+        self.price_for_member = price_for_member
+        self.price_for_no_member = price_for_no_member
+        self.edition = None
+
+    def import_edition(self) -> ImportModelResult:
+        try:
+            error_message = self.validate_fields()
+
+            if error_message is None:
+                self.edition = self.find_after_school_edition()
+                if self.edition:
+                    self.manage_found_edition()
+                else:
+                    self.manage_not_found_edition()
+            else:
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
+
+        return self.result
+
+    def find_after_school_edition(self) -> Optional[AfterSchoolEdition]:
+        return AfterSchoolEdition.objects.filter(
+            after_school=self.after_school, academic_course=self.academic_course, period=self.period,
+            timetable=self.timetable).first()
+
+    def manage_not_found_edition(self):
+        edition = AfterSchoolEdition.objects.create(
+            after_school=self.after_school, academic_course=self.academic_course, period=self.period,
+            timetable=self.timetable, price_for_member=self.price_for_member,
+            price_for_no_member=self.price_for_no_member)
+        self.result.set_created(edition)
+
+    def manage_found_edition(self):
+        if self.edition_is_modified():
+            modified_fields = []
+
+            if self.price_for_member is not None and self.price_for_member != self.edition.price_for_member:
+                modified_fields.append(
+                    ModifiedField(_('Price for members'), self.edition.price_for_member, self.price_for_member))
+                self.edition.price_for_member = self.price_for_member
+
+            if self.price_for_no_member is not None and self.price_for_no_member != self.edition.price_for_no_member:
+                modified_fields.append(
+                    ModifiedField(_('Price for non members'), self.edition.price_for_no_member, self.price_for_no_member))
+                self.edition.price_for_no_member = self.price_for_no_member
+
+            self.result.set_updated(self.edition, modified_fields)
+        else:
+            self.result.set_not_modified(self.edition)
+
+    def validate_fields(self) -> Optional[str]:
+        if not self.after_school:
+            return _('Missing after school')
+
+        if not self.academic_course:
+            return _('Missing academic course')
+
+        if not self.period:
+            return _('Missing period')
+
+        if not self.timetable:
+            return _('Missing timetable')
+
+        if not self.price_for_member or not isinstance(self.price_for_member, float):
+            return _('Missing/Wrong price for members') + f' ({self.price_for_member})'
+
+        if not self.price_for_no_member or not isinstance(self.price_for_no_member, float):
+            return _('Missing/Wrong price for non members') + f' ({self.price_for_no_member})'
 
         return None
 
-    @staticmethod
-    def create_edition_for_active_course(after_school, period, timetable, levels, price_for_member, price_for_no_member):
-        return AfterSchoolEdition.objects.create(after_school=after_school, period=period,
-                                                 timetable=timetable, levels=levels,
-                                                 academic_course=ActiveCourse.load(),
-                                                 price_for_member=price_for_member,
-                                                 price_for_no_member=price_for_no_member)
-
-    @staticmethod
-    def import_edition(after_school, period, timetable, levels, price_for_members, price_for_no_members) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolEdition.__name__, [period, timetable, levels, price_for_members,
-                                                                 price_for_no_members])
-
-        edition = AfterSchoolEditionImporter.find_edition_for_active_course(after_school, period, timetable)
-
-        if edition:
-            if edition.is_modified(after_school, period, timetable, levels, price_for_members, price_for_no_members):
-                fields_changes: FieldsChanges = edition.update(after_school, period, timetable, levels,
-                                                               price_for_members, price_for_no_members)
-                result.set_updated(edition, fields_changes)
-            else:
-                result.set_not_modified(edition)
-        else:
-            edition = AfterSchoolEditionImporter.create_edition_for_active_course(after_school, period, timetable,
-                                                                                  levels, price_for_members,
-                                                                                  price_for_no_members)
-            result.set_created(edition)
-
-        return result
+    def edition_is_modified(self):
+        return (self.price_for_member != self.edition.price_for_member or
+                self.price_for_no_member != self.edition.price_for_no_member)

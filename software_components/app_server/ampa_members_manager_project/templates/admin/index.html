@@ -1,7 +1,43 @@
 {% extends "admin/index.html" %}
+{% load i18n %}
 {% load static %}
 
+{% block content %}
+
+{% if menu %}
+  {% for app in menu %}
+    <div class="app-{{ app.app_label }} module{% if app.app_url in request.path|urlencode %} current-app{% endif %}">
+      <table>
+        <caption>
+          <a href="{{ app.app_url }}" class="section">{{ app.name }}</a>
+        </caption>
+        {% for model in app.models %}
+          {% with model_name=model.object_name|lower %}
+            <tr class="model-{{ model_name }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
+              <th scope="row" id="{{ app.app_label }}-{{ model_name }}">
+                {% if model.admin_url %}
+                  <a href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}>{{ model.name }}</a>
+                {% else %}
+                  {{ model.name }}
+                {% endif %}
+              </th>
+              <th>&nbsp;</th>
+            </tr>
+          {% endwith %}
+        {% endfor %}
+      </table>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+{% endif %}
+
+{% endblock %}
+
+
 {% block sidebar %}
+    {% comment %}
+
     <div id="content-related">
         <div class="module" id="recent-actions-module">
             <h1><img src="{% static 'images/checklist.png' %}" width="24px"> <a href="/ampa/validations/">Validar datos
@@ -116,4 +152,6 @@
             </ul>
         </div>
     </div>
+
+    {% endcomment %}
 {% endblock %}

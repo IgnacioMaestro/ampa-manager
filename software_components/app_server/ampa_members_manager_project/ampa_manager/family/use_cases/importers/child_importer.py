@@ -1,71 +1,122 @@
+from typing import Optional
+
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.child import Child
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class ChildImporter:
 
-    @staticmethod
-    def import_child(family, name: str, level: str, year_of_birth: int) -> ImportModelResult:
-        result = ImportModelResult(Child.__name__, [name, level, year_of_birth])
+    def __init__(self, family, name: str, level: str, year_of_birth: int, compulsory: bool):
+        self.result: ImportModelResult = ImportModelResult(Child)
+        self.family = family
+        self.name = name
+        self.level = level
+        self.year_of_birth = year_of_birth
+        self.repetition = None
+        self.compulsory = compulsory
+        self.child = None
 
-        fields_ok, error = ChildImporter.validate_fields(family, name, level, year_of_birth)
-        if fields_ok:
-            child = family.find_child(name)
-            if child:
-                if level and year_of_birth:
-                    repetition = Level.calculate_repetition(level, year_of_birth)
-                    if repetition >= 0:
-                        if child.is_modified(year_of_birth, repetition):
-                            fields_changes: FieldsChanges = child.update(year_of_birth, repetition)
-                            result.set_updated(child, fields_changes)
-                        else:
-                            result.set_not_modified(child)
-                    else:
-                        result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
-                else:
-                    result.set_not_modified(child)
-            elif level or year_of_birth:
-                if level and not year_of_birth:
-                    current_course = ActiveCourse.load()
-                    year_of_birth = current_course.initial_year - Level.get_age_by_level(level)
-                    result.add_warning(_("Missing year of birth calculated from level %(level)s")
-                                       % {'level': year_of_birth})
-                if not level and year_of_birth:
-                    current_course = ActiveCourse.load()
-                    age = current_course.initial_year - year_of_birth
-                    level = Level.get_level_by_age(age)
-                    result.add_warning(f'Missing level calculated from year of birth: {year_of_birth} -> {level}')
+    def import_child(self) -> ImportModelResult:
+        try:
+            if not self.compulsory and self.all_child_fields_are_empty():
+                self.result.set_omitted()
+                return self.result
 
-                repetition = Level.calculate_repetition(level, year_of_birth)
-                if repetition >= 0:
-                    child = Child.objects.create(name=name, year_of_birth=year_of_birth, repetition=repetition,
-                                                 family=family)
-                    result.set_created(child)
-                else:
-                    result.set_error(f'Wrong level ({level}) or year of birth ({year_of_birth})')
-            elif not level:
-                result.set_error('Missing level')
-            elif not year_of_birth:
-                result.set_error('Missing year of birth')
+            error_message = self.validate_fields()
+            if error_message is None:
+
+                self.child = self.find_child()
+                if self.child:
+                    self.manage_found_child()
+                elif self.level or self.year_of_birth:
+                    self.manage_not_found_child()
+                elif not self.level:
+                    self.result.set_error(_('Missing level'))
+                elif not self.year_of_birth:
+                    self.result.set_error(_('Missing year of birth'))
+            else:
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
+
+        return self.result
+
+    def find_child(self, exclude_id: Optional[int] = None) -> Optional[Child]:
+        for child in Child.objects.with_family(self.family):
+            if exclude_id and child.id == exclude_id:
+                continue
+            if child.matches_name(self.name, strict=False):
+                return child
+
+    def all_child_fields_are_empty(self):
+        return not self.name and not self.level and not self.year_of_birth
+
+    def manage_not_found_child(self):
+        child = Child.objects.create(name=self.name, year_of_birth=self.year_of_birth, repetition=self.repetition,
+                                     family=self.family)
+        self.result.set_created(child)
+
+    def manage_found_child(self):
+        if self.level and self.year_of_birth and self.child_is_modified():
+            modified_fields = []
+
+            if self.year_of_birth is not None and self.year_of_birth != self.child.year_of_birth:
+                modified_fields.append(ModifiedField(_('Year of birth'), self.child.year_of_birth, self.year_of_birth))
+                self.child.year_of_birth = self.year_of_birth
+
+            if self.repetition is not None and self.repetition != self.child.repetition:
+                modified_fields.append(ModifiedField(_('Repetition'), self.child.repetition, self.repetition))
+                self.child.repetition = self.repetition
+
+            self.child.save()
+
+            self.result.set_updated(self.child, modified_fields)
         else:
-            result.set_error(error)
+            self.result.set_not_modified(self.child)
 
-        return result
+    def child_is_modified(self):
+        return ((self.year_of_birth is not None and self.year_of_birth != self.child.year_of_birth) or
+                (self.repetition is not None and self.repetition != self.child.repetition))
 
-    @staticmethod
-    def validate_fields(family, name, level, year_of_birth):
-        if not family:
-            return False, f'Missing family'
-        if not name or type(name) != str:
-            return False, f'Missing/Wrong name: {name} ({type(name)})'
-        if level is not None and not Level.is_valid(level):
-            return False, f'Missing/Wrong repetition: {level} ({type(level)})'
-        if year_of_birth is not None and type(year_of_birth) != int:
-            return False, f'Missing/Wrong year of birth: {year_of_birth} ({type(year_of_birth)})'
+    def validate_fields(self) -> Optional[str]:
+        if not self.family:
+            return _('Missing family')
 
-        return True, None
+        if not self.name or not isinstance(self.name, str):
+            return _('Missing/Wrong name') + f' ({self.name})'
+
+        if self.level is not None and not Level.is_valid(self.level):
+            return _('Wrong level') + f' ({self.level})'
+
+        if self.year_of_birth is not None and not isinstance(self.year_of_birth, int):
+            return _('Wrong year of birth') + f': ({self.year_of_birth})'
+
+        if self.level and not self.year_of_birth:
+            current_course = ActiveCourse.load()
+            self.year_of_birth = current_course.initial_year - Level.get_age_by_level(self.level)
+
+            if self.year_of_birth:
+                self.result.add_warning(_('Year of birth calculated') + f' ({self.level} -> {self.year_of_birth})', minor=True)
+            else:
+                return _('Unable to calculate year of birth')
+
+        if not self.level and self.year_of_birth:
+            current_course = ActiveCourse.load()
+            age = current_course.initial_year - self.year_of_birth
+            self.level = Level.get_level_by_age(age)
+
+            if self.level:
+                self.result.add_warning(_('Level calculated') + f' ({self.year_of_birth} -> {self.level})', minor=True)
+            else:
+                return _('Unable to calculate level')
+
+        if self.level and self.year_of_birth:
+            self.repetition = Level.calculate_repetition(self.level, self.year_of_birth)
+            if self.repetition is None or self.repetition < 0:
+                return _('Wrong level or year of birth') + f' ({self.level}, {self.year_of_birth})'
+
+        return None

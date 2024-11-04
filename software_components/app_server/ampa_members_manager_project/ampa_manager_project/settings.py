@@ -40,7 +40,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
+    'ampa_manager_project.admin.CustomAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,7 +50,6 @@ INSTALLED_APPS = [
     'ampa_manager',
     'localflavor',
     'phonenumber_field',
-    'admin_reorder',
     'django_extensions',
 ]
 
@@ -62,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'ampa_manager_project.urls'
@@ -146,52 +145,231 @@ MEDIA_URL = ''
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ADMIN_REORDER = (
-    {'app': 'ampa_manager', 'label': _('Family'),
-     'models': (
-         'ampa_manager.Family',
-         'ampa_manager.Parent',
-         'ampa_manager.Child',
-         'ampa_manager.BankAccount',
-         'ampa_manager.Holder',
-         'ampa_manager.BankBicCode',
-     )},
-    {'app': 'ampa_manager', 'label': _('After-school'),
-     'models': (
-         'ampa_manager.AfterSchool',
-         'ampa_manager.AfterSchoolEdition',
-         'ampa_manager.AfterSchoolRegistration',
-         'ampa_manager.AfterSchoolReceipt',
-         'ampa_manager.AfterSchoolRemittance',
-     )},
-    {'app': 'ampa_manager', 'label': _('Custody'),
-     'models': (
-         'ampa_manager.CustodyEdition',
-         'ampa_manager.CustodyRegistration',
-         'ampa_manager.CustodyReceipt',
-         'ampa_manager.CustodyRemittance',
-     )},
-    {'app': 'ampa_manager', 'label': _('Camps'),
-     'models': (
-         'ampa_manager.CampsEdition',
-         'ampa_manager.CampsRegistration',
-         'ampa_manager.CampsReceipt',
-         'ampa_manager.CampsRemittance',
-     )},
-    {'app': 'ampa_manager', 'label': _('Members'),
-     'models': (
-         'ampa_manager.AcademicCourse',
-         'ampa_manager.ActiveCourse',
-         'ampa_manager.Membership',
-         'ampa_manager.Fee',
-         'ampa_manager.MembershipReceipt',
-         'ampa_manager.MembershipRemittance',
-     )},
-    {'app': 'ampa_manager', 'label': _('Settings'),
-     'models': (
-         'ampa_manager.DynamicSetting',)},
-    'auth',
-)
+
+ADMIN_MENU = [
+    {
+        'group_label': _('Families'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'family',
+                'label': _('Families'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'parent',
+                'label': _('Parents'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'child',
+                'label': _('Students'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'bankaccount',
+                'label': _('Bank accounts'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'holder',
+                'label': _('Holders'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'bankbiccode',
+                'label': _('Bank BIC Codes'),
+            },
+        ]
+    },
+    {
+        'group_label': _('After-schools'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'afterschool',
+                'label': _('Activities'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'afterschooledition',
+                'label': _('Editions'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'afterschoolregistration',
+                'label': _('Registrations'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'afterschoolreceipt',
+                'label': _('Receipts'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'afterschoolremittance',
+                'label': _('Remittances'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'import_after_schools_registrations',
+                'label': _('Import registrations'),
+            },
+        ]
+    },
+    {
+        'group_label': _('Custody'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'custodyedition',
+                'label': _('Editions'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'custodyregistration',
+                'label': _('Registrations'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'custodyreceipt',
+                'label': _('Receipts'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'custodyremittance',
+                'label': _('Remittances'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'import_custody',
+                'label': _('Import assistance'),
+            },
+        ]
+    },
+    {
+        'group_label': _('Camps'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'campsedition',
+                'label': _('Editions'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'campsregistration',
+                'label': _('Registrations'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'campsreceipt',
+                'label': _('Receipts'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'campsremittance',
+                'label': _('Remittances'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'import_camps',
+                'label': _('Import registrations'),
+            },
+        ]
+    },
+    {
+        'group_label': _('Members'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'academiccourse',
+                'label': _('Academic courses'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'activecourse',
+                'label': _('Active course'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'membership',
+                'label': _('Members'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'fee',
+                'label': _('Fees'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'membershipreceipt',
+                'label': _('Receipts'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'membershipremittance',
+                'label': _('Remittances'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'import_members',
+                'label': _('Import members'),
+            },
+        ]
+    },
+    {
+        'group_label': _('Others'),
+        'links': [
+            {
+                'type': 'model',
+                'app': 'auth',
+                'model': 'group',
+                'label': _('Users groups'),
+            },
+            {
+                'type': 'model',
+                'app': 'auth',
+                'model': 'user',
+                'label': _('App users'),
+            },
+            {
+                'type': 'model',
+                'app': 'ampa_manager',
+                'model': 'dynamicsetting',
+                'label': _('Settings'),
+            },
+        ]
+    }
+]
 
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'ES'

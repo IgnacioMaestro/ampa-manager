@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Manager
@@ -12,6 +14,8 @@ from ampa_manager.utils.utils import Utils
 
 
 class CustodyRegistration(models.Model):
+    ASSISTED_DAYS = _('assisted days')
+
     custody_edition = models.ForeignKey(to=CustodyEdition, on_delete=models.CASCADE, verbose_name=_("Custody edition"),
                                         related_name='registrations')
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, verbose_name=_("Child"))
@@ -29,7 +33,7 @@ class CustodyRegistration(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.custody_edition}, {self.child}'
+        return f'{self.custody_edition}, {self.child}, {self.assisted_days}, {_("days")}, {self.holder.bank_account}'
 
     def clean(self):
         if self.holder and not self.holder.parent.family_set.filter(id=self.child.family.id).exists():

@@ -1,36 +1,65 @@
+from typing import Optional
+
+from django.utils.translation import gettext_lazy as _
+
+from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult, ModifiedField
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class AfterSchoolRegistrationImporter:
 
-    @staticmethod
-    def find(after_school_edition, child):
+    def __init__(self, edition: AfterSchoolEdition, holder: Holder, child: Child):
+        self.result = ImportModelResult(AfterSchoolRegistration)
+        self.edition = edition
+        self.holder = holder
+        self.child = child
+        self.registration = None
+
+    def import_registration(self) -> ImportModelResult:
         try:
-            return AfterSchoolRegistration.objects.get(after_school_edition=after_school_edition, child=child)
-        except AfterSchoolRegistration.DoesNotExist:
-            return None
+            error_message = self.validate_fields()
 
-    @staticmethod
-    def import_registration(after_school_edition: AfterSchoolRegistration, holder: Holder, child: Child) -> ImportModelResult:
-        result = ImportModelResult(AfterSchoolRegistration.__name__, [after_school_edition, holder, child])
-
-        registration = AfterSchoolRegistrationImporter.find(after_school_edition, child)
-        if registration:
-            if registration.holder != holder:
-                fields_before = [registration.holder]
-                registration.holder = holder
-                fields_after = [registration.holder]
-                registration.save()
-                result.set_updated(registration, FieldsChanges(fields_before, fields_after, []))
+            if error_message is None:
+                self.registration = self.find_registration()
+                if self.registration:
+                    self.manage_found_registration()
+                else:
+                    self.manage_not_found_registration()
             else:
-                result.set_not_modified(registration)
-        else:
-            registration = AfterSchoolRegistration.objects.create(after_school_edition=after_school_edition,
-                                                                  holder=holder, child=child)
-            result.set_created(registration)
+                self.result.set_error(error_message)
+        except Exception as e:
+            self.result.set_error(str(e))
 
-        return result
+        return self.result
+
+    def find_registration(self) -> Optional[AfterSchoolRegistration]:
+        return AfterSchoolRegistration.objects.filter(
+            after_school_edition=self.edition, child=self.child).first()
+
+    def manage_not_found_registration(self):
+        self.registration = AfterSchoolRegistration.objects.create(
+            after_school_edition=self.edition, child=self.child, holder=self.holder)
+        self.result.set_created(self.registration)
+
+    def manage_found_registration(self):
+        if self.registration.holder != self.holder:
+            modified_fields = [ModifiedField(_('Holder'), self.registration.holder, self.holder)]
+            self.registration.holder = self.holder
+            self.result.set_updated(self.registration, modified_fields)
+        else:
+            self.result.set_not_modified(self.registration)
+
+    def validate_fields(self) -> Optional[str]:
+        if not self.edition:
+            return _('Missing after school edition')
+
+        if not self.holder:
+            return _('Missing holder')
+
+        if not self.child:
+            return _('Missing child')
+
+        return None

@@ -1,0 +1,351 @@
+{% extends 'admin/base_site.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ importer_title }}{% endblock %}
+
+{% block extrahead %}
+
+    <style>
+        .main-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 3px dotted #79AEC8;
+            border-radius: 15px;
+            padding: 10px 15px;
+        }
+        .list_item_label {
+            color: #BBBBBB;
+            font-size: 0.65rem;
+        }
+        .list_item_value {
+            color: black;
+            font-size: 0.8125rem;
+        }
+        .list_item_value_highlight {
+            color: black;
+            background-color: lightgoldenrodyellow;
+            font-size: 0.8125rem;
+            font-weight: bold;
+        }
+        .style_family {
+            background-color: #90e0ef;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_parent1 {
+            background-color: #48cae4;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_parent2 {
+            background-color: #90e0ef;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_child1 {
+            background-color: #48cae4;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_child2 {
+            background-color: #90e0ef;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_child3 {
+            background-color: #48cae4;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_child4 {
+            background-color: #90e0ef;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .style_others {
+            background-color: #0077b6;
+            color: white;
+            padding: 1px 10px;
+            border-radius: 15px;
+        }
+        .formatted_column_value_error {
+            color: white;
+            background-color: #f94144;
+            font-size: 0.8125rem;
+            {#font-weight: bold;#}
+            border-radius: 15px;
+            padding: 1px 10px;
+        }
+        .formatted_column_value_warning {
+            color: black;
+            background-color: lightgoldenrodyellow;
+            font-size: 0.8125rem;
+            {#font-weight: bold;#}
+            border-radius: 15px;
+            padding: 1px 10px;
+        }
+        .formatted_column_value {
+            color: black;
+            font-size: 0.8125rem;
+        }
+        .imported_model_status_not_processed {
+            background-color: #f9c74f;
+            padding: 1px 10px;
+            color: darkslategrey;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_status_not_modified {
+            padding: 1px 10px;
+            color: darkgray;
+            border: 1px dashed darkgray;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_status_created {
+            background-color: #277da1;
+            padding: 1px 10px;
+            color: white;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_status_updated {
+            {#background-color: #f8961e;#}
+            padding: 1px 10px;
+            color: lightslategrey;
+            border: 1px dashed lightslategrey;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_status_error {
+            background-color: #f94144;
+            padding: 1px 10px;
+            color: lightgray;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_status_omitted {
+            background-color: lightgray;
+            padding: 1px 10px;
+            color: darkslategrey;
+            border-radius: 15px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+        .imported_model_error {
+            background-color: #f94144;
+            padding: 1px 10px;
+            color: whitesmoke;
+            border-radius: 15px;
+        }
+        .imported_model_warning {
+            background-color: #f9c74f;
+            padding: 1px 10px;
+            color: black;
+            border-radius: 15px;
+        }
+        .imported_model_changed_field {
+            background-color: #f8961e;
+            padding: 1px 10px;
+            color: black;
+            border-radius: 15px;
+        }
+        .row_state_error {
+            text-transform: uppercase;
+            padding: 6px;
+            color: white;
+            background-color: #f94144;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+        .row_state_warning {
+            text-transform: uppercase;
+            padding: 6px;
+            color: black;
+            background-color: #f9c74f;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+        .row_state_omitted {
+            text-transform: uppercase;
+            padding: 6px;
+            color: black;
+            background-color: #fed9b7;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+        .row_state_ok {
+            text-transform: uppercase;
+            padding: 6px;
+            color: white;
+            background-color: #90be6d;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+        #rows_detected {
+            background-color: cadetblue;
+            padding: 5px
+        }
+        #all_rows {
+            background-color: darkslategrey;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        #rows_imported_ok {
+            background-color: #90be6d;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        #rows_count {
+            font-weight: bold;
+            font-size: 30px;
+        }
+        #rows_imported_warning {
+            background-color: #f9c74f;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        #rows_not_imported {
+            background-color: #f94144;
+            padding: 15px;
+            color: white;
+            border-radius: 15px;
+        }
+        #rows_omitted {
+            background-color: lightgray;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        #simulation {
+            background-color: #f9c74f;
+            padding: 5px 15px;
+            border-radius: 15px;
+        }
+        #results_summary {
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px dotted #79AEC8;
+        }
+        h1 {
+            font-size: 35px;
+        }
+        h2 {
+            font-size: 25px;
+        }
+        h3 {
+            font-size: 20px;
+        }
+        #results_summary li {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+    </style>
+
+    <script>
+      function showRowsByClass(className) {
+        var allRows = document.querySelectorAll('table tr');
+
+        allRows.forEach(function(row) {
+          if (row.classList.contains(className)) {
+            row.style.display = "table-row";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+    </script>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {{ importer_title }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ importer_title }}</h1>
+
+    {% block upload_form %}
+    <div id="upload_form" class="main-container">
+        <h2>{% trans 'Select file to import' %}</h2>
+        <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans 'Import file' %}">
+        </form>
+    </div>
+    {% endblock %}
+
+    {% block instructions %}
+    {% endblock %}
+
+    {% block results %}
+    <div id="results" class="main-container">
+        <h2>{% trans 'Results' %}</h2>
+
+        {% if simulation %}
+            <div id="simulation">
+                <h3>{% trans 'Warning: This has been a test of the import' %}</h3>
+                <ul>
+                    <li>{% trans 'Nothing has been imported' %}</li>
+                    <li>{% trans 'If the results are ok, import the file again disabling the "TEST THE IMPORT" option' %}</li>
+                </ul>
+            </div>
+            <br/>
+        {% endif %}
+
+    {% if result %}
+            <div id="results_by_row">
+                <a href="javascript:showRowsByClass('all')"><span id="all_rows">{% trans 'Show all rows' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.total }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('ok')"><span id="rows_imported_ok">{% trans 'Imported Ok' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_ok }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('warning')"><span id="rows_imported_warning">{% trans 'Imported warning' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.imported_warning }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('error')"><span id="rows_not_imported">{% trans 'Not imported' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.not_imported }}</span></span></a> &nbsp;
+                <a href="javascript:showRowsByClass('omitted')"><span id="rows_omitted">{% trans 'Omitted' %} &nbsp;&nbsp; <span id="rows_count">{{ result.rows_summary.without_data }}</span></span></a> &nbsp;
+                <br/><br/><br/>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr class="all ok warning error omitted">
+                            <th style="width: 4%; text-align: center">{% trans 'Row' %}</th>
+                            <th style="width: 6%; text-align: center">{% trans 'Result' %}</th>
+                            <th style="width: 45%; text-align: left">{% trans 'Imported' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Excel' %}</th>
+                            <th style="width: 22.5%; text-align: left">{% trans 'Formatted' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        {% for row in result.rows %}
+                        <tr class="all {{ row.state }}">
+                            <td style="text-align: center">{{ row.row_number }}</td>
+                            <td style="text-align: center">{{ row | row_state_to_html }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_imported_models_to_html }}
+                            </td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_columns_raw_values_to_html:excel_columns }}</td>
+                            <td style="text-align: left; font-size: 0.8125rem; line-height: 1.25rem;">
+                                {{ row | row_columns_formatted_values_to_html:excel_columns }}</td>
+                        </tr>
+        {% empty %}
+                        <tr class="all">
+                            <td colspan="4">{% trans 'There are no results' %}</td>
+                        </tr>
+        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+{% endblock %}

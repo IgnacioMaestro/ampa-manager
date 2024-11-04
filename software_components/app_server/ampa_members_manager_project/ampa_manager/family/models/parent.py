@@ -7,7 +7,6 @@ from django_extensions.db.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
 
 from ampa_manager.family.models.parent_queryset import ParentQuerySet
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from ampa_manager.utils.utils import Utils
@@ -24,12 +23,12 @@ class Parent(TimeStampedModel):
     objects = Manager.from_queryset(ParentQuerySet)()
 
     class Meta:
-        verbose_name = _('Parent')
-        verbose_name_plural = _("Parents")
+        verbose_name = _('Parent/Mother')
+        verbose_name_plural = _("Parents/Mothers")
         db_table = 'parent'
 
     def __str__(self) -> str:
-        return f'{self.full_name} ({self.id})'
+        return f'{self.full_name}'
 
     def save(self, *args, **kwargs):
         self.normalize_fields()
@@ -50,7 +49,7 @@ class Parent(TimeStampedModel):
         return self.family_set.filter(surnames=family.surnames).exists()
     
     def clean_name_and_surnames(self):
-        return FieldsFormatters.clean_name(self.cleaned_data['name_and_surnames'])
+        return FieldsFormatters.format_name(self.cleaned_data['name_and_surnames'])
 
     def matches_name_and_surnames(self, name_and_surnames, strict=False):
         if name_and_surnames and self.name_and_surnames:
@@ -60,41 +59,6 @@ class Parent(TimeStampedModel):
             elif StringUtils.contains_any_word(self.name_and_surnames, name_and_surnames):
                 return True
         return False
-
-    def is_modified(self, phone_number, additional_phone_number, email):
-        return ((phone_number and self.phone_number != phone_number) or
-                (additional_phone_number and self.additional_phone_number != additional_phone_number) or
-                (email and not self.is_family_email(email) and self.email != email))
-
-    def update(self, phone_number, additional_phone_number, email, allow_reset=False) -> FieldsChanges:
-        fields_before = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-        not_reset_fields = []
-        updated = False
-
-        if phone_number is not None or allow_reset:
-            self.phone_number = phone_number
-            updated = True
-        elif self.phone_number:
-            not_reset_fields.append(self.phone_number)
-
-        if additional_phone_number is not None or allow_reset:
-            self.additional_phone_number = additional_phone_number
-            updated = True
-        elif self.additional_phone_number:
-            not_reset_fields.append(self.additional_phone_number)
-
-        if email is not None and not self.is_family_email(email) or allow_reset:
-            self.email = email
-            updated = True
-        elif self.email:
-            not_reset_fields.append(self.email)
-
-        if updated:
-            self.save()
-
-        fields_after = [self.name_and_surnames, self.phone_number, self.additional_phone_number, self.email]
-
-        return FieldsChanges(fields_before, fields_after, not_reset_fields)
 
     def is_family_email(self, email: str):
         for family in self.family_set.all():
@@ -108,7 +72,7 @@ class Parent(TimeStampedModel):
     @staticmethod
     def fix_name_and_surnames():
         for parent in Parent.objects.all():
-            fixed_name_and_surnames = FieldsFormatters.clean_name(parent.name_and_surnames)
+            fixed_name_and_surnames = FieldsFormatters.format_name(parent.name_and_surnames)
             if fixed_name_and_surnames != parent.name_and_surnames:
                 print(f'Parent name and surnames fixed: "{parent.name_and_surnames}" -> "{fixed_name_and_surnames}"')
                 parent.name_and_surnames = fixed_name_and_surnames

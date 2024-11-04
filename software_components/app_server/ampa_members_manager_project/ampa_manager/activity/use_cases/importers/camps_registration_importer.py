@@ -1,36 +1,55 @@
+from typing import Optional
+
+from django.utils.translation import gettext_lazy as _
+
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
+from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
-from ampa_manager.family.use_cases.importers.fields_changes import FieldsChanges
-from ampa_manager.utils.excel.import_model_result import ImportModelResult
 
 
 class CampsRegistrationImporter:
 
-    @staticmethod
-    def find(camps_edition: CampsEdition, child: Child):
+    def __init__(self, edition: CampsEdition, holder: Holder, child: Child):
+        self.result = ImportModelResult(CampsRegistration)
+        self.edition = edition
+        self.holder = holder
+        self.child = child
+        self.registration = None
+
+    def import_registration(self) -> ImportModelResult:
+        error_message = self.validate_fields()
+        if error_message is None:
+            self.registration = self.find_registration()
+            if self.registration:
+                self.result.set_not_modified(self.registration)
+            else:
+                self.manage_not_found_registration()
+        else:
+            self.result.set_error(error_message)
+
+        return self.result
+
+    def find_registration(self) -> Optional[CampsRegistration]:
         try:
-            return CampsRegistration.objects.get(camps_edition=camps_edition, child=child)
+            return CampsRegistration.objects.get(custody_edition=self.edition, child=self.child)
         except CampsRegistration.DoesNotExist:
             return None
 
-    @staticmethod
-    def import_registration(camps_edition: CampsEdition, holder: Holder, child: Child) -> ImportModelResult:
-        result = ImportModelResult(CampsRegistration.__name__, [camps_edition, holder, child])
+    def manage_not_found_registration(self):
+        registration = CampsRegistration.objects.create(
+            custody_edition=self.edition, holder=self.holder, child=self.child)
+        self.result.set_created(registration)
 
-        registration = CampsRegistrationImporter.find(camps_edition, child)
-        if registration:
-            if registration.holder != holder:
-                fields_before = [registration.holder]
-                registration.holder = holder
-                fields_after = [registration.holder]
-                registration.save()
-                result.set_updated(registration, FieldsChanges(fields_before, fields_after, []))
-            else:
-                result.set_not_modified(registration)
-        else:
-            registration = CampsRegistration.objects.create(camps_edition=camps_edition, holder=holder, child=child)
-            result.set_created(registration)
+    def validate_fields(self) -> Optional[str]:
+        if not self.edition:
+            return _('Missing edition')
 
-        return result
+        if not self.holder:
+            return _('Missing holder')
+
+        if not self.child:
+            return _('Missing child')
+
+        return None

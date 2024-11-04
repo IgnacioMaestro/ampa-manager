@@ -7,14 +7,23 @@ from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 
 class ImportMembersForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportAfterSchoolsRegistrationsForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportAfterSchoolsActivitiesForm(forms.Form):
     file = forms.FileField()
+    simulation = forms.BooleanField(
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
+        initial=True)
 
 
 class ImportCustodyForm(forms.Form):
@@ -23,7 +32,7 @@ class ImportCustodyForm(forms.Form):
         label=_('Custody edition to import to'))
     file = forms.FileField()
     simulation = forms.BooleanField(
-        required=False, label=_('SIMULATION: Only list the changes without making any'),
+        required=False, label=_('TEST THE IMPORT (it does not make any changes)'),
         initial=True)
 
     def __init__(self, *args, **kwargs):
@@ -41,10 +50,6 @@ class ImportCampsForm(forms.Form):
 
 
 class CheckMembersForm(forms.Form):
-    file = forms.FileField()
-
-
-class ImportFamilyEmailForm(forms.Form):
     file = forms.FileField()
 
 

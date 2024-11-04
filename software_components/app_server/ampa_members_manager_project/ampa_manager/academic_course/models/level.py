@@ -95,8 +95,8 @@ class Level:
     ]
 
     @staticmethod
-    def get_level_by_age(age: int) -> str:
-        return Level.LEVEL_IDS_BY_AGE.get(age)
+    def get_level_by_age(age: int) -> Optional[str]:
+        return Level.LEVEL_IDS_BY_AGE.get(age, None)
 
     @staticmethod
     def get_cycle_by_level(level_id: str) -> Optional[str]:
@@ -107,8 +107,8 @@ class Level:
         return None
 
     @staticmethod
-    def get_age_by_level(level_id: str) -> int:
-        return Level.LEVEL_AGES.get(level_id)
+    def get_age_by_level(level_id: str) -> Optional[int]:
+        return Level.LEVEL_AGES.get(level_id, None)
 
     @staticmethod
     def get_level_name(level_id: str) -> int:
@@ -132,3 +132,27 @@ class Level:
     @staticmethod
     def is_valid(level_id: str) -> bool:
         return level_id in Level.LEVELS_IDS
+
+    @classmethod
+    def guess_level(cls, level_description: str) -> Optional[str]:
+        if LevelConstants.ID_HH2 in level_description:
+            return LevelConstants.ID_HH2
+        elif LevelConstants.ID_HH3 in level_description:
+            return LevelConstants.ID_HH3
+        elif LevelConstants.ID_HH4 in level_description:
+            return LevelConstants.ID_HH4
+        elif LevelConstants.ID_HH5 in level_description:
+            return LevelConstants.ID_HH5
+        elif LevelConstants.ID_LH1 in level_description:
+            return LevelConstants.ID_LH1
+        elif LevelConstants.ID_LH2 in level_description:
+            return LevelConstants.ID_LH2
+        elif LevelConstants.ID_LH3 in level_description:
+            return LevelConstants.ID_LH3
+        elif LevelConstants.ID_LH4 in level_description:
+            return LevelConstants.ID_LH4
+        elif LevelConstants.ID_LH5 in level_description:
+            return LevelConstants.ID_LH5
+        elif LevelConstants.ID_LH6 in level_description:
+            return LevelConstants.ID_LH6
+        return None
