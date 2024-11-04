@@ -21,8 +21,6 @@ class DocumentCreator:
     PARTY_IDENTIFICATION = DynamicSetting.load().remittances_party_id
     GENERIC_ORGANISATION_IDENTIFICATION_ID = DynamicSetting.load().remittances_generic_org_id
     COUNTRY = 'ES'
-    IBAN_ACCOUNT = DynamicSetting.load().remittances_iban
-    BIC = DynamicSetting.load().remittances_bic
     CORE = 'CORE'
     EURO = 'EUR'
     SEPA = 'SEPA'
@@ -121,14 +119,14 @@ class DocumentCreator:
 
     def create_branch_and_financial_institution_id(self) -> BranchAndFinancialInstitutionIdentification4:
         financial_institution_identification = FinancialInstitutionIdentification7()
-        financial_institution_identification.bic = self.BIC
+        financial_institution_identification.bic = self.remittance.get_bic()
         branch_and_financial_institution_identification = BranchAndFinancialInstitutionIdentification4()
         branch_and_financial_institution_identification.fin_instn_id = financial_institution_identification
         return branch_and_financial_institution_identification
 
     def create_cash_account(self) -> CashAccount16:
         account_identification_choice = AccountIdentification4Choice()
-        account_identification_choice.iban = self.IBAN_ACCOUNT
+        account_identification_choice.iban = self.remittance.get_iban()
         cash_account = CashAccount16()
         cash_account.id = account_identification_choice
         cash_account.ccy = self.EURO

@@ -9,6 +9,7 @@ from ampa_manager.activity.models.after_school.after_school_edition import After
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.family.models.membership import Membership
 
 
 class TestAfterSchoolRegistration(TestCase):

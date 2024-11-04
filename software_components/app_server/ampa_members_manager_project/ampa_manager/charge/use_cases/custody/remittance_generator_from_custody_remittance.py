@@ -8,6 +8,7 @@ from ampa_manager.charge.models.receipt_exceptions import NoSwiftBicException
 from ampa_manager.charge.receipt import Receipt
 from ampa_manager.charge.remittance import Remittance
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 
 
 class RemittanceGeneratorFromCustodyRemittance:
@@ -24,8 +25,10 @@ class RemittanceGeneratorFromCustodyRemittance:
                 receipts.append(receipt)
             except NoSwiftBicException:
                 return None, RemittanceCreatorError.BIC_ERROR
+        bic: str = DynamicSetting.load().remittances_bic
+        iban: str = DynamicSetting.load().remittances_iban
         remittance = Remittance(
             receipts=receipts, name=self.__custody_remittance.name, sepa_id=self.__custody_remittance.sepa_id,
             created_date=self.__custody_remittance.created_at, payment_date=self.__custody_remittance.payment_date,
-            concept=self.__custody_remittance.concept)
+            concept=self.__custody_remittance.concept, bic=bic, iban=iban)
         return remittance, None

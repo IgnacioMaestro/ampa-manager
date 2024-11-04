@@ -14,13 +14,13 @@ class TestRemittance(TestCase):
             amount=2.0, bank_account_owner='bank_account_owner', iban='iban', bic='bic',
             authorization=AuthorizationReceipt('2/2022', datetime.date(2022, 2, 2)))
         cls.empty_remittance = Remittance(
-            [], 'Empty Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '')
+            [], 'Empty Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '', 'bic', 'iban')
         cls.one_receipt_remittance = Remittance(
-            [cls.receipt], 'One Receipt Remittance', '2023/001', datetime.datetime.now(),
-            datetime.datetime.now(), '')
+            [cls.receipt], 'One Receipt Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '',
+            'bic', 'iban')
         cls.two_receipts_remittance = Remittance(
             [cls.receipt, cls.receipt], 'Two Receipt Remittance', '2023/001', datetime.datetime.now(),
-            datetime.datetime.now(), '')
+            datetime.datetime.now(), '', 'bic', 'iban')
 
     def test_obtain_rows_no_receipts(self):
         # Act
