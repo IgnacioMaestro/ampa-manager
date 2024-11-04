@@ -11,12 +11,13 @@ from ampa_manager.activity.use_cases.importers.import_model_result import Import
 class AfterSchoolEditionImporter:
 
     def __init__(self, after_school: AfterSchool, academic_course: AcademicCourse, period: str, timetable: str,
-                 price_for_member: float, price_for_no_member: float):
+                 levels: str, price_for_member: float, price_for_no_member: float):
         self.result = ImportModelResult(AfterSchoolEdition)
         self.after_school = after_school
         self.academic_course = academic_course
         self.period = period
         self.timetable = timetable
+        self.levels = levels
         self.price_for_member = price_for_member
         self.price_for_no_member = price_for_no_member
         self.edition = None
@@ -39,9 +40,12 @@ class AfterSchoolEditionImporter:
         return self.result
 
     def find_after_school_edition(self) -> Optional[AfterSchoolEdition]:
-        return AfterSchoolEdition.objects.filter(
-            after_school=self.after_school, academic_course=self.academic_course, period=self.period,
-            timetable=self.timetable).first()
+        try:
+            return AfterSchoolEdition.objects.get(
+                after_school=self.after_school, academic_course=self.academic_course, period=self.period,
+                timetable=self.timetable)
+        except AfterSchoolEdition.DoesNotExist:
+            return None
 
     def manage_not_found_edition(self):
         edition = AfterSchoolEdition.objects.create(

@@ -9,14 +9,13 @@
         <ul>
             <li>{% trans 'If the required custody edition does not exist ' %}, <a href="/admin/ampa_manager/custodyedition/add/" target="_new">{% trans 'you can create it here' %}</a></li>
             <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
-{#            <li>{% trans 'The file extension must be XLS (not XLSX)' %}.</li>#}
             <li>{% trans 'Only the first sheet of the excel will be imported' %}.</li>
             <li>{% trans 'The rows imported will be from row 3 onwards (two header rows are expected)' %}.</li>
             <li>{% trans 'If there is no data for any column leave it empty' %}.</li>
             <li>{% trans 'The columns must be in the following order' %}:
                 <ul>
                 {% for column in excel_columns %}
-                    <li>{% trans 'Column' %} {{ column.letter }}:  {{ column.label }}</li>
+                    {{ column | excel_column_to_html }}
                 {% endfor %}
                 </ul>
             </li>

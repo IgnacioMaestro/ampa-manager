@@ -2,6 +2,7 @@ from typing import List
 
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
@@ -67,6 +68,11 @@ def generate_html_list_from_title_list(titled_list: TitledList, level=1, numbere
 
     return mark_safe(html)
 
+@register.filter
+def excel_column_to_html(column: ExcelColumn):
+    text = f'{_("Column")} {column.letter}: {column.label}'
+    span_html = generate_span(column.style, text)
+    return mark_safe(f'<li>{span_html}</li>')
 
 @register.filter
 def to_unordered_list(items: list[str]):
