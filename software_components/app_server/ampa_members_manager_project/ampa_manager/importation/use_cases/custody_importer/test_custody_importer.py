@@ -24,8 +24,7 @@ class TestCustodyImporter(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.custody_edition = baker.make('CustodyEdition')
-
+        cls.custody_edition = baker.make(CustodyEdition)
 
     def test_import_custody_parse_errors(self):
         # Arrange

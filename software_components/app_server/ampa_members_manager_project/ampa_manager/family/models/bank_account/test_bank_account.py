@@ -9,5 +9,5 @@ GeneratorAdder.add_all()
 
 class TestBankAccount(TestCase):
     def test_str(self):
-        bank_account: BankAccount = baker.make('BankAccount')
+        bank_account: BankAccount = baker.make(BankAccount)
         self.assertEqual(str(bank_account), f'{bank_account.iban}')

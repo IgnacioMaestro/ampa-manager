@@ -14,7 +14,7 @@ class TestCampsRemittanceManager(TestCase):
             CampsRemittance.objects.create_filled(camps_editions=camps_editions)
 
     def test_create_filled_one_camps_edition_one(self):
-        camps_edition: CampsEdition = baker.make('CampsEdition')
+        camps_edition: CampsEdition = baker.make(CampsEdition)
         camps_edition_one: QuerySet[CampsEdition] = CampsEdition.objects.all()
 
         camps_remittance: CampsRemittance = CampsRemittance.objects.create_filled(
