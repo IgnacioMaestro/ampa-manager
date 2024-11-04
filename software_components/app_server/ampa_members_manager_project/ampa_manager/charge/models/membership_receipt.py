@@ -11,11 +11,9 @@ from .membership_receipt_queryset import MembershipReceiptQuerySet
 from .membership_remittance import MembershipRemittance
 from .receipt_exceptions import NoFeeForCourseException, NoSwiftBicException
 from ..receipt import Receipt, AuthorizationReceipt
-from ..state import State
 
 
 class MembershipReceipt(models.Model):
-    state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
     holder = models.ForeignKey(to=Holder, on_delete=CASCADE, verbose_name=_("Holder"))

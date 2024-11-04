@@ -7,13 +7,11 @@ from ampa_manager.charge.models.custody.custody_receipt_queryset import CustodyR
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
 from ampa_manager.charge.models.receipt_exceptions import NoSwiftBicException
 from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
-from ampa_manager.charge.state import State
 from ampa_manager.family.models.holder.holder import Holder
 
 
 class CustodyReceipt(models.Model):
     amount = models.FloatField(verbose_name=_("Total (€)"))
-    state = models.IntegerField(choices=State.choices, default=State.CREATED, verbose_name=_("State"))
     custody_registration = models.ForeignKey(
         to=CustodyRegistration, on_delete=CASCADE, verbose_name=_("Custody registrations"))
     remittance = models.ForeignKey(
@@ -27,7 +25,7 @@ class CustodyReceipt(models.Model):
         db_table = 'custody_receipt'
 
     def __str__(self):
-        return f'{self.custody_registration}, {self.get_state_display()}, {self.amount}'
+        return f'{self.custody_registration}, {self.amount}'
 
     def generate_receipt(self) -> Receipt:
         holder: Holder = self.custody_registration.holder

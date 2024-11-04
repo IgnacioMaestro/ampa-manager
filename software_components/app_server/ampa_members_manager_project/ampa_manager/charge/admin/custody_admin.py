@@ -15,7 +15,6 @@ from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
 from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
-from ..state import State
 from ..use_cases.custody.remittance_generator_from_custody_remittance import RemittanceGeneratorFromCustodyRemittance
 from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...utils.utils import Utils
@@ -23,15 +22,14 @@ from ...utils.utils import Utils
 
 class CustodyReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'id']
-    fields = ['remittance', 'custody_registration', 'state', 'amount', 'id']
-    ordering = ['state']
+    fields = ['remittance', 'custody_registration', 'amount', 'id']
     readonly_fields = ['id']
     search_fields = ['custody_registration__child__family__surnames',
                      'custody_registration__child__family__id',
                      'custody_registration__child__name',
                      'custody_registration__holder__bank_account__iban',
                      'custody_registration__holder__parent__name_and_surnames']
-    list_filter = ['state', 'amount', FamilyReceiptFilter]
+    list_filter = ['amount', FamilyReceiptFilter]
     list_per_page = 25
 
     @admin.display(description=_('Child'))
@@ -47,22 +45,6 @@ class CustodyReceiptAdmin(admin.ModelAdmin):
         if receipt.amount:
             return round(receipt.amount, 2)
         return None
-
-    @admin.action(description=gettext_lazy("Set as sent"))
-    def set_as_sent(self, request, queryset: QuerySet[CustodyReceipt]):
-        queryset.update(state=State.SEND)
-
-        message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
-        self.message_user(request=request, message=message)
-
-    @admin.action(description=gettext_lazy("Set as paid"))
-    def set_as_paid(self, request, queryset: QuerySet[CustodyReceipt]):
-        queryset.update(state=State.PAID)
-
-        message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
-        self.message_user(request=request, message=message)
-
-    actions = [set_as_sent, set_as_paid]
 
 
 class CustodyReceiptInline(ReadOnlyTabularInline):

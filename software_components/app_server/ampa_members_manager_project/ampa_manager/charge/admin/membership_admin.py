@@ -6,8 +6,7 @@ from django.db.models import QuerySet
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 
-from ampa_manager.charge.admin import RECEIPTS_SET_AS_SENT_MESSAGE, RECEIPTS_SET_AS_PAID_MESSAGE, \
-    ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
+from ampa_manager.charge.admin import ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
 from ampa_manager.charge.admin.filters.receipt_filters import FamilyReceiptFilter
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
@@ -15,12 +14,11 @@ from ampa_manager.charge.models.membership_remittance import MembershipRemittanc
 from ampa_manager.charge.remittance import Remittance
 from ampa_manager.charge.remittance_utils import RemittanceUtils
 from ampa_manager.charge.sepa.sepa_response_creator import SEPAResponseCreator
-from ampa_manager.charge.state import State
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
     MembershipRemittanceCreatorOfActiveCourse
-from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.utils import Utils
 
@@ -116,24 +114,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
 
 class MembershipReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'family', 'state']
-    ordering = ['state']
+    list_display = ['remittance', 'family']
     search_fields = ['family__surnames', 'family__id']
-    list_filter = ['state', FamilyReceiptFilter]
+    list_filter = [FamilyReceiptFilter]
     list_per_page = 25
-
-    @admin.action(description=gettext_lazy("Set as sent"))
-    def set_as_sent(self, request, queryset: QuerySet[MembershipReceipt]):
-        queryset.update(state=State.SEND)
-
-        message = gettext_lazy(RECEIPTS_SET_AS_SENT_MESSAGE) % {'num_receipts': queryset.count()}
-        self.message_user(request=request, message=message)
-
-    @admin.action(description=gettext_lazy("Set as paid"))
-    def set_as_paid(self, request, queryset: QuerySet[MembershipReceipt]):
-        queryset.update(state=State.PAID)
-
-        message = gettext_lazy(RECEIPTS_SET_AS_PAID_MESSAGE) % {'num_receipts': queryset.count()}
-        self.message_user(request=request, message=message)
-
-    actions = [set_as_sent, set_as_paid]
