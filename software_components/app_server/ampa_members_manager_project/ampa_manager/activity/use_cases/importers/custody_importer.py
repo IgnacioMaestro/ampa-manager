@@ -19,16 +19,16 @@ class CustodyImporter(BaseImporter):
     FIRST_ROW_INDEX = 2
 
     COLUMNS_TO_IMPORT = [
-        ExcelColumn(0, BaseImporter.family_email),
-        ExcelColumn(1, BaseImporter.parent_1_name_and_surnames),
-        ExcelColumn(2, BaseImporter.parent_1_phone_number),
-        ExcelColumn(3, BaseImporter.parent_1_email),
-        ExcelColumn(4, BaseImporter.bank_account_iban),
-        ExcelColumn(5, BaseImporter.child_1_name),
-        ExcelColumn(6, BaseImporter.family_surnames),
-        ExcelColumn(7, BaseImporter.child_1_year_of_birth),
-        ExcelColumn(8, BaseImporter.child_1_level),
-        ExcelColumn(9, BaseImporter.assisted_days),
+        ExcelColumn(0, BaseImporter.family_email, compulsory=True),
+        ExcelColumn(1, BaseImporter.parent_1_name_and_surnames, compulsory=False),
+        ExcelColumn(2, BaseImporter.parent_1_phone_number, compulsory=False),
+        ExcelColumn(3, BaseImporter.parent_1_email, compulsory=False),
+        ExcelColumn(4, BaseImporter.bank_account_iban, compulsory=False),
+        ExcelColumn(5, BaseImporter.child_1_name, compulsory=True),
+        ExcelColumn(6, BaseImporter.family_surnames, compulsory=False),
+        ExcelColumn(7, BaseImporter.child_1_year_of_birth, compulsory=False),
+        ExcelColumn(8, BaseImporter.child_1_level, compulsory=False),
+        ExcelColumn(9, BaseImporter.assisted_days, compulsory=True),
     ]
 
     def __init__(self, excel_content: bytes, custody_edition: CustodyEdition):

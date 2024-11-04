@@ -24,20 +24,20 @@ class AfterSchoolsImporter(BaseImporter):
     FIRST_ROW_INDEX = 2
 
     COLUMNS_TO_IMPORT = [
-        ExcelColumn(0, BaseImporter.family_email),
-        ExcelColumn(1, BaseImporter.family_surnames),
-        ExcelColumn(2, BaseImporter.parent_1_name_and_surnames),
-        ExcelColumn(3, BaseImporter.parent_1_phone_number),
-        ExcelColumn(4, BaseImporter.parent_1_email),
-        ExcelColumn(5, BaseImporter.bank_account_iban),
-        ExcelColumn(6, BaseImporter.child_1_name),
-        ExcelColumn(7, BaseImporter.child_1_year_of_birth),
-        ExcelColumn(8, BaseImporter.child_1_level),
-        ExcelColumn(9, BaseImporter.activity_name),
-        ExcelColumn(10, BaseImporter.activity_period),
-        ExcelColumn(11, BaseImporter.activity_timetable),
-        ExcelColumn(12, BaseImporter.activity_price_members),
-        ExcelColumn(13, BaseImporter.activity_price_non_members),
+        ExcelColumn(0, BaseImporter.family_email, compulsory=True),
+        ExcelColumn(1, BaseImporter.parent_1_name_and_surnames, compulsory=False),
+        ExcelColumn(2, BaseImporter.parent_1_phone_number, compulsory=False),
+        ExcelColumn(3, BaseImporter.parent_1_email, compulsory=False),
+        ExcelColumn(4, BaseImporter.bank_account_iban, compulsory=False),
+        ExcelColumn(5, BaseImporter.child_1_name, compulsory=True),
+        ExcelColumn(6, BaseImporter.family_surnames, compulsory=False),
+        ExcelColumn(7, BaseImporter.child_1_year_of_birth, compulsory=False),
+        ExcelColumn(8, BaseImporter.child_1_level, compulsory=False),
+        ExcelColumn(9, BaseImporter.activity_name, compulsory=True),
+        ExcelColumn(10, BaseImporter.activity_period, compulsory=False),
+        ExcelColumn(11, BaseImporter.activity_timetable, compulsory=False),
+        ExcelColumn(12, BaseImporter.activity_price_members, compulsory=False),
+        ExcelColumn(13, BaseImporter.activity_price_non_members, compulsory=False),
     ]
 
     def process_row(self, row: Row):

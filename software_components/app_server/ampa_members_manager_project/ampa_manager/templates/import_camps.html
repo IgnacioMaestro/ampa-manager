@@ -1,71 +1,23 @@
-{% extends 'admin/base_site.html' %}
+{% extends 'base_import.html' %}
 {% load custom_filters %}
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans 'Import camps registrations' %}{% endblock %}
-
-{% block breadcrumbs %}
-    <div class="breadcrumbs">
-      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo; {% trans 'Import camps registrations' %}
+{% block instructions %}
+    <div id="instructions" class="main-container">
+        <h2>{% trans 'Instructions' %}</h2>
+        <ul>
+            <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
+            <li>{% trans 'Only the first sheet of the excel will be imported' %}.</li>
+            <li>{% trans 'The rows imported will be from row 3 onwards (two header rows are expected)' %}.</li>
+            <li>{% trans 'If there is no data for any column leave it empty' %}.</li>
+            <li>{% trans 'The columns must be in the following order' %}:
+                <ul>
+                {% for column in excel_columns %}
+                    {{ column | excel_column_to_html }}
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
     </div>
-{% endblock %}
-
-{% block content %}
-    <h1>{% trans 'Import camps registrations' %}</h1>
-
-    <h2>{% trans 'Upload file' %}</h2>
-    <form action="{{ form_action }}" enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% trans 'Import file' %}">
-    </form>
-
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 35%;">
-
-                    <h2>{% trans 'Instructions' %}</h2>
-                    <ul>
-                        <li><a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a>.</li>
-                        <li>{% trans 'Only the first sheet of the excel will be imported' %}.</li>
-                        <li>{% trans 'The rows imported will be from row 3 onwards (two header rows are expected)' %}.</li>
-                        <li>{% trans 'If there is no data for any column leave it empty' %}.</li>
-                        <li>{% trans 'The columns must be in the following order' %}:
-                            <ul>
-                            {% for column in excel_columns %}
-                                <li>{% trans 'Column' %} {{ column.0 }}:  {{ column.1 }}</li>
-                            {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-            </td>
-            <td style="width: 65%;">
-                <h2>{% trans 'Results' %}</h2>
-                {% if simulation %}
-                    <h2 style="background-color: yellow;">{% trans 'Warning: This has been a simulation of the import' %}</h2>
-                    <ul>
-                        <li style="background-color: yellow;">{% trans 'No change has been made' %}</li>
-                        <li style="background-color: yellow;">{% trans 'If the results are ok, import the file again disabling the "SIMULATION" option' %}</li>
-                    </ul>
-                {% endif %}
-
-                {% if import_summary %}
-                    {% if success %}
-                    <img src="{% static 'images/success.png' %}" width="48px">
-                    {% else %}
-                    <img src="{% static 'images/warning.png' %}" width="48px">
-                    {% endif %}
-
-                    <p>{{ import_summary|titled_list_to_ul }}</p>
-
-                    <p>{{ import_results|titled_list_to_ul }}</p>
-                {% else %}
-                    <p>{% trans 'Choose an excel file and click "Import file" to see here the results of the import' %}.</p>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-
 {% endblock %}

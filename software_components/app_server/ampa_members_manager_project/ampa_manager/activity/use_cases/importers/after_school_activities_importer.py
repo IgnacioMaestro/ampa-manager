@@ -24,12 +24,12 @@ class AfterSchoolsActivitiesImporter(BaseImporter):
     FIRST_ROW_INDEX = 2
 
     COLUMNS_TO_IMPORT = [
-        ExcelColumn(0, BaseImporter.activity_name),
-        ExcelColumn(1, BaseImporter.activity_period),
-        ExcelColumn(2, BaseImporter.activity_timetable),
-        ExcelColumn(3, BaseImporter.activity_levels),
-        ExcelColumn(4, BaseImporter.activity_price_members),
-        ExcelColumn(5, BaseImporter.activity_price_non_members),
+        ExcelColumn(0, BaseImporter.activity_name, compulsory=True),
+        ExcelColumn(1, BaseImporter.activity_period, compulsory=True),
+        ExcelColumn(2, BaseImporter.activity_timetable, compulsory=True),
+        ExcelColumn(3, BaseImporter.activity_levels, compulsory=False),
+        ExcelColumn(4, BaseImporter.activity_price_members, compulsory=True),
+        ExcelColumn(5, BaseImporter.activity_price_non_members, compulsory=True),
     ]
 
     def process_row(self, row: Row):
