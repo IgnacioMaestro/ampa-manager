@@ -5,6 +5,7 @@ from ampa_manager.charge.models.receipt_exceptions import NoFeeForCourseExceptio
     NoSwiftBicException
 from ampa_manager.charge.receipt import Receipt
 from ampa_manager.charge.remittance import Remittance
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 
 
 class MembershipRemittanceGenerator:
@@ -18,10 +19,13 @@ class MembershipRemittanceGenerator:
         is_error, receipts = self.generate_receipts()
         if is_error:
             return None, self.ERROR_SWIFT_BIC_REQUIRED
+        bic: str = DynamicSetting.load().remittances_bic
+        iban: str = DynamicSetting.load().remittances_iban
         remittance = Remittance(
             receipts=receipts, name=self.__membership_remittance.name, sepa_id=self.__membership_remittance.sepa_id,
             created_date=self.__membership_remittance.created_at,
-            payment_date=self.__membership_remittance.payment_date, concept=self.__membership_remittance.concept)
+            payment_date=self.__membership_remittance.payment_date, concept=self.__membership_remittance.concept,
+            bic=bic, iban=iban)
         return remittance, None
 
     def generate_receipts(self) -> tuple[bool, List[Receipt]]:

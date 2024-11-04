@@ -17,7 +17,8 @@ class TestPostalAddressCreator(TestCase):
             amount=2.0, bank_account_owner='bank_account_owner', iban='iban', bic='bic',
             authorization=authorization_receipt)
         cls.remittance = Remittance(
-            [receipt], 'One Receipt Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '')
+            [receipt], 'One Receipt Remittance', '2023/001', datetime.datetime.now(), datetime.datetime.now(), '',
+            'bic', 'iban')
 
     def test_create(self):
         postal_address: PostalAddress6 = PostalAddressCreator().create(self.COUNTRY)
