@@ -184,7 +184,7 @@ ADMIN_MENU = [
                 'type': 'model',
                 'app': 'ampa_manager',
                 'model': 'bankbiccode',
-                'label': _('Bank BIC Codes'),
+                'label': _('Códigos bancarios BIC'),
             },
         ]
     },
@@ -195,7 +195,7 @@ ADMIN_MENU = [
                 'type': 'model',
                 'app': 'ampa_manager',
                 'model': 'afterschool',
-                'label': _('Activities'),
+                'label': _('Actividades'),
             },
             {
                 'type': 'model',
@@ -224,8 +224,14 @@ ADMIN_MENU = [
             {
                 'type': 'view',
                 'app': 'ampa_manager',
+                'view': 'import_after_schools_activities',
+                'label': _('Importar actividades'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
                 'view': 'import_after_schools_registrations',
-                'label': _('Import registrations'),
+                'label': _('Importar inscripciones'),
             },
         ]
     },
@@ -260,7 +266,7 @@ ADMIN_MENU = [
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_custody',
-                'label': _('Import assistance'),
+                'label': _('Import asistencia'),
             },
         ]
     },
@@ -295,7 +301,7 @@ ADMIN_MENU = [
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_camps',
-                'label': _('Import registrations'),
+                'label': _('Importar inscripciones'),
             },
         ]
     },
@@ -353,13 +359,13 @@ ADMIN_MENU = [
                 'type': 'model',
                 'app': 'auth',
                 'model': 'group',
-                'label': _('Users groups'),
+                'label': _('Usuarios'),
             },
             {
                 'type': 'model',
                 'app': 'auth',
                 'model': 'user',
-                'label': _('App users'),
+                'label': _('Grupos'),
             },
             {
                 'type': 'model',

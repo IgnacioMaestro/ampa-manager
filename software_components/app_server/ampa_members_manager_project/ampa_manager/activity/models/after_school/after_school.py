@@ -9,8 +9,8 @@ class AfterSchool(models.Model):
     funding = models.IntegerField(choices=Funding.choices, verbose_name=_("Funding"))
 
     class Meta:
-        verbose_name = _('After-school')
-        verbose_name_plural = _('After-schools')
+        verbose_name = _('Activity')
+        verbose_name_plural = _('Activities')
         db_table = 'after_school'
 
     def __str__(self) -> str:
