@@ -14,7 +14,7 @@ class TestCustodyRemittanceManager(TestCase):
             CustodyRemittance.objects.create_filled(custody_editions=custody_editions)
 
     def test_create_filled_one_custody_edition_one(self):
-        custody_edition: CustodyEdition = baker.make('CustodyEdition')
+        custody_edition: CustodyEdition = baker.make(CustodyEdition)
         custody_edition_one: QuerySet[CustodyEdition] = CustodyEdition.objects.all()
 
         custody_remittance: CustodyRemittance = CustodyRemittance.objects.create_filled(

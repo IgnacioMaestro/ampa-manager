@@ -5,6 +5,8 @@ from django.test import TestCase
 from django.utils import timezone
 from model_bakery import baker
 
+from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
+
 
 class TestCustodyRemittance(TestCase):
     timezone_now: datetime
@@ -17,11 +19,11 @@ class TestCustodyRemittance(TestCase):
     def test_str_with_name(self, now):
         now.return_value = self.timezone_now
         name = 'name'
-        custody_remittance = baker.make('CustodyRemittance', name=name)
+        custody_remittance: CustodyRemittance = baker.make(CustodyRemittance, name=name)
         self.assertEqual(str(custody_remittance), name + '_' + self.timezone_now.strftime("%Y%m%d_%H%M%S"))
 
     @mock.patch('django.utils.timezone.now')
     def test_str_without_name(self, now):
         now.return_value = self.timezone_now
-        custody_remittance = baker.make('CustodyRemittance')
+        custody_remittance: CustodyRemittance = baker.make(CustodyRemittance)
         self.assertEqual(str(custody_remittance), '_' + self.timezone_now.strftime("%Y%m%d_%H%M%S"))

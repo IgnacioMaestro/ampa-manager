@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models import CASCADE
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.charge.models.receipt_exceptions import NoSwiftBicException
+from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
 from ampa_manager.utils.utils import Utils
 from .holder_manager import HolderManager
 from .holder_queryset import HolderQuerySet
@@ -73,3 +75,12 @@ class Holder(models.Model):
             return holders.first()
         else:
             return None
+
+    def generate_receipt_with(self, amount: float) -> Receipt:
+        authorization: AuthorizationReceipt = AuthorizationReceipt(
+            number=self.authorization_full_number, date=self.authorization_sign_date)
+        if self.bank_account.swift_bic is None:
+            raise NoSwiftBicException
+        return Receipt(
+            amount=amount, bank_account_owner=self.parent.full_name, iban=self.bank_account.iban,
+            bic=self.bank_account.swift_bic, authorization=authorization)

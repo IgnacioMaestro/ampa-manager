@@ -14,7 +14,7 @@ class TestAfterSchoolRemittanceManager(TestCase):
             AfterSchoolRemittance.objects.create_filled(after_school_editions=after_school_editions)
 
     def test_create_filled_one_after_school_edition_one(self):
-        after_school_edition: AfterSchoolEdition = baker.make('AfterSchoolEdition')
+        after_school_edition: AfterSchoolEdition = baker.make(AfterSchoolEdition)
         after_school_edition_one: QuerySet[AfterSchoolEdition] = AfterSchoolEdition.objects.all()
 
         after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.objects.create_filled(

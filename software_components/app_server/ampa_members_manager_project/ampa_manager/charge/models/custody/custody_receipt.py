@@ -5,9 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.charge.models.custody.custody_receipt_queryset import CustodyReceiptQuerySet
 from ampa_manager.charge.models.custody.custody_remittance import CustodyRemittance
-from ampa_manager.charge.models.receipt_exceptions import NoSwiftBicException
-from ampa_manager.charge.receipt import Receipt, AuthorizationReceipt
-from ampa_manager.family.models.holder.holder import Holder
+from ampa_manager.charge.receipt import Receipt
 
 
 class CustodyReceipt(models.Model):
@@ -28,14 +26,7 @@ class CustodyReceipt(models.Model):
         return f'{self.custody_registration}, {self.amount}'
 
     def generate_receipt(self) -> Receipt:
-        holder: Holder = self.custody_registration.holder
-        authorization: AuthorizationReceipt = AuthorizationReceipt(
-            number=holder.authorization_full_number, date=holder.authorization_sign_date)
-        if holder.bank_account.swift_bic is None:
-            raise NoSwiftBicException
-        return Receipt(
-            amount=self.amount, bank_account_owner=holder.parent.full_name, iban=holder.bank_account.iban,
-            bic=holder.bank_account.swift_bic, authorization=authorization)
+        return self.custody_registration.holder.generate_receipt_with(self.amount)
 
     @classmethod
     def get_total_by_remittance(cls, remittance: CustodyRemittance) -> float:
