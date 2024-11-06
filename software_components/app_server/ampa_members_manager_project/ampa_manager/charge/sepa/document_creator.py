@@ -18,23 +18,25 @@ from ...dynamic_settings.dynamic_settings import DynamicSetting
 
 
 class DocumentCreator:
-    PARTY_IDENTIFICATION = DynamicSetting.load().remittances_party_id
-    GENERIC_ORGANISATION_IDENTIFICATION_ID = DynamicSetting.load().remittances_generic_org_id
     COUNTRY = 'ES'
     CORE = 'CORE'
     EURO = 'EUR'
     SEPA = 'SEPA'
+    party_identification: str
+    generic_organisation_identification_id: str
 
     def __init__(self, remittance: Remittance):
         self.remittance = remittance
+        self.party_identification = DynamicSetting.load().remittances_party_id
+        self.generic_organisation_identification_id = DynamicSetting.load().remittances_generic_org_id
 
     def create(self) -> Document:
         return Document(cstmr_drct_dbt_initn=self.create_customer_direct_debit_initiation())
 
     def create_customer_direct_debit_initiation(self) -> CustomerDirectDebitInitiationV02:
         group_header: GroupHeader39 = GroupHeaderCreator(
-            remittance=self.remittance, party_identification=self.PARTY_IDENTIFICATION,
-            organization_id=self.GENERIC_ORGANISATION_IDENTIFICATION_ID).create()
+            remittance=self.remittance, party_identification=self.party_identification,
+            organization_id=self.generic_organisation_identification_id).create()
         payment_information: list[PaymentInstructionInformation4] = self.create_payment_information_list()
         return CustomerDirectDebitInitiationV02(grp_hdr=group_header, pmt_inf=payment_information)
 
@@ -106,7 +108,7 @@ class DocumentCreator:
     def create_party_identification_ctr_scheme(self) -> PartyIdentification32:
         party_identification = PartyIdentification32()
         generic_person_identification = GenericPersonIdentification1()
-        generic_person_identification.id = self.GENERIC_ORGANISATION_IDENTIFICATION_ID
+        generic_person_identification.id = self.generic_organisation_identification_id
         person_identification_scheme_name_choice = PersonIdentificationSchemeName1Choice()
         person_identification_scheme_name_choice.prtry = self.SEPA
         generic_person_identification.schme_nm = person_identification_scheme_name_choice
@@ -137,7 +139,7 @@ class DocumentCreator:
 
     def create_party_identification_cdtr(self) -> PartyIdentification32:
         party_identification_32_payment_information = PartyIdentification32()
-        party_identification_32_payment_information.nm = self.PARTY_IDENTIFICATION
+        party_identification_32_payment_information.nm = self.party_identification
         party_identification_32_payment_information.pstl_adr = PostalAddressCreator().create(self.COUNTRY)
         return party_identification_32_payment_information
 

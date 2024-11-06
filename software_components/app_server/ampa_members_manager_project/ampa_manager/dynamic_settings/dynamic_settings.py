@@ -9,7 +9,9 @@ class DynamicSetting(Singleton):
     remittances_party_id = models.CharField(max_length=500, verbose_name=_("Party identification"))
     remittances_generic_org_id = models.CharField(max_length=500, verbose_name=_("Generic organisation identification"))
     remittances_bic = models.CharField(max_length=500, verbose_name=_("BIC"))
-    remittances_iban = IBANField(unique=True, verbose_name=_("IBAN"))
+    remittances_iban = IBANField(verbose_name=_("IBAN"))
+    remittances_custody_bic = models.CharField(max_length=500, verbose_name=_("Custody BIC"))
+    remittances_custody_iban = IBANField(verbose_name=_("Custody IBAN"))
 
     custody_members_discount_percent = models.FloatField(
         verbose_name=_("Members discount"),

@@ -25,8 +25,8 @@ class RemittanceGeneratorFromCustodyRemittance:
                 receipts.append(receipt)
             except NoSwiftBicException:
                 return None, RemittanceCreatorError.BIC_ERROR
-        bic: str = DynamicSetting.load().remittances_bic
-        iban: str = DynamicSetting.load().remittances_iban
+        bic: str = DynamicSetting.load().remittances_custody_bic
+        iban: str = DynamicSetting.load().remittances_custody_iban
         remittance = Remittance(
             receipts=receipts, name=self.__custody_remittance.name, sepa_id=self.__custody_remittance.sepa_id,
             created_date=self.__custody_remittance.created_at, payment_date=self.__custody_remittance.payment_date,
