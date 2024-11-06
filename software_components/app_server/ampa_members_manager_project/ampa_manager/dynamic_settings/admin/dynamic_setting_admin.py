@@ -9,7 +9,8 @@ class DynamicSettingAdmin(admin.ModelAdmin):
             'fields': ['remittances_party_id', 'remittances_generic_org_id', 'remittances_bic', 'remittances_iban']
         }),
         (_('Custody'), {
-            'fields': ['custody_members_discount_percent', 'custody_max_days_to_charge_percent'],
+            'fields': ['custody_members_discount_percent', 'custody_max_days_to_charge_percent',
+                       'remittances_custody_bic', 'remittances_custody_iban'],
         }),
         # (_('After-school'), {
         #     'fields': [],

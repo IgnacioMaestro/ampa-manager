@@ -25,8 +25,7 @@ class CustodyEdition(PricePerLevel):
     cost = models.DecimalField(max_digits=6, decimal_places=2, null=True, verbose_name=_("Cost"),
                                help_text=_(
                                    'Prices can be automatically calculated with the action "Calculate prices" based on '
-                                   'this cost and assisted days. No members have a surcharge of %(surcharge)s ') %
-                                   {'surcharge': f'{DynamicSetting.load().custody_members_discount_percent}%'})
+                                   'this cost and assisted days. No members have a surcharge'))
 
     objects = Manager.from_queryset(CustodyEditionQuerySet)()
 
