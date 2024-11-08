@@ -4,23 +4,14 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
-from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.activity.use_cases.importers.titled_list import TitledList
-from ampa_manager.family.models.child import Child
-from ampa_manager.family.models.family import Family
+from ampa_manager.templatetags.html_blocks import html_new_line_tab, html_new_line_tab_hyphen, html_space
 from ampa_manager.utils.utils import Utils
 
 register = template.Library()
-
-html_new_line = '<br/>'
-html_new_line_tab_hyphen = '<br/>&nbsp;&nbsp; - '
-html_new_line_tab = '<br/>&nbsp;&nbsp;'
-html_space = '&nbsp;'
 
 
 @register.filter
@@ -125,25 +116,6 @@ def row_columns_formatted_values_to_html(row: Row, excel_columns: list[ExcelColu
     return to_custom_list(items, '·')
 
 
-def get_instance_details(result: ImportModelResult) -> str:
-    if result.instance:
-        if result.model == CustodyRegistration:
-            return (f'{html_new_line_tab_hyphen}{result.instance.assisted_days} {CustodyRegistration.ASSISTED_DAYS}'
-                    f'{html_new_line_tab_hyphen}{result.instance.holder.bank_account} ({result.instance.holder.parent})')
-        elif result.model == CampsRegistration:
-            return f'{result.instance.holder}'
-        elif result.model == AfterSchoolRegistration:
-            return f'{result.instance.holder}'
-        elif result.model == Child:
-            return f'{result.instance.name} {str(result.instance.family.surnames)}, {result.instance.level}'
-        elif result.model == Family:
-            return f'{result.instance.surnames}'
-        else:
-            return str(result.instance)
-    else:
-        return ''
-
-
 @register.filter
 def row_imported_models_to_html(row: Row):
     items = []
@@ -151,7 +123,7 @@ def row_imported_models_to_html(row: Row):
     for result in row.imported_models_results:
         result_details = ''
         result_details += generate_span('list_item_label', result.model_verbose_name)
-        result_details += ' ' + generate_span('list_item_value', get_instance_details(result))
+        result_details += ' ' + generate_span('list_item_value', result.instance_str)
         if result.state not in [ImportModelResult.OMITTED, ImportModelResult.ERROR]:
             result_details += ' ' + generate_span(f'imported_model_status_{result.state.lower()}', result.state_label)
 
@@ -208,7 +180,7 @@ def row_state_to_html(row: Row):
 def complete_with_spaces(string: str, length: int) -> str:
     spaces = length - len(string)
     if spaces > 0:
-        return html_space * int(spaces / 2) + string + html_space * int(spaces / 2)
+        return str(html_space * int(spaces / 2)) + string + str(html_space * int(spaces / 2))
     return string
 
 

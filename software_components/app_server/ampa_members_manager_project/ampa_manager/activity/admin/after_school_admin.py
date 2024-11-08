@@ -89,12 +89,12 @@ class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
 
 class AfterSchoolEditionAdmin(admin.ModelAdmin):
     inlines = [AfterSchoolRegistrationInline]
-    list_display = ['academic_course', 'after_school', 'period', 'timetable', 'price_for_member', 'price_for_no_member',
-                    'after_schools_count']
+    list_display = ['academic_course', 'after_school', 'code', 'period', 'timetable', 'price_for_member',
+                    'price_for_no_member', 'after_schools_count']
     autocomplete_fields = ['after_school']
     fieldsets = (
         (None, {
-            'fields': ('academic_course', 'after_school')
+            'fields': ('academic_course', 'after_school', 'code')
         }),
         (_('Timetable'), {
             'fields': ('period', 'timetable', 'levels'),
@@ -170,7 +170,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
 
 class AfterSchoolEditionInline(ReadOnlyTabularInline):
     model = AfterSchoolEdition
-    fields = ['academic_course', 'after_school', 'timetable', 'period', 'levels', 'price_for_member',
+    fields = ['academic_course', 'after_school', 'code', 'timetable', 'period', 'levels', 'price_for_member',
               'price_for_no_member', 'registrations_link', 'edit_link']
     readonly_fields = ['edit_link', 'registrations_link']
     ordering = ['-academic_course', 'after_school']

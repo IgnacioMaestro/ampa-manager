@@ -9,6 +9,7 @@ from ampa_manager.activity.models.price_per_level import PricePerLevel
 
 class AfterSchoolEdition(PricePerLevel):
     after_school = models.ForeignKey(to=AfterSchool, on_delete=CASCADE, verbose_name=_("After-school"))
+    code = models.CharField(max_length=300, verbose_name=_("Code"), null=True, blank=True)
     period = models.CharField(max_length=300, verbose_name=_("Period"))
     timetable = models.CharField(max_length=300, verbose_name=_("Timetable"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
@@ -20,6 +21,8 @@ class AfterSchoolEdition(PricePerLevel):
         constraints = [
             models.UniqueConstraint(
                 fields=['after_school', 'academic_course', 'period', 'timetable'], name='unique_important_fields'),
+            models.UniqueConstraint(
+                fields=['academic_course', 'code'], name='unique_code_in_academic_course'),
         ]
 
     def __str__(self) -> str:
