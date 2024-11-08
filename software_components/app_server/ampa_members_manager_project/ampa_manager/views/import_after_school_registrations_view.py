@@ -14,7 +14,7 @@ from ampa_manager.views.import_custody_view import SimulationException
 
 class ImportAfterSchoolRegistrationsView(View):
     HTML_TEMPLATE = 'import_after_school_registrations.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_inscripciones_extraescolares.xlsx'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_extraescolares.xlsx'
     IMPORTER_TITLE = _('Import afterschool registrations')
     VIEW_NAME = 'import_after_schools_registrations'
 

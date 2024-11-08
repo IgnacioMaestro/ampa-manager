@@ -60,11 +60,12 @@ class BaseImporter:
     KEY_CHILD_4_YEAR_OF_BIRTH = 'child_4_year_of_birth'
     KEY_ASSISTED_DAYS = 'assisted_days'
     KEY_ACTIVITY_NAME = 'activity_name'
-    KEY_ACTIVITY_PERIOD = 'activity_period'
-    KEY_ACTIVITY_TIMETABLE = 'activity_timetable'
-    KEY_ACTIVITY_LEVELS = 'activity_levels'
-    KEY_ACTIVITY_PRICE_MEMBERS = 'activity_price_members'
-    KEY_ACTIVITY_PRICE_NON_MEMBERS = 'activity_price_no_members'
+    KEY_EDITION_CODE = 'edition_code'
+    KEY_EDITION_PERIOD = 'edition_period'
+    KEY_EDITION_TIMETABLE = 'edition_timetable'
+    KEY_EDITION_LEVELS = 'edition_levels'
+    KEY_EDITION_PRICE_MEMBERS = 'edition_price_members'
+    KEY_EDITION_PRICE_NON_MEMBERS = 'edition_price_no_members'
 
     family_email = ExcelColumnDefinition(
         KEY_FAMILY_EMAIL, _('Family: email'), _('Family: email'), FieldsFormatters.format_email, STYLE_FAMILY)
@@ -126,20 +127,23 @@ class BaseImporter:
     activity_name = ExcelColumnDefinition(
         KEY_ACTIVITY_NAME, _('Activity name'), _('Activity'),
         FieldsFormatters.format_string, STYLE_OTHERS)
-    activity_period = ExcelColumnDefinition(
-        KEY_ACTIVITY_PERIOD, _('Activity period (ostirala-viernes)'), _('Period'),
+    edition_code = ExcelColumnDefinition(
+        KEY_EDITION_CODE, _('Edition code (ESKU-AST-13)'), _('Code'),
+        FieldsFormatters.format_code, STYLE_OTHERS)
+    edition_period = ExcelColumnDefinition(
+        KEY_EDITION_PERIOD, _('Edition period (ostirala-viernes)'), _('Period'),
+        FieldsFormatters.format_and_capitalize_string, STYLE_OTHERS)
+    edition_timetable = ExcelColumnDefinition(
+        KEY_EDITION_TIMETABLE, _('Edition timetable (17:00-18:00)'), _('Timetable'),
         FieldsFormatters.format_string, STYLE_OTHERS)
-    activity_timetable = ExcelColumnDefinition(
-        KEY_ACTIVITY_TIMETABLE, _('Activity timetable (17:00-18:00)'), _('Timetable'),
+    edition_levels = ExcelColumnDefinition(
+        KEY_EDITION_LEVELS, _('Edition levels (HH, LH)'), _('Levels'),
         FieldsFormatters.format_string, STYLE_OTHERS)
-    activity_levels = ExcelColumnDefinition(
-        KEY_ACTIVITY_LEVELS, _('Activity levels (HH, LH)'), _('Levels'),
-        FieldsFormatters.format_string, STYLE_OTHERS)
-    activity_price_members = ExcelColumnDefinition(
-        KEY_ACTIVITY_PRICE_MEMBERS, _('Activity price for members'), _('Price members'),
+    edition_price_members = ExcelColumnDefinition(
+        KEY_EDITION_PRICE_MEMBERS, _('Edition price for members'), _('Price members'),
         FieldsFormatters.format_float, STYLE_OTHERS)
-    activity_price_non_members = ExcelColumnDefinition(
-        KEY_ACTIVITY_PRICE_NON_MEMBERS, _('Activity price for non members'), _('Price non members'),
+    edition_price_non_members = ExcelColumnDefinition(
+        KEY_EDITION_PRICE_NON_MEMBERS, _('Edition price for non members'), _('Price non members'),
         FieldsFormatters.format_float, STYLE_OTHERS)
 
     def __init__(self, excel_content: bytes):

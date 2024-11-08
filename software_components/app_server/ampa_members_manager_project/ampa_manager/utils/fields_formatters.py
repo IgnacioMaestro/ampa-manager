@@ -28,6 +28,19 @@ class FieldsFormatters:
         return None
 
     @staticmethod
+    def format_code(value: str) -> Optional[str]:
+        if value:
+            return StringUtils.uppercase(StringUtils.remove_all_spaces(str(value)))
+        return None
+
+    @staticmethod
+    def format_and_capitalize_string(value: str) -> Optional[str]:
+        if value:
+            return StringUtils.capitalize(
+                StringUtils.remove_duplicated_spaces(StringUtils.remove_strip_spaces(str(value))))
+        return None
+
+    @staticmethod
     def format_email(value: str) -> Optional[str]:
         if value:
             value = StringUtils.lowercase(StringUtils.remove_all_spaces(StringUtils.remove_accents(str(value))))

@@ -10,11 +10,12 @@ from ampa_manager.activity.use_cases.importers.import_model_result import Import
 
 class AfterSchoolEditionImporter:
 
-    def __init__(self, after_school: AfterSchool, academic_course: AcademicCourse, period: str, timetable: str,
-                 levels: str, price_for_member: float, price_for_no_member: float):
+    def __init__(self, after_school: AfterSchool, academic_course: AcademicCourse, code: str, period: str,
+                 timetable: str, levels: str, price_for_member: float, price_for_no_member: float):
         self.result = ImportModelResult(AfterSchoolEdition)
         self.after_school = after_school
         self.academic_course = academic_course
+        self.code = code
         self.period = period
         self.timetable = timetable
         self.levels = levels
@@ -41,6 +42,11 @@ class AfterSchoolEditionImporter:
 
     def find_after_school_edition(self) -> Optional[AfterSchoolEdition]:
         try:
+            return AfterSchoolEdition.objects.get(code=self.code)
+        except AfterSchoolEdition.DoesNotExist:
+            pass
+
+        try:
             return AfterSchoolEdition.objects.get(
                 after_school=self.after_school, academic_course=self.academic_course, period=self.period,
                 timetable=self.timetable)
@@ -49,7 +55,7 @@ class AfterSchoolEditionImporter:
 
     def manage_not_found_edition(self):
         edition = AfterSchoolEdition.objects.create(
-            after_school=self.after_school, academic_course=self.academic_course, period=self.period,
+            after_school=self.after_school, academic_course=self.academic_course, code=self.code, period=self.period,
             timetable=self.timetable, price_for_member=self.price_for_member,
             price_for_no_member=self.price_for_no_member)
         self.result.set_created(edition)

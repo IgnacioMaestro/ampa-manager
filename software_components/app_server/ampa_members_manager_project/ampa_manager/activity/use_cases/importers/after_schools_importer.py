@@ -6,6 +6,7 @@ from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.use_cases.importers.after_school_activity_importer import AfterSchoolActivityImporter
+from ampa_manager.activity.use_cases.importers.after_school_edition_finder import AfterSchoolEditionFinder
 from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
 from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
@@ -33,11 +34,7 @@ class AfterSchoolsImporter(BaseImporter):
         ExcelColumn(6, BaseImporter.family_surnames, compulsory=False),
         ExcelColumn(7, BaseImporter.child_1_year_of_birth, compulsory=False),
         ExcelColumn(8, BaseImporter.child_1_level, compulsory=False),
-        ExcelColumn(9, BaseImporter.activity_name, compulsory=True),
-        ExcelColumn(10, BaseImporter.activity_period, compulsory=False),
-        ExcelColumn(11, BaseImporter.activity_timetable, compulsory=False),
-        ExcelColumn(12, BaseImporter.activity_price_members, compulsory=False),
-        ExcelColumn(13, BaseImporter.activity_price_non_members, compulsory=False),
+        ExcelColumn(9, BaseImporter.edition_code, compulsory=True),
     ]
 
     def process_row(self, row: Row):
@@ -67,11 +64,7 @@ class AfterSchoolsImporter(BaseImporter):
                 row.set_error('Missing bank account')
                 return
 
-            activity: AfterSchool = self.import_after_school_activity(row)
-            if not activity:
-                return
-
-            edition: AfterSchoolEdition = self.import_after_school_edition(row, activity)
+            edition: AfterSchoolEdition = self.import_after_school_edition(row)
             if not edition:
                 return
 
@@ -88,15 +81,10 @@ class AfterSchoolsImporter(BaseImporter):
         return result.instance
 
     @classmethod
-    def import_after_school_edition(cls, row: Row, after_school: AfterSchool) -> Optional[AfterSchoolEdition]:
-        active_course: AcademicCourse = ActiveCourse.load()
-        period = row.get_value(cls.KEY_ACTIVITY_PERIOD)
-        timetable = row.get_value(cls.KEY_ACTIVITY_TIMETABLE)
-        price_members = row.get_value(cls.KEY_ACTIVITY_PRICE_MEMBERS)
-        price_non_members = row.get_value(cls.KEY_ACTIVITY_PRICE_NON_MEMBERS)
+    def import_after_school_edition(cls, row: Row) -> Optional[AfterSchoolEdition]:
+        code = row.get_value(cls.KEY_EDITION_CODE)
 
-        result: ImportModelResult = AfterSchoolEditionImporter(
-            after_school, active_course, period, timetable, price_members, price_non_members).import_edition()
+        result: ImportModelResult = AfterSchoolEditionFinder(code).find_edition()
 
         row.add_imported_model_result(result)
 
