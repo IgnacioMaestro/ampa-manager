@@ -8,5 +8,3 @@
 [Activity package](ActivityPackage/ActivityPackage.md)
 
 [Charge package](ChargePackage/ChargePackage.md)
-
-[Importation package](ImportationPackage/ImportationPackage.md)
