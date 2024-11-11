@@ -1,2 +1,0 @@
-## Importation package
-![](ImportationPackage.png)
