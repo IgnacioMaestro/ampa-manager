@@ -38,12 +38,22 @@ class ChildImporter:
                     self.result.set_error(_('Missing level'))
                 elif not self.year_of_birth:
                     self.result.set_error(_('Missing year of birth'))
+
+                if self.family_surnames_in_child_name():
+                    self.result.add_warning(_('Confirm that the child name does not contain the surnames'))
             else:
                 self.result.set_error(error_message)
         except Exception as e:
             self.result.set_error(str(e))
 
         return self.result
+
+    def family_surnames_in_child_name(self) -> bool:
+        if self.child:
+            for surname in self.family.surnames.split(' '):
+                if len(surname) > 3 and surname in self.child.name:
+                    return True
+        return False
 
     def find_child(self, exclude_id: Optional[int] = None) -> Optional[Child]:
         for child in Child.objects.with_family(self.family):

@@ -130,10 +130,12 @@ def row_imported_models_to_html(row: Row):
         # CHANGED FIELDS
         if result.state == ImportModelResult.UPDATED:
             for modified_field in result.modified_fields:
+                value_before = '-' if modified_field.value_before is None else modified_field.value_before
+                value_after = '-' if modified_field.value_after is None else modified_field.value_after
                 result_details += (html_new_line_tab_hyphen +
                                    generate_span('list_item_label',
                                                  f'{modified_field.field_name}') + ' ' +
-                                   generate_span('imported_model_changed_field', f'{modified_field.value_before} -> {modified_field.value_after}'))
+                                   generate_span('imported_model_changed_field', f'{value_before} → {value_after}'))
 
         # ERROR
         if result.error_message:
