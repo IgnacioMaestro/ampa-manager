@@ -19,6 +19,7 @@
 
 ```
 django-admin makemessages -l es -l eu
+python manage.py makemessages -l es
 ```
 
 2. Completar las traducciones
