@@ -59,7 +59,7 @@ class TestRemittanceCreator(TestCase):
 
         # Assert
         self.assertEqual(membership_remittance.course, self.course)
-        self.assertEqual(membership_remittance.membershipreceipt_set.all().count(), 1)
+        self.assertEqual(membership_remittance.receipts.all().count(), 1)
         self.assertEqual(1, MembershipRemittance.objects.count())
         self.assertEqual(1, MembershipReceipt.objects.count())
         self.assertIsNone(error)
@@ -87,7 +87,7 @@ class TestRemittanceCreator(TestCase):
             families=Family.objects.all(), course=self.course).create()
 
         self.assertEqual(membership_remittance.course, self.course)
-        self.assertEqual(membership_remittance.membershipreceipt_set.all().count(), quantity)
+        self.assertEqual(membership_remittance.receipts.all().count(), quantity)
         self.assertEqual(1, MembershipRemittance.objects.count())
         self.assertEqual(2, MembershipReceipt.objects.count())
         self.assertIsNone(error)

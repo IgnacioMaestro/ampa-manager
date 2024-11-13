@@ -15,7 +15,7 @@ class CampsReceipt(models.Model):
     camps_registration = models.ForeignKey(
         to=CampsRegistration, on_delete=CASCADE, verbose_name=_("Camps registrations"))
     remittance = models.ForeignKey(
-        to=CampsRemittance, on_delete=CASCADE, verbose_name=_("Camps remittance"))
+        to=CampsRemittance, on_delete=CASCADE, verbose_name=_("Camps remittance"), related_name='receipts')
 
     objects = Manager.from_queryset(CampsReceiptQuerySet)()
 

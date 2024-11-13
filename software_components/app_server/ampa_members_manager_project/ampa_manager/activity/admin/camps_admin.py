@@ -19,7 +19,9 @@ from ampa_manager.charge.use_cases.camps.camps_remittance_creator.camps_remittan
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.csv_http_response import CsvHttpResponse
 from ampa_manager.utils.utils import Utils
 
 
@@ -118,16 +120,12 @@ class CampsEditionAdmin(admin.ModelAdmin):
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export family emails to CSV"))
-    def export_emails(self, request, custody_editions: QuerySet[CampsEdition]):
-        emails = []
-        for custody_edition in custody_editions.all():
-            for custody_registration in custody_edition.registrations.all():
-                for email in custody_registration.child.family.get_emails():
-                    if email not in emails:
-                        emails.append(email)
+    def download_families_emails(self, request, editions: QuerySet[CampsEdition]):
+        families = []
+        for edition in editions.all():
+            for registration in edition.registrations.all():
+                families.append(registration.child.family)
+        emails_csv = FamilyEmailExporter(families).export_to_csv()
+        return CsvHttpResponse('correos.csv', emails_csv)
 
-        emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
-        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
-
-    actions = [create_camps_remittance, export_emails]
+    actions = [create_camps_remittance, download_families_emails]
