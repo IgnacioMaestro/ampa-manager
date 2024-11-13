@@ -117,6 +117,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def download_families_emails(self, request, remittances: QuerySet[MembershipRemittance]):
         families = []
         for remittance in remittances.all():
+            receipt: MembershipReceipt
             for receipt in remittance.receipts.all():
                 families.append(receipt.family)
         emails_csv = FamilyEmailExporter(families).export_to_csv()

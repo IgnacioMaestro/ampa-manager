@@ -110,8 +110,9 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def download_families_emails(self, request, remittances: QuerySet[AfterSchoolRemittance]):
         families = []
         for remittance in remittances.all():
+            receipt: AfterSchoolReceipt
             for receipt in remittance.receipts.all():
-                families.append(receipt.family)
+                families.append(receipt.after_school_registration.child.family)
         emails_csv = FamilyEmailExporter(families).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
 

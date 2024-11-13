@@ -110,8 +110,9 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     def download_families_emails(self, request, remittances: QuerySet[CustodyRemittance]):
         families = []
         for remittance in remittances.all():
+            receipt: CustodyReceipt
             for receipt in remittance.receipts.all():
-                families.append(receipt.family)
+                families.append(receipt.custody_registration.child.family)
         emails_csv = FamilyEmailExporter(families).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
 
