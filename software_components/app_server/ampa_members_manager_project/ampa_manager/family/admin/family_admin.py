@@ -24,7 +24,9 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.use_cases.auto_complete_holders import AutoCompleteHolders
+from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.csv_http_response import CsvHttpResponse
 from ampa_manager.utils.utils import Utils
 
 
@@ -153,17 +155,13 @@ class FamilyAdmin(admin.ModelAdmin):
 
     @admin.action(description=gettext_lazy("Export family and parents emails to CSV"))
     def export_all_emails(self, request, families: QuerySet[Family]):
-        emails = Family.get_families_parents_emails(families)
-        emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
-        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+        emails_csv = FamilyEmailExporter(list(families), parents_emails=True).export_to_csv()
+        return CsvHttpResponse('correos.csv', emails_csv)
 
     @admin.action(description=gettext_lazy("Export only family emails to CSV"))
     def export_family_emails(self, request, families: QuerySet[Family]):
-        emails = Family.get_families_parents_emails(families, parents_emails=False, family_emails=True)
-        emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
-        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+        emails_csv = FamilyEmailExporter(list(families), parents_emails=False).export_to_csv()
+        return CsvHttpResponse('correos.csv', emails_csv)
 
     @admin.action(description=gettext_lazy("Send email to the parents of selected families"))
     def send_email_to_parents(self, request, families: QuerySet[Family]):

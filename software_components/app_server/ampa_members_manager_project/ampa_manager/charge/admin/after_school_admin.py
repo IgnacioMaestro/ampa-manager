@@ -17,6 +17,8 @@ from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
 from ..use_cases.remittance_creator_error import RemittanceCreatorError
+from ...family.use_cases.family_emails_exporter import FamilyEmailExporter
+from ...utils.csv_http_response import CsvHttpResponse
 from ...utils.utils import Utils
 
 
@@ -104,4 +106,14 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=message, level=messages.ERROR)
         return SEPAResponseCreator().create_sepa_response(remittance)
 
-    actions = [download_membership_remittance_sepa_file]
+    @admin.action(description=gettext_lazy("Export family emails to CSV"))
+    def download_families_emails(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        families = []
+        for remittance in remittances.all():
+            receipt: AfterSchoolReceipt
+            for receipt in remittance.receipts.all():
+                families.append(receipt.after_school_registration.child.family)
+        emails_csv = FamilyEmailExporter(families).export_to_csv()
+        return CsvHttpResponse('correos.csv', emails_csv)
+
+    actions = [download_membership_remittance_sepa_file, download_families_emails]

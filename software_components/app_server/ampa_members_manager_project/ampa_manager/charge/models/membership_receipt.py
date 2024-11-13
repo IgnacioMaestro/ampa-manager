@@ -14,7 +14,8 @@ from ..receipt import Receipt, AuthorizationReceipt
 
 
 class MembershipReceipt(models.Model):
-    remittance = models.ForeignKey(to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"))
+    remittance = models.ForeignKey(
+        to=MembershipRemittance, on_delete=CASCADE, verbose_name=_("Membership Remittance"), related_name='receipts')
     family = models.ForeignKey(to=Family, on_delete=CASCADE, verbose_name=_("Family"))
     holder = models.ForeignKey(to=Holder, on_delete=CASCADE, verbose_name=_("Holder"))
 

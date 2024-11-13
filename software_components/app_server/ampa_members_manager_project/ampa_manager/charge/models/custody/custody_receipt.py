@@ -13,7 +13,7 @@ class CustodyReceipt(models.Model):
     custody_registration = models.ForeignKey(
         to=CustodyRegistration, on_delete=CASCADE, verbose_name=_("Custody registrations"))
     remittance = models.ForeignKey(
-        to=CustodyRemittance, on_delete=CASCADE, verbose_name=_("Custody remittance"))
+        to=CustodyRemittance, on_delete=CASCADE, verbose_name=_("Custody remittance"), related_name='receipts')
 
     objects = Manager.from_queryset(CustodyReceiptQuerySet)()
 

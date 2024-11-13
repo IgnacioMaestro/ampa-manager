@@ -31,7 +31,7 @@ class MembershipRemittanceGenerator:
     def generate_receipts(self) -> tuple[bool, List[Receipt]]:
         receipts: List[Receipt] = []
         is_error: bool = False
-        for membership_receipt in self.__membership_remittance.membershipreceipt_set.iterator():
+        for membership_receipt in self.__membership_remittance.receipts.iterator():
             try:
                 receipt: Receipt = membership_receipt.generate_receipt()
                 receipts.append(receipt)

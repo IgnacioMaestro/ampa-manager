@@ -17,7 +17,9 @@ from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
+from ampa_manager.utils.csv_http_response import CsvHttpResponse
 from ampa_manager.utils.utils import Utils
 
 
@@ -152,20 +154,16 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         return AfterSchoolRegistration.objects.of_edition(edition).count()
 
     @admin.action(description=gettext_lazy("Export family emails to CSV"))
-    def export_emails(self, request, editions: QuerySet[AfterSchoolEdition]):
-        emails = []
+    def download_families_emails(self, request, editions: QuerySet[AfterSchoolEdition]):
+        families = []
         for edition in editions.all():
             for registration in edition.registrations.all():
-                for email in registration.child.family.get_emails():
-                    if email not in emails:
-                        emails.append(email)
-
-        emails_csv = ",".join(emails)
-        headers = {'Content-Disposition': f'attachment; filename="correos.csv"'}
-        return HttpResponse(content_type='text/csv', headers=headers, content=emails_csv)
+                families.append(registration.child.family)
+        emails_csv = FamilyEmailExporter(families).export_to_csv()
+        return CsvHttpResponse('correos.csv', emails_csv)
 
     actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left,
-               export_emails]
+               download_families_emails]
 
 
 class AfterSchoolEditionInline(ReadOnlyTabularInline):

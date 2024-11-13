@@ -13,7 +13,7 @@ class AfterSchoolReceipt(models.Model):
     after_school_registration = models.ForeignKey(
         to=AfterSchoolRegistration, on_delete=CASCADE, verbose_name=_("After School registrations"))
     remittance = models.ForeignKey(
-        to=AfterSchoolRemittance, on_delete=CASCADE, verbose_name=_("After School remittance"))
+        to=AfterSchoolRemittance, on_delete=CASCADE, verbose_name=_("After School remittance"), related_name='receipts')
 
     objects = Manager.from_queryset(AfterSchoolReceiptQuerySet)()
 
