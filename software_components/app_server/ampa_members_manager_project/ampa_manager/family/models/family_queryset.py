@@ -5,6 +5,7 @@ from django.db.models import Count
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.family.models.bank_account.bank_account import BankAccount
 from ampa_manager.family.models.child import Child
 from ampa_manager.utils.string_utils import StringUtils
 
@@ -101,3 +102,11 @@ class FamilyQuerySet(QuerySet):
 
     def with_these_surnames(self, surnames):
         return self.filter(normalized_surnames=StringUtils.normalize(str(surnames)))
+
+    def possible_duplicated(self):
+        duplicated_ids = []
+        for account in BankAccount.objects.all():
+            families_ids = list(set(self.filter(parents__holder__bank_account=account).values_list('id', flat=True)))
+            if len(families_ids) > 1:
+                duplicated_ids.extend(families_ids)
+        return self.filter(id__in=duplicated_ids)

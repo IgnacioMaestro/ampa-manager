@@ -55,6 +55,25 @@ class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
             return queryset
 
 
+class FamilyDuplicated(admin.SimpleListFilter):
+    title = _('Possible duplicated')
+
+    parameter_name = 'duplicated'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Yes')),
+            ('no', _('No')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'yes':
+                return queryset.possible_duplicated()
+        else:
+            return queryset
+
+
 class MembershipHolder(admin.SimpleListFilter):
     title = _('Membership holder')
 
