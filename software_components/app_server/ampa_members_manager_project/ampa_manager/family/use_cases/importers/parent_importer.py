@@ -62,6 +62,7 @@ class ParentImporter:
                 additional_phone_number=self.additional_phone_number, email=self.email)
             self.result.set_created(self.parent)
             self.family.parents.add(self.parent)
+            self.result.add_warning(_('Parent created'))
 
     def manage_found_parent(self):
         if self.parent_is_modified():

@@ -40,6 +40,7 @@ class FamilyImporter:
             else:
                 family = Family.objects.create(surnames=self.family_surnames, email=self.family_email)
                 self.result.set_created(family)
+                self.result.add_warning(_('Family created'))
         else:
             self.result.set_error(_('Email not found, missing surnames'))
 

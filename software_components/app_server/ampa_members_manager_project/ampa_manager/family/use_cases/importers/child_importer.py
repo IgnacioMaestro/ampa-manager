@@ -69,6 +69,7 @@ class ChildImporter:
         child = Child.objects.create(name=self.name, year_of_birth=self.year_of_birth, repetition=self.repetition,
                                      family=self.family)
         self.result.set_created(child)
+        self.result.add_warning(_('Child created'))
 
     def manage_found_child(self):
         if self.level and self.year_of_birth and self.child_is_modified():
