@@ -18,7 +18,8 @@ from ampa_manager.charge.models.camps.camps_receipt import CampsReceipt
 from ampa_manager.charge.models.custody.custody_receipt import CustodyReceipt
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.family.admin.filters.family_filters import FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, \
-    MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder, FamilyEmail
+    MembershipHolder, CustodyHolder, FamilyParentCountFilter, CampsHolder, AnyHolder, AfterSchoolHolder, FamilyEmail, \
+    FamilyDuplicated
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
@@ -111,9 +112,9 @@ class FamilyAdmin(admin.ModelAdmin):
                        'after_school_receipts', 'camps_registrations', 'custody_registrations',
                        'after_school_registrations']
     ordering = ['surnames']
-    list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, 'created', 'modified', 'is_defaulter',
-                   'decline_membership', FamilyParentCountFilter, MembershipHolder, CustodyHolder, CampsHolder,
-                   AfterSchoolHolder, AnyHolder, FamilyEmail]
+    list_filter = [FamilyIsMemberFilter, FamilyChildrenInSchoolFilter, FamilyDuplicated, 'created', 'modified',
+                   'is_defaulter', 'decline_membership', FamilyParentCountFilter, MembershipHolder, CustodyHolder,
+                   CampsHolder, AfterSchoolHolder, AnyHolder, FamilyEmail]
     search_fields = ['surnames', 'normalized_surnames', 'email', 'secondary_email', 'parents__name_and_surnames', 'id',
                      'child__name', 'parents__email', 'membership_holder__bank_account__iban',
                      'custody_holder__bank_account__iban', 'camps_holder__bank_account__iban',
@@ -347,7 +348,8 @@ class FamilyAdmin(admin.ModelAdmin):
         after_school_receipts_count = AfterSchoolReceipt.objects.of_family(family).count()
         custody_receipts_count = CustodyReceipt.objects.of_family(family).count()
         camps_receipts_count = CampsReceipt.objects.of_family(family).count()
-        return after_school_receipts_count + custody_receipts_count + camps_receipts_count
+        membership_receipts_count = MembershipReceipt.objects.of_family(family).count()
+        return after_school_receipts_count + custody_receipts_count + camps_receipts_count + membership_receipts_count
 
     @admin.display(description=gettext_lazy('Emails'))
     def emails(self, family):

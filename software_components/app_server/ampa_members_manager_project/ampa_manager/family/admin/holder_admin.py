@@ -26,6 +26,7 @@ class HolderAdmin(admin.ModelAdmin):
     list_filter = ['authorization_year', 'authorization_state']
     search_fields = ['parent__name_and_surnames', 'authorization_sign_date',
                      'bank_account__iban', 'parent__name_and_surnames', 'id']
+    autocomplete_fields = ['parent', 'bank_account']
     list_per_page = 25
     inlines = [AfterSchoolRegistrationInline]
 
