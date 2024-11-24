@@ -42,6 +42,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
                    'custody_edition__cycle', RegistrationFilter, ChildLevelListFilter, FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames', 'child__id', 'child__family__id']
+    autocomplete_fields = ['custody_edition', 'holder', 'child']
     list_per_page = 25
     # form = CustodyRegistrationAdminForm
 
@@ -86,6 +87,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
     list_display = ['academic_course', 'cycle', 'period', 'price_for_member', 'price_for_no_member',
                     'max_days_for_charge', 'days_with_service', 'cost', 'charged', 'members_registrations_count',
                     'no_members_registrations_count', 'registrations_count', 'has_remittance', 'id']
+    search_fields = ['period', 'cycle']
     fieldsets = (
         (None, {
             'fields': ('academic_course', 'cycle', 'period')

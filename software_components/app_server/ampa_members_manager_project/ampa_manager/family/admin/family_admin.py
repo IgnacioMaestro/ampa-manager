@@ -90,8 +90,8 @@ class FamilyInline(ReadOnlyTabularInline):
 
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ['surnames', 'email', 'secondary_email', 'parents_names', 'children_names',  'children_in_school_count', 'is_member',
-                    'has_membership_holder', 'created_formatted', 'id']
+    list_display = ['surnames', 'emails', 'parents_names', 'children_names', 'children_in_school_count', 'is_member',
+                    'registrations_count', 'receipts_count', 'created_formatted', 'id']
     fieldsets = (
         (_('General'), {
             'fields': ['surnames', 'email', 'secondary_email', 'parents', 'decline_membership', 'is_defaulter', 'created', 'modified']
@@ -260,7 +260,10 @@ class FamilyAdmin(admin.ModelAdmin):
 
     @admin.display(description=gettext_lazy('Parents'))
     def parents_names(self, family):
-        return family.parents_names
+        names = []
+        for parent in family.parents.all():
+            names.append(parent.name_and_surnames)
+        return '\n'.join(names)
 
     @admin.display(description=gettext_lazy('Children'))
     def children_names(self, family):
@@ -331,6 +334,29 @@ class FamilyAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('After-school registrations'))
     def after_school_registrations(self, family):
         return self.get_registrations_link(family, AfterSchoolRegistration)
+
+    @admin.display(description=gettext_lazy('Registrations'))
+    def registrations_count(self, family):
+        after_school_registrations_count = AfterSchoolRegistration.objects.of_family(family).count()
+        custody_registrations_count = CustodyRegistration.objects.of_family(family).count()
+        camps_registrations_count = CampsRegistration.objects.of_family(family).count()
+        return after_school_registrations_count + custody_registrations_count + camps_registrations_count
+
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_count(self, family):
+        after_school_receipts_count = AfterSchoolReceipt.objects.of_family(family).count()
+        custody_receipts_count = CustodyReceipt.objects.of_family(family).count()
+        camps_receipts_count = CampsReceipt.objects.of_family(family).count()
+        return after_school_receipts_count + custody_receipts_count + camps_receipts_count
+
+    @admin.display(description=gettext_lazy('Emails'))
+    def emails(self, family):
+        emails = []
+        if family.email:
+            emails.append(family.email)
+        if family.secondary_email:
+            emails.append(family.secondary_email)
+        return '\n'.join(emails)
 
     def get_registrations_link(self, family, registration_model):
         registrations_count = registration_model.objects.of_family(family).count()
