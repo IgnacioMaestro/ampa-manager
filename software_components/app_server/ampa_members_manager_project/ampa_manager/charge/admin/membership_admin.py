@@ -128,6 +128,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
 
 class MembershipReceiptAdmin(admin.ModelAdmin):
     list_display = ['remittance', 'family']
-    search_fields = ['family__surnames', 'family__id']
-    list_filter = [FamilyReceiptFilter]
+    search_fields = ['family__surnames', 'family__id', 'holder__bank_account__iban']
+    list_filter = ['remittance__course__initial_year', FamilyReceiptFilter]
     list_per_page = 25
+    autocomplete_fields = ['family', 'holder']

@@ -41,7 +41,7 @@ class CampsRegistrationAdmin(admin.ModelAdmin):
                    FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'holder__bank_account__iban',
                      'holder__parent__name_and_surnames']
-    autocomplete_fields = ['holder', 'child']
+    autocomplete_fields = ['camps_edition', 'holder', 'child']
     list_per_page = 25
     form = CampsRegistrationAdminForm
 
@@ -70,6 +70,7 @@ class CampsEditionAdmin(admin.ModelAdmin):
     list_display = ['academic_course', 'levels', 'price_for_member', 'price_for_no_member',
                     'members_registrations_count', 'no_members_registrations_count',
                     'registrations_count', 'remittance']
+    search_fields = ['levels', 'academic_course']
     fieldsets = (
         (None, {'fields': ('academic_course', 'levels')}),
         (_('Prices'), {'fields': ('price_for_member', 'price_for_no_member'), }),

@@ -6,4 +6,5 @@ class MembershipAdmin(admin.ModelAdmin):
     ordering = ['-academic_course', 'family__surnames']
     list_filter = ['academic_course__initial_year']
     search_fields = ['family__surnames', 'academic_course__initial_year', 'family__id']
+    autocomplete_fields = ['family']
     list_per_page = 25
