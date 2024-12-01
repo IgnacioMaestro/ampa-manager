@@ -55,7 +55,10 @@ class AcademicCourseAdmin(admin.ModelAdmin):
                 if remittance_error == RemittanceCreatorError.BIC_ERROR:
                     message = Utils.create_bic_error_message()
                 else:
-                    message = gettext_lazy("Membership Remittance error")
+                    if remittance_error == RemittanceCreatorError.NO_FEE_FOR_COURSE:
+                        message = gettext_lazy("No fee for the selected course")
+                    else:
+                        message = gettext_lazy("Membership Remittance error")
             return self.message_user(request=request, message=message, level=messages.ERROR)
         else:
             message = mark_safe(

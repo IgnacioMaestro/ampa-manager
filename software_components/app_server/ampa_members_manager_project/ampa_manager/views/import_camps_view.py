@@ -68,7 +68,7 @@ class ImportCampsView(View):
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def import_camps(cls, excel_content, edition_id: int, simulation: bool) -> Optional[ImportExcelResult]:
+    def import_camps(cls, excel_content: bytes, edition_id: int, simulation: bool) -> Optional[ImportExcelResult]:
         result = None
         try:
             with transaction.atomic():
