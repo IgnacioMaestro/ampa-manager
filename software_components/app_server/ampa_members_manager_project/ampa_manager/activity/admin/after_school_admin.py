@@ -3,10 +3,10 @@ from typing import Optional
 from django import forms
 from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
@@ -20,6 +20,7 @@ from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.csv_http_response import CsvHttpResponse
+from ampa_manager.utils.db_utils import distinct_count
 from ampa_manager.utils.utils import Utils
 
 
@@ -188,7 +189,7 @@ class AfterSchoolEditionInline(ReadOnlyTabularInline):
 
 
 class AfterSchoolAdmin(admin.ModelAdmin):
-    list_display = ['name', 'funding', 'after_school_edition_count']
+    list_display = ['name', 'funding', 'after_school_edition_count', 'after_school_registration_count', 'courses_count']
     ordering = ['name']
     list_filter = ['funding']
     inlines = [AfterSchoolEditionInline]
@@ -198,6 +199,15 @@ class AfterSchoolAdmin(admin.ModelAdmin):
     @admin.display(description=_('Editions'))
     def after_school_edition_count(self, after_school):
         return after_school.afterschooledition_set.count()
+
+    @admin.display(description=_('Registrations'))
+    def after_school_registration_count(self, after_school):
+        return AfterSchoolRegistration.objects.filter(after_school_edition__after_school=after_school).count()
+
+    @admin.display(description=_('Courses'))
+    def courses_count(self, after_school):
+        return distinct_count(AcademicCourse.objects.filter(afterschooledition__after_school=after_school))
+
 
     @admin.action(description=gettext_lazy("Merge activities (Move all editions to first selected)"))
     def merge_after_schools(self, request, after_school_activities: QuerySet[AfterSchool]):
