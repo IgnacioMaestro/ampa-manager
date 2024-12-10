@@ -61,6 +61,9 @@ class FamilyQuerySet(QuerySet):
     def members(self):
         return self.filter(membership__academic_course=ActiveCourse.load())
 
+    def members_in_course(self, academic_course: AcademicCourse):
+        return self.filter(membership__academic_course=academic_course)
+
     def no_members(self):
         return self.exclude(membership__academic_course=ActiveCourse.load())
 
@@ -80,10 +83,6 @@ class FamilyQuerySet(QuerySet):
 
     def no_declined_membership(self) -> QuerySet:
         return self.filter(decline_membership=False)
-
-    def not_included_in_receipt_of_course(self, academic_course: AcademicCourse):
-        return self.filter(
-            Q(membershipreceipt__isnull=True) | ~Q(membershipreceipt__remittance__course=academic_course))
 
     def of_parent(self, parent):
         return self.filter(parents=parent)
