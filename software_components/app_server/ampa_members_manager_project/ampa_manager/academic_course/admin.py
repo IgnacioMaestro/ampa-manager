@@ -44,7 +44,7 @@ class AcademicCourseAdmin(admin.ModelAdmin):
             return self.message_user(request=request, message=message)
 
         academic_course: AcademicCourse = academic_courses.first()
-        families_to_renew = Family.objects.renew_membership()
+        families_to_renew = Family.objects.members_in_course(academic_course)
         remittance: Optional[MembershipRemittance]
         remittance_error: Optional[RemittanceCreatorError]
         remittance, remittance_error = MembershipRemittanceCreator(families_to_renew, academic_course).create()
