@@ -1,5 +1,10 @@
+from typing import Optional
+
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
+
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 
 
 class FamilyIsMemberFilter(admin.SimpleListFilter):
@@ -18,18 +23,20 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
+            course: AcademicCourse = ActiveCourse.load()
+            previous_course: Optional[AcademicCourse] = ActiveCourse.get_previous()
             if self.value() == 'yes':
-                return queryset.members()
+                return queryset.members_in_course(course)
             elif self.value() == 'no':
-                return queryset.no_members()
+                return queryset.no_members_in_course(course)
             elif self.value() == 'last_year':
-                return queryset.members_last_year()
+                return queryset.members_in_course(previous_course)
             elif self.value() == 'renew':
                 messages.success(request, _('Showing families that were members last year, that have any child in the school this year and that have not decline membership'))
-                return queryset.members_last_year().no_declined_membership().has_any_children()
+                return queryset.members_in_course(previous_course).no_declined_membership().has_any_children()
             elif self.value() == 'no_renew':
                 messages.success(request, _('Showing families that were members last year, but they haven\'t any child in the school'))
-                return queryset.members_last_year().has_no_children()
+                return queryset.members_in_course(previous_course).has_no_children()
         else:
             return queryset
 

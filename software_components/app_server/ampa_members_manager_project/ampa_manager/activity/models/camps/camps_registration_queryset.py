@@ -1,3 +1,5 @@
+from itertools import count
+
 from django.db.models import F
 from django.db.models.query import QuerySet
 
@@ -38,11 +40,11 @@ class CampsRegistrationQuerySet(QuerySet):
     def of_edition(self, camps_edition: CampsEdition):
         return self.filter(camps_edition=camps_edition)
 
-    def members(self):
-        return self.filter(child__family__membership__academic_course=ActiveCourse.load())
+    def members_in_course(self, academic_course: AcademicCourse):
+        return self.filter(child__family__membership__academic_course=academic_course)
 
-    def no_members(self):
-        return self.exclude(child__family__membership__academic_course=ActiveCourse.load())
+    def no_members_in_course(self, academic_course: AcademicCourse):
+        return self.exclude(child__family__membership__academic_course=academic_course)
 
     def child_of_age(self, age):
         return self.child_age_in_range(age, age)
