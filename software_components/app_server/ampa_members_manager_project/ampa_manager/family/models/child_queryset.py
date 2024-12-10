@@ -1,6 +1,7 @@
 from django.db.models.query import QuerySet
 from django.db.models import F
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 
@@ -35,8 +36,8 @@ class ChildQuerySet(QuerySet):
     def with_family(self, family):
         return self.filter(family=family)
 
-    def members(self):
-        return self.filter(family__membership__academic_course=ActiveCourse.load())
+    def members_in_course(self, academic_course: AcademicCourse):
+        return self.filter(family__membership__academic_course=academic_course)
 
-    def no_members(self):
-        return self.exclude(family__membership__academic_course=ActiveCourse.load())
+    def no_members_in_course(self, academic_course: AcademicCourse):
+        return self.exclude(family__membership__academic_course=academic_course)

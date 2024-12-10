@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 
@@ -73,9 +74,10 @@ class ChildIsMemberFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
+            course: AcademicCourse = ActiveCourse.load()
             if self.value() == 'yes':
-                return queryset.members()
+                return queryset.members_in_course(course)
             elif self.value() == 'no':
-                return queryset.no_members()
+                return queryset.no_members_in_course(course)
         else:
             return queryset

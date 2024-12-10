@@ -38,16 +38,17 @@ class CustodyRegistrationQuerySet(QuerySet):
     def of_edition(self, custody_edition: CustodyEdition):
         return self.filter(custody_edition=custody_edition)
 
-    def members(self):
-        return self.filter(child__family__membership__academic_course=ActiveCourse.load())
+    def members_in_course(self, academic_course: AcademicCourse):
+        return self.filter(child__family__membership__academic_course=academic_course)
 
-    def no_members(self):
-        return self.exclude(child__family__membership__academic_course=ActiveCourse.load())
+    def no_members_in_course(self, academic_course: AcademicCourse):
+        return self.exclude(child__family__membership__academic_course=academic_course)
 
     def child_of_age(self, age):
         return self.child_age_in_range(age, age)
 
     def child_age_in_range(self, min_age, max_age):
         active_course = ActiveCourse.load()
-        children_with_age = self.annotate(child_age=active_course.initial_year - F('child__year_of_birth') - F('child__repetition'))
+        children_with_age = self.annotate(
+            child_age=active_course.initial_year - F('child__year_of_birth') - F('child__repetition'))
         return children_with_age.filter(child_age__range=(min_age, max_age))
