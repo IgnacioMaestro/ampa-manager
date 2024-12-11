@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from .filters.receipt_filters import FamilyReceiptFilter
+from .filters.receipt_filters import FamilyReceiptFilter, AfterSchoolEditionReceiptFilter
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ..remittance import Remittance
@@ -17,20 +17,32 @@ from ..sepa.sepa_response_creator import SEPAResponseCreator
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
 from ..use_cases.remittance_creator_error import RemittanceCreatorError
+from ...academic_course.models.academic_course import AcademicCourse
+from ...family.models.membership import Membership
 from ...family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ...utils.csv_http_response import CsvHttpResponse
 from ...utils.utils import Utils
 
 
 class AfterSchoolReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'id']
+    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'course', 'is_member']
     search_fields = ['after_school_registration__child__family__surnames',
                      'after_school_registration__child__family__id',
                      'after_school_registration__child__name',
                      'after_school_registration__holder__bank_account__iban',
-                     'after_school_registration__parent__name_and_surnames']
-    list_filter = [FamilyReceiptFilter]
+                     'after_school_registration__child__family__parents__name_and_surnames']
+    list_filter = [
+        FamilyReceiptFilter, AfterSchoolEditionReceiptFilter,
+        'after_school_registration__after_school_edition__academic_course__initial_year']
     list_per_page = 25
+
+    @admin.display(description=_('Course'))
+    def course(self, receipt):
+        return receipt.after_school_registration.after_school_edition.academic_course
+
+    @admin.display(description=_('Member'), boolean=True)
+    def is_member(self, receipt):
+        return Membership.is_member_child(receipt.after_school_registration.child)
 
     @admin.display(description=_('Child'))
     def child(self, camps_receipt):
@@ -53,11 +65,19 @@ class AfterSchoolReceiptInline(ReadOnlyTabularInline):
 
 
 class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count']
+    list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count', 'courses']
     fields = ['name', 'concept', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_link']
     readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
     list_per_page = 25
+
+    @admin.display(description=gettext_lazy('Course'))
+    def courses(self, remittance):
+        courses_ids = []
+        for edition in remittance.after_school_editions.all():
+            if edition.academic_course.id not in courses_ids:
+                courses_ids.append(edition.academic_course.id)
+        return ', '.join([str(course) for course in AcademicCourse.objects.filter(id__in=courses_ids)])
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
