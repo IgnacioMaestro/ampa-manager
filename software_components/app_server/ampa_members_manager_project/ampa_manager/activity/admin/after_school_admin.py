@@ -11,6 +11,7 @@ from ampa_manager.activity.admin.registration_filters import FamilyRegistrationF
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
+from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
     AfterSchoolRemittanceCreator
@@ -93,7 +94,7 @@ class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
 class AfterSchoolEditionAdmin(admin.ModelAdmin):
     inlines = [AfterSchoolRegistrationInline]
     list_display = ['academic_course', 'after_school', 'code', 'period', 'timetable', 'price_for_member',
-                    'price_for_no_member', 'after_schools_count']
+                    'price_for_no_member', 'after_schools_count', 'receipts_link']
     autocomplete_fields = ['after_school']
     fieldsets = (
         (None, {
@@ -110,6 +111,16 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     list_filter = ['academic_course__initial_year', 'after_school__name']
     search_fields = ['after_school__name', 'timetable']
     list_per_page = 25
+
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_link(self, edition):
+        receipts_count = AfterSchoolReceipt.objects.of_edition(edition).count()
+        if receipts_count == 1:
+            link_text = gettext_lazy('%(num_receipts)s receipt') % {'num_receipts': receipts_count}
+        else:
+            link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
+        filters = f'edition={edition.id}'
+        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):

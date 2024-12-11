@@ -212,7 +212,7 @@ class FamilyAdmin(admin.ModelAdmin):
         fields.extend(children)
         return fields
 
-    @admin.action(description=gettext_lazy("Make families member"))
+    @admin.action(description=gettext_lazy("Make member"))
     def make_members(self, request, families: QuerySet[Family]):
         new_members = 0
         already_members = 0
@@ -231,7 +231,7 @@ class FamilyAdmin(admin.ModelAdmin):
                       'new_members': new_members, 'already_members': already_members, 'declined': declined}
         return self.message_user(request=request, message=message)
 
-    @admin.action(description=gettext_lazy("Remove from members"))
+    @admin.action(description=gettext_lazy("Remove member"))
     def undo_members(self, request, families: QuerySet[Family]):
         removed_members = 0
         non_members = 0

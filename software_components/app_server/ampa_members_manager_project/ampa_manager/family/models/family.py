@@ -20,8 +20,7 @@ from ...utils.utils import Utils
 class Family(TimeStampedModel):
     HOLDER_HELP_TEXT = _("Save the family to see its bank accounts")
     DECLINE_MEMBERSHIP_HELP_TEXT = _(
-        "It prevents the family from becoming a member. For example, if they no longer "
-        "have children at school but you do not want to delete the record.")
+        "The family does not want to renew the membesrhip next year. It makes no change this year")
     surnames = models.CharField(max_length=500, verbose_name=_("Surnames"))
     normalized_surnames = models.CharField(max_length=500, verbose_name=_("Normalized surnames"), blank=True)
     decline_membership = models.BooleanField(
