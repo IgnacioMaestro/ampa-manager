@@ -9,6 +9,7 @@ from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
 from ampa_manager.activity.models.custody.custody_edition_queryset import CustodyEditionQuerySet
 from ampa_manager.activity.models.price_per_level import PricePerLevel
@@ -46,11 +47,13 @@ class CustodyEdition(PricePerLevel):
 
     @property
     def no_members_registrations_count(self):
-        return self.registrations.no_members().count()
+        active_course = ActiveCourse.load()
+        return self.registrations.no_members_in_course(active_course).count()
 
     @property
     def members_registrations_count(self):
-        return self.registrations.members().count()
+        active_course = ActiveCourse.load()
+        return self.registrations.members_in_course(active_course).count()
 
     @property
     def registrations_count(self):
@@ -70,10 +73,11 @@ class CustodyEdition(PricePerLevel):
     def get_assisted_days(self, members=False, topped=False):
         assisted_days = 0
 
+        active_course = ActiveCourse.load()
         if members:
-            registrations = self.registrations.members()
+            registrations = self.registrations.members_in_course(active_course)
         else:
-            registrations = self.registrations.no_members()
+            registrations = self.registrations.no_members_in_course(active_course)
 
         for registration in registrations:
 
