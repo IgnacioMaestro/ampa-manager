@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from .filters.receipt_filters import FamilyReceiptFilter
+from .filters.receipt_filters import FamilyReceiptFilter, ParentReceiptFilter
 from ..models.custody.custody_receipt import CustodyReceipt
 from ..models.custody.custody_remittance import CustodyRemittance
 from ..remittance import Remittance
@@ -30,7 +30,7 @@ class CustodyReceiptAdmin(admin.ModelAdmin):
                      'custody_registration__child__name',
                      'custody_registration__holder__bank_account__iban',
                      'custody_registration__holder__parent__name_and_surnames']
-    list_filter = ['amount', FamilyReceiptFilter]
+    list_filter = ['amount', FamilyReceiptFilter, ParentReceiptFilter]
     list_per_page = 25
 
     @admin.display(description=_('Child'))
@@ -59,7 +59,7 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
     list_per_page = 25
-    search_fields = ['name', 'concept']
+    search_fields = ['name', 'concept', 'sepa_id']
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
