@@ -59,7 +59,7 @@ class CustodyRemittanceAdmin(admin.ModelAdmin):
     readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
     list_per_page = 25
-    search_fields = ['name', 'concept']
+    search_fields = ['name', 'concept', 'sepa_id']
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)

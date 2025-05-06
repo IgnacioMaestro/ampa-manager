@@ -35,6 +35,7 @@ class AfterSchoolReceiptAdmin(admin.ModelAdmin):
         FamilyReceiptFilter, ParentReceiptFilter, AfterSchoolEditionReceiptFilter,
         'after_school_registration__after_school_edition__academic_course__initial_year']
     list_per_page = 25
+    autocomplete_fields = ['after_school_registration', 'remittance']
 
     @admin.display(description=_('Course'))
     def course(self, receipt):
@@ -70,6 +71,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
     list_per_page = 25
+    search_fields = ['name', 'concept', 'sepa_id']
 
     @admin.display(description=gettext_lazy('Course'))
     def courses(self, remittance):

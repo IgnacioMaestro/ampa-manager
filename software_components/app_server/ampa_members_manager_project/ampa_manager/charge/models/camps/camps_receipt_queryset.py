@@ -10,4 +10,4 @@ class CampsReceiptQuerySet(QuerySet):
         return self.filter(camps_registration__child__family=family)
 
     def of_parent(self, parent):
-        return self.filter(camps_registration__child__family__parents=parent)
+        return self.filter(camps_registration__holder__parent=parent)

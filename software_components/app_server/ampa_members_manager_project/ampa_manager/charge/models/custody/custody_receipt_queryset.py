@@ -10,4 +10,4 @@ class CustodyReceiptQuerySet(QuerySet):
         return self.filter(custody_registration__child__family=family)
 
     def of_parent(self, parent):
-        return self.filter(custody_registration__child__family__parents=parent)
+        return self.filter(custody_registration__holder__parent=parent)

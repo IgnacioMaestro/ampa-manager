@@ -10,7 +10,7 @@ class AfterSchoolReceiptQuerySet(QuerySet):
         return self.filter(after_school_registration__child__family=family)
 
     def of_parent(self, parent):
-        return self.filter(after_school_registration__child__family__parents=parent)
+        return self.filter(after_school_registration__holder__parent=parent)
 
     def of_edition(self, edition):
         return self.filter(after_school_registration__after_school_edition=edition)
