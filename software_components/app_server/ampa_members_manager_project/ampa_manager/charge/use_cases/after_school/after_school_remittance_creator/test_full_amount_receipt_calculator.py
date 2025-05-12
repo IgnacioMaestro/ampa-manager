@@ -9,7 +9,12 @@ from .full_amount_receipt_calculator import FullAmountReceiptCalculator
 
 class TestFullAmountReceiptCalculator(TestCase):
     def test_calculate(self):
+        # Arrange
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration)
+
+        # Act
         amount: float = FullAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+
+        # Assert
         self.assertEqual(amount, after_school_registration.calculate_price())
