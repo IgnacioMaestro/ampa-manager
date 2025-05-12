@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from . import ERROR_REMITTANCE_NOT_FILLED, ERROR_ONLY_ONE_REMITTANCE
-from .filters.receipt_filters import FamilyReceiptFilter, AfterSchoolEditionReceiptFilter
+from .filters.receipt_filters import FamilyReceiptFilter, AfterSchoolEditionReceiptFilter, ParentReceiptFilter
 from ..models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ..models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ..remittance import Remittance
@@ -32,9 +32,10 @@ class AfterSchoolReceiptAdmin(admin.ModelAdmin):
                      'after_school_registration__holder__bank_account__iban',
                      'after_school_registration__child__family__parents__name_and_surnames']
     list_filter = [
-        FamilyReceiptFilter, AfterSchoolEditionReceiptFilter,
+        FamilyReceiptFilter, ParentReceiptFilter, AfterSchoolEditionReceiptFilter,
         'after_school_registration__after_school_edition__academic_course__initial_year']
     list_per_page = 25
+    autocomplete_fields = ['after_school_registration', 'remittance']
 
     @admin.display(description=_('Course'))
     def course(self, receipt):
@@ -70,6 +71,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
     ordering = ['-created_at']
     list_per_page = 25
+    search_fields = ['name', 'concept', 'sepa_id']
 
     @admin.display(description=gettext_lazy('Course'))
     def courses(self, remittance):
