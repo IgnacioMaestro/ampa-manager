@@ -28,6 +28,10 @@ class AfterSchoolRemittanceCreator:
     def create_left(self) -> tuple[Optional[AfterSchoolRemittance], Optional[RemittanceCreatorError]]:
         return self.create_with_calculator(calculator=LeftAmountReceiptCalculator())
 
+    def create_specific(self, amount: float) -> tuple[
+        Optional[AfterSchoolRemittance], Optional[RemittanceCreatorError]]:
+        pass
+
     def create_with_calculator(
             self, calculator: AmountReceiptCalculator) \
             -> tuple[Optional[AfterSchoolRemittance], Optional[RemittanceCreatorError]]:
@@ -41,4 +45,17 @@ class AfterSchoolRemittanceCreator:
             AfterSchoolReceipt.objects.create(
                 amount=calculator.calculate(after_school_registration), remittance=after_school_remittance,
                 after_school_registration=after_school_registration)
+        return after_school_remittance, None
+
+    def create_with_amount(
+            self, amount: float) -> tuple[Optional[AfterSchoolRemittance], Optional[RemittanceCreatorError]]:
+        after_school_remittance: AfterSchoolRemittance = AfterSchoolRemittance.objects.create_filled(self.__editions)
+        after_school_registrations: AfterSchoolRegistrationQuerySet = AfterSchoolRegistration.objects.of_after_school_remittance(
+            after_school_remittance)
+        after_school_registration: AfterSchoolRegistration
+        for after_school_registration in after_school_registrations.iterator():
+            if after_school_registration.holder.bank_account.swift_bic is None:
+                return None, RemittanceCreatorError.BIC_ERROR
+            AfterSchoolReceipt.objects.create(
+                amount=amount, remittance=after_school_remittance, after_school_registration=after_school_registration)
         return after_school_remittance, None

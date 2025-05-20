@@ -60,6 +60,27 @@ class TestAfterSchoolRemittanceCreator(TestCase):
             after_school_receipt.amount, after_school_registration.calculate_price() / 2, 2)
         self.assertIsNone(error)
 
+    def test_create_specific_after_school_edition_with_after_school_registration(self):
+        # Arrange
+        baker.make(BankBicCode, bank_code='2095')
+        ActiveCourse.objects.create(course=baker.make(AcademicCourse))
+        holder: Holder = baker.make(Holder)
+        baker.make(AfterSchoolRegistration, holder=holder)
+        amount: float = 50.0
+
+        # Act
+        after_school_remittance: Optional[AfterSchoolRemittance]
+        error: Optional[RemittanceCreatorError]
+        after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_specific(
+            amount)
+
+        # Assert
+        self.assertIsNotNone(after_school_remittance)
+        after_school_receipt: AfterSchoolReceipt = AfterSchoolReceipt.objects.get(remittance=after_school_remittance)
+        self.assertAlmostEqual(
+            after_school_receipt.amount, amount, 2)
+        self.assertIsNone(error)
+
     def test_create_half_after_school_edition_with_two_after_school_registrations(self):
         # Arrange
         baker.make(BankBicCode, bank_code='2095')
