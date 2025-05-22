@@ -11,24 +11,39 @@ from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.
 
 class TestLeftAmountReceiptCalculator(TestCase):
     def test_calculate_no_previous_after_school_receipt(self):
+        # Arrange
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration)
+
+        # Act
         amount: float = LeftAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+
+        # Assert
         self.assertAlmostEqual(amount, after_school_registration.calculate_price(), 3)
 
     def test_calculate_previous_after_school_receipt_with_a_third(self):
+        # Arrange
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration)
         total_amount = after_school_registration.calculate_price()
         third_of_amount = total_amount / 3
         baker.make(AfterSchoolReceipt, after_school_registration=after_school_registration, amount=third_of_amount)
+
+        # Act
         amount: float = LeftAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+
+        # Assert
         self.assertAlmostEqual(amount, third_of_amount * 2, 3)
 
     def test_calculate_previous_after_school_receipt_with_more_than_amount(self):
+        # Arrange
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration)
         total_amount = after_school_registration.calculate_price()
         baker.make(AfterSchoolReceipt, after_school_registration=after_school_registration, amount=total_amount * 2)
+
+        # Act
         amount: float = LeftAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+
+        # Assert
         self.assertAlmostEqual(amount, 0.0, 3)

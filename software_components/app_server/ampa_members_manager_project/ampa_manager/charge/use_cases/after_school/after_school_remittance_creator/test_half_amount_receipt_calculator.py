@@ -10,7 +10,12 @@ from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.
 
 class TestHalfAmountReceiptCalculator(TestCase):
     def test_calculate(self):
+        # Arrange
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration)
+
+        # Act
         amount: float = HalfAmountReceiptCalculator().calculate(after_school_registration=after_school_registration)
+
+        # Assert
         self.assertEqual(amount, after_school_registration.calculate_price() / 2)

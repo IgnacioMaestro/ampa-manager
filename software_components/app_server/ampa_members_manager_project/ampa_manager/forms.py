@@ -28,7 +28,7 @@ class ImportAfterSchoolsActivitiesForm(forms.Form):
 
 class ImportCustodyForm(forms.Form):
     custody_edition = forms.ModelChoiceField(
-        queryset=CustodyEdition.objects.of_current_academic_course().order_by('-id'),
+        queryset=CustodyEdition.objects.order_by('-id'),
         label=_('Custody edition to import to'))
     file = forms.FileField()
     simulation = forms.BooleanField(
@@ -51,12 +51,3 @@ class ImportCampsForm(forms.Form):
 
 class CheckMembersForm(forms.Form):
     file = forms.FileField()
-
-
-class CheckFamilyEmailForm(forms.Form):
-    emails = forms.CharField(
-        widget=forms.Textarea(
-            attrs={
-                'placeholder': _('Write emails separated by comma or each one in one line'),
-                'style': 'width: 700px; height: 200px;'
-            }), label='Correos electrónicos')

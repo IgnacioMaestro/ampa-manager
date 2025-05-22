@@ -18,6 +18,7 @@ package Charge {
       Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions full amount)
       Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions half amount)
       Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions left amount)
+      Admin --> (Create a AfterSchoolRemittance from AfterSchoolEditions specific amount)
       Admin --> (Export remittance from a AfterSchoolRemittance)
       Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance send)
       Admin --> (Set all AfterSchoolReceipts of a AfterSchoolRemittance paid)
