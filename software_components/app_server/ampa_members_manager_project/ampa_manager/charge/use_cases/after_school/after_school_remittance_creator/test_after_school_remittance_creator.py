@@ -1,5 +1,6 @@
 from typing import Optional
 
+from django.db.models import QuerySet
 from django.test import TestCase
 from model_bakery import baker
 
@@ -10,8 +11,7 @@ from ampa_manager.activity.models.after_school.after_school_registration import 
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
 from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 from ampa_manager.charge.no_after_school_edition_error import NoAfterSchoolEditionError
-from ampa_manager.charge.use_cases.after_school.after_school_remittance_creator.after_school_remittance_creator import \
-    AfterSchoolRemittanceCreator
+from .after_school_remittance_creator import AfterSchoolRemittanceCreator
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.holder.holder import Holder
@@ -31,11 +31,12 @@ class TestAfterSchoolRemittanceCreator(TestCase):
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         holder: Holder = baker.make(Holder)
         baker.make(AfterSchoolRegistration, holder=holder)
+        editions: QuerySet = AfterSchoolEdition.objects.all()
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
-        after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
+        after_school_remittance, error = AfterSchoolRemittanceCreator(editions).create_half()
 
         # Assert
         self.assertEqual(error, RemittanceCreatorError.BIC_ERROR)
@@ -47,11 +48,12 @@ class TestAfterSchoolRemittanceCreator(TestCase):
         ActiveCourse.objects.create(course=baker.make(AcademicCourse))
         holder: Holder = baker.make(Holder)
         after_school_registration: AfterSchoolRegistration = baker.make(AfterSchoolRegistration, holder=holder)
+        editions: QuerySet = AfterSchoolEdition.objects.all()
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
-        after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
+        after_school_remittance, error = AfterSchoolRemittanceCreator(editions).create_half()
 
         # Assert
         self.assertIsNotNone(after_school_remittance)
@@ -67,12 +69,12 @@ class TestAfterSchoolRemittanceCreator(TestCase):
         holder: Holder = baker.make(Holder)
         baker.make(AfterSchoolRegistration, holder=holder)
         amount: float = 50.0
+        editions: QuerySet = AfterSchoolEdition.objects.all()
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
-        after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_specific(
-            amount)
+        after_school_remittance, error = AfterSchoolRemittanceCreator(editions).create_specific(amount)
 
         # Assert
         self.assertIsNotNone(after_school_remittance)
@@ -88,11 +90,12 @@ class TestAfterSchoolRemittanceCreator(TestCase):
         after_school_edition: AfterSchoolEdition = baker.make(AfterSchoolEdition)
         holder: Holder = baker.make(Holder)
         baker.make(AfterSchoolRegistration, holder=holder, after_school_edition=after_school_edition, _quantity=2)
+        editions: QuerySet = AfterSchoolEdition.objects.all()
 
         # Act
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
-        after_school_remittance, error = AfterSchoolRemittanceCreator(AfterSchoolEdition.objects.all()).create_half()
+        after_school_remittance, error = AfterSchoolRemittanceCreator(editions).create_half()
 
         # Assert
         self.assertIsNotNone(after_school_remittance)

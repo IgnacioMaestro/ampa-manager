@@ -120,7 +120,8 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         else:
             link_text = gettext_lazy('%(num_receipts)s receipts') % {'num_receipts': receipts_count}
         filters = f'edition={edition.id}'
-        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text, filters=filters)
+        return Utils.get_model_link(model_name=AfterSchoolReceipt.__name__.lower(), link_text=link_text,
+                                    filters=filters)
 
     @admin.action(description=_("Create after school remittance"))
     def create_after_school_remittance(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
@@ -153,6 +154,19 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_left()
+        if error == RemittanceCreatorError.BIC_ERROR:
+            message = Utils.create_bic_error_message()
+            return self.message_user(request=request, message=message, level=messages.ERROR)
+        url = after_school_remittance.get_admin_url()
+        message = mark_safe(
+            _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
+        return self.message_user(request=request, message=message)
+
+    @admin.action(description=_("Create after school remittance with 25 euros"))
+    def create_after_school_remittance_left(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
+        after_school_remittance: Optional[AfterSchoolRemittance]
+        error: Optional[RemittanceCreatorError]
+        after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_specific(25.0)
         if error == RemittanceCreatorError.BIC_ERROR:
             message = Utils.create_bic_error_message()
             return self.message_user(request=request, message=message, level=messages.ERROR)
@@ -218,7 +232,6 @@ class AfterSchoolAdmin(admin.ModelAdmin):
     @admin.display(description=_('Courses'))
     def courses_count(self, after_school):
         return distinct_count(AcademicCourse.objects.filter(afterschooledition__after_school=after_school))
-
 
     @admin.action(description=gettext_lazy("Merge activities (Move all editions to first selected)"))
     def merge_after_schools(self, request, after_school_activities: QuerySet[AfterSchool]):

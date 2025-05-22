@@ -30,7 +30,7 @@ class AfterSchoolRemittanceCreator:
 
     def create_specific(self, amount: float) -> tuple[
         Optional[AfterSchoolRemittance], Optional[RemittanceCreatorError]]:
-        pass
+        return self.create_with_amount(amount)
 
     def create_with_calculator(
             self, calculator: AmountReceiptCalculator) \
