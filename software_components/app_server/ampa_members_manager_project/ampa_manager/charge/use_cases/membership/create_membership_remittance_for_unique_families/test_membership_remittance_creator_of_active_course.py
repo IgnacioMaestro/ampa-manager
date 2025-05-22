@@ -5,6 +5,7 @@ from model_bakery import baker
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_unique_families.membership_remittance_creator_of_active_course import \
@@ -14,7 +15,9 @@ from ampa_manager.family.models.bank_account.bank_bic_code import BankBicCode
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.tests.generator_adder import GeneratorAdder
 
+GeneratorAdder.add_all()
 
 class TestMembershipRemittanceCreatorOfActiveCourse(TestCase):
     academic_course: AcademicCourse
@@ -23,6 +26,7 @@ class TestMembershipRemittanceCreatorOfActiveCourse(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.academic_course = baker.make(AcademicCourse)
+        baker.make(Fee, academic_course=cls.academic_course)
         ActiveCourse.objects.create(course=cls.academic_course)
         baker.make(BankBicCode, bank_code='2095')
         holder = baker.make(Holder)
@@ -53,9 +57,9 @@ class TestMembershipRemittanceCreatorOfActiveCourse(TestCase):
         error: Optional[RemittanceCreatorError]
         membership_remittance, error = MembershipRemittanceCreatorOfActiveCourse.create()
 
+        self.assertIsNone(error)
         self.assertIsNotNone(membership_remittance)
         self.assertEqual(MembershipReceipt.objects.count(), 1)
-        self.assertIsNone(error)
 
     def test_create_one_membership_of_the_year_not_included_but_family_declined(self):
         membership: Membership = baker.make(Membership, family=self.family, academic_course=self.academic_course)
