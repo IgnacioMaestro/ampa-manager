@@ -69,8 +69,6 @@ class CampsImporter(BaseImporter):
 
     def import_camps_registration(self, row: Row, edition: CampsEdition, holder: Holder,
                                   child: Child) -> CampsRegistration:
-        assisted_days = row.get_value(self.KEY_ASSISTED_DAYS)
-
         result: ImportModelResult = CampsRegistrationImporter(
             edition=edition, holder=holder, child=child).import_registration()
 

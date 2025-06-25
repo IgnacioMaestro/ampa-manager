@@ -3,6 +3,7 @@ from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
+from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.activity.models.camps.camps_edition_queryset import CampsEditionQuerySet
 
 
@@ -27,11 +28,13 @@ class CampsEdition(models.Model):
 
     @property
     def no_members_registrations_count(self):
-        return self.registrations.no_members().count()
+        active_course = ActiveCourse.load()
+        return self.registrations.no_members_in_course(active_course).count()
 
     @property
     def members_registrations_count(self):
-        return self.registrations.members().count()
+        active_course = ActiveCourse.load()
+        return self.registrations.members_in_course(active_course).count()
 
     @property
     def registrations_count(self):

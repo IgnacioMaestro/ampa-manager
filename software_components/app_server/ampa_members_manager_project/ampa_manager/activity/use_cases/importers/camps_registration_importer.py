@@ -33,13 +33,13 @@ class CampsRegistrationImporter:
 
     def find_registration(self) -> Optional[CampsRegistration]:
         try:
-            return CampsRegistration.objects.get(custody_edition=self.edition, child=self.child)
+            return CampsRegistration.objects.get(camps_edition=self.edition, child=self.child)
         except CampsRegistration.DoesNotExist:
             return None
 
     def manage_not_found_registration(self):
         registration = CampsRegistration.objects.create(
-            custody_edition=self.edition, holder=self.holder, child=self.child)
+            camps_edition=self.edition, holder=self.holder, child=self.child)
         self.result.set_created(registration)
 
     def validate_fields(self) -> Optional[str]:

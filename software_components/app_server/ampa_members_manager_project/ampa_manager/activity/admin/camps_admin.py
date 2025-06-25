@@ -68,33 +68,33 @@ class CampsRegistrationInline(ReadOnlyTabularInline):
 class CampsEditionAdmin(admin.ModelAdmin):
     inlines = [CampsRegistrationInline]
     list_display = ['academic_course', 'levels', 'price_for_member', 'price_for_no_member',
-                    'members_registrations_count', 'no_members_registrations_count',
-                    'registrations_count', 'remittance']
+                    'members_registrations', 'no_members_registrations',
+                    'registrations', 'remittance']
     search_fields = ['levels', 'academic_course']
     fieldsets = (
         (None, {'fields': ('academic_course', 'levels')}),
         (_('Prices'), {'fields': ('price_for_member', 'price_for_no_member'), }),
         (_('Registrations'), {
-            'fields': ('members_registrations_count', 'no_members_registrations_count', 'registrations_count'),
+            'fields': ('members_registrations', 'no_members_registrations', 'registrations'),
         }),
         (_('Remittance'), {'fields': ('remittance',), }),
     )
-    readonly_fields = ['remittance', 'members_registrations_count', 'no_members_registrations_count',
-                       'registrations_count']
+    readonly_fields = ['remittance', 'members_registrations', 'no_members_registrations',
+                       'registrations']
     ordering = ['-academic_course', '-id']
     list_filter = ['academic_course__initial_year', CampsEditionHasRemittanceFilter]
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('No members'))
-    def no_members_registrations_count(self, edition):
+    def no_members_registrations(self, edition):
         return edition.no_members_registrations_count
 
     @admin.display(description=gettext_lazy('Members'))
-    def members_registrations_count(self, edition):
+    def members_registrations(self, edition):
         return edition.members_registrations_count
 
     @admin.display(description=gettext_lazy('Total'))
-    def registrations_count(self, edition):
+    def registrations(self, edition):
         return edition.registrations_count
 
     @admin.display(description=gettext_lazy('Remittance'))
