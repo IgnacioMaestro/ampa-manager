@@ -80,6 +80,8 @@ class ParentImporter:
                 modified_fields.append(ModifiedField(_('Email'), self.parent.email, self.email))
                 self.parent.email = self.email
 
+            self.parent.save()
+
             self.result.set_updated(self.parent, modified_fields)
         else:
             self.result.set_not_modified(self.parent)
