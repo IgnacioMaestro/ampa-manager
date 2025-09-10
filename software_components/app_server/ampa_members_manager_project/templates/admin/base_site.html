@@ -1,8 +1,17 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block extrahead %}
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'ampa.ico' %}"/>
     {{ block.super }}
 {% endblock %}
 
+{% block branding %}
+    <h1 id="site-name">
+        {{ site_header|default:_('Django administration') }}
+        {% if active_course %}
+            <span class="active-course-header">| {% blocktrans %}Curso {{ active_course }}{% endblocktrans %}</span>
+        {% endif %}
+    </h1>
+{% endblock %}

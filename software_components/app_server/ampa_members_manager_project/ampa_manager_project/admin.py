@@ -48,6 +48,8 @@ class CustomAdminSite(admin.AdminSite):
     def each_context(self, request):
         context = super().each_context(request)
         context['menu'] = self.get_custom_app_list()
+        from ampa_manager.academic_course.models.active_course import ActiveCourse
+        context['active_course'] = str(ActiveCourse.load())
         return context
 
     @staticmethod
