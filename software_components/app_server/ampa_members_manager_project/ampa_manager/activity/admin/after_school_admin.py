@@ -162,8 +162,9 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
             _("Activity remittance created") + " (<a href=\"" + url + "\">" + _("View details") + "</a>)")
         return self.message_user(request=request, message=message)
 
-    @admin.action(description=_("Create after school remittance with 25 euros"))
-    def create_after_school_remittance_left(self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
+    @admin.action(description=_("Create after school remittance with enrolment"))
+    def create_after_school_remittance_with_enrolment(
+            self, request, after_school_editions: QuerySet[AfterSchoolEdition]):
         after_school_remittance: Optional[AfterSchoolRemittance]
         error: Optional[RemittanceCreatorError]
         after_school_remittance, error = AfterSchoolRemittanceCreator(after_school_editions).create_specific(25.0)
@@ -189,7 +190,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         return CsvHttpResponse('correos.csv', emails_csv)
 
     actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left,
-               download_families_emails]
+               create_after_school_remittance_with_enrolment, download_families_emails]
 
 
 class AfterSchoolEditionInline(ReadOnlyTabularInline):
