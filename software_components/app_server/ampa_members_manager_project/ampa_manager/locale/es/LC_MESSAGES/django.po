@@ -1986,7 +1986,7 @@ msgstr "No se puede crear. Ya existe una familia con los mismos apellidos"
 #: .\ampa_manager\family\use_cases\importers\family_importer.py:43
 #| msgid "Family surnames"
 msgid "Family created"
-msgstr "Apellidos de la familia"
+msgstr "Familia creada"
 
 #: .\ampa_manager\family\use_cases\importers\family_importer.py:45
 msgid "Email not found, missing surnames"
@@ -2007,7 +2007,7 @@ msgstr "Ya existe un padre con el mismo nombre y apellidos en otra familia."
 #: .\ampa_manager\family\use_cases\importers\parent_importer.py:65
 #| msgid "Payment date"
 msgid "Parent created"
-msgstr "Fecha de pago"
+msgstr "Padre/Madre creado"
 
 #: .\ampa_manager\family\use_cases\importers\parent_importer.py:76
 msgid "Additional phone number"
