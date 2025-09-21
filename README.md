@@ -18,8 +18,12 @@
 1. Generar ficheros de traducciones
 
 ```
-django-admin makemessages -l es -l eu
 python manage.py makemessages -l es
+```
+
+Si da error:
+```
+python manage.py makemessages -l es --ignore venv/* --ignore "*/migrations/*"
 ```
 
 2. Completar las traducciones
