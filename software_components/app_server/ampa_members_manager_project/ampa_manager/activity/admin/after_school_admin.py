@@ -46,8 +46,8 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
                    'after_school_edition__levels',
                    'after_school_edition__after_school__name', FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
-                     'holder__bank_account__iban',
-                     'holder__parent__name_and_surnames']
+                     'holder__bank_account__iban', 'holder__parent__name_and_surnames',
+                     'child__family__email', 'child__family__secondary_email']
     autocomplete_fields = ['after_school_edition', 'holder', 'child']
     list_per_page = 25
 
