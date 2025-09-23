@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter
+from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter, AfterSchoolRegistrationRemittanceFilter
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
@@ -40,14 +40,14 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member',
                     'price']
     ordering = ['-after_school_edition__academic_course__initial_year', 'after_school_edition__after_school__name']
-    list_filter = ['after_school_edition__academic_course__initial_year',
+    list_filter = ['after_school_edition__academic_course__initial_year', AfterSchoolRegistrationRemittanceFilter,
                    'after_school_edition__period',
                    'after_school_edition__timetable',
                    'after_school_edition__levels',
                    'after_school_edition__after_school__name', FamilyRegistrationFilter]
     search_fields = ['child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
-                     'holder__bank_account__iban',
-                     'holder__parent__name_and_surnames']
+                     'holder__bank_account__iban', 'holder__parent__name_and_surnames',
+                     'child__family__email', 'child__family__secondary_email']
     autocomplete_fields = ['after_school_edition', 'holder', 'child']
     list_per_page = 25
 
@@ -90,8 +90,17 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
         file_content = ",".join(ids)
         return CsvHttpResponse(file_name, file_content)
 
-    actions = [download_ids_as_csv]
+    @admin.action(description=gettext_lazy("Download family emails"))
+    def export_emails(self, request, registrations: QuerySet[AfterSchoolRegistration]):
+        families = []
+        for registration in registrations.all():
+            families.append(registration.child.family)
 
+        file_name = 'correos.csv'
+        file_content = FamilyEmailExporter(families).export_to_csv()
+        return CsvHttpResponse(file_name, file_content)
+
+    actions = [export_emails, download_ids_as_csv]
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
     model = AfterSchoolRegistration

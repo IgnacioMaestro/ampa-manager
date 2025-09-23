@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 
 
 class RegistrationFilter(admin.SimpleListFilter):
@@ -56,16 +57,34 @@ class ChildLevelListFilter(admin.SimpleListFilter):
 
 class FamilyRegistrationFilter(admin.SimpleListFilter):
     title = _('Family')
-
     parameter_name = 'family'
 
     def lookups(self, request, model_admin):
         return (
-            ('all', _('All')),
+            ('enrolment', _('With enrolment')),
         )
 
     def queryset(self, request, queryset):
-        if self.value() and self.value() != 'all':
+        if self.value() and self.value() != 'enrolment':
             return queryset.of_family(self.value())
+        else:
+            return queryset
+
+class AfterSchoolRegistrationRemittanceFilter(admin.SimpleListFilter):
+    title = _('Remittance')
+    parameter_name = 'remittance'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('w_enr', _('With enrolment')),
+            ('wo_enr', _('Without enrolment')),
+        )
+
+    def queryset(self, request, queryset):
+        enrolment_amount = 25
+        if self.value() and self.value() == 'w_enr':
+            return queryset.filter(afterschoolreceipt__amount=enrolment_amount)
+        elif self.value() and self.value() == 'wo_enr':
+            return queryset.exclude(afterschoolreceipt__amount=enrolment_amount)
         else:
             return queryset
