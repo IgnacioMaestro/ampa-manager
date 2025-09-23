@@ -70,23 +70,21 @@ class FamilyRegistrationFilter(admin.SimpleListFilter):
         else:
             return queryset
 
-class AfterSchoolRemittanceFilter(admin.SimpleListFilter):
+class AfterSchoolRegistrationRemittanceFilter(admin.SimpleListFilter):
     title = _('Remittance')
     parameter_name = 'remittance'
 
     def lookups(self, request, model_admin):
         return (
-            ('all', _('All')),
+            ('w_enr', _('With enrolment')),
+            ('wo_enr', _('Without enrolment')),
         )
 
     def queryset(self, request, queryset):
-        if self.value() and self.value() != 'all':
-
-            return queryset.of_family(self.value())
+        enrolment_amount = 25
+        if self.value() and self.value() == 'w_enr':
+            return queryset.filter(afterschoolreceipt__amount=enrolment_amount)
+        elif self.value() and self.value() == 'wo_enr':
+            return queryset.exclude(afterschoolreceipt__amount=enrolment_amount)
         else:
             return queryset
-
-    @classmethod
-    def get_active_course_enrolment_remittance(cls):
-        active_course: AcademicCourse = ActiveCourse.load()
-        AfterSchoolRemittance.objects.filter(academic_course=active_course)

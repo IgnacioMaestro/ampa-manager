@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter, AfterSchoolRemittanceFilter
+from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter, AfterSchoolRegistrationRemittanceFilter
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
@@ -40,7 +40,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member',
                     'price']
     ordering = ['-after_school_edition__academic_course__initial_year', 'after_school_edition__after_school__name']
-    list_filter = ['after_school_edition__academic_course__initial_year', AfterSchoolRemittanceFilter,
+    list_filter = ['after_school_edition__academic_course__initial_year', AfterSchoolRegistrationRemittanceFilter,
                    'after_school_edition__period',
                    'after_school_edition__timetable',
                    'after_school_edition__levels',
