@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.charge.models.after_school_charge.after_school_remittance import AfterSchoolRemittance
 
 
 class RegistrationFilter(admin.SimpleListFilter):
@@ -56,8 +57,22 @@ class ChildLevelListFilter(admin.SimpleListFilter):
 
 class FamilyRegistrationFilter(admin.SimpleListFilter):
     title = _('Family')
-
     parameter_name = 'family'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('enrolment', _('With enrolment')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() and self.value() != 'enrolment':
+            return queryset.of_family(self.value())
+        else:
+            return queryset
+
+class AfterSchoolRemittanceFilter(admin.SimpleListFilter):
+    title = _('Remittance')
+    parameter_name = 'remittance'
 
     def lookups(self, request, model_admin):
         return (
@@ -66,6 +81,12 @@ class FamilyRegistrationFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() and self.value() != 'all':
+
             return queryset.of_family(self.value())
         else:
             return queryset
+
+    @classmethod
+    def get_active_course_enrolment_remittance(cls):
+        active_course: AcademicCourse = ActiveCourse.load()
+        AfterSchoolRemittance.objects.filter(academic_course=active_course)
