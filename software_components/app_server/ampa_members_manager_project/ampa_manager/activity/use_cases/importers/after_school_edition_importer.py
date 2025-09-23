@@ -28,7 +28,7 @@ class AfterSchoolEditionImporter:
             error_message = self.validate_fields()
 
             if error_message is None:
-                self.edition = self.find_after_school_edition()
+                self.edition = self.find_edition()
                 if self.edition:
                     self.manage_found_edition()
                 else:
@@ -40,11 +40,10 @@ class AfterSchoolEditionImporter:
 
         return self.result
 
-    def find_after_school_edition(self) -> Optional[AfterSchoolEdition]:
-        try:
-            return AfterSchoolEdition.objects.get(code=self.code)
-        except AfterSchoolEdition.DoesNotExist:
-            pass
+    def find_edition(self) -> Optional[AfterSchoolEdition]:
+        editions = AfterSchoolEdition.objects.with_code(self.code).of_course(self.academic_course)
+        if editions.exists():
+            return editions.first()
 
         try:
             return AfterSchoolEdition.objects.get(

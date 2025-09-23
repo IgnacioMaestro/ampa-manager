@@ -7,7 +7,6 @@ from ampa_manager.activity.models.after_school.after_school_edition import After
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.activity.use_cases.importers.after_school_activity_importer import AfterSchoolActivityImporter
 from ampa_manager.activity.use_cases.importers.after_school_edition_finder import AfterSchoolEditionFinder
-from ampa_manager.activity.use_cases.importers.after_school_edition_importer import AfterSchoolEditionImporter
 from ampa_manager.activity.use_cases.importers.after_school_registration_importer import AfterSchoolRegistrationImporter
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
 from ampa_manager.activity.use_cases.importers.excel_column import ExcelColumn
@@ -84,7 +83,8 @@ class AfterSchoolsImporter(BaseImporter):
     def import_after_school_edition(cls, row: Row) -> Optional[AfterSchoolEdition]:
         code = row.get_value(cls.KEY_EDITION_CODE)
 
-        result: ImportModelResult = AfterSchoolEditionFinder(code).find_edition()
+        active_course: AcademicCourse = ActiveCourse.load()
+        result: ImportModelResult = AfterSchoolEditionFinder(code, active_course).find_edition()
 
         row.add_imported_model_result(result)
 

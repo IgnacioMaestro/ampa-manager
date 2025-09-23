@@ -23,6 +23,7 @@ class CampsRegistrationImporter:
         if error_message is None:
             self.registration = self.find_registration()
             if self.registration:
+                self.result.add_warning(_("Registration already existed"))
                 self.result.set_not_modified(self.registration)
             else:
                 self.manage_not_found_registration()

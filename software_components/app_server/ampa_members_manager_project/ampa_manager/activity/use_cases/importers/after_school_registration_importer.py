@@ -45,6 +45,7 @@ class AfterSchoolRegistrationImporter:
         self.result.set_created(self.registration)
 
     def manage_found_registration(self):
+        self.result.add_warning(_("Registration already existed"))
         if self.registration.holder != self.holder:
             modified_fields = [ModifiedField(_('Holder'), self.registration.holder, self.holder)]
             self.registration.holder = self.holder

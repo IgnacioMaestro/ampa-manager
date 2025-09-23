@@ -48,6 +48,7 @@ class CustodyRegistrationImporter:
             self.result.set_omitted(self.registration, _('0 assisted days'))
 
     def manage_found_registration(self):
+        self.result.add_warning(_("Registration already existed"))
         if self.registration_is_modified():
             modified_fields = []
 

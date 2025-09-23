@@ -36,7 +36,7 @@ class FamilyImporter:
         if self.family_surnames:
             family = Family.objects.with_these_surnames(self.family_surnames).first()
             if family:
-                self.result.set_error(_('Unable to create. A family with same surnames already exists'))
+                self.result.set_error(_('Unable to create. A family with same surnames already exists. Complete family email'))
             else:
                 family = Family.objects.create(surnames=self.family_surnames, email=self.family_email)
                 self.result.set_created(family)
