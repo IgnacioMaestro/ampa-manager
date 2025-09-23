@@ -1,9 +1,10 @@
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Manager
 from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
+from ampa_manager.activity.models.after_school.after_school_edition_queryset import AfterSchoolEditionQuerySet
 from ampa_manager.activity.models.price_per_level import PricePerLevel
 
 
@@ -13,6 +14,8 @@ class AfterSchoolEdition(PricePerLevel):
     period = models.CharField(max_length=300, verbose_name=_("Period"))
     timetable = models.CharField(max_length=300, verbose_name=_("Timetable"))
     academic_course = models.ForeignKey(to=AcademicCourse, on_delete=CASCADE, verbose_name=_("Academic course"))
+
+    objects = Manager.from_queryset(AfterSchoolEditionQuerySet)()
 
     class Meta:
         verbose_name = _('After-school edition')

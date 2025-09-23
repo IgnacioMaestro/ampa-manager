@@ -1,3 +1,5 @@
+import json
+from datetime import datetime
 from typing import Optional
 
 from django import forms
@@ -79,6 +81,15 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     def price(self, registration):
         return registration.calculate_price()
 
+    @admin.action(description=gettext_lazy("Download IDs of selected registrations as CSV"))
+    def download_ids_as_csv(self, request, registrations: QuerySet[AfterSchoolRegistration]):
+        ids = []
+        for registration in registrations.all():
+            ids.append(str(registration.id))
+        file_name = f"{len(ids)}_{_('registrations')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        file_content = ",".join(ids)
+        return CsvHttpResponse(file_name, file_content)
+
     @admin.action(description=gettext_lazy("Download family emails"))
     def export_emails(self, request, registrations: QuerySet[AfterSchoolRegistration]):
         families = []
@@ -89,7 +100,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
         file_content = FamilyEmailExporter(families).export_to_csv()
         return CsvHttpResponse(file_name, file_content)
 
-    actions = [export_emails]
+    actions = [export_emails, download_ids_as_csv]
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
     model = AfterSchoolRegistration
@@ -120,7 +131,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     )
     ordering = ['-academic_course', 'after_school']
     list_filter = ['academic_course__initial_year', 'after_school__name']
-    search_fields = ['after_school__name', 'timetable']
+    search_fields = ['after_school__name', 'timetable', 'code']
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Receipts'))
@@ -200,8 +211,19 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
         emails_csv = FamilyEmailExporter(families).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
 
+    @admin.action(description=gettext_lazy("Download IDs of editions and registrations as JSON"))
+    def download_ids_as_json(self, request, editions: QuerySet[AfterSchoolEdition]):
+        ids = {}
+        for edition in editions.all():
+            ids[edition.id] = []
+            for registration in edition.registrations.all():
+                ids[edition.id].append(registration.id)
+        file_name = f"editions_and_registrations_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        file_content = json.dumps(ids, indent=4)
+        return CsvHttpResponse(file_name, file_content)
+
     actions = [create_after_school_remittance, create_after_school_remittance_half, create_after_school_remittance_left,
-               create_after_school_remittance_with_enrolment, download_families_emails]
+               create_after_school_remittance_with_enrolment, download_families_emails, download_ids_as_json]
 
 
 class AfterSchoolEditionInline(ReadOnlyTabularInline):
