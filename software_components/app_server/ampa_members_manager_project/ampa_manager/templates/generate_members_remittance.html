@@ -1,0 +1,29 @@
+{% extends 'admin/base_site.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{{ importer_title }}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {{ title }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="instructions" class="main-container">
+        <h2>{% trans 'Course' %}: {{ active_course }}</h2>
+        <h3>{% trans 'Members' %}</h3>
+        <ul>
+            <li>{% trans 'This course' %}: {{ active_course_members_count }}</li>
+            <li>{% trans 'Last course' %}: {{ last_course_members_count }}</li>
+        </ul>
+        <h3>{% trans 'Fee' %}</h3>
+        <ul>
+            <li>{% trans 'This course' %}: {{ active_course_fee }}</li>
+            <li>{% trans 'Last course' %}: {{ last_course_fee }}</li>
+        </ul>
+    </div>
+{% endblock %}

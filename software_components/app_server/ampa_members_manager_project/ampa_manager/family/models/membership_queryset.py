@@ -1,5 +1,6 @@
 from django.db.models.query import QuerySet
 
+from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.family.models.child import Child
 
@@ -14,7 +15,10 @@ class MembershipQuerySet(QuerySet):
         return self.filter(academic_course=ActiveCourse.load(), family__child__id__in=children_ids)
 
     def of_active_course(self):
-        return self.filter(academic_course=ActiveCourse.load())
+        return self.of_course(ActiveCourse.load())
+
+    def of_course(self, course: AcademicCourse):
+        return self.filter(academic_course=course)
 
     def of_family(self, family):
         return self.filter(family=family, academic_course=ActiveCourse.load())
