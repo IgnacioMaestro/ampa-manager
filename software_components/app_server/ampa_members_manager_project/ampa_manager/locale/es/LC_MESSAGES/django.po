@@ -77,7 +77,7 @@ msgstr "No hay familias que incluir en la remesa de socios"
 
 #: .\ampa_manager\academic_course\admin.py:59
 msgid "No fee for the selected course"
-msgstr ""
+msgstr "Sin cuota para el curso seleccionado"
 
 #: .\ampa_manager\academic_course\admin.py:61
 #: .\ampa_manager\charge\admin\membership_admin.py:107
@@ -341,7 +341,7 @@ msgstr "Precio"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:84
 msgid "Download IDs of selected registrations as CSV"
-msgstr ""
+msgstr "Descargar IDs de las inscripciones seleccionadas como CSV"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:102
 #: .\ampa_manager\activity\admin\camps_admin.py:63
@@ -446,7 +446,7 @@ msgstr "Exportar correos de la familia a CSV"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:205
 msgid "Download IDs of editions and registrations as JSON"
-msgstr ""
+msgstr "Descargar IDs de las ediciones e inscripciones como JSON"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:236
 #: .\ampa_manager\activity\admin\after_school_admin.py:238
@@ -1572,7 +1572,7 @@ msgstr "Sin hijos en la ikastola"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:66
 msgid "Possible duplicated"
-msgstr ""
+msgstr "Posible duplicado"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:85
 #: .\ampa_manager\family\models\family.py:30
@@ -1760,9 +1760,8 @@ msgstr "Guarda la familia para ver sus cuentas bancarias"
 
 #: .\ampa_manager\family\models\family.py:23
 msgid ""
-"The family does not want to renew the membesrhip next year. It makes no "
-"change this year"
-msgstr ""
+"The family does not want to renew the membesrhip next year. It makes no change this year"
+msgstr "La familia no quiere renovar como socio. No se cambia nada el curso actual"
 
 #: .\ampa_manager\family\models\family.py:24
 #: .\ampa_manager\family\use_cases\importers\family_importer.py:49

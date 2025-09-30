@@ -28,6 +28,7 @@ class ChildAdmin(admin.ModelAdmin):
                      'id']
     list_per_page = 25
     inlines = [AfterSchoolRegistrationInline, CustodyRegistrationInline, CampsRegistrationInline]
+    autocomplete_fields = ['family']
 
     @admin.display(description=_('Is member'))
     def is_member(self, child):
