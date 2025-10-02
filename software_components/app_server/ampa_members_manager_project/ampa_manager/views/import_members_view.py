@@ -8,7 +8,7 @@ from django.views import View
 
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter
-from ampa_manager.forms import ImportMembersForm
+from ampa_manager.forms.import_members_form import ImportMembersForm
 from ampa_manager.views.import_custody_view import SimulationException
 
 

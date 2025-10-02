@@ -1,6 +1,5 @@
 from typing import Optional
 
-from django.db import transaction
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -8,12 +7,10 @@ from django.views import View
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.charge.models.fee.fee import Fee
+from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.family.models.membership import Membership
-from ampa_manager.forms import ImportMembersForm
-from ampa_manager.views.import_custody_view import SimulationException
+from ampa_manager.forms.generate_members_remittance_form import GenerateMembersRemittanceForm
 
 
 class GenerateMembersRemittanceView(View):
@@ -21,9 +18,9 @@ class GenerateMembersRemittanceView(View):
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
-    def get_context(cls, form: Optional[ImportMembersForm] = None) -> dict:
+    def get_context(cls, form: Optional[GenerateMembersRemittanceForm] = None) -> dict:
         if not form:
-            form = ImportMembersForm()
+            form = GenerateMembersRemittanceForm(initial=cls.get_form_initial_data())
 
         active_course = cls.get_active_course()
         last_course = cls.get_last_course()
@@ -31,12 +28,27 @@ class GenerateMembersRemittanceView(View):
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
             'title': _('Generate members remittance'),
-            'active_course': '25-26',
+            'active_course': str(active_course),
+            'last_course_fee': cls.get_course_fee(last_course),
             'active_course_members_count': cls.get_members_count(active_course),
             'last_course_members_count': cls.get_members_count(last_course),
-            'active_course_fee': cls.get_course_fee(active_course),
-            'last_course_fee': cls.get_course_fee(last_course),
+            'active_course_members_remittance_count': cls.get_course_members_remittance_count(active_course),
+            'fee_link': reverse('admin:ampa_manager_fee_changelist'),
+            'membership_link': reverse('admin:ampa_manager_membership_changelist'),
+            'membership_remittance_link': reverse('admin:ampa_manager_membershipremittance_changelist')
         }
+
+    @classmethod
+    def get_form_initial_data(cls):
+        return {
+            'active_course_fee': cls.get_course_fee(cls.get_active_course()),
+        }
+
+    @classmethod
+    def get_course_members_remittance_count(cls, course: Optional[AcademicCourse]) -> int:
+        if not course:
+            return 0
+        return MembershipRemittance.objects.filter(course=course).count()
 
     @classmethod
     def get_members_count(cls, course: Optional[AcademicCourse]) -> int:
@@ -66,41 +78,24 @@ class GenerateMembersRemittanceView(View):
 
     @classmethod
     def post(cls, request):
-        form = ImportMembersForm(request.POST, request.FILES)
+        form = GenerateMembersRemittanceForm(request.POST, request.FILES)
         context = cls.get_context(form)
 
         if form.is_valid():
-            result: ImportExcelResult = cls.import_members(
-                excel_content=request.FILES['file'].read(),
-                simulation=request.POST.get('simulation')
-            )
+            cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
+            remittance: MembershipRemittance = cls.generate_active_course_remittance()
+            context['remittance'] = remittance
 
-            context['result'] = {
-                'rows': result.rows,
-                'state': result.state,
-                'rows_summary': {
-                    'total': result.rows_total,
-                    'with_data': result.rows_with_data,
-                    'without_data': result.rows_without_data,
-                    'imported_ok': result.rows_imported_ok,
-                    'imported_warning': result.rows_imported_warning,
-                    'not_imported': result.rows_not_imported,
-                },
-            }
-
-        context['simulation'] = request.POST.get('simulation')
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def import_members(cls, excel_content, simulation: bool) -> Optional[ImportExcelResult]:
-        result = None
-        try:
-            with transaction.atomic():
-                result = MembersImporter(excel_content).run()
+    def create_or_update_active_course_membership_fee(cls, amount: int):
+        active_course = ActiveCourse.load()
+        fee, _ = Fee.objects.get_or_create(academic_course=active_course)
+        if fee.amount != amount:
+            fee.amount = amount
+            fee.save()
 
-                if simulation:
-                    raise SimulationException()
-        except SimulationException:
-            print('Simulation mode: changes rolled back')
-
-        return result
+    @classmethod
+    def generate_active_course_remittance(cls) -> Optional[MembershipRemittance]:
+        return None
