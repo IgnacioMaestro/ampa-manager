@@ -9,7 +9,7 @@ from django.views import View
 from ampa_manager.activity.models.camps.camps_edition import CampsEdition
 from ampa_manager.activity.use_cases.importers.camps_importer import CampsImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.forms import ImportCampsForm
+from ampa_manager.forms.import_camps_form import ImportCampsForm
 
 
 class SimulationException(Exception):

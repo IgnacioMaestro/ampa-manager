@@ -8,7 +8,8 @@ from django.views import View
 
 from ampa_manager.activity.use_cases.importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.forms import ImportAfterSchoolsRegistrationsForm, ImportAfterSchoolsActivitiesForm
+from ampa_manager.forms.import_after_schools_activities_form import ImportAfterSchoolsActivitiesForm
+from ampa_manager.forms.import_after_schools_registrations_form import ImportAfterSchoolsRegistrationsForm
 from ampa_manager.views.import_custody_view import SimulationException
 
 
