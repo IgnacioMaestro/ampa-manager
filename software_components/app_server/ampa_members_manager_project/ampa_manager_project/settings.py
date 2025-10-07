@@ -159,8 +159,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('AMPA_MANAGER_USER', 'kaixo@abendanogurasoak.com')
-EMAIL_HOST_PASSWORD = os.getenv('AMPA_MANAGER_PASS', 'tmdd ugcx ypnh eeph')
+EMAIL_HOST_USER = os.getenv('AMPA_MANAGER_USER')
+EMAIL_HOST_PASSWORD = os.getenv('AMPA_MANAGER_PASS')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGO_FULL_URL = 'https://drive.google.com/uc?export=view&id=17-t3CTAmmSgRWO93xOZVOSdYGeA1XuTI'
