@@ -3,7 +3,52 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{{ importer_title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block extrahead %}
+    <style>
+
+        #upload_form .mb-3 {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form form p {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            max-width: 300px;
+            width: 100%;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="number"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        #upload_form form label {
+            display: inline-block;
+            width: 200px;
+            margin-right: 1rem;
+            text-align: right;
+        }
+
+    </style>
+{% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
@@ -40,4 +85,10 @@
         <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}">
         </form>
     </div>
+    {% if remittance %}
+    <div id="result">
+        <h2>{% trans 'The remittance has been generated' %}</h2>
+        <a href="membership_remittance_instance_link" target="_new">{{ remittance }}</a>
+    </div>
+    {% endif %}
 {% endblock %}

@@ -1,6 +1,5 @@
 from django import forms
-from django.conf import settings
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -28,6 +27,7 @@ from ampa_manager.family.use_cases.auto_complete_holders import AutoCompleteHold
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.csv_http_response import CsvHttpResponse
+from ampa_manager.utils.mailer import Mailer
 from ampa_manager.utils.utils import Utils
 
 
@@ -163,16 +163,6 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_family_emails(self, request, families: QuerySet[Family]):
         emails_csv = FamilyEmailExporter(list(families), parents_emails=False).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
-
-    @admin.action(description=gettext_lazy("Send email to the parents of selected families"))
-    def send_email_to_parents(self, request, families: QuerySet[Family]):
-        emails = Family.get_families_parents_emails(families)
-        emails_csv = ",".join(emails)
-        email = settings.FROM_EMAIL
-        link_href = f"mailto:{email}?bcc={emails_csv}"
-        link_text = gettext_lazy("Click here to send an email to the parents")
-        link_html = f'<a target="_new" href="{link_href}">{link_text}</a>'
-        return messages.success(request, mark_safe(link_html))
 
     @admin.action(description=gettext_lazy("Export families to XLS"))
     def export_families_xls(self, _, families: QuerySet[Family]):
@@ -383,4 +373,15 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    actions = [export_all_emails, export_family_emails, make_members, undo_members, export_families_xls, complete_holders]
+    @admin.action(description=gettext_lazy("Send test email"))
+    def send_test_email(self, request, families: QuerySet[Family]):
+
+        for family in families:
+            context = {
+                'email': family.email,
+            }
+            text_content = '<h1>¡Hola!</h1><p>Gracias por registrarte en el <b>AMPA</b>.</p>'
+            Mailer.send_template_mail(recipients=[family.email], subject='Prueba', body_html_template='emails/test.html',
+                                      body_html_context=context, body_text_content=text_content)
+
+    actions = [export_all_emails, export_family_emails, make_members, undo_members, export_families_xls, complete_holders, send_test_email]

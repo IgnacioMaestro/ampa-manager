@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { color: #007bff; }
+    p { font-size: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{{ logo_url }}" width="200px">
+    <h1>¡Hola {{ email }}!</h1>
+    {% block content %}{% endblock %}
+    <p>Un saludo,</p>
+  </div>
+</body>
+</html>
