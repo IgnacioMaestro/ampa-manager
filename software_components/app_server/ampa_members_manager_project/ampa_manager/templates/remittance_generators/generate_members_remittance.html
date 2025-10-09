@@ -82,13 +82,20 @@
         <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}">
+        <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}" {% if remittance %}disabled{% endif %}>
         </form>
     </div>
-    {% if remittance %}
+
+    {% if remittance_instance_url %}
+
     <div id="result">
         <h2>{% trans 'The remittance has been generated' %}</h2>
-        <a href="membership_remittance_instance_link" target="_new">{{ remittance }}</a>
+        <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');">
+        <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');">
     </div>
+    <button type="submit" class="button default">{% trans 'Notify families' %}</button>
+    <a href="{% url '...' %}" class="button default">{% trans 'Notify families' %}</a>
+
     {% endif %}
+
 {% endblock %}

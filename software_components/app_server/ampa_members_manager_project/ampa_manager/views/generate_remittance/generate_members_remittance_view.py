@@ -84,9 +84,8 @@ class GenerateMembersRemittanceView(View):
         if form.is_valid():
             cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
             remittance: MembershipRemittance = cls.generate_active_course_remittance()
-            context['remittance'] = remittance
-            context['membership_remittance_instance_link'] = (
-                reverse('admin:ampa_manager_membershipremittance_chang', args=[remittance.id]))
+            context['remittance_instance_url'] = remittance.get_admin_url()
+            context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
 
         return render(request, cls.HTML_TEMPLATE, context)
 
