@@ -17,7 +17,7 @@ class SimulationException(Exception):
 
 
 class ImportCampsView(View):
-    HTML_TEMPLATE = 'import_camps.html'
+    HTML_TEMPLATE = 'importers/import_camps.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_campamentos.xlsx'
     IMPORTER_TITLE = _('Import camps')
     VIEW_NAME = 'import_camps'

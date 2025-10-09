@@ -17,7 +17,7 @@ class SimulationException(Exception):
 
 
 class ImportCustodyView(View):
-    HTML_TEMPLATE = 'import_custody.html'
+    HTML_TEMPLATE = 'importers/import_custody.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xlsx'
     IMPORTER_TITLE = _('Import custody')
     VIEW_NAME = 'import_custody'
