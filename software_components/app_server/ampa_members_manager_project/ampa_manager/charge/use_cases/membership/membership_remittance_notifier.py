@@ -1,5 +1,3 @@
-import locale
-
 from django.utils.formats import date_format
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
@@ -9,8 +7,8 @@ from ampa_manager.utils.mailer import Mailer
 
 
 class MembershipRemittanceNotifier:
-    MAIL_SUBJECT = 'Cobro de la cuota de socio'
-    MAIL_TEMPLATE = 'emails/membership_fee_notice.html'
+    MAIL_SUBJECT = 'Cobro cuota de socio | Bazkide-kuota kobratzea'
+    MAIL_TEMPLATE = 'emails/membership_remittance_notice.html'
 
     def __init__(self, remittance: MembershipRemittance):
         self.remittance: MembershipRemittance = remittance
