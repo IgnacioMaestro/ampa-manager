@@ -127,7 +127,7 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     def notify_families(self, request, remittances: QuerySet[MembershipRemittance]):
         for remittance in remittances.all():
             error: Optional[str] = MembershipRemittanceNotifier(remittance).notify()
-            if MembershipRemittanceNotifier(remittance).notify():
+            if not error:
                 level = messages.INFO
                 message = gettext_lazy('Remittance notified')
             else:

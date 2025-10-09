@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.utils.formats import date_format
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
@@ -17,10 +19,11 @@ class MembershipRemittanceNotifier:
         self.pay_amount: str = self.__get_formatted_pay_amount()
         self.emails: list[str] = []
 
-    def notify(self):
-        Mailer.send_template_mail(
+    def notify(self) -> Optional[str]:
+        return Mailer.send_template_mail(
             bcc_recipients=self.__get_emails(), subject=self.MAIL_SUBJECT,  body_html_template=self.MAIL_TEMPLATE,
-            body_html_context=self.__get_template_context(), body_text_content=self.__get_text_content())
+            body_html_context=self.__get_template_context(), body_text_content=self.__get_text_content()
+        )
 
     def __get_template_context(self):
         return {
@@ -35,7 +38,7 @@ class MembershipRemittanceNotifier:
             f'- Fecha de cobro: {self.pay_date}. \n'
             f'- Importe: {self.pay_amount}. \n'
             f'\n\n'
-            f'Datozen egunetan AFAko bazkide kuota kobratuko dizugu {self.course} ikasturterako. \n'
+            f'Datozen egunetan IFEko bazkide kuota kobratuko dizugu {self.course} ikasturterako. \n'
             f'- Kobrantza-data: {self.pay_date}. \n'
             f'- Zenbateko: {self.pay_amount}. \n'
         )

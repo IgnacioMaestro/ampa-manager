@@ -25,7 +25,11 @@ class Mailer:
             subject, body=body_text_content, from_email=settings.DEFAULT_FROM_EMAIL, to=to_recipients,
             bcc=bcc_recipients, reply_to=reply_to)
         msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        try:
+            msg.send()
+        except Exception as e:
+            return str(e)
+        return None
 
     @classmethod
     def __get_base_email_context(cls) -> dict:
