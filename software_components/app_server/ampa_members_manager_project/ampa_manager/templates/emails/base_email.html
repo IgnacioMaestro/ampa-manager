@@ -21,9 +21,17 @@
 <body>
   <div class="container">
     <img src="{{ logo_url }}" width="200px">
-    <h1>¡Hola {{ email }}!</h1>
-    {% block content %}{% endblock %}
-    <p>Un saludo,</p>
+
+    <h1>Kaixo familia!</h1>
+
+    {% block content_es %}{% endblock %}
+    <p>Para cualquier duda, responde a este correo.</p>
+
+    <p>-------------------------------------------</p>
+
+    {% block content_eu %}{% endblock %}
+    <p>Zalantzarik izanez gero, erantzun mezu honi.</p>
+
   </div>
 </body>
 </html>

@@ -27,7 +27,6 @@ from ampa_manager.family.use_cases.auto_complete_holders import AutoCompleteHold
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.csv_http_response import CsvHttpResponse
-from ampa_manager.utils.mailer import Mailer
 from ampa_manager.utils.utils import Utils
 
 
@@ -373,15 +372,4 @@ class FamilyAdmin(admin.ModelAdmin):
 
     created_formatted.admin_order_field = 'created'
 
-    @admin.action(description=gettext_lazy("Send test email"))
-    def send_test_email(self, request, families: QuerySet[Family]):
-
-        for family in families:
-            context = {
-                'email': family.email,
-            }
-            text_content = '<h1>¡Hola!</h1><p>Gracias por registrarte en el <b>AMPA</b>.</p>'
-            Mailer.send_template_mail(recipients=[family.email], subject='Prueba', body_html_template='emails/test.html',
-                                      body_html_context=context, body_text_content=text_content)
-
-    actions = [export_all_emails, export_family_emails, make_members, undo_members, export_families_xls, complete_holders, send_test_email]
+    actions = [export_all_emails, export_family_emails, make_members, undo_members, export_families_xls, complete_holders]
