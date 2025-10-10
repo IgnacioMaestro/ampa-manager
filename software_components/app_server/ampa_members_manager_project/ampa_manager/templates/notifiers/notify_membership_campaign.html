@@ -47,6 +47,45 @@
             text-align: right;
         }
 
+        .result_container {
+          background-color: #fff8f8;          /* fondo ligeramente rosado */
+          border: 1px solid #cc0000;          /* borde rojo admin clásico */
+          border-radius: 4px;
+          padding: 1.5em;
+          margin: 1.5em 0;
+          color: #333;                        /* texto principal */
+          font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .result_container h1 {
+          color: #ba2121;                     /* rojo admin */
+          font-size: 1.4em;
+          font-weight: 600;
+          margin-bottom: 0.5em;
+          border-bottom: 1px solid #e6b8b8;   /* línea suave */
+          padding-bottom: 0.3em;
+        }
+
+        .result_container h2 {
+          color: #d9534f;                     /* tono más claro de rojo */
+          font-size: 1.1em;
+          font-weight: 500;
+          margin-top: 0.8em;
+          margin-bottom: 0.4em;
+        }
+
+        .result_container pre {
+          background: #fff;
+          border: 1px solid #ddd;
+          padding: 0.8em;
+          border-radius: 3px;
+          overflow-x: auto;
+          font-family: "Courier New", monospace;
+          font-size: 0.9em;
+          color: #444;
+        }
+
     </style>
 {% endblock %}
 
@@ -73,6 +112,22 @@
           <label for="families_not_renew_declined_count" class="form-label"><a href="{{ families_not_renew_declined_url }}" target="_new">{% trans 'Last year members but have declined renew' %}</a></label>
           <input type="text" id="families_not_renew_declined_count" class="form-control" value="{{ families_not_renew_declined_count }}" disabled>
         </div>
+
+        {% if result %}
+            {% if result.error %}
+                <div class="result_container">
+                    <h1>{% trans 'Errors sending mail' %}</h1>
+                    <h2>{% trans 'Notified families' %}: {{ result.notified_families_ids|length }}</h2>
+                    <h2>{% trans 'Error family' %}: {{ result.error_family_id }}</h2>
+                    <h2>{% trans 'Error' %}: {{ result.error }}</h2>
+                </div>
+            {% else %}
+                <div class="result_container">
+                    <h1>{% trans 'Families notified' %}</h1>
+                    <h2>{% trans 'Notified families' %}: {{ result.notified_families_ids|length }}</h2>
+                </div>
+            {% endif %}
+        {% endif %}
 
         <form method="post" action="{% url 'notify_members_campaign' %}">
           {% csrf_token %}

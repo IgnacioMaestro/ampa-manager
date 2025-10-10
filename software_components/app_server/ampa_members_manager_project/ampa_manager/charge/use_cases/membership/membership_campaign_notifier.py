@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.charge.use_cases.membership.notifier_response import FamiliesNotifierResponse
+from ampa_manager.charge.use_cases.membership.families_notifier_result import FamiliesNotifierResult
 from ampa_manager.family.models.family import Family
 from ampa_manager.utils.mailer import Mailer
 
@@ -20,7 +20,7 @@ class MembershipCampaignNotifier:
         self.course: AcademicCourse = ActiveCourse.load()
         self.notified_families: list[int] = []
 
-    def notify(self) -> FamiliesNotifierResponse:
+    def notify(self) -> FamiliesNotifierResult:
         families = {
             self.RENEW_STATUS_RENEW: Family.objects.membership_renew(),
             self.RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN: Family.objects.membership_no_renew_no_school_children(),
@@ -37,10 +37,10 @@ class MembershipCampaignNotifier:
                     body_text_content=self.__get_text_content(family, renew_status)
                 )
                 if error:
-                    return FamiliesNotifierResponse(self.notified_families, family.id, error)
+                    return FamiliesNotifierResult(self.notified_families, family.id, error)
                 else:
                     self.notified_families.append(family.id)
-        return FamiliesNotifierResponse(self.notified_families)
+        return FamiliesNotifierResult(self.notified_families)
 
     def __get_template_context(self, family: Family, renew_status: str):
         return {

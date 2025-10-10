@@ -1,10 +1,9 @@
-from typing import Optional
-
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
 from ampa_manager.charge.use_cases.membership.membership_campaign_notifier import MembershipCampaignNotifier
+from ampa_manager.charge.use_cases.membership.families_notifier_result import FamiliesNotifierResult
 from ampa_manager.family.models.family import Family
 
 
@@ -31,6 +30,5 @@ class NotifyMembershipCampaignView(View):
     @classmethod
     def post(cls, request):
         context = cls.get_context()
-        context['notified'] = True
-        context['error'] = MembershipCampaignNotifier().notify()
+        context['result'] = MembershipCampaignNotifier().notify()
         return render(request, cls.HTML_TEMPLATE, context)
