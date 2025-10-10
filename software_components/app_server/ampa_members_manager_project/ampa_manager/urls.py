@@ -1,6 +1,6 @@
 from django.urls import path
 
-from ampa_manager.views.generate_remittance.generate_members_remittance_view import GenerateMembersRemittanceView
+from ampa_manager.views.remittance_generators.generate_members_remittance_view import GenerateMembersRemittanceView
 from ampa_manager.views.importers.import_after_school_activities_view import ImportAfterSchoolActivitiesView
 from ampa_manager.views.importers.import_after_school_registrations_view import ImportAfterSchoolRegistrationsView
 from ampa_manager.views.importers.import_camps_view import ImportCampsView

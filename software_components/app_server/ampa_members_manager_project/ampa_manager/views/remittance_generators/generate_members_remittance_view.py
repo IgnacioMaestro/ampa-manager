@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from django.shortcuts import render
 from django.urls import reverse
@@ -79,12 +79,16 @@ class GenerateMembersRemittanceView(View):
     def post(cls, request):
         form = GenerateMembersRemittanceForm(request.POST, request.FILES)
         context = cls.get_context(form)
+        context['action_done'] = True
 
         if form.is_valid():
             cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
-            remittance: MembershipRemittance = cls.generate_active_course_remittance()
-            context['remittance_instance_url'] = remittance.get_admin_url()
-            context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
+            remittance, error = cls.generate_active_course_remittance()
+            if remittance:
+                context['remittance_instance_url'] = remittance.get_admin_url()
+                context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
+            else:
+                context['error'] = error
 
         return render(request, cls.HTML_TEMPLATE, context)
 
@@ -97,5 +101,8 @@ class GenerateMembersRemittanceView(View):
             fee.save()
 
     @classmethod
-    def generate_active_course_remittance(cls) -> Optional[MembershipRemittance]:
-        return None
+    def generate_active_course_remittance(cls) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
+        # TODO IÑAKI
+        # return remittance, None
+        # return None, 'Error'
+        pass

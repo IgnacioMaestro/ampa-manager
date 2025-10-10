@@ -101,15 +101,15 @@
         <h2>{% trans 'Review the following information' %}</h2>
 
         <div class="mb-3">
-          <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Last year members that will renew' %}</a></label>
+          <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Families to renew (last year members, with children in school and have not declined)' %}</a></label>
           <input type="text" id="families_renew_count" class="form-control" value="{{ families_renew_count }}" disabled>
         </div>
         <div class="mb-3">
-          <label for="families_not_renew_out_of_school_count" class="form-label"><a href="{{ families_not_renew_out_of_school_url }}" target="_new">{% trans 'Last year members without children in school' %}</a></label>
+          <label for="families_not_renew_out_of_school_count" class="form-label"><a href="{{ families_not_renew_out_of_school_url }}" target="_new">{% trans 'Families that will not renew due to they do not have children in school anymore' %}</a></label>
           <input type="text" id="families_not_renew_out_of_school_count" class="form-control" value="{{ families_not_renew_out_of_school_count }}" disabled>
         </div>
         <div class="mb-3">
-          <label for="families_not_renew_declined_count" class="form-label"><a href="{{ families_not_renew_declined_url }}" target="_new">{% trans 'Last year members but have declined renew' %}</a></label>
+          <label for="families_not_renew_declined_count" class="form-label"><a href="{{ families_not_renew_declined_url }}" target="_new">{% trans 'Families that will not renew due to they have declined renew' %}</a></label>
           <input type="text" id="families_not_renew_declined_count" class="form-control" value="{{ families_not_renew_declined_count }}" disabled>
         </div>
 
