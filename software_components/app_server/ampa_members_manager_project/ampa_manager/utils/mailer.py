@@ -17,7 +17,7 @@ class Mailer:
         if bcc_recipients is None:
             bcc_recipients = []
 
-        if reply_to is not None:
+        if reply_to is None:
             reply_to = [settings.DEFAULT_FROM_EMAIL]
 
         html_content = render_to_string(body_html_template, body_html_context)
