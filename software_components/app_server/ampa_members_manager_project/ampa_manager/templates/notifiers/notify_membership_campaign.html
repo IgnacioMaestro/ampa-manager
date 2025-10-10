@@ -118,7 +118,7 @@
                 <div class="result_container">
                     <h1>{% trans 'Errors sending mail' %}</h1>
                     <h2>{% trans 'Notified families' %}: {{ result.notified_families_ids|length }}</h2>
-                    <h2>{% trans 'Error family' %}: {{ result.error_family_id }}</h2>
+                    <h2>{% trans 'The error happened sending mail to' %}: {{ result.error_family.email }}, {{ result.error_family.secondary_email|replace_if_none:"-" }}</h2>
                     <h2>{% trans 'Error' %}: {{ result.error }}</h2>
                 </div>
             {% else %}

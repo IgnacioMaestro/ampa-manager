@@ -37,7 +37,7 @@ class MembershipCampaignNotifier:
                     body_text_content=self.__get_text_content(family, renew_status)
                 )
                 if error:
-                    return FamiliesNotifierResult(self.notified_families, family.id, error)
+                    return FamiliesNotifierResult(self.notified_families, family, error)
                 else:
                     self.notified_families.append(family.id)
         return FamiliesNotifierResult(self.notified_families)
