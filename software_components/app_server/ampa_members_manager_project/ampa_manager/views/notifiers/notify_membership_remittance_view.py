@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy
+from rest_framework import permissions
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
 from ampa_manager.charge.use_cases.membership.membership_remittance_notifier import MembershipRemittanceNotifier
 

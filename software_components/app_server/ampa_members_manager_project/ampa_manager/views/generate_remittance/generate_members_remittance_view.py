@@ -14,7 +14,7 @@ from ampa_manager.forms.generate_members_remittance_form import GenerateMembersR
 
 
 class GenerateMembersRemittanceView(View):
-    HTML_TEMPLATE = 'remittance_generators/generate_members_remittance.html'
+    HTML_TEMPLATE = 'remittance_generators/generate_membership_remittance.html'
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
@@ -27,7 +27,6 @@ class GenerateMembersRemittanceView(View):
         return {
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
-            'title': _('Generate members remittance'),
             'active_course': str(active_course),
             'last_course_fee': cls.get_course_fee(last_course),
             'active_course_members_count': cls.get_members_count(active_course),

@@ -10,7 +10,7 @@ from ampa_manager.utils.mailer import Mailer
 
 class MembershipRemittanceNotifier:
     MAIL_SUBJECT = 'Cobro cuota de socio | Bazkide-kuota kobratzea'
-    MAIL_TEMPLATE = 'emails/membership_remittance_notice.html'
+    MAIL_TEMPLATE = 'emails/membership_remittance_email.html'
 
     def __init__(self, remittance: MembershipRemittance):
         self.remittance: MembershipRemittance = remittance
