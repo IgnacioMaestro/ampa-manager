@@ -98,7 +98,7 @@
 
 {% block content %}
     <div id="upload_form" class="main-container">
-        <h2>{% trans 'Check' %}</h2>
+        <h2>{% trans 'Review the following information' %}</h2>
 
         <div class="mb-3">
           <label for="last_course_fee" class="form-label"><a href="{{ fee_link }}" target="_new">{% trans 'Last course fee' %}</a></label>
@@ -117,7 +117,7 @@
           <input type="text" id="active_course_members_remittance_count" class="form-control" value="{{ active_course_members_remittance_count }}" disabled>
         </div>
 
-        <h2>{% trans 'Complete' %}</h2>
+        <h2>{% trans 'Complete the following information' %}</h2>
         <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}

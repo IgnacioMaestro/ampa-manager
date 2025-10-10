@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.views import View
 
 from ampa_manager.charge.use_cases.membership.membership_campaign_notifier import MembershipCampaignNotifier
-from ampa_manager.charge.use_cases.membership.families_notifier_result import FamiliesNotifierResult
 from ampa_manager.family.models.family import Family
+from ampa_manager_project.admin import CustomAdminSite
 
 
 class NotifyMembershipCampaignView(View):
@@ -21,6 +21,7 @@ class NotifyMembershipCampaignView(View):
             'families_renew_url': f'{family_changelist_url}?member=renew',
             'families_not_renew_out_of_school_url': f'{family_changelist_url}?member=no_renew_no_school_children',
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
+            'menu': CustomAdminSite.get_custom_app_list()
         }
 
     @classmethod
