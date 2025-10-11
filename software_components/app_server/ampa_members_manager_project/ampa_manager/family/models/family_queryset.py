@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.db.models import Count
@@ -12,10 +14,10 @@ from ampa_manager.utils.string_utils import StringUtils
 
 class FamilyQuerySet(QuerySet):
 
-    def has_any_children(self):
+    def has_any_school_children(self):
         return self.filter(id__in=FamilyQuerySet.get_families_ids_with_school_children())
 
-    def has_no_children(self):
+    def has_no_school_children(self):
         return self.exclude(id__in=FamilyQuerySet.get_families_ids_with_school_children())
 
     @classmethod
@@ -60,6 +62,9 @@ class FamilyQuerySet(QuerySet):
             membership_holder__isnull=False, custody_holder__isnull=False,
             camps_holder__isnull=False, after_school_holder__isnull=False)
 
+    def members_last_course(self):
+        return self.members_in_course(ActiveCourse.get_previous())
+
     def members_in_course(self, academic_course: AcademicCourse):
         return self.filter(membership__academic_course=academic_course)
 
@@ -79,6 +84,9 @@ class FamilyQuerySet(QuerySet):
 
     def no_declined_membership(self) -> QuerySet:
         return self.filter(decline_membership=False)
+
+    def declined_membership(self) -> QuerySet:
+        return self.filter(decline_membership=True)
 
     def of_parent(self, parent):
         return self.filter(parents=parent)
@@ -102,3 +110,12 @@ class FamilyQuerySet(QuerySet):
             if len(families_ids) > 1:
                 duplicated_ids.extend(families_ids)
         return self.filter(id__in=duplicated_ids)
+
+    def membership_renew(self):
+        return self.members_last_course().no_declined_membership().has_any_school_children()
+
+    def membership_no_renew_no_school_children(self):
+        return self.members_last_course().has_no_school_children()
+
+    def membership_no_renew_declined(self):
+        return self.members_last_course().declined_membership()

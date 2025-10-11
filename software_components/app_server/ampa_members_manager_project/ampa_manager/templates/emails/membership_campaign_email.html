@@ -1,0 +1,58 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content_es %}
+    <p>Próximamente iniciamos la campaña de socios para este curso {{ course }}. </p>
+
+    {% if renew_status == "RENEW" %}
+        <p>Según los datos que tenemos, el año pasado vuestra familia fue socia y vuestros hijos/as siguen en la ikastola. <b>Este año se os volverá a pasar la cuota a la cuenta terminada en {{ account_last_4_digits }}</b>.</p>
+        <ul>
+            <li>Si queréis seguir siendo socio: no tenéis que hacer nada.</li>
+            <li>Si no queréis renovar o queréis cambiar el nº de cuenta: responded a este correo para que lo corrijamos.</li>
+        </ul>
+    {% endif %}
+
+    {% if renew_status == "NO_RENEW_NO_SCHOOL_CHILDREN" %}
+        <p>Según los datos que tenemos, el año pasado vuestra familia fue socia, pero este año vuestros hijos/as ya no están en la ikastola. <b>Por eso este año no os vamos a cobrar la cuota de socio</b>.</p>
+        <ul>
+            <li>Si esto es correcto: no tenéis que hacer nada.</li>
+            <li>Si esto no es correcto y queréis seguir siendo socios: responded a este correo para que lo corrijamos.</li>
+        </ul>
+    {% endif %}
+
+    {% if renew_status == "NO_RENEW_DECLINED" %}
+        <p>Según los datos que tenemos, el año pasado vuestra familia fue socia, pero habéis solicitado no renovar. <b>Por eso este año no os vamos a cobrar la cuota de socio</b>.</p>
+        <ul>
+            <li>Si esto es correcto: no tenéis que hacer nada.</li>
+            <li>Si esto no es correcto y queréis seguir siendo socios: responded a este correo para que lo corrijamos.</li>
+        </ul>
+    {% endif %}
+
+{% endblock %}
+
+{% block content_eu %}
+    <p>Datozen egunetan hasiko dugu {{ course }} ikasturte honetarako bazkide kanpaina. </p>
+
+    {% if renew_status == "RENEW" %}
+        <p>Ditugun datuen arabera, iaz zuen familia bazkide izan zen eta zuen seme-alabek ikastolan jarraitzen dute. Aurten, <b>kuota {{ account_last_4_digits }} zenbakitan amaitutako kontura pasatuko zaizue berriro.</b>.</p>
+        <ul>
+            <li>Bazkide izaten jarraitu nahi baduzue: ez duzue ezer egin behar.</li>
+            <li>Ez baduzue berritu nahi edo kontu-zenbakia aldatu nahi baduzue: erantzun mezu honi zuzen dezagun.</li>
+        </ul>
+    {% endif %}
+
+    {% if renew_status == "NO_RENEW_NO_SCHOOL_CHILDREN" %}
+        <p>Ditugun datuen arabera, iaz zuen familia bazkide izan zen, baina aurten zuen seme-alabak jada ez daude ikastolan. Horregatik, <b>aurten ez dizuegu bazkide-kuota kobratuko.</b>.</p>
+        <ul>
+            <li>Hori zuzena bada: ez duzue ezer egin behar.</li>
+            <li>Hori zuzena ez bada eta bazkide izaten jarraitu nahi baduzue: erantzun mezu honi zuzen dezagun.</li>
+        </ul>
+    {% endif %}
+
+    {% if renew_status == "NO_RENEW_DECLINED" %}
+        <p>Ditugun datuen arabera, iaz zuen familia bazkide izan zen, baina ez berritzea eskatu duzue. Horregatik, <b>aurten ez dizuegu bazkide-kuota kobratuko.</b>.</p>
+        <ul>
+            <li>Hori zuzena bada: ez duzue ezer egin behar.</li>
+            <li>Hori zuzena ez bada eta bazkide izaten jarraitu nahi baduzue: erantzun mezu honi zuzen dezagun.</li>
+        </ul>
+    {% endif %}
+{% endblock %}
