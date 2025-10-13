@@ -98,7 +98,9 @@
 
 {% block content %}
     <div id="upload_form" class="main-container">
-        <h2>{% trans 'Review the following information' %}</h2>
+        <h1>{% trans 'Review the following information' %}</h1>
+        <h3>{% trans 'Each of the following groups of families will receive a different email' %}</h3>
+        <br/>
 
         <div class="mb-3">
           <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Families to renew (last year members, with children in school and have not declined)' %}</a></label>
@@ -128,6 +130,8 @@
                 </div>
             {% endif %}
         {% endif %}
+
+        <br/>
 
         <form method="post" action="{% url 'notify_members_campaign' %}">
           {% csrf_token %}

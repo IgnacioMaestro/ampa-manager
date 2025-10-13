@@ -18,13 +18,13 @@ class GenerateMembersRemittanceView(View):
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
-    def get_context(cls, form: Optional[GenerateMembersRemittanceForm] = None) -> dict:
+    def get_context(cls, form: Optional[GenerateMembersRemittanceForm] = None, extra_context: dict = None) -> dict:
         if not form:
             form = GenerateMembersRemittanceForm(initial=cls.get_form_initial_data())
 
         active_course = cls.get_active_course()
         last_course = cls.get_last_course()
-        return {
+        context = {
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
             'active_course': str(active_course),
@@ -32,10 +32,25 @@ class GenerateMembersRemittanceView(View):
             'active_course_members_count': cls.get_members_count(active_course),
             'last_course_members_count': cls.get_members_count(last_course),
             'active_course_members_remittance_count': cls.get_course_members_remittance_count(active_course),
-            'fee_link': reverse('admin:ampa_manager_fee_changelist'),
-            'membership_link': reverse('admin:ampa_manager_membership_changelist'),
-            'membership_remittance_link': reverse('admin:ampa_manager_membershipremittance_changelist')
+            'fee_url': reverse('admin:ampa_manager_fee_changelist'),
+            'last_course_members_url': cls.get_last_course_members_url(),
+            'active_course_members_url': cls.get_active_course_members_url(),
+            'membership_remittance_url': reverse('admin:ampa_manager_membershipremittance_changelist'),
+            'import_members_url': reverse('import_members')
         }
+        if extra_context:
+            context.update(extra_context)
+        return context
+
+    @classmethod
+    def get_last_course_members_url(cls):
+        year = ActiveCourse.get_active_course_initial_year() - 1
+        return reverse('admin:ampa_manager_membership_changelist') + f'?academic_course__initial_year={year}'
+
+    @classmethod
+    def get_active_course_members_url(cls):
+        year = ActiveCourse.get_active_course_initial_year()
+        return reverse('admin:ampa_manager_membership_changelist') + f'?academic_course__initial_year={year}'
 
     @classmethod
     def get_form_initial_data(cls):
@@ -78,18 +93,19 @@ class GenerateMembersRemittanceView(View):
     @classmethod
     def post(cls, request):
         form = GenerateMembersRemittanceForm(request.POST, request.FILES)
-        context = cls.get_context(form)
-        context['action_done'] = True
 
+        extra_context = {}
         if form.is_valid():
             cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
             remittance, error = cls.generate_active_course_remittance()
             if remittance:
-                context['remittance_instance_url'] = remittance.get_admin_url()
-                context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
+                extra_context['remittance_instance_url'] = remittance.get_admin_url()
+                extra_context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
             else:
-                context['error'] = error
+                extra_context['error'] = error
 
+        extra_context['action_done'] = True
+        context = cls.get_context(form, extra_context)
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod

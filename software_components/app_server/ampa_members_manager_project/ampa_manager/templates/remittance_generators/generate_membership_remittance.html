@@ -98,26 +98,27 @@
 
 {% block content %}
     <div id="upload_form" class="main-container">
-        <h2>{% trans 'Review the following information' %}</h2>
+        <h1>{% trans 'Review the following information' %}</h1>
 
         <div class="mb-3">
-          <label for="last_course_fee" class="form-label"><a href="{{ fee_link }}" target="_new">{% trans 'Last course fee' %}</a></label>
+          <label for="last_course_fee" class="form-label"><a href="{{ fee_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course fee' %}</a></label>
           <input type="text" id="last_course_fee" class="form-control" value="{{ last_course_fee }}" disabled>
         </div>
         <div class="mb-3">
-          <label for="last_course_members_count" class="form-label"><a href="{{ membership_link }}" target="_new">{% trans 'Last course members' %}</a></label>
+          <label for="last_course_members_count" class="form-label"><a href="{{ last_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course members' %}</a></label>
           <input type="text" id="last_course_members_count" class="form-control" value="{{ last_course_members_count }}" disabled>
         </div>
         <div class="mb-3">
-          <label for="active_course_members_count" class="form-label"><a href="{{ membership_link }}" target="_new">{% trans 'Active course members' %}</a></label>
+          <label for="active_course_members_count" class="form-label"><a href="{{ active_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Active course members' %}</a></label>
           <input type="text" id="active_course_members_count" class="form-control" value="{{ active_course_members_count }}" disabled>
         </div>
         <div class="mb-3">
-          <label for="active_course_members_remittance_count" class="form-label"><a href="{{ membership_remittance_link }}" target="_new">{% trans 'Remittances already generated' %}</a></label>
+          <label for="active_course_members_remittance_count" class="form-label"><a href="{{ membership_remittance_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Remittances already generated' %}</a></label>
           <input type="text" id="active_course_members_remittance_count" class="form-control" value="{{ active_course_members_remittance_count }}" disabled>
         </div>
 
-        <h2>{% trans 'Complete the following information' %}</h2>
+        <br/>
+        <h1>{% trans 'Complete the following information' %}</h1>
         <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -133,9 +134,12 @@
             {% endif %}
         {% endif %}
 
+        <br/>
+
         <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}" {% if remittance %}disabled{% endif %}>
         <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
         <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
+        <input type="button" value="{% trans 'Import members' %}" onclick="window.open('{{ import_members_url }}', '_blank');">
         <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
 
         </form>
