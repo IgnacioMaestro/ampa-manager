@@ -1,14 +1,17 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.translation import gettext_lazy
 from django.views import View
 
-from ampa_manager.charge.use_cases.membership.membership_campaign_notifier import MembershipCampaignNotifier
+from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.charge.use_cases.membership.membership_campaign_copier import MembershipCampaignCopier
 from ampa_manager.family.models.family import Family
 
 
-class NotifyMembershipCampaignView(View):
-    HTML_TEMPLATE = 'notifiers/notify_membership_campaign.html'
-    VIEW_NAME = 'notify_members_campaign'
+class CopyLastCourseMembersView(View):
+    HTML_TEMPLATE = 'copy_last_course_members.html'
+    VIEW_NAME = 'copy_last_course_members'
 
     @classmethod
     def get_context(cls) -> dict:
@@ -28,6 +31,14 @@ class NotifyMembershipCampaignView(View):
 
     @classmethod
     def post(cls, request):
-        context = cls.get_context()
-        context['result'] = MembershipCampaignNotifier().notify()
-        return render(request, cls.HTML_TEMPLATE, context)
+        if MembershipCampaignCopier().copy_members_from_last_course():
+            messages.info(request, gettext_lazy('Active course members updated'))
+        else:
+            messages.error(request, gettext_lazy('Unable to update active course members'))
+
+        return redirect(cls.get_active_course_members_url())
+
+    @classmethod
+    def get_active_course_members_url(cls) -> str:
+        year = ActiveCourse.get_active_course_initial_year()
+        return reverse('admin:ampa_manager_membership_changelist') + f'?academic_course__initial_year={year}'

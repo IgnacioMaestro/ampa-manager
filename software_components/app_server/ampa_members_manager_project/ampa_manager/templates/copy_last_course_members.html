@@ -1,0 +1,124 @@
+{% extends 'admin/base_site.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Copy last course members' %}{% endblock %}
+
+{% block extrahead %}
+    <style>
+
+        #upload_form .mb-3 {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form form p {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            max-width: 300px;
+            width: 100%;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="number"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        #upload_form form label {
+            display: inline-block;
+            width: 200px;
+            margin-right: 1rem;
+            text-align: right;
+        }
+
+        .result_container {
+          background-color: #fff8f8;          /* fondo ligeramente rosado */
+          border: 1px solid #cc0000;          /* borde rojo admin clásico */
+          border-radius: 4px;
+          padding: 1.5em;
+          margin: 1.5em 0;
+          color: #333;                        /* texto principal */
+          font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .result_container h1 {
+          color: #ba2121;                     /* rojo admin */
+          font-size: 1.4em;
+          font-weight: 600;
+          margin-bottom: 0.5em;
+          border-bottom: 1px solid #e6b8b8;   /* línea suave */
+          padding-bottom: 0.3em;
+        }
+
+        .result_container h2 {
+          color: #d9534f;                     /* tono más claro de rojo */
+          font-size: 1.1em;
+          font-weight: 500;
+          margin-top: 0.8em;
+          margin-bottom: 0.4em;
+        }
+
+        .result_container pre {
+          background: #fff;
+          border: 1px solid #ddd;
+          padding: 0.8em;
+          border-radius: 3px;
+          overflow-x: auto;
+          font-family: "Courier New", monospace;
+          font-size: 0.9em;
+          color: #444;
+        }
+
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      &rsaquo; {% trans 'Copy last course members' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="upload_form" class="main-container">
+        <h1>{% trans 'Review the following information' %}</h1>
+        <br/>
+
+        <div class="mb-3">
+          <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Families to renew (last year members, with children in school and have not declined)' %}</a></label>
+          <input type="text" id="families_renew_count" class="form-control" value="{{ families_renew_count }}" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="families_not_renew_out_of_school_count" class="form-label"><a href="{{ families_not_renew_out_of_school_url }}" target="_new">{% trans 'Families that will not renew due to they do not have children in school anymore' %}</a></label>
+          <input type="text" id="families_not_renew_out_of_school_count" class="form-control" value="{{ families_not_renew_out_of_school_count }}" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="families_not_renew_declined_count" class="form-label"><a href="{{ families_not_renew_declined_url }}" target="_new">{% trans 'Families that will not renew due to they have declined renew' %}</a></label>
+          <input type="text" id="families_not_renew_declined_count" class="form-control" value="{{ families_not_renew_declined_count }}" disabled>
+        </div>
+
+        <form method="post" action="{% url 'copy_last_course_members' %}">
+          {% csrf_token %}
+            <input type="submit" value="{% trans 'Copy last course members' %}">
+            <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
+        </form>
+    </div>
+
+{% endblock %}

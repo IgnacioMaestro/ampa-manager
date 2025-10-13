@@ -1,5 +1,6 @@
 from django.urls import path
 
+from ampa_manager.views.copy_last_course_members_view import CopyLastCourseMembersView
 from ampa_manager.views.remittance_generators.generate_members_remittance_view import GenerateMembersRemittanceView
 from ampa_manager.views.importers.import_after_school_activities_view import ImportAfterSchoolActivitiesView
 from ampa_manager.views.importers.import_after_school_registrations_view import ImportAfterSchoolRegistrationsView
@@ -13,8 +14,9 @@ from ampa_manager.views.validate_data import validate_data
 urlpatterns = [
     path('custody/import/', ImportCustodyView.as_view(), name='import_custody'),
     path('camps/import/', ImportCampsView.as_view(), name='import_camps'),
-    path('members/import/', ImportMembersView.as_view(), name='import_members'),
+    path('members-campaign/import/', ImportMembersView.as_view(), name='import_members'),
     path('members-campaign/notify/', NotifyMembershipCampaignView.as_view(), name='notify_members_campaign'),
+    path('members-campaign/copy/', CopyLastCourseMembersView.as_view(), name='copy_last_course_members'),
     path('membership-remittances/generate/', GenerateMembersRemittanceView.as_view(), name='generate_members_remittance'),
     path('membership-remittances/<int:remittance_id>/notify/', NotifyMembersRemittanceView.as_view(), name='notify_members_remittance'),
     path('afterschools-registrations/import/', ImportAfterSchoolRegistrationsView.as_view(),

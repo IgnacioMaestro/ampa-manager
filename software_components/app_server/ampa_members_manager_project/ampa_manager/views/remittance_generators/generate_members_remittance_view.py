@@ -36,7 +36,6 @@ class GenerateMembersRemittanceView(View):
             'last_course_members_url': cls.get_last_course_members_url(),
             'active_course_members_url': cls.get_active_course_members_url(),
             'membership_remittance_url': reverse('admin:ampa_manager_membershipremittance_changelist'),
-            'import_members_url': reverse('import_members')
         }
         if extra_context:
             context.update(extra_context)

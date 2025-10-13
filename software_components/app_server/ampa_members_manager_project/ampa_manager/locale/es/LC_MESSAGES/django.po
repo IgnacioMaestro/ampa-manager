@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 16:17+0200\n"
+"POT-Creation-Date: 2025-10-13 16:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1611,7 +1611,8 @@ msgstr ""
 msgid ""
 "Showing families that were members last year, but they have declined to renew"
 msgstr ""
-"Mostrando familias que fueron socias el año pasado, pero que han rechazado renovar"
+"Mostrando familias que fueron socias el año pasado, pero que han rechazado "
+"renovar"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:57
 msgid "Any children in school"
@@ -2100,12 +2101,53 @@ msgstr "SIMULACIÓN: Solo listar los cambios sin hacer ninguno"
 msgid "Custody edition to import to"
 msgstr "Edición de custodia a la que importar"
 
+#: .\ampa_manager\templates\copy_last_course_members.html:6
+#: .\ampa_manager\templates\copy_last_course_members.html:95
+#: .\ampa_manager\templates\copy_last_course_members.html:119
+#: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:143
+msgid "Copy last course members"
+msgstr "Copiar los socios del curso pasado"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:94
 #: .\ampa_manager\templates\importers\base_import.html:273
 #: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:94
 #: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:94
 #: .\ampa_manager\templates\validate_families_data.html:28
 msgid "Home"
 msgstr "Inicio"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:101
+#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:101
+#: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:101
+msgid "Review the following information"
+msgstr "Revisa la siguiente información"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:105
+#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:106
+msgid ""
+"Families to renew (last year members, with children in school and have not "
+"declined)"
+msgstr ""
+"Familias que renuevan (miembros el año pasado, con hijos en la ikastola y no "
+"han rechazado)"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:109
+#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:110
+msgid ""
+"Families that will not renew due to they do not have children in school "
+"anymore"
+msgstr "Familias que no renuevan porque sus hijos ya no están en la ikastola"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:113
+#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:114
+msgid "Families that will not renew due to they have declined renew"
+msgstr "Familias que no renuevan porque han solicitado no hacerlo"
+
+#: .\ampa_manager\templates\copy_last_course_members.html:120
+#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:139
+#: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:144
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: .\ampa_manager\templates\importers\base_import.html:283
 msgid "Select file to import"
@@ -2238,31 +2280,10 @@ msgstr " puedes crearla aquí"
 msgid "Notify membership campaign"
 msgstr "Notificar la campaña de socios"
 
-#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:101
-#: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:101
-msgid "Review the following information"
-msgstr "Revisa la siguiente información"
-
 #: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:102
 msgid "Each of the following groups of families will receive a different email"
-msgstr "Cada uno de los siguientes grupos de familias recibirán un correo distinto"
-
-#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:106
-msgid ""
-"Families to renew (last year members, with children in school and have not "
-"declined)"
 msgstr ""
-"Familias que renuevan (miembros el año pasado, con hijos en la ikastola y no han rechazado)"
-
-#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:110
-msgid ""
-"Families that will not renew due to they do not have children in school "
-"anymore"
-msgstr "Familias que no renuevan porque sus hijos ya no están en la ikastola"
-
-#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:114
-msgid "Families that will not renew due to they have declined renew"
-msgstr "Familias que no renuevan porque han solicitado no hacerlo"
+"Cada uno de los siguientes grupos de familias recibirán un correo distinto"
 
 #: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:121
 msgid "Errors sending mail"
@@ -2285,11 +2306,6 @@ msgstr "Familias notificadas"
 #: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:141
 msgid "Notify families by email"
 msgstr "Notificar familias por correo"
-
-#: .\ampa_manager\templates\notifiers\notify_membership_campaign.html:139
-#: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:143
-msgid "Cancel"
-msgstr "Cancelar"
 
 #: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:6
 #: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:95
@@ -2341,10 +2357,8 @@ msgid "Open generated remittance"
 msgstr "Abrir la remesa generada"
 
 #: .\ampa_manager\templates\remittance_generators\generate_membership_remittance.html:142
-#: .\ampa_manager\views\importers\import_members_view.py:18
-#: .\ampa_manager_project\admin_menu.py:205
-msgid "Import members"
-msgstr "Importar socios"
+msgid "Import new members"
+msgstr "Importar nuevos socios"
 
 #: .\ampa_manager\templates\validate_families_data.html:6
 #: .\ampa_manager\templates\validate_families_data.html:29
@@ -2372,6 +2386,14 @@ msgstr "Revisar las cuentas Bancarias sin BIC"
 msgid "BIC error"
 msgstr "BIC error"
 
+#: .\ampa_manager\views\copy_last_course_members_view.py:35
+msgid "Active course members updated"
+msgstr "Socios de este curso actualizados"
+
+#: .\ampa_manager\views\copy_last_course_members_view.py:37
+msgid "Unable to update active course members"
+msgstr "No se ha podido actualizar los socios de este curso"
+
 #: .\ampa_manager\views\importers\import_after_school_activities_view.py:19
 msgid "Import afterschool activities"
 msgstr "Importar actividades de extraescolares"
@@ -2387,6 +2409,11 @@ msgstr "Importar campamentos"
 #: .\ampa_manager\views\importers\import_custody_view.py:22
 msgid "Import custody"
 msgstr "Importar custodia"
+
+#: .\ampa_manager\views\importers\import_members_view.py:18
+#: .\ampa_manager_project\admin_menu.py:205
+msgid "Import members"
+msgstr "Importar socios"
 
 #: .\ampa_manager\views\notifiers\notify_membership_remittance_view.py:28
 msgid "Remittance not found"
