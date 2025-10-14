@@ -123,6 +123,16 @@
         {% csrf_token %}
         {{ form.as_p }}
 
+        <br/><br/>
+        <h1>{% trans 'If active course members are not completed' %}</h1>
+        <input type="button" value="{% trans 'Import new members' %}" onclick="window.open('{% url 'import_members' %}', '_blank');">
+        <input type="button" value="{% trans 'Copy last course members' %}" onclick="window.open('{% url 'copy_last_course_members' %}', '_blank');">
+
+        <br/><br/><br/>
+        <h1>{% trans 'Once the remittance has been generated' %}</h1>
+        <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
+        <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
+
         {% if action_done %}
             <div class="result_container">
                 {% if error %}
@@ -134,13 +144,9 @@
             {% endif %}
         {% endif %}
 
-        <br/>
+        <br/><br/><br/>
 
         <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}" {% if remittance %}disabled{% endif %}>
-        <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
-        <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
-        <input type="button" value="{% trans 'Import new members' %}" onclick="window.open('{% url 'import_members' %}', '_blank');">
-        <input type="button" value="{% trans 'Copy last course members' %}" onclick="window.open('{% url 'copy_last_course_members' %}', '_blank');">
         <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
 
         </form>

@@ -216,6 +216,12 @@ MENU = [
                 'view': 'notify_members_campaign',
                 'label': _('Notify members campaign'),
             },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'notify_members_campaign',
+                'label': _('Members campaign'),
+            },
         ]
     },
     {

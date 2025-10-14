@@ -1,0 +1,81 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block extrahead %}
+    <style>
+        .step-cell {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #000;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .step-cell.completed {
+            background-color: #d9f0d9;
+        }
+
+        .step-cell.current {
+            background-color: #5e81ac;
+            color: #fff;
+        }
+
+        .step-cell.pending {
+            background-color: #88c0d0;
+            color: #fff;
+        }
+
+        .step-cell:hover {
+            background-color: #8fbcbb;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .arrow-cell {
+            padding: 0 4px;
+            vertical-align: middle;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 4px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block title %}{% trans 'Membership campaign' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        &rsaquo; {% trans 'Membership campaign' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% block steps %}
+        <table>
+            <tr>
+                {% for step in steps %}
+                    {% if step.current %}
+                        <td class="step-cell current"><a href="">{{ step.title }}</a></td>
+                    {% else %}
+                        <td class="step-cell pending"><a href="">{{ step.title }}</a></td>
+                    {% endif %}
+
+                    {% if not forloop.last %}
+                        <td class="arrow-cell">
+                            <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    {% endblock %}
+    <br/>
+{% endblock %}

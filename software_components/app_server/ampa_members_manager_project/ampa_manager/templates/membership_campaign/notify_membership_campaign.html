@@ -1,13 +1,11 @@
-{% extends 'admin/base_site.html' %}
+{% extends 'membership_campaign/base_membership_campaign.html' %}
 {% load custom_filters %}
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans 'Notify membership campaign' %}{% endblock %}
-
 {% block extrahead %}
+    {{ block.super }}
     <style>
-
         #upload_form .mb-3 {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -89,14 +87,8 @@
     </style>
 {% endblock %}
 
-{% block breadcrumbs %}
-    <div class="breadcrumbs">
-      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo; {% trans 'Notify membership campaign' %}
-    </div>
-{% endblock %}
-
 {% block content %}
+    {{ block.super }}
     <div id="upload_form" class="main-container">
         <h1>{% trans 'Review the following information' %}</h1>
         <h3>{% trans 'Each of the following groups of families will receive a different email' %}</h3>
