@@ -201,24 +201,6 @@ MENU = [
             {
                 'type': 'view',
                 'app': 'ampa_manager',
-                'view': 'import_members',
-                'label': _('Import members'),
-            },
-            {
-                'type': 'view',
-                'app': 'ampa_manager',
-                'view': 'generate_members_remittance',
-                'label': _('Generate remitance'),
-            },
-            {
-                'type': 'view',
-                'app': 'ampa_manager',
-                'view': 'notify_members_campaign',
-                'label': _('Notify members campaign'),
-            },
-            {
-                'type': 'view',
-                'app': 'ampa_manager',
                 'view': 'notify_members_campaign',
                 'label': _('Members campaign'),
             },

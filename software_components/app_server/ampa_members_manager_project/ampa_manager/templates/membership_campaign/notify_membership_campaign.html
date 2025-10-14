@@ -85,6 +85,17 @@
         }
 
     </style>
+
+    <script>
+        function submitWithUrlParam(param) {
+          const form = document.getElementById('notify-form');
+          const originalAction = form.action;
+          form.action = `${originalAction}?${param}`;
+          form.submit();
+          form.action = originalAction;
+        }
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -125,8 +136,9 @@
 
         <br/>
 
-        <form method="post" action="{% url 'notify_members_campaign' %}">
+        <form id="notify-form" method="post" action="{% url 'notify_members_campaign' %}">
           {% csrf_token %}
+            <input type="button" value="{% trans 'Send test email' %}" onclick="submitWithUrlParam('test=true');">
             <input type="submit" value="{% trans 'Notify families by email' %}">
             <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
         </form>

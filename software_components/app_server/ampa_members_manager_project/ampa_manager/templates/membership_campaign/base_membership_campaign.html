@@ -14,38 +14,32 @@
             color: #000;
             transition: background-color 0.2s, box-shadow 0.2s;
         }
-
         .step-cell.completed {
             background-color: #d9f0d9;
         }
-
         .step-cell.current {
             background-color: #5e81ac;
             color: #fff;
         }
-
         .step-cell.pending {
             background-color: #88c0d0;
             color: #fff;
         }
-
         .step-cell:hover {
             background-color: #8fbcbb;
+            color: #fff;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         }
-
         .arrow-cell {
             padding: 0 4px;
             vertical-align: middle;
         }
-
         table {
             border-collapse: separate;
             border-spacing: 4px;
         }
     </style>
-
 {% endblock %}
 
 {% block title %}{% trans 'Membership campaign' %}{% endblock %}
@@ -61,19 +55,36 @@
     {% block steps %}
         <table>
             <tr>
-                {% for step in steps %}
-                    {% if step.current %}
-                        <td class="step-cell current"><a href="">{{ step.title }}</a></td>
-                    {% else %}
-                        <td class="step-cell pending"><a href="">{{ step.title }}</a></td>
-                    {% endif %}
-
-                    {% if not forloop.last %}
-                        <td class="arrow-cell">
-                            <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
-                        </td>
-                    {% endif %}
-                {% endfor %}
+                <td class="step-cell {% if current_step == 'notify_members_campaign' %}current{% else %}pending{% endif %}">
+                    <a href="{% url 'notify_members_campaign' %}">{% trans 'Notify campaign start' %}</a>
+                </td>
+                <td class="arrow-cell">
+                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                </td>
+                <td class="step-cell {% if current_step == 'import_members' %}current{% else %}pending{% endif %}">
+                    <a href="{% url 'import_new_members' %}">{% trans 'Import new members' %}</a>
+                </td>
+                <td class="arrow-cell">
+                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                </td>
+                <td class="step-cell {% if current_step == 'copy_last_course_members' %}current{% else %}pending{% endif %}">
+                    <a href="{% url 'import_last_course_members' %}">{% trans 'Import last course members' %}</a>
+                </td>
+                <td class="arrow-cell">
+                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                </td>
+                <td class="step-cell {% if current_step == 'generate_members_remittance' %}current{% else %}pending{% endif %}">
+                    <a href="{% url 'generate_members_remittance' %}">{% trans 'Generate remittance' %}</a>
+                </td>
+                <td class="arrow-cell">
+                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                </td>
+                <td class="step-cell {% if current_step == 'notify_members_campaign' %}current{% else %}pending{% endif %}">
+                    <a href="#">{% trans 'Notify remittance' %}</a>
+                </td>
+                <td class="arrow-cell">
+                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                </td>
             </tr>
         </table>
     {% endblock %}

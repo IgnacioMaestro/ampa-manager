@@ -20,33 +20,6 @@ class NotifyMembershipCampaignView(View):
             'families_renew_url': f'{family_changelist_url}?member=renew',
             'families_not_renew_out_of_school_url': f'{family_changelist_url}?member=no_renew_no_school_children',
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
-            'steps': [
-                {
-                    'title': 'Notify campaign start',
-                    'view_name': 'notify_members_campaign',
-                    'current': False,
-                },
-                {
-                    'title': 'Import new members',
-                    'view_name': 'import_members',
-                    'current': False,
-                },
-                {
-                    'title': 'Import last course members',
-                    'view_name': 'copy_last_course_members',
-                    'current': True,
-                },
-                {
-                    'title': 'Generate remittance',
-                    'view_name': 'generate_members_remittance',
-                    'current': False,
-                },
-                {
-                    'title': 'Notify remittance',
-                    'view_name': 'notify_members_remittance',
-                    'current': False,
-                },
-            ],
         }
 
     @classmethod
@@ -55,6 +28,10 @@ class NotifyMembershipCampaignView(View):
 
     @classmethod
     def post(cls, request):
+        is_a_test = request.GET.get("test") == "true"
         context = cls.get_context()
-        context['result'] = MembershipCampaignNotifier().notify()
+        if is_a_test:
+            context['result'] = MembershipCampaignNotifier().test_notify()
+        else:
+            context['result'] = MembershipCampaignNotifier().notify()
         return render(request, cls.HTML_TEMPLATE, context)

@@ -9,7 +9,7 @@ from ampa_manager.charge.use_cases.membership.membership_campaign_copier import 
 from ampa_manager.family.models.family import Family
 
 
-class CopyLastCourseMembersView(View):
+class ImportLastCourseMembersView(View):
     HTML_TEMPLATE = 'copy_last_course_members.html'
     VIEW_NAME = 'copy_last_course_members'
 

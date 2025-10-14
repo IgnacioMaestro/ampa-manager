@@ -1,5 +1,6 @@
 from typing import Optional
 
+from django.conf import settings
 from django.utils.translation import gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
@@ -16,9 +17,26 @@ class MembershipCampaignNotifier:
     RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN = 'NO_RENEW_NO_SCHOOL_CHILDREN'
     RENEW_STATUS_DECLINED = 'NO_RENEW_DECLINED'
 
-    def __init__(self):
+    def __init__(self, is_a_test: bool = False):
         self.course: AcademicCourse = ActiveCourse.load()
         self.notified_families: list[int] = []
+        self.is_a_test = is_a_test
+
+    def test_notify(self) -> FamiliesNotifierResult:
+        for renew_status in \
+                [self.RENEW_STATUS_RENEW, self.RENEW_STATUS_DECLINED, self.RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN]:
+            error: Optional[str] = Mailer.send_template_mail(
+                bcc_recipients=settings.TEST_EMAIL_RECIPIENT,
+                subject=self.MAIL_SUBJECT,
+                body_html_template=self.MAIL_TEMPLATE,
+                body_html_context=self.__get_test_template_context(renew_status),
+                body_text_content=self.__get_test_text_context(renew_status)
+            )
+
+            if error:
+                return FamiliesNotifierResult(self.notified_families, family, error)
+            else:
+                self.notified_families.append(family.id)
 
     def notify(self) -> FamiliesNotifierResult:
         families = {
@@ -30,11 +48,11 @@ class MembershipCampaignNotifier:
         for renew_status, families in families.items():
             for family in families:
                 error: Optional[str] = Mailer.send_template_mail(
-                    to_recipients=self.__get_emails(family),
+                    bcc_recipients=self.__get_emails(family),
                     subject=self.MAIL_SUBJECT,
                     body_html_template=self.MAIL_TEMPLATE,
-                    body_html_context=self.__get_template_context(family, renew_status),
-                    body_text_content=self.__get_text_content(family, renew_status)
+                    body_html_context=self.__get_family_template_context(family, renew_status),
+                    body_text_content=self.__get_family_text_content(family, renew_status)
                 )
                 if error:
                     return FamiliesNotifierResult(self.notified_families, family, error)
@@ -42,15 +60,28 @@ class MembershipCampaignNotifier:
                     self.notified_families.append(family.id)
         return FamiliesNotifierResult(self.notified_families)
 
-    def __get_template_context(self, family: Family, renew_status: str):
+    def __get_test_template_context(self, renew_status: str):
+        return self.__get_template_context('XXXX', renew_status)
+
+    def __get_family_template_context(self, family: Family, renew_status: str):
+        account_last_4_digits = self.__get_membership_account_last_4_digits(family)
+        return self.__get_template_context(account_last_4_digits, renew_status)
+
+    def __get_template_context(self, account_last_4_digits: str, renew_status: str):
         return {
             'course': str(self.course),
-            'account_last_4_digits': self.__get_membership_account_last_4_digits(family),
+            'account_last_4_digits': account_last_4_digits,
             'renew_status': renew_status,
         }
 
-    def __get_text_content(self, family: Family, renew_status: str) -> str:
+    def __get_test_text_context(self, renew_status: str):
+        return self.__get_text_content('XXXX', renew_status)
+
+    def __get_family_text_context(self, family: Family, renew_status: str):
         account_last_4_digits = self.__get_membership_account_last_4_digits(family)
+        return self.__get_text_content(account_last_4_digits, renew_status)
+
+    def __get_text_content(self, account_last_4_digits: str, renew_status: str) -> str:
         if renew_status == self.RENEW_STATUS_RENEW:
             return (
                 f'Próximamente iniciamos la campaña de socios para este curso {self.course}. '
@@ -98,7 +129,8 @@ class MembershipCampaignNotifier:
 
     @classmethod
     def __get_emails(cls, family: Family) -> list[str]:
-        return ['danilanda@gmail.com']
+        return [settings.TEST_EMAIL_RECIPIENT]
+
         emails = []
         if family.email:
             emails.append(family.email)
