@@ -122,14 +122,29 @@
             {% if result.error %}
                 <div class="result_container">
                     <h1>{% trans 'Errors sending mail' %}</h1>
-                    <h2>{% trans 'Notified families' %}: {{ result.notified_families_ids|length }}</h2>
-                    <h2>{% trans 'The error happened sending mail to' %}: {{ result.error_family.email }}, {{ result.error_family.secondary_email|replace_if_none:"-" }}</h2>
+                    <h2>{% trans 'Notified emails' %}: {{ result.success_emails|length }}</h2>
+                    <ul>
+                        {% for email in result.success_emails %}
+                            <li>email</li>
+                        {% endfor %}
+                    </ul>
+                    <h2>{% trans 'The error happened sending mail to' %}: {{ result.error_emails }}</h2>
+                    <ul>
+                        {% for email in result.error_emails %}
+                            <li>email</li>
+                        {% endfor %}
+                    </ul>
                     <h2>{% trans 'Error' %}: {{ result.error }}</h2>
                 </div>
             {% else %}
                 <div class="result_container">
                     <h1>{% trans 'Families notified' %}</h1>
-                    <h2>{% trans 'Notified families' %}: {{ result.notified_families_ids|length }}</h2>
+                    <h2>{% trans 'Notified emails' %}: {{ result.success_emails|length }}</h2>
+                    <ul>
+                        {% for email in result.success_emails %}
+                            <li>email</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             {% endif %}
         {% endif %}
@@ -138,7 +153,7 @@
 
         <form id="notify-form" method="post" action="{% url 'notify_members_campaign' %}">
           {% csrf_token %}
-            <input type="button" value="{% trans 'Send test email' %}" onclick="submitWithUrlParam('test=true');">
+            <input type="button" value="{% blocktrans %}Send test email to {{ email }}{% endblocktrans %}" onclick="submitWithUrlParam('test=true');">
             <input type="submit" value="{% trans 'Notify families by email' %}">
             <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
         </form>

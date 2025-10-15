@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
-from ampa_manager.charge.use_cases.membership.families_notifier_result import FamiliesNotifierResult
+from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.family.models.family import Family
 from ampa_manager.utils.mailer import Mailer
 
@@ -19,26 +19,28 @@ class MembershipCampaignNotifier:
 
     def __init__(self, is_a_test: bool = False):
         self.course: AcademicCourse = ActiveCourse.load()
-        self.notified_families: list[int] = []
+        self.notified_emails: list[str] = []
         self.is_a_test = is_a_test
 
-    def test_notify(self) -> FamiliesNotifierResult:
+    def test_notify(self) -> MailNotifierResult:
+        emails = [settings.TEST_EMAIL_RECIPIENT]
         for renew_status in \
                 [self.RENEW_STATUS_RENEW, self.RENEW_STATUS_DECLINED, self.RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN]:
             error: Optional[str] = Mailer.send_template_mail(
-                bcc_recipients=settings.TEST_EMAIL_RECIPIENT,
+                bcc_recipients=emails,
                 subject=self.MAIL_SUBJECT,
                 body_html_template=self.MAIL_TEMPLATE,
                 body_html_context=self.__get_test_template_context(renew_status),
                 body_text_content=self.__get_test_text_context(renew_status)
             )
-
             if error:
-                return FamiliesNotifierResult(self.notified_families, family, error)
+                return MailNotifierResult(self.notified_emails, emails, error)
             else:
-                self.notified_families.append(family.id)
+                self.notified_emails.extend(emails)
 
-    def notify(self) -> FamiliesNotifierResult:
+        return MailNotifierResult(self.notified_emails, emails, error)
+
+    def notify(self) -> MailNotifierResult:
         families = {
             self.RENEW_STATUS_RENEW: Family.objects.membership_renew(),
             self.RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN: Family.objects.membership_no_renew_no_school_children(),
@@ -47,18 +49,19 @@ class MembershipCampaignNotifier:
 
         for renew_status, families in families.items():
             for family in families:
+                family_emails = self.__get_emails(family)
                 error: Optional[str] = Mailer.send_template_mail(
                     bcc_recipients=self.__get_emails(family),
                     subject=self.MAIL_SUBJECT,
                     body_html_template=self.MAIL_TEMPLATE,
                     body_html_context=self.__get_family_template_context(family, renew_status),
-                    body_text_content=self.__get_family_text_content(family, renew_status)
+                    body_text_content=self.__get_family_text_context(family, renew_status)
                 )
                 if error:
-                    return FamiliesNotifierResult(self.notified_families, family, error)
+                    return MailNotifierResult(self.notified_emails, family_emails, error)
                 else:
-                    self.notified_families.append(family.id)
-        return FamiliesNotifierResult(self.notified_families)
+                    self.notified_emails.extend(family_emails)
+        return MailNotifierResult(self.notified_emails)
 
     def __get_test_template_context(self, renew_status: str):
         return self.__get_template_context('XXXX', renew_status)

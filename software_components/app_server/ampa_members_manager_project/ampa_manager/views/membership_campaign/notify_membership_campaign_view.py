@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
@@ -20,6 +21,7 @@ class NotifyMembershipCampaignView(View):
             'families_renew_url': f'{family_changelist_url}?member=renew',
             'families_not_renew_out_of_school_url': f'{family_changelist_url}?member=no_renew_no_school_children',
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
+            'test_email': settings.TEST_EMAIL_RECIPIENT,
         }
 
     @classmethod
