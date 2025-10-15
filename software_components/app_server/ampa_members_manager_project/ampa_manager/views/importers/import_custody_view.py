@@ -6,28 +6,32 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
-from ampa_manager.activity.use_cases.importers.after_school_activities_importer import AfterSchoolsActivitiesImporter
+from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
+from ampa_manager.activity.use_cases.importers.custody_importer import CustodyImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.forms import ImportAfterSchoolsRegistrationsForm, ImportAfterSchoolsActivitiesForm
-from ampa_manager.views.import_custody_view import SimulationException
+from ampa_manager.forms.import_custody_form import ImportCustodyForm
 
 
-class ImportAfterSchoolActivitiesView(View):
-    HTML_TEMPLATE = 'import_after_school_activities.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_extraescolares.xlsx'
-    IMPORTER_TITLE = _('Import afterschool activities')
-    VIEW_NAME = 'import_after_schools_activities'
+class SimulationException(Exception):
+    pass
+
+
+class ImportCustodyView(View):
+    HTML_TEMPLATE = 'importers/import_custody.html'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xlsx'
+    IMPORTER_TITLE = _('Import custody')
+    VIEW_NAME = 'import_custody'
 
     @classmethod
-    def get_context(cls, form: Optional[ImportAfterSchoolsRegistrationsForm] = None) -> dict:
+    def get_context(cls, form: Optional[ImportCustodyForm] = None) -> dict:
         if not form:
-            form = ImportAfterSchoolsActivitiesForm()
+            form = ImportCustodyForm()
 
         return {
             'form': form,
             'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
-            'excel_columns': AfterSchoolsActivitiesImporter.COLUMNS_TO_IMPORT,
+            'excel_columns': CustodyImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE
         }
 
@@ -37,12 +41,13 @@ class ImportAfterSchoolActivitiesView(View):
 
     @classmethod
     def post(cls, request):
-        form = ImportAfterSchoolsActivitiesForm(request.POST, request.FILES)
+        form = ImportCustodyForm(request.POST, request.FILES)
         context = cls.get_context(form)
 
         if form.is_valid():
-            result: ImportExcelResult = cls.import_after_school_activities(
+            result: ImportExcelResult = cls.import_custody(
                 excel_content=request.FILES['file'].read(),
+                edition_id=request.POST.get('custody_edition'),
                 simulation=request.POST.get('simulation')
             )
 
@@ -63,11 +68,12 @@ class ImportAfterSchoolActivitiesView(View):
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def import_after_school_activities(cls, excel_content, simulation: bool) -> Optional[ImportExcelResult]:
+    def import_custody(cls, excel_content, edition_id: int, simulation: bool) -> Optional[ImportExcelResult]:
         result = None
         try:
             with transaction.atomic():
-                result = AfterSchoolsActivitiesImporter(excel_content).run()
+                edition = CustodyEdition.objects.get(id=edition_id)
+                result = CustodyImporter(excel_content, edition).run()
 
                 if simulation:
                     raise SimulationException()

@@ -1,0 +1,17 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content_es %}
+    <p>En los próximos días te cobraremos la cuota de socio de la AFA para el curso {{ course }}.</p>
+    <ul>
+        <li>Fecha de cobro: {{ pay_date }}</li>
+        <li>Importe: {{  pay_amount }}</li>
+    </ul>
+{% endblock %}
+
+{% block content_eu %}
+    <p>Hemendik gutxira, {{ course }} ikasturterako IFEko bazkide kuota kobratuko dizugu.</p>
+    <ul>
+        <li>Kobrantza-data: {{ pay_date }}</li>
+        <li>Zenbatekoa: {{  pay_amount }}</li>
+    </ul>
+{% endblock %}
