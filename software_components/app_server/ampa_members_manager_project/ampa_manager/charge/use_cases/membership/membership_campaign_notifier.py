@@ -17,10 +17,9 @@ class MembershipCampaignNotifier:
     RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN = 'NO_RENEW_NO_SCHOOL_CHILDREN'
     RENEW_STATUS_DECLINED = 'NO_RENEW_DECLINED'
 
-    def __init__(self, is_a_test: bool = False):
+    def __init__(self):
         self.course: AcademicCourse = ActiveCourse.load()
         self.notified_emails: list[str] = []
-        self.is_a_test = is_a_test
 
     def test_notify(self) -> MailNotifierResult:
         emails = [settings.TEST_EMAIL_RECIPIENT]
