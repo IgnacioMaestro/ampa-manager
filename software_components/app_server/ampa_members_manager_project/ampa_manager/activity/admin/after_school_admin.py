@@ -38,20 +38,24 @@ class AfterSchoolRegistrationAdminForm(forms.ModelForm):
 
 class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
     list_display = ['course', 'after_school', 'timetable', 'family_surnames', 'child_name', 'holder', 'is_member',
-                    'price']
+                    'price', 'receipts_count']
     ordering = ['-after_school_edition__academic_course__initial_year', 'after_school_edition__after_school__name']
     list_filter = ['after_school_edition__academic_course__initial_year', AfterSchoolRegistrationRemittanceFilter,
                    'after_school_edition__period',
                    'after_school_edition__timetable',
                    'after_school_edition__levels',
                    'after_school_edition__after_school__name', FamilyRegistrationFilter]
-    search_fields = ['child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
+    search_fields = ['id', 'child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
                      'holder__bank_account__iban', 'holder__parent__name_and_surnames',
                      'child__family__email', 'child__family__secondary_email']
     autocomplete_fields = ['after_school_edition', 'holder', 'child']
     list_per_page = 25
 
     # form = AfterSchoolRegistrationAdminForm
+
+    @admin.display(description=gettext_lazy('Receipts'))
+    def receipts_count(self, registration):
+        return registration.afterschoolreceipt_set.count()
 
     @admin.display(description=gettext_lazy('Course'))
     def course(self, registration):
@@ -131,7 +135,7 @@ class AfterSchoolEditionAdmin(admin.ModelAdmin):
     )
     ordering = ['-academic_course', 'after_school']
     list_filter = ['academic_course__initial_year', 'after_school__name']
-    search_fields = ['after_school__name', 'timetable', 'code']
+    search_fields = ['after_school__name', 'timetable', 'code', 'id']
     list_per_page = 25
 
     @admin.display(description=gettext_lazy('Receipts'))

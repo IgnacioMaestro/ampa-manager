@@ -10,6 +10,7 @@ from ampa_manager.activity.models.custody.custody_registration_queryset import C
 from ampa_manager.family.models.child import Child
 from ampa_manager.family.models.holder.holder import Holder
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.utils.currency_utils import CurrencyUtils
 from ampa_manager.utils.utils import Utils
 
 
@@ -46,7 +47,7 @@ class CustodyRegistration(models.Model):
         else:
             price = float(assisted_days_for_charge) * float(self.custody_edition.price_for_no_member)
 
-        return round(price, 2)
+        return CurrencyUtils.get_rounded_amount(price)
 
     @property
     def is_member(self):

@@ -3,6 +3,7 @@ from typing import Optional
 
 from django.contrib import admin, messages
 from django.db.models import QuerySet
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -21,33 +22,42 @@ from ...academic_course.models.academic_course import AcademicCourse
 from ...family.models.membership import Membership
 from ...family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ...utils.csv_http_response import CsvHttpResponse
+from ...utils.currency_utils import CurrencyUtils
 from ...utils.utils import Utils
 
 
 class AfterSchoolReceiptAdmin(admin.ModelAdmin):
-    list_display = ['remittance', 'holder', 'child', 'rounded_amount', 'course', 'is_member']
-    search_fields = ['after_school_registration__child__family__surnames',
-                     'after_school_registration__child__family__id',
-                     'after_school_registration__child__name',
-                     'after_school_registration__holder__bank_account__iban',
-                     'after_school_registration__child__family__parents__name_and_surnames']
+    list_display = ['remittance', 'edition', 'child', 'holder', 'rounded_amount', 'is_member']
+    search_fields = [
+        'id',
+        'after_school_registration__child__family__surnames',
+        'after_school_registration__child__family__id',
+        'after_school_registration__child__name',
+        'after_school_registration__holder__bank_account__iban',
+        'after_school_registration__child__family__parents__name_and_surnames'
+    ]
     list_filter = [
         FamilyReceiptFilter, ParentReceiptFilter, AfterSchoolEditionReceiptFilter,
         'after_school_registration__after_school_edition__academic_course__initial_year']
     list_per_page = 25
     autocomplete_fields = ['after_school_registration', 'remittance']
 
-    @admin.display(description=_('Course'))
-    def course(self, receipt):
-        return receipt.after_school_registration.after_school_edition.academic_course
+    @admin.display(description=_('Edition'))
+    def edition(self, receipt):
+        return f'{receipt.after_school_registration.after_school_edition.academic_course}, '\
+               f'{receipt.after_school_registration.after_school_edition.after_school}, '\
+               f'{receipt.after_school_registration.after_school_edition.period}, '\
+               f'{receipt.after_school_registration.after_school_edition.timetable}'
 
     @admin.display(description=_('Member'), boolean=True)
     def is_member(self, receipt):
         return Membership.is_member_child(receipt.after_school_registration.child)
 
     @admin.display(description=_('Child'))
-    def child(self, camps_receipt):
-        return camps_receipt.after_school_registration.child.name
+    def child(self, receipt):
+        child_name = receipt.after_school_registration.child.name
+        child_last_names = receipt.after_school_registration.child.family.surnames
+        return f'{child_name} {child_last_names}'
 
     @admin.display(description=gettext_lazy('Holder'))
     def holder(self, receipt):
@@ -55,9 +65,7 @@ class AfterSchoolReceiptAdmin(admin.ModelAdmin):
 
     @admin.display(description=gettext_lazy('Total'))
     def rounded_amount(self, receipt):
-        if receipt.amount:
-            return round(receipt.amount, 2)
-        return None
+        return CurrencyUtils.get_rounded_amount(receipt.amount)
 
 
 class AfterSchoolReceiptInline(ReadOnlyTabularInline):

@@ -22,6 +22,7 @@ from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.csv_http_response import CsvHttpResponse
+from ampa_manager.utils.currency_utils import CurrencyUtils
 from ampa_manager.utils.utils import Utils
 
 
@@ -184,8 +185,8 @@ class CustodyEditionAdmin(admin.ModelAdmin):
         CustodyEdition.calculate_prices_from_multiple_editions(editions)
         edition = editions.first()
         message = _("Editions' prices calculated")
-        message += '. ' + _('Members') + f': {round(edition.price_for_member, 2)}€'
-        message += '. ' + _('Non members') + f': {round(edition.price_for_no_member, 2)}€'
+        message += '. ' + _('Members') + f': {CurrencyUtils.get_rounded_amount(edition.price_for_member)}'
+        message += '. ' + _('Non members') + f': {CurrencyUtils.get_rounded_amount(edition.price_for_no_member)}'
         return self.message_user(request=request, message=message)
 
     @admin.action(description=gettext_lazy("Export family emails to CSV"))

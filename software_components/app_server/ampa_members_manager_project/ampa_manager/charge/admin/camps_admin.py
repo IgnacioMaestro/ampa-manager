@@ -19,6 +19,7 @@ from ..use_cases.camps.remittance_generator_from_camps_remittance import Remitta
 from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ...utils.csv_http_response import CsvHttpResponse
+from ...utils.currency_utils import CurrencyUtils
 from ...utils.utils import Utils
 
 
@@ -43,7 +44,7 @@ class CampsReceiptAdmin(admin.ModelAdmin):
     @admin.display(description=gettext_lazy('Total'))
     def rounded_amount(self, receipt):
         if receipt.amount:
-            return round(receipt.amount, 2)
+            return CurrencyUtils.get_rounded_amount(receipt.amount)
         return None
 
     @admin.display(description=_('Child'))
