@@ -9,7 +9,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
-from ampa_manager.activity.admin.registration_filters import FamilyRegistrationFilter, AfterSchoolRegistrationRemittanceFilter
+from ampa_manager.activity.admin.registration_filters import (FamilyRegistrationFilter,
+                                                              AfterSchoolRegistrationRemittanceFilter)
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
