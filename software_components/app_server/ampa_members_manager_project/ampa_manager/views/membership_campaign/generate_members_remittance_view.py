@@ -14,7 +14,7 @@ from ampa_manager.forms.generate_members_remittance_form import GenerateMembersR
 
 
 class GenerateMembersRemittanceView(View):
-    HTML_TEMPLATE = 'remittance_generators/generate_membership_remittance.html'
+    HTML_TEMPLATE = 'membership_campaign/generate_membership_remittance.html'
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
@@ -25,6 +25,7 @@ class GenerateMembersRemittanceView(View):
         active_course = cls.get_active_course()
         last_course = cls.get_last_course()
         context = {
+            'current_step': cls.VIEW_NAME,
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
             'active_course': str(active_course),
@@ -96,8 +97,9 @@ class GenerateMembersRemittanceView(View):
         extra_context = {}
         if form.is_valid():
             cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
-            remittance, error = cls.generate_active_course_remittance()
+            remittance, error = cls.generate_active_course_membership_remittance()
             if remittance:
+                extra_context['remittance_id'] = remittance.id
                 extra_context['remittance_instance_url'] = remittance.get_admin_url()
                 extra_context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
             else:
@@ -116,8 +118,7 @@ class GenerateMembersRemittanceView(View):
             fee.save()
 
     @classmethod
-    def generate_active_course_remittance(cls) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
+    def generate_active_course_membership_remittance(cls) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
         # TODO IÑAKI
         # return remittance, None
-        # return None, 'Error'
-        pass
+        return None, 'Not implemented yet'

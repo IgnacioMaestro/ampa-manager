@@ -1,4 +1,4 @@
-{% extends 'admin/base_site.html' %}
+{% extends 'membership_campaign/base_membership_campaign.html' %}
 {% load custom_filters %}
 {% load i18n %}
 {% load static %}
@@ -6,8 +6,8 @@
 {% block title %}{% trans 'Generate members remittance' %}{% endblock %}
 
 {% block extrahead %}
+    {{ block.super }}
     <style>
-
         #upload_form .mb-3 {
             display: grid;
             grid-template-columns: 200px 1fr;
@@ -47,75 +47,46 @@
             text-align: right;
         }
 
-        .result_container {
-          background-color: #fff8f8;          /* fondo ligeramente rosado */
-          border: 1px solid #cc0000;          /* borde rojo admin clásico */
-          border-radius: 4px;
-          padding: 1.5em;
-          margin: 1.5em 0;
-          color: #333;                        /* texto principal */
-          font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .result_container h1 {
-          color: #ba2121;                     /* rojo admin */
-          font-size: 1.4em;
-          font-weight: 600;
-          margin-bottom: 0.5em;
-          border-bottom: 1px solid #e6b8b8;   /* línea suave */
-          padding-bottom: 0.3em;
-        }
-
-        .result_container h2 {
-          color: #d9534f;                     /* tono más claro de rojo */
-          font-size: 1.1em;
-          font-weight: 500;
-          margin-top: 0.8em;
-          margin-bottom: 0.4em;
-        }
-
-        .result_container pre {
-          background: #fff;
-          border: 1px solid #ddd;
-          padding: 0.8em;
-          border-radius: 3px;
-          overflow-x: auto;
-          font-family: "Courier New", monospace;
-          font-size: 0.9em;
-          color: #444;
-        }
-
     </style>
 {% endblock %}
 
-{% block breadcrumbs %}
-    <div class="breadcrumbs">
-      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-      &rsaquo; {% trans 'Generate members remittance' %}
-    </div>
-{% endblock %}
-
 {% block content %}
+    {{ block.super }}
     <div id="upload_form" class="main-container">
-        <h1>{% trans 'Review the following information' %}</h1>
+        <h1>{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It generates the membership remittance.' %}</li>
+        </ul>
+        <br/>
 
-        <div class="mb-3">
-          <label for="last_course_fee" class="form-label"><a href="{{ fee_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course fee' %}</a></label>
-          <input type="text" id="last_course_fee" class="form-control" value="{{ last_course_fee }}" disabled>
-        </div>
-        <div class="mb-3">
-          <label for="last_course_members_count" class="form-label"><a href="{{ last_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course members' %}</a></label>
-          <input type="text" id="last_course_members_count" class="form-control" value="{{ last_course_members_count }}" disabled>
-        </div>
-        <div class="mb-3">
-          <label for="active_course_members_count" class="form-label"><a href="{{ active_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Active course members' %}</a></label>
-          <input type="text" id="active_course_members_count" class="form-control" value="{{ active_course_members_count }}" disabled>
-        </div>
-        <div class="mb-3">
-          <label for="active_course_members_remittance_count" class="form-label"><a href="{{ membership_remittance_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Remittances already generated' %}</a></label>
-          <input type="text" id="active_course_members_remittance_count" class="form-control" value="{{ active_course_members_remittance_count }}" disabled>
-        </div>
+        <h1>{% trans 'Review the following information' %}</h1>
+        <br/>
+        <ul>
+            <li>
+                <div class="mb-3">
+                  <label for="last_course_fee" class="form-label"><a href="{{ fee_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course fee' %}</a></label>
+                  <input type="text" id="last_course_fee" class="form-control" value="{{ last_course_fee }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="last_course_members_count" class="form-label"><a href="{{ last_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Last course members' %}</a></label>
+                  <input type="text" id="last_course_members_count" class="form-control" value="{{ last_course_members_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_members_count" class="form-label"><a href="{{ active_course_members_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Active course members' %}</a></label>
+                  <input type="text" id="active_course_members_count" class="form-control" value="{{ active_course_members_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_members_remittance_count" class="form-label"><a href="{{ membership_remittance_url }}" target="_new" title="{% trans 'Click to open' %}">{% trans 'Remittances already generated' %}</a></label>
+                  <input type="text" id="active_course_members_remittance_count" class="form-control" value="{{ active_course_members_remittance_count }}" disabled>
+                </div>
+            </li>
+        </ul>
 
         <br/>
         <h1>{% trans 'Complete the following information' %}</h1>
@@ -123,32 +94,26 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <br/><br/>
-        <h1>{% trans 'If active course members are not completed' %}</h1>
-        <input type="button" value="{% trans 'Import new members' %}" onclick="window.open('{% url 'import_members' %}', '_blank');">
-        <input type="button" value="{% trans 'Copy last course members' %}" onclick="window.open('{% url 'copy_last_course_members' %}', '_blank');">
-
-        <br/><br/><br/>
-        <h1>{% trans 'Once the remittance has been generated' %}</h1>
-        <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
-        <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
-
         {% if action_done %}
-            <div class="result_container">
-                {% if error %}
-                    <h1>{% trans 'Unable to generate remittance' %}</h1>
-                    <h2>{% trans 'Error' %}: {{ error }}</h2>
-                {% else %}
-                    <h1>{% trans 'The remittance has been generated' %}</h1>
-                </div>
+            {% if error %}
+                <h1 class="highlight">{% trans 'Unable to generate remittance' %}</h1>
+                <ul>
+                    <li>{% trans 'Error' %}: {{ error }}</li>
+                </ul>
+            {% else %}
+                <h1 class="highlight">{% trans 'The remittance has been generated' %}</h1>
+                <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
+                <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
             {% endif %}
         {% endif %}
+        <br/>
 
-        <br/><br/><br/>
-
+        <h1>{% trans 'Select an option' %}</h1>
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}" {% if remittance %}disabled{% endif %}>
+        &nbsp;
         <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
-
         </form>
     </div>
 

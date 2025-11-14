@@ -6,27 +6,27 @@
 
 {% block extrahead %}
     <style>
-        .step-cell {
+        .not-current-step {
             padding: 8px 16px;
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
             color: #000;
             transition: background-color 0.2s, box-shadow 0.2s;
+            background-color: #8ed2f9;
         }
-        .step-cell.completed {
-            background-color: #d9f0d9;
-        }
-        .step-cell.current {
-            background-color: #5e81ac;
+        .current-step {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
             color: #fff;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            background-color: #6cc3d7;
+            border: 1px solid #000000;
         }
-        .step-cell.pending {
-            background-color: #88c0d0;
-            color: #fff;
-        }
-        .step-cell:hover {
-            background-color: #8fbcbb;
+        .not-current-step:hover {
+            background-color: deepskyblue;
             color: #fff;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -38,6 +38,21 @@
         table {
             border-collapse: separate;
             border-spacing: 4px;
+        }
+
+        h1 {
+            font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+            font-weight: normal;
+            color: #333;
+            margin: 20px 0 10px 0;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border-radius: 4px;
+        }
+
+        .hightlight {
+            background: #f5ec6f;
         }
     </style>
 {% endblock %}
@@ -55,35 +70,34 @@
     {% block steps %}
         <table>
             <tr>
-                <td class="step-cell {% if current_step == 'notify_members_campaign' %}current{% else %}pending{% endif %}">
+                <td class="{% if current_step == 'notify_members_campaign' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'notify_members_campaign' %}">{% trans 'Notify campaign start' %}</a>
                 </td>
                 <td class="arrow-cell">
                     <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
                 </td>
-                <td class="step-cell {% if current_step == 'import_members' %}current{% else %}pending{% endif %}">
+                <td class="{% if current_step == 'import_members' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'import_new_members' %}">{% trans 'Import new members' %}</a>
                 </td>
                 <td class="arrow-cell">
                     <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
                 </td>
-                <td class="step-cell {% if current_step == 'copy_last_course_members' %}current{% else %}pending{% endif %}">
+                <td class="{% if current_step == 'import_last_course_members' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'import_last_course_members' %}">{% trans 'Import last course members' %}</a>
                 </td>
                 <td class="arrow-cell">
                     <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
                 </td>
-                <td class="step-cell {% if current_step == 'generate_members_remittance' %}current{% else %}pending{% endif %}">
+                <td class="{% if current_step == 'generate_members_remittance' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'generate_members_remittance' %}">{% trans 'Generate remittance' %}</a>
                 </td>
                 <td class="arrow-cell">
                     <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
                 </td>
-                <td class="step-cell {% if current_step == 'notify_members_campaign' %}current{% else %}pending{% endif %}">
-                    <a href="#">{% trans 'Notify remittance' %}</a>
-                </td>
-                <td class="arrow-cell">
-                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                <td class="{% if current_step == 'notify_members_campaign' %}current-step{% else %}not-current-step{% endif %}">
+                    <a href="{% if remittance_id %}{% url 'notify_members_remittance' remittance_id %}{% else %}#{% endif %}">
+                        {% trans 'Notify remittance' %}
+                    </a>
                 </td>
             </tr>
         </table>

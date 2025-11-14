@@ -12,11 +12,11 @@ from ampa_manager.forms.import_members_form import ImportMembersForm
 from ampa_manager.views.importers.import_custody_view import SimulationException
 
 
-class ImportMembersView(View):
-    HTML_TEMPLATE = 'importers/import_members.html'
+class ImportNewMembersView(View):
+    HTML_TEMPLATE = 'membership_campaign/import_new_members.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xlsx'
     IMPORTER_TITLE = _('Import members')
-    VIEW_NAME = 'import_members'
+    VIEW_NAME = 'import_new_members'
 
     @classmethod
     def get_context(cls, form: Optional[ImportMembersForm] = None) -> dict:

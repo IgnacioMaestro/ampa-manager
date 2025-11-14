@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans 'Notify membership campaign' %}{% endblock %}
+{% block title %}{% trans 'Import last course members' %}{% endblock %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -47,17 +47,6 @@
             text-align: right;
         }
     </style>
-
-    <script>
-        function submitWithUrlParam(param) {
-          const form = document.getElementById('notify-form');
-          const originalAction = form.action;
-          form.action = `${originalAction}?${param}`;
-          form.submit();
-          form.action = originalAction;
-        }
-    </script>
-
 {% endblock %}
 
 {% block content %}
@@ -65,9 +54,9 @@
     <div id="upload_form" class="main-container">
         <h1>{% trans 'What this section does?' %}</h1>
         <ul>
-            <li>{% trans 'It notifies by email the membership campaign start to all families that were members last course.' %}</li>
-            <li>{% trans 'Each family will receive a different email depending if they are going to renew or not.' %}</li>
-            <li>{% trans 'It should be sent before the campaign starts.' %}</li>
+            <li>{% trans 'It copies the members from the last course.' %}</li>
+            <li>{% trans 'Families whose children are not in the school anymore will not be copied.' %}</li>
+            <li>{% trans 'Families that have request not to renew will not be copied.' %}</li>
         </ul>
         <br/>
 
@@ -94,44 +83,26 @@
             </li>
         </ul>
 
-        {% if result %}
-            {% if result.error %}
-                <h1 class="hightlight">{% trans 'Errors sending mails' %}</h1>
-                <ul>
-                    <li>{% trans 'Error' %}: {{ result.error }}</li>
-                    <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
-                        <ul>
-                            {% for email in result.success_emails %}
-                                <li>{{ email }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li>{% trans 'The error happened sending mail to' %}:
-                        <ul>
-                            {% for email in result.error_emails %}
-                                <li>{{ email }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                </ul>
-            {% else %}
-                <h1 class="hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
-                <ul>
-                    {% for email in result.success_emails %}
-                        <li>email</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+        {% if members_copied %}
+
+            <h1 class="hightlight">{% trans 'Last course members copied' %}</h1>
+            <ul>
+                <li>{% trans 'This course members' %}: {{ members_active_course }}</li>
+            </ul>
+            <br/>
+
         {% endif %}
 
         <h1>{% trans 'Select an option' %}</h1>
         <br/>
-        <form id="notify-form" method="post" action="{% url 'notify_members_campaign' %}">
+        <form method="post" action="{% url 'import_last_course_members' %}">
           {% csrf_token %}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" value="{% blocktrans %}Send test emails to {{ test_email }}{% endblocktrans %}" onclick="submitWithUrlParam('test=true');">
+            <input type="submit" value="{% trans 'Copy last course members' %}">
             &nbsp;
-            <input type="submit" value="{% trans 'Notify families by email' %}">
+            <input type="button" value="{% trans 'Check last course members' %}" onclick="window.open('{{ last_course_members_url }}', '_blank');">
+            &nbsp;
+            <input type="button" value="{% trans 'Check this course members' %}" onclick="window.open('{{ active_course_members_url }}', '_blank');">
             &nbsp;
             <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
         </form>

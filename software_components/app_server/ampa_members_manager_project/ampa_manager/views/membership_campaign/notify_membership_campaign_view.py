@@ -15,6 +15,7 @@ class NotifyMembershipCampaignView(View):
     def get_context(cls) -> dict:
         family_changelist_url = reverse('admin:ampa_manager_family_changelist')
         return {
+            'current_step': cls.VIEW_NAME,
             'families_renew_count': Family.objects.membership_renew().count(),
             'families_not_renew_out_of_school_count': Family.objects.membership_no_renew_no_school_children().count(),
             'families_not_renew_declined_count': Family.objects.membership_no_renew_declined().count(),
