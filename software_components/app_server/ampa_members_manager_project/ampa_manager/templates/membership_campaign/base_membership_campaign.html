@@ -64,6 +64,21 @@
     <div class="breadcrumbs">
         <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
         &rsaquo; {% trans 'Membership campaign' %}
+        {% if current_step == 'notify_members_campaign' %}
+            &rsaquo; {% trans 'Notify campaign' %}
+        {% endif %}
+        {% if current_step == 'import_new_members' %}
+            &rsaquo; {% trans 'Import new members' %}
+        {% endif %}
+        {% if current_step == 'import_last_course_members' %}
+            &rsaquo; {% trans 'Import last course members' %}
+        {% endif %}
+        {% if current_step == 'generate_members_remittance' %}
+            &rsaquo; {% trans 'Generate remittance' %}
+        {% endif %}
+        {% if current_step == 'notify_members_remittance' %}
+            &rsaquo; {% trans 'Notify remittance' %}
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -75,25 +90,25 @@
                     <a href="{% url 'notify_members_campaign' %}">{% trans 'Notify campaign start' %}</a>
                 </td>
                 <td class="arrow-cell">
-                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                    &rsaquo;
                 </td>
-                <td class="{% if current_step == 'import_members' %}current-step{% else %}not-current-step{% endif %}">
+                <td class="{% if current_step == 'import_new_members' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'import_new_members' %}">{% trans 'Import new members' %}</a>
                 </td>
                 <td class="arrow-cell">
-                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                    &rsaquo;
                 </td>
                 <td class="{% if current_step == 'import_last_course_members' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'import_last_course_members' %}">{% trans 'Import last course members' %}</a>
                 </td>
                 <td class="arrow-cell">
-                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                    &rsaquo;
                 </td>
                 <td class="{% if current_step == 'generate_members_remittance' %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'generate_members_remittance' %}">{% trans 'Generate remittance' %}</a>
                 </td>
                 <td class="arrow-cell">
-                    <img src="{% static 'images/right-arrow.png' %}" alt="Step Icon" width="15">
+                    &rsaquo;
                 </td>
                 <td class="{% if current_step|slice:":26" == "notify_members_remittance" %}current-step{% else %}not-current-step{% endif %}">
                     <a href="{% url 'notify_members_remittance' %}">{% trans 'Notify remittance' %}</a>
