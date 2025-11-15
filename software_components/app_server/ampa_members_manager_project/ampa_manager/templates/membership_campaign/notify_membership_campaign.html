@@ -118,7 +118,7 @@
                 <h1 class="hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
                 <ul>
                     {% for email in result.success_emails %}
-                        <li>email</li>
+                        <li>{{ email }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}

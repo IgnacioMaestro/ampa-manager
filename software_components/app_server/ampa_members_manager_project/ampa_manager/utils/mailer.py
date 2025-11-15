@@ -23,7 +23,7 @@ class Mailer:
             bcc_recipients = []
 
         if reply_to is None:
-            reply_to = [settings.DEFAULT_FROM_EMAIL]
+            reply_to = [settings.DEFAULT_REPLY_TO_EMAIL]
 
         html_content = render_to_string(body_html_template, body_html_context)
         msg = EmailMultiAlternatives(
