@@ -2420,7 +2420,7 @@ msgstr "Cada familia recibirá un correo distinto dependiendo de si van a renova
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:70
 msgid "It should be sent before the campaign starts."
-msgstr "Debería enviarse antes de compenzar la campaña de socios"
+msgstr "Debería enviarse antes de comenzar la campaña de socios"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:99
 #: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:92

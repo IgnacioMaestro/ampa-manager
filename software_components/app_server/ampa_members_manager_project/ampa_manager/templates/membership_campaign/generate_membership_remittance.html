@@ -53,13 +53,13 @@
 {% block content %}
     {{ block.super }}
     <div id="upload_form" class="main-container">
-        <h1>{% trans 'What this section does?' %}</h1>
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
         <ul>
             <li>{% trans 'It generates the membership remittance.' %}</li>
         </ul>
         <br/>
 
-        <h1>{% trans 'Review the following information' %}</h1>
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
         <br/>
         <ul>
             <li>
@@ -89,26 +89,26 @@
         </ul>
 
         <br/>
-        <h1>{% trans 'Complete the following information' %}</h1>
+        <h1 class="step-section">{% trans 'Complete the following information' %}</h1>
         <form action="{{ view_url }}" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form.as_p }}
 
         {% if action_done %}
             {% if error %}
-                <h1 class="highlight">{% trans 'Unable to generate remittance' %}</h1>
+                <h1 class="step-section hightlight">{% trans 'Unable to generate remittance' %}</h1>
                 <ul>
                     <li>{% trans 'Error' %}: {{ error }}</li>
                 </ul>
             {% else %}
-                <h1 class="highlight">{% trans 'The remittance has been generated' %}</h1>
+                <h1 class="step-section hightlight">{% trans 'The remittance has been generated' %}</h1>
                 <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
                 <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
             {% endif %}
         {% endif %}
         <br/>
 
-        <h1>{% trans 'Select an option' %}</h1>
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
         <br/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="submit" value="{% blocktrans with course=active_course %}Generate members remittance for course {{ active_course }}{% endblocktrans %}" {% if remittance %}disabled{% endif %}>

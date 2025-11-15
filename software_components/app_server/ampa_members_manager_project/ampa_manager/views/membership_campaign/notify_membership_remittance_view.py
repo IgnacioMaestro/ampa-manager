@@ -2,11 +2,10 @@ from typing import Optional
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy
-from rest_framework import permissions
-from rest_framework.views import APIView
+from django.views import View
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.models.fee.fee import Fee
@@ -15,8 +14,7 @@ from ampa_manager.charge.use_cases.membership.membership_remittance_notifier imp
 from ampa_manager.family.models.membership import Membership
 
 
-class NotifyMembersRemittanceView(APIView):
-    permission_classes = [permissions.IsAdminUser]
+class NotifyMembersRemittanceView(View):
     HTML_TEMPLATE = 'membership_campaign/notify_membership_remittance.html'
     VIEW_NAME = 'notify_members_remittance'
 
@@ -26,16 +24,21 @@ class NotifyMembersRemittanceView(APIView):
             'current_step': cls.VIEW_NAME,
             'active_course_fee': cls.get_active_course_fee(),
             'active_course_members': cls.get_active_course_members_count(),
-            'fee_url': reverse('admin:ampa_manager_fee_changelist'),
             'active_course_members_url': cls.get_active_course_members_url(),
+            'fee_url': reverse('admin:ampa_manager_fee_changelist'),
             'test_email': settings.TEST_EMAIL_RECIPIENT,
             'remittance_id': remittance_id,
         }
 
     @classmethod
     def get(cls, request):
+        return render(request, cls.HTML_TEMPLATE, cls.get_context())
+
+    @classmethod
+    def post(cls, request):
         try:
-            remittance = MembershipRemittance.objects.get(id=request.GET['remittance_id'])
+            remittance_id = request.GET.get('remittance_id')
+            remittance = MembershipRemittance.objects.get(id=remittance_id)
 
             error: Optional[str] = MembershipRemittanceNotifier(remittance).notify()
             if not error:

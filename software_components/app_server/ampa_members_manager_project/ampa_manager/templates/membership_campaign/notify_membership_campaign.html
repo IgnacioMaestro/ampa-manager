@@ -63,7 +63,7 @@
 {% block content %}
     {{ block.super }}
     <div id="upload_form" class="main-container">
-        <h1>{% trans 'What this section does?' %}</h1>
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
         <ul>
             <li>{% trans 'It notifies by email the membership campaign start to all families that were members last course.' %}</li>
             <li>{% trans 'Each family will receive a different email depending if they are going to renew or not.' %}</li>
@@ -71,7 +71,7 @@
         </ul>
         <br/>
 
-        <h1>{% trans 'Review the following information' %}</h1>
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
         <br/>
         <ul>
             <li>
@@ -96,7 +96,7 @@
 
         {% if result %}
             {% if result.error %}
-                <h1 class="hightlight">{% trans 'Errors sending mails' %}</h1>
+                <h1 class="step-section hightlight">{% trans 'Errors sending mails' %}</h1>
                 <ul>
                     <li>{% trans 'Error' %}: {{ result.error }}</li>
                     <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
@@ -115,7 +115,7 @@
                     </li>
                 </ul>
             {% else %}
-                <h1 class="hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
+                <h1 class="step-section hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
                 <ul>
                     {% for email in result.success_emails %}
                         <li>{{ email }}</li>
@@ -124,7 +124,7 @@
             {% endif %}
         {% endif %}
 
-        <h1>{% trans 'Select an option' %}</h1>
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
         <br/>
         <form id="notify-form" method="post" action="{% url 'notify_members_campaign' %}">
           {% csrf_token %}

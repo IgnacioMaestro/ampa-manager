@@ -52,7 +52,7 @@
 {% block content %}
     {{ block.super }}
     <div id="upload_form" class="main-container">
-        <h1>{% trans 'What this section does?' %}</h1>
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
         <ul>
             <li>{% trans 'It copies the members from the last course.' %}</li>
             <li>{% trans 'Families whose children are not in the school anymore will not be copied.' %}</li>
@@ -60,7 +60,7 @@
         </ul>
         <br/>
 
-        <h1>{% trans 'Review the following information' %}</h1>
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
         <br/>
         <ul>
             <li>
@@ -85,7 +85,7 @@
 
         {% if members_copied %}
 
-            <h1 class="hightlight">{% trans 'Last course members copied' %}</h1>
+            <h1 class="step-section hightlight">{% trans 'Last course members copied' %}</h1>
             <ul>
                 <li>{% trans 'This course members' %}: {{ members_active_course }}</li>
             </ul>
@@ -93,7 +93,7 @@
 
         {% endif %}
 
-        <h1>{% trans 'Select an option' %}</h1>
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
         <br/>
         <form method="post" action="{% url 'import_last_course_members' %}">
           {% csrf_token %}
