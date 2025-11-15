@@ -1,0 +1,133 @@
+{% extends 'membership_campaign/base_membership_campaign.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Notify membership remittance' %}{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        #upload_form .mb-3 {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form form p {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            max-width: 300px;
+            width: 100%;
+        }
+
+        #upload_form input[type="text"],
+        #upload_form input[type="number"],
+        #upload_form input[type="file"],
+        #upload_form select {
+            width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        #upload_form form label {
+            display: inline-block;
+            width: 200px;
+            margin-right: 1rem;
+            text-align: right;
+        }
+    </style>
+
+    <script>
+        function submitWithUrlParam(param) {
+          const form = document.getElementById('notify-form');
+          const originalAction = form.action;
+          form.action = `${originalAction}?${param}`;
+          form.submit();
+          form.action = originalAction;
+        }
+    </script>
+
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="upload_form" class="main-container">
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It notifies by email to the families that the membership fee will be charged soon.' %}</li>
+            <li>{% trans 'It should be sent before the remittance is uploaded to the bank.' %}</li>
+        </ul>
+        <br/>
+
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
+        <br/>
+        <ul>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_fee" class="form-label"><a href="{{ fee_url }}" target="_new">{% trans 'Fee' %}</a></label>
+                  <input type="text" id="active_course_fee" class="form-control" value="{{ active_course_fee }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_members" class="form-label"><a href="{{ active_course_members_url }}" target="_new">{% trans 'Members' %}</a></label>
+                  <input type="text" id="active_course_members" class="form-control" value="{{ active_course_members }}" disabled>
+                </div>
+            </li>
+        </ul>
+
+        {% if result %}
+            {% if result.error %}
+                <h1 class="step-section hightlight">{% trans 'Errors sending mails' %}</h1>
+                <ul>
+                    <li>{% trans 'Error' %}: {{ result.error }}</li>
+                    <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
+                        <ul>
+                            {% for email in result.success_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>{% trans 'The error happened sending mail to' %}:
+                        <ul>
+                            {% for email in result.error_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                <h1 class="step-section hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
+                <ul>
+                    {% for email in result.success_emails %}
+                        <li>{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
+        <br/>
+        <form id="notify-form" method="post" action="{% url 'notify_members_campaign' %}">
+          {% csrf_token %}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="{% blocktrans %}Send test emails to {{ test_email }}{% endblocktrans %}" onclick="submitWithUrlParam('test=true');">
+            &nbsp;
+            <input type="submit" value="{% trans 'Notify families by email' %}">
+            &nbsp;
+            <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
+        </form>
+    </div>
+
+{% endblock %}

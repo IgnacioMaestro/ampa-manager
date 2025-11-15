@@ -196,3 +196,10 @@ def import_state_to_html(state: str):
         status_style = 'row_state_ok'
 
     return mark_safe(generate_span(status_style, state.upper()))
+
+
+@register.filter
+def replace_if_none(value: str, replacement: str):
+    if value is None:
+        return replacement
+    return value

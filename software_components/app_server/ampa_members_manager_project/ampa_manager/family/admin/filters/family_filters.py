@@ -18,7 +18,8 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
             ('no', _('Current year NO members')),
             ('last_year', _('Last year members')),
             ('renew', _('Renew (Last year + Children + Renew)')),
-            ('no_renew', _('Out of school (Last year + No children)')),
+            ('no_renew_no_school_children', _('No renew: out of school (Last year + No children)')),
+            ('no_renew_declined', _('No renew: declined (Last year + Declined)')),
         )
 
     def queryset(self, request, queryset):
@@ -33,10 +34,15 @@ class FamilyIsMemberFilter(admin.SimpleListFilter):
                 return queryset.members_in_course(previous_course)
             elif self.value() == 'renew':
                 messages.success(request, _('Showing families that were members last year, that have any child in the school this year and that have not decline membership'))
-                return queryset.members_in_course(previous_course).no_declined_membership().has_any_children()
-            elif self.value() == 'no_renew':
+                return queryset.membership_renew()
+            elif self.value() == 'no_renew_no_school_children':
                 messages.success(request, _('Showing families that were members last year, but they haven\'t any child in the school'))
-                return queryset.members_in_course(previous_course).has_no_children()
+                # return queryset.members_in_course(previous_course).has_no_school_children()
+                return queryset.membership_no_renew_no_school_children()
+            elif self.value() == 'no_renew_declined':
+                messages.success(request, _('Showing families that were members last year, but they have declined to renew'))
+                # return queryset.members_in_course(previous_course).has_no_school_children()
+                return queryset.membership_no_renew_declined()
         else:
             return queryset
 
