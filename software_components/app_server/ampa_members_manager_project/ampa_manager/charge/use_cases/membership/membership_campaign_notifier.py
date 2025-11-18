@@ -140,7 +140,8 @@ class MembershipCampaignNotifier:
             emails.append(family.secondary_email)
         return emails
 
-    def __get_membership_account_last_4_digits(self, family: Family):
+    @classmethod
+    def __get_membership_account_last_4_digits(cls, family: Family):
         if family and family.membership_holder and family.membership_holder.bank_account and family.membership_holder.bank_account.iban:
             return family.membership_holder.bank_account.iban[-4:]
         return gettext_lazy('Not available')

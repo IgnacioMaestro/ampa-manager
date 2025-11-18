@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.charge.use_cases.membership.membership_campaign_notifier import MembershipCampaignNotifier
 from ampa_manager.family.models.family import Family
 
@@ -31,10 +32,15 @@ class NotifyMembershipCampaignView(View):
 
     @classmethod
     def post(cls, request):
-        is_a_test = request.GET.get("test") == "true"
-        context = cls.get_context()
-        if is_a_test:
-            context['result'] = MembershipCampaignNotifier().test_notify()
+        if cls.is_a_test(request):
+            result: MailNotifierResult = MembershipCampaignNotifier().test_notify()
         else:
-            context['result'] = MembershipCampaignNotifier().notify()
+            result: MailNotifierResult = MembershipCampaignNotifier().notify()
+
+        context = cls.get_context()
+        context['result'] = result
         return render(request, cls.HTML_TEMPLATE, context)
+
+    @classmethod
+    def is_a_test(cls, request):
+        return request.GET.get("test") == "true"

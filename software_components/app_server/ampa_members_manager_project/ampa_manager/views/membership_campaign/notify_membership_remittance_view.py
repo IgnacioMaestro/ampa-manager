@@ -10,6 +10,7 @@ from django.views import View
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.charge.use_cases.membership.membership_remittance_notifier import MembershipRemittanceNotifier
 from ampa_manager.family.models.membership import Membership
 
@@ -19,15 +20,26 @@ class NotifyMembersRemittanceView(View):
     VIEW_NAME = 'notify_members_remittance'
 
     @classmethod
-    def get_context(cls, remittance_id: Optional[int]) -> dict:
+    def get_context(cls) -> dict:
+        remittance: MembershipRemittance = cls.get_active_course_remittance()
+        if remittance:
+            remittance_url = reverse('admin:ampa_manager_membershipremittance_change', args=[remittance.id])
+            remittance_str = str(remittance)
+        else:
+            remittance_url = None
+            remittance_str = gettext_lazy('Not yet generated')
+
         return {
             'current_step': cls.VIEW_NAME,
             'active_course_fee': cls.get_active_course_fee(),
             'active_course_members': cls.get_active_course_members_count(),
             'active_course_members_url': cls.get_active_course_members_url(),
+            'active_course_remittance_name': remittance_str,
+            'active_course_remittance_url': remittance_url,
+            'active_course_remittances_url': cls.get_active_course_remittances_url(),
+            'active_course_remittances_count': cls.get_active_course_remittances_count(),
             'fee_url': reverse('admin:ampa_manager_fee_changelist'),
             'test_email': settings.TEST_EMAIL_RECIPIENT,
-            'remittance_id': remittance_id,
         }
 
     @classmethod
@@ -36,19 +48,18 @@ class NotifyMembersRemittanceView(View):
 
     @classmethod
     def post(cls, request):
-        try:
-            remittance_id = request.GET.get('remittance_id')
-            remittance = MembershipRemittance.objects.get(id=remittance_id)
-
-            error: Optional[str] = MembershipRemittanceNotifier(remittance).notify()
-            if not error:
-                messages.info(request, gettext_lazy('Remittance notified'))
+        remittance: MembershipRemittance = cls.get_active_course_remittance()
+        if remittance:
+            if cls.is_a_test(request):
+                result: MailNotifierResult = MembershipRemittanceNotifier(remittance).test_notify()
             else:
-                messages.error(request, gettext_lazy('Unable to notify remittance') + f': {error}')
-        except MembershipRemittance.DoesNotExist:
-            messages.error(request, gettext_lazy('Remittance not found'))
+                result: MailNotifierResult = MembershipRemittanceNotifier(remittance).notify()
+        else:
+            result = None
 
-        return redirect(reverse('admin:ampa_manager_membershipremittance_changelist'))
+        context = cls.get_context()
+        context['result'] = result
+        return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
     def get_active_course_members_url(cls):
@@ -67,3 +78,21 @@ class NotifyMembersRemittanceView(View):
             return Fee.objects.get(academic_course=active_course).amount
         except Fee.DoesNotExist:
             return 0
+
+    @classmethod
+    def get_active_course_remittance(cls) -> Optional[MembershipRemittance]:
+        active_course = ActiveCourse.load()
+        return MembershipRemittance.objects.of_course(active_course).order_by('-id').first()
+
+    @classmethod
+    def get_active_course_remittances_count(cls) -> int:
+        active_course = ActiveCourse.load()
+        return MembershipRemittance.objects.of_course(active_course).count()
+
+    @classmethod
+    def get_active_course_remittances_url(cls):
+        return reverse('admin:ampa_manager_membershipremittance_changelist')
+
+    @classmethod
+    def is_a_test(cls, request):
+        return request.GET.get("test") == "true"
