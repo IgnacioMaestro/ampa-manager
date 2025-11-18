@@ -82,7 +82,7 @@
             </li>
             <li>
                 <div class="mb-3">
-                  <label for="remittances_count" class="form-label"><a href="{{ active_course_remittances_url }}" target="_new">{% trans 'Number of remittances' %}</a></label>
+                  <label for="remittances_count" class="form-label"><a href="{{ active_course_remittances_url }}" target="_new">{% trans 'Active course remittances' %}</a></label>
                   <input type="text" id="remittances_count" class="form-control" value="{{ active_course_remittances_count }}" disabled>
                 </div>
             </li>
@@ -102,7 +102,7 @@
 
         {% if result %}
             {% if result.error %}
-                <h1 class="step-section hightlight">{% trans 'Errors sending mails' %}</h1>
+                <h1 class="step-section highlight">{% trans 'Errors sending mails' %}</h1>
                 <ul>
                     <li>{% trans 'Error' %}: {{ result.error }}</li>
                     <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
@@ -121,7 +121,7 @@
                     </li>
                 </ul>
             {% else %}
-                <h1 class="step-section hightlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
+                <h1 class="step-section highlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
                 <ul>
                     {% for email in result.success_emails %}
                         <li>{{ email }}</li>

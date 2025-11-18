@@ -1,10 +1,12 @@
 from typing import Optional
 
+from django.conf import settings
 from django.utils.formats import date_format
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.utils.mailer import Mailer
 
 
@@ -19,11 +21,21 @@ class MembershipRemittanceNotifier:
         self.pay_amount: str = self.__get_formatted_pay_amount()
         self.emails: list[str] = []
 
-    def notify(self) -> Optional[str]:
-        return Mailer.send_template_mail(
-            bcc_recipients=self.__get_emails(), subject=self.MAIL_SUBJECT,  body_html_template=self.MAIL_TEMPLATE,
+    def test_notify(self) -> MailNotifierResult:
+        return self.__notify([settings.TEST_EMAIL_RECIPIENT])
+
+    def notify(self) -> MailNotifierResult:
+        return self.__notify(self.__get_emails())
+
+    def __notify(self, emails: list[str]) -> MailNotifierResult:
+        error: Optional[str] = Mailer.send_template_mail(
+            bcc_recipients=emails, subject=self.MAIL_SUBJECT,  body_html_template=self.MAIL_TEMPLATE,
             body_html_context=self.__get_template_context(), body_text_content=self.__get_text_content()
         )
+        if error:
+            return MailNotifierResult(error_emails=emails)
+        else:
+            return MailNotifierResult(success_emails=emails, error=error)
 
     def __get_template_context(self):
         return {

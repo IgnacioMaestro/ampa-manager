@@ -1,8 +1,7 @@
 from typing import Optional
 
 from django.conf import settings
-from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy
 from django.views import View

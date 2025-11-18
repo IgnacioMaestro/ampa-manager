@@ -96,14 +96,14 @@
 
         {% if action_done %}
             {% if error %}
-                <h1 class="step-section hightlight">{% trans 'Unable to generate remittance' %}</h1>
+                <h1 class="step-section highlight">{% trans 'Unable to generate remittance' %}</h1>
                 <ul>
                     <li>{% trans 'Error' %}: {{ error }}</li>
                 </ul>
             {% else %}
-                <h1 class="step-section hightlight">{% trans 'The remittance has been generated' %}</h1>
-                <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
-                <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{{ notify_families_url }}', '_blank');" {% if not remittance %}disabled{% endif %}>
+                <h1 class="step-section highlight">{% trans 'The remittance has been generated' %}</h1>
+                <input type="button" value="{% trans 'Open generated remittance' %}" onclick="window.open('{{ remittance_instance_url }}', '_blank');" {% if not remittance_instance_url %}disabled{% endif %}>
+                <input type="button" value="{% trans 'Notify families by email' %}" onclick="window.open('{% url 'notify_members_remittance' %}', '_blank');" {% if not remittance_instance_url %}disabled{% endif %}>
             {% endif %}
         {% endif %}
         <br/>

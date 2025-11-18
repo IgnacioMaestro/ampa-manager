@@ -9,8 +9,13 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_manager.charge.use_cases.membership.create_membership_remittance_with_families.membership_remittance_creator import \
+    MembershipRemittanceCreator
+from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
+from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.forms.generate_members_remittance_form import GenerateMembersRemittanceForm
+from ampa_manager.utils.utils import Utils
 
 
 class GenerateMembersRemittanceView(View):
@@ -96,12 +101,13 @@ class GenerateMembersRemittanceView(View):
 
         extra_context = {}
         if form.is_valid():
-            cls.create_or_update_active_course_membership_fee(form.cleaned_data['active_course_fee'])
-            remittance, error = cls.generate_active_course_membership_remittance()
+            fee_amount = form.cleaned_data['active_course_fee']
+            payment_date = form.cleaned_data['payment_date']
+
+            cls.create_or_update_active_course_membership_fee(fee_amount)
+            remittance, error = cls.generate_active_course_membership_remittance(payment_date)
             if remittance:
-                extra_context['remittance_id'] = remittance.id
                 extra_context['remittance_instance_url'] = remittance.get_admin_url()
-                extra_context['notify_families_url'] = reverse('notify_members_remittance', args=[remittance.id])
             else:
                 extra_context['error'] = error
 
@@ -110,15 +116,31 @@ class GenerateMembersRemittanceView(View):
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def create_or_update_active_course_membership_fee(cls, amount: int):
+    def create_or_update_active_course_membership_fee(cls, fee_amount: int):
         active_course = ActiveCourse.load()
         fee, _ = Fee.objects.get_or_create(academic_course=active_course)
-        if fee.amount != amount:
-            fee.amount = amount
+        if fee.amount != fee_amount:
+            fee.amount = fee_amount
             fee.save()
 
     @classmethod
-    def generate_active_course_membership_remittance(cls) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
-        # TODO IÑAKI
-        # return remittance, None
-        return None, 'Not implemented yet'
+    def generate_active_course_membership_remittance(cls, payment_date) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
+        academic_course: AcademicCourse = ActiveCourse.load()
+        members = Family.objects.members_in_course(academic_course)
+        remittance: Optional[MembershipRemittance]
+        remittance_error: Optional[RemittanceCreatorError]
+        remittance, remittance_error = MembershipRemittanceCreator(members, academic_course, payment_date).create()
+        if not remittance:
+            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
+                error = _('No families to include in Membership Remittance')
+            else:
+                if remittance_error == RemittanceCreatorError.BIC_ERROR:
+                    error = Utils.create_bic_error_message()
+                else:
+                    if remittance_error == RemittanceCreatorError.NO_FEE_FOR_COURSE:
+                        error = _('No fee for the selected course')
+                    else:
+                        error = _('Membership Remittance error')
+            return None, error
+        else:
+            return remittance, None

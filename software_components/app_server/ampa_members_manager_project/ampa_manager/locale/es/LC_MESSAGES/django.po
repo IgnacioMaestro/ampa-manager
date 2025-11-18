@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 17:51+0100\n"
+"POT-Creation-Date: 2025-11-18 16:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgstr "No"
 #: .\ampa_manager\activity\admin\custody_admin.py:142
 #: .\ampa_manager\activity\admin\custody_admin.py:187
 #: .\ampa_manager\activity\admin\registration_filters.py:17
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:84
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:97
 #: .\ampa_manager_project\admin_menu.py:163
 #: .\ampa_manager_project\admin_menu.py:181
 msgid "Members"
@@ -73,15 +73,18 @@ msgstr "Selecciona los cursos de uno en uno"
 
 #: .\ampa_manager\academic_course\admin.py:53
 #: .\ampa_manager\charge\admin\membership_admin.py:102
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:132
 msgid "No families to include in Membership Remittance"
 msgstr "No hay familias que incluir en la remesa de socios"
 
 #: .\ampa_manager\academic_course\admin.py:59
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:138
 msgid "No fee for the selected course"
 msgstr "Sin cuota para el curso seleccionado"
 
 #: .\ampa_manager\academic_course\admin.py:61
 #: .\ampa_manager\charge\admin\membership_admin.py:107
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:140
 msgid "Membership Remittance error"
 msgstr "Error en la remesa de socios"
 
@@ -520,6 +523,7 @@ msgstr "Precios"
 #: .\ampa_manager\activity\admin\custody_admin.py:160
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
 #: .\ampa_manager\activity\admin\registration_filters.py:74
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:79
 msgid "Remittance"
 msgstr "Remesa"
 
@@ -1084,7 +1088,7 @@ msgstr "Modificado"
 #: .\ampa_manager\activity\use_cases\importers\row.py:18
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:101
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:101
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:94
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:107
 msgid "Error"
 msgstr "Error"
 
@@ -1145,12 +1149,10 @@ msgid "Notify families"
 msgstr "Notificar a las familias"
 
 #: .\ampa_manager\charge\admin\membership_admin.py:132
-#: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:42
 msgid "Remittance notified"
 msgstr "Remesa notificada"
 
 #: .\ampa_manager\charge\admin\membership_admin.py:135
-#: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:44
 msgid "Unable to notify remittance"
 msgstr "No se ha podido notificar la remesa"
 
@@ -1244,7 +1246,7 @@ msgid "Amount"
 msgstr "Importe"
 
 #: .\ampa_manager\charge\models\fee\fee.py:14
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:78
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:91
 msgid "Fee"
 msgstr "Cuota"
 
@@ -1316,11 +1318,15 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
+#: .\ampa_manager\charge\use_cases\membership\create_membership_remittance_with_families\membership_remittance_creator.py:51
+msgid "Members fee"
+msgstr "Cuota de socios"
+
 #: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:130
 msgid "Unknown renew status"
 msgstr "Estado de renovación desconocido"
 
-#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:146
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:147
 msgid "Not available"
 msgstr "No disponible"
 
@@ -2105,7 +2111,7 @@ msgid "Custody edition to import to"
 msgstr "Edición de custodia a la que importar"
 
 #: .\ampa_manager\templates\importers\base_import.html:273
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:64
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:65
 #: .\ampa_manager\templates\validate_families_data.html:28
 msgid "Home"
 msgstr "Inicio"
@@ -2236,31 +2242,39 @@ msgstr "Si la edición de custodia necesaria no existe "
 msgid "you can create it here"
 msgstr " puedes crearla aquí"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:60
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:65
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:61
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:66
 msgid "Membership campaign"
 msgstr "Campaña de socios"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:74
-msgid "Notify campaign start"
-msgstr "Notificar inicio de la campaña"
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:68
+msgid "Notify campaign"
+msgstr "Notificar campaña"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:80
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:71
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:96
 msgid "Import new members"
 msgstr "Importar nuevos socios"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:86
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:74
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:102
 #: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:6
 msgid "Import last course members"
 msgstr "Importar socios del curso pasado"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:92
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:77
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:108
 msgid "Generate remittance"
 msgstr "Generar remesa"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:99
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:80
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:114
 msgid "Notify remittance"
 msgstr "Notificar remesa"
+
+#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:90
+msgid "Notify campaign start"
+msgstr "Notificar inicio de la campaña"
 
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:6
 msgid "Generate members remittance"
@@ -2280,7 +2294,7 @@ msgstr "Generar la remesa de socios"
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:62
 #: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:63
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:74
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:73
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:74
 msgid "Review the following information"
 msgstr "Revisa la siguiente información"
 
@@ -2325,14 +2339,14 @@ msgstr "Abrir la remesa generada"
 
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:106
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:134
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:127
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:141
 msgid "Notify families by email"
 msgstr "Notificar familias por correo"
 
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:111
 #: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:96
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:127
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:120
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:133
 msgid "Select an option"
 msgstr "Selecciona una opción"
 
@@ -2344,7 +2358,7 @@ msgstr "Generar la remesa de socios para el curso %(active_course)s"
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:116
 #: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:107
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:136
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:129
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:143
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2410,40 +2424,43 @@ msgstr "Notificar la campaña de socios"
 msgid ""
 "It notifies by email the membership campaign start to all families that were "
 "members last course."
-msgstr "Notifica por correo el inicio de la campaña de socios a todas las familias que fueron socias el año pasado"
+msgstr ""
+"Notifica por correo el inicio de la campaña de socios a todas las familias "
+"que fueron socias el año pasado"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:69
 msgid ""
 "Each family will receive a different email depending if they are going to "
 "renew or not."
-msgstr "Cada familia recibirá un correo distinto dependiendo de si van a renovar o no"
+msgstr ""
+"Cada familia recibirá un correo distinto dependiendo de si van a renovar o no"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:70
 msgid "It should be sent before the campaign starts."
 msgstr "Debería enviarse antes de comenzar la campaña de socios"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:99
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:92
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:105
 msgid "Errors sending mails"
 msgstr "Error al enviar correos"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:102
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:95
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
 msgid "Notified emails"
 msgstr "Correos notificados"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:109
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:102
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:115
 msgid "The error happened sending mail to"
 msgstr "El error sucedió al enviar un correo a"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:118
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:111
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:124
 msgid "Families notified"
 msgstr "Familias notificadas"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:132
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:125
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:139
 #, python-format
 msgid "Send test emails to %(test_email)s"
 msgstr "Enviar correos de prueba a %(test_email)s"
@@ -2456,11 +2473,30 @@ msgstr "Notificar remesa de socios"
 msgid ""
 "It notifies by email to the families that the membership fee will be charged "
 "soon."
-msgstr "Notifica por correo a las familias que la cuota de socio se cobrará próximamente"
+msgstr ""
+"Notifica por correo a las familias que la cuota de socio se cobrará "
+"próximamente"
 
 #: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:69
 msgid "It should be sent before the remittance is uploaded to the bank."
 msgstr "Debería enviarse antes de que subir la remesa al banco."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:70
+msgid ""
+"If there are more than one remittance for the active course, the last one "
+"generated will be notified."
+msgstr ""
+"Si hay más de una remesa para el curso activo, se notificará la última "
+"generada."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:85
+msgid "Active course remittances"
+msgstr "Remesas del curso activo"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:139
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:141
+msgid "Remittance not yet generated"
+msgstr "Remesa no generada aún"
 
 #: .\ampa_manager\templates\validate_families_data.html:6
 #: .\ampa_manager\templates\validate_families_data.html:29
@@ -2505,12 +2541,10 @@ msgid "Import custody"
 msgstr "Importar custodia"
 
 #: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:39
-#: .\ampa_manager\views\membership_campaign\members_campaign_view.py:46
 msgid "Active course members updated"
 msgstr "Socios de este curso actualizados"
 
 #: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:41
-#: .\ampa_manager\views\membership_campaign\members_campaign_view.py:48
 msgid "Unable to update active course members"
 msgstr "No se ha podido actualizar los socios de este curso"
 
@@ -2518,9 +2552,9 @@ msgstr "No se ha podido actualizar los socios de este curso"
 msgid "Import members"
 msgstr "Importar socios"
 
-#: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:46
-msgid "Remittance not found"
-msgstr "Remesa no encontrada"
+#: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:30
+msgid "Not yet generated"
+msgstr "No generada aún"
 
 #: .\ampa_manager\views\validate_data.py:55
 msgid "Families with zero or more than 2 parents"
@@ -2614,3 +2648,6 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:126
 msgid "Basque"
 msgstr "Euskera"
+
+#~ msgid "Number of remittances"
+#~ msgstr "Número de remesas"
