@@ -1,0 +1,6 @@
+{% load i18n %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> &rsaquo;
+    {{ campaign_title }} &rsaquo;
+    {{ current_step_title }}
+</div>

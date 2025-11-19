@@ -35,13 +35,5 @@ class Membership(models.Model):
 
     @classmethod
     def make_member_for_active_course(cls, family: Family):
-        membership = Membership(family=family, academic_course=ActiveCourse.load())
-        membership.save()
+        membership, _ = Membership.objects.get_or_create(family=family, academic_course=ActiveCourse.load())
         return membership
-
-    @classmethod
-    def get_membership(cls, family: Family):
-        memberships = Membership.objects.of_family(family)
-        if memberships.count() == 1:
-            return memberships.first()
-        return None

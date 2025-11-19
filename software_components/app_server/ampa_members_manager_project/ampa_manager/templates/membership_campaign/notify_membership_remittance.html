@@ -1,0 +1,106 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Notify membership remittance' %}{% endblock %}
+
+{% block extrahead %}
+    <style>
+        {% include "./campaign_styles.css" %}
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
+    <div id="upload_form" class="main-container">
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It notifies by email to the families that the membership fee will be charged soon.' %}</li>
+            <li>{% trans 'It should be sent before the remittance is uploaded to the bank.' %}</li>
+            <li>{% trans 'If there are more than one remittance for the active course, the last one generated will be notified.' %}</li>
+        </ul>
+        <br/>
+
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
+        <br/>
+        <ul>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_link" class="form-label"><a href="{{ active_course_remittance_url }}" target="_new">{% trans 'Remittance' %}</a></label>
+                  <input type="text" id="active_course_link" class="form-control" value="{{ active_course_remittance_name }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="remittances_count" class="form-label"><a href="{{ active_course_remittances_url }}" target="_new">{% trans 'Active course remittances' %}</a></label>
+                  <input type="text" id="remittances_count" class="form-control" value="{{ active_course_remittances_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_fee" class="form-label"><a href="{{ fee_url }}" target="_new">{% trans 'Fee' %}</a></label>
+                  <input type="text" id="active_course_fee" class="form-control" value="{{ active_course_fee }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_members" class="form-label"><a href="{{ active_course_members_url }}" target="_new">{% trans 'Members' %}</a></label>
+                  <input type="text" id="active_course_members" class="form-control" value="{{ active_course_members }}" disabled>
+                </div>
+            </li>
+        </ul>
+
+        {% if result %}
+            {% if result.error %}
+                <h1 class="step-section highlight">{% trans 'Errors sending mails' %}</h1>
+                <ul>
+                    <li>{% trans 'Error' %}: {{ result.error }}</li>
+                    <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
+                        <ul>
+                            {% for email in result.success_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>{% trans 'The error happened sending mail to' %}:
+                        <ul>
+                            {% for email in result.error_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                <h1 class="step-section highlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
+                <ul>
+                    {% for email in result.success_emails %}
+                        <li>{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
+        <br/>
+        <form id="notify-form" method="post" action="{% url 'notify_members_remittance' %}">
+          {% csrf_token %}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <input type="button" {% if not active_course_remittance_url %}disabled title="{% trans 'Remittance not yet generated' %}"{% endif %} value="{% blocktrans %}Send test emails to {{ test_email }}{% endblocktrans %}" onclick="submitWithUrlParam('test=true');">
+            &nbsp;
+            <input type="submit" {% if not active_course_remittance_url %}disabled title="{% trans 'Remittance not yet generated' %}"{% endif %} value="{% trans 'Notify families by email' %}">
+            &nbsp;
+            <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
+        </form>
+    </div>
+
+{% endblock %}

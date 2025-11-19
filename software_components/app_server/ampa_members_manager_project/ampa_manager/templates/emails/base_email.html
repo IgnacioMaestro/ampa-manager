@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container {
+      border: 0px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { color: #000000; }
+    p { font-size: 15px; }
+    li { font-size: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{{ logo_url }}" width="200px">
+
+    <h1>Kaixo familia!</h1>
+
+    {% block content_es %}{% endblock %}
+    <p>Para cualquier duda, responde a este correo.</p>
+    <p><i>Asociación de Familias del Alumnado. Ikastola Abendaño</i></p>
+
+    <p>-------------------------------------------</p>
+
+    {% block content_eu %}{% endblock %}
+    <p>Zalantzarik izanez gero, erantzun mezu honi.</p>
+    <p><i>Ikasleen Familia Elkartea. Abendaño ikastola</i></p>
+
+  </div>
+</body>
+</html>

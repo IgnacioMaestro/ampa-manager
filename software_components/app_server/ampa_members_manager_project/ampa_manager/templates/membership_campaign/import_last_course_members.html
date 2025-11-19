@@ -1,0 +1,87 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Import last course members' %}{% endblock %}
+
+{% block extrahead %}
+    <style>
+        {% include "./campaign_styles.css" %}
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
+    <div id="upload_form" class="main-container">
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It copies the members from the last course.' %}</li>
+            <li>{% trans 'Families whose children are not in the school anymore will not be copied.' %}</li>
+            <li>{% trans 'Families that have request not to renew will not be copied.' %}</li>
+        </ul>
+        <br/>
+
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
+        <br/>
+        <ul>
+            <li>
+                <div class="mb-3">
+                  <label for="active_course_members_count" class="form-label"><a href="{{ active_course_members_url }}" target="_new">{% trans 'Active course members' %}</a></label>
+                  <input type="text" id="active_course_members_count" class="form-control" value="{{ active_course_members_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Families to renew (last year members, with children in school and have not declined)' %}</a></label>
+                  <input type="text" id="families_renew_count" class="form-control" value="{{ families_renew_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="families_not_renew_out_of_school_count" class="form-label"><a href="{{ families_not_renew_out_of_school_url }}" target="_new">{% trans 'Families that will not renew due to they do not have children in school anymore' %}</a></label>
+                  <input type="text" id="families_not_renew_out_of_school_count" class="form-control" value="{{ families_not_renew_out_of_school_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
+                  <label for="families_not_renew_declined_count" class="form-label"><a href="{{ families_not_renew_declined_url }}" target="_new">{% trans 'Families that will not renew due to they have declined renew' %}</a></label>
+                  <input type="text" id="families_not_renew_declined_count" class="form-control" value="{{ families_not_renew_declined_count }}" disabled>
+                </div>
+            </li>
+        </ul>
+
+        {% if members_copied %}
+
+            <h1 class="step-section highlight">{% trans 'Last course members copied' %}</h1>
+            <ul>
+                <li>{% trans 'This course members' %}: {{ members_active_course }}</li>
+            </ul>
+            <br/>
+
+        {% endif %}
+
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
+        <br/>
+        <form method="post" action="{% url 'import_last_course_members' %}">
+          {% csrf_token %}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" value="{% trans 'Copy last course members' %}">
+            &nbsp;
+            <input type="button" value="{% trans 'Check last course members' %}" onclick="window.open('{{ last_course_members_url }}', '_blank');">
+            &nbsp;
+            <input type="button" value="{% trans 'Check this course members' %}" onclick="window.open('{{ active_course_members_url }}', '_blank');">
+            &nbsp;
+            <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
+        </form>
+    </div>
+
+{% endblock %}

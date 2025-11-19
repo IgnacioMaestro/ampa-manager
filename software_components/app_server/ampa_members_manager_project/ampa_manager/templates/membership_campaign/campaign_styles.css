@@ -1,0 +1,91 @@
+.not-current-step {
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border: 1px dashed #000000;
+}
+
+.current-step {
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    background-color: #90e0ef;
+    border: 1px solid #000000;
+}
+
+.not-current-step:hover {
+    background-color: #caf0f8;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-cell {
+    padding: 0 4px;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+h1.step-section {
+    font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+    font-weight: normal;
+    color: #333;
+    margin: 20px 0 10px 0;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    border-radius: 4px;
+}
+
+h1.highlight {
+    background: #f5ec6f;
+}
+
+#upload_form .mb-3 {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#upload_form form p {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#upload_form input[type="text"],
+#upload_form input[type="file"],
+#upload_form select {
+    max-width: 300px;
+    width: 100%;
+}
+
+#upload_form input[type="text"],
+#upload_form input[type="number"],
+#upload_form input[type="file"],
+#upload_form select {
+    width: 300px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#upload_form form label {
+    display: inline-block;
+    width: 200px;
+    margin-right: 1rem;
+    text-align: right;
+}

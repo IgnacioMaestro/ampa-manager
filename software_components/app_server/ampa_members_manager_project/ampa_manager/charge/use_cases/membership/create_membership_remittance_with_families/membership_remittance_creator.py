@@ -1,33 +1,42 @@
+from datetime import date
 from typing import List, Optional
 
+from django.conf import settings
 from django.db.models import QuerySet
+from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.charge.models.fee.fee import Fee
 from ampa_manager.charge.models.membership_receipt import MembershipReceipt
 from ampa_manager.charge.models.membership_remittance import MembershipRemittance
+from ampa_manager.charge.remittance_utils import RemittanceUtils
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.models.family import Family
 
 
 class MembershipRemittanceCreator:
-    def __init__(self, families: QuerySet[Family], course: AcademicCourse):
+    def __init__(self, families: QuerySet[Family], course: AcademicCourse, payment_date: date):
         self.__families = families
         self.__course = course
+        self.__payment_date = payment_date
+        self.__sepa_id = RemittanceUtils.get_next_sepa_id()
+        self.__concept = settings.MEMBERSHIP_REMITTANCE_CONCEPT
 
     def create(self) -> tuple[Optional[MembershipRemittance], Optional[RemittanceCreatorError]]:
-        membership_remittance: MembershipRemittance = MembershipRemittance(course=self.__course)
-        membership_receipts: List[MembershipReceipt]
+        remittance: MembershipRemittance = MembershipRemittance(
+            course=self.__course, name=self.__generate_remittance_name(), sepa_id=self.__sepa_id,
+            payment_date=self.__payment_date, concept=self.__concept)
+        receipts: List[MembershipReceipt]
         error: Optional[RemittanceCreatorError]
-        membership_receipts, error = self.__create_membership_receipts(membership_remittance)
+        receipts, error = self.__create_membership_receipts(remittance)
         if error:
             return None, error
-        membership_remittance.save()
-        MembershipReceipt.objects.bulk_create(membership_receipts)
-        return membership_remittance, None
+        remittance.save()
+        MembershipReceipt.objects.bulk_create(receipts)
+        return remittance, None
 
     def __create_membership_receipts(self, remittance: MembershipRemittance) -> tuple[
-            Optional[list[MembershipReceipt]], Optional[RemittanceCreatorError]]:
+        Optional[list[MembershipReceipt]], Optional[RemittanceCreatorError]]:
         membership_receipts: List[MembershipReceipt] = []
         family: Family
         for family in self.__families.iterator():
@@ -44,3 +53,6 @@ class MembershipRemittanceCreator:
         except Fee.DoesNotExist:
             return None, RemittanceCreatorError.NO_FEE_FOR_COURSE
         return membership_receipts, None
+
+    def __generate_remittance_name(self):
+        return _('Members fee') + ' ' + str(self.__course)
