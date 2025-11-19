@@ -34,6 +34,12 @@
         <ul>
             <li>
                 <div class="mb-3">
+                  <label for="active_course_members_count" class="form-label"><a href="{{ active_course_members_url }}" target="_new">{% trans 'Active course members' %}</a></label>
+                  <input type="text" id="active_course_members_count" class="form-control" value="{{ active_course_members_count }}" disabled>
+                </div>
+            </li>
+            <li>
+                <div class="mb-3">
                   <label for="families_renew_count" class="form-label"><a href="{{ families_renew_url }}" target="_new">{% trans 'Families to renew (last year members, with children in school and have not declined)' %}</a></label>
                   <input type="text" id="families_renew_count" class="form-control" value="{{ families_renew_count }}" disabled>
                 </div>

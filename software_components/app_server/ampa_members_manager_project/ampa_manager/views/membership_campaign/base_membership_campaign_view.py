@@ -38,23 +38,11 @@ class BaseMembershipCampaignView(View):
 
     @classmethod
     def get_context(cls) -> dict:
-        extra_context = cls.get_extra_context()
-        base_context = cls.get_base_context()
-        if extra_context:
-            base_context.update(extra_context)
-        return base_context
-
-    @classmethod
-    def get_base_context(cls):
         return {
             'steps': cls.get_steps(),
             'campaign_title': cls.CAMPAIGN_TITLE,
             'current_step_title': cls.get_current_step_title(),
         }
-
-    @classmethod
-    def get_extra_context(cls) -> dict:
-        return {}
 
     @classmethod
     def get_current_step_title(cls) -> str:

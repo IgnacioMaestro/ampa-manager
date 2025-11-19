@@ -13,9 +13,10 @@ class NotifyMembershipCampaignView(BaseMembershipCampaignView):
     VIEW_NAME = 'notify_members_campaign'
 
     @classmethod
-    def get_extra_context(cls) -> dict:
+    def get_context(cls) -> dict:
+        context = super().get_context()
         family_changelist_url = reverse('admin:ampa_manager_family_changelist')
-        return {
+        context.update({
             'families_renew_count': Family.objects.membership_renew().count(),
             'families_not_renew_out_of_school_count': Family.objects.membership_no_renew_no_school_children().count(),
             'families_not_renew_declined_count': Family.objects.membership_no_renew_declined().count(),
@@ -23,7 +24,8 @@ class NotifyMembershipCampaignView(BaseMembershipCampaignView):
             'families_not_renew_out_of_school_url': f'{family_changelist_url}?member=no_renew_no_school_children',
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
             'test_email': settings.TEST_EMAIL_RECIPIENT,
-        }
+        })
+        return context
 
     @classmethod
     def get(cls, request):

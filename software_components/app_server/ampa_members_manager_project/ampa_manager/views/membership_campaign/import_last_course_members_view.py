@@ -15,9 +15,10 @@ class ImportLastCourseMembersView(BaseMembershipCampaignView):
     VIEW_NAME = 'import_last_course_members'
 
     @classmethod
-    def get_extra_context(cls) -> dict:
+    def get_context(cls) -> dict:
+        context = super().get_context()
         family_changelist_url = reverse('admin:ampa_manager_family_changelist')
-        return {
+        context.update({
             'families_renew_count': Family.objects.membership_renew().count(),
             'families_not_renew_out_of_school_count': Family.objects.membership_no_renew_no_school_children().count(),
             'families_not_renew_declined_count': Family.objects.membership_no_renew_declined().count(),
@@ -25,8 +26,10 @@ class ImportLastCourseMembersView(BaseMembershipCampaignView):
             'families_not_renew_out_of_school_url': f'{family_changelist_url}?member=no_renew_no_school_children',
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
             'last_course_members_url': f'{family_changelist_url}?member=last_year',
-            'active_course_members_url': f'{family_changelist_url}?member=yes'
-        }
+            'active_course_members_url': f'{family_changelist_url}?member=yes',
+            'active_course_members_count': cls.get_active_course_members_count()
+        })
+        return context
 
     @classmethod
     def get(cls, request):
@@ -48,3 +51,8 @@ class ImportLastCourseMembersView(BaseMembershipCampaignView):
     def get_active_course_members_url(cls) -> str:
         year = ActiveCourse.get_active_course_initial_year()
         return reverse('admin:ampa_manager_membership_changelist') + f'?academic_course__initial_year={year}'
+
+    @classmethod
+    def get_active_course_members_count(cls):
+        course = ActiveCourse.load()
+        return Membership.objects.of_course(course).count()

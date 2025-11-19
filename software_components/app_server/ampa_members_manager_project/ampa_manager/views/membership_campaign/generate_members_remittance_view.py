@@ -25,13 +25,15 @@ class GenerateMembersRemittanceView(BaseMembershipCampaignView):
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
-    def get_extra_context(cls, form: Optional[GenerateMembersRemittanceForm] = None, extra_context: dict = None) -> dict:
+    def get_context(cls, form: Optional[GenerateMembersRemittanceForm] = None, extra_context: dict = None) -> dict:
+        context = super().get_context()
+
         if not form:
             form = GenerateMembersRemittanceForm(initial=cls.get_form_initial_data())
 
         active_course = cls.get_active_course()
         last_course = cls.get_last_course()
-        context = {
+        context.update({
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
             'active_course': str(active_course),
@@ -43,7 +45,7 @@ class GenerateMembersRemittanceView(BaseMembershipCampaignView):
             'last_course_members_url': cls.get_last_course_members_url(),
             'active_course_members_url': cls.get_active_course_members_url(),
             'membership_remittance_url': reverse('admin:ampa_manager_membershipremittance_changelist'),
-        }
+        })
         if extra_context:
             context.update(extra_context)
         return context
@@ -113,8 +115,7 @@ class GenerateMembersRemittanceView(BaseMembershipCampaignView):
                 extra_context['error'] = error
 
         extra_context['action_done'] = True
-        context = cls.get_context(form, extra_context)
-        return render(request, cls.HTML_TEMPLATE, context)
+        return render(request, cls.HTML_TEMPLATE, cls.get_context(form, extra_context))
 
     @classmethod
     def create_or_update_active_course_membership_fee(cls, fee_amount: int):
