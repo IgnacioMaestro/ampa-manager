@@ -5,7 +5,6 @@ from django.db.models import QuerySet
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views import View
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
@@ -18,21 +17,21 @@ from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
 from ampa_manager.forms.generate_members_remittance_form import GenerateMembersRemittanceForm
 from ampa_manager.utils.utils import Utils
+from ampa_manager.views.membership_campaign.base_membership_campaign_view import BaseMembershipCampaignView
 
 
-class GenerateMembersRemittanceView(View):
+class GenerateMembersRemittanceView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/generate_membership_remittance.html'
     VIEW_NAME = 'generate_members_remittance'
 
     @classmethod
-    def get_context(cls, form: Optional[GenerateMembersRemittanceForm] = None, extra_context: dict = None) -> dict:
+    def get_extra_context(cls, form: Optional[GenerateMembersRemittanceForm] = None, extra_context: dict = None) -> dict:
         if not form:
             form = GenerateMembersRemittanceForm(initial=cls.get_form_initial_data())
 
         active_course = cls.get_active_course()
         last_course = cls.get_last_course()
         context = {
-            'current_step': cls.VIEW_NAME,
             'form': form,
             'view_url': reverse(cls.VIEW_NAME),
             'active_course': str(active_course),

@@ -1,0 +1,61 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block extrahead %}
+    <style>
+        .not-current-step {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #000;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            border: 1px dashed #000000;
+            {#background-color: #8ed2f9;#}
+        }
+        .current-step {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            background-color: #90e0ef;
+            border: 1px solid #000000;
+        }
+        .not-current-step:hover {
+            background-color: #caf0f8;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .arrow-cell {
+            padding: 0 4px;
+            vertical-align: middle;
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 4px;
+        }
+
+        h1.step-section {
+            font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+            font-weight: normal;
+            color: #333;
+            margin: 20px 0 10px 0;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border-radius: 4px;
+        }
+
+        h1.highlight {
+            background: #f5ec6f;
+        }
+    </style>
+{% endblock %}
+
+

@@ -1,4 +1,4 @@
-{% extends 'membership_campaign/base_membership_campaign.html' %}
+{% extends 'membership_campaign/base_membership_campaign_REMOVE.html' %}
 {% load custom_filters %}
 {% load i18n %}
 {% load static %}
@@ -6,8 +6,10 @@
 {% block title %}{% trans 'Notify membership campaign' %}{% endblock %}
 
 {% block extrahead %}
-    {{ block.super }}
     <style>
+
+        {% include "./campaign_styles.css" %}
+
         #upload_form .mb-3 {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -60,8 +62,15 @@
 
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
 {% block content %}
-    {{ block.super }}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
     <div id="upload_form" class="main-container">
         <h1 class="step-section">{% trans 'What this section does?' %}</h1>
         <ul>

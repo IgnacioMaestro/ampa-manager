@@ -1,4 +1,4 @@
-{% extends 'membership_campaign/base_membership_campaign.html' %}
+{% extends 'membership_campaign/base_membership_campaign_REMOVE.html' %}
 {% load custom_filters %}
 {% load i18n %}
 {% load static %}
@@ -6,52 +6,20 @@
 {% block title %}{% trans 'Generate members remittance' %}{% endblock %}
 
 {% block extrahead %}
-    {{ block.super }}
     <style>
-        #upload_form .mb-3 {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        #upload_form form p {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        #upload_form input[type="text"],
-        #upload_form input[type="file"],
-        #upload_form select {
-            max-width: 300px;
-            width: 100%;
-        }
-
-        #upload_form input[type="text"],
-        #upload_form input[type="number"],
-        #upload_form input[type="file"],
-        #upload_form select {
-            width: 300px;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        #upload_form form label {
-            display: inline-block;
-            width: 200px;
-            margin-right: 1rem;
-            text-align: right;
-        }
-
+        {% include "./campaign_styles.css" %}
     </style>
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
 {% block content %}
-    {{ block.super }}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
     <div id="upload_form" class="main-container">
         <h1 class="step-section">{% trans 'What this section does?' %}</h1>
         <ul>

@@ -1,24 +1,23 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy
-from django.views import View
 
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.use_cases.membership.membership_campaign_copier import MembershipCampaignCopier
 from ampa_manager.family.models.family import Family
 from ampa_manager.family.models.membership import Membership
+from ampa_manager.views.membership_campaign.base_membership_campaign_view import BaseMembershipCampaignView
 
 
-class ImportLastCourseMembersView(View):
+class ImportLastCourseMembersView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/import_last_course_members.html'
     VIEW_NAME = 'import_last_course_members'
 
     @classmethod
-    def get_context(cls) -> dict:
+    def get_extra_context(cls) -> dict:
         family_changelist_url = reverse('admin:ampa_manager_family_changelist')
         return {
-            'current_step': cls.VIEW_NAME,
             'families_renew_count': Family.objects.membership_renew().count(),
             'families_not_renew_out_of_school_count': Family.objects.membership_no_renew_no_school_children().count(),
             'families_not_renew_declined_count': Family.objects.membership_no_renew_declined().count(),

@@ -3,6 +3,10 @@
 {% load i18n %}
 {% load static %}
 
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
 {% block instructions %}
     <div id="instructions" class="main-container">
         <h2>{% trans 'Instructions' %}</h2>

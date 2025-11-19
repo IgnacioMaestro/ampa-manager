@@ -1,22 +1,21 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse
-from django.views import View
 
 from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.charge.use_cases.membership.membership_campaign_notifier import MembershipCampaignNotifier
 from ampa_manager.family.models.family import Family
+from ampa_manager.views.membership_campaign.base_membership_campaign_view import BaseMembershipCampaignView
 
 
-class NotifyMembershipCampaignView(View):
+class NotifyMembershipCampaignView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/notify_membership_campaign.html'
     VIEW_NAME = 'notify_members_campaign'
 
     @classmethod
-    def get_context(cls) -> dict:
+    def get_extra_context(cls) -> dict:
         family_changelist_url = reverse('admin:ampa_manager_family_changelist')
         return {
-            'current_step': cls.VIEW_NAME,
             'families_renew_count': Family.objects.membership_renew().count(),
             'families_not_renew_out_of_school_count': Family.objects.membership_no_renew_no_school_children().count(),
             'families_not_renew_declined_count': Family.objects.membership_no_renew_declined().count(),
