@@ -164,6 +164,6 @@ EMAIL_HOST_PASSWORD = os.getenv('AMPA_MANAGER_EMAIL_PASS')
 DEFAULT_FROM_EMAIL = os.getenv('AMPA_MANAGER_EMAIL_USER', 'Avisos AFA Abendaño <kaixo@abendanogurasoak.com>')
 DEFAULT_REPLY_TO_EMAIL = os.getenv('AMPA_MANAGER_DEFAULT_REPLY_TO_EMAIL', 'ampa@abendanogurasoak.com')
 TEST_EMAIL_RECIPIENT = os.getenv('AMPA_MANAGER_TEST_EMAIL_RECIPIENT', 'danilanda@gmail.com')
-MEMBERSHIP_REMITTANCE_CONCEPT = 'Cuota AFA'
+MEMBERSHIP_REMITTANCE_CONCEPT = 'Cuota AFA Abendano'
 
 LOGO_FULL_URL = 'https://drive.google.com/uc?export=view&id=17-t3CTAmmSgRWO93xOZVOSdYGeA1XuTI'
