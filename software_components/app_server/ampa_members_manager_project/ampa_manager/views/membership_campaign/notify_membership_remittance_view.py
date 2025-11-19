@@ -19,7 +19,8 @@ class NotifyMembersRemittanceView(BaseMembershipCampaignView):
     VIEW_NAME = 'notify_members_remittance'
 
     @classmethod
-    def get_extra_context(cls) -> dict:
+    def get_context(cls) -> dict:
+        context = super().get_context()
         remittance: MembershipRemittance = cls.get_active_course_remittance()
         if remittance:
             remittance_url = reverse('admin:ampa_manager_membershipremittance_change', args=[remittance.id])
@@ -28,7 +29,7 @@ class NotifyMembersRemittanceView(BaseMembershipCampaignView):
             remittance_url = None
             remittance_str = _('Not yet generated')
 
-        return {
+        context.update({
             'active_course_fee': cls.get_active_course_fee(),
             'active_course_members': cls.get_active_course_members_count(),
             'active_course_members_url': cls.get_active_course_members_url(),
@@ -38,7 +39,8 @@ class NotifyMembersRemittanceView(BaseMembershipCampaignView):
             'active_course_remittances_count': cls.get_active_course_remittances_count(),
             'fee_url': reverse('admin:ampa_manager_fee_changelist'),
             'test_email': settings.TEST_EMAIL_RECIPIENT,
-        }
+        })
+        return context
 
     @classmethod
     def get(cls, request):
