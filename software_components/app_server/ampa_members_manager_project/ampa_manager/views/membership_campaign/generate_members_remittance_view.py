@@ -1,5 +1,7 @@
+from datetime import datetime
 from typing import Optional, Tuple
 
+from django.db.models import QuerySet
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -82,7 +84,7 @@ class GenerateMembersRemittanceView(View):
     @classmethod
     def get_last_course(cls) -> AcademicCourse:
         active_course = cls.get_active_course()
-        return AcademicCourse.objects.get(initial_year=active_course.initial_year-1)
+        return AcademicCourse.objects.get(initial_year=active_course.initial_year - 1)
 
     @classmethod
     def get_course_fee(cls, course: Optional[AcademicCourse]) -> int:
@@ -124,23 +126,22 @@ class GenerateMembersRemittanceView(View):
             fee.save()
 
     @classmethod
-    def generate_active_course_membership_remittance(cls, payment_date) -> Tuple[Optional[MembershipRemittance], Optional[str]]:
-        academic_course: AcademicCourse = ActiveCourse.load()
-        members = Family.objects.members_in_course(academic_course)
+    def generate_active_course_membership_remittance(cls, payment_date: datetime) -> Tuple[
+        Optional[MembershipRemittance], Optional[str]]:
+        course: AcademicCourse = ActiveCourse.load()
+        members: QuerySet[Family] = Family.objects.members_in_course(course)
         remittance: Optional[MembershipRemittance]
-        remittance_error: Optional[RemittanceCreatorError]
-        remittance, remittance_error = MembershipRemittanceCreator(members, academic_course, payment_date).create()
-        if not remittance:
-            if remittance_error == RemittanceCreatorError.NO_FAMILIES:
-                error = _('No families to include in Membership Remittance')
-            else:
-                if remittance_error == RemittanceCreatorError.BIC_ERROR:
-                    error = Utils.create_bic_error_message()
-                else:
-                    if remittance_error == RemittanceCreatorError.NO_FEE_FOR_COURSE:
-                        error = _('No fee for the selected course')
-                    else:
-                        error = _('Membership Remittance error')
-            return None, error
+        error_code: Optional[RemittanceCreatorError]
+        remittance, error_code = MembershipRemittanceCreator(members, course, payment_date).create()
+        return remittance, cls.translate_remittance_error(error_code)
+
+    @classmethod
+    def translate_remittance_error(cls, error_code: RemittanceCreatorError):
+        if error_code == RemittanceCreatorError.NO_FAMILIES:
+            return _('No families to include in Membership Remittance')
+        elif error_code == RemittanceCreatorError.BIC_ERROR:
+            return Utils.create_bic_error_message()
+        elif error_code == RemittanceCreatorError.NO_FEE_FOR_COURSE:
+            return _('No fee for the selected course')
         else:
-            return remittance, None
+            return _('Unknown error')
