@@ -3,7 +3,7 @@ from django.views import View
 
 
 class CampaignStep:
-    def __init__(self, view_name: str, title: str, current: bool = False):
+    def __init__(self, view_name: str, title, current: bool = False):
         self.current = current
         self.view_name = view_name
         self.title = title
@@ -17,11 +17,11 @@ class BaseMembershipCampaignView(View):
     VIEW_NAME = None
     VIEW_TITLE = None
     STEPS = [
-        CampaignStep(view_name='notify_members_campaign', title='Notify campaign'),
-        CampaignStep(view_name='import_new_members', title='Import new members'),
-        CampaignStep(view_name='import_last_course_members', title='Import last course members'),
-        CampaignStep(view_name='generate_members_remittance', title='Generate remittance'),
-        CampaignStep(view_name='notify_members_remittance', title='Notify remittance'),
+        CampaignStep(view_name='notify_members_campaign', title=_('Notify campaign')),
+        CampaignStep(view_name='import_new_members', title=_('Import new members')),
+        CampaignStep(view_name='import_last_course_members', title=_('Import last course members')),
+        CampaignStep(view_name='generate_members_remittance', title=_('Generate remittance')),
+        CampaignStep(view_name='notify_members_remittance', title=_('Notify remittance')),
     ]
 
     @classmethod
