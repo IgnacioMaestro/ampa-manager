@@ -4,15 +4,15 @@ from django.db import transaction
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views import View
 
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter
 from ampa_manager.forms.import_members_form import ImportMembersForm
 from ampa_manager.views.importers.import_custody_view import SimulationException
+from ampa_manager.views.membership_campaign.base_membership_campaign_view import BaseMembershipCampaignView
 
 
-class ImportNewMembersView(View):
+class ImportNewMembersView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/import_new_members.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xlsx'
     IMPORTER_TITLE = _('Import members')
@@ -20,16 +20,19 @@ class ImportNewMembersView(View):
 
     @classmethod
     def get_context(cls, form: Optional[ImportMembersForm] = None) -> dict:
+        context = super().get_context()
+
         if not form:
             form = ImportMembersForm()
 
-        return {
+        context.update({
             'form': form,
             'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
             'excel_columns': MembersImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE
-        }
+        })
+        return context
 
     @classmethod
     def get(cls, request):

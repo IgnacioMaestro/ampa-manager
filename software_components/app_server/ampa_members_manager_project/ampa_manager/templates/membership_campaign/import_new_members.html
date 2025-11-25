@@ -3,6 +3,13 @@
 {% load i18n %}
 {% load static %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        {% include "./campaign_styles.css" %}
+    </style>
+{% endblock %}
+
 {% block breadcrumbs %}
 {% include "../campaign_breadcrumbs.html" %}
 {% endblock %}
