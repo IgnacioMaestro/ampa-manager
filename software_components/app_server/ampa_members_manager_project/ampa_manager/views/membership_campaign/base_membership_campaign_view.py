@@ -18,8 +18,8 @@ class BaseMembershipCampaignView(View):
     VIEW_TITLE = None
     STEPS = [
         CampaignStep(view_name='notify_members_campaign', title=_('Notify campaign')),
-        CampaignStep(view_name='import_new_members', title=_('Import new members')),
         CampaignStep(view_name='import_last_course_members', title=_('Import last course members')),
+        CampaignStep(view_name='import_new_members', title=_('Import new members')),
         CampaignStep(view_name='generate_members_remittance', title=_('Generate remittance')),
         CampaignStep(view_name='notify_members_remittance', title=_('Notify remittance')),
     ]
