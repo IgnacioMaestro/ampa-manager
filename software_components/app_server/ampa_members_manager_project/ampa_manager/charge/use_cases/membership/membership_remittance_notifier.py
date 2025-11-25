@@ -28,14 +28,10 @@ class MembershipRemittanceNotifier:
         return self.__notify(self.__get_emails())
 
     def __notify(self, emails: list[str]) -> MailNotifierResult:
-        error: Optional[str] = Mailer.send_template_mail(
+        return Mailer.send_template_mail(
             bcc_recipients=emails, subject=self.MAIL_SUBJECT,  body_html_template=self.MAIL_TEMPLATE,
             body_html_context=self.__get_template_context(), body_text_content=self.__get_text_content()
         )
-        if error:
-            return MailNotifierResult(error_emails=emails)
-        else:
-            return MailNotifierResult(success_emails=emails, error=error)
 
     def __get_template_context(self):
         return {
