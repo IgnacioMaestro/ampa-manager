@@ -76,7 +76,7 @@ class AfterSchoolReceiptInline(ReadOnlyTabularInline):
 class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_count', 'courses']
     fields = ['name', 'concept', 'sepa_id', 'created_at', 'payment_date', 'receipts_total', 'receipts_link']
-    readonly_fields = ['receipts_link', 'created_at', 'receipts_total']
+    readonly_fields = ['receipts_link', 'created_at', 'receipts_total', 'sepa_id']
     ordering = ['-created_at']
     list_per_page = 25
     search_fields = ['name', 'concept', 'sepa_id']
@@ -88,11 +88,6 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
             if edition.academic_course.id not in courses_ids:
                 courses_ids.append(edition.academic_course.id)
         return ', '.join([str(course) for course in AcademicCourse.objects.filter(id__in=courses_ids)])
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        form.base_fields['sepa_id'].initial = RemittanceUtils.get_next_sepa_id()
-        return form
 
     def save_model(self, request, obj, form, change):
         if not obj.sepa_id:
