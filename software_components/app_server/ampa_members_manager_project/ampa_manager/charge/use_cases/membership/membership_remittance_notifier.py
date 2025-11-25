@@ -63,7 +63,6 @@ class MembershipRemittanceNotifier:
         return f'{fee.amount} €'
 
     def __get_emails(self) -> list[str]:
-        return ['danilanda@gmail.com']
         self.emails = []
         for receipt in self.remittance.receipts.all():
             self.__append_email(receipt.family.email)

@@ -131,8 +131,6 @@ class MembershipCampaignNotifier:
 
     @classmethod
     def __get_emails(cls, family: Family) -> list[str]:
-        return [settings.TEST_EMAIL_RECIPIENT]
-
         emails = []
         if family.email:
             emails.append(family.email)
