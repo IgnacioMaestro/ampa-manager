@@ -4,13 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 class NameableWithDate(models.Model):
     name = models.CharField(max_length=30, null=True, blank=True, verbose_name=_("Name"),
-                            help_text=_("Maximum 30 characters"))
-    sepa_id = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Sepa_id"),
-                               help_text=_("Leave empty to auto-generate"))
+                            help_text=_("Name to identify the remittance. Maximum 30 characters"))
+    sepa_id = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Sepa_id"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created at"))
     payment_date = models.DateField(auto_now_add=False, null=True, blank=True, verbose_name=_("Payment date"))
     concept = models.CharField(max_length=30, null=True, blank=True, verbose_name=_("Concept"),
-                               help_text=_("Maximum 30 characters"))
+                               help_text=_("Description that the families will see in the bank account. Maximum 30 characters"))
 
     class Meta:
         abstract = True
