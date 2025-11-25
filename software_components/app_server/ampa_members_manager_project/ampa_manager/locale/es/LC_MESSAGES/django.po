@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-18 16:05+0100\n"
+"POT-Creation-Date: 2025-11-25 15:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,9 @@ msgid "Is active"
 msgstr "Está activo"
 
 #: .\ampa_manager\academic_course\admin.py:34
-#: .\ampa_manager\activity\admin\after_school_admin.py:78
+#: .\ampa_manager\activity\admin\after_school_admin.py:83
 #: .\ampa_manager\activity\admin\camps_admin.py:50
-#: .\ampa_manager\activity\admin\custody_admin.py:51
+#: .\ampa_manager\activity\admin\custody_admin.py:52
 #: .\ampa_manager\family\admin\child_admin.py:35
 #: .\ampa_manager\family\admin\family_admin.py:276
 #: .\ampa_manager\family\admin\family_admin.py:280
@@ -39,9 +39,9 @@ msgid "Yes"
 msgstr "Sí"
 
 #: .\ampa_manager\academic_course\admin.py:34
-#: .\ampa_manager\activity\admin\after_school_admin.py:78
+#: .\ampa_manager\activity\admin\after_school_admin.py:83
 #: .\ampa_manager\activity\admin\camps_admin.py:50
-#: .\ampa_manager\activity\admin\custody_admin.py:51
+#: .\ampa_manager\activity\admin\custody_admin.py:52
 #: .\ampa_manager\family\admin\child_admin.py:35
 #: .\ampa_manager\family\admin\family_admin.py:276
 #: .\ampa_manager\family\admin\family_admin.py:280
@@ -53,13 +53,13 @@ msgstr "No"
 #: .\ampa_manager\academic_course\admin.py:36
 #: .\ampa_manager\academic_course\admin.py:98
 #: .\ampa_manager\activity\admin\camps_admin.py:92
-#: .\ampa_manager\activity\admin\custody_admin.py:122
-#: .\ampa_manager\activity\admin\custody_admin.py:142
-#: .\ampa_manager\activity\admin\custody_admin.py:187
+#: .\ampa_manager\activity\admin\custody_admin.py:123
+#: .\ampa_manager\activity\admin\custody_admin.py:143
+#: .\ampa_manager\activity\admin\custody_admin.py:188
 #: .\ampa_manager\activity\admin\registration_filters.py:17
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:97
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:66
 #: .\ampa_manager_project\admin_menu.py:163
-#: .\ampa_manager_project\admin_menu.py:181
+#: .\ampa_manager_project\admin_menu.py:180
 msgid "Members"
 msgstr "Socios"
 
@@ -73,18 +73,17 @@ msgstr "Selecciona los cursos de uno en uno"
 
 #: .\ampa_manager\academic_course\admin.py:53
 #: .\ampa_manager\charge\admin\membership_admin.py:102
-#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:132
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:141
 msgid "No families to include in Membership Remittance"
 msgstr "No hay familias que incluir en la remesa de socios"
 
 #: .\ampa_manager\academic_course\admin.py:59
-#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:138
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:145
 msgid "No fee for the selected course"
 msgstr "Sin cuota para el curso seleccionado"
 
 #: .\ampa_manager\academic_course\admin.py:61
 #: .\ampa_manager\charge\admin\membership_admin.py:107
-#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:140
 msgid "Membership Remittance error"
 msgstr "Error en la remesa de socios"
 
@@ -94,12 +93,12 @@ msgid "Membership remittance created"
 msgstr "Remesa de socios creada"
 
 #: .\ampa_manager\academic_course\admin.py:67
-#: .\ampa_manager\activity\admin\after_school_admin.py:158
-#: .\ampa_manager\activity\admin\after_school_admin.py:171
-#: .\ampa_manager\activity\admin\after_school_admin.py:184
-#: .\ampa_manager\activity\admin\after_school_admin.py:198
+#: .\ampa_manager\activity\admin\after_school_admin.py:163
+#: .\ampa_manager\activity\admin\after_school_admin.py:176
+#: .\ampa_manager\activity\admin\after_school_admin.py:189
+#: .\ampa_manager\activity\admin\after_school_admin.py:203
 #: .\ampa_manager\activity\admin\camps_admin.py:120
-#: .\ampa_manager\activity\admin\custody_admin.py:175
+#: .\ampa_manager\activity\admin\custody_admin.py:176
 #: .\ampa_manager\charge\admin\membership_admin.py:113
 msgid "View details"
 msgstr "Ver detalles"
@@ -221,10 +220,9 @@ msgid "Academic courses"
 msgstr "Cursos académicos"
 
 #: .\ampa_manager\academic_course\models\active_course.py:11
-#: .\ampa_manager\activity\admin\after_school_admin.py:56
+#: .\ampa_manager\activity\admin\after_school_admin.py:61
 #: .\ampa_manager\activity\admin\registration_filters.py:33
-#: .\ampa_manager\charge\admin\after_school_admin.py:40
-#: .\ampa_manager\charge\admin\after_school_admin.py:76
+#: .\ampa_manager\charge\admin\after_school_admin.py:84
 #: .\ampa_manager\charge\admin\membership_admin.py:33
 #: .\ampa_manager\charge\models\fee\fee.py:9
 #: .\ampa_manager\family\admin\child_admin.py:37
@@ -235,7 +233,7 @@ msgstr "Curso"
 
 #: .\ampa_manager\academic_course\models\active_course.py:14
 #: .\ampa_manager\academic_course\models\active_course.py:15
-#: .\ampa_manager_project\admin_menu.py:175
+#: .\ampa_manager_project\admin_menu.py:173
 msgid "Active course"
 msgstr "Curso activo"
 
@@ -288,34 +286,53 @@ msgstr "Primaria"
 msgid "All cycles"
 msgstr "Todos los ciclos"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:60
+#: .\ampa_manager\activity\admin\after_school_admin.py:57
+#: .\ampa_manager\activity\admin\after_school_admin.py:142
+#: .\ampa_manager\charge\admin\after_school_admin.py:102
+#: .\ampa_manager\charge\admin\after_school_admin.py:119
+#: .\ampa_manager\charge\admin\camps_admin.py:78
+#: .\ampa_manager\charge\admin\camps_admin.py:94
+#: .\ampa_manager\charge\admin\custody_admin.py:73
+#: .\ampa_manager\charge\admin\custody_admin.py:89
+#: .\ampa_manager\charge\admin\membership_admin.py:56
+#: .\ampa_manager\charge\admin\membership_admin.py:76
+#: .\ampa_manager\family\admin\family_admin.py:105
+#: .\ampa_manager\family\admin\family_admin.py:335
+#: .\ampa_manager_project\admin_menu.py:70
+#: .\ampa_manager_project\admin_menu.py:111
+#: .\ampa_manager_project\admin_menu.py:146
+#: .\ampa_manager_project\admin_menu.py:192
+msgid "Receipts"
+msgstr "Recibos"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:65
 #: .\ampa_manager\activity\models\after_school\after_school.py:12
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:128
 msgid "Activity"
 msgstr "Actividad"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:64
-#: .\ampa_manager\activity\admin\after_school_admin.py:125
+#: .\ampa_manager\activity\admin\after_school_admin.py:69
+#: .\ampa_manager\activity\admin\after_school_admin.py:130
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:15
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:137
 msgid "Timetable"
 msgstr "Horario"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:68
-#: .\ampa_manager\activity\admin\custody_admin.py:57
+#: .\ampa_manager\activity\admin\after_school_admin.py:73
+#: .\ampa_manager\activity\admin\custody_admin.py:58
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
 #: .\ampa_manager\activity\models\camps\camps_registration.py:18
-#: .\ampa_manager\activity\models\custody\custody_registration.py:21
-#: .\ampa_manager\charge\admin\after_school_admin.py:48
-#: .\ampa_manager\charge\admin\camps_admin.py:35
-#: .\ampa_manager\charge\admin\camps_admin.py:49
-#: .\ampa_manager\charge\admin\custody_admin.py:36
+#: .\ampa_manager\activity\models\custody\custody_registration.py:22
+#: .\ampa_manager\charge\admin\after_school_admin.py:56
+#: .\ampa_manager\charge\admin\camps_admin.py:36
+#: .\ampa_manager\charge\admin\camps_admin.py:50
+#: .\ampa_manager\charge\admin\custody_admin.py:37
 #: .\ampa_manager\views\validate_data.py:124
 msgid "Child"
 msgstr "Hijo"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:72
-#: .\ampa_manager\activity\admin\custody_admin.py:61
+#: .\ampa_manager\activity\admin\after_school_admin.py:77
+#: .\ampa_manager\activity\admin\custody_admin.py:62
 #: .\ampa_manager\activity\admin\registration_filters.py:59
 #: .\ampa_manager\charge\admin\filters\receipt_filters.py:6
 #: .\ampa_manager\charge\models\membership_receipt.py:19
@@ -329,66 +346,48 @@ msgstr "Hijo"
 msgid "Family"
 msgstr "Familia"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:76
+#: .\ampa_manager\activity\admin\after_school_admin.py:81
 #: .\ampa_manager\activity\admin\camps_admin.py:48
 #: .\ampa_manager\activity\admin\camps_admin.py:59
-#: .\ampa_manager\activity\admin\custody_admin.py:76
+#: .\ampa_manager\activity\admin\custody_admin.py:77
 #: .\ampa_manager\family\admin\child_admin.py:33
 #: .\ampa_manager\family\admin\family_admin.py:274
 #: .\ampa_manager\family\admin\parent_admin.py:24
 msgid "Is member"
 msgstr "Es socio"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:80
-#: .\ampa_manager\activity\admin\after_school_admin.py:128
-#: .\ampa_manager\activity\admin\custody_admin.py:65
+#: .\ampa_manager\activity\admin\after_school_admin.py:85
+#: .\ampa_manager\activity\admin\after_school_admin.py:133
+#: .\ampa_manager\activity\admin\custody_admin.py:66
 msgid "Price"
 msgstr "Precio"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:84
+#: .\ampa_manager\activity\admin\after_school_admin.py:89
 msgid "Download IDs of selected registrations as CSV"
 msgstr "Descargar IDs de las inscripciones seleccionadas como CSV"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:89
+#: .\ampa_manager\activity\admin\after_school_admin.py:94
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:32
 #: .\ampa_manager\activity\models\after_school\test_after_school_edition.py:31
 #: .\ampa_manager\activity\models\camps\camps_edition.py:27
 msgid "registrations"
 msgstr "Inscripciones"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:93
+#: .\ampa_manager\activity\admin\after_school_admin.py:98
 msgid "Download family emails"
 msgstr "Descargar correos familiares"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:111
+#: .\ampa_manager\activity\admin\after_school_admin.py:116
 #: .\ampa_manager\activity\admin\camps_admin.py:63
-#: .\ampa_manager\activity\admin\custody_admin.py:80
+#: .\ampa_manager\activity\admin\custody_admin.py:81
 #: .\ampa_manager\family\admin\family_admin.py:61
 msgid "Id"
 msgstr "Id"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:137
-#: .\ampa_manager\charge\admin\after_school_admin.py:94
-#: .\ampa_manager\charge\admin\after_school_admin.py:111
-#: .\ampa_manager\charge\admin\camps_admin.py:77
-#: .\ampa_manager\charge\admin\camps_admin.py:93
-#: .\ampa_manager\charge\admin\custody_admin.py:74
-#: .\ampa_manager\charge\admin\custody_admin.py:90
-#: .\ampa_manager\charge\admin\membership_admin.py:56
-#: .\ampa_manager\charge\admin\membership_admin.py:76
-#: .\ampa_manager\family\admin\family_admin.py:105
-#: .\ampa_manager\family\admin\family_admin.py:335
-#: .\ampa_manager_project\admin_menu.py:70
-#: .\ampa_manager_project\admin_menu.py:111
-#: .\ampa_manager_project\admin_menu.py:146
-#: .\ampa_manager_project\admin_menu.py:193
-msgid "Receipts"
-msgstr "Recibos"
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:141
-#: .\ampa_manager\charge\admin\after_school_admin.py:98
-#: .\ampa_manager\charge\admin\camps_admin.py:81
-#: .\ampa_manager\charge\admin\custody_admin.py:78
+#: .\ampa_manager\activity\admin\after_school_admin.py:146
+#: .\ampa_manager\charge\admin\after_school_admin.py:106
+#: .\ampa_manager\charge\admin\camps_admin.py:82
+#: .\ampa_manager\charge\admin\custody_admin.py:77
 #: .\ampa_manager\charge\admin\membership_admin.py:60
 #: .\ampa_manager\family\admin\family_admin.py:290
 #: .\ampa_manager\family\admin\family_admin.py:300
@@ -399,10 +398,10 @@ msgstr "Recibos"
 msgid "%(num_receipts)s receipt"
 msgstr "%(num_receipts)s recibos"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:143
-#: .\ampa_manager\charge\admin\after_school_admin.py:100
-#: .\ampa_manager\charge\admin\camps_admin.py:83
-#: .\ampa_manager\charge\admin\custody_admin.py:80
+#: .\ampa_manager\activity\admin\after_school_admin.py:148
+#: .\ampa_manager\charge\admin\after_school_admin.py:108
+#: .\ampa_manager\charge\admin\camps_admin.py:84
+#: .\ampa_manager\charge\admin\custody_admin.py:79
 #: .\ampa_manager\charge\admin\membership_admin.py:62
 #: .\ampa_manager\family\admin\family_admin.py:292
 #: .\ampa_manager\family\admin\family_admin.py:302
@@ -413,36 +412,36 @@ msgstr "%(num_receipts)s recibos"
 msgid "%(num_receipts)s receipts"
 msgstr "%(num_receipts)s recibos"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:148
+#: .\ampa_manager\activity\admin\after_school_admin.py:153
 msgid "Create after school remittance"
 msgstr "Crear remesa de extraescolares"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:158
-#: .\ampa_manager\activity\admin\after_school_admin.py:171
-#: .\ampa_manager\activity\admin\after_school_admin.py:184
-#: .\ampa_manager\activity\admin\after_school_admin.py:198
+#: .\ampa_manager\activity\admin\after_school_admin.py:163
+#: .\ampa_manager\activity\admin\after_school_admin.py:176
+#: .\ampa_manager\activity\admin\after_school_admin.py:189
+#: .\ampa_manager\activity\admin\after_school_admin.py:203
 #: .\ampa_manager\activity\admin\camps_admin.py:120
-#: .\ampa_manager\activity\admin\custody_admin.py:175
+#: .\ampa_manager\activity\admin\custody_admin.py:176
 msgid "Activity remittance created"
 msgstr "Remesa de actividad creada"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:161
+#: .\ampa_manager\activity\admin\after_school_admin.py:166
 msgid "Create after school remittance with half"
 msgstr "Crear remesa de extraescolares con la mitad del importe"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:174
+#: .\ampa_manager\activity\admin\after_school_admin.py:179
 msgid "Create after school remittance with left"
 msgstr "Crear remesa de extraescolares con el importe restante"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:187
+#: .\ampa_manager\activity\admin\after_school_admin.py:192
 msgid "Create after school remittance with enrolment"
 msgstr "Crear remesa de extraescolares con el importe de la matrícula"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:201
-#: .\ampa_manager\activity\admin\after_school_admin.py:237
-#: .\ampa_manager\activity\admin\after_school_admin.py:262
+#: .\ampa_manager\activity\admin\after_school_admin.py:206
+#: .\ampa_manager\activity\admin\after_school_admin.py:242
+#: .\ampa_manager\activity\admin\after_school_admin.py:267
 #: .\ampa_manager\activity\admin\camps_admin.py:77
-#: .\ampa_manager\activity\admin\custody_admin.py:99
+#: .\ampa_manager\activity\admin\custody_admin.py:100
 #: .\ampa_manager\family\admin\family_admin.py:102
 #: .\ampa_manager\family\admin\family_admin.py:328
 #: .\ampa_manager_project\admin_menu.py:64
@@ -451,97 +450,97 @@ msgstr "Crear remesa de extraescolares con el importe de la matrícula"
 msgid "Registrations"
 msgstr "Inscripciones"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:205
+#: .\ampa_manager\activity\admin\after_school_admin.py:210
 #: .\ampa_manager\activity\admin\camps_admin.py:123
-#: .\ampa_manager\activity\admin\custody_admin.py:191
-#: .\ampa_manager\charge\admin\after_school_admin.py:131
-#: .\ampa_manager\charge\admin\camps_admin.py:112
-#: .\ampa_manager\charge\admin\custody_admin.py:109
+#: .\ampa_manager\activity\admin\custody_admin.py:192
+#: .\ampa_manager\charge\admin\after_school_admin.py:139
+#: .\ampa_manager\charge\admin\camps_admin.py:113
+#: .\ampa_manager\charge\admin\custody_admin.py:108
 #: .\ampa_manager\charge\admin\membership_admin.py:116
 msgid "Export family emails to CSV"
 msgstr "Exportar correos de la familia a CSV"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:214
+#: .\ampa_manager\activity\admin\after_school_admin.py:219
 msgid "Download IDs of editions and registrations as JSON"
 msgstr "Descargar IDs de las ediciones e inscripciones como JSON"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:245
-#: .\ampa_manager\activity\admin\after_school_admin.py:247
+#: .\ampa_manager\activity\admin\after_school_admin.py:250
+#: .\ampa_manager\activity\admin\after_school_admin.py:252
 msgid "Edit"
 msgstr "Editar"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:258
+#: .\ampa_manager\activity\admin\after_school_admin.py:263
 #: .\ampa_manager_project\admin_menu.py:58
 #: .\ampa_manager_project\admin_menu.py:99
 #: .\ampa_manager_project\admin_menu.py:134
 msgid "Editions"
 msgstr "Ediciones"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:266
+#: .\ampa_manager\activity\admin\after_school_admin.py:271
 msgid "Courses"
 msgstr "Cursos"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:270
+#: .\ampa_manager\activity\admin\after_school_admin.py:275
 msgid "Merge activities (Move all editions to first selected)"
 msgstr "Unir actividades (mover todas las ediciones a la primera seleccionada"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:277
+#: .\ampa_manager\activity\admin\after_school_admin.py:282
 msgid "After-school kept"
 msgstr "Extraescolar mantenida"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:282
+#: .\ampa_manager\activity\admin\after_school_admin.py:287
 msgid "Edition changed"
 msgstr "Edición modificada"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:283
+#: .\ampa_manager\activity\admin\after_school_admin.py:288
 #: .\ampa_manager\activity\models\after_school\after_school_edition.py:12
 msgid "After-school"
 msgstr "Extraescolar"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:289
+#: .\ampa_manager\activity\admin\after_school_admin.py:294
 msgid "After-school deleted"
 msgstr "Extraescolar borrada"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:294
+#: .\ampa_manager\activity\admin\after_school_admin.py:299
 msgid "After-school renamed"
 msgstr "Extraescolar renombrada"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:302
+#: .\ampa_manager\activity\admin\after_school_admin.py:307
 msgid "No merge done. You have to select more than one after-school"
 msgstr "No se ha unido nada. Tienes que seleccionar mas de una extraescolar"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:76
-#: .\ampa_manager\activity\admin\custody_admin.py:95
+#: .\ampa_manager\activity\admin\custody_admin.py:96
 msgid "Prices"
 msgstr "Precios"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:80
 #: .\ampa_manager\activity\admin\camps_admin.py:100
 #: .\ampa_manager\activity\admin\camps_edition_filters.py:8
-#: .\ampa_manager\activity\admin\custody_admin.py:106
-#: .\ampa_manager\activity\admin\custody_admin.py:150
-#: .\ampa_manager\activity\admin\custody_admin.py:160
+#: .\ampa_manager\activity\admin\custody_admin.py:107
+#: .\ampa_manager\activity\admin\custody_admin.py:151
+#: .\ampa_manager\activity\admin\custody_admin.py:161
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
 #: .\ampa_manager\activity\admin\registration_filters.py:74
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:79
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:48
 msgid "Remittance"
 msgstr "Remesa"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:88
-#: .\ampa_manager\activity\admin\custody_admin.py:130
-#: .\ampa_manager\activity\admin\custody_admin.py:138
+#: .\ampa_manager\activity\admin\custody_admin.py:131
+#: .\ampa_manager\activity\admin\custody_admin.py:139
 #: .\ampa_manager\activity\admin\registration_filters.py:18
 msgid "No members"
 msgstr "No socios"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:96
-#: .\ampa_manager\activity\admin\custody_admin.py:146
-#: .\ampa_manager\charge\admin\after_school_admin.py:56
-#: .\ampa_manager\charge\admin\after_school_admin.py:105
-#: .\ampa_manager\charge\admin\camps_admin.py:43
-#: .\ampa_manager\charge\admin\camps_admin.py:87
-#: .\ampa_manager\charge\admin\custody_admin.py:44
-#: .\ampa_manager\charge\admin\custody_admin.py:84
+#: .\ampa_manager\activity\admin\custody_admin.py:147
+#: .\ampa_manager\charge\admin\after_school_admin.py:66
+#: .\ampa_manager\charge\admin\after_school_admin.py:113
+#: .\ampa_manager\charge\admin\camps_admin.py:44
+#: .\ampa_manager\charge\admin\camps_admin.py:88
+#: .\ampa_manager\charge\admin\custody_admin.py:45
+#: .\ampa_manager\charge\admin\custody_admin.py:83
 #: .\ampa_manager\charge\admin\membership_admin.py:66
 msgid "Total"
 msgstr "Total"
@@ -564,48 +563,48 @@ msgstr "Con remesa"
 msgid "No remittance"
 msgstr "Sin remesa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:49
-#: .\ampa_manager\charge\admin\after_school_admin.py:44
+#: .\ampa_manager\activity\admin\custody_admin.py:50
+#: .\ampa_manager\charge\admin\after_school_admin.py:52
 msgid "Member"
 msgstr "Socio"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:53
+#: .\ampa_manager\activity\admin\custody_admin.py:54
 #: .\ampa_manager\activity\models\custody\custody_edition.py:34
-#: .\ampa_manager\activity\models\custody\custody_registration.py:19
+#: .\ampa_manager\activity\models\custody\custody_registration.py:20
 msgid "Custody edition"
 msgstr "Edición de custodia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:102
-#: .\ampa_manager\activity\models\custody\custody_registration.py:23
+#: .\ampa_manager\activity\admin\custody_admin.py:103
+#: .\ampa_manager\activity\models\custody\custody_registration.py:24
 #: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:61
 msgid "Assisted days"
 msgstr "Días asistidos"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:118
+#: .\ampa_manager\activity\admin\custody_admin.py:119
 msgid "Charged"
 msgstr "Cobrado"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:126
+#: .\ampa_manager\activity\admin\custody_admin.py:127
 msgid "Members (topped by \"Max days for charge\")"
 msgstr "Socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:134
+#: .\ampa_manager\activity\admin\custody_admin.py:135
 msgid "No members (topped by \"Max days for charge\")"
 msgstr "No socios (limitado por los \"Días máximos a cobrar\")"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:158
+#: .\ampa_manager\activity\admin\custody_admin.py:159
 msgid "Multiple remmitances"
 msgstr "Varias remesas"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:165
+#: .\ampa_manager\activity\admin\custody_admin.py:166
 msgid "Create custody remittance"
 msgstr "Crear remesa de custodia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:178
+#: .\ampa_manager\activity\admin\custody_admin.py:179
 msgid "Calculate prices based on cost and registrations"
 msgstr "Calcular precios a partir de el coste y asistencia"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:181
+#: .\ampa_manager\activity\admin\custody_admin.py:182
 msgid ""
 "Any of the required fields to calculate the price is missing (cost, days "
 "with service, registrations)"
@@ -613,11 +612,11 @@ msgstr ""
 "Falta alguno de los campos necesarios para calcular el precio (coste, días "
 "con servicio, inscripciones)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:186
+#: .\ampa_manager\activity\admin\custody_admin.py:187
 msgid "Editions' prices calculated"
 msgstr "Precios de las ediciones calculados"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:188
+#: .\ampa_manager\activity\admin\custody_admin.py:189
 msgid "Non members"
 msgstr "No socios"
 
@@ -680,12 +679,12 @@ msgstr "Ediciones de extraescolares"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:20
 #: .\ampa_manager\activity\models\camps\camps_registration.py:19
-#: .\ampa_manager\activity\models\custody\custody_registration.py:22
+#: .\ampa_manager\activity\models\custody\custody_registration.py:23
 #: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:50
 #: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:56
-#: .\ampa_manager\charge\admin\after_school_admin.py:52
-#: .\ampa_manager\charge\admin\camps_admin.py:39
-#: .\ampa_manager\charge\admin\custody_admin.py:40
+#: .\ampa_manager\charge\admin\after_school_admin.py:62
+#: .\ampa_manager\charge\admin\camps_admin.py:40
+#: .\ampa_manager\charge\admin\custody_admin.py:41
 #: .\ampa_manager\charge\models\membership_receipt.py:20
 #: .\ampa_manager\family\models\holder\holder.py:27
 #: .\ampa_manager\family\models\holder\holder.py:42
@@ -704,7 +703,7 @@ msgstr "Inscripciones en extraescolares"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:39
 #: .\ampa_manager\activity\models\camps\camps_registration.py:37
-#: .\ampa_manager\activity\models\custody\custody_registration.py:40
+#: .\ampa_manager\activity\models\custody\custody_registration.py:41
 msgid "The selected bank account does not belong to the child's family"
 msgstr ""
 "La cuenta bancaria seleccionada no pertenece a la familia del hijo "
@@ -780,21 +779,21 @@ msgstr ""
 msgid "Custody editions"
 msgstr "Ediciones de custodia"
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:17
+#: .\ampa_manager\activity\models\custody\custody_registration.py:18
 msgid "assisted days"
 msgstr "días asistidos"
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:28
+#: .\ampa_manager\activity\models\custody\custody_registration.py:29
 msgid "Custody registration"
 msgstr "Inscripción en custodia"
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:29
+#: .\ampa_manager\activity\models\custody\custody_registration.py:30
 #: .\ampa_manager\charge\models\custody\custody_receipt.py:14
 #: .\ampa_manager\family\admin\family_admin.py:316
 msgid "Custody registrations"
 msgstr "Inscripciones en custodia"
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:36
+#: .\ampa_manager\activity\models\custody\custody_registration.py:37
 msgid "days"
 msgstr "días"
 
@@ -1086,15 +1085,15 @@ msgstr "Modificado"
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:34
 #: .\ampa_manager\activity\use_cases\importers\row.py:18
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:101
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:101
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:107
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:71
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:71
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:76
 msgid "Error"
 msgstr "Error"
 
 #: .\ampa_manager\activity\use_cases\importers\import_model_result.py:35
 #: .\ampa_manager\activity\use_cases\importers\row.py:19
-#: .\ampa_manager\templates\importers\base_import.html:316
+#: .\ampa_manager\templates\importers\base_import.html:81
 msgid "Omitted"
 msgstr "Omitido"
 
@@ -1110,15 +1109,20 @@ msgstr "Aviso"
 msgid "PTA Administration"
 msgstr "Administración del AMPA"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:115
+#: .\ampa_manager\charge\admin\after_school_admin.py:45
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:40
+msgid "Edition"
+msgstr "Ediciones"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:123
 msgid "Export after-school remittance to SEPA file"
 msgstr "Exportar la remesa de extraescolares a fichero SEPA"
 
-#: .\ampa_manager\charge\admin\camps_admin.py:97
+#: .\ampa_manager\charge\admin\camps_admin.py:98
 msgid "Export camps remittance to SEPA file"
 msgstr "Exportar la remesa de campamentos a fichero SEPA"
 
-#: .\ampa_manager\charge\admin\custody_admin.py:94
+#: .\ampa_manager\charge\admin\custody_admin.py:93
 msgid "Export custody remittance to SEPA file"
 msgstr "Exportar la remesa de custodia a fichero SEPA"
 
@@ -1131,10 +1135,6 @@ msgstr "Todos"
 #: .\ampa_manager\charge\admin\filters\receipt_filters.py:23
 msgid "Parent"
 msgstr "Padres"
-
-#: .\ampa_manager\charge\admin\filters\receipt_filters.py:40
-msgid "Edition"
-msgstr "Ediciones"
 
 #: .\ampa_manager\charge\admin\membership_admin.py:80
 msgid "Export Membership remittance to SEPA file"
@@ -1246,12 +1246,12 @@ msgid "Amount"
 msgstr "Importe"
 
 #: .\ampa_manager\charge\models\fee\fee.py:14
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:91
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:60
 msgid "Fee"
 msgstr "Cuota"
 
 #: .\ampa_manager\charge\models\fee\fee.py:15
-#: .\ampa_manager_project\admin_menu.py:187
+#: .\ampa_manager_project\admin_menu.py:186
 msgid "Fees"
 msgstr "Cuotas"
 
@@ -1303,6 +1303,7 @@ msgid "Created at"
 msgstr "Creado"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:11
+#: .\ampa_manager\forms\generate_members_remittance_form.py:7
 msgid "Payment date"
 msgstr "Fecha de pago"
 
@@ -1318,15 +1319,15 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
-#: .\ampa_manager\charge\use_cases\membership\create_membership_remittance_with_families\membership_remittance_creator.py:51
+#: .\ampa_manager\charge\use_cases\membership\create_membership_remittance_with_families\membership_remittance_creator.py:58
 msgid "Members fee"
 msgstr "Cuota de socios"
 
-#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:130
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:127
 msgid "Unknown renew status"
 msgstr "Estado de renovación desconocido"
 
-#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:147
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:142
 msgid "Not available"
 msgstr "No disponible"
 
@@ -1334,7 +1335,7 @@ msgstr "No disponible"
 #: .\ampa_manager_project\admin_menu.py:76
 #: .\ampa_manager_project\admin_menu.py:117
 #: .\ampa_manager_project\admin_menu.py:152
-#: .\ampa_manager_project\admin_menu.py:199
+#: .\ampa_manager_project\admin_menu.py:198
 msgid "Remittances"
 msgstr "Remesas"
 
@@ -1392,7 +1393,7 @@ msgstr "Configuración"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:27
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:30
-#: .\ampa_manager_project\admin_menu.py:228
+#: .\ampa_manager_project\admin_menu.py:226
 msgid "Settings"
 msgstr "Configuraciones"
 
@@ -2110,33 +2111,33 @@ msgstr "SIMULACIÓN: Solo listar los cambios sin hacer ninguno"
 msgid "Custody edition to import to"
 msgstr "Edición de custodia a la que importar"
 
-#: .\ampa_manager\templates\importers\base_import.html:273
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:65
+#: .\ampa_manager\templates\campaign_breadcrumbs.html:3
+#: .\ampa_manager\templates\importers\base_import.html:32
 #: .\ampa_manager\templates\validate_families_data.html:28
 msgid "Home"
 msgstr "Inicio"
 
-#: .\ampa_manager\templates\importers\base_import.html:283
+#: .\ampa_manager\templates\importers\base_import.html:48
 msgid "Select file to import"
 msgstr "Selecciona el fichero a importar"
 
-#: .\ampa_manager\templates\importers\base_import.html:287
+#: .\ampa_manager\templates\importers\base_import.html:52
 msgid "Import file"
 msgstr "Importar fichero"
 
-#: .\ampa_manager\templates\importers\base_import.html:297
+#: .\ampa_manager\templates\importers\base_import.html:62
 msgid "Results"
 msgstr "Resultados"
 
-#: .\ampa_manager\templates\importers\base_import.html:301
+#: .\ampa_manager\templates\importers\base_import.html:66
 msgid "Warning: This has been a test of the import"
 msgstr "Aviso: Esto ha sido una prueba de la importación"
 
-#: .\ampa_manager\templates\importers\base_import.html:303
+#: .\ampa_manager\templates\importers\base_import.html:68
 msgid "Nothing has been imported"
 msgstr "No se ha importado nada"
 
-#: .\ampa_manager\templates\importers\base_import.html:304
+#: .\ampa_manager\templates\importers\base_import.html:69
 msgid ""
 "If the results are ok, import the file again disabling the \"TEST THE "
 "IMPORT\" option"
@@ -2144,43 +2145,43 @@ msgstr ""
 "Si los resultados son correctos, importa de nuevo el fichero desmarcando la "
 "opción \"PROBAR LA IMPORTACIÓN\""
 
-#: .\ampa_manager\templates\importers\base_import.html:312
+#: .\ampa_manager\templates\importers\base_import.html:77
 msgid "Show all rows"
 msgstr "Mostrar todas las filas"
 
-#: .\ampa_manager\templates\importers\base_import.html:313
+#: .\ampa_manager\templates\importers\base_import.html:78
 msgid "Imported Ok"
 msgstr "Importado Ok"
 
-#: .\ampa_manager\templates\importers\base_import.html:314
+#: .\ampa_manager\templates\importers\base_import.html:79
 msgid "Imported warning"
 msgstr "Importado con avisos"
 
-#: .\ampa_manager\templates\importers\base_import.html:315
+#: .\ampa_manager\templates\importers\base_import.html:80
 msgid "Not imported"
 msgstr "No importado"
 
-#: .\ampa_manager\templates\importers\base_import.html:321
+#: .\ampa_manager\templates\importers\base_import.html:86
 msgid "Row"
 msgstr "Fila"
 
-#: .\ampa_manager\templates\importers\base_import.html:322
+#: .\ampa_manager\templates\importers\base_import.html:87
 msgid "Result"
 msgstr "Resultado"
 
-#: .\ampa_manager\templates\importers\base_import.html:323
+#: .\ampa_manager\templates\importers\base_import.html:88
 msgid "Imported"
 msgstr "Importado"
 
-#: .\ampa_manager\templates\importers\base_import.html:324
+#: .\ampa_manager\templates\importers\base_import.html:89
 msgid "Excel"
 msgstr "Excel"
 
-#: .\ampa_manager\templates\importers\base_import.html:325
+#: .\ampa_manager\templates\importers\base_import.html:90
 msgid "Formatted"
 msgstr "Formateado"
 
-#: .\ampa_manager\templates\importers\base_import.html:343
+#: .\ampa_manager\templates\importers\base_import.html:108
 msgid "There are no results"
 msgstr "No hay resultados"
 
@@ -2188,7 +2189,7 @@ msgstr "No hay resultados"
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:8
 #: .\ampa_manager\templates\importers\import_camps.html:8
 #: .\ampa_manager\templates\importers\import_custody.html:8
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:8
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:19
 msgid "Instructions"
 msgstr "Instrucciones"
 
@@ -2196,7 +2197,8 @@ msgstr "Instrucciones"
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:10
 #: .\ampa_manager\templates\importers\import_camps.html:10
 #: .\ampa_manager\templates\importers\import_custody.html:11
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:10
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:21
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:34
 msgid "Click here to download an excel template"
 msgstr "Haz clic aquí para descargar una plantilla excel"
 
@@ -2204,7 +2206,7 @@ msgstr "Haz clic aquí para descargar una plantilla excel"
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:11
 #: .\ampa_manager\templates\importers\import_camps.html:11
 #: .\ampa_manager\templates\importers\import_custody.html:12
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:11
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:22
 msgid "Only the first sheet of the excel will be imported"
 msgstr "Sólo se importa la primera hoja del excel"
 
@@ -2212,7 +2214,7 @@ msgstr "Sólo se importa la primera hoja del excel"
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:12
 #: .\ampa_manager\templates\importers\import_camps.html:12
 #: .\ampa_manager\templates\importers\import_custody.html:13
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:12
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:23
 msgid ""
 "The rows imported will be from row 3 onwards (two header rows are expected)"
 msgstr ""
@@ -2222,7 +2224,7 @@ msgstr ""
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:13
 #: .\ampa_manager\templates\importers\import_camps.html:13
 #: .\ampa_manager\templates\importers\import_custody.html:14
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:13
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:24
 msgid "If there is no data for any column leave it empty"
 msgstr "Si no hay datos para alguna columna déjala en blanco"
 
@@ -2230,7 +2232,7 @@ msgstr "Si no hay datos para alguna columna déjala en blanco"
 #: .\ampa_manager\templates\importers\import_after_school_registrations.html:14
 #: .\ampa_manager\templates\importers\import_camps.html:14
 #: .\ampa_manager\templates\importers\import_custody.html:15
-#: .\ampa_manager\templates\membership_campaign\import_new_members.html:14
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:25
 msgid "The columns must be in the following order"
 msgstr "Las columnas deben aparecer en el siguiente orden"
 
@@ -2242,141 +2244,116 @@ msgstr "Si la edición de custodia necesaria no existe "
 msgid "you can create it here"
 msgstr " puedes crearla aquí"
 
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:61
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:66
-msgid "Membership campaign"
-msgstr "Campaña de socios"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:68
-msgid "Notify campaign"
-msgstr "Notificar campaña"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:71
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:96
-msgid "Import new members"
-msgstr "Importar nuevos socios"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:74
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:102
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:6
-msgid "Import last course members"
-msgstr "Importar socios del curso pasado"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:77
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:108
-msgid "Generate remittance"
-msgstr "Generar remesa"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:80
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:114
-msgid "Notify remittance"
-msgstr "Notificar remesa"
-
-#: .\ampa_manager\templates\membership_campaign\base_membership_campaign.html:90
-msgid "Notify campaign start"
-msgstr "Notificar inicio de la campaña"
-
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:6
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:7
 msgid "Generate members remittance"
 msgstr "Generar la remesa de socios"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:56
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:55
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:66
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:66
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:25
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:25
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:36
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:35
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:25
 msgid "What this section does?"
 msgstr "Para qué sirve esta sección"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:58
-msgid "It generates the membership remittance."
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:27
+msgid "It generates the membership remittance"
 msgstr "Generar la remesa de socios"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:62
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:63
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:74
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:74
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:28
+msgid ""
+"It should be generated once the new members and the last course members have "
+"been imported"
+msgstr ""
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:32
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:33
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:44
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:31
 msgid "Review the following information"
 msgstr "Revisa la siguiente información"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:67
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:73
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:79
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:85
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:37
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:49
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:55
 msgid "Click to open"
 msgstr "Clic para abrir"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:67
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:37
 msgid "Last course fee"
 msgstr "Cuota de socios del año pasado"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:73
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:44
 msgid "Last course members"
 msgstr "Socios el año pasado"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:79
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:49
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:38
 msgid "Active course members"
 msgstr "Socios este curso"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:85
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:55
 msgid "Remittances already generated"
 msgstr "Remesas previamente generadas"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:92
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:62
 msgid "Complete the following information"
 msgstr "Completa la siguiente información"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:99
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:69
 msgid "Unable to generate remittance"
 msgstr "No se ha podido generar la remesa"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:104
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:74
 msgid "The remittance has been generated"
 msgstr "La remesa ha sido generada"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:105
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:75
 msgid "Open generated remittance"
 msgstr "Abrir la remesa generada"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:106
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:134
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:141
-msgid "Notify families by email"
-msgstr "Notificar familias por correo"
-
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:111
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:96
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:127
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:133
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:80
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:78
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:97
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:102
 msgid "Select an option"
 msgstr "Selecciona una opción"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:114
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:83
 #, python-format
 msgid "Generate members remittance for course %(active_course)s"
 msgstr "Generar la remesa de socios para el curso %(active_course)s"
 
-#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:116
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:107
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:136
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:143
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:85
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:84
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:106
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:112
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:57
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:7
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:22
+msgid "Import last course members"
+msgstr "Importar socios del curso pasado"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:27
 msgid "It copies the members from the last course."
 msgstr "Copia los socios del curso pasado"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:58
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:28
 msgid ""
 "Families whose children are not in the school anymore will not be copied."
 msgstr "Las familias cuyos hijos ya no están en la ikastola no se copiarán"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:59
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:29
 msgid "Families that have request not to renew will not be copied."
 msgstr "Las familias que han pedido no renovar no se copiarán"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:68
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:79
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:50
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:49
 msgid ""
 "Families to renew (last year members, with children in school and have not "
 "declined)"
@@ -2384,43 +2361,36 @@ msgstr ""
 "Familias que renuevan (miembros el año pasado, con hijos en la ikastola y no "
 "han rechazado)"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:74
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:85
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:56
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:55
 msgid ""
 "Families that will not renew due to they do not have children in school "
 "anymore"
 msgstr "Familias que no renuevan porque sus hijos ya no están en la ikastola"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:80
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:91
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:62
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:61
 msgid "Families that will not renew due to they have declined renew"
 msgstr "Familias que no renuevan porque han solicitado no hacerlo"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:88
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:70
 msgid "Last course members copied"
 msgstr "Socios del año pasado copiados"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:90
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:72
 msgid "This course members"
 msgstr "Socios de este año"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:101
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:83
 msgid "Copy last course members"
 msgstr "Copiar los socios del curso pasado"
 
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:103
-msgid "Check last course members"
-msgstr "Comprueba los socios del curso pasado"
-
-#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:105
-msgid "Check this course members"
-msgstr "Comprueba los socios de este curso"
-
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:6
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:7
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:7
 msgid "Notify membership campaign"
 msgstr "Notificar la campaña de socios"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:68
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:38
 msgid ""
 "It notifies by email the membership campaign start to all families that were "
 "members last course."
@@ -2428,48 +2398,53 @@ msgstr ""
 "Notifica por correo el inicio de la campaña de socios a todas las familias "
 "que fueron socias el año pasado"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:69
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:39
 msgid ""
 "Each family will receive a different email depending if they are going to "
 "renew or not."
 msgstr ""
 "Cada familia recibirá un correo distinto dependiendo de si van a renovar o no"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:70
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:40
 msgid "It should be sent before the campaign starts."
 msgstr "Debería enviarse antes de comenzar la campaña de socios"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:99
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:105
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:69
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:74
 msgid "Errors sending mails"
 msgstr "Error al enviar correos"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:102
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:72
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:77
 msgid "Notified emails"
 msgstr "Correos notificados"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:109
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:115
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:79
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:84
 msgid "The error happened sending mail to"
 msgstr "El error sucedió al enviar un correo a"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:118
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:124
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:88
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:93
 msgid "Families notified"
 msgstr "Familias notificadas"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:132
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:139
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:102
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
 #, python-format
 msgid "Send test emails to %(test_email)s"
 msgstr "Enviar correos de prueba a %(test_email)s"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:6
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:104
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:110
+msgid "Notify families by email"
+msgstr "Notificar familias por correo"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:7
 msgid "Notify membership remittance"
 msgstr "Notificar remesa de socios"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:68
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:37
 msgid ""
 "It notifies by email to the families that the membership fee will be charged "
 "soon."
@@ -2477,11 +2452,11 @@ msgstr ""
 "Notifica por correo a las familias que la cuota de socio se cobrará "
 "próximamente"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:69
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:38
 msgid "It should be sent before the remittance is uploaded to the bank."
 msgstr "Debería enviarse antes de que subir la remesa al banco."
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:70
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:39
 msgid ""
 "If there are more than one remittance for the active course, the last one "
 "generated will be notified."
@@ -2489,14 +2464,36 @@ msgstr ""
 "Si hay más de una remesa para el curso activo, se notificará la última "
 "generada."
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:85
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:54
 msgid "Active course remittances"
 msgstr "Remesas del curso activo"
 
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:139
-#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:141
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:110
 msgid "Remittance not yet generated"
 msgstr "Remesa no generada aún"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:27
+msgid ""
+"It gives you information on how to configure and open a membership campaign"
+msgstr "Te da información sobre como configurar y abrir la campaña de socios"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:33
+msgid ""
+"You have to create a Google Form to ask for the personal data of new "
+"members, open it and distribute the link among the families in the WhatsApp "
+"community."
+msgstr "Tienes que crear un formulario de Google para pedir los datos personales de los nuevos miembros, abrirlo y distribuir el enlace enre las familias en la comunidad de WhatsApp"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:34
+msgid ""
+"The data requested in the form need to be enough to complete the following "
+"template"
+msgstr "Los datos solicitados en el formulario deben ser suficientes para completar la siguiente plantilla"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:35
+msgid "It\\'s recommended to make a copy of the last course form."
+msgstr "Se recomienda hacer una copia del formulario del año pasado."
 
 #: .\ampa_manager\templates\validate_families_data.html:6
 #: .\ampa_manager\templates\validate_families_data.html:29
@@ -2540,17 +2537,41 @@ msgstr "Importar campamentos"
 msgid "Import custody"
 msgstr "Importar custodia"
 
-#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:39
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:16
+msgid "Membership campaign"
+msgstr "Campaña de socios"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:20
+msgid "Notify campaign"
+msgstr "Notificar campaña"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:21
+msgid "Open campaign"
+msgstr "Abrir campaña"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:23
+msgid "Import new members"
+msgstr "Importar nuevos socios"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:24
+msgid "Generate remittance"
+msgstr "Generar remesa"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:25
+msgid "Notify remittance"
+msgstr "Notificar remesa"
+
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:147
+msgid "Unknown error"
+msgstr "Error desconocido"
+
+#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:42
 msgid "Active course members updated"
 msgstr "Socios de este curso actualizados"
 
-#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:41
+#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:44
 msgid "Unable to update active course members"
 msgstr "No se ha podido actualizar los socios de este curso"
-
-#: .\ampa_manager\views\membership_campaign\import_new_members_view.py:18
-msgid "Import members"
-msgstr "Importar socios"
 
 #: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:30
 msgid "Not yet generated"
@@ -2625,19 +2646,19 @@ msgstr "Importar inscripciones"
 msgid "Import asistencia"
 msgstr "Importar asistencia"
 
-#: .\ampa_manager_project\admin_menu.py:205
+#: .\ampa_manager_project\admin_menu.py:204
 msgid "Members campaign"
 msgstr "Campaña de socios"
 
-#: .\ampa_manager_project\admin_menu.py:210
+#: .\ampa_manager_project\admin_menu.py:209
 msgid "Others"
 msgstr "Otros"
 
-#: .\ampa_manager_project\admin_menu.py:216
+#: .\ampa_manager_project\admin_menu.py:215
 msgid "Usuarios"
 msgstr "Usuarios"
 
-#: .\ampa_manager_project\admin_menu.py:222
+#: .\ampa_manager_project\admin_menu.py:221
 msgid "Grupos"
 msgstr "Grupos"
 
@@ -2648,6 +2669,18 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:126
 msgid "Basque"
 msgstr "Euskera"
+
+#~ msgid "Notify campaign start"
+#~ msgstr "Notificar inicio de la campaña"
+
+#~ msgid "Check last course members"
+#~ msgstr "Comprueba los socios del curso pasado"
+
+#~ msgid "Check this course members"
+#~ msgstr "Comprueba los socios de este curso"
+
+#~ msgid "Import members"
+#~ msgstr "Importar socios"
 
 #~ msgid "Number of remittances"
 #~ msgstr "Número de remesas"

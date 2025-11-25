@@ -15,7 +15,6 @@ from ampa_manager.views.membership_campaign.base_membership_campaign_view import
 class ImportNewMembersView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/import_new_members.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_socios.xlsx'
-    IMPORTER_TITLE = _('Import members')
     VIEW_NAME = 'import_new_members'
 
     @classmethod
@@ -27,7 +26,6 @@ class ImportNewMembersView(BaseMembershipCampaignView):
 
         context.update({
             'form': form,
-            'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
             'excel_columns': MembersImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE

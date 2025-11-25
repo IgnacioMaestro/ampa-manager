@@ -10,7 +10,7 @@ from ampa_manager.views.membership_campaign.base_membership_campaign_view import
 
 class OpenMembershipCampaignView(BaseMembershipCampaignView):
     HTML_TEMPLATE = 'membership_campaign/open_membership_campaign.html'
-    VIEW_NAME = 'notify_members_campaign'
+    VIEW_NAME = 'open_members_campaign'
 
     @classmethod
     def get_context(cls) -> dict:
