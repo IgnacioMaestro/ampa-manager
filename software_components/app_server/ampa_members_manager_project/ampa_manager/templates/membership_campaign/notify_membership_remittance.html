@@ -10,6 +10,16 @@
     <style>
         {% include "./campaign_styles.css" %}
     </style>
+
+    <script>
+        function submitWithUrlParam(param) {
+          const form = document.getElementById('notify-form');
+          const originalAction = form.action;
+          form.action = `${originalAction}?${param}`;
+          form.submit();
+          form.action = originalAction;
+        }
+    </script>
 {% endblock %}
 
 {% block breadcrumbs %}
