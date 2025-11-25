@@ -27,7 +27,8 @@ class ImportLastCourseMembersView(BaseMembershipCampaignView):
             'families_not_renew_declined_url': f'{family_changelist_url}?member=no_renew_declined',
             'last_course_members_url': f'{family_changelist_url}?member=last_year',
             'active_course_members_url': f'{family_changelist_url}?member=yes',
-            'active_course_members_count': cls.get_active_course_members_count()
+            'active_course_members_count': cls.get_active_course_members_count(),
+            'last_course_members_count': cls.get_last_course_members_count()
         })
         return context
 
@@ -56,3 +57,8 @@ class ImportLastCourseMembersView(BaseMembershipCampaignView):
     def get_active_course_members_count(cls):
         course = ActiveCourse.load()
         return Membership.objects.of_course(course).count()
+
+    @classmethod
+    def get_last_course_members_count(cls):
+        last_course = ActiveCourse.get_previous()
+        return Membership.objects.of_course(last_course).count()

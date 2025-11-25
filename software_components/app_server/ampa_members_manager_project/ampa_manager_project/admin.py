@@ -61,15 +61,17 @@ class CustomAdminSite(admin.AdminSite):
             menu_app = MenuGroup(app_label=group_label, app_url='#', name=group_label)
 
             for group_link in admin_group['links']:
-                link_app = group_link['app']
                 link_label = group_link['label']
                 link_type = group_link['type']
                 if link_type == 'model':
+                    link_app = group_link['app']
                     link_model = group_link['model']
                     link_url = reverse('admin:%s_%s_changelist' % (link_app, link_model))
                 elif link_type == 'view':
                     link_view = group_link['view']
                     link_url = reverse(link_view)
+                elif link_type == 'link':
+                    link_url = group_link['url']
                 else:
                     continue
 
