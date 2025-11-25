@@ -23,7 +23,7 @@ class MembershipRemittance(NameableWithDate, models.Model):
 
     @property
     def complete_name(self) -> str:
-        return f'{self.course} - {self.name} ({self.created_at.strftime("%Y%m%d_%H%M%S")})'
+        return f'{self.course} - {self.name} ({self.created_at.strftime("%d/%m/%y")})'
 
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=[self.id])

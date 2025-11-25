@@ -1,6 +1,5 @@
 from django import forms
-from django.conf import settings
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
@@ -163,16 +162,6 @@ class FamilyAdmin(admin.ModelAdmin):
     def export_family_emails(self, request, families: QuerySet[Family]):
         emails_csv = FamilyEmailExporter(list(families), parents_emails=False).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
-
-    @admin.action(description=gettext_lazy("Send email to the parents of selected families"))
-    def send_email_to_parents(self, request, families: QuerySet[Family]):
-        emails = Family.get_families_parents_emails(families)
-        emails_csv = ",".join(emails)
-        email = settings.FROM_EMAIL
-        link_href = f"mailto:{email}?bcc={emails_csv}"
-        link_text = gettext_lazy("Click here to send an email to the parents")
-        link_html = f'<a target="_new" href="{link_href}">{link_text}</a>'
-        return messages.success(request, mark_safe(link_html))
 
     @admin.action(description=gettext_lazy("Export families to XLS"))
     def export_families_xls(self, _, families: QuerySet[Family]):

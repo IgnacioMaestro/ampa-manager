@@ -23,5 +23,5 @@ class CustodyRemittanceManager(Manager):
             custody_remittance.custody_editions.set(custody_editions)
             return custody_remittance
 
-    def paid_on_current_year(self) -> QuerySet[CustodyEdition]:
+    def paid_on_current_year(self) -> QuerySet[CustodyRemittance]:
         return self.filter(payment_date__year=timezone.now().year)

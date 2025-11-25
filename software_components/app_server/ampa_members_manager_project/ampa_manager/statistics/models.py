@@ -42,5 +42,5 @@ class Statistic:
     @classmethod
     def families_in_school(cls):
         family_count = Family.objects.count()
-        family_in_school_count = Family.objects.has_any_children().count()
+        family_in_school_count = Family.objects.has_any_school_children().count()
         return f'{family_in_school_count}/{family_count}'

@@ -6,28 +6,32 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
-from ampa_manager.activity.use_cases.importers.after_schools_importer import AfterSchoolsImporter
+from ampa_manager.activity.models.camps.camps_edition import CampsEdition
+from ampa_manager.activity.use_cases.importers.camps_importer import CampsImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.forms import ImportAfterSchoolsRegistrationsForm
-from ampa_manager.views.import_custody_view import SimulationException
+from ampa_manager.forms.import_camps_form import ImportCampsForm
 
 
-class ImportAfterSchoolRegistrationsView(View):
-    HTML_TEMPLATE = 'import_after_school_registrations.html'
-    EXCEL_TEMPLATE = 'templates/plantilla_importar_extraescolares.xlsx'
-    IMPORTER_TITLE = _('Import afterschool registrations')
-    VIEW_NAME = 'import_after_schools_registrations'
+class SimulationException(Exception):
+    pass
+
+
+class ImportCampsView(View):
+    HTML_TEMPLATE = 'importers/import_camps.html'
+    EXCEL_TEMPLATE = 'templates/plantilla_importar_campamentos.xlsx'
+    IMPORTER_TITLE = _('Import camps')
+    VIEW_NAME = 'import_camps'
 
     @classmethod
-    def get_context(cls, form: Optional[ImportAfterSchoolsRegistrationsForm] = None) -> dict:
+    def get_context(cls, form: Optional[ImportCampsForm] = None) -> dict:
         if not form:
-            form = ImportAfterSchoolsRegistrationsForm()
+            form = ImportCampsForm()
 
         return {
             'form': form,
             'importer_title': cls.IMPORTER_TITLE,
             'view_url': reverse(cls.VIEW_NAME),
-            'excel_columns': AfterSchoolsImporter.COLUMNS_TO_IMPORT,
+            'excel_columns': CampsImporter.COLUMNS_TO_IMPORT,
             'excel_template_file_name': cls.EXCEL_TEMPLATE
         }
 
@@ -37,12 +41,13 @@ class ImportAfterSchoolRegistrationsView(View):
 
     @classmethod
     def post(cls, request):
-        form = ImportAfterSchoolsRegistrationsForm(request.POST, request.FILES)
+        form = ImportCampsForm(request.POST, request.FILES)
         context = cls.get_context(form)
 
         if form.is_valid():
-            result: ImportExcelResult = cls.import_after_school_registrations(
+            result: ImportExcelResult = cls.import_camps(
                 excel_content=request.FILES['file'].read(),
+                edition_id=request.POST.get('camps_edition'),
                 simulation=request.POST.get('simulation')
             )
 
@@ -63,11 +68,12 @@ class ImportAfterSchoolRegistrationsView(View):
         return render(request, cls.HTML_TEMPLATE, context)
 
     @classmethod
-    def import_after_school_registrations(cls, excel_content, simulation: bool) -> Optional[ImportExcelResult]:
+    def import_camps(cls, excel_content: bytes, edition_id: int, simulation: bool) -> Optional[ImportExcelResult]:
         result = None
         try:
             with transaction.atomic():
-                result = AfterSchoolsImporter(excel_content).run()
+                edition = CampsEdition.objects.get(id=edition_id)
+                result = CampsImporter(excel_content, edition).run()
 
                 if simulation:
                     raise SimulationException()

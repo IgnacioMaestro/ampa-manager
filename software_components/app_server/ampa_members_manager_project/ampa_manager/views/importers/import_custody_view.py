@@ -9,7 +9,7 @@ from django.views import View
 from ampa_manager.activity.models.custody.custody_edition import CustodyEdition
 from ampa_manager.activity.use_cases.importers.custody_importer import CustodyImporter
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
-from ampa_manager.forms import ImportCustodyForm
+from ampa_manager.forms.import_custody_form import ImportCustodyForm
 
 
 class SimulationException(Exception):
@@ -17,7 +17,7 @@ class SimulationException(Exception):
 
 
 class ImportCustodyView(View):
-    HTML_TEMPLATE = 'import_custody.html'
+    HTML_TEMPLATE = 'importers/import_custody.html'
     EXCEL_TEMPLATE = 'templates/plantilla_importar_ludoteca.xlsx'
     IMPORTER_TITLE = _('Import custody')
     VIEW_NAME = 'import_custody'
