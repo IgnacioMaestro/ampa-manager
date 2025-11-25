@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
 from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
+from ampa_manager.charge.use_cases.membership.mail_result_merger import MailResultMerger
 from ampa_manager.family.models.family import Family
 from ampa_manager.utils.mailer import Mailer
 
@@ -22,22 +23,20 @@ class MembershipCampaignNotifier:
         self.notified_emails: list[str] = []
 
     def test_notify(self) -> MailNotifierResult:
+        partial_results = []
         emails = [settings.TEST_EMAIL_RECIPIENT]
         for renew_status in \
                 [self.RENEW_STATUS_RENEW, self.RENEW_STATUS_DECLINED, self.RENEW_STATUS_NO_RENEW_NO_SCHOOL_CHILDREN]:
-            error: Optional[str] = Mailer.send_template_mail(
+            partial_result: MailNotifierResult = Mailer.send_template_mail(
                 bcc_recipients=emails,
                 subject=self.MAIL_SUBJECT,
                 body_html_template=self.MAIL_TEMPLATE,
                 body_html_context=self.__get_test_template_context(renew_status),
                 body_text_content=self.__get_test_text_context(renew_status)
             )
-            if error:
-                return MailNotifierResult(self.notified_emails, emails, error)
-            else:
-                self.notified_emails.extend(emails)
+            partial_results.append(partial_result)
 
-        return MailNotifierResult(self.notified_emails, emails, error)
+        return MailResultMerger.merge(partial_results)
 
     def notify(self) -> MailNotifierResult:
         families = {
@@ -46,21 +45,19 @@ class MembershipCampaignNotifier:
             self.RENEW_STATUS_DECLINED: Family.objects.membership_no_renew_declined(),
         }
 
+        partial_results = []
         for renew_status, families in families.items():
             for family in families:
-                family_emails = self.__get_emails(family)
-                error: Optional[str] = Mailer.send_template_mail(
+                partial_result: MailNotifierResult = Mailer.send_template_mail(
                     bcc_recipients=self.__get_emails(family),
                     subject=self.MAIL_SUBJECT,
                     body_html_template=self.MAIL_TEMPLATE,
                     body_html_context=self.__get_family_template_context(family, renew_status),
                     body_text_content=self.__get_family_text_context(family, renew_status)
                 )
-                if error:
-                    return MailNotifierResult(self.notified_emails, family_emails, error)
-                else:
-                    self.notified_emails.extend(family_emails)
-        return MailNotifierResult(self.notified_emails)
+                partial_results.append(partial_result)
+
+        return MailResultMerger.merge(partial_results)
 
     def __get_test_template_context(self, renew_status: str):
         return self.__get_template_context('XXXX', renew_status)
