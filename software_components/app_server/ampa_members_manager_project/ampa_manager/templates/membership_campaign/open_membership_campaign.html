@@ -1,0 +1,39 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Notify membership campaign' %}{% endblock %}
+
+{% block extrahead %}
+    <style>
+        {% include "./campaign_styles.css" %}
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
+    <div id="upload_form" class="main-container">
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It gives you information on how to configure and open a membership campaign' %}</li>
+        </ul>
+        <br/>
+
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
+        <ul>
+            <li>{% trans 'You have to create a Google Form to ask for the personal data of new members, open it and distribute the link among the families in the WhatsApp community.' %}</li>
+            <li>{% trans 'The data requested in the form need to be enough to complete the following template' %}: <a href="{% static excel_template_file_name %}">{% trans 'Click here to download an excel template' %}</a></li>
+            <li>{% trans "It\'s recommended to make a copy of the last course form." %}</li>
+        </ul>
+    </div>
+
+{% endblock %}

@@ -169,10 +169,9 @@ MENU = [
                 'label': _('Academic courses'),
             },
             {
-                'type': 'model',
-                'app': 'ampa_manager',
-                'model': 'activecourse',
+                'type': 'link',
                 'label': _('Active course'),
+                'url': '/admin/ampa_manager/activecourse/1/change/',
             },
             {
                 'type': 'model',
@@ -222,9 +221,8 @@ MENU = [
                 'label': _('Grupos'),
             },
             {
-                'type': 'model',
-                'app': 'ampa_manager',
-                'model': 'dynamicsetting',
+                'type': 'link',
+                'url': '/admin/ampa_manager/dynamicsetting/1/change/',
                 'label': _('Settings'),
             },
         ]
