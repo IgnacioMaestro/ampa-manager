@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.conf import settings
 from django.utils.translation import gettext_lazy
 
@@ -124,7 +122,7 @@ class MembershipCampaignNotifier:
                 f'- Hori zuzena ez bada eta bazkide izaten jarraitu nahi baduzue: erantzun mezu honi zuzen dezagun. \n'
             )
         else:
-            return gettext_lazy('Unknown renew status')
+            return gettext('Unknown renew status')
 
     @classmethod
     def __get_emails(cls, family: Family) -> list[str]:
