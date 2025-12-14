@@ -15,8 +15,10 @@ from ..models.after_school_charge.after_school_remittance import AfterSchoolRemi
 from ..remittance import Remittance
 from ..remittance_utils import RemittanceUtils
 from ..sepa.sepa_response_creator import SEPAResponseCreator
+from ..use_cases.after_school.after_school_remittance_notifier import AfterSchoolRemittanceNotifier
 from ..use_cases.after_school.remittance_generator_from_after_school_remittance import \
     RemittanceGeneratorFromAfterSchoolRemittance
+from ..use_cases.membership.mail_notifier_result import MailNotifierResult
 from ..use_cases.remittance_creator_error import RemittanceCreatorError
 from ...academic_course.models.academic_course import AcademicCourse
 from ...family.models.membership import Membership
@@ -80,6 +82,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     list_per_page = 25
     search_fields = ['name', 'concept', 'sepa_id']
+    list_filter = ['after_school_editions__academic_course']
 
     @admin.display(description=gettext_lazy('Course'))
     def courses(self, remittance):
@@ -115,7 +118,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
     def receipts_count(self, remittance):
         return AfterSchoolReceipt.objects.filter(remittance=remittance).count()
 
-    @admin.action(description=gettext_lazy("Export after-school remittance to SEPA file"))
+    @admin.action(description=gettext_lazy("Export remittance to SEPA file"))
     def download_membership_remittance_sepa_file(self, request, queryset: QuerySet[AfterSchoolRemittance]):
         if queryset.count() > 1:
             return self.message_user(request=request, message=gettext_lazy(ERROR_ONLY_ONE_REMITTANCE))
@@ -141,4 +144,48 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         emails_csv = FamilyEmailExporter(families).export_to_csv()
         return CsvHttpResponse('correos.csv', emails_csv)
 
-    actions = [download_membership_remittance_sepa_file, download_families_emails]
+    @admin.action(description=gettext_lazy("Notify families: enrollment"))
+    def notify_remittance_enrollment(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_ENROLLMENT, False)
+
+    @admin.action(description=gettext_lazy("Notify families: first fee"))
+    def notify_remittance_first_fee(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_FIRST_FEE, False)
+
+    @admin.action(description=gettext_lazy("Notify families: remaining fee"))
+    def notify_remittance_remaining_fee(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_LAST_FEE, False)
+
+    @admin.action(description=gettext_lazy("Test: Notify families: enrollment"))
+    def test_notify_remittance_enrollment(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_ENROLLMENT, True)
+
+    @admin.action(description=gettext_lazy("Test: Notify families: first fee"))
+    def test_notify_remittance_first_fee(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_FIRST_FEE, True)
+
+    @admin.action(description=gettext_lazy("Test: Notify families: remaining fee"))
+    def test_notify_remittance_remaining_fee(self, request, remittances: QuerySet[AfterSchoolRemittance]):
+        self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_LAST_FEE, True)
+
+    @admin.action(description=gettext_lazy("Notify families"))
+    def notify_families(self, request, remittances: QuerySet[AfterSchoolRemittance], notify_type: int, test: bool = False):
+        for remittance in remittances.all():
+            if test:
+                result: MailNotifierResult = AfterSchoolRemittanceNotifier(remittance, notify_type).test_notify()
+            else:
+                result: MailNotifierResult = AfterSchoolRemittanceNotifier(remittance, notify_type).notify()
+
+            if not result.error:
+                level = messages.INFO
+                message = gettext_lazy('Remittance notified')
+            else:
+                level = messages.ERROR
+                message = gettext_lazy('Unable to notify remittance') + f': {mark_safe(result.get_as_html())}'
+
+            self.message_user(request=request, message=message, level=level)
+
+    actions = [download_membership_remittance_sepa_file, download_families_emails,
+               notify_remittance_enrollment, test_notify_remittance_enrollment,
+               notify_remittance_first_fee, test_notify_remittance_first_fee,
+               notify_remittance_remaining_fee, test_notify_remittance_remaining_fee]

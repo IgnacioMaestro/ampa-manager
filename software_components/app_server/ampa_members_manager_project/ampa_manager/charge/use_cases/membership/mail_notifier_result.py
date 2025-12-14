@@ -14,3 +14,16 @@ class MailNotifierResult:
     def append_error_emails(self, emails: list[str]):
         if emails:
             self.error_emails.extend(emails)
+
+    def get_as_html(self):
+        html = '<ul>'
+        html += f'<li>Sent emails: {len(self.success_emails)}</li>'
+        html += f'<li>Error emails: {len(self.error_emails)}</li>'
+        html += f'<li>Error: {self.error}</li>'
+        if len(self.error_emails) > 0:
+            html += f'<li><ul>'
+            for email in self.error_emails:
+                html += f'<li>{email}</li>'
+            html += '</ul></li>'
+        html = '</ul>'
+        return html

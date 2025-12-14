@@ -18,6 +18,7 @@ from ampa_manager.charge.use_cases.membership.create_membership_remittance_for_u
     MembershipRemittanceCreatorOfActiveCourse
 from ampa_manager.charge.use_cases.membership.generate_remittance_from_membership_remittance.membership_remittance_generator import \
     MembershipRemittanceGenerator
+from ampa_manager.charge.use_cases.membership.mail_notifier_result import MailNotifierResult
 from ampa_manager.charge.use_cases.membership.membership_remittance_notifier import MembershipRemittanceNotifier
 from ampa_manager.charge.use_cases.remittance_creator_error import RemittanceCreatorError
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
@@ -121,13 +122,13 @@ class MembershipRemittanceAdmin(admin.ModelAdmin):
     @admin.action(description=gettext_lazy("Notify families"))
     def notify_families(self, request, remittances: QuerySet[MembershipRemittance]):
         for remittance in remittances.all():
-            error: Optional[str] = MembershipRemittanceNotifier(remittance).notify()
-            if not error:
+            result: MailNotifierResult = MembershipRemittanceNotifier(remittance).notify()
+            if not result.error:
                 level = messages.INFO
                 message = gettext_lazy('Remittance notified')
             else:
                 level = messages.ERROR
-                message = gettext_lazy('Unable to notify remittance') + f': {error}'
+                message = gettext_lazy('Unable to notify remittance') + f': {mark_safe(result.get_as_html())}'
 
             self.message_user(request=request, message=message, level=level)
 

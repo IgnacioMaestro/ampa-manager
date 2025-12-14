@@ -1,0 +1,45 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content_es %}
+
+    {% if renew_status == "ENROLLMENT" %}
+        <p>En los próximos días te cobraremos la matrícula de las extraescolares del curso {{ course }}.</p>
+    {% endif %}
+
+    {% if renew_status == "FIRST_FEE" %}
+        <p>En los próximos días te cobraremos la primera cuota de las extraescolares del curso {{ course }}.</p>
+    {% endif %}
+
+    {% if renew_status == "LAST_FEE" %}
+        <p>En los próximos días te cobraremos la última cuota de las extraescolares del curso {{ course }}.</p>
+    {% endif %}
+
+    <ul>
+        <li>La cuenta de cobro acaba en: {{ account_last_digitals }}</li>
+        <li>Fecha de cobro: {{ pay_date }}</li>
+        <li>Importe: {{  pay_amount }}</li>
+    </ul>
+
+{% endblock %}
+
+{% block content_eu %}
+
+    {% if renew_status == "ENROLLMENT" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko matrikulak kobratuko dizkizugu.</p>
+    {% endif %}
+
+    {% if renew_status == "FIRST_FEE" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko lehen kuota kobratuko dizugu.</p>
+    {% endif %}
+
+    {% if renew_status == "LAST_FEE" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko azken kuota kobratuko dizugu.</p>
+    {% endif %}
+
+    <ul>
+        <li>Kobrantza-kontua hemen amaitzen da:: {{ account_last_digitals }}</li>
+        <li>Kobrantza-data: {{ pay_date }}</li>
+        <li>Zenbatekoa: {{ pay_amount }}</li>
+    </ul>
+
+{% endblock %}
