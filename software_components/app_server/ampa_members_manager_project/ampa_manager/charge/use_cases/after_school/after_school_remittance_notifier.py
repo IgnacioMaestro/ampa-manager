@@ -63,6 +63,7 @@ class AfterSchoolRemittanceNotifier:
             'account_last_digits': account_last_4_digits,
             'pay_date': self.pay_date,
             'pay_amount': pay_amount,
+            'notify_type': self.notify_type,
         }
 
     def __get_test_text_context(self):
