@@ -1,7 +1,7 @@
 from django.urls import path, include
 
-from ampa_manager.views.importers.import_after_school_activities_view import ImportAfterSchoolActivitiesView
-from ampa_manager.views.importers.import_after_school_registrations_view import ImportAfterSchoolRegistrationsView
+from ampa_manager.views.after_schools.import_after_school_activities_view import ImportAfterSchoolActivitiesView
+from ampa_manager.views.after_schools.import_after_school_registrations_view import ImportAfterSchoolRegistrationsView
 from ampa_manager.views.importers.import_camps_view import ImportCampsView
 from ampa_manager.views.importers.import_custody_view import ImportCustodyView
 from ampa_manager.views.membership_campaign.generate_members_remittance_view import GenerateMembersRemittanceView
@@ -21,13 +21,16 @@ membership_campaign_urlpatterns = [
     path('notify-remittance/', NotifyMembersRemittanceView.as_view(), name='notify_members_remittance'),
 ]
 
+after_schools_urlpatterns = [
+    path('registrations/import/', ImportAfterSchoolRegistrationsView.as_view(),
+         name='import_after_schools_registrations'),
+    path('activities/import/', ImportAfterSchoolActivitiesView.as_view(), name='import_after_schools_activities'),
+]
+
 urlpatterns = [
     path('custody/import/', ImportCustodyView.as_view(), name='import_custody'),
     path('camps/import/', ImportCampsView.as_view(), name='import_camps'),
     path('members-campaign/', include(membership_campaign_urlpatterns)),
-    path('afterschools-registrations/import/', ImportAfterSchoolRegistrationsView.as_view(),
-         name='import_after_schools_registrations'),
-    path('afterschools-activities/import/', ImportAfterSchoolActivitiesView.as_view(),
-         name='import_after_schools_activities'),
+    path('after-schools/', include(after_schools_urlpatterns)),
     path('validations/', validate_data, name='validate_data'),
 ]

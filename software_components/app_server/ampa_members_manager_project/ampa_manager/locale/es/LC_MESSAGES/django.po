@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 15:20+0100\n"
+"POT-Creation-Date: 2025-12-14 22:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "Select the courses one by one"
 msgstr "Selecciona los cursos de uno en uno"
 
 #: .\ampa_manager\academic_course\admin.py:53
-#: .\ampa_manager\charge\admin\membership_admin.py:97
+#: .\ampa_manager\charge\admin\membership_admin.py:98
 #: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:141
 msgid "No families to include in Membership Remittance"
 msgstr "No hay familias que incluir en la remesa de socios"
@@ -83,12 +83,12 @@ msgid "No fee for the selected course"
 msgstr "Sin cuota para el curso seleccionado"
 
 #: .\ampa_manager\academic_course\admin.py:61
-#: .\ampa_manager\charge\admin\membership_admin.py:102
+#: .\ampa_manager\charge\admin\membership_admin.py:103
 msgid "Membership Remittance error"
 msgstr "Error en la remesa de socios"
 
 #: .\ampa_manager\academic_course\admin.py:66
-#: .\ampa_manager\charge\admin\membership_admin.py:107
+#: .\ampa_manager\charge\admin\membership_admin.py:108
 msgid "Membership remittance created"
 msgstr "Remesa de socios creada"
 
@@ -99,7 +99,7 @@ msgstr "Remesa de socios creada"
 #: .\ampa_manager\activity\admin\after_school_admin.py:203
 #: .\ampa_manager\activity\admin\camps_admin.py:120
 #: .\ampa_manager\activity\admin\custody_admin.py:176
-#: .\ampa_manager\charge\admin\membership_admin.py:108
+#: .\ampa_manager\charge\admin\membership_admin.py:109
 msgid "View details"
 msgstr "Ver detalles"
 
@@ -222,8 +222,8 @@ msgstr "Cursos académicos"
 #: .\ampa_manager\academic_course\models\active_course.py:11
 #: .\ampa_manager\activity\admin\after_school_admin.py:61
 #: .\ampa_manager\activity\admin\registration_filters.py:33
-#: .\ampa_manager\charge\admin\after_school_admin.py:84
-#: .\ampa_manager\charge\admin\membership_admin.py:33
+#: .\ampa_manager\charge\admin\after_school_admin.py:87
+#: .\ampa_manager\charge\admin\membership_admin.py:34
 #: .\ampa_manager\charge\models\fee\fee.py:9
 #: .\ampa_manager\family\admin\child_admin.py:37
 #: .\ampa_manager\family\admin\family_admin.py:65
@@ -288,14 +288,14 @@ msgstr "Todos los ciclos"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:57
 #: .\ampa_manager\activity\admin\after_school_admin.py:142
-#: .\ampa_manager\charge\admin\after_school_admin.py:97
-#: .\ampa_manager\charge\admin\after_school_admin.py:114
+#: .\ampa_manager\charge\admin\after_school_admin.py:100
+#: .\ampa_manager\charge\admin\after_school_admin.py:117
 #: .\ampa_manager\charge\admin\camps_admin.py:73
 #: .\ampa_manager\charge\admin\camps_admin.py:89
 #: .\ampa_manager\charge\admin\custody_admin.py:68
 #: .\ampa_manager\charge\admin\custody_admin.py:84
-#: .\ampa_manager\charge\admin\membership_admin.py:51
-#: .\ampa_manager\charge\admin\membership_admin.py:71
+#: .\ampa_manager\charge\admin\membership_admin.py:52
+#: .\ampa_manager\charge\admin\membership_admin.py:72
 #: .\ampa_manager\family\admin\family_admin.py:105
 #: .\ampa_manager\family\admin\family_admin.py:335
 #: .\ampa_manager_project\admin_menu.py:70
@@ -323,7 +323,7 @@ msgstr "Horario"
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
 #: .\ampa_manager\activity\models\camps\camps_registration.py:18
 #: .\ampa_manager\activity\models\custody\custody_registration.py:22
-#: .\ampa_manager\charge\admin\after_school_admin.py:56
+#: .\ampa_manager\charge\admin\after_school_admin.py:58
 #: .\ampa_manager\charge\admin\camps_admin.py:36
 #: .\ampa_manager\charge\admin\camps_admin.py:50
 #: .\ampa_manager\charge\admin\custody_admin.py:37
@@ -385,10 +385,10 @@ msgid "Id"
 msgstr "Id"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:146
-#: .\ampa_manager\charge\admin\after_school_admin.py:101
+#: .\ampa_manager\charge\admin\after_school_admin.py:104
 #: .\ampa_manager\charge\admin\camps_admin.py:77
 #: .\ampa_manager\charge\admin\custody_admin.py:72
-#: .\ampa_manager\charge\admin\membership_admin.py:55
+#: .\ampa_manager\charge\admin\membership_admin.py:56
 #: .\ampa_manager\family\admin\family_admin.py:290
 #: .\ampa_manager\family\admin\family_admin.py:300
 #: .\ampa_manager\family\admin\family_admin.py:310
@@ -399,10 +399,10 @@ msgid "%(num_receipts)s receipt"
 msgstr "%(num_receipts)s recibos"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:148
-#: .\ampa_manager\charge\admin\after_school_admin.py:103
+#: .\ampa_manager\charge\admin\after_school_admin.py:106
 #: .\ampa_manager\charge\admin\camps_admin.py:79
 #: .\ampa_manager\charge\admin\custody_admin.py:74
-#: .\ampa_manager\charge\admin\membership_admin.py:57
+#: .\ampa_manager\charge\admin\membership_admin.py:58
 #: .\ampa_manager\family\admin\family_admin.py:292
 #: .\ampa_manager\family\admin\family_admin.py:302
 #: .\ampa_manager\family\admin\family_admin.py:312
@@ -453,10 +453,10 @@ msgstr "Inscripciones"
 #: .\ampa_manager\activity\admin\after_school_admin.py:210
 #: .\ampa_manager\activity\admin\camps_admin.py:123
 #: .\ampa_manager\activity\admin\custody_admin.py:192
-#: .\ampa_manager\charge\admin\after_school_admin.py:134
+#: .\ampa_manager\charge\admin\after_school_admin.py:137
 #: .\ampa_manager\charge\admin\camps_admin.py:108
 #: .\ampa_manager\charge\admin\custody_admin.py:103
-#: .\ampa_manager\charge\admin\membership_admin.py:111
+#: .\ampa_manager\charge\admin\membership_admin.py:112
 msgid "Export family emails to CSV"
 msgstr "Exportar correos de la familia a CSV"
 
@@ -535,13 +535,13 @@ msgstr "No socios"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:96
 #: .\ampa_manager\activity\admin\custody_admin.py:147
-#: .\ampa_manager\charge\admin\after_school_admin.py:66
-#: .\ampa_manager\charge\admin\after_school_admin.py:108
+#: .\ampa_manager\charge\admin\after_school_admin.py:68
+#: .\ampa_manager\charge\admin\after_school_admin.py:111
 #: .\ampa_manager\charge\admin\camps_admin.py:44
 #: .\ampa_manager\charge\admin\camps_admin.py:83
 #: .\ampa_manager\charge\admin\custody_admin.py:45
 #: .\ampa_manager\charge\admin\custody_admin.py:78
-#: .\ampa_manager\charge\admin\membership_admin.py:61
+#: .\ampa_manager\charge\admin\membership_admin.py:62
 msgid "Total"
 msgstr "Total"
 
@@ -564,7 +564,7 @@ msgid "No remittance"
 msgstr "Sin remesa"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:50
-#: .\ampa_manager\charge\admin\after_school_admin.py:52
+#: .\ampa_manager\charge\admin\after_school_admin.py:54
 msgid "Member"
 msgstr "Socio"
 
@@ -682,7 +682,7 @@ msgstr "Ediciones de extraescolares"
 #: .\ampa_manager\activity\models\custody\custody_registration.py:23
 #: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:50
 #: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:56
-#: .\ampa_manager\charge\admin\after_school_admin.py:62
+#: .\ampa_manager\charge\admin\after_school_admin.py:64
 #: .\ampa_manager\charge\admin\camps_admin.py:40
 #: .\ampa_manager\charge\admin\custody_admin.py:41
 #: .\ampa_manager\charge\models\membership_receipt.py:20
@@ -1109,14 +1109,53 @@ msgstr "Aviso"
 msgid "PTA Administration"
 msgstr "Administración del AMPA"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:45
+#: .\ampa_manager\charge\admin\after_school_admin.py:47
 #: .\ampa_manager\charge\admin\filters\receipt_filters.py:40
 msgid "Edition"
 msgstr "Ediciones"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:118
-msgid "Export after-school remittance to SEPA file"
-msgstr "Exportar la remesa de extraescolares a fichero SEPA"
+#: .\ampa_manager\charge\admin\after_school_admin.py:121
+msgid "Export remittance to SEPA file"
+msgstr "Exportar la remesa a fichero SEPA"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:147
+msgid "Notify families: enrollment"
+msgstr "Notificar a las familias: matrícula"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:151
+msgid "Notify families: first fee"
+msgstr "Notificar a las familias: 1ª cuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:155
+msgid "Notify families: remaining fee"
+msgstr "Notificar a las familias: resto de cuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:159
+msgid "Test: Notify families: enrollment"
+msgstr "PRUEBA: Notificar a las familias: matrícula"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:163
+msgid "Test: Notify families: first fee"
+msgstr "PRUEBA: Notificar a las familias: 1ª cuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:167
+msgid "Test: Notify families: remaining fee"
+msgstr "PRUEBA: Notificar a las familias: resto de cuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:171
+#: .\ampa_manager\charge\admin\membership_admin.py:122
+msgid "Notify families"
+msgstr "Notificar a las familias"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:181
+#: .\ampa_manager\charge\admin\membership_admin.py:128
+msgid "Remittance notified"
+msgstr "Remesa notificada"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:184
+#: .\ampa_manager\charge\admin\membership_admin.py:131
+msgid "Unable to notify remittance"
+msgstr "No se ha podido notificar la remesa"
 
 #: .\ampa_manager\charge\admin\camps_admin.py:93
 msgid "Export camps remittance to SEPA file"
@@ -1136,25 +1175,13 @@ msgstr "Todos"
 msgid "Parent"
 msgstr "Padres"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:75
+#: .\ampa_manager\charge\admin\membership_admin.py:76
 msgid "Export Membership remittance to SEPA file"
 msgstr "Exportar la remesa de socios a fichero SEPA"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:90
+#: .\ampa_manager\charge\admin\membership_admin.py:91
 msgid "Create Membership Remittance with families not included yet"
 msgstr "Generar la remesa de socios con familias aún no incluidas"
-
-#: .\ampa_manager\charge\admin\membership_admin.py:121
-msgid "Notify families"
-msgstr "Notificar a las familias"
-
-#: .\ampa_manager\charge\admin\membership_admin.py:127
-msgid "Remittance notified"
-msgstr "Remesa notificada"
-
-#: .\ampa_manager\charge\admin\membership_admin.py:130
-msgid "Unable to notify remittance"
-msgstr "No se ha podido notificar la remesa"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:12
 #: .\ampa_manager\charge\models\camps\camps_receipt.py:14
@@ -1310,7 +1337,8 @@ msgstr "Concepto"
 msgid ""
 "Description that the families will see in the bank account. Maximum 30 "
 "characters"
-msgstr "Concepto que las familias verán en la cuenta bancaria. Máximo 30 caracteres"
+msgstr ""
+"Concepto que las familias verán en la cuenta bancaria. Máximo 30 caracteres"
 
 #: .\ampa_manager\charge\state.py:7 .\ampa_manager\family\models\state.py:7
 msgid "Sent"
@@ -1320,15 +1348,16 @@ msgstr "Enviado"
 msgid "Paid"
 msgstr "Pagado"
 
+#: .\ampa_manager\charge\use_cases\after_school\after_school_remittance_notifier.py:118
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:125
+msgid "Unknown renew status"
+msgstr "Estado de renovación desconocido"
+
 #: .\ampa_manager\charge\use_cases\membership\create_membership_remittance_with_families\membership_remittance_creator.py:58
 msgid "Members fee"
 msgstr "Cuota de socios"
 
-#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:127
-msgid "Unknown renew status"
-msgstr "Estado de renovación desconocido"
-
-#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:142
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:140
 msgid "Not available"
 msgstr "No disponible"
 
@@ -2265,7 +2294,7 @@ msgstr "Generar la remesa de socios"
 msgid ""
 "It should be generated once the new members and the last course members have "
 "been imported"
-msgstr ""
+msgstr "Debería ser generada después de importar los nuevos socios y los socios del curso pasado"
 
 #: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:32
 #: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:33
@@ -2527,11 +2556,11 @@ msgstr "Revisar las cuentas Bancarias sin BIC"
 msgid "BIC error"
 msgstr "BIC error"
 
-#: .\ampa_manager\views\importers\import_after_school_activities_view.py:19
+#: .\ampa_manager\views\after_schools\import_after_school_activities_view.py:19
 msgid "Import afterschool activities"
 msgstr "Importar actividades de extraescolares"
 
-#: .\ampa_manager\views\importers\import_after_school_registrations_view.py:18
+#: .\ampa_manager\views\after_schools\import_after_school_registrations_view.py:18
 msgid "Import afterschool registrations"
 msgstr "Importar inscripciones de extraescolares"
 
@@ -2675,3 +2704,6 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:126
 msgid "Basque"
 msgstr "Euskera"
+
+#~ msgid "Export after-school remittance to SEPA file"
+#~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"

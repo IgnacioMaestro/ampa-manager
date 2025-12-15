@@ -1,0 +1,37 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content_es %}
+
+    {% if notify_type == "ENROLLMENT" %}
+        <p>En los próximos días te cobraremos la matrícula de las extraescolares del curso {{ course }}.</p>
+    {% elif notify_type == "FIRST_FEE" %}
+        <p>En los próximos días te cobraremos la primera cuota de las extraescolares del curso {{ course }}.</p>
+    {% elif notify_type == "LAST_FEE" %}
+        <p>En los próximos días te cobraremos la última cuota de las extraescolares del curso {{ course }}.</p>
+    {% endif %}
+
+    <ul>
+        <li>Fecha de cobro: {{ pay_date }}</li>
+{#        <li>Importe: {{  pay_amount }}</li>#}
+{#        <li>La cuenta de cobro acaba en: {{ account_last_digits }}</li>#}
+    </ul>
+
+{% endblock %}
+
+{% block content_eu %}
+
+    {% if notify_type == "ENROLLMENT" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko matrikulak kobratuko dizkizugu.</p>
+    {% elif notify_type == "FIRST_FEE" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko lehen kuota kobratuko dizugu.</p>
+    {% elif notify_type == "LAST_FEE" %}
+        <p>Datozen egunetan {{ course }} ikasturteko eskolaz kanpoko azken kuota kobratuko dizugu.</p>
+    {% endif %}
+
+    <ul>
+        <li>Kobrantza-data: {{ pay_date }}</li>
+{#        <li>Zenbatekoa: {{ pay_amount }}</li>#}
+{#        <li>Kobrantza-kontua hemen amaitzen da:: {{ account_last_digits }}</li>#}
+    </ul>
+
+{% endblock %}
