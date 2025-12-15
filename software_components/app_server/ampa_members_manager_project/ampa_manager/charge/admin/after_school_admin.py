@@ -169,7 +169,7 @@ class AfterSchoolRemittanceAdmin(admin.ModelAdmin):
         self.notify_families(request, remittances, AfterSchoolRemittanceNotifier.TYPE_LAST_FEE, True)
 
     @admin.action(description=gettext_lazy("Notify families"))
-    def notify_families(self, request, remittances: QuerySet[AfterSchoolRemittance], notify_type: int, test: bool = False):
+    def notify_families(self, request, remittances: QuerySet[AfterSchoolRemittance], notify_type: str, test: bool = False):
         for remittance in remittances.all():
             if test:
                 result: MailNotifierResult = AfterSchoolRemittanceNotifier(remittance, notify_type).test_notify()

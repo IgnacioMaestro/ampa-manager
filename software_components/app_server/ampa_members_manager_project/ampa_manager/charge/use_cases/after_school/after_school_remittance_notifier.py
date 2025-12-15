@@ -25,19 +25,13 @@ class AfterSchoolRemittanceNotifier:
         self.pay_date: str = self.__get_formatted_pay_date()
 
     def test_notify(self) -> MailNotifierResult:
-        partial_results = []
-
-        for notify_type in [self.TYPE_ENROLLMENT, self.TYPE_FIRST_FEE, self.TYPE_LAST_FEE]:
-            partial_result: MailNotifierResult = Mailer.send_template_mail(
-                bcc_recipients=[settings.TEST_EMAIL_RECIPIENT],
-                subject=self.MAIL_SUBJECT,
-                body_html_template=self.MAIL_TEMPLATE,
-                body_html_context=self.__get_test_template_context(notify_type),
-                body_text_content=self.__get_test_text_context(notify_type)
-            )
-            partial_results.append(partial_result)
-
-        return MailResultMerger.merge(partial_results)
+        return Mailer.send_template_mail(
+            bcc_recipients=[settings.TEST_EMAIL_RECIPIENT],
+            subject=self.MAIL_SUBJECT,
+            body_html_template=self.MAIL_TEMPLATE,
+            body_html_context=self.__get_test_template_context(),
+            body_text_content=self.__get_test_text_context()
+        )
 
     def notify(self) -> MailNotifierResult:
         partial_results = []
@@ -48,12 +42,10 @@ class AfterSchoolRemittanceNotifier:
                 subject=self.MAIL_SUBJECT,
                 body_html_template=self.MAIL_TEMPLATE,
                 body_html_context=self.__get_template_context(
-                    notify_type=self.notify_type,
                     account_last_4_digits=self.get_account_last_4_digits(receipt),
                     pay_amount=self.__get_formatted_pay_amount(receipt)
                 ),
                 body_text_content=self.__get_text_content(
-                    notify_type=self.notify_type,
                     account_last_4_digits=self.get_account_last_4_digits(receipt),
                     pay_amount=self.__get_formatted_pay_amount(receipt)
                 )
@@ -62,23 +54,22 @@ class AfterSchoolRemittanceNotifier:
 
         return MailResultMerger.merge(partial_results)
 
-    def __get_test_template_context(self, notify_type: str):
-        return self.__get_template_context(notify_type=notify_type, account_last_4_digits='XXXX', pay_amount='100 €')
+    def __get_test_template_context(self):
+        return self.__get_template_context(account_last_4_digits='XXXX', pay_amount='100 €')
 
-    def __get_template_context(self, notify_type: str, account_last_4_digits: str, pay_amount: str):
+    def __get_template_context(self, account_last_4_digits: str, pay_amount: str):
         return {
-            'notify_type': notify_type,
             'course': str(self.course),
             'account_last_digits': account_last_4_digits,
             'pay_date': self.pay_date,
             'pay_amount': pay_amount,
         }
 
-    def __get_test_text_context(self, notify_type: str):
-        return self.__get_text_content(notify_type=notify_type, account_last_4_digits='XXXX', pay_amount='100 €')
+    def __get_test_text_context(self):
+        return self.__get_text_content(account_last_4_digits='XXXX', pay_amount='100 €')
 
-    def __get_text_content(self, notify_type: str, account_last_4_digits: str, pay_amount: str) -> str:
-        if notify_type == self.TYPE_ENROLLMENT:
+    def __get_text_content(self, account_last_4_digits: str, pay_amount: str) -> str:
+        if self.notify_type == self.TYPE_ENROLLMENT:
             return (
                 f'En los próximos días te cobraremos la matrícula de las extraescolares del curso {self.course}. \n'
                 f'- La cuenta de cobro acaba en: {account_last_4_digits}. \n'
@@ -90,7 +81,7 @@ class AfterSchoolRemittanceNotifier:
                 f'- Kobrantza-data: {self.pay_date}. \n'
                 f'- Zenbateko: {pay_amount}. \n'
             )
-        elif notify_type == self.TYPE_FIRST_FEE:
+        elif self.notify_type == self.TYPE_FIRST_FEE:
             return (
                 f'En los próximos días te cobraremos la primera cuota de las extraescolares del curso {self.course}. \n'
                 f'- La cuenta de cobro acaba en: {account_last_4_digits}. \n'
@@ -102,7 +93,7 @@ class AfterSchoolRemittanceNotifier:
                 f'- Kobrantza-data: {self.pay_date}. \n'
                 f'- Zenbateko: {pay_amount}. \n'
             )
-        elif notify_type == self.TYPE_LAST_FEE:
+        elif self.notify_type == self.TYPE_LAST_FEE:
             return (
                 f'En los próximos días te cobraremos la última cuota de las extraescolares del curso {self.course}. \n'
                 f'- La cuenta de cobro acaba en: {account_last_4_digits}. \n'
