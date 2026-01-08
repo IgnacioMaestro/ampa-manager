@@ -65,7 +65,7 @@ class CustodyRegistrationAdmin(admin.ModelAdmin):
 
     @admin.display(description=gettext_lazy('Price'))
     def price(self, registration):
-        return registration.calculate_price()
+        return CurrencyUtils.get_rounded_amount(registration.calculate_price())
 
 
 class CustodyRegistrationInline(ReadOnlyTabularInline):

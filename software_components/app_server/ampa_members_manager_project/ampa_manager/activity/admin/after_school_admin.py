@@ -24,6 +24,7 @@ from ampa_manager.family.models.membership import Membership
 from ampa_manager.family.use_cases.family_emails_exporter import FamilyEmailExporter
 from ampa_manager.read_only_inline import ReadOnlyTabularInline
 from ampa_manager.utils.csv_http_response import CsvHttpResponse
+from ampa_manager.utils.currency_utils import CurrencyUtils
 from ampa_manager.utils.db_utils import distinct_count
 from ampa_manager.utils.utils import Utils
 
@@ -84,7 +85,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
 
     @admin.display(description=gettext_lazy('Price'))
     def price(self, registration):
-        return registration.calculate_price()
+        return CurrencyUtils.get_rounded_amount(registration.calculate_price())
 
     @admin.action(description=gettext_lazy("Download IDs of selected registrations as CSV"))
     def download_ids_as_csv(self, request, registrations: QuerySet[AfterSchoolRegistration]):

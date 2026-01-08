@@ -47,7 +47,7 @@ class CustodyRegistration(models.Model):
         else:
             price = float(assisted_days_for_charge) * float(self.custody_edition.price_for_no_member)
 
-        return CurrencyUtils.get_rounded_amount(price)
+        return round(price, 2)
 
     @property
     def is_member(self):
