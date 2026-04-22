@@ -172,7 +172,7 @@ class AfterSchoolRemittanceNotifier:
         for receipt in remittance.receipts.all():
             holder = receipt.after_school_registration.holder
 
-            if notifications[holder.id] is None:
+            if holder.id not in notifications:
                 notifications[holder.id] = HolderNotification(holder=holder)
 
             notifications[holder.id].add_registration(receipt.after_school_registration)
