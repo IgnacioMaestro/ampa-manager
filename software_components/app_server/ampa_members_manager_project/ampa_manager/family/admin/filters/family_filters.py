@@ -61,9 +61,9 @@ class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value():
             if self.value() == 'yes':
-                return queryset.has_any_children()
+                return queryset.has_any_school_children()
             elif self.value() == 'no':
-                return queryset.has_no_children()
+                return queryset.has_no_school_children()
         else:
             return queryset
 
