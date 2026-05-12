@@ -173,7 +173,7 @@ class FamilyAdmin(admin.ModelAdmin):
         active_course = str(ActiveCourse.load())
 
         column_titles = ['Apellidos familia', f'Socios curso {active_course}', 'Padre 1', 'Padre 2', 'Hijo 1', 'Hijo 2',
-                         'Hijo 3', 'Hijo 4', 'Hijo 5']
+                         'Hijo 3', 'Hijo 4', 'Hijo 5', 'Correo 1', 'Correo 2']
         ws.append(column_titles)
 
         for family in families:
@@ -185,21 +185,38 @@ class FamilyAdmin(admin.ModelAdmin):
 
     @classmethod
     def get_family_xls_fields(cls, family):
-        parents = [p.name_and_surnames.encode('utf-8') for p in family.parents.all()]
-        for i in range(len(parents), 2):
-            parents.append('')
+        max_parents = 2
+        max_children = 5
 
-        children = [c.name.encode('utf-8') for c in family.child_set.all()]
-        for i in range(len(parents), 5):
-            children.append('')
+        parents = [
+            parent.name_and_surnames.encode("utf-8")
+            for parent in family.parents.all()
+        ]
 
-        is_member = Membership.is_member_family(family)
-        is_member_text = 'Sí' if is_member else 'No'
+        children = [
+            child.name.encode("utf-8")
+            for child in family.child_set.all()
+        ]
 
-        fields = [family.surnames, is_member_text]
-        fields.extend(parents)
-        fields.extend(children)
-        return fields
+        parents = parents[:max_parents]
+        children = children[:max_children]
+
+        parents += [""] * (max_parents - len(parents))
+        children += [""] * (max_children - len(children))
+
+        is_member_text = "Sí" if Membership.is_member_family(family) else "No"
+
+        email1 = family.email or ""
+        email2 = family.secondary_email or ""
+
+        return [
+            family.surnames,
+            is_member_text,
+            *parents,
+            *children,
+            email1,
+            email2,
+        ]
 
     @admin.action(description=gettext_lazy("Make member"))
     def make_members(self, request, families: QuerySet[Family]):
