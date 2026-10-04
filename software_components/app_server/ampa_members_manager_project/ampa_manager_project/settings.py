@@ -161,6 +161,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('AMPA_MANAGER_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('AMPA_MANAGER_EMAIL_PASS')
+# EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = os.getenv('AMPA_MANAGER_EMAIL_USER', 'Avisos AFA Abendaño <kaixo@abendanogurasoak.com>')
 DEFAULT_REPLY_TO_EMAIL = os.getenv('AMPA_MANAGER_DEFAULT_REPLY_TO_EMAIL', 'ampa@abendanogurasoak.com')
 TEST_EMAIL_RECIPIENT = os.getenv('AMPA_MANAGER_TEST_EMAIL_RECIPIENT', 'ampa@abendanogurasoak.com')

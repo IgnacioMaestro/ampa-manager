@@ -46,6 +46,8 @@ class MembershipCampaignNotifier:
         partial_results = []
         for renew_status, families in families.items():
             for family in families:
+                if family.id != 1655:
+                    continue
                 partial_result: MailNotifierResult = Mailer.send_template_mail(
                     bcc_recipients=self.__get_emails(family),
                     subject=self.MAIL_SUBJECT,
