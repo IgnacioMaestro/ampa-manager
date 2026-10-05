@@ -33,10 +33,7 @@ class NotifyMembershipCampaignView(BaseMembershipCampaignView):
 
     @classmethod
     def post(cls, request):
-        if cls.is_a_test(request):
-            result: MailNotifierResult = MembershipCampaignNotifier().test_notify()
-        else:
-            result: MailNotifierResult = MembershipCampaignNotifier().notify()
+        result: MailNotifierResult = MembershipCampaignNotifier(is_a_test=cls.is_a_test(request)).notify()
 
         context = cls.get_context()
         context['result'] = result

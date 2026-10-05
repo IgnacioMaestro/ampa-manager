@@ -1,12 +1,12 @@
 {% extends 'emails/base_email.html' %}
 
 {% block content_es %}
-    <p>Próximamente iniciamos la campaña de socios para este curso {{ course }}. </p>
+    <p>Iniciamos la campaña de socios para este curso {{ course }}. </p>
 
     {% if renew_status == "RENEW" %}
-        <p>Según los datos que tenemos, el año pasado vuestra familia fue socia y vuestros hijos/as siguen en la ikastola. <b>Este año se os volverá a pasar la cuota a la cuenta terminada en {{ account_last_4_digits }}</b>.</p>
+        <p>Según los datos que tenemos, el año pasado vuestra familia fue socia y vuestros hijos/as siguen en la ikastola. <b>Este año se os volverá a pasar la cuota</b>.</p>
         <ul>
-            <li>Si queréis seguir siendo socio: no tenéis que hacer nada.</li>
+            <li>Si queréis seguir siendo socios: no tenéis que hacer nada.</li>
             <li>Si no queréis renovar o queréis cambiar el nº de cuenta: responded a este correo para que lo corrijamos.</li>
         </ul>
     {% elif renew_status == "NO_RENEW_NO_SCHOOL_CHILDREN" %}
@@ -26,10 +26,10 @@
 {% endblock %}
 
 {% block content_eu %}
-    <p>Datozen egunetan hasiko dugu {{ course }} ikasturte honetarako bazkide kanpaina. </p>
+    <p>{{ course }} ikasturte honetarako bazkide kanpaina hasiko dugu. </p>
 
     {% if renew_status == "RENEW" %}
-        <p>Ditugun datuen arabera, iaz zuen familia bazkide izan zen eta zuen seme-alabek ikastolan jarraitzen dute. Aurten, <b>kuota {{ account_last_4_digits }} zenbakitan amaitutako kontura pasatuko zaizue berriro.</b>.</p>
+        <p>Ditugun datuen arabera, iaz zuen familia bazkide izan zen eta zuen seme-alabek ikastolan jarraitzen dute. Aurten, <b>kuota berriro pasatuko zaizue.</b>.</p>
         <ul>
             <li>Bazkide izaten jarraitu nahi baduzue: ez duzue ezer egin behar.</li>
             <li>Ez baduzue berritu nahi edo kontu-zenbakia aldatu nahi baduzue: erantzun mezu honi zuzen dezagun.</li>
