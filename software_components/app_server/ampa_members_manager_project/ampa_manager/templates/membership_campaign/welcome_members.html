@@ -1,0 +1,97 @@
+{% extends 'admin/base_site.html' %}
+
+{% load custom_filters %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Welcome members' %}{% endblock %}
+
+{% block extrahead %}
+    <style>
+        {% include "./../campaign_styles.css" %}
+    </style>
+
+    <script>
+        function submitWithUrlParam(param) {
+          const form = document.getElementById('notify-form');
+          const originalAction = form.action;
+          form.action = `${originalAction}?${param}`;
+          form.submit();
+          form.action = originalAction;
+        }
+    </script>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "../campaign_breadcrumbs.html" %}
+{% endblock %}
+
+{% block content %}
+    {% block steps %}
+    {% include "../campaign_steps.html" %}
+    {% endblock %}
+
+    <div id="upload_form" class="main-container">
+        <h1 class="step-section">{% trans 'What this section does?' %}</h1>
+        <ul>
+            <li>{% trans 'It sends a welcome email to all families that are members of the current course.' %}</li>
+            <li>{% trans 'It should be sent after the members of the last course and the new ones have been imported.' %}</li>
+        </ul>
+        <br/>
+
+        <h1 class="step-section">{% trans 'Review the following information' %}</h1>
+        <br/>
+        <ul>
+            <li>
+                <div class="mb-3">
+                  <label for="members_count" class="form-label"><a href="{{ members_url }}" target="_new">{% trans 'Members of the current course' %}</a></label>
+                  <input type="text" id="members_count" class="form-control" value="{{ members_count }}" disabled>
+                </div>
+            </li>
+        </ul>
+
+        {% if result %}
+            {% if result.error %}
+                <h1 class="step-section highlight">{% trans 'Errors sending mails' %}</h1>
+                <ul>
+                    <li>{% trans 'Error' %}: {{ result.error }}</li>
+                    <li>{% trans 'Notified emails' %}: {{ result.success_emails|length }}
+                        <ul>
+                            {% for email in result.success_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>{% trans 'The error happened sending mail to' %}:
+                        <ul>
+                            {% for email in result.error_emails %}
+                                <li>{{ email }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                <h1 class="step-section highlight">{% trans 'Families notified' %}: {{ result.success_emails|length }}</h1>
+                <ul>
+                    {% for email in result.success_emails %}
+                        <li>{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+
+        <h1 class="step-section">{% trans 'Select an option' %}</h1>
+        <br/>
+        <form id="notify-form" method="post" action="{% url 'welcome_members' %}">
+          {% csrf_token %}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="{% blocktrans %}Send test emails to {{ test_email }}{% endblocktrans %}" onclick="submitWithUrlParam('test=true');">
+            &nbsp;
+            <input type="submit" value="{% trans 'Welcome families by email' %}">
+            &nbsp;
+            <input type="button" value="{% trans 'Cancel' %}" onclick="window.open('{% url 'admin:index' %}', '_blank');">
+        </form>
+    </div>
+
+{% endblock %}

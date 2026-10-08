@@ -2470,6 +2470,22 @@ msgstr "Enviar correos de prueba a %(test_email)s"
 msgid "Notify families by email"
 msgstr "Notificar familias por correo"
 
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:38
+msgid "It sends a welcome email to all families that are members of the current course."
+msgstr "Envía un correo de bienvenida a todas las familias socias del curso actual."
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:39
+msgid "It should be sent after the members of the last course and the new ones have been imported."
+msgstr "Debería enviarse después de haber importado los nuevos socios y los del curso pasado."
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:48
+msgid "Members of the current course"
+msgstr "Socios del curso actual"
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:91
+msgid "Welcome families by email"
+msgstr "Dar la bienvenida a las familias por correo"
+
 #: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:7
 msgid "Notify membership remittance"
 msgstr "Notificar remesa de socios"
@@ -2588,11 +2604,16 @@ msgstr "Abrir campaña"
 msgid "Import new members"
 msgstr "Importar nuevos socios"
 
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:7
 #: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:24
+msgid "Welcome members"
+msgstr "Dar la bienvenida a los socios"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:25
 msgid "Generate remittance"
 msgstr "Generar remesa"
 
-#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:25
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:26
 msgid "Notify remittance"
 msgstr "Notificar remesa"
 
