@@ -3,10 +3,10 @@
 {% block content_es %}
     <p>Os damos la bienvenida como socios de la AFA para el curso {{ course }}.</p>
     <ul>
-        <li>Si tienes alguna duda puedes escribir a <a href="mailto:info@abendanogurasoak.com">info@abendanogurasoak.com</a></li>
-        <li>Tenemos una <a href="https://chat.whatsapp.com/Cdvgm2ZDnPuDA9vpbT5F3h">comunidad de whatsapp</a> donde ponemos avisos importantes.</li>
-        <li>Puedes consultar la web <a href="https://www.abendanogurasoak.com/">www.abendanogurasoak.com</a> para apuntarte en actividades, consultar información
-            o ver la <a href="https://www.abendanogurasoak.com/#batzordeak">lista de comisiones</a>.
+        <li>Si tienes alguna duda puedes escribir a <a href="mailto:{{ info_email }}">{{ info_email }}</a></li>
+        <li>Tenemos una <a href="{{ whatsapp_community_url }}">comunidad de whatsapp</a> donde ponemos avisos importantes.</li>
+        <li>Puedes consultar la web <a href="{{ website_url }}">{{ website_label }}</a> para apuntarte en actividades, consultar información
+            o ver la <a href="{{ committees_url }}">lista de comisiones</a>.
             Si crees que puedes colaborar en alguna de ellas serás bienvenido/a. Todos los que colaboramos somos padres y madres como tú. </li>
         <li>Hay una reunión mensual para tratar los temas activos y cualquier sugerencia. Avisamos de las fechas en la comunidad de whatsapp.</li>
     </ul>
@@ -15,5 +15,13 @@
 
 {% block content_eu %}
     <p>Ongi etorri IFEko bazkide gisa {{ course }} ikasturterako.</p>
+    <ul>
+        <li>Zalantzarik baduzu, idatzi <a href="mailto:{{ info_email }}">{{ info_email }}</a> helbidera.</li>
+        <li><a href="{{ whatsapp_community_url }}">Whatsapp komunitate</a> bat dugu, eta bertan abisu garrantzitsuak jartzen ditugu.</li>
+        <li><a href="{{ website_url }}">{{ website_label }}</a> webgunea kontsulta dezakezu jardueretan izena emateko, informazioa kontsultatzeko
+            edo <a href="{{ committees_url }}">batzordeen zerrenda</a> ikusteko.
+            Haietako batean lagun dezakezula uste baduzu, ongi etorria izango zara. Laguntzen dugunok zu bezalako gurasoak gara.</li>
+        <li>Hilean behin bilera bat dago gai aktiboak eta edozein iradokizun lantzeko. Datak whatsapp komunitatean jakinarazten ditugu.</li>
+    </ul>
     <p>Eskerrik asko Ikasleen Familia Elkarteko parte izateagatik.</p>
 {% endblock %}

@@ -164,9 +164,12 @@ EMAIL_HOST_PASSWORD = os.getenv('AMPA_MANAGER_EMAIL_PASS')
 # EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = os.getenv('AMPA_MANAGER_EMAIL_USER', 'Avisos AFA Abendaño <kaixo@abendanogurasoak.com>')
 DEFAULT_REPLY_TO_EMAIL = os.getenv('AMPA_MANAGER_DEFAULT_REPLY_TO_EMAIL', 'info@abendanogurasoak.com')
-# TEST_EMAIL_RECIPIENT = os.getenv('AMPA_MANAGER_TEST_EMAIL_RECIPIENT', 'info@abendanogurasoak.com')
-TEST_EMAIL_RECIPIENT = os.getenv('AMPA_MANAGER_TEST_EMAIL_RECIPIENT', 'danilanda@gmail.com')
+TEST_EMAIL_RECIPIENT = os.getenv('AMPA_MANAGER_TEST_EMAIL_RECIPIENT', 'info@abendanogurasoak.com')
 MEMBERSHIP_REMITTANCE_CONCEPT = 'Cuota AFA Abendano'
-
 LOGO_FULL_URL = 'https://drive.google.com/uc?export=view&id=1eFJMKdeHq9qvQcyo7GuvA8wro3zWPoYK'
+INFO_EMAIL = 'info@abendanogurasoak.com'
+WHATSAPP_COMMUNITY_URL = 'https://chat.whatsapp.com/Cdvgm2ZDnPuDA9vpbT5F3h'
+WEBSITE_URL = 'https://www.abendanogurasoak.com/'
+WEBSITE_LABEL = 'www.abendanogurasoak.com'
+COMMITTEES_URL = 'https://www.abendanogurasoak.com/#batzordeak'
                  

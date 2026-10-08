@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from django.conf import settings
+from django.template.loader import render_to_string
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from model_bakery import baker
@@ -34,8 +36,27 @@ class TestMembershipWelcomeNotifier(TestCase):
         self.assertEqual(kwargs['bcc_recipients'], ['member@example.com', 'member2@example.com'])
         self.assertEqual(kwargs['subject'], MembershipWelcomeNotifier.MAIL_SUBJECT)
         self.assertEqual(kwargs['body_html_template'], MembershipWelcomeNotifier.MAIL_TEMPLATE)
-        self.assertEqual(kwargs['body_html_context'], {'course': str(self.academic_course)})
+        self.assertEqual(kwargs['body_html_context'], {
+            'course': str(self.academic_course),
+            'info_email': settings.INFO_EMAIL,
+            'whatsapp_community_url': settings.WHATSAPP_COMMUNITY_URL,
+            'website_url': settings.WEBSITE_URL,
+            'website_label': settings.WEBSITE_LABEL,
+            'committees_url': settings.COMMITTEES_URL,
+        })
+        html = render_to_string(kwargs['body_html_template'], kwargs['body_html_context'])
+        self.assertIn('lista de comisiones', html)
+        self.assertIn('batzordeen zerrenda', html)
+        self.assertEqual(html.count(f'mailto:{settings.INFO_EMAIL}'), 2)
+        self.assertEqual(html.count(f'href="{settings.WHATSAPP_COMMUNITY_URL}"'), 2)
+        self.assertEqual(html.count(f'href="{settings.WEBSITE_URL}"'), 2)
+        self.assertEqual(html.count(f'href="{settings.COMMITTEES_URL}"'), 2)
+        self.assertEqual(html.count(f'>{settings.WEBSITE_LABEL}</a>'), 2)
         self.assertIn(str(self.academic_course), kwargs['body_text_content'])
+        self.assertIn(settings.INFO_EMAIL, kwargs['body_text_content'])
+        self.assertIn(settings.WHATSAPP_COMMUNITY_URL, kwargs['body_text_content'])
+        self.assertIn(settings.WEBSITE_URL, kwargs['body_text_content'])
+        self.assertIn(settings.COMMITTEES_URL, kwargs['body_text_content'])
         self.assertEqual(result.success_emails, ['member@example.com', 'member2@example.com'])
 
     @patch('ampa_manager.charge.use_cases.membership.membership_welcome_notifier.Mailer.send_template_mail')
