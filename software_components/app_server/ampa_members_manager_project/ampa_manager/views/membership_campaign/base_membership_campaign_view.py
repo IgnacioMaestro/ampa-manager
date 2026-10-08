@@ -21,6 +21,7 @@ class BaseMembershipCampaignView(View):
         CampaignStep(view_name='open_members_campaign', title=_('Open campaign')),
         CampaignStep(view_name='import_last_course_members', title=_('Import last course members')),
         CampaignStep(view_name='import_new_members', title=_('Import new members')),
+        CampaignStep(view_name='welcome_members', title=_('Welcome members')),
         CampaignStep(view_name='generate_members_remittance', title=_('Generate remittance')),
         CampaignStep(view_name='notify_members_remittance', title=_('Notify remittance')),
     ]

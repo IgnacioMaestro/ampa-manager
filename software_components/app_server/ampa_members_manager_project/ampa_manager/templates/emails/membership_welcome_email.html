@@ -1,0 +1,19 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content_es %}
+    <p>Os damos la bienvenida como socios de la AFA para el curso {{ course }}.</p>
+    <ul>
+        <li>Si tienes alguna duda puedes escribir a <a href="mailto:info@abendanogurasoak.com">info@abendanogurasoak.com</a></li>
+        <li>Tenemos una <a href="https://chat.whatsapp.com/Cdvgm2ZDnPuDA9vpbT5F3h">comunidad de whatsapp</a> donde ponemos avisos importantes.</li>
+        <li>Puedes consultar la web <a href="https://www.abendanogurasoak.com/">www.abendanogurasoak.com</a> para apuntarte en actividades, consultar información
+            o ver la <a href="https://www.abendanogurasoak.com/#batzordeak">lista de comisiones</a>.
+            Si crees que puedes colaborar en alguna de ellas serás bienvenido/a. Todos los que colaboramos somos padres y madres como tú. </li>
+        <li>Hay una reunión mensual para tratar los temas activos y cualquier sugerencia. Avisamos de las fechas en la comunidad de whatsapp.</li>
+    </ul>
+    <p>Gracias por formar parte de la Asociación de Familias del Alumnado.</p>
+{% endblock %}
+
+{% block content_eu %}
+    <p>Ongi etorri IFEko bazkide gisa {{ course }} ikasturterako.</p>
+    <p>Eskerrik asko Ikasleen Familia Elkarteko parte izateagatik.</p>
+{% endblock %}
