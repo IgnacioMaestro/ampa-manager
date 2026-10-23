@@ -3,16 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-14 22:15+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-10-23 19:30+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1377,11 +1376,11 @@ msgstr "Custodia"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:9
 msgid "Party identification"
-msgstr "Party identification"
+msgstr "Identificación de la parte"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:10
 msgid "Generic organisation identification"
-msgstr "Generic organisation identification"
+msgstr "Identificación genérica de la organización"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:11
 msgid "BIC"
@@ -2570,7 +2569,7 @@ msgstr "Revisar las cuentas Bancarias sin BIC"
 
 #: .\ampa_manager\utils\utils.py:35
 msgid "BIC error"
-msgstr "BIC error"
+msgstr "Error de BIC"
 
 #: .\ampa_manager\views\after_schools\import_after_school_activities_view.py:19
 msgid "Import afterschool activities"
