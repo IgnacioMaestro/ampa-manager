@@ -3,1391 +3,1503 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-02 20:13+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2025-12-14 22:15+0100\n"
+"PO-Revision-Date: 2026-10-23 19:30+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Basque\n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\ampa_manager\academic_course\admin.py:28
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:111
 msgid "Summary"
-msgstr ""
+msgstr "Laburpena"
 
 #: .\ampa_manager\academic_course\admin.py:32
 msgid "Is active"
-msgstr ""
+msgstr "Aktibo dago"
 
 #: .\ampa_manager\academic_course\admin.py:34
-#: .\ampa_manager\activity\admin\after_school_admin.py:72
-#: .\ampa_manager\activity\admin\camps_admin.py:48
-#: .\ampa_manager\activity\admin\custody_admin.py:48
-#: .\ampa_manager\family\admin\child_admin.py:34
-#: .\ampa_manager\family\admin\family_admin.py:278
-#: .\ampa_manager\family\admin\family_admin.py:282
+#: .\ampa_manager\activity\admin\after_school_admin.py:83
+#: .\ampa_manager\activity\admin\camps_admin.py:50
+#: .\ampa_manager\activity\admin\custody_admin.py:52
+#: .\ampa_manager\family\admin\child_admin.py:35
+#: .\ampa_manager\family\admin\family_admin.py:276
+#: .\ampa_manager\family\admin\family_admin.py:280
+#: .\ampa_manager\family\admin\filters\family_filters.py:78
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "Yes"
-msgstr ""
+msgstr "Bai"
 
 #: .\ampa_manager\academic_course\admin.py:34
-#: .\ampa_manager\activity\admin\after_school_admin.py:72
-#: .\ampa_manager\activity\admin\camps_admin.py:48
-#: .\ampa_manager\activity\admin\custody_admin.py:48
-#: .\ampa_manager\family\admin\child_admin.py:34
-#: .\ampa_manager\family\admin\family_admin.py:278
-#: .\ampa_manager\family\admin\family_admin.py:282
+#: .\ampa_manager\activity\admin\after_school_admin.py:83
+#: .\ampa_manager\activity\admin\camps_admin.py:50
+#: .\ampa_manager\activity\admin\custody_admin.py:52
+#: .\ampa_manager\family\admin\child_admin.py:35
+#: .\ampa_manager\family\admin\family_admin.py:276
+#: .\ampa_manager\family\admin\family_admin.py:280
+#: .\ampa_manager\family\admin\filters\family_filters.py:79
 #: .\ampa_manager\family\admin\parent_admin.py:26
 msgid "No"
-msgstr ""
+msgstr "Ez"
 
 #: .\ampa_manager\academic_course\admin.py:36
-#: .\ampa_manager\academic_course\admin.py:95
-#: .\ampa_manager\activity\admin\camps_admin.py:89
-#: .\ampa_manager\activity\admin\custody_admin.py:118
-#: .\ampa_manager\activity\admin\custody_admin.py:138
-#: .\ampa_manager\activity\admin\custody_admin.py:183
-#: .\ampa_manager\activity\admin\registration_filters.py:14
-#: .\ampa_manager_project\settings.py:181
+#: .\ampa_manager\academic_course\admin.py:98
+#: .\ampa_manager\activity\admin\camps_admin.py:92
+#: .\ampa_manager\activity\admin\custody_admin.py:123
+#: .\ampa_manager\activity\admin\custody_admin.py:143
+#: .\ampa_manager\activity\admin\custody_admin.py:188
+#: .\ampa_manager\activity\admin\registration_filters.py:17
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:66
+#: .\ampa_manager_project\admin_menu.py:163
+#: .\ampa_manager_project\admin_menu.py:180
 msgid "Members"
-msgstr ""
+msgstr "Bazkideak"
 
 #: .\ampa_manager\academic_course\admin.py:40
 msgid "Generate remesa de socios"
-msgstr ""
+msgstr "Sortu bazkideen zordunketa"
 
 #: .\ampa_manager\academic_course\admin.py:43
 msgid "Select the courses one by one"
-msgstr ""
+msgstr "Hautatu ikasturteak banan-banan"
 
 #: .\ampa_manager\academic_course\admin.py:53
-#: .\ampa_manager\charge\admin\membership_admin.py:101
+#: .\ampa_manager\charge\admin\membership_admin.py:98
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:141
 msgid "No families to include in Membership Remittance"
-msgstr ""
+msgstr "Ez dago bazkideen zordunketan sartzeko familiarik"
 
-#: .\ampa_manager\academic_course\admin.py:58
-#: .\ampa_manager\charge\admin\membership_admin.py:106
+#: .\ampa_manager\academic_course\admin.py:59
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:145
+msgid "No fee for the selected course"
+msgstr "Hautatutako ikasturteak ez du kuotarik"
+
+#: .\ampa_manager\academic_course\admin.py:61
+#: .\ampa_manager\charge\admin\membership_admin.py:103
 msgid "Membership Remittance error"
-msgstr ""
+msgstr "Errorea bazkideen zordunketan"
 
-#: .\ampa_manager\academic_course\admin.py:63
-#: .\ampa_manager\charge\admin\membership_admin.py:111
+#: .\ampa_manager\academic_course\admin.py:66
+#: .\ampa_manager\charge\admin\membership_admin.py:108
 msgid "Membership remittance created"
-msgstr ""
+msgstr "Bazkideen zordunketa sortu da"
 
-#: .\ampa_manager\academic_course\admin.py:64
-#: .\ampa_manager\activity\admin\after_school_admin.py:121
-#: .\ampa_manager\activity\admin\after_school_admin.py:134
-#: .\ampa_manager\activity\admin\after_school_admin.py:147
-#: .\ampa_manager\activity\admin\camps_admin.py:117
-#: .\ampa_manager\activity\admin\custody_admin.py:171
-#: .\ampa_manager\charge\admin\membership_admin.py:112
+#: .\ampa_manager\academic_course\admin.py:67
+#: .\ampa_manager\activity\admin\after_school_admin.py:163
+#: .\ampa_manager\activity\admin\after_school_admin.py:176
+#: .\ampa_manager\activity\admin\after_school_admin.py:189
+#: .\ampa_manager\activity\admin\after_school_admin.py:203
+#: .\ampa_manager\activity\admin\camps_admin.py:120
+#: .\ampa_manager\activity\admin\custody_admin.py:176
+#: .\ampa_manager\charge\admin\membership_admin.py:109
 msgid "View details"
-msgstr ""
-
-#: .\ampa_manager\academic_course\admin.py:79
-#: .\ampa_manager\academic_course\admin.py:99
-#: .\ampa_manager\family\models\family.py:56
-msgid "Families"
-msgstr ""
+msgstr "Ikusi xehetasunak"
 
 #: .\ampa_manager\academic_course\admin.py:82
-#: .\ampa_manager\family\models\child.py:26
-msgid "Students"
-msgstr ""
+#: .\ampa_manager\academic_course\admin.py:102
+#: .\ampa_manager\family\models\family.py:50
+#: .\ampa_manager_project\admin_menu.py:5
+#: .\ampa_manager_project\admin_menu.py:11
+msgid "Families"
+msgstr "Familiak"
 
-#: .\ampa_manager\academic_course\admin.py:86
-#: .\ampa_manager\academic_course\admin.py:127
-msgid "HH members"
-msgstr ""
+#: .\ampa_manager\academic_course\admin.py:85
+#: .\ampa_manager\family\models\child.py:26
+#: .\ampa_manager_project\admin_menu.py:23
+msgid "Students"
+msgstr "Ikasleak"
 
 #: .\ampa_manager\academic_course\admin.py:89
-#: .\ampa_manager\academic_course\admin.py:147
+#: .\ampa_manager\academic_course\admin.py:130
+msgid "HH members"
+msgstr "HH bazkideak"
+
+#: .\ampa_manager\academic_course\admin.py:92
+#: .\ampa_manager\academic_course\admin.py:150
 msgid "LH members"
-msgstr ""
+msgstr "LH bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:103
+#: .\ampa_manager\academic_course\admin.py:106
 msgid "Families with children in school"
-msgstr ""
+msgstr "Seme-alabak ikastolan dituzten familiak"
 
-#: .\ampa_manager\academic_course\admin.py:107
-#: .\ampa_manager\family\admin\child_admin.py:40
-#: .\ampa_manager\family\admin\child_admin.py:62
-#: .\ampa_manager\family\admin\family_admin.py:256
-#: .\ampa_manager\family\admin\family_admin.py:264
-#: .\ampa_manager\family\models\family.py:27
+#: .\ampa_manager\academic_course\admin.py:110
+#: .\ampa_manager\family\admin\child_admin.py:41
+#: .\ampa_manager\family\admin\child_admin.py:63
+#: .\ampa_manager\family\admin\family_admin.py:251
+#: .\ampa_manager\family\admin\family_admin.py:262
+#: .\ampa_manager\family\models\family.py:28
+#: .\ampa_manager_project\admin_menu.py:17
 msgid "Parents"
-msgstr ""
+msgstr "Gurasoak"
 
-#: .\ampa_manager\academic_course\admin.py:111
-#: .\ampa_manager\family\admin\filters\family_filters.py:34
+#: .\ampa_manager\academic_course\admin.py:114
+#: .\ampa_manager\family\admin\filters\family_filters.py:51
 msgid "Children in school"
-msgstr ""
+msgstr "Seme-alabak ikastolan"
 
-#: .\ampa_manager\academic_course\admin.py:115
+#: .\ampa_manager\academic_course\admin.py:118
 #: .\ampa_manager\academic_course\models\level.py:92
-#: .\ampa_manager\family\admin\filters\child_filters.py:16
+#: .\ampa_manager\family\admin\filters\child_filters.py:17
 msgid "Pre-school"
-msgstr ""
+msgstr "Haur Hezkuntza"
 
-#: .\ampa_manager\academic_course\admin.py:119
+#: .\ampa_manager\academic_course\admin.py:122
 msgid "Primary"
-msgstr ""
+msgstr "Lehen Hezkuntza"
 
-#: .\ampa_manager\academic_course\admin.py:123
-#: .\ampa_manager\family\admin\filters\child_filters.py:18
+#: .\ampa_manager\academic_course\admin.py:126
+#: .\ampa_manager\family\admin\filters\child_filters.py:19
 msgid "Out of school"
-msgstr ""
+msgstr "Ikastolatik kanpo"
 
-#: .\ampa_manager\academic_course\admin.py:131
+#: .\ampa_manager\academic_course\admin.py:134
 msgid "HH2 members"
-msgstr ""
+msgstr "HH2 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:135
+#: .\ampa_manager\academic_course\admin.py:138
 msgid "HH3 members"
-msgstr ""
+msgstr "HH3 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:139
+#: .\ampa_manager\academic_course\admin.py:142
 msgid "HH4 members"
-msgstr ""
+msgstr "HH4 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:143
+#: .\ampa_manager\academic_course\admin.py:146
 msgid "HH5 members"
-msgstr ""
+msgstr "HH5 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:151
+#: .\ampa_manager\academic_course\admin.py:154
 msgid "LH1 members"
-msgstr ""
+msgstr "LH1 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:155
+#: .\ampa_manager\academic_course\admin.py:158
 msgid "LH2 members"
-msgstr ""
+msgstr "LH2 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:159
+#: .\ampa_manager\academic_course\admin.py:162
 msgid "LH3 members"
-msgstr ""
+msgstr "LH3 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:163
+#: .\ampa_manager\academic_course\admin.py:166
 msgid "LH4 members"
-msgstr ""
+msgstr "LH4 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:167
+#: .\ampa_manager\academic_course\admin.py:170
 msgid "LH5 members"
-msgstr ""
+msgstr "LH5 bazkideak"
 
-#: .\ampa_manager\academic_course\admin.py:171
+#: .\ampa_manager\academic_course\admin.py:174
 msgid "LH6 members"
-msgstr ""
+msgstr "LH6 bazkideak"
 
 #: .\ampa_manager\academic_course\models\academic_course.py:8
 msgid "Initial year"
-msgstr ""
+msgstr "Hasierako urtea"
 
 #: .\ampa_manager\academic_course\models\academic_course.py:11
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:29
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:14
-#: .\ampa_manager\activity\models\camps\camps_edition.py:10
-#: .\ampa_manager\activity\models\custody\custody_edition.py:22
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:16
+#: .\ampa_manager\activity\models\camps\camps_edition.py:11
+#: .\ampa_manager\activity\models\custody\custody_edition.py:23
 #: .\ampa_manager\family\models\membership.py:14
 msgid "Academic course"
-msgstr ""
+msgstr "Ikasturtea"
 
 #: .\ampa_manager\academic_course\models\academic_course.py:12
+#: .\ampa_manager_project\admin_menu.py:169
 msgid "Academic courses"
-msgstr ""
+msgstr "Ikasturteak"
 
 #: .\ampa_manager\academic_course\models\active_course.py:11
-#: .\ampa_manager\activity\admin\after_school_admin.py:50
-#: .\ampa_manager\activity\admin\registration_filters.py:29
-#: .\ampa_manager\charge\admin\membership_admin.py:32
+#: .\ampa_manager\activity\admin\after_school_admin.py:61
+#: .\ampa_manager\activity\admin\registration_filters.py:33
+#: .\ampa_manager\charge\admin\after_school_admin.py:87
+#: .\ampa_manager\charge\admin\membership_admin.py:34
 #: .\ampa_manager\charge\models\fee\fee.py:9
-#: .\ampa_manager\family\admin\child_admin.py:36
-#: .\ampa_manager\family\admin\family_admin.py:63
-#: .\ampa_manager\family\admin\filters\child_filters.py:38
+#: .\ampa_manager\family\admin\child_admin.py:37
+#: .\ampa_manager\family\admin\family_admin.py:65
+#: .\ampa_manager\family\admin\filters\child_filters.py:39
 msgid "Course"
-msgstr ""
+msgstr "Ikasturtea"
 
 #: .\ampa_manager\academic_course\models\active_course.py:14
 #: .\ampa_manager\academic_course\models\active_course.py:15
+#: .\ampa_manager_project\admin_menu.py:173
 msgid "Active course"
-msgstr ""
+msgstr "Ikasturte aktiboa"
 
 #: .\ampa_manager\academic_course\models\level.py:21
 msgid "HH2"
-msgstr ""
+msgstr "HH2"
 
 #: .\ampa_manager\academic_course\models\level.py:22
 msgid "HH3"
-msgstr ""
+msgstr "HH3"
 
 #: .\ampa_manager\academic_course\models\level.py:23
 msgid "HH4"
-msgstr ""
+msgstr "HH4"
 
 #: .\ampa_manager\academic_course\models\level.py:24
 msgid "HH5"
-msgstr ""
+msgstr "HH5"
 
 #: .\ampa_manager\academic_course\models\level.py:25
 msgid "LH1"
-msgstr ""
+msgstr "LH1"
 
 #: .\ampa_manager\academic_course\models\level.py:26
 msgid "LH2"
-msgstr ""
+msgstr "LH2"
 
 #: .\ampa_manager\academic_course\models\level.py:27
 msgid "LH3"
-msgstr ""
+msgstr "LH3"
 
 #: .\ampa_manager\academic_course\models\level.py:28
 msgid "LH4"
-msgstr ""
+msgstr "LH4"
 
 #: .\ampa_manager\academic_course\models\level.py:29
 msgid "LH5"
-msgstr ""
+msgstr "LH5"
 
 #: .\ampa_manager\academic_course\models\level.py:30
 msgid "LH6"
-msgstr ""
+msgstr "LH6"
 
 #: .\ampa_manager\academic_course\models\level.py:93
-#: .\ampa_manager\family\admin\filters\child_filters.py:17
+#: .\ampa_manager\family\admin\filters\child_filters.py:18
 msgid "Primary education"
-msgstr ""
+msgstr "Lehen Hezkuntza"
 
 #: .\ampa_manager\academic_course\models\level.py:94
 msgid "All cycles"
-msgstr ""
+msgstr "Ziklo guztiak"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:54
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:126
+#: .\ampa_manager\activity\admin\after_school_admin.py:57
+#: .\ampa_manager\activity\admin\after_school_admin.py:142
+#: .\ampa_manager\charge\admin\after_school_admin.py:100
+#: .\ampa_manager\charge\admin\after_school_admin.py:117
+#: .\ampa_manager\charge\admin\camps_admin.py:73
+#: .\ampa_manager\charge\admin\camps_admin.py:89
+#: .\ampa_manager\charge\admin\custody_admin.py:68
+#: .\ampa_manager\charge\admin\custody_admin.py:84
+#: .\ampa_manager\charge\admin\membership_admin.py:52
+#: .\ampa_manager\charge\admin\membership_admin.py:72
+#: .\ampa_manager\family\admin\family_admin.py:105
+#: .\ampa_manager\family\admin\family_admin.py:335
+#: .\ampa_manager_project\admin_menu.py:70
+#: .\ampa_manager_project\admin_menu.py:111
+#: .\ampa_manager_project\admin_menu.py:146
+#: .\ampa_manager_project\admin_menu.py:192
+msgid "Receipts"
+msgstr "Ordainagiriak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:65
+#: .\ampa_manager\activity\models\after_school\after_school.py:12
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:128
 msgid "Activity"
-msgstr ""
+msgstr "Jarduera"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:58
-#: .\ampa_manager\activity\admin\after_school_admin.py:99
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:13
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:132
+#: .\ampa_manager\activity\admin\after_school_admin.py:69
+#: .\ampa_manager\activity\admin\after_school_admin.py:130
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:15
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:137
 msgid "Timetable"
-msgstr ""
+msgstr "Ordutegia"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:62
-#: .\ampa_manager\activity\admin\custody_admin.py:54
+#: .\ampa_manager\activity\admin\after_school_admin.py:73
+#: .\ampa_manager\activity\admin\custody_admin.py:58
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:19
 #: .\ampa_manager\activity\models\camps\camps_registration.py:18
-#: .\ampa_manager\activity\models\custody\custody_registration.py:23
-#: .\ampa_manager\charge\admin\after_school_admin.py:36
-#: .\ampa_manager\charge\admin\camps_admin.py:49
-#: .\ampa_manager\charge\admin\camps_admin.py:63
+#: .\ampa_manager\activity\models\custody\custody_registration.py:22
+#: .\ampa_manager\charge\admin\after_school_admin.py:58
+#: .\ampa_manager\charge\admin\camps_admin.py:36
+#: .\ampa_manager\charge\admin\camps_admin.py:50
 #: .\ampa_manager\charge\admin\custody_admin.py:37
 #: .\ampa_manager\views\validate_data.py:124
 msgid "Child"
-msgstr ""
+msgstr "Seme-alaba"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:66
-#: .\ampa_manager\activity\admin\custody_admin.py:58
-#: .\ampa_manager\activity\admin\registration_filters.py:55
+#: .\ampa_manager\activity\admin\after_school_admin.py:77
+#: .\ampa_manager\activity\admin\custody_admin.py:62
+#: .\ampa_manager\activity\admin\registration_filters.py:59
 #: .\ampa_manager\charge\admin\filters\receipt_filters.py:6
-#: .\ampa_manager\charge\models\membership_receipt.py:20
+#: .\ampa_manager\charge\models\membership_receipt.py:19
 #: .\ampa_manager\family\admin\parent_admin.py:28
 #: .\ampa_manager\family\models\child.py:20
-#: .\ampa_manager\family\models\family.py:55
+#: .\ampa_manager\family\models\family.py:49
 #: .\ampa_manager\family\models\membership.py:13
 #: .\ampa_manager\views\validate_data.py:123
-#: .\ampa_manager_project\settings.py:150
+#: .\ampa_manager\views\validate_data.py:219
+#: .\ampa_manager\views\validate_data.py:220
 msgid "Family"
-msgstr ""
+msgstr "Familia"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:70
-#: .\ampa_manager\activity\admin\camps_admin.py:46
-#: .\ampa_manager\activity\admin\camps_admin.py:57
-#: .\ampa_manager\activity\admin\custody_admin.py:73
-#: .\ampa_manager\family\admin\child_admin.py:32
-#: .\ampa_manager\family\admin\family_admin.py:276
+#: .\ampa_manager\activity\admin\after_school_admin.py:81
+#: .\ampa_manager\activity\admin\camps_admin.py:48
+#: .\ampa_manager\activity\admin\camps_admin.py:59
+#: .\ampa_manager\activity\admin\custody_admin.py:77
+#: .\ampa_manager\family\admin\child_admin.py:33
+#: .\ampa_manager\family\admin\family_admin.py:274
 #: .\ampa_manager\family\admin\parent_admin.py:24
 msgid "Is member"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:74
-#: .\ampa_manager\activity\admin\after_school_admin.py:102
-#: .\ampa_manager\activity\admin\custody_admin.py:62
-msgid "Price"
-msgstr ""
+msgstr "Bazkidea da"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:85
-#: .\ampa_manager\activity\admin\camps_admin.py:61
-#: .\ampa_manager\activity\admin\custody_admin.py:77
-#: .\ampa_manager\family\admin\family_admin.py:59
+#: .\ampa_manager\activity\admin\after_school_admin.py:133
+#: .\ampa_manager\activity\admin\custody_admin.py:66
+msgid "Price"
+msgstr "Prezioa"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:89
+msgid "Download IDs of selected registrations as CSV"
+msgstr "Deskargatu hautatutako izen-emateen IDak CSV gisa"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:94
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:32
+#: .\ampa_manager\activity\models\after_school\test_after_school_edition.py:31
+#: .\ampa_manager\activity\models\camps\camps_edition.py:27
+msgid "registrations"
+msgstr "Izen-emateak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:98
+msgid "Download family emails"
+msgstr "Deskargatu familien posta elektronikoak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:116
+#: .\ampa_manager\activity\admin\camps_admin.py:63
+#: .\ampa_manager\activity\admin\custody_admin.py:81
+#: .\ampa_manager\family\admin\family_admin.py:61
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:111
+#: .\ampa_manager\activity\admin\after_school_admin.py:146
+#: .\ampa_manager\charge\admin\after_school_admin.py:104
+#: .\ampa_manager\charge\admin\camps_admin.py:77
+#: .\ampa_manager\charge\admin\custody_admin.py:72
+#: .\ampa_manager\charge\admin\membership_admin.py:56
+#: .\ampa_manager\family\admin\family_admin.py:290
+#: .\ampa_manager\family\admin\family_admin.py:300
+#: .\ampa_manager\family\admin\family_admin.py:310
+#: .\ampa_manager\family\admin\family_admin.py:367
+#: .\ampa_manager\family\admin\holder_admin.py:56
+#, python-format
+msgid "%(num_receipts)s receipt"
+msgstr "%(num_receipts)s ordainagiri"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:148
+#: .\ampa_manager\charge\admin\after_school_admin.py:106
+#: .\ampa_manager\charge\admin\camps_admin.py:79
+#: .\ampa_manager\charge\admin\custody_admin.py:74
+#: .\ampa_manager\charge\admin\membership_admin.py:58
+#: .\ampa_manager\family\admin\family_admin.py:292
+#: .\ampa_manager\family\admin\family_admin.py:302
+#: .\ampa_manager\family\admin\family_admin.py:312
+#: .\ampa_manager\family\admin\family_admin.py:369
+#: .\ampa_manager\family\admin\holder_admin.py:58
+#, python-format
+msgid "%(num_receipts)s receipts"
+msgstr "%(num_receipts)s ordainagiri"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:153
 msgid "Create after school remittance"
-msgstr ""
+msgstr "Sortu eskolaz kanpokoen zordunketa"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:121
-#: .\ampa_manager\activity\admin\after_school_admin.py:134
-#: .\ampa_manager\activity\admin\after_school_admin.py:147
-#: .\ampa_manager\activity\admin\camps_admin.py:117
-#: .\ampa_manager\activity\admin\custody_admin.py:171
-msgid "Activity remittance created"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:124
-msgid "Create after school remittance with half"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:137
-msgid "Create after school remittance with left"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:150
-#: .\ampa_manager\activity\admin\after_school_admin.py:179
-#: .\ampa_manager\activity\admin\camps_admin.py:74
-#: .\ampa_manager\activity\admin\custody_admin.py:95
-#: .\ampa_manager\family\admin\family_admin.py:100
-msgid "Registrations"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:154
-#: .\ampa_manager\activity\admin\camps_admin.py:120
-#: .\ampa_manager\activity\admin\custody_admin.py:187
-msgid "Export family emails to CSV"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:187
+#: .\ampa_manager\activity\admin\after_school_admin.py:163
+#: .\ampa_manager\activity\admin\after_school_admin.py:176
 #: .\ampa_manager\activity\admin\after_school_admin.py:189
-msgid "Edit"
-msgstr ""
+#: .\ampa_manager\activity\admin\after_school_admin.py:203
+#: .\ampa_manager\activity\admin\camps_admin.py:120
+#: .\ampa_manager\activity\admin\custody_admin.py:176
+msgid "Activity remittance created"
+msgstr "Jardueraren zordunketa sortu da"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:200
-msgid "Editions"
-msgstr ""
+#: .\ampa_manager\activity\admin\after_school_admin.py:166
+msgid "Create after school remittance with half"
+msgstr "Sortu eskolaz kanpokoen zordunketa zenbatekoaren erdiarekin"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:204
-msgid "Merge activities (Move all editions to first selected)"
-msgstr ""
+#: .\ampa_manager\activity\admin\after_school_admin.py:179
+msgid "Create after school remittance with left"
+msgstr "Sortu eskolaz kanpokoen zordunketa falta den zenbatekoarekin"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:211
-msgid "After-school kept"
-msgstr ""
+#: .\ampa_manager\activity\admin\after_school_admin.py:192
+msgid "Create after school remittance with enrolment"
+msgstr "Sortu eskolaz kanpokoen zordunketa matrikularen zenbatekoarekin"
 
-#: .\ampa_manager\activity\admin\after_school_admin.py:216
-msgid "Edition changed"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:217
-#: .\ampa_manager\activity\models\after_school\after_school.py:12
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:11
-#: .\ampa_manager_project\settings.py:159
-msgid "After-school"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:223
-msgid "After-school deleted"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:228
-msgid "After-school renamed"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\after_school_admin.py:236
-msgid "No merge done. You have to select more than one after-school"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\camps_admin.py:73
-#: .\ampa_manager\activity\admin\custody_admin.py:91
-msgid "Prices"
-msgstr ""
-
+#: .\ampa_manager\activity\admin\after_school_admin.py:206
+#: .\ampa_manager\activity\admin\after_school_admin.py:242
+#: .\ampa_manager\activity\admin\after_school_admin.py:267
 #: .\ampa_manager\activity\admin\camps_admin.py:77
-#: .\ampa_manager\activity\admin\camps_admin.py:97
+#: .\ampa_manager\activity\admin\custody_admin.py:100
+#: .\ampa_manager\family\admin\family_admin.py:102
+#: .\ampa_manager\family\admin\family_admin.py:328
+#: .\ampa_manager_project\admin_menu.py:64
+#: .\ampa_manager_project\admin_menu.py:105
+#: .\ampa_manager_project\admin_menu.py:140
+msgid "Registrations"
+msgstr "Izen-emateak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:210
+#: .\ampa_manager\activity\admin\camps_admin.py:123
+#: .\ampa_manager\activity\admin\custody_admin.py:192
+#: .\ampa_manager\charge\admin\after_school_admin.py:137
+#: .\ampa_manager\charge\admin\camps_admin.py:108
+#: .\ampa_manager\charge\admin\custody_admin.py:103
+#: .\ampa_manager\charge\admin\membership_admin.py:112
+msgid "Export family emails to CSV"
+msgstr "Esportatu familiaren posta elektronikoak CSVra"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:219
+msgid "Download IDs of editions and registrations as JSON"
+msgstr "Deskargatu edizioen eta izen-emateen IDak JSON gisa"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:250
+#: .\ampa_manager\activity\admin\after_school_admin.py:252
+msgid "Edit"
+msgstr "Editatu"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:263
+#: .\ampa_manager_project\admin_menu.py:58
+#: .\ampa_manager_project\admin_menu.py:99
+#: .\ampa_manager_project\admin_menu.py:134
+msgid "Editions"
+msgstr "Edizioak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:271
+msgid "Courses"
+msgstr "Ikasturteak"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:275
+msgid "Merge activities (Move all editions to first selected)"
+msgstr "Batu jarduerak (eraman edizio guztiak hautatutako lehenengora)"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:282
+msgid "After-school kept"
+msgstr "Eskolaz kanpokoa mantendu da"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:287
+msgid "Edition changed"
+msgstr "Edizioa aldatu da"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:288
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:12
+msgid "After-school"
+msgstr "Eskolaz kanpokoa"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:294
+msgid "After-school deleted"
+msgstr "Eskolaz kanpokoa ezabatu da"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:299
+msgid "After-school renamed"
+msgstr "Eskolaz kanpokoa berrizendatu da"
+
+#: .\ampa_manager\activity\admin\after_school_admin.py:307
+msgid "No merge done. You have to select more than one after-school"
+msgstr "Ez da ezer batu. Eskolaz kanpoko bat baino gehiago hautatu behar duzu"
+
+#: .\ampa_manager\activity\admin\camps_admin.py:76
+#: .\ampa_manager\activity\admin\custody_admin.py:96
+msgid "Prices"
+msgstr "Prezioak"
+
+#: .\ampa_manager\activity\admin\camps_admin.py:80
+#: .\ampa_manager\activity\admin\camps_admin.py:100
 #: .\ampa_manager\activity\admin\camps_edition_filters.py:8
-#: .\ampa_manager\activity\admin\custody_admin.py:102
-#: .\ampa_manager\activity\admin\custody_admin.py:146
-#: .\ampa_manager\activity\admin\custody_admin.py:156
+#: .\ampa_manager\activity\admin\custody_admin.py:107
+#: .\ampa_manager\activity\admin\custody_admin.py:151
+#: .\ampa_manager\activity\admin\custody_admin.py:161
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:8
+#: .\ampa_manager\activity\admin\registration_filters.py:74
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:48
 msgid "Remittance"
-msgstr ""
+msgstr "Zordunketa"
 
-#: .\ampa_manager\activity\admin\camps_admin.py:85
-#: .\ampa_manager\activity\admin\custody_admin.py:126
-#: .\ampa_manager\activity\admin\custody_admin.py:134
-#: .\ampa_manager\activity\admin\registration_filters.py:15
+#: .\ampa_manager\activity\admin\camps_admin.py:88
+#: .\ampa_manager\activity\admin\custody_admin.py:131
+#: .\ampa_manager\activity\admin\custody_admin.py:139
+#: .\ampa_manager\activity\admin\registration_filters.py:18
 msgid "No members"
-msgstr ""
+msgstr "Bazkideak ez"
 
-#: .\ampa_manager\activity\admin\camps_admin.py:93
-#: .\ampa_manager\activity\admin\custody_admin.py:142
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:116
-#: .\ampa_manager\charge\admin\after_school_admin.py:44
-#: .\ampa_manager\charge\admin\after_school_admin.py:100
-#: .\ampa_manager\charge\admin\camps_admin.py:57
-#: .\ampa_manager\charge\admin\camps_admin.py:103
+#: .\ampa_manager\activity\admin\camps_admin.py:96
+#: .\ampa_manager\activity\admin\custody_admin.py:147
+#: .\ampa_manager\charge\admin\after_school_admin.py:68
+#: .\ampa_manager\charge\admin\after_school_admin.py:111
+#: .\ampa_manager\charge\admin\camps_admin.py:44
+#: .\ampa_manager\charge\admin\camps_admin.py:83
 #: .\ampa_manager\charge\admin\custody_admin.py:45
-#: .\ampa_manager\charge\admin\custody_admin.py:101
-#: .\ampa_manager\charge\admin\membership_admin.py:65
+#: .\ampa_manager\charge\admin\custody_admin.py:78
+#: .\ampa_manager\charge\admin\membership_admin.py:62
 msgid "Total"
-msgstr ""
+msgstr "Guztira"
 
-#: .\ampa_manager\activity\admin\camps_admin.py:105
+#: .\ampa_manager\activity\admin\camps_admin.py:108
 msgid "Multiple remittances"
-msgstr ""
+msgstr "Hainbat zordunketa"
 
-#: .\ampa_manager\activity\admin\camps_admin.py:107
+#: .\ampa_manager\activity\admin\camps_admin.py:110
 msgid "Create camps remittance"
-msgstr ""
+msgstr "Sortu udalekuen zordunketa"
 
 #: .\ampa_manager\activity\admin\camps_edition_filters.py:14
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:14
 msgid "Has remittance"
-msgstr ""
+msgstr "Zordunketarekin"
 
 #: .\ampa_manager\activity\admin\camps_edition_filters.py:15
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:15
 msgid "No remittance"
-msgstr ""
-
-#: .\ampa_manager\activity\admin\custody_admin.py:46
-msgid "Member"
-msgstr ""
+msgstr "Zordunketarik gabe"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:50
+#: .\ampa_manager\charge\admin\after_school_admin.py:54
+msgid "Member"
+msgstr "Bazkidea"
+
+#: .\ampa_manager\activity\admin\custody_admin.py:54
 #: .\ampa_manager\activity\models\custody\custody_edition.py:34
-#: .\ampa_manager\activity\models\custody\custody_registration.py:21
+#: .\ampa_manager\activity\models\custody\custody_registration.py:20
 msgid "Custody edition"
-msgstr ""
+msgstr "Zaintza-edizioa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:98
-#: .\ampa_manager\activity\models\custody\custody_registration.py:25
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:54
+#: .\ampa_manager\activity\admin\custody_admin.py:103
+#: .\ampa_manager\activity\models\custody\custody_registration.py:24
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:61
 msgid "Assisted days"
-msgstr ""
+msgstr "Bertaratutako egunak"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:114
+#: .\ampa_manager\activity\admin\custody_admin.py:119
 msgid "Charged"
-msgstr ""
+msgstr "Kobratuta"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:122
+#: .\ampa_manager\activity\admin\custody_admin.py:127
 msgid "Members (topped by \"Max days for charge\")"
-msgstr ""
+msgstr "Bazkideak (\"Kobratzeko gehienezko egunak\" mugaren arabera)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:130
+#: .\ampa_manager\activity\admin\custody_admin.py:135
 msgid "No members (topped by \"Max days for charge\")"
-msgstr ""
+msgstr "Bazkideak ez (\"Kobratzeko gehienezko egunak\" mugaren arabera)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:154
+#: .\ampa_manager\activity\admin\custody_admin.py:159
 msgid "Multiple remmitances"
-msgstr ""
+msgstr "Hainbat zordunketa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:161
+#: .\ampa_manager\activity\admin\custody_admin.py:166
 msgid "Create custody remittance"
-msgstr ""
+msgstr "Sortu zaintzaren zordunketa"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:174
+#: .\ampa_manager\activity\admin\custody_admin.py:179
 msgid "Calculate prices based on cost and registrations"
-msgstr ""
+msgstr "Kalkulatu prezioak kostuaren eta bertaratzeen arabera"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:177
+#: .\ampa_manager\activity\admin\custody_admin.py:182
 msgid ""
 "Any of the required fields to calculate the price is missing (cost, days "
 "with service, registrations)"
 msgstr ""
+"Prezioa kalkulatzeko beharrezko eremuren bat falta da (kostua, "
+"zerbitzu-egunak, izen-emateak)"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:182
+#: .\ampa_manager\activity\admin\custody_admin.py:187
 msgid "Editions' prices calculated"
-msgstr ""
+msgstr "Edizioen prezioak kalkulatu dira"
 
-#: .\ampa_manager\activity\admin\custody_admin.py:184
+#: .\ampa_manager\activity\admin\custody_admin.py:189
 msgid "Non members"
-msgstr ""
+msgstr "Bazkide ez direnak"
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:35
 msgid "Current"
-msgstr ""
+msgstr "Unekoa"
 
 #: .\ampa_manager\activity\admin\custody_edition_filters.py:36
 msgid "Previous"
-msgstr ""
+msgstr "Aurrekoa"
 
-#: .\ampa_manager\activity\admin\registration_filters.py:8
-#: .\ampa_manager\family\admin\filters\child_filters.py:64
-#: .\ampa_manager\family\admin\filters\family_filters.py:6
+#: .\ampa_manager\activity\admin\registration_filters.py:11
+#: .\ampa_manager\family\admin\filters\child_filters.py:65
+#: .\ampa_manager\family\admin\filters\family_filters.py:11
 #: .\ampa_manager\family\models\membership.py:19
 #: .\ampa_manager\family\models\membership.py:20
 msgid "Membership"
-msgstr ""
+msgstr "Bazkideak"
 
-#: .\ampa_manager\activity\admin\registration_filters.py:61
-#: .\ampa_manager\charge\admin\filters\receipt_filters.py:12
-msgid "All"
-msgstr ""
+#: .\ampa_manager\activity\admin\registration_filters.py:64
+#: .\ampa_manager\activity\admin\registration_filters.py:79
+msgid "With enrolment"
+msgstr "Matrikularekin"
+
+#: .\ampa_manager\activity\admin\registration_filters.py:80
+msgid "Without enrolment"
+msgstr "Matrikularik gabe"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:8
 msgid "AfterSchool activity name"
-msgstr ""
+msgstr "Eskolaz kanpoko jardueraren izena"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:9
 msgid "Funding"
-msgstr ""
+msgstr "Finantzaketa"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:13
-#: .\ampa_manager\family\admin\family_admin.py:67
-#: .\ampa_manager\family\admin\holder_admin.py:60
-msgid "After-schools"
-msgstr ""
+msgid "Activities"
+msgstr "Jarduerak"
 
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:12
-#: .\ampa_manager\activity\models\custody\custody_edition.py:19
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:129
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:13
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:131
+msgid "Code"
+msgstr "Kodea"
+
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:14
+#: .\ampa_manager\activity\models\custody\custody_edition.py:20
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:134
 msgid "Period"
-msgstr ""
+msgstr "Aldia"
 
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:17
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:21
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:17
 msgid "After-school edition"
-msgstr ""
+msgstr "Eskolaz kanpokoen edizioa"
 
-#: .\ampa_manager\activity\models\after_school\after_school_edition.py:18
+#: .\ampa_manager\activity\models\after_school\after_school_edition.py:22
 msgid "After-school editions"
-msgstr ""
+msgstr "Eskolaz kanpokoen edizioak"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:20
 #: .\ampa_manager\activity\models\camps\camps_registration.py:19
-#: .\ampa_manager\activity\models\custody\custody_registration.py:24
-#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:46
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:49
-#: .\ampa_manager\charge\admin\after_school_admin.py:40
-#: .\ampa_manager\charge\admin\camps_admin.py:53
+#: .\ampa_manager\activity\models\custody\custody_registration.py:23
+#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:50
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:56
+#: .\ampa_manager\charge\admin\after_school_admin.py:64
+#: .\ampa_manager\charge\admin\camps_admin.py:40
 #: .\ampa_manager\charge\admin\custody_admin.py:41
-#: .\ampa_manager\family\models\holder\holder.py:25
-#: .\ampa_manager\family\models\holder\holder.py:40
+#: .\ampa_manager\charge\models\membership_receipt.py:20
+#: .\ampa_manager\family\models\holder\holder.py:27
+#: .\ampa_manager\family\models\holder\holder.py:42
 #: .\ampa_manager\views\validate_data.py:125
 msgid "Holder"
-msgstr ""
+msgstr "Titularra"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:25
 msgid "After-school registration"
-msgstr ""
+msgstr "Eskolaz kanpoko izen-ematea"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:26
-#: .\ampa_manager\family\admin\family_admin.py:326
+#: .\ampa_manager\family\admin\family_admin.py:324
 msgid "After-school registrations"
-msgstr ""
+msgstr "Eskolaz kanpoko izen-emateak"
 
 #: .\ampa_manager\activity\models\after_school\after_school_registration.py:39
 #: .\ampa_manager\activity\models\camps\camps_registration.py:37
-#: .\ampa_manager\activity\models\custody\custody_registration.py:42
+#: .\ampa_manager\activity\models\custody\custody_registration.py:41
 msgid "The selected bank account does not belong to the child's family"
-msgstr ""
-
-#: .\ampa_manager\activity\models\camps\camps_edition.py:11
-#: .\ampa_manager\activity\models\price_per_level.py:7
-msgid "Levels"
-msgstr ""
-
-#: .\ampa_manager\activity\models\camps\camps_edition.py:11
-msgid "For example: Primary, Pre-school, LH1-LH3"
-msgstr ""
+msgstr "Hautatutako banku-kontua ez da hautatutako seme-alabaren familiarena"
 
 #: .\ampa_manager\activity\models\camps\camps_edition.py:12
-#: .\ampa_manager\activity\models\price_per_level.py:8
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:55
-msgid "Price for members"
-msgstr ""
+#: .\ampa_manager\activity\models\price_per_level.py:7
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:140
+msgid "Levels"
+msgstr "Mailak"
+
+#: .\ampa_manager\activity\models\camps\camps_edition.py:12
+msgid "For example: Primary, Pre-school, LH1-LH3"
+msgstr "Adibidez: Lehen Hezkuntza, Haur Hezkuntza, LH1-LH3"
 
 #: .\ampa_manager\activity\models\camps\camps_edition.py:13
+#: .\ampa_manager\activity\models\price_per_level.py:8
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:68
+msgid "Price for members"
+msgstr "Bazkideen prezioa"
+
+#: .\ampa_manager\activity\models\camps\camps_edition.py:14
 #: .\ampa_manager\activity\models\price_per_level.py:9
 msgid "Price for no members"
-msgstr ""
-
-#: .\ampa_manager\activity\models\camps\camps_edition.py:18
-#: .\ampa_manager\activity\models\camps\camps_registration.py:16
-msgid "Camps edition"
-msgstr ""
+msgstr "Bazkide ez direnen prezioa"
 
 #: .\ampa_manager\activity\models\camps\camps_edition.py:19
+#: .\ampa_manager\activity\models\camps\camps_registration.py:16
+msgid "Camps edition"
+msgstr "Udalekuen edizioa"
+
+#: .\ampa_manager\activity\models\camps\camps_edition.py:20
 msgid "Camps editions"
-msgstr ""
+msgstr "Udalekuen edizioak"
 
 #: .\ampa_manager\activity\models\camps\camps_registration.py:24
 msgid "Camps registration"
-msgstr ""
+msgstr "Udalekuetako izen-ematea"
 
 #: .\ampa_manager\activity\models\camps\camps_registration.py:25
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:19
-#: .\ampa_manager\family\admin\family_admin.py:322
+#: .\ampa_manager\charge\models\camps\camps_receipt.py:16
+#: .\ampa_manager\family\admin\family_admin.py:320
 msgid "Camps registrations"
-msgstr ""
-
-#: .\ampa_manager\activity\models\custody\custody_edition.py:20
-msgid "Days with service"
-msgstr ""
+msgstr "Udalekuetako izen-emateak"
 
 #: .\ampa_manager\activity\models\custody\custody_edition.py:21
-msgid "Days in which there was custody this edition"
-msgstr ""
+msgid "Days with service"
+msgstr "Zerbitzu-egunak"
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:24
-#: .\ampa_manager\family\admin\filters\child_filters.py:10
-msgid "Cycle"
-msgstr ""
+#: .\ampa_manager\activity\models\custody\custody_edition.py:22
+msgid "Days in which there was custody this edition"
+msgstr "Edizio honetan zaintza egon zen egunak"
 
 #: .\ampa_manager\activity\models\custody\custody_edition.py:25
-msgid "Cost"
-msgstr ""
+#: .\ampa_manager\family\admin\filters\child_filters.py:11
+msgid "Cycle"
+msgstr "Zikloa"
 
-#: .\ampa_manager\activity\models\custody\custody_edition.py:27
-#, python-format
+#: .\ampa_manager\activity\models\custody\custody_edition.py:26
+msgid "Cost"
+msgstr "Kostua"
+
+#: .\ampa_manager\activity\models\custody\custody_edition.py:28
 msgid ""
 "Prices can be automatically calculated with the action \"Calculate prices\" "
-"based on this cost and assisted days. No members have a surcharge of "
-"%(surcharge)s "
+"based on this cost and assisted days. No members have a surcharge"
 msgstr ""
+"Prezioak automatikoki kalkula daitezke \"Kalkulatu prezioak\" ekintzarekin, "
+"kostu honetan eta bertaratutako egunetan oinarrituta. Bazkide ez direnek "
+"errekargua dute"
 
 #: .\ampa_manager\activity\models\custody\custody_edition.py:35
 msgid "Custody editions"
-msgstr ""
+msgstr "Zaintza-edizioak"
 
-#: .\ampa_manager\activity\models\custody\custody_registration.py:19
+#: .\ampa_manager\activity\models\custody\custody_registration.py:18
 msgid "assisted days"
-msgstr ""
+msgstr "bertaratutako egunak"
+
+#: .\ampa_manager\activity\models\custody\custody_registration.py:29
+msgid "Custody registration"
+msgstr "Zaintzako izen-ematea"
 
 #: .\ampa_manager\activity\models\custody\custody_registration.py:30
-msgid "Custody registration"
-msgstr ""
-
-#: .\ampa_manager\activity\models\custody\custody_registration.py:31
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:18
-#: .\ampa_manager\family\admin\family_admin.py:318
+#: .\ampa_manager\charge\models\custody\custody_receipt.py:14
+#: .\ampa_manager\family\admin\family_admin.py:316
 msgid "Custody registrations"
-msgstr ""
+msgstr "Zaintzako izen-emateak"
+
+#: .\ampa_manager\activity\models\custody\custody_registration.py:37
+msgid "days"
+msgstr "egun"
 
 #: .\ampa_manager\activity\models\funding.py:6
 msgid "No funding"
-msgstr ""
+msgstr "Finantzaketarik gabe"
 
 #: .\ampa_manager\activity\models\funding.py:7
 msgid "Cultural"
-msgstr ""
+msgstr "Kulturala"
 
 #: .\ampa_manager\activity\models\funding.py:8
 msgid "Sport"
-msgstr ""
+msgstr "Kirola"
 
 #: .\ampa_manager\activity\models\payment_type.py:8
 msgid "Single"
-msgstr ""
+msgstr "Bakarra"
 
 #: .\ampa_manager\activity\models\payment_type.py:9
 msgid "Per day"
-msgstr ""
+msgstr "Eguneko"
 
 #: .\ampa_manager\activity\models\payment_type.py:10
 msgid "Per week"
-msgstr ""
+msgstr "Asteko"
 
 #: .\ampa_manager\activity\models\payment_type.py:11
 msgid "Per month"
-msgstr ""
+msgstr "Hileko"
 
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:60
-msgid "Price for non members"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:69
-msgid "Missing after school"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:72
-msgid "Missing academic course"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:75
-msgid "Missing period"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:78
-msgid "Missing timetable"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:81
-msgid "Missing/Wrong price for members"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:84
-msgid "Missing/Wrong price for non members"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\after_school_importer.py:33
+#: .\ampa_manager\activity\use_cases\importers\after_school_activity_importer.py:37
 msgid "Missing name"
-msgstr ""
+msgstr "Izena falta da"
 
-#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:54
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_finder.py:27
+msgid "Edition not found"
+msgstr "Edizioa ez da aurkitu"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_finder.py:38
+msgid "Missing code"
+msgstr "Kodea falta da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:73
+msgid "Price for non members"
+msgstr "Bazkide ez direnen prezioa"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:82
+msgid "Missing after school"
+msgstr "Eskolaz kanpokoa falta da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:85
+msgid "Missing academic course"
+msgstr "Ikasturtea falta da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:88
+msgid "Missing period"
+msgstr "Aldia falta da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:91
+msgid "Missing timetable"
+msgstr "Ordutegia falta da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:94
+msgid "Missing/Wrong price for members"
+msgstr "Bazkideen prezioa falta da edo okerra da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_edition_importer.py:97
+msgid "Missing/Wrong price for non members"
+msgstr "Bazkide ez direnen prezioa falta da edo okerra da"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:48
+#: .\ampa_manager\activity\use_cases\importers\camps_registration_importer.py:26
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:51
+msgid "Registration already existed"
+msgstr "Izen-ematea bazegoen jada"
+
+#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:58
 msgid "Missing after school edition"
-msgstr ""
+msgstr "Eskolaz kanpokoen edizioa falta da"
 
-#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:57
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:71
+#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:61
+#: .\ampa_manager\activity\use_cases\importers\camps_registration_importer.py:51
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:78
 msgid "Missing holder"
-msgstr ""
+msgstr "Titularra falta da"
 
-#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:60
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:74
+#: .\ampa_manager\activity\use_cases\importers\after_school_registration_importer.py:64
+#: .\ampa_manager\activity\use_cases\importers\camps_registration_importer.py:54
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:81
 msgid "Missing child"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:69
-msgid "Family: email"
-msgstr ""
+msgstr "Seme-alaba falta da"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:71
+msgid "Family: email"
+msgstr "Familia: posta elektronikoa"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:73
 msgid "Family: surnames"
-msgstr ""
+msgstr "Familia: abizenak"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:73
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:75
 msgid "Parent/Mother 1: name and surnames"
-msgstr ""
+msgstr "Aita/Ama 1: izen-abizenak"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:73
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:75
 msgid "Parent/Mother: name and surnames"
-msgstr ""
+msgstr "Aita/Ama: izen-abizenak"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:76
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:78
 msgid "Parent/Mother 1: phone number"
-msgstr ""
+msgstr "Aita/Ama 1: telefonoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:76
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:78
 msgid "Parent/Mother: phone number"
-msgstr ""
+msgstr "Aita/Ama: telefonoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:79
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:81
 msgid "Parent/Mother 1: email"
-msgstr ""
+msgstr "Aita/Ama 1: posta elektronikoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:79
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:81
 msgid "Parent/Mother: email"
-msgstr ""
+msgstr "Aita/Ama: posta elektronikoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:82
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:84
 msgid "Parent/Mother 1: bank account IBAN"
-msgstr ""
+msgstr "Aita/Ama 1: banku-kontuaren IBAN"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:85
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:86
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:87
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:88
 msgid "Parent/Mother 2: name and surnames"
-msgstr ""
+msgstr "Aita/Ama 2: izen-abizenak"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:89
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:91
 msgid "Parent/Mother 2: phone number"
-msgstr ""
+msgstr "Aita/Ama 2: telefonoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:92
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:94
 msgid "Parent/Mother 2: email"
-msgstr ""
+msgstr "Aita/Ama 2: posta elektronikoa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:95
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:97
 msgid "Child 1: name without surnames"
-msgstr ""
+msgstr "Seme-alaba 1: izena, abizenik gabe"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:95
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:97
 msgid "Child: name"
-msgstr ""
+msgstr "Seme-alaba: izena"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:97
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:99
 msgid "Child 1: level"
-msgstr ""
+msgstr "Seme-alaba 1: maila"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:97
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:99
 msgid "Child: level"
-msgstr ""
+msgstr "Seme-alaba: maila"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:99
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:101
 msgid "Child 1: year of birth"
-msgstr ""
+msgstr "Seme-alaba 1: jaiotze-urtea"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:99
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:101
 msgid "Child: year of birth"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:102
-msgid "Child 2: name without surnames"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:102
-msgid "Child 2: name"
-msgstr ""
+msgstr "Seme-alaba: jaiotze-urtea"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:104
-msgid "Child 2: level"
-msgstr ""
+msgid "Child 2: name without surnames"
+msgstr "Seme-alaba 2: izena, abizenik gabe"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:104
+msgid "Child 2: name"
+msgstr "Seme-alaba 2: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:106
+msgid "Child 2: level"
+msgstr "Seme-alaba 2: maila"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:108
 msgid "Child 2: year of birth"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:109
-msgid "Child 3: name without surnames"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:109
-msgid "Child 3: name"
-msgstr ""
+msgstr "Seme-alaba 2: jaiotze-urtea"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:111
-msgid "Child 3: level"
-msgstr ""
+msgid "Child 3: name without surnames"
+msgstr "Seme-alaba 3: izena, abizenik gabe"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:111
+msgid "Child 3: name"
+msgstr "Seme-alaba 3: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:113
+msgid "Child 3: level"
+msgstr "Seme-alaba 3: maila"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:115
 msgid "Child 3: year of birth"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:116
-msgid "Child 4: name without surnames"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:116
-msgid "Child 4: name"
-msgstr ""
+msgstr "Seme-alaba 3: jaiotze-urtea"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:118
-msgid "Child 4: level"
-msgstr ""
+msgid "Child 4: name without surnames"
+msgstr "Seme-alaba 4: izena, abizenik gabe"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:118
+msgid "Child 4: name"
+msgstr "Seme-alaba 4: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:120
+msgid "Child 4: level"
+msgstr "Seme-alaba 4: maila"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:122
 msgid "Child 4: year of birth"
-msgstr ""
+msgstr "Seme-alaba 4: jaiotze-urtea"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:123
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:125
 msgid "Assisted days in the selected edition"
-msgstr ""
+msgstr "Bertaratutako egunak hautatutako edizioan"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:123
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:125
 msgid "Assistance"
-msgstr ""
+msgstr "Bertaratzea"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:126
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:128
 msgid "Activity name"
-msgstr ""
+msgstr "Jardueraren izena"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:129
-msgid "Activity period (ostirala-viernes)"
-msgstr ""
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:131
+msgid "Edition code (ESKU-AST-13)"
+msgstr "Edizioaren kodea (ESKU-AST-13)"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:132
-msgid "Activity timetable (17:00-18:00)"
-msgstr ""
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:134
+msgid "Edition period (ostirala-viernes)"
+msgstr "Edizioaren aldia (ostirala-viernes)"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:135
-msgid "Activity price for members"
-msgstr ""
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:137
+msgid "Edition timetable (17:00-18:00)"
+msgstr "Edizioaren ordutegia (17:00-18:00)"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:135
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:140
+msgid "Edition levels (HH, LH)"
+msgstr "Edizioaren mailak (adib. HH4, LH3)"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:143
+msgid "Edition price for members"
+msgstr "Edizioaren prezioa bazkideentzat"
+
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:143
 msgid "Price members"
-msgstr ""
+msgstr "Bazkideen prezioa"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:138
-msgid "Activity price for non members"
-msgstr ""
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:146
+msgid "Edition price for non members"
+msgstr "Edizioaren prezioa bazkide ez direnentzat"
 
-#: .\ampa_manager\activity\use_cases\importers\base_importer.py:138
+#: .\ampa_manager\activity\use_cases\importers\base_importer.py:146
 msgid "Price non members"
-msgstr ""
+msgstr "Bazkide ez direnen prezioa"
 
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:42
-msgid "0 assisted days"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:68
+#: .\ampa_manager\activity\use_cases\importers\camps_registration_importer.py:48
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:75
 msgid "Missing edition"
-msgstr ""
+msgstr "Edizioa falta da"
 
-#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:78
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:48
+msgid "0 assisted days"
+msgstr "0 bertaratutako egun"
+
+#: .\ampa_manager\activity\use_cases\importers\custody_registration_importer.py:85
 msgid "Wrong assisted days"
-msgstr ""
+msgstr "Bertaratutako egun okerrak"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:23
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:30
 msgid "Not processed"
-msgstr ""
+msgstr "Prozesatu gabe"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:24
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:31
 msgid "Not modified"
-msgstr ""
+msgstr "Aldatu gabe"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:25
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:32
 #: .\ampa_manager\charge\state.py:6
-#: .\ampa_manager\family\admin\family_admin.py:284
+#: .\ampa_manager\family\admin\family_admin.py:282
 msgid "Created"
-msgstr ""
+msgstr "Sortuta"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:26
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:33
 msgid "Modified"
-msgstr ""
+msgstr "Aldatuta"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:27
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:34
 #: .\ampa_manager\activity\use_cases\importers\row.py:18
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:71
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:71
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:76
 msgid "Error"
-msgstr ""
+msgstr "Errorea"
 
-#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:28
+#: .\ampa_manager\activity\use_cases\importers\import_model_result.py:35
 #: .\ampa_manager\activity\use_cases\importers\row.py:19
-#: .\ampa_manager\templates\base_import.html:301
+#: .\ampa_manager\templates\importers\base_import.html:81
 msgid "Omitted"
-msgstr ""
+msgstr "Baztertuta"
 
 #: .\ampa_manager\activity\use_cases\importers\row.py:16
 msgid "Ok"
-msgstr ""
+msgstr "Ongi"
 
 #: .\ampa_manager\activity\use_cases\importers\row.py:17
 msgid "Warning"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:37
-#: .\ampa_manager\family\use_cases\importers\family_email_importer.py:20
-msgid "Family email"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:38
-#: .\ampa_manager\templates\check_members.html:33
-msgid "Parent name and surnames"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:39
-msgid "Parent phone number"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:40
-msgid "Parent email"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:41
-msgid "Parent bank account IBAN"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:42
-msgid "Child name (without surnames)"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:43
-msgid "Child surnames"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:44
-msgid "Child year of birth (ex. 2015)"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\camps_importer.py:45
-msgid "Child level (ex. HH4, LH3)"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:117
-msgid "Rows imported successfully"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:118
-msgid "Rows not imported"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:121
-msgid "Errors"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:123
-#: .\ampa_manager\importation\models\custody_importation_row.py:13
-#: .\ampa_manager\templates\base_import.html:306
-msgid "Row"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:126
-msgid "Warnings"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:128
-#, python-format
-msgid "%(created_families)s families created"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:141
-msgid "Results by model"
-msgstr ""
-
-#: .\ampa_manager\activity\use_cases\old_importers\excel\excel_importer.py:151
-msgid "Results by status"
-msgstr ""
+msgstr "Abisua"
 
 #: .\ampa_manager\admin.py:50 .\ampa_manager\admin.py:51
 msgid "PTA Administration"
-msgstr ""
+msgstr "Guraso Elkartearen administrazioa"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:50
-#: .\ampa_manager\charge\admin\camps_admin.py:35
-#: .\ampa_manager\charge\admin\custody_admin.py:51
-#: .\ampa_manager\charge\admin\membership_admin.py:125
-msgid "Set as sent"
-msgstr ""
+#: .\ampa_manager\charge\admin\after_school_admin.py:47
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:40
+msgid "Edition"
+msgstr "Edizioa"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:57
-#: .\ampa_manager\charge\admin\camps_admin.py:42
-#: .\ampa_manager\charge\admin\custody_admin.py:58
-#: .\ampa_manager\charge\admin\membership_admin.py:132
-msgid "Set as paid"
-msgstr ""
+#: .\ampa_manager\charge\admin\after_school_admin.py:121
+msgid "Export remittance to SEPA file"
+msgstr "Esportatu zordunketa SEPA fitxategira"
 
-#: .\ampa_manager\charge\admin\after_school_admin.py:89
-#: .\ampa_manager\charge\admin\after_school_admin.py:106
+#: .\ampa_manager\charge\admin\after_school_admin.py:147
+msgid "Notify families: enrollment"
+msgstr "Jakinarazi familiei: matrikula"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:151
+msgid "Notify families: first fee"
+msgstr "Jakinarazi familiei: 1. kuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:155
+msgid "Notify families: remaining fee"
+msgstr "Jakinarazi familiei: kuotaren gainerakoa"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:159
+msgid "Test: Notify families: enrollment"
+msgstr "PROBA: Jakinarazi familiei: matrikula"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:163
+msgid "Test: Notify families: first fee"
+msgstr "PROBA: Jakinarazi familiei: 1. kuota"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:167
+msgid "Test: Notify families: remaining fee"
+msgstr "PROBA: Jakinarazi familiei: kuotaren gainerakoa"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:171
+#: .\ampa_manager\charge\admin\membership_admin.py:122
+msgid "Notify families"
+msgstr "Jakinarazi familiei"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:181
+#: .\ampa_manager\charge\admin\membership_admin.py:128
+msgid "Remittance notified"
+msgstr "Zordunketa jakinarazi da"
+
+#: .\ampa_manager\charge\admin\after_school_admin.py:184
+#: .\ampa_manager\charge\admin\membership_admin.py:131
+msgid "Unable to notify remittance"
+msgstr "Ezin izan da zordunketa jakinarazi"
+
 #: .\ampa_manager\charge\admin\camps_admin.py:93
-#: .\ampa_manager\charge\admin\camps_admin.py:109
-#: .\ampa_manager\charge\admin\custody_admin.py:91
-#: .\ampa_manager\charge\admin\custody_admin.py:107
-#: .\ampa_manager\charge\admin\membership_admin.py:55
-#: .\ampa_manager\charge\admin\membership_admin.py:75
-#: .\ampa_manager\family\admin\family_admin.py:103
-msgid "Receipts"
-msgstr ""
-
-#: .\ampa_manager\charge\admin\after_school_admin.py:93
-#: .\ampa_manager\charge\admin\camps_admin.py:97
-#: .\ampa_manager\charge\admin\custody_admin.py:95
-#: .\ampa_manager\charge\admin\membership_admin.py:59
-#: .\ampa_manager\family\admin\family_admin.py:292
-#: .\ampa_manager\family\admin\family_admin.py:302
-#: .\ampa_manager\family\admin\family_admin.py:312
-#: .\ampa_manager\family\admin\family_admin.py:345
-#, python-format
-msgid "%(num_receipts)s receipt"
-msgstr ""
-
-#: .\ampa_manager\charge\admin\after_school_admin.py:95
-#: .\ampa_manager\charge\admin\camps_admin.py:99
-#: .\ampa_manager\charge\admin\custody_admin.py:97
-#: .\ampa_manager\charge\admin\membership_admin.py:61
-#: .\ampa_manager\family\admin\family_admin.py:294
-#: .\ampa_manager\family\admin\family_admin.py:304
-#: .\ampa_manager\family\admin\family_admin.py:314
-#: .\ampa_manager\family\admin\family_admin.py:347
-#, python-format
-msgid "%(num_receipts)s receipts"
-msgstr ""
-
-#: .\ampa_manager\charge\admin\after_school_admin.py:110
-msgid "Export after-school remittance to SEPA file"
-msgstr ""
-
-#: .\ampa_manager\charge\admin\camps_admin.py:113
 msgid "Export camps remittance to SEPA file"
-msgstr ""
+msgstr "Esportatu udalekuen zordunketa SEPA fitxategira"
 
-#: .\ampa_manager\charge\admin\custody_admin.py:111
+#: .\ampa_manager\charge\admin\custody_admin.py:88
 msgid "Export custody remittance to SEPA file"
-msgstr ""
+msgstr "Esportatu zaintzaren zordunketa SEPA fitxategira"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:79
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:12
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:29
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:46
+msgid "All"
+msgstr "Guztiak"
+
+#: .\ampa_manager\charge\admin\filters\receipt_filters.py:23
+msgid "Parent"
+msgstr "Gurasoa"
+
+#: .\ampa_manager\charge\admin\membership_admin.py:76
 msgid "Export Membership remittance to SEPA file"
-msgstr ""
+msgstr "Esportatu bazkideen zordunketa SEPA fitxategira"
 
-#: .\ampa_manager\charge\admin\membership_admin.py:94
+#: .\ampa_manager\charge\admin\membership_admin.py:91
 msgid "Create Membership Remittance with families not included yet"
-msgstr ""
+msgstr "Sortu bazkideen zordunketa oraindik sartu gabeko familiekin"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:15
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:16
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:15
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:12
+#: .\ampa_manager\charge\models\camps\camps_receipt.py:14
+#: .\ampa_manager\charge\models\custody\custody_receipt.py:12
 msgid "Total (€)"
-msgstr ""
+msgstr "Guztira (€)"
+
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:14
+msgid "After School registrations"
+msgstr "Eskolaz kanpoko izen-emateak"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:16
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:17
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:16
-#: .\ampa_manager\charge\models\membership_receipt.py:18
-#: .\ampa_manager\family\models\holder\holder.py:32
-msgid "State"
-msgstr ""
-
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:18
-msgid "After School registrations"
-msgstr ""
-
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:20
 msgid "After School remittance"
-msgstr ""
+msgstr "Eskolaz kanpokoen zordunketa"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:25
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:21
 msgid "After-school receipt"
-msgstr ""
+msgstr "Eskolaz kanpokoen ordainagiria"
 
-#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:341
+#: .\ampa_manager\charge\models\after_school_charge\after_school_receipt.py:22
+#: .\ampa_manager\family\admin\family_admin.py:363
 msgid "After-school receipts"
-msgstr ""
+msgstr "Eskolaz kanpokoen ordainagiriak"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_remittance.py:14
 msgid "AfterSchoolEditions"
-msgstr ""
+msgstr "Eskolaz kanpokoen edizioak"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_remittance.py:19
 msgid "After-school remittance"
-msgstr ""
+msgstr "Eskolaz kanpokoen zordunketa"
 
 #: .\ampa_manager\charge\models\after_school_charge\after_school_remittance.py:20
 msgid "After-school remittances"
-msgstr ""
+msgstr "Eskolaz kanpokoen zordunketak"
 
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:21
+#: .\ampa_manager\charge\models\camps\camps_receipt.py:18
 #: .\ampa_manager\charge\models\camps\camps_remittance.py:19
 msgid "Camps remittance"
-msgstr ""
+msgstr "Udalekuen zordunketa"
 
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:26
+#: .\ampa_manager\charge\models\camps\camps_receipt.py:23
 msgid "Camps receipt"
-msgstr ""
+msgstr "Udalekuen ordainagiria"
 
-#: .\ampa_manager\charge\models\camps\camps_receipt.py:27
-#: .\ampa_manager\family\admin\family_admin.py:298
+#: .\ampa_manager\charge\models\camps\camps_receipt.py:24
+#: .\ampa_manager\family\admin\family_admin.py:296
 msgid "Camps receipts"
-msgstr ""
+msgstr "Udalekuen ordainagiriak"
 
 #: .\ampa_manager\charge\models\camps\camps_remittance.py:14
 msgid "CampsEdition"
-msgstr ""
+msgstr "Udalekuen edizioa"
 
 #: .\ampa_manager\charge\models\camps\camps_remittance.py:20
 msgid "Camps remittances"
-msgstr ""
+msgstr "Udalekuen zordunketak"
 
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:20
+#: .\ampa_manager\charge\models\custody\custody_receipt.py:16
 #: .\ampa_manager\charge\models\custody\custody_remittance.py:19
 msgid "Custody remittance"
-msgstr ""
+msgstr "Zaintzaren zordunketa"
 
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:25
+#: .\ampa_manager\charge\models\custody\custody_receipt.py:21
 msgid "Custody receipt"
-msgstr ""
+msgstr "Zaintzaren ordainagiria"
 
-#: .\ampa_manager\charge\models\custody\custody_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:308
+#: .\ampa_manager\charge\models\custody\custody_receipt.py:22
+#: .\ampa_manager\family\admin\family_admin.py:306
+#: .\ampa_manager\family\admin\holder_admin.py:28
+#: .\ampa_manager\family\admin\holder_admin.py:32
+#: .\ampa_manager\family\admin\holder_admin.py:36
+#: .\ampa_manager\family\admin\holder_admin.py:90
+#: .\ampa_manager\family\admin\holder_admin.py:94
+#: .\ampa_manager\family\admin\holder_admin.py:98
 msgid "Custody receipts"
-msgstr ""
+msgstr "Zaintzaren ordainagiriak"
 
 #: .\ampa_manager\charge\models\custody\custody_remittance.py:14
 msgid "CustodyEditions"
-msgstr ""
+msgstr "Zaintza-edizioak"
 
 #: .\ampa_manager\charge\models\custody\custody_remittance.py:20
 msgid "Custody remittances"
-msgstr ""
+msgstr "Zaintzaren zordunketak"
 
 #: .\ampa_manager\charge\models\fee\fee.py:10
 msgid "Amount"
-msgstr ""
+msgstr "Zenbatekoa"
 
 #: .\ampa_manager\charge\models\fee\fee.py:14
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:60
 msgid "Fee"
-msgstr ""
+msgstr "Kuota"
 
 #: .\ampa_manager\charge\models\fee\fee.py:15
+#: .\ampa_manager_project\admin_menu.py:186
 msgid "Fees"
-msgstr ""
+msgstr "Kuotak"
 
-#: .\ampa_manager\charge\models\membership_receipt.py:19
+#: .\ampa_manager\charge\models\membership_receipt.py:18
 msgid "Membership Remittance"
-msgstr ""
+msgstr "Bazkideen zordunketa"
 
 #: .\ampa_manager\charge\models\membership_receipt.py:25
 msgid "Membership receipt"
-msgstr ""
+msgstr "Bazkide-ordainagiria"
 
 #: .\ampa_manager\charge\models\membership_receipt.py:26
-#: .\ampa_manager\family\admin\family_admin.py:288
+#: .\ampa_manager\family\admin\family_admin.py:286
 msgid "Membership receipts"
-msgstr ""
+msgstr "Bazkide-ordainagiriak"
 
 #: .\ampa_manager\charge\models\membership_remittance.py:12
 msgid "AcademicCourse"
-msgstr ""
+msgstr "Ikasturtea"
 
 #: .\ampa_manager\charge\models\membership_remittance.py:17
 msgid "Membership remittance"
-msgstr ""
+msgstr "Bazkideen zordunketa"
 
 #: .\ampa_manager\charge\models\membership_remittance.py:18
 msgid "Membership remittances"
-msgstr ""
+msgstr "Bazkideen zordunketak"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:6
 #: .\ampa_manager\family\models\child.py:15
-#: .\ampa_manager\importation\models\child_import_data.py:9
 msgid "Name"
-msgstr ""
+msgstr "Izena"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:7
-#: .\ampa_manager\charge\models\nameable_with_date.py:13
-msgid "Maximum 30 characters"
-msgstr ""
+msgid "Name to identify the remittance. Maximum 30 characters"
+msgstr "Zordunketa identifikatzeko izena. Gehienez 30 karaktere"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:8
 msgid "Sepa_id"
-msgstr ""
+msgstr "SEPA id"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:9
-msgid "Leave empty to auto-generate"
-msgstr ""
+msgid "Created at"
+msgstr "Sortuta"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:10
-#: .\ampa_manager\importation\models\importation.py:6
-msgid "Created at"
-msgstr ""
+#: .\ampa_manager\forms\generate_members_remittance_form.py:7
+msgid "Payment date"
+msgstr "Ordainketa-data"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:11
-msgid "Payment date"
-msgstr ""
+msgid "Concept"
+msgstr "Kontzeptua"
 
 #: .\ampa_manager\charge\models\nameable_with_date.py:12
-msgid "Concept"
-msgstr ""
+msgid ""
+"Description that the families will see in the bank account. Maximum 30 "
+"characters"
+msgstr "Familiek banku-kontuan ikusiko duten kontzeptua. Gehienez 30 karaktere"
 
 #: .\ampa_manager\charge\state.py:7 .\ampa_manager\family\models\state.py:7
 msgid "Sent"
-msgstr ""
+msgstr "Bidalita"
 
 #: .\ampa_manager\charge\state.py:8
 msgid "Paid"
-msgstr ""
+msgstr "Ordainduta"
+
+#: .\ampa_manager\charge\use_cases\after_school\after_school_remittance_notifier.py:118
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:125
+msgid "Unknown renew status"
+msgstr "Berritze-egoera ezezaguna"
+
+#: .\ampa_manager\charge\use_cases\membership\create_membership_remittance_with_families\membership_remittance_creator.py:58
+msgid "Members fee"
+msgstr "Bazkide-kuota"
+
+#: .\ampa_manager\charge\use_cases\membership\membership_campaign_notifier.py:140
+msgid "Not available"
+msgstr "Ez dago erabilgarri"
 
 #: .\ampa_manager\dynamic_settings\admin\dynamic_setting_admin.py:8
+#: .\ampa_manager_project\admin_menu.py:76
+#: .\ampa_manager_project\admin_menu.py:117
+#: .\ampa_manager_project\admin_menu.py:152
+#: .\ampa_manager_project\admin_menu.py:198
 msgid "Remittances"
-msgstr ""
+msgstr "Zordunketak"
 
 #: .\ampa_manager\dynamic_settings\admin\dynamic_setting_admin.py:11
-#: .\ampa_manager\family\admin\family_admin.py:73
-#: .\ampa_manager_project\settings.py:167
+#: .\ampa_manager\family\admin\family_admin.py:75
+#: .\ampa_manager_project\admin_menu.py:93
 msgid "Custody"
-msgstr ""
+msgstr "Zaintza"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:9
 msgid "Party identification"
-msgstr ""
+msgstr "Alderdiaren identifikazioa"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:10
 msgid "Generic organisation identification"
-msgstr ""
+msgstr "Erakundearen identifikazio generikoa"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:11
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: .\ampa_manager\dynamic_settings\dynamic_settings.py:12
 #: .\ampa_manager\family\models\bank_account\bank_account.py:14
-#: .\ampa_manager\importation\models\holder_import_data.py:8
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:15
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:13
+msgid "Custody BIC"
+msgstr "Zaintzaren BIC"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:14
+msgid "Custody IBAN"
+msgstr "Zaintzaren IBAN"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:17
 msgid "Members discount"
-msgstr ""
+msgstr "Bazkideen deskontua"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:16
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:18
 msgid "Percentage discounted to members in the price of the custody"
-msgstr ""
+msgstr "Bazkideei zaintzaren prezioan egiten zaien ehuneko deskontua"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:19
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:21
 msgid "Max days to charge"
-msgstr ""
+msgstr "Kobratzeko gehienezko egunak"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:20
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:22
 msgid ""
 "Maximum number of days in a month (as a percentage) to charge to each user"
 msgstr ""
+"Hilabetean erabiltzaile bakoitzari kobratu beharreko gehienezko egun kopurua"
+" (ehunekotan)"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:24
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:26
 msgid "Setting"
-msgstr ""
+msgstr "Ezarpena"
 
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:25
-#: .\ampa_manager\dynamic_settings\dynamic_settings.py:28
-#: .\ampa_manager_project\settings.py:190
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:27
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py:30
+#: .\ampa_manager_project\admin_menu.py:226
 msgid "Settings"
-msgstr ""
+msgstr "Ezarpenak"
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:22
 #: .\ampa_manager\family\admin\parent_admin.py:32
-#: .\ampa_manager\family\models\holder\holder.py:41
+#: .\ampa_manager\family\models\holder\holder.py:43
+#: .\ampa_manager_project\admin_menu.py:35
 msgid "Holders"
-msgstr ""
+msgstr "Titularrak"
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:26
 msgid "Complete SWIFT/BIC codes"
-msgstr ""
+msgstr "Osatu SWIFT/BIC kodeak"
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:33
 msgid "Validate IBAN"
-msgstr ""
+msgstr "Balioztatu IBAN"
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:41
 msgid "All validated IBANs are valid"
-msgstr ""
+msgstr "Balioztatutako IBAN guztiak zuzenak dira"
 
 #: .\ampa_manager\family\admin\bank_account_admin.py:43
 #, python-format
 msgid "%(number)s IBANs are invalid: %(ibans)s"
-msgstr ""
+msgstr "%(number)s IBAN baliogabeak dira: %(ibans)s"
 
-#: .\ampa_manager\family\admin\child_admin.py:44
+#: .\ampa_manager\family\admin\child_admin.py:45
 msgid "After-sch."
-msgstr ""
+msgstr "Esk. kanp."
 
-#: .\ampa_manager\family\admin\child_admin.py:50
+#: .\ampa_manager\family\admin\child_admin.py:51
 msgid "Cust."
-msgstr ""
+msgstr "Zaint."
 
-#: .\ampa_manager\family\admin\child_admin.py:56
+#: .\ampa_manager\family\admin\child_admin.py:57
 msgid "Cmps."
-msgstr ""
+msgstr "Udal."
 
-#: .\ampa_manager\family\admin\child_admin.py:66
+#: .\ampa_manager\family\admin\child_admin.py:67
 msgid "Export children to XLS"
-msgstr ""
+msgstr "Esportatu seme-alabak XLSra"
 
-#: .\ampa_manager\family\admin\family_admin.py:67
-#: .\ampa_manager\family\admin\family_admin.py:73
-#: .\ampa_manager\family\admin\family_admin.py:79
+#: .\ampa_manager\family\admin\family_admin.py:69
+#: .\ampa_manager_project\admin_menu.py:46
+msgid "After-schools"
+msgstr "Eskolaz kanpokoak"
+
+#: .\ampa_manager\family\admin\family_admin.py:69
+#: .\ampa_manager\family\admin\family_admin.py:75
+#: .\ampa_manager\family\admin\family_admin.py:81
 msgid "This year"
-msgstr ""
+msgstr "Aurten"
 
-#: .\ampa_manager\family\admin\family_admin.py:67
-#: .\ampa_manager\family\admin\family_admin.py:73
-#: .\ampa_manager\family\admin\family_admin.py:79
+#: .\ampa_manager\family\admin\family_admin.py:69
+#: .\ampa_manager\family\admin\family_admin.py:75
+#: .\ampa_manager\family\admin\family_admin.py:81
 msgid "Previously"
-msgstr ""
+msgstr "Lehenago"
 
-#: .\ampa_manager\family\admin\family_admin.py:79
-#: .\ampa_manager_project\settings.py:174
+#: .\ampa_manager\family\admin\family_admin.py:81
+#: .\ampa_manager_project\admin_menu.py:128
 msgid "Camps"
-msgstr ""
+msgstr "Udalekuak"
 
-#: .\ampa_manager\family\admin\family_admin.py:94
+#: .\ampa_manager\family\admin\family_admin.py:96
 msgid "General"
-msgstr ""
+msgstr "Orokorra"
 
-#: .\ampa_manager\family\admin\family_admin.py:97
+#: .\ampa_manager\family\admin\family_admin.py:99
 msgid "Payment details"
-msgstr ""
+msgstr "Ordainketa-informazioa"
 
-#: .\ampa_manager\family\admin\family_admin.py:124
+#: .\ampa_manager\family\admin\family_admin.py:126
 msgid "Complete missing holders"
-msgstr ""
+msgstr "Osatu titular hutsak"
 
-#: .\ampa_manager\family\admin\family_admin.py:140
+#: .\ampa_manager\family\admin\family_admin.py:142
 #, python-format
 msgid ""
 "Membership holders: %(membership_holders_before)s -> "
@@ -1396,1078 +1508,1229 @@ msgid ""
 "holders: %(after_school_holders_before)s -> %(after_school_holders_after)s "
 "<br/>Camps holders: %(camps_holders_before)s -> %(camps_holders_after)s"
 msgstr ""
+"Bazkideen titularrak: %(membership_holders_before)s -> "
+"%(membership_holders_after)s <br/>Zaintzaren titularrak: "
+"%(custody_holders_before)s -> %(custody_holders_after)s <br/>Eskolaz "
+"kanpokoen titularrak: %(after_school_holders_before)s -> "
+"%(after_school_holders_after)s <br/>Udalekuen titularrak: "
+"%(camps_holders_before)s -> %(camps_holders_after)s"
 
-#: .\ampa_manager\family\admin\family_admin.py:154
-msgid "Export emails to CSV"
-msgstr ""
+#: .\ampa_manager\family\admin\family_admin.py:156
+msgid "Export family and parents emails to CSV"
+msgstr "Esportatu familiaren eta gurasoen posta elektronikoak CSVra"
 
 #: .\ampa_manager\family\admin\family_admin.py:161
-msgid "Send email to the parents of selected families"
-msgstr ""
+msgid "Export only family emails to CSV"
+msgstr "Esportatu familiaren posta elektronikoak soilik CSVra"
 
-#: .\ampa_manager\family\admin\family_admin.py:167
-msgid "Click here to send an email to the parents"
-msgstr ""
-
-#: .\ampa_manager\family\admin\family_admin.py:171
+#: .\ampa_manager\family\admin\family_admin.py:166
 msgid "Export families to XLS"
-msgstr ""
+msgstr "Esportatu familiak XLSra"
 
-#: .\ampa_manager\family\admin\family_admin.py:209
-msgid "Make families member"
-msgstr ""
+#: .\ampa_manager\family\admin\family_admin.py:204
+msgid "Make member"
+msgstr "Bihurtu familiak bazkide"
 
-#: .\ampa_manager\family\admin\family_admin.py:224
+# python-format
+#: .\ampa_manager\family\admin\family_admin.py:219
 #, python-format
 msgid ""
 "%(new_members)s families became members. %(already_members)s families "
 "already were members. %(declined)s families declined to be members anymore"
 msgstr ""
+"%(new_members)s familia bazkide bihurtu dira. %(already_members)s familia "
+"bazkide ziren lehendik. %(declined)s familiak bazkide izateari uko egin "
+"diote"
 
-#: .\ampa_manager\family\admin\family_admin.py:228
-msgid "Remove from members"
-msgstr ""
+#: .\ampa_manager\family\admin\family_admin.py:223
+msgid "Remove member"
+msgstr "Kendu bazkideetatik"
 
-#: .\ampa_manager\family\admin\family_admin.py:244
+# python-format
+#: .\ampa_manager\family\admin\family_admin.py:239
 #, python-format
 msgid ""
 "%(removed_members)s families removed from members. %(non_members)s of the "
 "selected families were not members"
 msgstr ""
+"%(removed_members)s familia bazkideen artetik kendu dira. Hautatutako "
+"familietatik %(non_members)s ez ziren bazkide"
 
-#: .\ampa_manager\family\admin\family_admin.py:249
+#: .\ampa_manager\family\admin\family_admin.py:244
 msgid "Decline Membership"
-msgstr ""
+msgstr "Ez du bazkide izan nahi"
 
-#: .\ampa_manager\family\admin\family_admin.py:253
+#: .\ampa_manager\family\admin\family_admin.py:248
 msgid "Decline Membership established"
-msgstr ""
+msgstr "\"Ez du bazkide izan nahi\" aktibatuta"
 
-#: .\ampa_manager\family\admin\family_admin.py:260
-#: .\ampa_manager\family\admin\family_admin.py:268
+#: .\ampa_manager\family\admin\family_admin.py:258
+#: .\ampa_manager\family\admin\family_admin.py:266
 msgid "Children"
-msgstr ""
+msgstr "Seme-alabak"
 
-#: .\ampa_manager\family\admin\family_admin.py:272
+#: .\ampa_manager\family\admin\family_admin.py:270
 msgid "In school"
-msgstr ""
+msgstr "Ikastolan"
 
-#: .\ampa_manager\family\admin\family_admin.py:280
+#: .\ampa_manager\family\admin\family_admin.py:278
 msgid "Default holder"
-msgstr ""
+msgstr "Titular lehenetsia"
 
-#: .\ampa_manager\family\admin\family_admin.py:333
+#: .\ampa_manager\family\admin\family_admin.py:343
+msgid "Emails"
+msgstr "Posta elektronikoak"
+
+#: .\ampa_manager\family\admin\family_admin.py:355
 #, python-format
 msgid "%(registrations)s registration"
-msgstr ""
+msgstr "%(registrations)s izen-emate"
 
-#: .\ampa_manager\family\admin\family_admin.py:335
+#: .\ampa_manager\family\admin\family_admin.py:357
 #, python-format
 msgid "%(registrations)s registrations"
-msgstr ""
+msgstr "%(registrations)s izen-emate"
 
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:6
 #: .\ampa_manager\family\models\bank_account\bank_account.py:13
 msgid "SWIFT/BIC"
-msgstr ""
+msgstr "SWIFT/BIC"
 
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:12
 msgid "With SWIFT/BIC"
-msgstr ""
+msgstr "SWIFT/BICekin"
 
 #: .\ampa_manager\family\admin\filters\bank_account_filters.py:13
 msgid "Without SWIFT/BIC"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\child_filters.py:70
-#: .\ampa_manager\family\admin\filters\family_filters.py:12
-msgid "Current year members"
-msgstr ""
+msgstr "SWIFT/BICrik gabe"
 
 #: .\ampa_manager\family\admin\filters\child_filters.py:71
-#: .\ampa_manager\family\admin\filters\family_filters.py:13
+#: .\ampa_manager\family\admin\filters\family_filters.py:17
+msgid "Current year members"
+msgstr "Aurtengo bazkideak"
+
+#: .\ampa_manager\family\admin\filters\child_filters.py:72
+#: .\ampa_manager\family\admin\filters\family_filters.py:18
 msgid "Current year NO members"
-msgstr ""
+msgstr "Aurten bazkide EZ"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:14
+#: .\ampa_manager\family\admin\filters\family_filters.py:19
 msgid "Last year members"
-msgstr ""
+msgstr "Iazko bazkideak"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:15
+#: .\ampa_manager\family\admin\filters\family_filters.py:20
 msgid "Renew (Last year + Children + Renew)"
-msgstr ""
+msgstr "Berritu (Iaz + Seme-alabak + Berritu)"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:27
+#: .\ampa_manager\family\admin\filters\family_filters.py:21
+msgid "No renew: out of school (Last year + No children)"
+msgstr ""
+"Ez dute berritzen: ikastolatik kanpo (iazko bazkideak + seme-alabarik gabe)"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:22
+msgid "No renew: declined (Last year + Declined)"
+msgstr "Ez dute berritzen: ukatuta (iazko bazkideak + ukatuta)"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:36
 msgid ""
 "Showing families that were members last year, that have any child in the "
 "school this year and that have not decline membership"
 msgstr ""
+"Iaz bazkide izan ziren, aurten seme-alabak ikastolan dituzten eta "
+"berritzeari uko egin ez dioten familiak erakusten dira"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:40
+#: .\ampa_manager\family\admin\filters\family_filters.py:39
+msgid ""
+"Showing families that were members last year, but they haven't any child in "
+"the school"
+msgstr ""
+"Iaz bazkide izan ziren baina ikastolan seme-alabarik ez duten familiak "
+"erakusten dira"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:43
+msgid ""
+"Showing families that were members last year, but they have declined to renew"
+msgstr ""
+"Iaz bazkide izan ziren baina berritzeari uko egin dioten familiak erakusten "
+"dira"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:57
 msgid "Any children in school"
-msgstr ""
+msgstr "Seme-alabaren bat ikastolan"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:41
+#: .\ampa_manager\family\admin\filters\family_filters.py:58
 msgid "No children in school"
-msgstr ""
+msgstr "Seme-alabarik ez ikastolan"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:55
-#: .\ampa_manager\family\models\family.py:29
+#: .\ampa_manager\family\admin\filters\family_filters.py:72
+msgid "Possible duplicated"
+msgstr "Balizko bikoiztua"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:91
+#: .\ampa_manager\family\models\family.py:30
 msgid "Membership holder"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:61
-#: .\ampa_manager\family\admin\filters\family_filters.py:82
-#: .\ampa_manager\family\admin\filters\family_filters.py:103
-#: .\ampa_manager\family\admin\filters\family_filters.py:124
-#: .\ampa_manager\family\admin\filters\family_filters.py:167
-msgid "Completed"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:62
-#: .\ampa_manager\family\admin\filters\family_filters.py:83
-#: .\ampa_manager\family\admin\filters\family_filters.py:104
-#: .\ampa_manager\family\admin\filters\family_filters.py:125
-msgid "Not completed"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:76
-#: .\ampa_manager\family\models\family.py:34
-msgid "Custody holder"
-msgstr ""
+msgstr "Bazkide-kuotaren titularra"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:97
-#: .\ampa_manager\family\models\family.py:44
-msgid "Camps holder"
-msgstr ""
-
 #: .\ampa_manager\family\admin\filters\family_filters.py:118
-#: .\ampa_manager\family\models\family.py:39
-msgid "After-school holder"
-msgstr ""
-
 #: .\ampa_manager\family\admin\filters\family_filters.py:139
-msgid "Any holder"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:145
-msgid "Any missing"
-msgstr ""
-
-#: .\ampa_manager\family\admin\filters\family_filters.py:146
-msgid "All completed"
-msgstr ""
-
 #: .\ampa_manager\family\admin\filters\family_filters.py:160
-#: .\ampa_manager\family\models\family.py:49
-#: .\ampa_manager\family\models\parent.py:21
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:63
-#: .\ampa_manager\importation\models\parent_import_data.py:9
-msgid "Email"
-msgstr ""
+#: .\ampa_manager\family\admin\filters\family_filters.py:203
+msgid "Completed"
+msgstr "Osatuta"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:166
-msgid "Missing"
-msgstr ""
+#: .\ampa_manager\family\admin\filters\family_filters.py:98
+#: .\ampa_manager\family\admin\filters\family_filters.py:119
+#: .\ampa_manager\family\admin\filters\family_filters.py:140
+#: .\ampa_manager\family\admin\filters\family_filters.py:161
+msgid "Not completed"
+msgstr "Osatu gabe"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:112
+#: .\ampa_manager\family\models\family.py:33
+msgid "Custody holder"
+msgstr "Zaintzaren titularra"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:133
+#: .\ampa_manager\family\models\family.py:39
+msgid "Camps holder"
+msgstr "Udalekuen titularra"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:154
+#: .\ampa_manager\family\models\family.py:36
+msgid "After-school holder"
+msgstr "Eskolaz kanpokoen titularra"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:175
+msgid "Any holder"
+msgstr "Edozein titular"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:181
-msgid "Numer of parents"
-msgstr ""
+msgid "Any missing"
+msgstr "Baten bat falta"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:187
+#: .\ampa_manager\family\admin\filters\family_filters.py:182
+msgid "All completed"
+msgstr "Dena osatuta"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:196
+#: .\ampa_manager\family\models\family.py:43
+#: .\ampa_manager\family\models\parent.py:21
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:80
+msgid "Email"
+msgstr "Posta elektronikoa"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:202
+msgid "Missing"
+msgstr "Falta da"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:217
+msgid "Numer of parents"
+msgstr "Guraso kopurua"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:223
 #: .\ampa_manager\views\validate_data.py:51
 msgid "No parents"
-msgstr ""
+msgstr "Gurasorik gabe"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:188
+#: .\ampa_manager\family\admin\filters\family_filters.py:224
 msgid "1 parent"
-msgstr ""
+msgstr "Guraso 1"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:189
+#: .\ampa_manager\family\admin\filters\family_filters.py:225
 msgid "2 parent"
-msgstr ""
+msgstr "2 guraso"
 
-#: .\ampa_manager\family\admin\filters\family_filters.py:190
+#: .\ampa_manager\family\admin\filters\family_filters.py:226
 msgid "More than 2 parents"
-msgstr ""
+msgstr "2 guraso baino gehiago"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:6
 msgid "Family emails"
-msgstr ""
+msgstr "Familiaren posta elektronikoa"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:12
 msgid "With email"
-msgstr ""
+msgstr "Posta elektronikoarekin"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:13
 msgid "Without email"
-msgstr ""
+msgstr "Posta elektronikorik gabe"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:27
 msgid "Families count"
-msgstr ""
+msgstr "Familia kopurua"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:33
 #: .\ampa_manager\views\validate_data.py:241
 msgid "No families"
-msgstr ""
+msgstr "Familiarik gabe"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:34
 msgid "One family"
-msgstr ""
+msgstr "Familia 1"
 
 #: .\ampa_manager\family\admin\filters\parent_filters.py:35
 msgid "More than one family"
-msgstr ""
+msgstr "Familia bat baino gehiago"
 
-#: .\ampa_manager\family\admin\holder_admin.py:32
+#: .\ampa_manager\family\admin\holder_admin.py:62
 msgid "Set authorization as  not sent"
-msgstr ""
+msgstr "Markatu baimenak bidali gabe gisa"
 
-#: .\ampa_manager\family\admin\holder_admin.py:36
+#: .\ampa_manager\family\admin\holder_admin.py:66
 #, python-format
 msgid "%(num_authorizations)s authorizations set as NOT sent"
-msgstr ""
+msgstr "%(num_authorizations)s baimen bidali gabe gisa markatu dira"
 
-#: .\ampa_manager\family\admin\holder_admin.py:39
+#: .\ampa_manager\family\admin\holder_admin.py:69
 msgid "Set authorization as sent"
-msgstr ""
+msgstr "Markatu baimenak bidalitako gisa"
 
-#: .\ampa_manager\family\admin\holder_admin.py:43
+#: .\ampa_manager\family\admin\holder_admin.py:73
 #, python-format
 msgid "%(num_authorizations)s authorizations set as sent"
-msgstr ""
+msgstr "%(num_authorizations)s baimen bidalitako gisa markatu dira"
 
-#: .\ampa_manager\family\admin\holder_admin.py:46
+#: .\ampa_manager\family\admin\holder_admin.py:76
 msgid "Set authorization as signed"
-msgstr ""
+msgstr "Markatu baimenak sinatutako gisa"
 
-#: .\ampa_manager\family\admin\holder_admin.py:50
+#: .\ampa_manager\family\admin\holder_admin.py:80
 #, python-format
 msgid "%(num_authorizations)s authorizations set as signed"
-msgstr ""
+msgstr "%(num_authorizations)s baimen sinatutako gisa markatu dira"
 
 #: .\ampa_manager\family\models\bank_account\bank_account.py:19
 msgid "Bank account"
-msgstr ""
+msgstr "Banku-kontua"
 
 #: .\ampa_manager\family\models\bank_account\bank_account.py:20
+#: .\ampa_manager_project\admin_menu.py:29
 msgid "Bank accounts"
-msgstr ""
+msgstr "Banku-kontuak"
 
 #: .\ampa_manager\family\models\bank_account\bank_bic_code.py:8
 msgid "Bank code"
-msgstr ""
+msgstr "Banku-kodea"
 
 #: .\ampa_manager\family\models\bank_account\bank_bic_code.py:8
 msgid "4 characters"
-msgstr ""
+msgstr "4 karaktere"
 
 #: .\ampa_manager\family\models\bank_account\bank_bic_code.py:9
 msgid "BIC code"
-msgstr ""
+msgstr "BIC kodea"
 
 #: .\ampa_manager\family\models\bank_account\bank_bic_code.py:9
 msgid ""
 "8-11 characters: Entity (4), Country (2), City (2), Office (3, Optional)"
 msgstr ""
+"8-11 karaktere: Erakundea (4), Herrialdea (2), Herria (2), Bulegoa (3, "
+"aukerakoa)"
 
 #: .\ampa_manager\family\models\child.py:16
 msgid "Normalized name"
-msgstr ""
+msgstr "Izen normalizatua"
 
 #: .\ampa_manager\family\models\child.py:18
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:58
-#: .\ampa_manager\importation\models\child_import_data.py:11
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:79
 msgid "Year of birth"
-msgstr ""
+msgstr "Jaiotze-urtea"
 
 #: .\ampa_manager\family\models\child.py:19
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:62
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:83
 msgid "Repetition"
-msgstr ""
+msgstr "Errepikapena"
 
 #: .\ampa_manager\family\models\child.py:25
 msgid "Student"
-msgstr ""
+msgstr "Ikaslea"
 
 #: .\ampa_manager\family\models\family.py:21
-#: .\ampa_manager\family\use_cases\importers\family_importer.py:40
-#: .\ampa_manager\importation\models\child_with_surnames_import_data.py:8
-msgid "Surnames"
-msgstr ""
+msgid "Save the family to see its bank accounts"
+msgstr "Gorde familia, banku-kontuak ikusteko"
 
-#: .\ampa_manager\family\models\family.py:22
-msgid "Normalized surnames"
+#: .\ampa_manager\family\models\family.py:23
+msgid ""
+"The family does not want to renew the membesrhip next year. It makes no "
+"change this year"
 msgstr ""
+"Familiak ez du hurrengo urtean bazkide izaten jarraitu nahi. Ikasturte "
+"honetan ez du ezer aldatzen"
 
 #: .\ampa_manager\family\models\family.py:24
-msgid "Decline membership"
-msgstr ""
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:49
+msgid "Surnames"
+msgstr "Abizenak"
 
 #: .\ampa_manager\family\models\family.py:25
-msgid ""
-"It prevents the family from becoming a member. For example, if they no "
-"longer have children at school but you do not want to delete the record."
-msgstr ""
+msgid "Normalized surnames"
+msgstr "Abizen normalizatuak"
 
-#: .\ampa_manager\family\models\family.py:30
-#: .\ampa_manager\family\models\family.py:35
-#: .\ampa_manager\family\models\family.py:40
-#: .\ampa_manager\family\models\family.py:45
-msgid "Save the family to see its bank accounts"
-msgstr ""
+#: .\ampa_manager\family\models\family.py:27
+msgid "Decline membership"
+msgstr "Ez du bazkide izan nahi"
 
 #: .\ampa_manager\family\models\family.py:31
 msgid "This account will be used if no other is specified"
-msgstr ""
+msgstr "Kontu hau erabiliko da besterik adierazten ez bada"
 
-#: .\ampa_manager\family\models\family.py:48
+#: .\ampa_manager\family\models\family.py:42
 msgid "Defaulter"
-msgstr ""
+msgstr "Zorduna"
 
-#: .\ampa_manager\family\models\family.py:48
+#: .\ampa_manager\family\models\family.py:42
 msgid "Informative field only"
-msgstr ""
+msgstr "Informazio-eremua soilik"
 
-#: .\ampa_manager\family\models\family.py:50
+#: .\ampa_manager\family\models\family.py:44
 msgid "Secondary email"
-msgstr ""
+msgstr "Bigarren posta elektronikoa"
 
-#: .\ampa_manager\family\models\family.py:62
-#: .\ampa_manager\family\models\test_family.py:23
+#: .\ampa_manager\family\models\family.py:56
+#: .\ampa_manager\family\models\test_family.py:24
 msgid "No children"
-msgstr ""
-
-#: .\ampa_manager\family\models\holder\holder.py:26
-msgid "Bank Account"
-msgstr ""
+msgstr "Seme-alabarik gabe"
 
 #: .\ampa_manager\family\models\holder\holder.py:28
+msgid "Bank Account"
+msgstr "Banku-kontua"
+
+#: .\ampa_manager\family\models\holder\holder.py:30
 msgid "Order"
-msgstr ""
+msgstr "Ordena"
 
-#: .\ampa_manager\family\models\holder\holder.py:31
+#: .\ampa_manager\family\models\holder\holder.py:33
 msgid "Year"
-msgstr ""
+msgstr "Urtea"
 
-#: .\ampa_manager\family\models\holder\holder.py:35
+#: .\ampa_manager\family\models\holder\holder.py:34
+msgid "State"
+msgstr "Egoera"
+
+#: .\ampa_manager\family\models\holder\holder.py:37
 msgid "Document"
-msgstr ""
+msgstr "Dokumentua"
 
-#: .\ampa_manager\family\models\holder\holder.py:54
+#: .\ampa_manager\family\models\holder\holder.py:56
 msgid "The state can not be sent or signed if there is no document attached"
 msgstr ""
+"Egoera ezin da bidalitako edo sinatutako gisa jarri dokumenturik erantsi "
+"gabe"
 
 #: .\ampa_manager\family\models\parent.py:16
-#: .\ampa_manager\importation\models\parent_import_data.py:7
 msgid "Name and surnames"
-msgstr ""
+msgstr "Izen-abizenak"
 
 #: .\ampa_manager\family\models\parent.py:17
 msgid "Normalized name and surnames"
-msgstr ""
+msgstr "Izen-abizen normalizatuak"
 
 #: .\ampa_manager\family\models\parent.py:19
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:55
-#: .\ampa_manager\importation\models\parent_import_data.py:8
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:72
 msgid "Phone number"
-msgstr ""
+msgstr "Telefono-zenbakia"
 
 #: .\ampa_manager\family\models\parent.py:20
 msgid "Other phone"
-msgstr ""
+msgstr "Beste telefono bat"
 
 #: .\ampa_manager\family\models\parent.py:26
 msgid "Parent/Mother"
-msgstr ""
+msgstr "Aita/Ama"
 
 #: .\ampa_manager\family\models\parent.py:27
 msgid "Parents/Mothers"
-msgstr ""
+msgstr "Aitak/Amak"
 
 #: .\ampa_manager\family\models\state.py:6
 msgid "Not sent"
-msgstr ""
+msgstr "Bidali gabe"
 
 #: .\ampa_manager\family\models\state.py:8
 msgid "Signed"
-msgstr ""
+msgstr "Sinatuta"
 
 #: .\ampa_manager\family\use_cases\importers\bank_account_importer.py:25
 msgid "IBAN not valid"
-msgstr ""
+msgstr "IBAN baliogabea"
 
 #: .\ampa_manager\family\use_cases\importers\bank_account_importer.py:27
 msgid "Missing IBAN"
-msgstr ""
+msgstr "IBANa falta da"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:37
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:38
 msgid "Missing level"
-msgstr ""
+msgstr "Maila falta da"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:39
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:40
 msgid "Missing year of birth"
-msgstr ""
+msgstr "Jaiotze-urtea falta da"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:77
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:72
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:43
+msgid "Confirm that the child name does not contain the surnames"
+msgstr "Baieztatu seme-alabaren izenak ez dituela abizenak"
+
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:72
+msgid "Child created"
+msgstr "Sortuta"
+
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:98
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:91
 msgid "Missing family"
-msgstr ""
+msgstr "Familia falta da"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:80
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:101
 msgid "Missing/Wrong name"
-msgstr ""
+msgstr "Izena falta da edo okerra da"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:83
-#: .\ampa_manager\utils\fields_formatters.py:95
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:104
+#: .\ampa_manager\utils\fields_formatters.py:108
 msgid "Wrong level"
-msgstr ""
+msgstr "Maila okerra"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:86
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:107
 msgid "Wrong year of birth"
-msgstr ""
+msgstr "Jaiotze-urtea okerra"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:93
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:114
 msgid "Year of birth calculated"
-msgstr ""
+msgstr "Jaiotze-urtea kalkulatuta"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:95
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:116
 msgid "Unable to calculate year of birth"
-msgstr ""
+msgstr "Ezin da jaiotze-urtea kalkulatu"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:103
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:124
 msgid "Level calculated"
-msgstr ""
+msgstr "Maila kalkulatuta"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:105
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:126
 msgid "Unable to calculate level"
-msgstr ""
+msgstr "Ezin da maila kalkulatu"
 
-#: .\ampa_manager\family\use_cases\importers\child_importer.py:110
+#: .\ampa_manager\family\use_cases\importers\child_importer.py:131
 msgid "Wrong level or year of birth"
-msgstr ""
-
-#: .\ampa_manager\family\use_cases\importers\family_email_importer.py:21
-msgid "Family first surname"
-msgstr ""
-
-#: .\ampa_manager\family\use_cases\importers\family_email_importer.py:22
-msgid "Family second surname"
-msgstr ""
+msgstr "Maila edo jaiotze-urtea okerra"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:18
 msgid "Family custody holder updated with last registration holder"
 msgstr ""
+"Familiaren zaintza-titularra azken izen-ematearen titularrarekin eguneratu "
+"da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:21
 msgid "Family after-school holder updated with last registration holder"
 msgstr ""
+"Familiaren eskolaz kanpokoen titularra azken izen-ematearen titularrarekin "
+"eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:24
 msgid "Family camps holder updated with last registration holder"
 msgstr ""
+"Familiaren udalekuen titularra azken izen-ematearen titularrarekin eguneratu"
+" da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:29
 msgid "Family membership holder updated with custody holder"
-msgstr ""
+msgstr "Familiaren bazkide-titularra zaintzaren titularrarekin eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:32
 msgid "Family membership holder updated with camps holder"
-msgstr ""
+msgstr "Familiaren bazkide-titularra udalekuen titularrarekin eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:35
 msgid "Family membership holder updated with after-school holder"
 msgstr ""
+"Familiaren bazkide-titularra eskolaz kanpokoen titularrarekin eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:40
 msgid ""
 "Family membership holder updated with a last registered holder of the family"
 msgstr ""
+"Familiaren bazkide-titularra familian erregistratutako azken titularrarekin "
+"eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:44
 msgid "Custody holder updated with membership holder"
-msgstr ""
+msgstr "Zaintzaren titularra bazkide-titularrarekin eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:47
 msgid "After-school holder updated with membership holder"
-msgstr ""
+msgstr "Eskolaz kanpokoen titularra bazkide-titularrarekin eguneratu da"
 
 #: .\ampa_manager\family\use_cases\importers\family_holders_consolidator.py:50
 msgid "Camps holder updated with membership holder"
-msgstr ""
+msgstr "Udalekuen titularra bazkide-titularrarekin eguneratu da"
 
-#: .\ampa_manager\family\use_cases\importers\family_importer.py:23
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:26
 msgid "Unable to find, missing email"
-msgstr ""
+msgstr "Ez da aurkitzen, posta elektronikoa falta da"
 
-#: .\ampa_manager\family\use_cases\importers\family_importer.py:31
-msgid "Unable to create. A family with same surnames already exists"
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:39
+msgid ""
+"Unable to create. A family with same surnames already exists. Complete "
+"family email"
 msgstr ""
+"Ezin da sortu. Abizen berak dituen familia bat badago jada. Osatu familiaren"
+" posta elektronikoa"
 
-#: .\ampa_manager\family\use_cases\importers\family_importer.py:36
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:43
+msgid "Family created"
+msgstr "Familia sortu da"
+
+#: .\ampa_manager\family\use_cases\importers\family_importer.py:45
 msgid "Email not found, missing surnames"
-msgstr ""
+msgstr "Posta elektronikoa ez da aurkitu, abizenak falta dira"
 
 #: .\ampa_manager\family\use_cases\importers\holder_importer.py:28
 msgid "Missing bank account"
-msgstr ""
+msgstr "Banku-kontua falta da"
 
 #: .\ampa_manager\family\use_cases\importers\holder_importer.py:30
 msgid "Missing parent"
-msgstr ""
+msgstr "Gurasoa falta da"
 
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:59
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:58
+msgid "Parent with the same name and surnames already exists in another family"
+msgstr "Izen-abizen berak dituen guraso bat badago jada beste familia batean"
+
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:65
+msgid "Parent created"
+msgstr "Gurasoa sortu da"
+
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:76
 msgid "Additional phone number"
-msgstr ""
+msgstr "Telefono gehigarria"
 
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:75
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:94
 msgid "Missing/Wrong name and surnames"
-msgstr ""
+msgstr "Izen-abizenak falta dira edo okerrak dira"
 
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:78
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:97
 msgid "Missing/Wrong phone number"
-msgstr ""
+msgstr "Telefonoa falta da edo okerra da"
 
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:81
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:100
 msgid "Missing/Wrong additional phone number"
-msgstr ""
+msgstr "Telefono gehigarria falta da edo okerra da"
 
-#: .\ampa_manager\family\use_cases\importers\parent_importer.py:84
+#: .\ampa_manager\family\use_cases\importers\parent_importer.py:103
 msgid "Missing/Wrong email"
-msgstr ""
+msgstr "Posta elektronikoa falta da edo okerra da"
 
-#: .\ampa_manager\forms.py:11 .\ampa_manager\forms.py:29
+#: .\ampa_manager\forms\generate_members_remittance_form.py:6
+msgid "Members fee in active course"
+msgstr "Bazkide-kuota ikasturte honetan"
+
+#: .\ampa_manager\forms\import_after_schools_activities_form.py:8
+#: .\ampa_manager\forms\import_after_schools_registrations_form.py:8
+#: .\ampa_manager\forms\import_custody_form.py:13
+#: .\ampa_manager\forms\import_members_form.py:8
 msgid "TEST THE IMPORT (it does not make any changes)"
-msgstr ""
+msgstr "PROBATU INPORTAZIOA (ez du aldaketarik egiten)"
 
-#: .\ampa_manager\forms.py:26
-msgid "Custody edition to import to"
-msgstr ""
-
-#: .\ampa_manager\forms.py:39
+#: .\ampa_manager\forms\import_camps_form.py:9
 msgid "Camp edition to import to"
-msgstr ""
+msgstr "Inportatu beharreko udalekuen edizioa"
 
-#: .\ampa_manager\forms.py:42
+#: .\ampa_manager\forms\import_camps_form.py:12
 msgid "SIMULATION: Only list the changes without making any"
-msgstr ""
+msgstr "SIMULAZIOA: zerrendatu aldaketak, bat ere egin gabe"
 
-#: .\ampa_manager\forms.py:58
-msgid "Write emails separated by comma or each one in one line"
-msgstr ""
+#: .\ampa_manager\forms\import_custody_form.py:10
+msgid "Custody edition to import to"
+msgstr "Inportatu beharreko zaintza-edizioa"
 
-#: .\ampa_manager\importation\models\child_import_data.py:12
-msgid "Level"
-msgstr ""
-
-#: .\ampa_manager\importation\models\child_import_data.py:16
-#: .\ampa_manager\importation\models\child_import_data.py:17
-msgid "Child import data"
-msgstr ""
-
-#: .\ampa_manager\importation\models\child_with_surnames_import_data.py:12
-msgid "Child with surnames"
-msgstr ""
-
-#: .\ampa_manager\importation\models\child_with_surnames_import_data.py:13
-msgid "Children with surnames"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_child_import_data.py:8
-msgid "Days attended"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_child_import_data.py:12
-#: .\ampa_manager\importation\models\custody_child_import_data.py:13
-msgid "Custody child import data"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation.py:10
-msgid "Custody Edition"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation.py:13
-msgid "Custody importation"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation.py:14
-msgid "Custody importations"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:15
-msgid "Use Child"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:16
-msgid "Update Child"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:18
-msgid "Child to update"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:19
-msgid "Create Child"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:21
-msgid "Family to create child"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:24
-msgid "Custody importation action child"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_action_child.py:25
-msgid "Custody importation action children"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_row.py:12
-#: .\ampa_manager\importation\models\importation.py:11
-msgid "Importation"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_row.py:16
-msgid "Custody importation row"
-msgstr ""
-
-#: .\ampa_manager\importation\models\custody_importation_row.py:17
-msgid "Custody importation rows"
-msgstr ""
-
-#: .\ampa_manager\importation\models\holder_import_data.py:12
-#: .\ampa_manager\importation\models\holder_import_data.py:13
-msgid "Holder import data"
-msgstr ""
-
-#: .\ampa_manager\importation\models\importation.py:7
-msgid "Filename"
-msgstr ""
-
-#: .\ampa_manager\importation\models\importation.py:12
-msgid "Importations"
-msgstr ""
-
-#: .\ampa_manager\importation\models\parent_import_data.py:13
-#: .\ampa_manager\importation\models\parent_import_data.py:14
-msgid "Parent import data"
-msgstr ""
-
-#: .\ampa_manager\templates\base_import.html:258
-#: .\ampa_manager\templates\check_family_email.html:32
-#: .\ampa_manager\templates\check_members.html:9
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:10
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:10
-#: .\ampa_manager\templates\import_camps.html:10
-#: .\ampa_manager\templates\import_family_email.html:10
-#: .\ampa_manager\templates\importer.html:9
+#: .\ampa_manager\templates\campaign_breadcrumbs.html:3
+#: .\ampa_manager\templates\importers\base_import.html:32
 #: .\ampa_manager\templates\validate_families_data.html:28
 msgid "Home"
-msgstr ""
+msgstr "Hasiera"
 
-#: .\ampa_manager\templates\base_import.html:268
+#: .\ampa_manager\templates\importers\base_import.html:48
 msgid "Select file to import"
-msgstr ""
+msgstr "Hautatu inportatu beharreko fitxategia"
 
-#: .\ampa_manager\templates\base_import.html:272
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:22
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:22
-#: .\ampa_manager\templates\import_camps.html:22
-#: .\ampa_manager\templates\import_family_email.html:22
-#: .\ampa_manager\templates\importer.html:21
+#: .\ampa_manager\templates\importers\base_import.html:52
 msgid "Import file"
-msgstr ""
+msgstr "Inportatu fitxategia"
 
-#: .\ampa_manager\templates\base_import.html:282
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:46
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:46
-#: .\ampa_manager\templates\import_camps.html:46
-#: .\ampa_manager\templates\import_family_email.html:45
-#: .\ampa_manager\templates\importer.html:45
+#: .\ampa_manager\templates\importers\base_import.html:62
 msgid "Results"
-msgstr ""
+msgstr "Emaitzak"
 
-#: .\ampa_manager\templates\base_import.html:286
+#: .\ampa_manager\templates\importers\base_import.html:66
 msgid "Warning: This has been a test of the import"
-msgstr ""
+msgstr "Abisua: inportazioaren proba bat izan da hau"
 
-#: .\ampa_manager\templates\base_import.html:288
+#: .\ampa_manager\templates\importers\base_import.html:68
 msgid "Nothing has been imported"
-msgstr ""
+msgstr "Ez da ezer inportatu"
 
-#: .\ampa_manager\templates\base_import.html:289
+#: .\ampa_manager\templates\importers\base_import.html:69
 msgid ""
-"If the results are ok, import the file again disabling the \"TEST THE IMPORT"
-"\" option"
+"If the results are ok, import the file again disabling the \"TEST THE "
+"IMPORT\" option"
 msgstr ""
+"Emaitzak zuzenak badira, inportatu fitxategia berriro \"PROBATU "
+"INPORTAZIOA\" aukera desgaituta"
 
-#: .\ampa_manager\templates\base_import.html:297
+#: .\ampa_manager\templates\importers\base_import.html:77
 msgid "Show all rows"
-msgstr ""
+msgstr "Erakutsi errenkada guztiak"
 
-#: .\ampa_manager\templates\base_import.html:298
+#: .\ampa_manager\templates\importers\base_import.html:78
 msgid "Imported Ok"
-msgstr ""
+msgstr "Ongi inportatuta"
 
-#: .\ampa_manager\templates\base_import.html:299
+#: .\ampa_manager\templates\importers\base_import.html:79
 msgid "Imported warning"
-msgstr ""
+msgstr "Abisuekin inportatuta"
 
-#: .\ampa_manager\templates\base_import.html:300
+#: .\ampa_manager\templates\importers\base_import.html:80
 msgid "Not imported"
-msgstr ""
+msgstr "Ez da inportatu"
 
-#: .\ampa_manager\templates\base_import.html:307
+#: .\ampa_manager\templates\importers\base_import.html:86
+msgid "Row"
+msgstr "Errenkada"
+
+#: .\ampa_manager\templates\importers\base_import.html:87
 msgid "Result"
-msgstr ""
+msgstr "Emaitza"
 
-#: .\ampa_manager\templates\base_import.html:308
+#: .\ampa_manager\templates\importers\base_import.html:88
 msgid "Imported"
-msgstr ""
+msgstr "Inportatuta"
 
-#: .\ampa_manager\templates\base_import.html:309
+#: .\ampa_manager\templates\importers\base_import.html:89
 msgid "Excel"
-msgstr ""
+msgstr "Excel"
 
-#: .\ampa_manager\templates\base_import.html:310
+#: .\ampa_manager\templates\importers\base_import.html:90
 msgid "Formatted"
-msgstr ""
+msgstr "Formateatuta"
 
-#: .\ampa_manager\templates\base_import.html:328
+#: .\ampa_manager\templates\importers\base_import.html:108
 msgid "There are no results"
-msgstr ""
+msgstr "Ez dago emaitzarik"
 
-#: .\ampa_manager\templates\check_family_email.html:28
-#: .\ampa_manager\templates\check_family_email.html:33
-#: .\ampa_manager\templates\check_family_email.html:38
-msgid "Check family emails"
-msgstr ""
-
-#: .\ampa_manager\templates\check_family_email.html:40
-msgid "Write or paste here the family emails you want to check"
-msgstr ""
-
-#: .\ampa_manager\templates\check_family_email.html:44
-msgid "Check if these emails belong to a family"
-msgstr ""
-
-#: .\ampa_manager\templates\check_family_email.html:49
-msgid "Emails not registered"
-msgstr ""
-
-#: .\ampa_manager\templates\check_family_email.html:57
-msgid "Copy not registered emails to clipboard"
-msgstr ""
-
-#: .\ampa_manager\templates\check_family_email.html:61
-msgid "Emails registered"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:5
-#: .\ampa_manager\templates\check_members.html:10
-#: .\ampa_manager\templates\check_members.html:15
-#: .\ampa_manager\templates\check_members.html:21
-msgid "Check members"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:17
-msgid ""
-"Upload an Excel file with multiple families to check if they are members"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:24
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:29
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:29
-#: .\ampa_manager\templates\import_afterschool_registrations.html:8
-#: .\ampa_manager\templates\import_camps.html:29
-#: .\ampa_manager\templates\import_custody.html:8
-#: .\ampa_manager\templates\import_family_email.html:29
-#: .\ampa_manager\templates\import_members.html:8
-#: .\ampa_manager\templates\importer.html:28
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:8
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:8
+#: .\ampa_manager\templates\importers\import_camps.html:8
+#: .\ampa_manager\templates\importers\import_custody.html:8
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:19
 msgid "Instructions"
-msgstr ""
+msgstr "Argibideak"
 
-#: .\ampa_manager\templates\check_members.html:26
-msgid "Upload an Excel with the families you want to check"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:28
-msgid "Click here to download a template"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:29
-msgid "The uploaded Excel needs the following format in the first sheet"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:31
-msgid "The first row is the header"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:32
-#: .\ampa_manager\templates\check_members.html:33
-#: .\ampa_manager\templates\check_members.html:34
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:39
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:39
-#: .\ampa_manager\templates\import_afterschool_registrations.html:18
-#: .\ampa_manager\templates\import_camps.html:39
-#: .\ampa_manager\templates\import_custody.html:19
-#: .\ampa_manager\templates\import_family_email.html:38
-#: .\ampa_manager\templates\import_members.html:18
-#: .\ampa_manager\templates\importer.html:38
-msgid "Column"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:32
-msgid "Family surnames"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:32
-msgid "Compulsory"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:33
-#: .\ampa_manager\templates\check_members.html:34
-msgid "Optional"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:34
-msgid "Other parent name and surnames"
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:39
-msgid "Click the button above \"Check members\""
-msgstr ""
-
-#: .\ampa_manager\templates\check_members.html:40
-msgid "A new Excel file will be downloaded with an extra column \"Is member\""
-msgstr ""
-
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:6
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:11
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:16
-msgid "Import after schools activities"
-msgstr ""
-
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:18
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:18
-#: .\ampa_manager\templates\import_camps.html:18
-#: .\ampa_manager\templates\import_family_email.html:18
-#: .\ampa_manager\templates\importer.html:17
-msgid "Upload file"
-msgstr ""
-
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:31
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:31
-#: .\ampa_manager\templates\import_afterschool_registrations.html:10
-#: .\ampa_manager\templates\import_camps.html:31
-#: .\ampa_manager\templates\import_custody.html:11
-#: .\ampa_manager\templates\import_family_email.html:31
-#: .\ampa_manager\templates\import_members.html:10
-#: .\ampa_manager\templates\importer.html:30
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:10
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:10
+#: .\ampa_manager\templates\importers\import_camps.html:10
+#: .\ampa_manager\templates\importers\import_custody.html:11
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:21
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:34
 msgid "Click here to download an excel template"
-msgstr ""
+msgstr "Egin klik hemen Excel txantiloi bat deskargatzeko"
 
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:32
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:32
-#: .\ampa_manager\templates\import_camps.html:32
-#: .\ampa_manager\templates\import_family_email.html:32
-#: .\ampa_manager\templates\importer.html:31
-msgid "The file extension must be XLS (not XLSX)"
-msgstr ""
-
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:33
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:33
-#: .\ampa_manager\templates\import_afterschool_registrations.html:12
-#: .\ampa_manager\templates\import_camps.html:33
-#: .\ampa_manager\templates\import_custody.html:13
-#: .\ampa_manager\templates\import_family_email.html:33
-#: .\ampa_manager\templates\import_members.html:12
-#: .\ampa_manager\templates\importer.html:32
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:11
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:11
+#: .\ampa_manager\templates\importers\import_camps.html:11
+#: .\ampa_manager\templates\importers\import_custody.html:12
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:22
 msgid "Only the first sheet of the excel will be imported"
-msgstr ""
+msgstr "Excelaren lehen orria bakarrik inportatuko da"
 
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:34
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:34
-#: .\ampa_manager\templates\import_afterschool_registrations.html:13
-#: .\ampa_manager\templates\import_camps.html:34
-#: .\ampa_manager\templates\import_custody.html:14
-#: .\ampa_manager\templates\import_members.html:13
-#: .\ampa_manager\templates\importer.html:33
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:12
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:12
+#: .\ampa_manager\templates\importers\import_camps.html:12
+#: .\ampa_manager\templates\importers\import_custody.html:13
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:23
 msgid ""
 "The rows imported will be from row 3 onwards (two header rows are expected)"
 msgstr ""
+"3. errenkadatik aurrera inportatzen da (2 goiburu-errenkada espero dira)"
 
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:35
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:35
-#: .\ampa_manager\templates\import_afterschool_registrations.html:14
-#: .\ampa_manager\templates\import_camps.html:35
-#: .\ampa_manager\templates\import_custody.html:15
-#: .\ampa_manager\templates\import_members.html:14
-#: .\ampa_manager\templates\importer.html:34
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:13
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:13
+#: .\ampa_manager\templates\importers\import_camps.html:13
+#: .\ampa_manager\templates\importers\import_custody.html:14
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:24
 msgid "If there is no data for any column leave it empty"
-msgstr ""
+msgstr "Zutaberen baterako daturik ez badago, utzi hutsik"
 
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:36
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:36
-#: .\ampa_manager\templates\import_afterschool_registrations.html:15
-#: .\ampa_manager\templates\import_camps.html:36
-#: .\ampa_manager\templates\import_custody.html:16
-#: .\ampa_manager\templates\import_family_email.html:35
-#: .\ampa_manager\templates\import_members.html:15
-#: .\ampa_manager\templates\importer.html:35
+#: .\ampa_manager\templates\importers\import_after_school_activities.html:14
+#: .\ampa_manager\templates\importers\import_after_school_registrations.html:14
+#: .\ampa_manager\templates\importers\import_camps.html:14
+#: .\ampa_manager\templates\importers\import_custody.html:15
+#: .\ampa_manager\templates\membership_campaign\import_new_members.html:25
 msgid "The columns must be in the following order"
-msgstr ""
+msgstr "Zutabeek ordena honetan egon behar dute"
 
-#: .\ampa_manager\templates\import_after_schools_activities_OLD.html:58
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:58
-#: .\ampa_manager\templates\import_camps.html:66
-#: .\ampa_manager\templates\import_family_email.html:57
-#: .\ampa_manager\templates\importer.html:50
-msgid ""
-"Choose an excel file and click \"Import file\" to see here the results of "
-"the import"
-msgstr ""
-
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:6
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:11
-#: .\ampa_manager\templates\import_after_schools_registrations_OLD.html:16
-msgid "Import after schools registrations"
-msgstr ""
-
-#: .\ampa_manager\templates\import_camps.html:6
-#: .\ampa_manager\templates\import_camps.html:11
-#: .\ampa_manager\templates\import_camps.html:16
-msgid "Import camps registrations"
-msgstr ""
-
-#: .\ampa_manager\templates\import_camps.html:48
-msgid "Warning: This has been a simulation of the import"
-msgstr ""
-
-#: .\ampa_manager\templates\import_camps.html:50
-msgid "No change has been made"
-msgstr ""
-
-#: .\ampa_manager\templates\import_camps.html:51
-msgid ""
-"If the results are ok, import the file again disabling the \"SIMULATION\" "
-"option"
-msgstr ""
-
-#: .\ampa_manager\templates\import_custody.html:10
+#: .\ampa_manager\templates\importers\import_custody.html:10
 msgid "If the required custody edition does not exist "
-msgstr ""
+msgstr "Beharrezko zaintza-edizioa existitzen ez bada"
 
-#: .\ampa_manager\templates\import_custody.html:10
+#: .\ampa_manager\templates\importers\import_custody.html:10
 msgid "you can create it here"
-msgstr ""
+msgstr "hemen sor dezakezu"
 
-#: .\ampa_manager\templates\import_family_email.html:6
-#: .\ampa_manager\templates\import_family_email.html:11
-msgid "Import family emails"
-msgstr ""
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:7
+msgid "Generate members remittance"
+msgstr "Sortu bazkideen zordunketa"
 
-#: .\ampa_manager\templates\import_family_email.html:16
-msgid "Import family email"
-msgstr ""
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:25
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:25
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:36
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:35
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:25
+msgid "What this section does?"
+msgstr "Zertarako da atal hau?"
 
-#: .\ampa_manager\templates\import_family_email.html:34
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:27
+msgid "It generates the membership remittance"
+msgstr "Bazkideen zordunketa sortzen du"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:28
 msgid ""
-"The rows imported will be from row 2 onwards (one header row is expected)"
+"It should be generated once the new members and the last course members have "
+"been imported"
 msgstr ""
+"Bazkide berriak eta iazko ikasturteko bazkideak inportatu ondoren sortu "
+"behar da"
 
-#: .\ampa_manager\templates\importer.html:47
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:32
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:33
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:44
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:31
+msgid "Review the following information"
+msgstr "Berrikusi informazio hau"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:37
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:49
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:55
+msgid "Click to open"
+msgstr "Egin klik irekitzeko"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:37
+msgid "Last course fee"
+msgstr "Iazko bazkide-kuota"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:43
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:44
+msgid "Last course members"
+msgstr "Iazko bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:49
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:38
+msgid "Active course members"
+msgstr "Ikasturte honetako bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:55
+msgid "Remittances already generated"
+msgstr "Lehendik sortutako zordunketak"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:62
+msgid "Complete the following information"
+msgstr "Osatu informazio hau"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:69
+msgid "Unable to generate remittance"
+msgstr "Ezin izan da zordunketa sortu"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:74
+msgid "The remittance has been generated"
+msgstr "Zordunketa sortu da"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:75
+msgid "Open generated remittance"
+msgstr "Ireki sortutako zordunketa"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:80
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:78
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:97
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:102
+msgid "Select an option"
+msgstr "Hautatu aukera bat"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:83
+#, python-format
+msgid "Generate members remittance for course %(active_course)s"
+msgstr "Sortu bazkideen zordunketa %(active_course)s ikasturterako"
+
+#: .\ampa_manager\templates\membership_campaign\generate_membership_remittance.html:85
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:84
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:106
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:112
+msgid "Cancel"
+msgstr "Utzi"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:7
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:22
+msgid "Import last course members"
+msgstr "Inportatu iazko ikasturteko bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:27
+msgid "It copies the members from the last course."
+msgstr "Iazko ikasturteko bazkideak kopiatzen ditu."
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:28
 msgid ""
-"A file with the following contents has been saved in the project directory"
+"Families whose children are not in the school anymore will not be copied."
+msgstr "Seme-alabak ikastolan ez dituzten familiak ez dira kopiatuko."
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:29
+msgid "Families that have request not to renew will not be copied."
+msgstr "Ez berritzea eskatu duten familiak ez dira kopiatuko."
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:50
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:49
+msgid ""
+"Families to renew (last year members, with children in school and have not "
+"declined)"
 msgstr ""
+"Berrituko diren familiak (iazko bazkideak, seme-alabak ikastolan eta uko "
+"egin ez dutenak)"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:56
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:55
+msgid ""
+"Families that will not renew due to they do not have children in school "
+"anymore"
+msgstr "Ez berrituko duten familiak, seme-alabak jada ikastolan ez daudelako"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:62
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:61
+msgid "Families that will not renew due to they have declined renew"
+msgstr "Ez berrituko duten familiak, ez berritzea eskatu dutelako"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:70
+msgid "Last course members copied"
+msgstr "Iazko bazkideak kopiatu dira"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:72
+msgid "This course members"
+msgstr "Ikasturte honetako bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\import_last_course_members.html:83
+msgid "Copy last course members"
+msgstr "Kopiatu iazko ikasturteko bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:7
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:7
+msgid "Notify membership campaign"
+msgstr "Jakinarazi bazkide-kanpaina"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:38
+msgid ""
+"It notifies by email the membership campaign start to all families that were "
+"members last course."
+msgstr ""
+"Iaz bazkide izan ziren familia guztiei jakinarazten die posta elektronikoz "
+"bazkide-kanpainaren hasiera."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:39
+msgid ""
+"Each family will receive a different email depending if they are going to "
+"renew or not."
+msgstr ""
+"Familia bakoitzak mezu desberdin bat jasoko du, berrituko duenaren arabera."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:40
+msgid "It should be sent before the campaign starts."
+msgstr "Kanpaina hasi baino lehen bidali behar da."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:69
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:74
+msgid "Errors sending mails"
+msgstr "Errorea mezuak bidaltzean"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:72
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:77
+msgid "Notified emails"
+msgstr "Jakinarazitako mezuak"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:79
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:84
+msgid "The error happened sending mail to"
+msgstr "Errorea mezu hau bidaltzean gertatu da"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:88
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:93
+msgid "Families notified"
+msgstr "Jakinarazitako familiak"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:102
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
+#, python-format
+msgid "Send test emails to %(test_email)s"
+msgstr "Bidali proba-mezuak hona: %(test_email)s"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_campaign.html:104
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:110
+msgid "Notify families by email"
+msgstr "Jakinarazi familiei posta elektronikoz"
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:38
+msgid "It sends a welcome email to all families that are members of the current course."
+msgstr ""
+"Ongi etorriko mezu bat bidaltzen die ikasturte honetako bazkide diren "
+"familia guztiei."
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:39
+msgid "It should be sent after the members of the last course and the new ones have been imported."
+msgstr ""
+"Iazko ikasturteko bazkideak eta berriak inportatu ondoren bidali behar da."
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:48
+msgid "Members of the current course"
+msgstr "Ikasturte honetako bazkideak"
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:91
+msgid "Welcome families by email"
+msgstr "Ongi etorria eman familiei posta elektronikoz"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:7
+msgid "Notify membership remittance"
+msgstr "Jakinarazi bazkideen zordunketa"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:37
+msgid ""
+"It notifies by email to the families that the membership fee will be charged "
+"soon."
+msgstr ""
+"Familiei posta elektronikoz jakinarazten die bazkide-kuota laster kobratuko "
+"dela."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:38
+msgid "It should be sent before the remittance is uploaded to the bank."
+msgstr "Zordunketa bankura igo aurretik bidali behar da."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:39
+msgid ""
+"If there are more than one remittance for the active course, the last one "
+"generated will be notified."
+msgstr ""
+"Ikasturte aktiborako zordunketa bat baino gehiago badago, sortutako azkena "
+"jakinaraziko da."
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:54
+msgid "Active course remittances"
+msgstr "Ikasturte aktiboko zordunketak"
+
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:108
+#: .\ampa_manager\templates\membership_campaign\notify_membership_remittance.html:110
+msgid "Remittance not yet generated"
+msgstr "Zordunketa oraindik sortu gabe"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:27
+msgid ""
+"It gives you information on how to configure and open a membership campaign"
+msgstr "Bazkide-kanpaina nola konfiguratu eta ireki azaltzen du"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:33
+msgid ""
+"You have to create a Google Form to ask for the personal data of new "
+"members, open it and distribute the link among the families in the WhatsApp "
+"community."
+msgstr ""
+"Google inprimaki bat sortu behar duzu bazkide berrien datu pertsonalak "
+"eskatzeko, ireki eta esteka WhatsApp komunitateko familien artean banatu."
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:34
+msgid ""
+"The data requested in the form need to be enough to complete the following "
+"template"
+msgstr ""
+"Inprimakian eskatutako datuek nahikoa izan behar dute hurrengo txantiloia "
+"osatzeko"
+
+#: .\ampa_manager\templates\membership_campaign\open_membership_campaign.html:35
+msgid "It\\'s recommended to make a copy of the last course form."
+msgstr "Iazko ikasturteko inprimakiaren kopia bat egitea gomendatzen da."
 
 #: .\ampa_manager\templates\validate_families_data.html:6
 #: .\ampa_manager\templates\validate_families_data.html:29
 #: .\ampa_manager\templates\validate_families_data.html:34
 msgid "Validate families data"
-msgstr ""
+msgstr "Balioztatu familien datuak"
 
-#: .\ampa_manager\utils\fields_formatters.py:37
+#: .\ampa_manager\templatetags\custom_filters.py:64
+msgid "Column"
+msgstr "Zutabea"
+
+#: .\ampa_manager\utils\fields_formatters.py:50
 msgid "Wrong email"
-msgstr ""
+msgstr "Posta elektroniko okerra"
 
-#: .\ampa_manager\utils\fields_formatters.py:81
+#: .\ampa_manager\utils\fields_formatters.py:94
 msgid "Wrong IBAN"
-msgstr ""
+msgstr "IBAN okerra"
 
 #: .\ampa_manager\utils\utils.py:33
 msgid "Review the Bank Accounts without BIC"
-msgstr ""
+msgstr "Berrikusi BICrik gabeko banku-kontuak"
 
 #: .\ampa_manager\utils\utils.py:35
 msgid "BIC error"
-msgstr ""
+msgstr "BIC errorea"
 
-#: .\ampa_manager\views\import_after_school_registrations_view.py:19
+#: .\ampa_manager\views\after_schools\import_after_school_activities_view.py:19
+msgid "Import afterschool activities"
+msgstr "Inportatu eskolaz kanpoko jarduerak"
+
+#: .\ampa_manager\views\after_schools\import_after_school_registrations_view.py:18
 msgid "Import afterschool registrations"
-msgstr ""
+msgstr "Inportatu eskolaz kanpoko izen-emateak"
 
-#: .\ampa_manager\views\import_custody_view.py:22
+#: .\ampa_manager\views\importers\import_camps_view.py:22
+msgid "Import camps"
+msgstr "Inportatu udalekuak"
+
+#: .\ampa_manager\views\importers\import_custody_view.py:22
 msgid "Import custody"
-msgstr ""
+msgstr "Inportatu zaintza"
 
-#: .\ampa_manager\views\import_members_view.py:18
-msgid "Import members"
-msgstr ""
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:16
+msgid "Membership campaign"
+msgstr "Bazkide-kanpaina"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:20
+msgid "Notify campaign"
+msgstr "Jakinarazi kanpaina"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:21
+msgid "Open campaign"
+msgstr "Ireki kanpaina"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:23
+msgid "Import new members"
+msgstr "Inportatu bazkide berriak"
+
+#: .\ampa_manager\templates\membership_campaign\welcome_members.html:7
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:24
+msgid "Welcome members"
+msgstr "Ongi etorria eman bazkideei"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:25
+msgid "Generate remittance"
+msgstr "Sortu zordunketa"
+
+#: .\ampa_manager\views\membership_campaign\base_membership_campaign_view.py:26
+msgid "Notify remittance"
+msgstr "Jakinarazi zordunketa"
+
+#: .\ampa_manager\views\membership_campaign\generate_members_remittance_view.py:147
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:42
+msgid "Active course members updated"
+msgstr "Ikasturte honetako bazkideak eguneratu dira"
+
+#: .\ampa_manager\views\membership_campaign\import_last_course_members_view.py:44
+msgid "Unable to update active course members"
+msgstr "Ezin izan dira ikasturte honetako bazkideak eguneratu"
+
+#: .\ampa_manager\views\membership_campaign\notify_membership_remittance_view.py:30
+msgid "Not yet generated"
+msgstr "Oraindik sortu gabe"
 
 #: .\ampa_manager\views\validate_data.py:55
 msgid "Families with zero or more than 2 parents"
-msgstr ""
+msgstr "Gurasorik gabeko edo 2 guraso baino gehiago dituzten familiak"
 
 #: .\ampa_manager\views\validate_data.py:68
 msgid "Families with 1 only father"
-msgstr ""
+msgstr "Aita bakarra duten familiak"
 
 #: .\ampa_manager\views\validate_data.py:81
 msgid "Families without default holder"
-msgstr ""
+msgstr "Titular lehenetsirik gabeko familiak"
 
 #: .\ampa_manager\views\validate_data.py:94
 msgid "Families with wrong holder"
-msgstr ""
+msgstr "Titular okerra duten familiak"
 
 #: .\ampa_manager\views\validate_data.py:101
 msgid "Custody registration with wrong holder"
-msgstr ""
+msgstr "Titular okerra duten zaintza-izen-emateak"
 
 #: .\ampa_manager\views\validate_data.py:108
 msgid "Camps registration with wrong holder"
-msgstr ""
+msgstr "Titular okerra duten udaleku-izen-emateak"
 
 #: .\ampa_manager\views\validate_data.py:115
 msgid "After-school registration with wrong holder"
-msgstr ""
+msgstr "Titular okerra duten eskolaz kanpoko izen-emateak"
 
 #: .\ampa_manager\views\validate_data.py:155
 msgid "Families with same surnames"
-msgstr ""
+msgstr "Abizen berak dituzten familiak"
 
 #: .\ampa_manager\views\validate_data.py:179
 msgid "Families with same children names"
-msgstr ""
+msgstr "Seme-alaben izen berak dituzten familiak"
 
 #: .\ampa_manager\views\validate_data.py:203
 msgid "Children with same name and year"
-msgstr ""
+msgstr "Izen eta jaiotze-urte bera duten seme-alabak"
 
 #: .\ampa_manager\views\validate_data.py:226
 msgid "Parents with same email and different family"
-msgstr ""
+msgstr "Posta elektroniko bera eta familia desberdina duten gurasoak"
 
 #: .\ampa_manager\views\validate_data.py:245
 msgid "Parents with zero or more than one families"
-msgstr ""
+msgstr "Familiarik gabeko edo familia bat baino gehiago duten gurasoak"
 
-#: .\ampa_manager_project\settings.py:122
-msgid "Spanish"
-msgstr ""
+#: .\ampa_manager_project\admin_menu.py:41
+msgid "Códigos bancarios BIC"
+msgstr "BIC banku-kodeak"
+
+#: .\ampa_manager_project\admin_menu.py:52
+msgid "Actividades"
+msgstr "Jarduerak"
+
+#: .\ampa_manager_project\admin_menu.py:82
+msgid "Importar actividades"
+msgstr "Inportatu jarduerak"
+
+#: .\ampa_manager_project\admin_menu.py:88
+#: .\ampa_manager_project\admin_menu.py:158
+msgid "Importar inscripciones"
+msgstr "Inportatu izen-emateak"
+
+#: .\ampa_manager_project\admin_menu.py:123
+msgid "Import asistencia"
+msgstr "Inportatu bertaratzea"
+
+#: .\ampa_manager_project\admin_menu.py:204
+msgid "Members campaign"
+msgstr "Bazkide-kanpaina"
+
+#: .\ampa_manager_project\admin_menu.py:209
+msgid "Others"
+msgstr "Besteak"
+
+#: .\ampa_manager_project\admin_menu.py:215
+msgid "Usuarios"
+msgstr "Erabiltzaileak"
+
+#: .\ampa_manager_project\admin_menu.py:221
+msgid "Grupos"
+msgstr "Taldeak"
 
 #: .\ampa_manager_project\settings.py:124
+msgid "Spanish"
+msgstr "Gaztelania"
+
+#: .\ampa_manager_project\settings.py:126
 msgid "Basque"
-msgstr ""
+msgstr "Euskara"
+
+#~ msgid "Export after-school remittance to SEPA file"
+#~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"
