@@ -6,8 +6,11 @@ from django.test import TestCase
 from django.urls import reverse
 from schwifty import IBAN
 
+from django.core.exceptions import ValidationError
+
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.academic_course.models.active_course import ActiveCourse
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 from ampa_manager.activity.use_cases.importers.import_model_result import ImportModelResult
 from ampa_manager.activity.use_cases.importers.row import Row
 from ampa_manager.family.models.bank_account.bank_account import BankAccount
@@ -128,6 +131,38 @@ class TestFamilyAccountsImporter(TestCase):
         self.assertContains(response, 'No se ha importado nada')
         self.assertEqual(Family.objects.count(), 0)
         self.assertEqual(Child.objects.count(), 0)
+
+    def test_family_email_from_another_domain_is_not_imported(self):
+        DynamicSetting(family_email_domain='AbendanoIkastola.com').save()
+
+        result = FamilyAccountsImporter(self.excel_with([
+            ['familia@correo.test', 'García', 'López', None, 'Ana García',
+             None, None, None, None, 'ana@gmail.com', None],
+        ])).run()
+
+        self.assertEqual(Family.objects.count(), 0)
+        self.assertEqual(Parent.objects.count(), 0)
+        self.assertEqual(result.rows[0].state, Row.STATE_ERROR)
+        self.assertIn('@abendanoikastola.com', result.rows[0].columns['family_email'].error)
+
+    def test_family_email_with_required_domain_keeps_holder_email_free(self):
+        DynamicSetting(family_email_domain='@AbendanoIkastola.com').save()
+
+        result = FamilyAccountsImporter(self.excel_with([
+            ['familia@abendanoikastola.com', 'García', 'López', None, 'Ana García',
+             None, None, None, None, 'ana@gmail.com', None],
+        ])).run()
+
+        self.assertNotEqual(result.rows[0].state, Row.STATE_ERROR)
+        self.assertEqual(Family.objects.get().email, 'familia@abendanoikastola.com')
+        self.assertEqual(Parent.objects.get().email, 'ana@gmail.com')
+        self.assertEqual(DynamicSetting.load().family_email_domain, '@abendanoikastola.com')
+
+    def test_invalid_family_email_domain_is_rejected(self):
+        setting = DynamicSetting(family_email_domain='correo')
+
+        with self.assertRaises(ValidationError):
+            setting.clean()
 
     def test_row_without_family_email_or_surnames_is_not_imported(self):
         result = FamilyAccountsImporter(self.excel_with([

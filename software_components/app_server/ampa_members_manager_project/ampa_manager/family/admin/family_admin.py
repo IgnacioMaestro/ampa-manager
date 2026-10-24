@@ -33,16 +33,13 @@ from ampa_manager.utils.utils import Utils
 class FamilyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance:
-            self.fields['membership_holder'].queryset = Holder.objects.of_family(self.instance)
-            self.fields['custody_holder'].queryset = Holder.objects.of_family(self.instance)
-            self.fields['after_school_holder'].queryset = Holder.objects.of_family(self.instance)
-            self.fields['camps_holder'].queryset = Holder.objects.of_family(self.instance)
+        if self.instance.pk:
+            holders = Holder.objects.of_family(self.instance)
         else:
-            self.fields['membership_holder'].queryset = Holder.objects.none()
-            self.fields['custody_holder'].queryset = Holder.objects.none()
-            self.fields['after_school_holder'].queryset = Holder.objects.none()
-            self.fields['camps_holder'].queryset = Holder.objects.none()
+            holders = Holder.objects.none()
+
+        for field_name in ('membership_holder', 'custody_holder', 'after_school_holder', 'camps_holder'):
+            self.fields[field_name].queryset = holders.all()
 
 
 class MembershipInline(ReadOnlyTabularInline):

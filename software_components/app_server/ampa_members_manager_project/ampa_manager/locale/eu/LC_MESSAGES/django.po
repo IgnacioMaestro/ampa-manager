@@ -2797,5 +2797,21 @@ msgstr "Kuotaren titularra eguneratu da"
 msgid "Columns F, G, H and I (children names) are ignored"
 msgstr "F, G, H eta I zutabeak (seme-alaben izenak) ez dira kontuan hartzen"
 
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Family email domain"
+msgstr "Familia-postaren domeinua"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "If set, imported family emails must use this domain. Example: @abendanoikastola.com"
+msgstr "Adierazten bada, inportatutako familia-postek domeinu hori erabili behar dute. Adibidea: @abendanoikastola.com"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Enter a domain like @abendanoikastola.com"
+msgstr "Sartu domeinu bat, adibidez @abendanoikastola.com"
+
+#: .\ampa_manager\utils\fields_formatters.py
+msgid "Family email must use the domain %(domain)s"
+msgstr "Familia-postak %(domain)s domeinua erabili behar du"
+
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"

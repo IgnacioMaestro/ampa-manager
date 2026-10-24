@@ -68,7 +68,7 @@ class BaseImporter:
     KEY_EDITION_PRICE_NON_MEMBERS = 'edition_price_no_members'
 
     family_email = ExcelColumnDefinition(
-        KEY_FAMILY_EMAIL, _('Family: email'), _('Family: email'), FieldsFormatters.format_email, STYLE_FAMILY)
+        KEY_FAMILY_EMAIL, _('Family: email'), _('Family: email'), FieldsFormatters.format_family_email, STYLE_FAMILY)
     family_surnames = ExcelColumnDefinition(
         KEY_FAMILY_SURNAMES, _('Family: surnames'), _('Family: surnames'), FieldsFormatters.format_name, STYLE_FAMILY)
     parent_1_name_and_surnames = ExcelColumnDefinition(

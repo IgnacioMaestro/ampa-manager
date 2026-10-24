@@ -51,6 +51,19 @@ class FieldsFormatters:
         return None
 
     @staticmethod
+    def format_family_email(value: str) -> Optional[str]:
+        email = FieldsFormatters.format_email(value)
+        if not email:
+            return None
+
+        from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
+        if not DynamicSetting.family_email_matches_required_domain(email):
+            domain = DynamicSetting.required_family_email_domain()
+            raise ValidationError(
+                _('Family email must use the domain %(domain)s') % {'domain': domain} + f' ({email})')
+        return email
+
+    @staticmethod
     def format_phone(value: str) -> Optional[str]:
         if value:
             value = StringUtils.remove_all_spaces(str(value))

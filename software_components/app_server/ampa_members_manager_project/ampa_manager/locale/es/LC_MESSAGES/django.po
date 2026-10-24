@@ -2790,5 +2790,21 @@ msgstr "Titular de la cuota actualizado"
 msgid "Columns F, G, H and I (children names) are ignored"
 msgstr "Las columnas F, G, H e I (nombres de los hijos) se ignoran"
 
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Family email domain"
+msgstr "Dominio del correo familiar"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "If set, imported family emails must use this domain. Example: @abendanoikastola.com"
+msgstr "Si se indica, los correos familiares importados deben usar este dominio. Ejemplo: @abendanoikastola.com"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Enter a domain like @abendanoikastola.com"
+msgstr "Introduce un dominio como @abendanoikastola.com"
+
+#: .\ampa_manager\utils\fields_formatters.py
+msgid "Family email must use the domain %(domain)s"
+msgstr "El correo familiar debe usar el dominio %(domain)s"
+
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"
