@@ -5,6 +5,7 @@ from typing import Optional
 from django import forms
 from django.contrib import admin, messages
 from django.db.models import QuerySet
+from django.utils.html import format_html_join
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
@@ -12,6 +13,7 @@ from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.admin.registration_filters import (FamilyRegistrationFilter,
                                                               AfterSchoolRegistrationRemittanceFilter)
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
+from ampa_manager.activity.use_cases.after_school.after_school_merger import AfterSchoolMerger
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
 from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
 from ampa_manager.charge.models.after_school_charge.after_school_receipt import AfterSchoolReceipt
@@ -107,6 +109,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
         return CsvHttpResponse(file_name, file_content)
 
     actions = [export_emails, download_ids_as_csv]
+
 
 class AfterSchoolRegistrationInline(ReadOnlyTabularInline):
     model = AfterSchoolRegistration
@@ -273,39 +276,11 @@ class AfterSchoolAdmin(admin.ModelAdmin):
     def courses_count(self, after_school):
         return distinct_count(AcademicCourse.objects.filter(afterschooledition__after_school=after_school))
 
-    @admin.action(description=gettext_lazy("Merge activities (Move all editions to first selected)"))
+    @admin.action(description=gettext_lazy("Merge activities into the first of the list"))
     def merge_after_schools(self, request, after_school_activities: QuerySet[AfterSchool]):
-        if after_school_activities.count() > 1:
-            messages = []
-            after_school_to_keep = after_school_activities.first()
-            merged_name = after_school_to_keep.name
-
-            messages.append(gettext_lazy('After-school kept') + f': {after_school_to_keep} ({after_school_to_keep.id})')
-            for after_school in after_school_activities.all():
-                if after_school.id != after_school_to_keep.id:
-                    for edition in after_school.afterschooledition_set.all():
-                        messages.append(
-                            gettext_lazy('Edition changed') + f': {edition} ({edition.id}). ' +
-                            gettext_lazy('After-school') + f': {edition.after_school.id} -> {after_school_to_keep.id}')
-                        edition.after_school = after_school_to_keep
-                        edition.save()
-
-                    merged_name += f' | {after_school.name}'
-
-                    messages.append(gettext_lazy('After-school deleted') + f': {after_school} ({after_school.id})')
-                    after_school.delete()
-
-            if after_school_to_keep.name != merged_name:
-                messages.append(
-                    gettext_lazy('After-school renamed') +
-                    f': {after_school_to_keep.name} '
-                    f'({after_school_to_keep.id}) -> {merged_name}')
-                after_school_to_keep.name = merged_name
-                after_school_to_keep.save()
-
-            message = mark_safe('<br/>'.join(messages))
-        else:
-            message = gettext_lazy('No merge done. You have to select more than one after-school')
-        self.message_user(request=request, message=message)
+        result = AfterSchoolMerger().merge(after_school_activities)
+        level = messages.SUCCESS if result.succeeded else messages.ERROR
+        message = format_html_join('<br/>', '{}', ((line,) for line in result.lines))
+        self.message_user(request=request, message=message, level=level)
 
     actions = ['merge_after_schools']
