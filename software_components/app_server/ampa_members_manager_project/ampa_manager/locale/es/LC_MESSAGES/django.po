@@ -480,8 +480,8 @@ msgid "Courses"
 msgstr "Cursos"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:275
-msgid "Merge activities (Move all editions to first selected)"
-msgstr "Unir actividades (mover todas las ediciones a la primera seleccionada"
+msgid "Merge activities into the first of the list"
+msgstr "Unir actividades en la primera del listado"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:282
 msgid "After-school kept"
@@ -2810,6 +2810,15 @@ msgstr "El correo familiar debe usar el dominio %(domain)s"
 #, python-format
 msgid "Curso %(active_course)s"
 msgstr "Curso %(active_course)s"
+
+msgid "Editions moved"
+msgstr "Ediciones movidas"
+
+msgid "No merge done. These editions share the same course, period and timetable"
+msgstr "No se ha unido nada. Estas ediciones comparten el mismo curso, período y horario"
+
+msgid "No merge done. Error"
+msgstr "No se ha unido nada. Error"
 
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"

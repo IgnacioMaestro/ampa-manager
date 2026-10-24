@@ -480,8 +480,8 @@ msgid "Courses"
 msgstr "Ikasturteak"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:275
-msgid "Merge activities (Move all editions to first selected)"
-msgstr "Batu jarduerak (eraman edizio guztiak hautatutako lehenengora)"
+msgid "Merge activities into the first of the list"
+msgstr "Batu jarduerak zerrendako lehenengoan"
 
 #: .\ampa_manager\activity\admin\after_school_admin.py:282
 msgid "After-school kept"
@@ -2817,6 +2817,15 @@ msgstr "Familia-postak %(domain)s domeinua erabili behar du"
 #, python-format
 msgid "Curso %(active_course)s"
 msgstr "Ikasturtea %(active_course)s"
+
+msgid "Editions moved"
+msgstr "Eramandako edizioak"
+
+msgid "No merge done. These editions share the same course, period and timetable"
+msgstr "Ez da ezer batu. Edizio hauek ikasturte, aldi eta ordutegi bera dute"
+
+msgid "No merge done. Error"
+msgstr "Ez da ezer batu. Errorea"
 
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Esportatu eskolaz kanpoko zordunketa SEPA fitxategira"
