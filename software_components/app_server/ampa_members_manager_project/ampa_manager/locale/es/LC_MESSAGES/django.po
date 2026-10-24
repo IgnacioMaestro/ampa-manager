@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-14 22:15+0100\n"
-"PO-Revision-Date: 2026-10-23 19:30+0200\n"
+"PO-Revision-Date: 2026-10-24 14:10+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -2681,40 +2681,40 @@ msgid "Parents with zero or more than one families"
 msgstr "Padres sin familia o con mas de 1 familia"
 
 #: .\ampa_manager_project\admin_menu.py:41
-msgid "Códigos bancarios BIC"
+msgid "BIC bank accounts"
 msgstr "Códigos bancarios BIC"
 
-#: .\ampa_manager_project\admin_menu.py:52
+#: .\ampa_manager_project\admin_menu.py:58
 msgid "Actividades"
 msgstr "Actividades"
 
-#: .\ampa_manager_project\admin_menu.py:82
-msgid "Importar actividades"
+#: .\ampa_manager_project\admin_menu.py:88
+msgid "Import activities"
 msgstr "Importar actividades"
 
-#: .\ampa_manager_project\admin_menu.py:88
-#: .\ampa_manager_project\admin_menu.py:158
-msgid "Importar inscripciones"
+#: .\ampa_manager_project\admin_menu.py:94
+#: .\ampa_manager_project\admin_menu.py:164
+msgid "Import registrations"
 msgstr "Importar inscripciones"
 
-#: .\ampa_manager_project\admin_menu.py:123
-msgid "Import asistencia"
+#: .\ampa_manager_project\admin_menu.py:129
+msgid "Import attendance"
 msgstr "Importar asistencia"
 
-#: .\ampa_manager_project\admin_menu.py:204
+#: .\ampa_manager_project\admin_menu.py:210
 msgid "Members campaign"
 msgstr "Campaña de socios"
 
-#: .\ampa_manager_project\admin_menu.py:209
+#: .\ampa_manager_project\admin_menu.py:215
 msgid "Others"
 msgstr "Otros"
 
-#: .\ampa_manager_project\admin_menu.py:215
-msgid "Usuarios"
+#: .\ampa_manager_project\admin_menu.py:221
+msgid "Users"
 msgstr "Usuarios"
 
-#: .\ampa_manager_project\admin_menu.py:221
-msgid "Grupos"
+#: .\ampa_manager_project\admin_menu.py:227
+msgid "Groups"
 msgstr "Grupos"
 
 #: .\ampa_manager_project\settings.py:124
@@ -2805,6 +2805,11 @@ msgstr "Introduce un dominio como @abendanoikastola.com"
 #: .\ampa_manager\utils\fields_formatters.py
 msgid "Family email must use the domain %(domain)s"
 msgstr "El correo familiar debe usar el dominio %(domain)s"
+
+#: .\templates\admin\base_site.html:14
+#, python-format
+msgid "Curso %(active_course)s"
+msgstr "Curso %(active_course)s"
 
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"
