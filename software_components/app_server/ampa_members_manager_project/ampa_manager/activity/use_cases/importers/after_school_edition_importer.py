@@ -73,6 +73,7 @@ class AfterSchoolEditionImporter:
                     ModifiedField(_('Price for non members'), self.edition.price_for_no_member, self.price_for_no_member))
                 self.edition.price_for_no_member = self.price_for_no_member
 
+            self.edition.save()
             self.result.set_updated(self.edition, modified_fields)
         else:
             self.result.set_not_modified(self.edition)
