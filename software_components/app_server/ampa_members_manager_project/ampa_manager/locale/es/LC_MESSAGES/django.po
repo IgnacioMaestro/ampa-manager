@@ -2725,5 +2725,70 @@ msgstr "Español"
 msgid "Basque"
 msgstr "Euskera"
 
+#: .\ampa_manager\views\family_accounts\import_family_accounts_view.py
+#: .\ampa_manager_project\admin_menu.py
+msgid "Import family accounts"
+msgstr "Importar cuentas familiares"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: first surname"
+msgstr "Familia: primer apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "First surname"
+msgstr "Primer apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: second surname"
+msgstr "Familia: segundo apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Second surname"
+msgstr "Segundo apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: name and surnames"
+msgstr "Titular: nombre y apellidos"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: phone number"
+msgstr "Titular: teléfono"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder phone"
+msgstr "Teléfono del titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: email"
+msgstr "Titular: correo"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder email"
+msgstr "Correo del titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing family email and surnames"
+msgstr "Faltan el correo y los apellidos de la familia"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family already has two different emails. Email not updated"
+msgstr "La familia ya tiene dos correos distintos. No se actualiza el correo"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing holder name. Parent not imported"
+msgstr "Falta el nombre del titular. No se importa el progenitor"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "IBAN without holder name. Holder not linked"
+msgstr "IBAN sin nombre de titular. No se vincula el titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Membership holder updated"
+msgstr "Titular de la cuota actualizado"
+
+#: .\ampa_manager\templates\family_accounts\import_family_accounts.html
+msgid "Columns F, G, H and I (children names) are ignored"
+msgstr "Las columnas F, G, H e I (nombres de los hijos) se ignoran"
+
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"

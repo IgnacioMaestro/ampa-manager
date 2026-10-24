@@ -2732,5 +2732,70 @@ msgstr "Gaztelania"
 msgid "Basque"
 msgstr "Euskara"
 
+#: .\ampa_manager\views\family_accounts\import_family_accounts_view.py
+#: .\ampa_manager_project\admin_menu.py
+msgid "Import family accounts"
+msgstr "Inportatu familia-kontuak"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: first surname"
+msgstr "Familia: lehen abizena"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "First surname"
+msgstr "Lehen abizena"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: second surname"
+msgstr "Familia: bigarren abizena"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Second surname"
+msgstr "Bigarren abizena"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: name and surnames"
+msgstr "Titularra: izen-abizenak"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: phone number"
+msgstr "Titularra: telefonoa"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder phone"
+msgstr "Titularraren telefonoa"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: email"
+msgstr "Titularra: posta elektronikoa"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder email"
+msgstr "Titularraren posta elektronikoa"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing family email and surnames"
+msgstr "Familiaren posta elektronikoa eta abizenak falta dira"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family already has two different emails. Email not updated"
+msgstr "Familiak dagoeneko bi posta elektroniko desberdin ditu. Ez da posta eguneratzen"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing holder name. Parent not imported"
+msgstr "Titularraren izena falta da. Ez da gurasoa inportatzen"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "IBAN without holder name. Holder not linked"
+msgstr "IBAN titularraren izenik gabe. Ez da titularra lotzen"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Membership holder updated"
+msgstr "Kuotaren titularra eguneratu da"
+
+#: .\ampa_manager\templates\family_accounts\import_family_accounts.html
+msgid "Columns F, G, H and I (children names) are ignored"
+msgstr "F, G, H eta I zutabeak (seme-alaben izenak) ez dira kontuan hartzen"
+
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"
