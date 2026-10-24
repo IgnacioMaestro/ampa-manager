@@ -267,7 +267,7 @@ class FamilyAdmin(admin.ModelAdmin):
         names = []
         for parent in family.parents.all():
             names.append(parent.name_and_surnames)
-        return '\n'.join(names)
+        return mark_safe('<br/>'.join(names))
 
     @admin.display(description=gettext_lazy('Children'))
     def children_names(self, family):
