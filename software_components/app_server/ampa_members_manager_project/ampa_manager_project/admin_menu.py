@@ -38,7 +38,13 @@ MENU = [
                 'type': 'model',
                 'app': 'ampa_manager',
                 'model': 'bankbiccode',
-                'label': _('Códigos bancarios BIC'),
+                'label': _('BIC bank accounts'),
+            },
+            {
+                'type': 'view',
+                'app': 'ampa_manager',
+                'view': 'import_family_accounts',
+                'label': _('Import family accounts'),
             },
         ]
     },
@@ -79,13 +85,13 @@ MENU = [
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_after_schools_activities',
-                'label': _('Importar actividades'),
+                'label': _('Import activities'),
             },
             {
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_after_schools_registrations',
-                'label': _('Importar inscripciones'),
+                'label': _('Import registrations'),
             },
         ]
     },
@@ -120,7 +126,7 @@ MENU = [
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_custody',
-                'label': _('Import asistencia'),
+                'label': _('Import attendance'),
             },
         ]
     },
@@ -155,7 +161,7 @@ MENU = [
                 'type': 'view',
                 'app': 'ampa_manager',
                 'view': 'import_camps',
-                'label': _('Importar inscripciones'),
+                'label': _('Import registrations'),
             },
         ]
     },
@@ -211,14 +217,14 @@ MENU = [
             {
                 'type': 'model',
                 'app': 'auth',
-                'model': 'group',
-                'label': _('Usuarios'),
+                'model': 'user',
+                'label': _('Users'),
             },
             {
                 'type': 'model',
                 'app': 'auth',
-                'model': 'user',
-                'label': _('Grupos'),
+                'model': 'group',
+                'label': _('Groups'),
             },
             {
                 'type': 'link',
