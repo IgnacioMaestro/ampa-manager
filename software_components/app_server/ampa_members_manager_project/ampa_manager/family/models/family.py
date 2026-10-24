@@ -2,12 +2,14 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import SET_NULL, QuerySet, Manager
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 
 from ampa_manager.academic_course.models.level import Level
+from ampa_manager.dynamic_settings.dynamic_settings import DynamicSetting
 from ampa_manager.utils.fields_formatters import FieldsFormatters
 from ampa_manager.utils.string_utils import StringUtils
 from .child import Child
@@ -59,6 +61,21 @@ class Family(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.normalize_fields()
         super(Family, self).save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        domain = DynamicSetting.required_family_email_domain()
+        if not domain:
+            return
+
+        errors = {}
+        message = _('Family email must use the domain %(domain)s') % {'domain': domain}
+        for field_name in ('email', 'secondary_email'):
+            email = getattr(self, field_name)
+            if email and not DynamicSetting.family_email_matches_required_domain(email):
+                errors[field_name] = f'{message} ({email})'
+        if errors:
+            raise ValidationError(errors)
 
     def normalize_fields(self):
         self.normalized_surnames = StringUtils.normalize(str(self.surnames))

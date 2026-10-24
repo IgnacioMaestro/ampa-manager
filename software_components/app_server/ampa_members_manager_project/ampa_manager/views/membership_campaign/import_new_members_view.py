@@ -3,7 +3,6 @@ from typing import Optional
 from django.db import transaction
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
 from ampa_manager.activity.use_cases.importers.members_importer import MembersImporter

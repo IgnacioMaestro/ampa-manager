@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-14 22:15+0100\n"
-"PO-Revision-Date: 2026-10-23 19:30+0200\n"
+"PO-Revision-Date: 2026-10-24 14:10+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -2681,40 +2681,40 @@ msgid "Parents with zero or more than one families"
 msgstr "Padres sin familia o con mas de 1 familia"
 
 #: .\ampa_manager_project\admin_menu.py:41
-msgid "Códigos bancarios BIC"
+msgid "BIC bank accounts"
 msgstr "Códigos bancarios BIC"
 
-#: .\ampa_manager_project\admin_menu.py:52
+#: .\ampa_manager_project\admin_menu.py:58
 msgid "Actividades"
 msgstr "Actividades"
 
-#: .\ampa_manager_project\admin_menu.py:82
-msgid "Importar actividades"
+#: .\ampa_manager_project\admin_menu.py:88
+msgid "Import activities"
 msgstr "Importar actividades"
 
-#: .\ampa_manager_project\admin_menu.py:88
-#: .\ampa_manager_project\admin_menu.py:158
-msgid "Importar inscripciones"
+#: .\ampa_manager_project\admin_menu.py:94
+#: .\ampa_manager_project\admin_menu.py:164
+msgid "Import registrations"
 msgstr "Importar inscripciones"
 
-#: .\ampa_manager_project\admin_menu.py:123
-msgid "Import asistencia"
+#: .\ampa_manager_project\admin_menu.py:129
+msgid "Import attendance"
 msgstr "Importar asistencia"
 
-#: .\ampa_manager_project\admin_menu.py:204
+#: .\ampa_manager_project\admin_menu.py:210
 msgid "Members campaign"
 msgstr "Campaña de socios"
 
-#: .\ampa_manager_project\admin_menu.py:209
+#: .\ampa_manager_project\admin_menu.py:215
 msgid "Others"
 msgstr "Otros"
 
-#: .\ampa_manager_project\admin_menu.py:215
-msgid "Usuarios"
+#: .\ampa_manager_project\admin_menu.py:221
+msgid "Users"
 msgstr "Usuarios"
 
-#: .\ampa_manager_project\admin_menu.py:221
-msgid "Grupos"
+#: .\ampa_manager_project\admin_menu.py:227
+msgid "Groups"
 msgstr "Grupos"
 
 #: .\ampa_manager_project\settings.py:124
@@ -2724,6 +2724,92 @@ msgstr "Español"
 #: .\ampa_manager_project\settings.py:126
 msgid "Basque"
 msgstr "Euskera"
+
+#: .\ampa_manager\views\family_accounts\import_family_accounts_view.py
+#: .\ampa_manager_project\admin_menu.py
+msgid "Import family accounts"
+msgstr "Importar cuentas familiares"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: first surname"
+msgstr "Familia: primer apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "First surname"
+msgstr "Primer apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family: second surname"
+msgstr "Familia: segundo apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Second surname"
+msgstr "Segundo apellido"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: name and surnames"
+msgstr "Titular: nombre y apellidos"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: phone number"
+msgstr "Titular: teléfono"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder phone"
+msgstr "Teléfono del titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder: email"
+msgstr "Titular: correo"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Holder email"
+msgstr "Correo del titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing family email and surnames"
+msgstr "Faltan el correo y los apellidos de la familia"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Family already has two different emails. Email not updated"
+msgstr "La familia ya tiene dos correos distintos. No se actualiza el correo"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Missing holder name. Parent not imported"
+msgstr "Falta el nombre del titular. No se importa el progenitor"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "IBAN without holder name. Holder not linked"
+msgstr "IBAN sin nombre de titular. No se vincula el titular"
+
+#: .\ampa_manager\family\use_cases\importers\family_accounts_importer.py
+msgid "Membership holder updated"
+msgstr "Titular de la cuota actualizado"
+
+#: .\ampa_manager\templates\family_accounts\import_family_accounts.html
+msgid "Columns F, G, H and I (children names) are ignored"
+msgstr "Las columnas F, G, H e I (nombres de los hijos) se ignoran"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Family email domain"
+msgstr "Dominio del correo familiar"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "If set, imported family emails must use this domain. Example: @abendanoikastola.com"
+msgstr "Si se indica, los correos familiares importados deben usar este dominio. Ejemplo: @abendanoikastola.com"
+
+#: .\ampa_manager\dynamic_settings\dynamic_settings.py
+msgid "Enter a domain like @abendanoikastola.com"
+msgstr "Introduce un dominio como @abendanoikastola.com"
+
+#: .\ampa_manager\utils\fields_formatters.py
+msgid "Family email must use the domain %(domain)s"
+msgstr "El correo familiar debe usar el dominio %(domain)s"
+
+#: .\templates\admin\base_site.html:14
+#, python-format
+msgid "Curso %(active_course)s"
+msgstr "Curso %(active_course)s"
 
 #~ msgid "Export after-school remittance to SEPA file"
 #~ msgstr "Exportar la remesa de extraescolares a fichero SEPA"

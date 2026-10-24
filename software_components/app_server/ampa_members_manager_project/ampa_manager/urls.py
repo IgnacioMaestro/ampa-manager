@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from ampa_manager.views.after_schools.import_after_school_activities_view import ImportAfterSchoolActivitiesView
 from ampa_manager.views.after_schools.import_after_school_registrations_view import ImportAfterSchoolRegistrationsView
+from ampa_manager.views.family_accounts.import_family_accounts_view import ImportFamilyAccountsView
 from ampa_manager.views.importers.import_camps_view import ImportCampsView
 from ampa_manager.views.importers.import_custody_view import ImportCustodyView
 from ampa_manager.views.membership_campaign.generate_members_remittance_view import GenerateMembersRemittanceView
@@ -34,5 +35,6 @@ urlpatterns = [
     path('camps/import/', ImportCampsView.as_view(), name='import_camps'),
     path('members-campaign/', include(membership_campaign_urlpatterns)),
     path('after-schools/', include(after_schools_urlpatterns)),
+    path('import_family_accounts/', ImportFamilyAccountsView.as_view(), name='import_family_accounts'),
     path('validations/', validate_data, name='validate_data'),
 ]
