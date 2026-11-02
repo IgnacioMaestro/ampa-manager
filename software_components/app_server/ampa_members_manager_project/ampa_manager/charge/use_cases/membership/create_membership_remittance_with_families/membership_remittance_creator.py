@@ -42,10 +42,9 @@ class MembershipRemittanceCreator:
         for family in self.__families.iterator():
             if not family.membership_holder or not family.membership_holder.bank_account or not family.membership_holder.bank_account.swift_bic:
                 return None, RemittanceCreatorError.BIC_ERROR
-            if not family.decline_membership:
-                membership_receipt: MembershipReceipt = MembershipReceipt(
-                    remittance=remittance, family=family, holder=family.membership_holder)
-                membership_receipts.append(membership_receipt)
+            membership_receipt: MembershipReceipt = MembershipReceipt(
+                remittance=remittance, family=family, holder=family.membership_holder)
+            membership_receipts.append(membership_receipt)
         if not membership_receipts:
             return None, RemittanceCreatorError.NO_FAMILIES
         try:

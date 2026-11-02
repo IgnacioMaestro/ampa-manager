@@ -50,6 +50,10 @@ class MembersImporter(BaseImporter):
             if not family:
                 return
 
+            if family.decline_membership:
+                row.set_error('Family declined membership. You can disable this flag in the family profile.')
+                return
+
             child1: Child = self.import_child(row, family, compulsory=True, child_number=1)
             if not child1:
                 return
