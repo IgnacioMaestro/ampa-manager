@@ -15,13 +15,16 @@ class FamilyHoldersConsolidator:
 
         if not self.family.custody_holder:
             self.family.custody_holder = self.get_last_custody_registration_holder()
-            warnings.append(_('Family custody holder updated with last registration holder'))
+            if self.family.custody_holder:
+                warnings.append(_('Family custody holder updated with last registration holder'))
         if not self.family.after_school_holder:
             self.family.after_school_holder = self.get_last_after_school_registration_holder()
-            warnings.append(_('Family after-school holder updated with last registration holder'))
+            if self.family.after_school_holder:
+                warnings.append(_('Family after-school holder updated with last registration holder'))
         if not self.family.camps_holder:
             self.family.camps_holder = self.get_last_camps_registration_holder()
-            warnings.append(_('Family camps holder updated with last registration holder'))
+            if self.family.camps_holder:
+                warnings.append(_('Family camps holder updated with last registration holder'))
 
         if not self.family.membership_holder:
             if self.family.custody_holder:
@@ -34,18 +37,18 @@ class FamilyHoldersConsolidator:
                 self.family.membership_holder = self.family.after_school_holder
                 warnings.append(_('Family membership holder updated with after-school holder'))
             else:
-                family_holders = Holder.objects.of_family(self).order_by('-id')
+                family_holders = Holder.objects.of_family(self.family).order_by('-id')
                 if family_holders.exists():
                     self.family.membership_holder = family_holders.first()
                     warnings.append(_('Family membership holder updated with a last registered holder of the family'))
 
-        if not self.family.custody_holder:
+        if not self.family.custody_holder and self.family.membership_holder:
             self.family.custody_holder = self.family.membership_holder
             warnings.append(_('Custody holder updated with membership holder'))
-        if not self.family.after_school_holder:
+        if not self.family.after_school_holder and self.family.membership_holder:
             self.family.after_school_holder = self.family.membership_holder
             warnings.append(_('After-school holder updated with membership holder'))
-        if not self.family.camps_holder:
+        if not self.family.camps_holder and self.family.membership_holder:
             self.family.camps_holder = self.family.membership_holder
             warnings.append(_('Camps holder updated with membership holder'))
 
@@ -57,17 +60,17 @@ class FamilyHoldersConsolidator:
     def get_last_custody_registration_holder(self):
         registrations = CustodyRegistration.objects.of_family(self.family).order_by('-id')
         if registrations.exists():
-            return registrations.last().holder
+            return registrations.first().holder
         return None
 
     def get_last_after_school_registration_holder(self):
         registrations = AfterSchoolRegistration.objects.of_family(self.family).order_by('-id')
         if registrations.exists():
-            return registrations.last().holder
+            return registrations.first().holder
         return None
 
     def get_last_camps_registration_holder(self):
         registrations = CampsRegistration.objects.of_family(self.family).order_by('-id')
         if registrations.exists():
-            return registrations.last().holder
+            return registrations.first().holder
         return None

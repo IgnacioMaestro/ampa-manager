@@ -82,7 +82,7 @@ class MembersImporter(BaseImporter):
             if row.any_error:
                 return
 
-            FamilyHoldersConsolidator(family).consolidate()
+            row.add_warnings(FamilyHoldersConsolidator(family).consolidate(), Family)
 
             if not family.membership_holder:
                 row.set_error('Missing bank account')
