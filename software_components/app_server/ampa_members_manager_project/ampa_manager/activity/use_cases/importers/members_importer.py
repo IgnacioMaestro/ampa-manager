@@ -1,3 +1,4 @@
+import traceback
 from typing import Optional
 
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
@@ -73,10 +74,9 @@ class MembersImporter(BaseImporter):
             if row.any_error:
                 return
 
-            if parent1:
-                holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent1)
-                if holder:
-                    family.update_membership_holder(holder)
+            holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent1)
+            if holder:
+                family.update_membership_holder(holder)
 
             self.import_parent(row, family, compulsory=False, parent_number=2)
             if row.any_error:
@@ -91,7 +91,8 @@ class MembersImporter(BaseImporter):
             self.import_membership(row, family)
 
         except Exception as e:
-            row.error = str(e)
+            print(traceback.format_exc())
+            row.set_error(f'Unexpected error: {e}')
 
     @classmethod
     def import_membership(cls, row: Row, family: Family) -> Membership:
