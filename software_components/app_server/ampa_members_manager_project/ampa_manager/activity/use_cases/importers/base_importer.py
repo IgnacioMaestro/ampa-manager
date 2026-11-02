@@ -1,10 +1,8 @@
 from typing import Optional
 
+from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
-from ampa_manager.activity.models.after_school.after_school_registration import AfterSchoolRegistration
-from ampa_manager.activity.models.camps.camps_registration import CampsRegistration
-from ampa_manager.activity.models.custody.custody_registration import CustodyRegistration
 from ampa_manager.activity.use_cases.importers.excel_column_definition import ExcelColumnDefinition
 from ampa_manager.activity.use_cases.importers.excel_data_extractor_pandas import ExcelDataExtractorPandas
 from ampa_manager.activity.use_cases.importers.import_excel_result import ImportExcelResult
@@ -20,7 +18,6 @@ from ampa_manager.family.use_cases.importers.family_importer import FamilyImport
 from ampa_manager.family.use_cases.importers.holder_importer import HolderImporter
 from ampa_manager.family.use_cases.importers.parent_importer import ParentImporter
 from ampa_manager.utils.fields_formatters import FieldsFormatters
-from ampa_manager.utils.string_utils import StringUtils
 
 
 class BaseImporter:
@@ -154,7 +151,11 @@ class BaseImporter:
             self.excel_content, self.SHEET_NUMBER, self.FIRST_ROW_INDEX, self.COLUMNS_TO_IMPORT).extract()
 
         for row in rows:
-            self.process_row(row)
+            with transaction.atomic():
+                self.process_row(row)
+
+                if row.any_error:
+                    transaction.set_rollback(True)
 
         return ImportExcelResult(rows)
 
