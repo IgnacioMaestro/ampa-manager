@@ -214,7 +214,7 @@ class FamilyEmail(admin.SimpleListFilter):
 
 
 class FamilyParentCountFilter(admin.SimpleListFilter):
-    title = _('Numer of parents')
+    title = _('Number of parents')
 
     parameter_name = 'parents'
 

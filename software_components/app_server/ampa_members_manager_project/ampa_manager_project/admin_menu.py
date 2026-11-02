@@ -55,7 +55,7 @@ MENU = [
                 'type': 'model',
                 'app': 'ampa_manager',
                 'model': 'afterschool',
-                'label': _('Actividades'),
+                'label': _('Activities'),
             },
             {
                 'type': 'model',

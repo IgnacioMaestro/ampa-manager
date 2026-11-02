@@ -93,6 +93,7 @@ class TestRemittanceCreator(TestCase):
 
     def test_create_with_a_declined_family(self):
         # Arrange
+        baker.make(Fee, academic_course=self.course)
         baker.make(Family, membership_holder=self.holder, decline_membership=True)
 
         # Act
@@ -102,10 +103,10 @@ class TestRemittanceCreator(TestCase):
             families=Family.objects.all(), course=self.course).create()
 
         # Assert
-        self.assertIsNone(membership_remittance)
-        self.assertEqual(0, MembershipRemittance.objects.count())
-        self.assertEqual(0, MembershipReceipt.objects.count())
-        self.assertEqual(error, RemittanceCreatorError.NO_FAMILIES)
+        self.assertEqual(membership_remittance.receipts.all().count(), 1)
+        self.assertEqual(1, MembershipRemittance.objects.count())
+        self.assertEqual(1, MembershipReceipt.objects.count())
+        self.assertIsNone(error)
 
     def test_create_with_two_family(self):
         # Arrange

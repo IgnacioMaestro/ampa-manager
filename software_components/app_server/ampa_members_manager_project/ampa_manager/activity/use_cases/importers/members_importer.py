@@ -1,3 +1,4 @@
+import traceback
 from typing import Optional
 
 from ampa_manager.activity.use_cases.importers.base_importer import BaseImporter
@@ -50,36 +51,38 @@ class MembersImporter(BaseImporter):
             if not family:
                 return
 
+            if family.decline_membership:
+                row.set_error('Family declined membership. You can disable this flag in the family profile.')
+                return
+
             child1: Child = self.import_child(row, family, compulsory=True, child_number=1)
             if not child1:
                 return
 
-            self.import_child(row, family, compulsory=False, child_number=2)
-            if row.any_error:
-                return
+            imported_children_ids: list[int] = [child1.id]
 
-            self.import_child(row, family, compulsory=False, child_number=3)
-            if row.any_error:
-                return
-
-            self.import_child(row, family, compulsory=False, child_number=4)
-            if row.any_error:
-                return
+            for child_number in [2, 3, 4]:
+                child: Optional[Child] = self.import_child(
+                    row, family, compulsory=False, child_number=child_number,
+                    excluded_children_ids=imported_children_ids)
+                if row.any_error:
+                    return
+                if child:
+                    imported_children_ids.append(child.id)
 
             parent1: Parent = self.import_parent(row, family, compulsory=True, parent_number=1)
             if row.any_error:
                 return
 
-            if parent1:
-                holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent1)
-                if holder:
-                    family.update_membership_holder(holder)
+            holder: Optional[Holder] = self.import_bank_account_and_holder(row, parent1)
+            if holder:
+                family.update_membership_holder(holder)
 
             self.import_parent(row, family, compulsory=False, parent_number=2)
             if row.any_error:
                 return
 
-            FamilyHoldersConsolidator(family).consolidate()
+            row.add_warnings(FamilyHoldersConsolidator(family).consolidate(), Family)
 
             if not family.membership_holder:
                 row.set_error('Missing bank account')
@@ -88,7 +91,8 @@ class MembersImporter(BaseImporter):
             self.import_membership(row, family)
 
         except Exception as e:
-            row.error = str(e)
+            print(traceback.format_exc())
+            row.set_error(f'Unexpected error: {e}')
 
     @classmethod
     def import_membership(cls, row: Row, family: Family) -> Membership:

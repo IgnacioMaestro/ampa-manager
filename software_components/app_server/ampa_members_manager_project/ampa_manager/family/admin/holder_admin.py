@@ -59,7 +59,7 @@ class HolderAdmin(admin.ModelAdmin):
         filters = f'parent={holder.parent.id}'
         return Utils.get_model_link(model_name=receipts_model.__name__.lower(), link_text=link_text, filters=filters)
 
-    @admin.action(description=_("Set authorization as  not sent"))
+    @admin.action(description=_("Set authorization as not sent"))
     def set_as_not_sent(self, request, queryset: QuerySet[Holder]):
         queryset.update(state=State.NOT_SENT)
 
