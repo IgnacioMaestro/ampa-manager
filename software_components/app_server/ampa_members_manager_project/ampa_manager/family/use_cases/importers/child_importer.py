@@ -10,7 +10,8 @@ from ampa_manager.family.models.child import Child
 
 class ChildImporter:
 
-    def __init__(self, family, name: str, level: str, year_of_birth: int, compulsory: bool):
+    def __init__(self, family, name: str, level: str, year_of_birth: int, compulsory: bool,
+                 excluded_children_ids: Optional[list[int]] = None):
         self.result: ImportModelResult = ImportModelResult(Child)
         self.family = family
         self.name = name
@@ -18,6 +19,7 @@ class ChildImporter:
         self.year_of_birth = year_of_birth
         self.repetition = None
         self.compulsory = compulsory
+        self.excluded_children_ids = excluded_children_ids or []
         self.child = None
 
     def import_child(self) -> ImportModelResult:
@@ -55,9 +57,9 @@ class ChildImporter:
                     return True
         return False
 
-    def find_child(self, exclude_id: Optional[int] = None) -> Optional[Child]:
+    def find_child(self) -> Optional[Child]:
         for child in Child.objects.with_family(self.family):
-            if exclude_id and child.id == exclude_id:
+            if child.id in self.excluded_children_ids:
                 continue
             if child.matches_name(self.name, strict=False):
                 return child

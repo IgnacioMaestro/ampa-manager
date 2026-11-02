@@ -174,7 +174,8 @@ class BaseImporter:
         return result.instance
 
     @classmethod
-    def import_child(cls, row: Row, family: Family, compulsory: bool, child_number: int = 1) -> Optional[Child]:
+    def import_child(cls, row: Row, family: Family, compulsory: bool, child_number: int = 1,
+                     excluded_children_ids: Optional[list[int]] = None) -> Optional[Child]:
         if child_number == 1:
             name = row.get_value(cls.KEY_CHILD_1_NAME)
             level = row.get_value(cls.KEY_CHILD_1_LEVEL)
@@ -197,7 +198,8 @@ class BaseImporter:
             name=name,
             level=level,
             year_of_birth=year_of_birth,
-            compulsory=compulsory).import_child()
+            compulsory=compulsory,
+            excluded_children_ids=excluded_children_ids).import_child()
 
         row.add_imported_model_result(result)
 

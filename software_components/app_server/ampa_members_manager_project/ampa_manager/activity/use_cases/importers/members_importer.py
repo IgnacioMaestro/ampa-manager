@@ -54,17 +54,16 @@ class MembersImporter(BaseImporter):
             if not child1:
                 return
 
-            self.import_child(row, family, compulsory=False, child_number=2)
-            if row.any_error:
-                return
+            imported_children_ids: list[int] = [child1.id]
 
-            self.import_child(row, family, compulsory=False, child_number=3)
-            if row.any_error:
-                return
-
-            self.import_child(row, family, compulsory=False, child_number=4)
-            if row.any_error:
-                return
+            for child_number in [2, 3, 4]:
+                child: Optional[Child] = self.import_child(
+                    row, family, compulsory=False, child_number=child_number,
+                    excluded_children_ids=imported_children_ids)
+                if row.any_error:
+                    return
+                if child:
+                    imported_children_ids.append(child.id)
 
             parent1: Parent = self.import_parent(row, family, compulsory=True, parent_number=1)
             if row.any_error:
