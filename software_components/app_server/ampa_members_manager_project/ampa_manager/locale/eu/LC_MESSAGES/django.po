@@ -530,7 +530,7 @@ msgstr "Zordunketa"
 #: .\ampa_manager\activity\admin\custody_admin.py:139
 #: .\ampa_manager\activity\admin\registration_filters.py:18
 msgid "No members"
-msgstr "Bazkideak ez"
+msgstr "Bazkide ez direnak"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:96
 #: .\ampa_manager\activity\admin\custody_admin.py:147
@@ -545,6 +545,7 @@ msgid "Total"
 msgstr "Guztira"
 
 #: .\ampa_manager\activity\admin\camps_admin.py:108
+#: .\ampa_manager\activity\admin\custody_admin.py:159
 msgid "Multiple remittances"
 msgstr "Hainbat zordunketa"
 
@@ -589,11 +590,7 @@ msgstr "Bazkideak (\"Kobratzeko gehienezko egunak\" mugaren arabera)"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:135
 msgid "No members (topped by \"Max days for charge\")"
-msgstr "Bazkideak ez (\"Kobratzeko gehienezko egunak\" mugaren arabera)"
-
-#: .\ampa_manager\activity\admin\custody_admin.py:159
-msgid "Multiple remmitances"
-msgstr "Hainbat zordunketa"
+msgstr "Bazkide ez direnak (\"Kobratzeko gehienezko egunak\" mugaren arabera)"
 
 #: .\ampa_manager\activity\admin\custody_admin.py:166
 msgid "Create custody remittance"
@@ -653,6 +650,7 @@ msgid "Funding"
 msgstr "Finantzaketa"
 
 #: .\ampa_manager\activity\models\after_school\after_school.py:13
+#: .\ampa_manager_project\admin_menu.py:58
 msgid "Activities"
 msgstr "Jarduerak"
 
@@ -963,7 +961,7 @@ msgstr "Seme-alaba 2: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:104
 msgid "Child 2: name"
-msgstr "Seme-alaba 2: izena, abizenik gabe"
+msgstr "Seme-alaba 2: izena"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:106
 msgid "Child 2: level"
@@ -979,7 +977,7 @@ msgstr "Seme-alaba 3: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:111
 msgid "Child 3: name"
-msgstr "Seme-alaba 3: izena, abizenik gabe"
+msgstr "Seme-alaba 3: izena"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:113
 msgid "Child 3: level"
@@ -995,7 +993,7 @@ msgstr "Seme-alaba 4: izena, abizenik gabe"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:118
 msgid "Child 4: name"
-msgstr "Seme-alaba 4: izena, abizenik gabe"
+msgstr "Seme-alaba 4: izena"
 
 #: .\ampa_manager\activity\use_cases\importers\base_importer.py:120
 msgid "Child 4: level"
@@ -1612,7 +1610,7 @@ msgstr "Aurtengo bazkideak"
 #: .\ampa_manager\family\admin\filters\child_filters.py:72
 #: .\ampa_manager\family\admin\filters\family_filters.py:18
 msgid "Current year NO members"
-msgstr "Aurten bazkide EZ"
+msgstr "Aurtengo bazkide EZ direnak"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:19
 msgid "Last year members"
@@ -1725,7 +1723,7 @@ msgid "Missing"
 msgstr "Falta da"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:217
-msgid "Numer of parents"
+msgid "Number of parents"
 msgstr "Guraso kopurua"
 
 #: .\ampa_manager\family\admin\filters\family_filters.py:223
@@ -1775,7 +1773,7 @@ msgid "More than one family"
 msgstr "Familia bat baino gehiago"
 
 #: .\ampa_manager\family\admin\holder_admin.py:62
-msgid "Set authorization as  not sent"
+msgid "Set authorization as not sent"
 msgstr "Markatu baimenak bidali gabe gisa"
 
 #: .\ampa_manager\family\admin\holder_admin.py:66
@@ -2269,7 +2267,7 @@ msgid "The columns must be in the following order"
 msgstr "Zutabeek ordena honetan egon behar dute"
 
 #: .\ampa_manager\templates\importers\import_custody.html:10
-msgid "If the required custody edition does not exist "
+msgid "If the required custody edition does not exist"
 msgstr "Beharrezko zaintza-edizioa existitzen ez bada"
 
 #: .\ampa_manager\templates\importers\import_custody.html:10
@@ -2691,10 +2689,6 @@ msgstr "Familiarik gabeko edo familia bat baino gehiago duten gurasoak"
 msgid "BIC bank accounts"
 msgstr "BIC banku-kodeak"
 
-#: .\ampa_manager_project\admin_menu.py:58
-msgid "Actividades"
-msgstr "Jarduerak"
-
 #: .\ampa_manager_project\admin_menu.py:88
 msgid "Import activities"
 msgstr "Inportatu jarduerak"
@@ -2815,8 +2809,8 @@ msgstr "Familia-postak %(domain)s domeinua erabili behar du"
 
 #: .\templates\admin\base_site.html:14
 #, python-format
-msgid "Curso %(active_course)s"
-msgstr "Ikasturtea %(active_course)s"
+msgid "Course %(active_course)s"
+msgstr "%(active_course)s ikasturtea"
 
 msgid "Editions moved"
 msgstr "Eramandako edizioak"

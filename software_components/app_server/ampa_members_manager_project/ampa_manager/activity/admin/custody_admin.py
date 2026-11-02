@@ -156,7 +156,7 @@ class CustodyEditionAdmin(admin.ModelAdmin):
         elif remittances.count() == 0:
             return '-'
         else:
-            return _('Multiple remmitances')
+            return _('Multiple remittances')
 
     @admin.display(description=gettext_lazy('Remittance'), boolean=True)
     def has_remittance(self, edition):
