@@ -11,7 +11,8 @@ from django.utils.translation import gettext_lazy as _, gettext_lazy
 
 from ampa_manager.academic_course.models.academic_course import AcademicCourse
 from ampa_manager.activity.admin.registration_filters import (FamilyRegistrationFilter,
-                                                              AfterSchoolRegistrationRemittanceFilter)
+                                                              AfterSchoolRegistrationRemittanceFilter,
+                                                              RegistrationFilter)
 from ampa_manager.activity.models.after_school.after_school import AfterSchool
 from ampa_manager.activity.use_cases.after_school.after_school_merger import AfterSchoolMerger
 from ampa_manager.activity.models.after_school.after_school_edition import AfterSchoolEdition
@@ -48,7 +49,7 @@ class AfterSchoolRegistrationAdmin(admin.ModelAdmin):
                    'after_school_edition__period',
                    'after_school_edition__timetable',
                    'after_school_edition__levels',
-                   'after_school_edition__after_school__name', FamilyRegistrationFilter]
+                   'after_school_edition__after_school__name', RegistrationFilter, FamilyRegistrationFilter]
     search_fields = ['id', 'child__name', 'child__family__surnames', 'after_school_edition__after_school__name',
                      'holder__bank_account__iban', 'holder__parent__name_and_surnames',
                      'child__family__email', 'child__family__secondary_email']

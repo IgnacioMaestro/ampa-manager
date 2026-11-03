@@ -1660,6 +1660,14 @@ msgstr "Seme-alabaren bat ikastolan"
 msgid "No children in school"
 msgstr "Seme-alabarik ez ikastolan"
 
+#: .\ampa_manager\family\admin\filters\family_filters.py:78
+msgid "With registrations this year"
+msgstr "Aurten izen-emateekin"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:79
+msgid "Without registrations this year"
+msgstr "Aurten izen-ematerik gabe"
+
 #: .\ampa_manager\family\admin\filters\family_filters.py:72
 msgid "Possible duplicated"
 msgstr "Balizko bikoiztua"

@@ -36,3 +36,9 @@ class AfterSchoolRegistrationQuerySet(QuerySet):
 
     def of_edition(self, after_school_edition: AfterSchoolEdition):
         return self.filter(after_school_edition=after_school_edition)
+
+    def members_in_course(self, academic_course: AcademicCourse):
+        return self.filter(child__family__membership__academic_course=academic_course)
+
+    def no_members_in_course(self, academic_course: AcademicCourse):
+        return self.exclude(child__family__membership__academic_course=academic_course)

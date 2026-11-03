@@ -1659,6 +1659,14 @@ msgstr "Algún hijo en la ikastola"
 msgid "No children in school"
 msgstr "Sin hijos en la ikastola"
 
+#: .\ampa_manager\family\admin\filters\family_filters.py:78
+msgid "With registrations this year"
+msgstr "Con inscripciones este año"
+
+#: .\ampa_manager\family\admin\filters\family_filters.py:79
+msgid "Without registrations this year"
+msgstr "Sin inscripciones este año"
+
 #: .\ampa_manager\family\admin\filters\family_filters.py:72
 msgid "Possible duplicated"
 msgstr "Posible duplicado"
