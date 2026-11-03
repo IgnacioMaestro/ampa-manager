@@ -68,6 +68,28 @@ class FamilyChildrenInSchoolFilter(admin.SimpleListFilter):
             return queryset
 
 
+class FamilyAfterSchoolRegistrationFilter(admin.SimpleListFilter):
+    title = _('After-school registrations')
+
+    parameter_name = 'after_school_registration'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('With registrations this year')),
+            ('no', _('Without registrations this year')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            course: AcademicCourse = ActiveCourse.load()
+            if self.value() == 'yes':
+                return queryset.with_after_school_registrations_in_course(course)
+            elif self.value() == 'no':
+                return queryset.without_after_school_registrations_in_course(course)
+        else:
+            return queryset
+
+
 class FamilyDuplicated(admin.SimpleListFilter):
     title = _('Possible duplicated')
 

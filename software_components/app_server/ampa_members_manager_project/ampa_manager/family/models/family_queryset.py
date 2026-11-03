@@ -71,6 +71,13 @@ class FamilyQuerySet(QuerySet):
     def no_members_in_course(self, academic_course: AcademicCourse):
         return self.exclude(membership__academic_course=academic_course)
 
+    def with_after_school_registrations_in_course(self, academic_course: AcademicCourse):
+        return self.filter(
+            child__afterschoolregistration__after_school_edition__academic_course=academic_course).distinct()
+
+    def without_after_school_registrations_in_course(self, academic_course: AcademicCourse):
+        return self.exclude(child__afterschoolregistration__after_school_edition__academic_course=academic_course)
+
     def with_surnames(self, surnames):
         return self.filter(surnames__iexact=surnames)
 
